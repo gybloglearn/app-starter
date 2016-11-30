@@ -22,9 +22,18 @@ $> cd <b>[<i>projektNév</i>]</b>
 </code>
 
 <code>
+$> git checkout -b <b>[<i>projektNév</i>]</b>
+</code>
+
+<code>
 $> npm install<br>
 </code>
 
 <code>
 $> gulp run<br>
 </code>
+
+<br>
+Módosítsd a programot és utána töltsd fel a <b>projektNév</b> <i>branch</i>-be<br>
+<br>
+
