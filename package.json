@@ -1,0 +1,23 @@
+{
+  "name": "app-starter",
+  "version": "0.0.1",
+  "description": "Starter application skeleton",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gybloglearn/app-starter.git"
+  },
+  "author": "szabolcs.gyoerfi@ge.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gybloglearn/app-starter/issues"
+  },
+  "homepage": "https://github.com/gybloglearn/app-starter#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.2",
+    "gulp": "^3.9.1"
+  }
+}
