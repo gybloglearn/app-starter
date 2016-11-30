@@ -1,6 +1,6 @@
 define([], function () {
   'use strict';
-  function StartController(Data) {
+  function Controller(Data) {
     var vm = this;
 
     activate();
@@ -19,6 +19,6 @@ define([], function () {
       */
     }
   }
-  StartController.$inject = ['Data'];
-  return StartController;
+  Controller.$inject = ['Data'];
+  return Controller;
 });

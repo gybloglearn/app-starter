@@ -1,8 +1,8 @@
 define([], function(){
   'use strict';
-  function ReportController(){
+  function Controller(){
 
   }
-  ReportController.$inject = [];
-  return ReportController;
+  Controller.$inject = [];
+  return Controller;
 });
