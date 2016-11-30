@@ -34,6 +34,10 @@ $> gulp run<br>
 </code>
 
 <br>
-Módosítsd a programot és utána töltsd fel a <b>projektNév</b> <i>branch</i>-be<br>
+Módosítsd a programot és utána töltsd fel a <b>projektNév</b> <i>branch</i>-be:<br>
+
+<code>
+$>  git push origin <b>[<i>projektNév</i>]</b>
+</code>
 <br>
 
