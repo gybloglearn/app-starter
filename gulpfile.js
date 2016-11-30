@@ -7,7 +7,7 @@ var reload = browserSync.reload;
 
 // run app and watch
 gulp.task('run', ['startcode', 'sync'], function () {
-  gulp.watch(['./js/**', '*.html', '*.js']).on('change', reload);
+  gulp.watch(['./app/**', '*.html', '*.js']).on('change', reload);
 });
 // start code
 gulp.task('startcode', function () {
@@ -16,6 +16,12 @@ gulp.task('startcode', function () {
 // sync
 gulp.task('sync', function () {
   var dir = __dirname.substr(__dirname.lastIndexOf('\\') + 1, __dirname.length);
+  gulp.src('./app/require.config.js')
+    .pipe(inject.replace('[APPREPLACE]', dir))
+    .pipe(gulp.dest('./app/'));
+  gulp.src('./app/app.js')
+    .pipe(inject.replace('[APPREPLACE]', dir))
+    .pipe(gulp.dest('./app/'));
   browserSync.init(null, {
     proxy: "localhost/" + dir,
     browser: 'default'
@@ -29,7 +35,7 @@ gulp.task('route', function () {
       return '\n' +
         '$stateProvider.state(\'' + route + '\', {\n' +
         ' url: \'/' + route + '\',\n' +
-        ' templateUrl: \'./js/components/' + route + '/' + route + '.html\',\n' +
+        ' templateUrl: \'./app/components/' + route + '/' + route + '.html\',\n' +
         ' controller: \'' + route + 'Controller\',\n' +
         ' controllerAs: \'vm\'\n' +
         '});';
@@ -37,16 +43,16 @@ gulp.task('route', function () {
     console.log('Adding route: "' + route + '" to project');
 
     console.log('ADD to config');
-    gulp.src('./js/components/config.js')
+    gulp.src('./app/components/config.js')
       .pipe(inject.after('/* Add states */', addToConfig(route)))
-      .pipe(gulp.dest('./js/components/'));
+      .pipe(gulp.dest('./app/components/'));
 
     console.log('ADD to module');
-    gulp.src('./js/components/module.js')
+    gulp.src('./app/components/module.js')
       .pipe(inject.before('/* files */', ', \'./' + route + '/' + route + '.ctrl\''))
       .pipe(inject.before('/* names */', ', ' + route + 'Controller'))
       .pipe(inject.before('/* controllers */', '\t app.controller(\'' + route + 'Controller' + '\', ' + route + 'Controller);\n'))
-      .pipe(gulp.dest('./js/components/'));
+      .pipe(gulp.dest('./app/components/'));
 
     console.log('ADD to index.html');
     gulp.src('./index.html')
@@ -54,16 +60,16 @@ gulp.task('route', function () {
       .pipe(gulp.dest('.'));
 
     console.log('ADD files');
-    gulp.src('./js/components/start/start.html', {base: process.cwd()})
+    gulp.src('./app/components/start/start.html', { base: process.cwd() })
       .pipe(rename({
-        dirname: './js/components/'+ route,
+        dirname: './app/components/' + route,
         basename: route,
         extname: '.html'
       }))
       .pipe(gulp.dest('.'));
-    gulp.src('./js/components/start/start.ctrl.js', {base: process.cwd()})
+    gulp.src('./app/components/start/start.ctrl.js', { base: process.cwd() })
       .pipe(rename({
-        dirname: './js/components/'+ route,
+        dirname: './app/components/' + route,
         basename: route,
         suffix: '.ctrl',
         extname: '.js'
