@@ -41,3 +41,8 @@ $>  git push origin <b>[<i>projektNév</i>]</b>
 </code>
 <br>
 
+<b>Új "route" hozzáadása </b><br>
+A route --add hozzáadja a components mappához a [routeNév] mappát és abban a megfelelő fileokat (routeNév.html és routeNév.ctrl.js). A config.js, a module.js és az index.html file-okat frissíti. Az index.html file-ban csak a fő menüsorba teszi be az új adatot.
+
+
+<code>gulp route --add <b><i>routeNév</i></b></code>
