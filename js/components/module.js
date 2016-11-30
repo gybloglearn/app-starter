@@ -1,8 +1,9 @@
 define([
   './config',
   './start/start.ctrl',
+  './report/report.ctrl',
   './services/data.service'
-], function(configFunction, startController, dataService){
+], function(configFunction, startController, reportController, dataService){
 
   // Link all components to the module !!!
 
@@ -10,4 +11,5 @@ define([
   app.config(configFunction);
   app.service('Data', dataService);
   app.controller('StartController', startController);
+  app.controller('ReportController', reportController);
 });
