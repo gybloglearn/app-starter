@@ -6,7 +6,6 @@ define([
 ], function(
     configFunction,
     startController,
-    reportController,
     dataService
 	/* names */) {
 

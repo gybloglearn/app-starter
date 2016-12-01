@@ -111,7 +111,7 @@ gulp.task('route', function () {
       }))
       .pipe(gulp.dest('.'));
     gulp.src('./app/components/start/start.ctrl.js', { base: process.cwd() })
-      .pipe(inject.replce('Contorller', route + 'Controller'))
+      .pipe(inject.replace('Contorller', route + 'Controller'))
       .pipe(rename({
         dirname: './app/components/' + route,
         basename: route,
