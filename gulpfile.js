@@ -57,7 +57,7 @@ gulp.task('service', function () {
       .pipe(gulp.dest('./app/components/'));
     console.log('ADD file');
     gulp.src('./app/components/services/data.service.js', { base: process.cwd() })
-      .pipe(inject.replace('url', srv.url))
+      .pipe(inject.replace('//url//', srv.url))
       .pipe(rename({
         dirname: './app/components/services',
         basename: srv.name,
