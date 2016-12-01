@@ -1,0 +1,48 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">Assessment</div>
+    <div class="module-body">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th colspan="6">
+              <div class="input-group input-group-sm">
+                <div class="input-group-btn">
+                  <button class="btn btn-primary btn-sm" style="padding-top:2px;"><i class="icon-filter"></i> Szűrők</button>
+                </div>
+                <span class="input-group-addon" style="padding-top:2px; padding-bottom:2px;">Név:</span>
+                <input type="text" ng-model="vm.filter.name" placeholder="Név" class="form-control">
+                <span class="input-group-addon" style="padding-top:2px; padding-bottom:2px;">Terület:</span>
+                <input type="text" ng-model="vm.filter.area" placeholder="Terület" class="form-control">
+                <span class="input-group-addon" style="padding-top:2px; padding-bottom:2px;">Szak:</span>
+                <input type="text" ng-model="vm.filter.shift" placeholder="Szak" class="form-control">
+                <div class="input-group-btn">
+                  <button class="btn btn-warning btn-sm" ng-click="vm.filter=''" style="padding-top:2px;"><i class="icon-remove"></i> Szűrő törlése</button>
+                </div>
+              </div>
+            </th>
+          </tr>
+          <tr>
+            <th ng-click="vm.orderby='name';vm.order=!vm.order">Név</th>
+            <th ng-click="vm.orderby='area';vm.order=!vm.order">Terület</th>
+            <th ng-click="vm.orderby='shift';vm.order=!vm.order">Szak</th>
+            <th>Assignment</th>
+            <th>Onboard</th>
+            <th>Offboard</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="user in vm.users | filter:vm.filter | orderBy:vm.orderby:vm.order track by $index">
+            <td>{{user.name}} <small>{{user.sso}}</small></td>
+            <td>{{user.area}}</td>
+            <td>{{user.shift}}</td>
+            <td>{{user.assignment}}</td>
+            <td>{{user.onboarding}}</td>
+            <td>{{user.offboarding}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>

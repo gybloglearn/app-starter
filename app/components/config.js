@@ -13,6 +13,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('assessment', {
+		url: '/assessment',
+		templateUrl: './app/components/assessment/assessment.html',
+		controller: 'assessmentController',
+		controllerAs: 'vm'
+	});
 
   }
   ConfigFunction.$inject = ['$urlRouterProvider', '$stateProvider'];

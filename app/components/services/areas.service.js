@@ -13,7 +13,7 @@ define([], function () {
     function get() {
       var req = {
         method: 'GET',
-        url: '//url//'
+        url: '//3.228.180.15/hpd/api/area/'
       };
       return $http(req);
     }
