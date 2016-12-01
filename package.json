@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Starter application skeleton",
   "scripts": {
-    "test": "gulp run"
+    "test": "gulp"
   },
   "repository": {
     "type": "git",

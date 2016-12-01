@@ -5,6 +5,11 @@ var exec = require('gulp-exec');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
+// default gulp task
+gulp.task('default', function(){
+  console.log('RUNNING');
+});
+
 // run app and watch
 gulp.task('run', ['startcode', 'sync'], function () {
   gulp.watch(['./app/**', '*.html', '*.js']).on('change', reload);
