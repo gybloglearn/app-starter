@@ -51,7 +51,7 @@ gulp.task('service', function () {
     };
     console.log('ADD to module');
     gulp.src('./app/components/module.js')
-      .pipe(inject.before('/* files */', ', \'./services/' + srv.name + '\'\n\t'))
+      .pipe(inject.before('/* files */', ', \'./services/' + srv.name + '.service\'\n\t'))
       .pipe(inject.before('/* names */', ', ' + srv.name + 'Service\n\t'))
       .pipe(inject.before('/* controllers */', 'app.service(\'' + srv.name + 'Service' + '\', ' + srv.name + 'Service);\n\t\t'))
       .pipe(gulp.dest('./app/components/'));
