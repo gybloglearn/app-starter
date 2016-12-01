@@ -48,3 +48,9 @@ A route --add hozzáadja a components mappához a [routeNév] mappát és abban 
 
 
 <code>gulp route --add <b><i>routeNév</i></b></code>
+
+<b>Új "service" hozzáadása </b><br>
+A service --add hozzáadja a components/services mappához a megfelelő filet - serviceNév.service.js). A module.js filet frissíti.
+
+
+<code>gulp service --add <b><i>serciceNév</i>://<i>(url-http-nélkül)</i></b></code>
