@@ -1,15 +1,14 @@
 define([
     './config',
     './start/start.ctrl',
-    './report/report.ctrl',
     './services/data.service'
-    /* files */
+	/* files */
 ], function(
     configFunction,
     startController,
     reportController,
     dataService
-  /* names */) {
+	/* names */) {
 
         // Link all components to the module !!!
 
@@ -17,6 +16,5 @@ define([
         app.config(configFunction);
         app.service('Data', dataService);
         app.controller('StartController', startController);
-        app.controller('ReportController', reportController);
-/* controllers */
+		/* controllers */
     });

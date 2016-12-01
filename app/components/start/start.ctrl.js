@@ -6,17 +6,7 @@ define([], function () {
     activate();
 
     function activate() {
-      // [TODO:] Customize controller
 
-      /*
-
-      link to service
-
-      Data.get().then(function (response) {
-        console.log(response.data);
-      });
-
-      */
     }
   }
   Controller.$inject = ['Data'];

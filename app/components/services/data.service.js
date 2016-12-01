@@ -13,7 +13,7 @@ define([], function () {
     function get() {
       var req = {
         method: 'GET',
-        url: '...'
+        url: 'url'
       };
       return $http(req);
     }
