@@ -26,10 +26,10 @@ gulp.task('sync', function () {
 
   // Change project name in configs
   gulp.src('./app/require.config.js')
-    .pipe(inject.replace('[APPREPLACE]', dir))
+    .pipe(inject.replace('APPREPLACE', dir))
     .pipe(gulp.dest('./app/'));
   gulp.src('./app/app.js')
-    .pipe(inject.replace('[APPREPLACE]', dir))
+    .pipe(inject.replace('APPREPLACE', dir))
     .pipe(gulp.dest('./app/'));
 
   browserSync.init(null, {
