@@ -1,6 +1,8 @@
 # app-starter
 GE - Oroszlány app starter (wo components from iidx)
 
+[![Build Status](https://travis-ci.org/gybloglearn/app-starter.svg?branch=master)](https://travis-ci.org/gybloglearn/app-starter)
+
 <b>Használat:</b><br>
 Legyen:<br>
 1. <i>xampp</i> vagy <i>wamp</i> telepítve, <br>
