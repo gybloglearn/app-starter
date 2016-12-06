@@ -30,7 +30,7 @@ define([], function () {
         method: 'POST',
         url: '//3.228.180.15/ticketapi/task/' + data.id,
         data:data,
-        header: {"Content-Type":"aplication/json"}
+        headers: {"Content-Type":"application/json"}
       };
       return $http(req);
     }
