@@ -12,6 +12,14 @@ define([], function () {
       controllerAs: 'vm'
     });
 
+    /* Add states */
+
+    $stateProvider.state('addTask', {
+      url: '/addTask',
+      templateUrl: './app/components/addTask/addTask.html',
+      controller: 'addTaskController',
+      controllerAs: 'vm'
+    });
   }
   ConfigFunction.$inject = ['$urlRouterProvider', '$stateProvider'];
   return ConfigFunction;

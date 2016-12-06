@@ -1,55 +1,7 @@
 <div class="container">
-  <!-- első szekció-->
   <section class="module">
-    <div class="module-header">Feladat felvitele a rendszerbe</div>
-    <div class="module-body">
-      <!-- első sor-->
-      <div class="row" style="margin-top:10px">
-        <div class="col-sm-3">
-          <div class="input-group">
-            <span class="input-group-addon">Dátum:</span>
-            <span type="text" class="form-control">{{vm.datum}}</span>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="input-group">
-            <span class="input-group-addon">Feladat:</span>
-            <input type="text" class="form-control" ng-model="vm.data.task" placeholder="Kötelező kitölteni">
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="input-group">
-            <span class="input-group-addon">Felelős:</span>
-            <input type="text" class="form-control" ng-model="vm.data.responsible" placeholder="Kötelező kitölteni">
-          </div>
-        </div>
-      </div>
-      <!-- második sor-->
-      <div class="row" style="margin-top:10px">
-        <div class="col-sm-7">
-          <div class="input-group">
-            <span class="input-group-addon">Részletes leírás</span>
-            <textarea class="form-control" rows="4" ng-model="vm.data.description"></textarea>
-          </div>
-        </div>
-        <!--div class="col-sm-3">
-          <div class="input-group">
-            <span class="input-group-addon">Várható befejezés:</span>
-            <span type="text" class="form-control" ng-model="vm.data.due">{{vm.hatarido}}</span>
-          </div>
-        </div-->
-        <div class="col-sm-2">
-          <button class="btn btn-primary" ng-click="vm.save()" ng-disabled="!vm.data.task || !vm.data.responsible">Felvisz</button>
-        </div>
-
-      </div>
-    </div>
+    <div class="module-header">Start</div>
+    <div class="module-body"></div>
     <div class="module-footer"></div>
-  </section>
-  <!-- második szekció-->
-  <section class="module" style="margin-top:10px">
-    <div class="module-header">Feladatok megtekintése
-      <button class="btn btn default" ng-class="{'btn-info':detailsShow}" ng-click="detailsShow=!detailsShow;">Feladatok</button>
-    </div>
   </section>
 </div>
