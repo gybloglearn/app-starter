@@ -12,8 +12,6 @@ define([], function () {
       controllerAs: 'vm'
     });
 
-    /* Add states */
-
   }
   ConfigFunction.$inject = ['$urlRouterProvider', '$stateProvider'];
   return ConfigFunction;
