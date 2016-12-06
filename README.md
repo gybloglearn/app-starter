@@ -1,4 +1,4 @@
-# app-starter
+# ticket (app-starter BRANCH)
 GE - Oroszlány app starter (wo components from iidx)
 
 [![Build Status](https://travis-ci.org/gybloglearn/app-starter.svg?branch=master)](https://travis-ci.org/gybloglearn/app-starter)
