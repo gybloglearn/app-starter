@@ -13,29 +13,29 @@ gulp.task('default', function(){
 // run app and watch
 gulp.task('run', ['startcode', 'sync'], function () {
   gulp.watch(['./app/**', '*.html', '*.js']).on('change', reload);
-});
+		      });
 
 // start code
 gulp.task('startcode', function () {
-  gulp.src('.').pipe(exec('code .'));
+gulp.src('.').pipe(exec('code .'));
 });
 
 // sync
 gulp.task('sync', function () {
-  var dir = __dirname.substr(__dirname.lastIndexOf('\\') + 1, __dirname.length);
+var dir = __dirname.substr(__dirname.lastIndexOf('\\') + 1, __dirname.length);
 
-  // Change project name in configs
-  gulp.src('./app/require.config.js')
-    .pipe(inject.replace('APPREPLACE', dir))
-    .pipe(gulp.dest('./app/'));
-  gulp.src('./app/app.js')
-    .pipe(inject.replace('APPREPLACE', dir))
-    .pipe(gulp.dest('./app/'));
+// Change project name in configs
+gulp.src('./app/require.config.js')
+.pipe(inject.replace('APPREPLACE', dir))
+.pipe(gulp.dest('./app/'));
+gulp.src('./app/app.js')
+.pipe(inject.replace('APPREPLACE', dir))
+.pipe(gulp.dest('./app/'));
 
-  browserSync.init(null, {
-    proxy: "localhost/" + dir,
-    browser: 'default'
-  });
+browserSync.init(null, {
+proxy: "localhost/" + dir,
+browser: 'default'
+});
 });
 
 gulp.task('rename', function(){
@@ -43,30 +43,30 @@ gulp.task('rename', function(){
 })
 // add new service
 gulp.task('service', function () {
-  if (process.argv[3] == "--add") {
-    var d = process.argv[4].split(':');
-    var srv = {
-      name: d[0],
-      url: d[1]
-    };
-    console.log('ADD to module');
-    gulp.src('./app/components/module.js')
-      .pipe(inject.before('/* files */', ', \'./services/' + srv.name + '.service\'\n\t'))
-      .pipe(inject.before('/* names */', ', ' + srv.name + 'Service\n\t'))
-      .pipe(inject.before('/* controllers */', 'app.service(\'' + srv.name + 'Service' + '\', ' + srv.name + 'Service);\n\t\t'))
-      .pipe(gulp.dest('./app/components/'));
-    console.log('ADD file');
-    gulp.src('./app/components/services/data.service.js', { base: process.cwd() })
-      .pipe(inject.replace('//url//', srv.url))
-      .pipe(rename({
-        dirname: './app/components/services',
-        basename: srv.name,
-        suffix: '.service',
-        extname: '.js'
-      }))
-      .pipe(gulp.dest('.'));
-  } else
-    console.log('Nothing to do!');
+if (process.argv[3] == "--add") {
+var d = process.argv[4].split(':');
+var srv = {
+name: d[0],
+url: d[1]
+};
+console.log('ADD to module');
+gulp.src('./app/components/module.js')
+.pipe(inject.before('/* files */', ', \'./services/' + srv.name + '.service\'\n\t'))
+.pipe(inject.before('/* names */', ', ' + srv.name + 'Service\n\t'))
+.pipe(inject.before('/* controllers */', 'app.service(\'' + srv.name + 'Service' + '\', ' + srv.name + 'Service);\n\t\t'))
+.pipe(gulp.dest('./app/components/'));
+console.log('ADD file');
+gulp.src('./app/components/services/data.service.js', { base: process.cwd() })
+.pipe(inject.replace('//url//', srv.url))
+.pipe(rename({
+  dirname: './app/components/services',
+  basename: srv.name,
+  suffix: '.service',
+  extname: '.js'
+}))
+.pipe(gulp.dest('.'));
+} else
+console.log('Nothing to do!');
 });
 
 // add new route
@@ -75,12 +75,12 @@ gulp.task('route', function () {
     var route = process.argv[4];
     function addToConfig(route) {
       return '\n' +
-        '\t$stateProvider.state(\'' + route + '\', {\n' +
-        '\t\turl: \'/' + route + '\',\n' +
-        '\t\ttemplateUrl: \'./app/components/' + route + '/' + route + '.html\',\n' +
-        '\t\tcontroller: \'' + route + 'Controller\',\n' +
-        '\t\tcontrollerAs: \'vm\'\n' +
-        '\t});';
+	'\t$stateProvider.state(\'' + route + '\', {\n' +
+	  '\t\turl: \'/' + route + '\',\n' +
+	    '\t\ttemplateUrl: \'./app/components/' + route + '/' + route + '.html\',\n' +
+	    '\t\tcontroller: \'' + route + 'Controller\',\n' +
+	    '\t\tcontrollerAs: \'vm\'\n' +
+	    '\t});';
     }
     console.log('Adding route: "' + route + '" to project');
 
@@ -105,20 +105,20 @@ gulp.task('route', function () {
     gulp.src('./app/components/start/start.html', { base: process.cwd() })
       .pipe(inject.replace('Start', (route[0].toUpperCase() + route.slice(1))))
       .pipe(rename({
-        dirname: './app/components/' + route,
-        basename: route,
-        extname: '.html'
+	dirname: './app/components/' + route,
+	basename: route,
+	extname: '.html'
       }))
-      .pipe(gulp.dest('.'));
+    .pipe(gulp.dest('.'));
     gulp.src('./app/components/start/start.ctrl.js', { base: process.cwd() })
       .pipe(inject.replace('Contorller', route + 'Controller'))
       .pipe(rename({
-        dirname: './app/components/' + route,
-        basename: route,
-        suffix: '.ctrl',
-        extname: '.js'
+	dirname: './app/components/' + route,
+	basename: route,
+	suffix: '.ctrl',
+	extname: '.js'
       }))
-      .pipe(gulp.dest('.'));
+    .pipe(gulp.dest('.'));
   }
   else
     console.log('Nothing to do');
