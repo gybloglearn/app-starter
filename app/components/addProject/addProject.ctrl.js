@@ -1,6 +1,6 @@
 define([], function () {
   'use strict';
-  function Controller($filter, tasksService) {
+  function Controller($filter, projectService) {
     var vm = this;
     // add comment to this to check 
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
@@ -10,18 +10,19 @@ define([], function () {
 
     function save(){
       vm.data.id=new Date().getTime();
-      tasksService.post(vm.data).then(function(resp){
+      vm.data.due=new Date().getTime()+(28*24*3600*1000);
+      projectService.post(vm.data).then(function(resp){
         console.log(vm.data);
       });
 
     }
 
     activate();
-    vm.tasks = [];
+    vm.project = [];
     function activate() {
-      tasksService.getAll().then(function(resp){
-        vm.tasks=resp.data;
-        console.log(vm.tasks);
+      projectService.getAll().then(function(resp){
+        vm.project=resp.data;
+        console.log(vm.project);
       });
 
     }
@@ -29,6 +30,6 @@ define([], function () {
     console.log(vm.azon);
     console.log(vm.hatarido);
   }
-  Controller.$inject = ['$filter','tasksService'];
+  Controller.$inject = ['$filter','projectsService'];
   return Controller;
 });

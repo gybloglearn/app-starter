@@ -14,10 +14,10 @@ define([], function () {
 
     /* Add states */
 
-    $stateProvider.state('addTask', {
-      url: '/addTask',
-      templateUrl: './app/components/addTask/addTask.html',
-      controller: 'addTaskController',
+    $stateProvider.state('addProject', {
+      url: '/addProject',
+      templateUrl: './app/components/addProject/addProject.html',
+      controller: 'addProjectController',
       controllerAs: 'vm'
     });
   }
