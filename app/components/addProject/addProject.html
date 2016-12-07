@@ -1,7 +1,7 @@
 <div class="container">
   <!-- első szekció-->
   <section class="module">
-    <div class="module-header">Feladat felvitele a rendszerbe</div>
+    <div class="module-header">Projekt felvitele a rendszerbe</div>
     <div class="module-body">
       <!-- első sor-->
       <div class="row" style="margin-top:10px">
@@ -13,8 +13,8 @@
         </div>
         <div class="col-sm-4">
           <div class="input-group">
-            <span class="input-group-addon">Feladat:</span>
-            <input type="text" class="form-control" ng-model="vm.data.task" placeholder="Kötelező kitölteni">
+            <span class="input-group-addon">Projekt:</span>
+            <input type="text" class="form-control" ng-model="vm.data.name" placeholder="Kötelező kitölteni">
           </div>
         </div>
         <div class="col-sm-4">
@@ -39,17 +39,17 @@
           </div>
         </div-->
         <div class="col-sm-2">
-          <button class="btn btn-primary" ng-click="vm.save()" ng-disabled="!vm.data.task || !vm.data.responsible">Felvisz</button>
+          <button class="btn btn-primary" ng-click="vm.save();" ng-disabled="!vm.data.name || !vm.data.responsible || vm.showmessage">Felvisz</button>
+        </div>
+        <!-- ADD FEEDBACK MESSAGE -->
+        <div class="col-sm-2">
+          <div class="alert alert-success" ng-show="vm.showmessage">
+            <strong>Sikeres felvitel! </strong>{{vm.showtitle}}
+          </div>
         </div>
 
       </div>
     </div>
     <div class="module-footer"></div>
-  </section>
-  <!-- második szekció-->
-  <section class="module" style="margin-top:10px">
-    <div class="module-header">Feladatok megtekintése
-      <button class="btn btn default" ng-class="{'btn-info':detailsShow}" ng-click="detailsShow=!detailsShow;">Feladatok</button>
-    </div>
   </section>
 </div>

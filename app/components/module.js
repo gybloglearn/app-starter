@@ -5,18 +5,20 @@ define([
     './directives/datepicker',
     './directives/mychart',
 	'./services/tasks.service',
-	'./addProject/addProject.ctrl'
-	, './services/projects.service'
+	'./addProject/addProject.ctrl',
+	'./services/projects.service',
+	'./Projektlista/Projektlista.ctrl'
 	/* files */
 ], function(
     configFunction,
     startController,
     dataService,
     datepicker,
-    mychart
-	, tasksService
-	, addProjectController
-	, projectsService
+    mychart,
+	tasksService,
+	addProjectController,
+	projectsService,
+	ProjektlistaController
 	/* names */) {
 
         // Link all components to the module !!!
@@ -30,5 +32,6 @@ define([
 		app.service('tasksService', tasksService);
 		app.service('projectsService', projectsService);
 		app.controller('addProjectController', addProjectController);
+		app.controller('ProjektlistaController', ProjektlistaController);
 		/* controllers */
     });

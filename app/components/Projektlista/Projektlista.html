@@ -1,0 +1,61 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">Projektlista</div>
+    <div class="module-body">
+      <div class="tray filter-tray top">
+        <div class="tray-inner">
+          <div class="filter-rule-group">
+
+
+            <div class="col-sm-4" style="margin-top:20px">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Projekt:</span>
+                <input type="text" ng-model="vm.search.name" class="form-group">
+                </select>
+              </div>
+            </div>
+
+            <div class="col-sm-4" style="margin-top:20px">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Felelős:</span>
+                <input type="text" ng-model="vm.search.responsible" class="form-group">
+                </select>
+              </div>
+            </div>
+
+            <div class="col-sm-4" style="margin-top:20px">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Státusz:</span>
+                <input type="text" ng-model="vm.search.status" class="form-group">
+                </select>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th rowspan=2 ng-click="vm.order='id';vm.asc=!vm.asc;">Felvitel időpontja</th>
+            <th rowspan=2 ng-click="vm.order='name';vm.asc=!vm.asc;">Projekt</th>
+            <th rowspan=2 ng-click="vm.order='responsible';vm.asc=!vm.asc;">Felelős</th>
+            <th rowspan=2 ng-click="vm.order='status';vm.asc=!vm.asc;">Státusz</th>
+            <th rowspan=2 ng-click="vm.order='due';vm.asc=!vm.asc;">Határidő</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.project | orderBy:vm.order:vm.asc | filter: vm.search" class="ng-scope">
+            <td>{{item.id | date: 'yyyy-MM-dd HH:mm'}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.responsible}}</td>
+            <td>{{item.status}}</td>
+            <td>{{item.due | date: 'yyyy-MM-dd HH:mm'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>
