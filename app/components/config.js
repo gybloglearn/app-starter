@@ -13,7 +13,6 @@ define([], function () {
     });
 
     /* Add states */
-<<<<<<< HEAD
 	$stateProvider.state('addTask', {
 		url: '/addTask',
 		templateUrl: './app/components/addTask/addTask.html',
