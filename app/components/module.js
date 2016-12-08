@@ -8,7 +8,8 @@ define([
 	'./addProject/addProject.ctrl',
 	'./services/projects.service',
 	'./Projektlista/Projektlista.ctrl',
-	'./addTask/addTask.ctrl'
+	'./addTask/addTask.ctrl',
+	'./Feladatlista/Feladatlista.ctrl'
 	/* files */
 ], function(
     configFunction,
@@ -20,7 +21,8 @@ define([
 	addProjectController,
 	projectsService,
 	ProjektlistaController,
-	addTaskController
+	addTaskController,
+	FeladatlistaController
 	/* names */) {
 
   // Link all components to the module !!!
@@ -36,5 +38,6 @@ define([
 		app.controller('addProjectController', addProjectController);
 		app.controller('ProjektlistaController', ProjektlistaController);
 		app.controller('addTaskController', addTaskController);
+		app.controller('FeladatlistaController', FeladatlistaController);
 		/* controllers */
     });

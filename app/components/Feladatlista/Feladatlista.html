@@ -1,0 +1,78 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">Feladatlista</div>
+    <div class="module-body">
+      <div class="tray filter-tray top">
+        <div class="tray-inner">
+          <div class="filter-rule-group">
+
+
+            <div class="col-sm-2" style="margin-top:20px">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Feladat:</span>
+                <input type="text" ng-model="vm.search.task" class="form-control">
+              </div>
+            </div>
+
+            <div class="col-sm-2" style="margin-top:20px">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Prioritás:</span>
+                <input type="text" ng-model="vm.search.priority" class="form-control">
+              </div>
+            </div>
+
+            <div class="col-sm-2" style="margin-top:20px">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Státusz:</span>
+                <input type="text" ng-model="vm.search.status" class="form-control">
+              </div>
+            </div>
+
+            <div class="col-sm-2" style="margin-top:20px">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Iteráció:</span>
+                <input type="text" ng-model="vm.search.iteration" class="form-control">
+              </div>
+            </div>
+
+            <div class="col-sm-4" style="margin-top:20px">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Programozó:</span>
+                <select ng-model="vm.search.coder" class="form-control">
+						    <option value="Györfi-Balogh Szabolcs">Györfi-Balogh Szabolcs</option>
+						    <option value="Albano Péter">Albano Péter</option>
+            </select>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th rowspan=2 ng-click="vm.order='id';vm.asc=!vm.asc;">Felvitel időpontja</th>
+            <th rowspan=2 ng-click="vm.order='name';vm.asc=!vm.asc;">Feladat</th>
+            <th rowspan=2 ng-click="vm.order='responsible';vm.asc=!vm.asc;">Prioritás</th>
+            <th rowspan=2 ng-click="vm.order='status';vm.asc=!vm.asc;">Státusz</th>
+            <th rowspan=2 ng-click="vm.order='coder';vm.asc=!vm.asc;">Programozó</th>
+            <th rowspan=2 ng-click="vm.order='iteration';vm.asc=!vm.asc;">Iteráció</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.task | orderBy:vm.order:vm.asc | filter: vm.search" class="ng-scope">
+            <td>{{item.id | date: 'yyyy-MM-dd HH:mm'}}</td>
+            <td>{{item.task}}</td>
+            <td>{{item.priority}}</td>
+            <td>{{item.status}}</td>
+            <td>{{item.coder}}</td>
+            <td>{{item.iteration}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
+<div class="module-footer"></div>
+</section>
+</div>
