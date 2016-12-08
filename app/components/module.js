@@ -25,7 +25,6 @@ define([
 
   // Link all components to the module !!!
 
-<<<<<<< HEAD
         var app = angular.module('app', ['ui.router']);
         app.config(configFunction);
         app.service('Data', dataService);
