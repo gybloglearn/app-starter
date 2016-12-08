@@ -13,6 +13,7 @@ define([], function () {
     });
 
     /* Add states */
+<<<<<<< HEAD
 	$stateProvider.state('addTask', {
 		url: '/addTask',
 		templateUrl: './app/components/addTask/addTask.html',
@@ -25,7 +26,6 @@ define([], function () {
 		controller: 'ProjektlistaController',
 		controllerAs: 'vm'
 	});
-
     $stateProvider.state('addProject', {
       url: '/addProject',
       templateUrl: './app/components/addProject/addProject.html',
