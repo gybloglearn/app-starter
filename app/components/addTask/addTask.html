@@ -1,29 +1,34 @@
 <div class="container">
-  <!-- első szekció-->
   <section class="module">
-    <div class="module-header">Projekt felvétele a rendszerbe</div>
+    <div class="module-header">Feladat felvétele</div>
     <div class="module-body">
       <!-- első sor-->
       <div class="row" style="margin-top:10px">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <div class="input-group">
             <span class="input-group-addon">Dátum:</span>
             <span type="text" class="form-control">{{vm.datum}}</span>
           </div>
         </div>
+
         <div class="col-sm-4">
           <div class="input-group">
-            <span class="input-group-addon">Projekt:</span>
-            <input type="text" class="form-control" ng-model="vm.data.name" placeholder="Kötelező kitölteni">
+            <span class="input-group-addon">Feladat:</span>
+            <input type="text" class="form-control" ng-model="vm.data.task" placeholder="Kötelező kitölteni">
           </div>
         </div>
+
         <div class="col-sm-4">
           <div class="input-group">
-            <span class="input-group-addon">Felelős:</span>
-            <input type="text" class="form-control" ng-model="vm.data.responsible" placeholder="Kötelező kitölteni">
+            <span class="input-group-addon">Programozó:</span>
+            <select ng-model="vm.data.coder" class="form-control">
+						<option value="Györfi-Balogh Szabolcs">Györfi-Balogh Szabolcs</option>
+						<option value="Albano Péter">Albano Péter</option>
+            </select>
           </div>
         </div>
       </div>
+
       <!-- második sor-->
       <div class="row" style="margin-top:10px">
         <div class="col-sm-7">
@@ -32,24 +37,16 @@
             <textarea class="form-control" rows="4" ng-model="vm.data.description"></textarea>
           </div>
         </div>
-        <!--div class="col-sm-3">
-          <div class="input-group">
-            <span class="input-group-addon">Várható befejezés:</span>
-            <span type="text" class="form-control" ng-model="vm.data.due">{{vm.hatarido}}</span>
-          </div>
-        </div-->
         <div class="col-sm-2">
-          <button class="btn btn-primary" ng-click="vm.save()" ng-disabled="!vm.data.name || !vm.data.responsible || vm.showmessage">Felvesz</button>
+          <button class="btn btn-primary" ng-click="vm.savetask()" ng-disabled="!vm.data.task || !vm.data.coder">Felvesz</button>
         </div>
-        <!-- ADD FEEDBACK MESSAGE -->
-        <div class="col-sm-2">
+      </div>
+      <div class="col-sm-2">
           <div class="alert alert-success" ng-show="vm.showmessage">
             <strong>Sikeres felvitel! </strong>{{vm.showtitle}}
           </div>
         </div>
 
-      </div>
-    </div>
-    <div class="module-footer"></div>
+      <div class="module-footer"></div>
   </section>
-</div>
+  </div>

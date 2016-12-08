@@ -13,6 +13,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('addTask', {
+		url: '/addTask',
+		templateUrl: './app/components/addTask/addTask.html',
+		controller: 'addTaskController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('Projektlista', {
 		url: '/Projektlista',
 		templateUrl: './app/components/Projektlista/Projektlista.html',
