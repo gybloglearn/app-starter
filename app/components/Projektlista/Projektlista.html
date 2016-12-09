@@ -7,24 +7,29 @@
           <div class="filter-rule-group">
 
 
-            <div class="col-sm-4" style="margin-top:20px">
+            <div class="col-sm-3" style="margin-top:20px">
               <div class="form-group">
                 <span class="control-label" style="color:#FFFFFF">Projekt:</span>
                 <input type="text" ng-model="vm.search.name" class="form-group">
               </div>
             </div>
 
-            <div class="col-sm-4" style="margin-top:20px">
+            <div class="col-sm-3" style="margin-top:20px">
               <div class="form-group">
                 <span class="control-label" style="color:#FFFFFF">Felelős:</span>
                 <input type="text" ng-model="vm.search.responsible" class="form-group">
               </div>
             </div>
 
-            <div class="col-sm-4" style="margin-top:20px">
+            <div class="col-sm-3" style="margin-top:20px">
               <div class="form-group">
                 <span class="control-label" style="color:#FFFFFF">Státusz:</span>
-                <input type="text" ng-model="vm.search.status" class="form-group">
+                <select ng-model="vm.search.status" class="form-control">
+						    <option value="">Mind</option>
+                <option value="0">Várakozik</option>
+                <option value="1">Folyamatban</option>
+                <option value="2">Befejezve</option>
+            </select>
               </div>
             </div>
 
@@ -47,7 +52,7 @@
             <td>{{item.id | date: 'yyyy-MM-dd HH:mm'}}</td>
             <td>{{item.name}}</td>
             <td>{{item.responsible}}</td>
-            <td>{{item.status}}</td>
+            <td>{{item.status | change}}</td>
             <td>{{item.due | date: 'yyyy-MM-dd HH:mm'}}</td>
           </tr>
         </tbody>
