@@ -16,22 +16,38 @@
 
             <div class="col-sm-2" style="margin-top:20px">
               <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Iteráció:</span>
+                <input type="text" ng-model="vm.search.iteration" class="form-control">
+              </div>
+            </div>
+
+            <div class="col-sm-2" style="margin-top:20px">
+              <div class="form-group">
                 <span class="control-label" style="color:#FFFFFF">Prioritás:</span>
-                <input type="text" ng-model="vm.search.priority" class="form-control">
+                <select ng-model="vm.search.priority" class="form-control">
+						    <option value="">Mind</option>
+                <option value="0">Muszáj</option>
+                <option value="1">Kell</option>
+                <option value="2">Fontos</option>
+                <option value="3">Később</option>
+                <option value="4">Ajánlott</option>
+                <option value="5">Ha van idő</option>
+            </select>
               </div>
             </div>
 
             <div class="col-sm-2" style="margin-top:20px">
               <div class="form-group">
                 <span class="control-label" style="color:#FFFFFF">Státusz:</span>
-                <input type="text" ng-model="vm.search.status" class="form-control">
-              </div>
-            </div>
-
-            <div class="col-sm-2" style="margin-top:20px">
-              <div class="form-group">
-                <span class="control-label" style="color:#FFFFFF">Iteráció:</span>
-                <input type="text" ng-model="vm.search.iteration" class="form-control">
+                <select ng-model="vm.search.status" class="form-control">
+						    <option value="">Mind</option>
+                <option value="0">Várakozik</option>
+                <option value="1">Folyamatban</option>
+                <option value="2">Lekódolva</option>
+                <option value="3">Tesztelve</option>
+                <option value="4">Kész</option>
+                <option value="5">Befejezve</option>
+            </select>
               </div>
             </div>
 
@@ -65,8 +81,8 @@
           <tr ng-repeat="item in vm.task | orderBy:vm.order:vm.asc | filter: vm.search" class="ng-scope">
             <td>{{item.id | date: 'yyyy-MM-dd HH:mm'}}</td>
             <td>{{item.task}}</td>
-            <td>{{item.priority}}</td>
-            <td>{{item.status}}</td>
+            <td>{{item.priority | change_priority}}</td>
+            <td>{{item.status | change}}</td>
             <td>{{item.coder}}</td>
             <td>{{item.iteration}}</td>
           </tr>

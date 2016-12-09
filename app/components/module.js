@@ -10,7 +10,8 @@ define([
 	'./Projektlista/Projektlista.ctrl',
 	'./addTask/addTask.ctrl',
 	'./Feladatlista/Feladatlista.ctrl',
-	'./filters/change'
+	'./filters/change',
+	'./filters/change_priority'
 	/* files */
 ], function(
     configFunction,
@@ -24,7 +25,8 @@ define([
 	ProjektlistaController,
 	addTaskController,
 	FeladatlistaController,
-	change
+	change,
+	change_priority
 	/* names */) {
 
   // Link all components to the module !!!
@@ -42,5 +44,6 @@ define([
 		app.controller('addTaskController', addTaskController);
 		app.controller('FeladatlistaController', FeladatlistaController);
 		app.filter('change',change);
+		app.filter('change_priority',change_priority);
 		/* controllers */
     });
