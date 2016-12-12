@@ -5,6 +5,7 @@ define([], function () {
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
     vm.showmessage = false;
     vm.savetask = savetask;
+    vm.updatetask=updatetask;
 
     function savetask()
     {
@@ -19,11 +20,18 @@ define([], function () {
         },5000);
        });
     }
+    function updatetask() {
+            Service.put(vm.edit).then(function (resp) {
+                vm.edit = '';
+            });
+        }
 
-     activate();
-    
-    function activate(){
-
+    activate();
+    vm.task = [];
+    function activate() {
+      tasksService.getAll().then(function (resp) {
+        vm.task = resp.data;
+      });
     }
 
   }
