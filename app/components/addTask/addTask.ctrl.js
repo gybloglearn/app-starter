@@ -21,7 +21,7 @@ define([], function () {
        });
     }
     function updatetask() {
-            Service.put(vm.edit).then(function (resp) {
+            tasksService.put(vm.edit).then(function (resp) {
                 vm.edit = '';
             });
         }
