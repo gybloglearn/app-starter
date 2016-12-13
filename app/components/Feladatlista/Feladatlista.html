@@ -75,6 +75,7 @@
             <th rowspan=2 ng-click="vm.order='status';vm.asc=!vm.asc;">Státusz</th>
             <th rowspan=2 ng-click="vm.order='coder';vm.asc=!vm.asc;">Programozó</th>
             <th rowspan=2 ng-click="vm.order='iteration';vm.asc=!vm.asc;">Iteráció</th>
+            <th>Szerkesztés</th>
           </tr>
         </thead>
         <tbody>
@@ -85,11 +86,76 @@
             <td>{{item.status | change}}</td>
             <td>{{item.coder}}</td>
             <td>{{item.iteration}}</td>
+            <td><button class="btn btn-primary" ng-click="vm.edit = item"><i class="icon-edit"></i></button></td>
           </tr>
         </tbody>
       </table>
     </div>
-</div>
 <div class="module-footer"></div>
+</section>
+
+<section class="module" ng-show="vm.edit" style="margin-top:20px">
+  <div class="module-header">Feladat módosítása</div>
+  <div class="module-body">
+    <div>
+
+      <div class="col-sm-4">
+        <div class="input-group">
+          <span class="input-group-addon">Azonosító:</span>
+          <input type="text" class="form-control" ng-model="vm.edit.id" readonly>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="input-group">
+          <span class="input-group-addon">Név:</span>
+          <input type="text" class="form-control" ng-model="vm.edit.task">
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="input-group">
+          <span class="input-group-addon">Prioritás beállítása:</span>
+          <input type="text" class="form-control" ng-model="vm.edit.priority">
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="input-group">
+          <span class="input-group-addon">Státusz beállítása:</span>
+          <input type="text" class="form-control" ng-model="vm.edit.status">
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="input-group">
+          <span class="input-group-addon">Sprint Azonosító:</span>
+          <input type="text" class="form-control" ng-model="vm.edit.iteration">
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="input-group">
+          <span class="input-group-addon">Azonosító:</span>
+          <input type="text" class="form-control" ng-model="vm.edit.coder" readonly>
+        </div>
+      </div>
+
+      <div class="col-sm-7">
+        <div class="input-group">
+          <span class="input-group-addon">Részletes leírás:</span>
+          <textarea class="form-control" rows="4" ng-model="vm.edit.description"></textarea>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-default" ng-click="vm.edit = '';">Mégse</button>
+        <button class="btn btn-danger" ng-click="vm.updatetask(vm.edit)">Mentés</button>
+      </div>
+
+    </div>
+  </div>
+  </div>
+  <div class="module-footer"></div>
 </section>
 </div>

@@ -47,104 +47,11 @@
         </div>
       </div>
 
-      <div class="module-footer">
-        <div>
-          <button class="btn btn-default pull-right" ng-class="{'btn-info':detailsShow}" ng-click="detailsShow=!detailsShow">Módosít</button>
-        </div>
-      </div>
+      <div class="module-footer"></div>
   </section>
 
-  <section class="module" style="margin-top:20px" ng-show="detailsShow">
-    <div class="module-header">Felvitt feladat módosítása</div>
-    <div class="module-body">
-      <div class="col-sm-4" style="margin-top:20px">
-        <div class="form-group">
-          <span class="control-label">Keresés feladatra:</span>
-          <input type="text" ng-model="vm.search.task" class="form-control">
-        </div>
-      </div>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th rowspan=2 ng-click="vm.order='id';vm.asc=!vm.asc;">Felvitel időpontja</th>
-            <th rowspan=2 ng-click="vm.order='name';vm.asc=!vm.asc;">Feladat</th>
-            <th rowspan=2 ng-click="vm.order='responsible';vm.asc=!vm.asc;">Prioritás</th>
-            <th rowspan=2 ng-click="vm.order='status';vm.asc=!vm.asc;">Státusz</th>
-            <th rowspan=2 ng-click="vm.order='coder';vm.asc=!vm.asc;">Programozó</th>
-            <th rowspan=2 ng-click="vm.order='iteration';vm.asc=!vm.asc;">Iteráció</th>
-            <th>Szerkesztés</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="item in vm.task | orderBy:vm.order:vm.asc | filter: vm.search" class="ng-scope">
-            <td>{{item.id | date: 'yyyy-MM-dd HH:mm'}}</td>
-            <td>{{item.task}}</td>
-            <td>{{item.priority | change_priority}}</td>
-            <td>{{item.status | change}}</td>
-            <td>{{item.coder}}</td>
-            <td>{{item.iteration}}</td>
-            <td><button class="btn btn-primary" ng-click="vm.edit = item"><i class="icon-edit"></i></button></td>
-          </tr>
-        </tbody>
-      </table>
-      <div ng-show="vm.edit">
-        
-        <div class="col-sm-4">
-          <div class="input-group">
-            <span class="input-group-addon">Azonosító:</span>
-            <input type="text" class="form-control" ng-model="vm.edit.id" readonly>
-          </div>
-        </div>
-        
-        <div class="col-sm-4">
-          <div class="input-group">
-            <span class="input-group-addon">Név:</span>
-            <input type="text" class="form-control" ng-model="vm.edit.task">
-          </div>
-        </div>
-
-        <div class="col-sm-4">
-          <div class="input-group">
-            <span class="input-group-addon">Prioritás beállítása:</span>
-            <input type="text" class="form-control" ng-model="vm.edit.priority">
-          </div>
-        </div>
-
-        <div class="col-sm-4">
-          <div class="input-group">
-            <span class="input-group-addon">Státusz beállítása:</span>
-            <input type="text" class="form-control" ng-model="vm.edit.status">
-          </div>
-        </div>
-
-        <div class="col-sm-4">
-          <div class="input-group">
-            <span class="input-group-addon">Sprint Azonosító:</span>
-            <input type="text" class="form-control" ng-model="vm.edit.iteration">
-          </div>
-        </div>
-
-        <div class="col-sm-4">
-          <div class="input-group">
-            <span class="input-group-addon">Azonosító:</span>
-            <input type="text" class="form-control" ng-model="vm.edit.coder" readonly>
-          </div>
-        </div>
-
-        <div class="col-sm-7">
-          <div class="input-group">
-            <span class="input-group-addon">Részletes leírás:</span>
-            <textarea class="form-control" rows="4" ng-model="vm.edit.description"></textarea>
-          </div>
-        </div>
-
-        <div class="btn-group">
-          <button class="btn btn-default" ng-click="vm.edit = '';">Mégse</button>
-          <button class="btn btn-danger" ng-click="vm.updatetask(vm.edit)">Mentés</button>
-        </div>
-
-      </div>
-    </div>
+  
+     
     <div class="module-footer"></div>
   </section>
   </div>
