@@ -48,7 +48,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="item in vm.project | orderBy:vm.order:vm.asc | filter: vm.search" class="ng-scope">
+          <style>
+            .green {color: green!important;}
+            .blue {color: blue!important;}
+          </style>
+          <tr ng-repeat="item in vm.project | orderBy:vm.order:vm.asc | filter: vm.search" ng-class="{'green':item.status==5,'blue':item.status==1}" >
             <td>{{item.id | date: 'yyyy-MM-dd HH:mm'}}</td>
             <td>{{item.name}}</td>
             <td>{{item.responsible}}</td>

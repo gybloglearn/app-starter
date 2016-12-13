@@ -2,7 +2,7 @@ define([], function () {
   'use strict';
   function Controller($filter,projectService) {
     var vm = this;
-
+    vm.order = 'status';
     activate();
     vm.project = [];
     function activate() {
