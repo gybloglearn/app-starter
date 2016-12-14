@@ -27,12 +27,11 @@
 	  <ul class="nav navbar-nav">
 	    <!--<li><a ui-sref="start">Start</a></li>-->
 	    <!-- links -->
-
-	    <li><a ui-sref="Projektlista"><i class="icon-file"></i> Projektlista</a></li>
-			<li><a ui-sref="Feladatlista"><i class="icon-file"></i> Feladatlista</a></li>
-	    <li><a ui-sref="addProject"><i class="icon-tasks"></i> Új Projekt</a></li>
-			<li><a ui-sref="addTask"><i class="icon-tasks"></i> Új Feladat</a></li>
-			<li><a ui-sref="Sprint"><i class="icon-play"></i> Sprint</a></li>
+	    <li ng-show="user.displayname"><a ui-sref="Projektlista"><i class="icon-file"></i> Projektlista</a></li>
+			<li ng-show="user.displayname && (user.username=='212434909'||user.username=='502678184') "><a ui-sref="Feladatlista"><i class="icon-file"></i> Feladatlista</a></li>
+	    <li ng-show="user.displayname"><a ui-sref="addProject"><i class="icon-tasks"></i> Új Projekt</a></li>
+			<li ng-show="user.displayname && (user.username=='212434909'||user.username=='502678184') "><a ui-sref="addTask"><i class="icon-tasks"></i> Új Feladat</a></li>
+			<li ng-show="user.displayname && (user.username=='212434909'||user.username=='502678184') "><a ui-sref="Sprint"><i class="icon-play"></i> Sprint</a></li>
 	  </ul>	
 	  <ul class="nav navbar-nav pull-right">
 	    <li><a ui-sref="start"><i class="icon-home"></i></a></li>
