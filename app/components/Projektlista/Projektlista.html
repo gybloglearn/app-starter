@@ -45,8 +45,8 @@
             <th rowspan=2 ng-click="vm.order='responsible';vm.asc=!vm.asc;">Felelős</th>
             <th rowspan=2 ng-click="vm.order='status';vm.asc=!vm.asc;">Státusz</th>
             <th>Szerkesztés</th>
-            <th>Részletek</th>
-            <th>Sprint indítása</th>
+            <!--<th>Részletek</th>
+            <th>Sprint indítása</th>-->
           </tr>
         </thead>
         <tbody>
@@ -64,9 +64,16 @@
             <td>{{item.name}}</td>
             <td>{{item.responsible}}</td>
             <td>{{item.status | change}}</td>
-            <td><button class="btn btn-primary" ng-click="vm.edit = item"><i class="icon-edit"></i></button></td>
+            <td>
+              <div class="btn-group btn-group-sm">
+                <button class="btn btn-primary" ng-click="vm.edit = item" title="Szerkesztés"><i class="icon-edit"></i></button>
+                <button ng-show="user.username == '212434909' || user.username == '502678184'" class="btn btn-danger" ng-click="vm.addSprint(item)"><i class="icon-play" title="SPRINT"></i></button>
+                <button class="btn btn-info" ng-click="vm.show = item"><i class="icon-info-sign" title="Részletek"></i></button>
+              </div>
+            </td>
+            <!--<td><button class="btn btn-primary" ng-click="vm.edit = item"><i class="icon-edit"></i></button></td>
             <td><button class="btn btn-primary" ng-click="vm.show = item"><i class="icon-info-sign"></i></button></td>
-            <td><button class="btn btn-primary" ng-click="vm.addSprint(item)"><i class="icon-play"></i></button></td>
+            <td><button class="btn btn-primary" ng-click="vm.addSprint(item)"><i class="icon-play"></i></button></td>-->
           </tr>
         </tbody>
       </table>
