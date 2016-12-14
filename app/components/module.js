@@ -2,8 +2,8 @@ define([
   './config',
   './run',
   './start/start.ctrl',
-  './start/login/login.ctrl',
-  './service/login.service',
+  './login/login.ctrl',
+  './services/login.service',
   './services/data.service',
   './directives/datepicker',
   './directives/mychart',
@@ -20,7 +20,7 @@ define([
   /* files */
 ], function(
   configFunction,
-  runFunction
+  runFunction,
   startController,
   loginController,
   loginService,
