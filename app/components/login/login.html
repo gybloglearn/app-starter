@@ -1,0 +1,30 @@
+<div class="row middle-xs" style="height:100%;max-width:100%; min-height: 400px; min-width: 300px;">
+  <div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-5 col-lg-2 col-lg-offset-5">
+    <div class="box">
+      <div class="module" style="overflow:hidden">
+	<div class="module-header" style="background:black;color:white;margin:-15px -15px 10px -15px;padding:10px;">
+	  <div class="brand">
+	    <span class="ge-logo"></span>
+	    <span>Bejelentkezés</span>
+	  </div>
+	</div>
+	<div class="module-body">
+	  <div class="alert alert-error" ng-show="vm.err.message">
+	    <strong>Hiba</strong>
+	    {{vm.err.message}}
+	  </div>
+	  <div class="form-group">
+	      <input class="form-control" placeholder="Felhasználó név" type="text" ng-model="vm.data.uname">
+	    <br>
+	      <input class="form-control" placeholder="Jelszó" ng-model="vm.data.passw" type="password" ng-keypress="($event.which === 13)?vm.authenticate():false;">
+	    <br>
+	    <div class="form-group-btn text-center">
+	      <button class="btn btn-primary" ng-click="vm.authenticate()">Bejelentkezés</button>
+	    </div>
+	  </div>
+	</div>
+	<div class="module-footer"></div>
+      </div>
+    </div>
+  </div>
+</div>
