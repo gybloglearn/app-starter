@@ -2,6 +2,8 @@ define([], function () {
   'use strict';
   function Controller($filter,projectService) {
     var vm = this;
+    vm.updateproject = updateproject;
+
     vm.order = 'status';
     activate();
     vm.project = [];
@@ -10,6 +12,12 @@ define([], function () {
         vm.project = resp.data;
       });
     }
+
+     function updateproject() {
+            tasksService.put(vm.edit).then(function (resp) {
+                vm.edit = '';
+            });
+        }
 
   }
   Controller.$inject = ['$filter','projectsService'];

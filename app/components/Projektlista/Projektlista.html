@@ -44,23 +44,99 @@
             <th rowspan=2 ng-click="vm.order='name';vm.asc=!vm.asc;">Projekt</th>
             <th rowspan=2 ng-click="vm.order='responsible';vm.asc=!vm.asc;">Felelős</th>
             <th rowspan=2 ng-click="vm.order='status';vm.asc=!vm.asc;">Státusz</th>
-            <th rowspan=2 ng-click="vm.order='due';vm.asc=!vm.asc;">Határidő</th>
+            <th>Szerkesztés</th>
+            <th>Részletek</th>
+            <th>Sprint indítása</th>
           </tr>
         </thead>
         <tbody>
           <style>
-            .green {color: green!important;}
-            .blue {color: blue!important;}
+            .green {
+              color: green!important;
+            }
+            
+            .blue {
+              color: blue!important;
+            }
           </style>
-          <tr ng-repeat="item in vm.project | orderBy:vm.order:vm.asc | filter: vm.search" ng-class="{'green':item.status==5,'blue':item.status==1}" >
+          <tr ng-repeat="item in vm.project | orderBy:vm.order:vm.asc | filter: vm.search" ng-class="{'green':item.status==5,'blue':item.status==1}">
             <td>{{item.id | date: 'yyyy-MM-dd HH:mm'}}</td>
             <td>{{item.name}}</td>
             <td>{{item.responsible}}</td>
             <td>{{item.status | change}}</td>
-            <td>{{item.due | date: 'yyyy-MM-dd HH:mm'}}</td>
+            <td><button class="btn btn-primary" ng-click="vm.edit = item"><i class="icon-edit"></i></button></td>
+            <td><button class="btn btn-primary" ng-click="vm.show = item"><i class="icon-info-sign"></i></button></td>
+            <td><button class="btn btn-primary" ng-click=""><i class="icon-play"></i></button></td>
           </tr>
         </tbody>
       </table>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+
+  <section class="module" ng-show="vm.edit" style="margin-top:20px">
+    <div class="module-header">Projekt módosítása</div>
+    <div class="module-body">
+
+      <div class="col-sm-3">
+        <div class="input-group">
+          <span class="input-group-addon">Azonosító:</span>
+          <input type="text" class="form-control" ng-model="vm.edit.id" readonly>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="input-group">
+          <span class="input-group-addon">Név:</span>
+          <input type="text" class="form-control" ng-model="vm.edit.name">
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="input-group">
+          <span class="input-group-addon">Részletes leírás:</span>
+          <textarea class="form-control" rows="4" ng-model="vm.edit.description"></textarea>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-default" ng-click="vm.edit = '';">Mégse</button>
+        <button class="btn btn-danger" ng-click="vm.updateproject(vm.edit)">Mentés</button>
+      </div>
+
+    </div>
+    <div class="module-footer"></div>
+  </section>
+
+  <section class="module" ng-show="vm.show" style="margin-top:20px">
+    <div class="module-header">Projekt részletek</div>
+    <div class="module-body">
+
+      <div class="col-sm-3">
+        <div class="input-group">
+          <span class="input-group-addon">Azonosító:</span>
+          <input type="text" class="form-control" ng-model="vm.show.id" readonly>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="input-group">
+          <span class="input-group-addon">Név:</span>
+          <input type="text" class="form-control" ng-model="vm.show.name" readonly>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="input-group">
+          <span class="input-group-addon">Részletes leírás:</span>
+          <textarea class="form-control" rows="4" ng-model="vm.show.description" readonly></textarea>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-info" ng-click="vm.show = '';">OK</button>
+      </div>
+
     </div>
     <div class="module-footer"></div>
   </section>

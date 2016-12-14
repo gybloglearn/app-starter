@@ -4,13 +4,11 @@ define([], function () {
     var vm = this;
     // add comment to this to check 
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
-    vm.hatarido = $filter('date')(new Date().getTime()+(28*24*3600*1000), 'yyyy-MM-dd');
     vm.showmessage = false;
     vm.save = save;
 
     function save(){
       vm.data.id=new Date().getTime();
-      vm.data.due=new Date().getTime()+(28*24*3600*1000);
       projectService.post(vm.data).then(function(resp){
         vm.showmessage = true;
         vm.showtitle = vm.data.name;
