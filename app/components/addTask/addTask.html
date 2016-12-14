@@ -21,10 +21,7 @@
         <div class="col-sm-4">
           <div class="input-group">
             <span class="input-group-addon">Programozó:</span>
-            <select ng-model="vm.data.coder" class="form-control">
-						<option value="Györfi-Balogh Szabolcs">Györfi-Balogh Szabolcs</option>
-						<option value="Albano Péter">Albano Péter</option>
-            </select>
+            <span type="text" class="form-control" ng-model="vm.data.coder">{{user.displayname}}</span>
           </div>
         </div>
       </div>

@@ -20,7 +20,7 @@
         <div class="col-sm-4">
           <div class="input-group">
             <span class="input-group-addon">Felelős:</span>
-            <input type="text" class="form-control" ng-model="vm.data.responsible" placeholder="Kötelező kitölteni">
+            <span type="text" class="form-control" ng-model="vm.data.responsible">{{user.displayname}}</span>
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@
           </div>
         </div-->
         <div class="col-sm-2">
-          <button class="btn btn-primary" ng-click="vm.save()" ng-disabled="!vm.data.name || !vm.data.responsible || vm.showmessage">Felvesz</button>
+          <button class="btn btn-primary" ng-click="vm.save()" ng-disabled="!vm.data.name  || vm.showmessage">Felvesz</button>
         </div>
         <!-- ADD FEEDBACK MESSAGE -->
         <div class="col-sm-2">

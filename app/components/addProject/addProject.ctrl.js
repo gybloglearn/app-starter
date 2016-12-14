@@ -1,6 +1,6 @@
 define([], function () {
   'use strict';
-  function Controller($filter, projectService, $timeout) {
+  function Controller($filter, projectService, $timeout,$cookies,$rootScope) {
     var vm = this;
     // add comment to this to check 
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
@@ -24,6 +24,7 @@ define([], function () {
     activate();
     vm.project = [];
     function activate() {
+      (!$cookies.getObject('user')?$state.go('login'):$rootScope.user=$cookies.getObject('user'));
       projectService.getAll().then(function(resp){
         vm.project=resp.data;
       });
@@ -32,6 +33,6 @@ define([], function () {
 
   }
 
-  Controller.$inject = ['$filter','projectsService','$timeout'];
+  Controller.$inject = ['$filter','projectsService','$timeout','$cookies','$rootScope'];
   return Controller;
 });

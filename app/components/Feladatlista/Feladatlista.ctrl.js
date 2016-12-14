@@ -1,12 +1,13 @@
 define([], function () {
   'use strict';
-  function Controller($filter,tasksService) {
+  function Controller($filter,tasksService,$cookies,$rootScope) {
     var vm = this;
     vm.updatetask=updatetask;
 
     activate();
     vm.task = [];
     function activate() {
+      (!$cookies.getObject('user')?$state.go('login'):$rootScope.user=$cookies.getObject('user'));
       tasksService.getAll().then(function (resp) {
         vm.task = resp.data;
       });
@@ -20,6 +21,6 @@ define([], function () {
 
 
   }
-  Controller.$inject = ['$filter','tasksService'];
+  Controller.$inject = ['$filter','tasksService','$cookies','$rootScope'];
   return Controller;
 });
