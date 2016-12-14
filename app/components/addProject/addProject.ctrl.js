@@ -1,6 +1,6 @@
 define([], function () {
   'use strict';
-  function Controller($filter, projectService, $timeout,$cookies,$rootScope) {
+  function Controller($filter, projectService, $timeout,$cookies,$rootScope, $state) {
     var vm = this;
     // add comment to this to check 
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
@@ -33,6 +33,6 @@ define([], function () {
 
   }
 
-  Controller.$inject = ['$filter','projectsService','$timeout','$cookies','$rootScope'];
+  Controller.$inject = ['$filter','projectsService','$timeout','$cookies','$rootScope','$state'];
   return Controller;
 });
