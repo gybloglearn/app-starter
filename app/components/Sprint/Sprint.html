@@ -1,0 +1,35 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">Sprint</div>
+    <div class="module-body">{{vm.actProject}}
+      <div class="btn-group">
+          <button class="btn btn-danger" ng-click="vm.newSprint()" ng-disabled="vm.actProject==null">Mentés</button>
+          <button class="btn btn-default" ng-class="{'btn-info':deatailsShow}" ng-click="deatailsShow=!deatailsShow">Sprint lista</button>
+      </div>
+      <div>
+          <div class="alert alert-success" ng-show="vm.showmessage">
+            <strong>Sikeres felvitel! </strong>{{vm.showtitle}}
+          </div>
+        </div>
+
+      <table class="table table-striped" ng-show="deatailsShow">
+        <thead>
+          <tr>
+            <th>Sprint ID</th>
+            <th>Projekt ID</th>
+            <th>Projekt Név</th>
+            <th>Határidő</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.sprint" class="ng-scope">
+            <td>{{item.id}}</td>
+            <td>{{item.project}}</td>
+            <td>{{item.projectname}}</td>
+            <td>{{item.due}}</td>
+          </tr>
+        </tbody>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>

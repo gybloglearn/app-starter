@@ -17,7 +17,7 @@
             <div class="col-sm-2" style="margin-top:20px">
               <div class="form-group">
                 <span class="control-label" style="color:#FFFFFF">Iteráció:</span>
-                <input type="text" ng-model="vm.search.iteration" class="form-control">
+                <input type="text" ng-model="vm.search.sprint" class="form-control">
               </div>
             </div>
 
@@ -74,7 +74,7 @@
             <th rowspan=2 ng-click="vm.order='responsible';vm.asc=!vm.asc;">Prioritás</th>
             <th rowspan=2 ng-click="vm.order='status';vm.asc=!vm.asc;">Státusz</th>
             <th rowspan=2 ng-click="vm.order='coder';vm.asc=!vm.asc;">Programozó</th>
-            <th rowspan=2 ng-click="vm.order='iteration';vm.asc=!vm.asc;">Iteráció</th>
+            <th rowspan=2 ng-click="vm.order='sprint';vm.asc=!vm.asc;">Iteráció</th>
             <th>Szerkesztés</th>
           </tr>
         </thead>
@@ -85,7 +85,7 @@
             <td>{{item.priority | change_priority}}</td>
             <td>{{item.status | change}}</td>
             <td>{{item.coder}}</td>
-            <td>{{item.iteration}}</td>
+            <td>{{item.sprint}}</td>
             <td><button class="btn btn-primary" ng-click="vm.edit = item"><i class="icon-edit"></i></button></td>
           </tr>
         </tbody>
@@ -129,7 +129,7 @@
       <div class="col-sm-4">
         <div class="input-group">
           <span class="input-group-addon">Sprint Azonosító:</span>
-          <input type="text" class="form-control" ng-model="vm.edit.iteration">
+          <input type="text" class="form-control" ng-model="vm.edit.sprint">
         </div>
       </div>
 

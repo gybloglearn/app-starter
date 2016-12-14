@@ -13,6 +13,13 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('Sprint', {
+		url: '/Sprint',
+		params: {project: null},
+		templateUrl: './app/components/Sprint/Sprint.html',
+		controller: 'SprintController',
+		controllerAs: 'vm'
+	});
  $stateProvider.state('Feladatlista', {
 		url: '/Feladatlista',
 		templateUrl: './app/components/Feladatlista/Feladatlista.html',

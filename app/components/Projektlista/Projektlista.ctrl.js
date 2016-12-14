@@ -1,9 +1,14 @@
 define([], function () {
   'use strict';
-  function Controller($filter,projectService) {
+  function Controller($filter,projectService, $state) {
     var vm = this;
     vm.updateproject = updateproject;
+    vm.addSprint = addSprint;
 
+    function addSprint(project){
+      $state.go('Sprint', {project: project});
+    }
+    
     vm.order = 'status';
     activate();
     vm.project = [];
@@ -20,6 +25,6 @@ define([], function () {
         }
 
   }
-  Controller.$inject = ['$filter','projectsService'];
+  Controller.$inject = ['$filter','projectsService','$state'];
   return Controller;
 });

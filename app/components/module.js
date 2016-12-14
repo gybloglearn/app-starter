@@ -11,7 +11,9 @@ define([
 	'./addTask/addTask.ctrl',
 	'./Feladatlista/Feladatlista.ctrl',
 	'./filters/change',
-	'./filters/change_priority'
+	'./filters/change_priority',
+	'./Sprint/Sprint.ctrl',
+	'./services/sprint.service'
 	/* files */
 ], function(
     configFunction,
@@ -26,7 +28,9 @@ define([
 	addTaskController,
 	FeladatlistaController,
 	change,
-	change_priority
+	change_priority,
+	SprintController,
+	sprintService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -45,5 +49,7 @@ define([
 		app.controller('FeladatlistaController', FeladatlistaController);
 		app.filter('change',change);
 		app.filter('change_priority',change_priority);
+		app.controller('SprintController', SprintController);
+		app.service('sprintService', sprintService);
 		/* controllers */
     });

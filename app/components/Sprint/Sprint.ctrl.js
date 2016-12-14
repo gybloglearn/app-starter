@@ -1,0 +1,43 @@
+define([], function () {
+  'use strict';
+  function Controller($filter,sprintService, $stateParams,$timeout) {
+    var vm = this;
+    vm.newSprint=newSprint;
+    vm.actProject = {};
+    vm.showmessage = false
+    vm.data={};
+
+    function newSprint()
+    {
+      vm.data.id=new Date().getTime();
+      vm.data.due=new Date().getTime() + (14*24*3600*1000);
+      vm.data.project=vm.actProject.id;
+      vm.data.projectname=vm.actProject.name;
+       
+      sprintService.post(vm.data).then(function(resp){
+        vm.showmessage = true;
+        vm.showtitle = vm.data.id;
+        vm.data = {};
+        $timeout(function(){
+          vm.showmessage = false;
+          vm.showtitle = '';
+        },5000);
+      });
+    }
+
+    activate();
+
+    vm.sprint=[];
+    function activate(){
+      if($stateParams){
+        vm.actProject = $stateParams.project;
+      }
+      sprintService.getAll().then(function(resp){
+       vm.sprint=resp.data;
+      });
+    }
+
+  }
+  Controller.$inject = ['$filter','sprintService', '$stateParams','$timeout'];
+  return Controller;
+});
