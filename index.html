@@ -1,4 +1,5 @@
-</html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -35,12 +36,14 @@
 	  </ul>	
 	  <ul class="nav navbar-nav pull-right">
 	    <li><a ui-sref="start"><i class="icon-home"></i></a></li>
+	    <li><a ui-sref="logout" ng-show="user.displayname"><i class="icon-lock"></i> {{user.displayname}}</a></li>
 	  </ul>
 	</div>
       </div>
     </nav>
     <div style="margin: 20px auto;" ui-view></div>
-    <div class="footer">
+
+    <div class="footer" style="position:absolute;bottom:0;right:0;left:0;">
       <div class="primary">
 	<div class="container">
 	  <div class="brand">
@@ -54,13 +57,14 @@
 	  </div>
 	</div>
       </div>
+
       <script src="../components/requirejs/require.js"></script>
       <script src="app/require.config.js"></script>
       <script>
-	require.config({
-	  baseUrl: '../'
-	});
-	require (['ge-bootstrap','app','datepicker']);
+require.config({
+  baseUrl: '../'
+});
+require (['app']);
       </script>
       <script src="../components/respond/respond.src.js"></script>
   </body>

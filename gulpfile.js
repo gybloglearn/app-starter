@@ -24,13 +24,13 @@ gulp.src('.').pipe(exec('code .'));
 gulp.task('sync', function () {
 var dir = __dirname.substr(__dirname.lastIndexOf('\\') + 1, __dirname.length);
 
-// Change project name in configs
-gulp.src('./app/require.config.js')
-.pipe(inject.replace('APPREPLACE', dir))
-.pipe(gulp.dest('./app/'));
-gulp.src('./app/app.js')
-.pipe(inject.replace('APPREPLACE', dir))
-.pipe(gulp.dest('./app/'));
+  // Change project name in configs
+  gulp.src('./app/require.config.js')
+    .pipe(inject.replace('app-starter', dir))
+    .pipe(gulp.dest('./app/'));
+  gulp.src('./app/app.js')
+    .pipe(inject.replace('app-starter', dir))
+    .pipe(gulp.dest('./app/'));
 
 browserSync.init(null, {
 proxy: "localhost/" + dir,

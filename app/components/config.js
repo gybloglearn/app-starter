@@ -11,6 +11,20 @@ define([], function () {
       controller: 'StartController',
       controllerAs: 'vm'
     });
+    $stateProvider.state('login', {
+      url: '/login',
+      templateUrl: './app/components/login/login.html',
+      controller: 'LoginController',
+      controllerAs: 'vm'
+    });
+    $stateProvider.state('logout', {
+      url: '/logout',
+      controller: function($cookies, $rootScope, $state) {
+	$cookies.remove('user');
+	$rootScope.user = {};
+	$state.go('start', {}, {reload: true});
+      }
+    });
 
     /* Add states */
 	$stateProvider.state('Sprint', {
