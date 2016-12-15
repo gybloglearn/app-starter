@@ -4,6 +4,8 @@ define([], function(){
     var vm = this;
     vm.err = {};
     vm.authenticate = authenticate;
+
+
     function authenticate(){
       Login.auth(vm.data).then(function(resp){
 	// Put user cookie

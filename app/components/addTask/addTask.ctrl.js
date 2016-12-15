@@ -23,6 +23,8 @@ define([], function () {
     vm.task = [];
     function activate() {
       (!$cookies.getObject('user')?$state.go('login'):$rootScope.user=$cookies.getObject('user'));
+      vm.data = {};
+      vm.data.coder=$rootScope.user.displayname;
       tasksService.getAll().then(function (resp) {
         vm.task = resp.data;
       });

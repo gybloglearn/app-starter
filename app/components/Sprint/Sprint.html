@@ -15,7 +15,7 @@
       <table class="table table-striped" ng-show="deatailsShow">
         <thead>
           <tr>
-            <th>Sprint ID</th>
+            <th>Sprint felvételének ideje</th>
             <th>Projekt ID</th>
             <th>Projekt Név</th>
             <th>Határidő</th>
@@ -23,10 +23,10 @@
         </thead>
         <tbody>
           <tr ng-repeat="item in vm.sprint" class="ng-scope">
-            <td>{{item.id}}</td>
+            <td>{{item.id | date: 'yyyy-MM-dd HH:mm'}}</td>
             <td>{{item.project}}</td>
             <td>{{item.projectname}}</td>
-            <td>{{item.due}}</td>
+            <td>{{item.due | date: 'yyyy-MM-dd HH:mm'}}</td>
           </tr>
         </tbody>
     </div>

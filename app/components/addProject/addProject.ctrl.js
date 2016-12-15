@@ -25,6 +25,8 @@ define([], function () {
     vm.project = [];
     function activate() {
       (!$cookies.getObject('user')?$state.go('login'):$rootScope.user=$cookies.getObject('user'));
+      vm.data = {};
+      vm.data.responsible=$rootScope.user.displayname;
       projectService.getAll().then(function(resp){
         vm.project=resp.data;
       });
