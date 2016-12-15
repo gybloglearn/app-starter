@@ -131,7 +131,7 @@
           <span class="input-group-addon">Sprint Azonosító:</span>
            <select ng-model="vm.edit.sprint" class="form-control">
 						    <option value=""></option>
-                <option ng-repeat="item in vm.sprint" value="{{item.id}}+{{item.projectname}}">{{item.projectname}}</option>
+                <option ng-repeat="item in vm.goodsprint" value="{{item.projectname}}-{{item.id}}">{{item.projectname}}</option>
             </select>
         </div>
       </div>
