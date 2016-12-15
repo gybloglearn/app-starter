@@ -46,13 +46,15 @@ define([], function () {
       }
     }
 
-    function checksp(id)
+    function checksp(item)
     {
-      var insp = true;
-      angular.forEach(vm.actsprint, function(v, k){
-        console.log(v.project);
-        (v.project == id)?insp = true:insp=false;
-      });
+      var insp = false;
+      for(var i = 0; i < vm.actsprint.length; i++){
+        if(vm.actsprint[i].project == item.id){
+          insp = true;
+          break;
+        }
+      }
       return insp;
     }
   }
