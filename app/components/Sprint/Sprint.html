@@ -1,7 +1,8 @@
 <div class="container">
   <section class="module">
     <div class="module-header">Sprint</div>
-    <div class="module-body">{{vm.actProject}}
+    <div class="module-body"><h2 ng-show="vm.actProject!=null">Projekt azonosító: {{vm.actProject.id}}</h2>
+    <h2 ng-show="vm.actProject!=null">Projekt név: {{vm.actProject.name}}</h2>
       <div class="btn-group">
           <button class="btn btn-danger" ng-click="vm.newSprint()" ng-disabled="vm.actProject==null">Mentés</button>
           <button class="btn btn-default" ng-class="{'btn-info':deatailsShow}" ng-click="deatailsShow=!deatailsShow">Sprint lista</button>

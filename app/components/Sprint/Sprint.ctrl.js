@@ -30,6 +30,10 @@ define([], function () {
     vm.sprint=[];
     function activate(){
       (!$cookies.getObject('user')?$state.go('login'):$rootScope.user=$cookies.getObject('user'));
+      if ($rootScope.user.username != "212434909" && $rootScope.user.username != "502678184")
+      {
+        $state.go('Forbidden');
+      }
       if($stateParams){
         vm.actProject = $stateParams.project;
       }

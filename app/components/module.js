@@ -16,8 +16,9 @@ define([
   './filters/change',
   './filters/change_priority',
   './Sprint/Sprint.ctrl',
-  './services/sprint.service'
-  /* files */
+  './services/sprint.service',
+  './Forbidden/Forbidden.ctrl'
+	/* files */
 ], function(
   configFunction,
   runFunction,
@@ -36,8 +37,9 @@ define([
   change,
   change_priority,
   SprintController,
-  sprintService
-/* names */) {
+  sprintService,
+  ForbiddenController
+	/* names */) {
 
   // Link all components to the module !!!
 
@@ -60,5 +62,6 @@ define([
   app.filter('change_priority',change_priority);
   app.controller('SprintController', SprintController);
   app.service('sprintService', sprintService);
-  /* controllers */
+  app.controller('ForbiddenController', ForbiddenController);
+		/* controllers */
 });

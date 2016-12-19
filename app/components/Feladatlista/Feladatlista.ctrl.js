@@ -11,6 +11,10 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
+      if ($rootScope.user.username != "212434909" && $rootScope.user.username != "502678184")
+      {
+        $state.go('Forbidden');
+      }
       tasksService.getAll().then(function (resp) {
         vm.task = $filter('filter')(resp.data, {'status': '!5'});
       });

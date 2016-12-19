@@ -23,6 +23,10 @@ define([], function () {
     vm.task = [];
     function activate() {
       (!$cookies.getObject('user')?$state.go('login'):$rootScope.user=$cookies.getObject('user'));
+      if ($rootScope.user.username != "212434909" && $rootScope.user.username != "502678184")
+      {
+        $state.go('Forbidden');
+      }
       vm.data = {};
       vm.data.coder=$rootScope.user.displayname;
       tasksService.getAll().then(function (resp) {

@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('Forbidden', {
+		url: '/403Forbidden',
+		templateUrl: './app/components/Forbidden/Forbidden.html',
+		controller: 'ForbiddenController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('Sprint', {
 		url: '/Sprint',
 		params: {project: null},
