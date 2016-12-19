@@ -12,7 +12,7 @@ define([], function () {
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       tasksService.getAll().then(function (resp) {
-        vm.task = resp.data;
+        vm.task = $filter('filter')(resp.data, {'status': '!5'});
       });
 
       sprintService.getAll().then(function (resp) {
