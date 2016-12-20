@@ -66,8 +66,8 @@
             <td>{{item.status | change}}</td>
             <td>
               <div class="btn-group btn-group-sm">
-                <button class="btn btn-primary" ng-click="vm.edit = item" title="Szerkesztés" ng-show="user.username"><i class="icon-edit"></i></button>
-                <button ng-show="user.username == '212434909' || user.username == '502678184'" class="btn btn-danger" ng-click="vm.addSprint(item)" ng-disabled="vm.checksp(item);"><i class="icon-play" title="SPRINT"></i></button>
+                <button class="btn btn-primary" ng-click="vm.edit = item" title="Szerkesztés" ng-show="user.username" ng-disabled="item.status=='5'"><i class="icon-edit"></i></button>
+                <button ng-show="(user.username == '212434909' || user.username == '502678184') && item.status!='5'" class="btn btn-danger" ng-click="vm.addSprint(item)" ng-disabled="vm.checksp(item)"><i class="icon-play" title="SPRINT"></i></button>
                 <button class="btn btn-info" ng-click="vm.show = item"><i class="icon-info-sign" title="Részletek"></i></button>
               </div>
             </td>

@@ -115,14 +115,28 @@
       <div class="col-sm-4">
         <div class="input-group">
           <span class="input-group-addon">Prioritás beállítása:</span>
-          <input type="text" class="form-control" ng-model="vm.edit.priority">
+           <select ng-model="vm.edit.priority" class="form-control">
+                <option value="0">Muszáj</option>
+                <option value="1">Kell</option>
+                <option value="2">Fontos</option>
+                <option value="3">Később</option>
+                <option value="4">Ajánlott</option>
+                <option value="5">Ha van idő</option>
+            </select>
         </div>
       </div>
 
       <div class="col-sm-4">
         <div class="input-group">
           <span class="input-group-addon">Státusz beállítása:</span>
-          <input type="text" class="form-control" ng-model="vm.edit.status">
+          <select ng-model="vm.edit.status" class="form-control">
+                <option value="0">Várakozik</option>
+                <option value="1">Folyamatban</option>
+                <option value="2">Lekódolva</option>
+                <option value="3">Tesztelve</option>
+                <option value="4">Kész</option>
+                <option value="5">Befejezve</option>
+            </select>
         </div>
       </div>
 

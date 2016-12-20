@@ -61,6 +61,8 @@ define([], function () {
       }
       return insp;
     }
+
+
   }
   Controller.$inject = ['$filter', 'projectsService', '$state', '$rootScope', '$cookies', 'sprintService'];
   return Controller;
