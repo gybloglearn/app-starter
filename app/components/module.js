@@ -17,8 +17,8 @@ define([
   './filters/change_priority',
   './Sprint/Sprint.ctrl',
   './services/sprint.service',
-  './Forbidden/Forbidden.ctrl'
-	, './Projekt/Projekt.ctrl'
+  './Forbidden/Forbidden.ctrl',
+	'./Projekt/Projekt.ctrl'
 	/* files */
 ], function(
   configFunction,
@@ -39,8 +39,8 @@ define([
   change_priority,
   SprintController,
   sprintService,
-  ForbiddenController
-	, ProjektController
+  ForbiddenController,
+	ProjektController
 	/* names */) {
 
   // Link all components to the module !!!

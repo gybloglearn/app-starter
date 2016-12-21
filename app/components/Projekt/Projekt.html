@@ -1,7 +1,37 @@
 <div class="container">
   <section class="module">
-    <div class="module-header">Projekt {{vm.project.id}}</div>
-    <div class="module-body"></div>
+    <div class="module-header">Projekt {{vm.project.id}}
+      <button class="btn btn-success" ui-sref="Projektlista">Vissza</button>
+    </div>
+    <div class="module-body">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="input-group">
+            <span class="input-group-addon">Azonosító:</span>
+            <input type="text" class="form-control" ng-model="vm.project.id" readonly>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="input-group">
+            <span class="input-group-addon">Név:</span>
+            <input type="text" class="form-control" ng-model="vm.project.name" readonly>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span class="input-group-addon">Részletes leírás:</span>
+            <textarea class="form-control" rows="4" ng-model="vm.project.description" readonly></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <my-chart id="chart1" config="vm.chartConfig"></my-chart>
+      </div>
+      
+    </div>
     <div class="module-footer"></div>
   </section>
 </div>
