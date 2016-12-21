@@ -27,6 +27,13 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('Projekt', {
+		url: '/Projekt',
+		params: {project: null},
+		templateUrl: './app/components/Projekt/Projekt.html',
+		controller: 'ProjektController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('Forbidden', {
 		url: '/403Forbidden',
 		templateUrl: './app/components/Forbidden/Forbidden.html',

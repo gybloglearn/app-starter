@@ -18,6 +18,7 @@ define([
   './Sprint/Sprint.ctrl',
   './services/sprint.service',
   './Forbidden/Forbidden.ctrl'
+	, './Projekt/Projekt.ctrl'
 	/* files */
 ], function(
   configFunction,
@@ -39,6 +40,7 @@ define([
   SprintController,
   sprintService,
   ForbiddenController
+	, ProjektController
 	/* names */) {
 
   // Link all components to the module !!!
@@ -63,5 +65,6 @@ define([
   app.controller('SprintController', SprintController);
   app.service('sprintService', sprintService);
   app.controller('ForbiddenController', ForbiddenController);
+	app.controller('ProjektController', ProjektController);
 		/* controllers */
 });
