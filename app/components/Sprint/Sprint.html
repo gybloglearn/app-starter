@@ -7,7 +7,9 @@
       <div class="btn-group">
         <button class="btn btn-danger" ng-click="vm.newSprint()" ng-disabled="vm.actProject==null">Mentés</button>
         <button class="btn btn-default" ng-class="{'btn-info':vm.deatailsShow}" ng-click="vm.deatailsShow=!vm.deatailsShow">Sprint lista</button>
+        <button class="btn btn-default" ui-sref="Projektlista" ng-disabled="vm.actProject==null">Mégse</button>
       </div>
+      
 
 
       <div class="form-group" style="margin-top:10px" ng-show="vm.deatailsShow">

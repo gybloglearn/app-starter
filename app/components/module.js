@@ -13,6 +13,7 @@ define([
   './Projektlista/Projektlista.ctrl',
   './addTask/addTask.ctrl',
   './Feladatlista/Feladatlista.ctrl',
+  './filters/active_sprint',
   './filters/change',
   './filters/change_priority',
   './Sprint/Sprint.ctrl',
@@ -35,6 +36,7 @@ define([
   ProjektlistaController,
   addTaskController,
   FeladatlistaController,
+  active_sprint,
   change,
   change_priority,
   SprintController,
@@ -60,6 +62,7 @@ define([
   app.controller('ProjektlistaController', ProjektlistaController);
   app.controller('addTaskController', addTaskController);
   app.controller('FeladatlistaController', FeladatlistaController);
+  app.filter('asp',active_sprint);
   app.filter('change',change);
   app.filter('change_priority',change_priority);
   app.controller('SprintController', SprintController);

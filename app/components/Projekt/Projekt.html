@@ -1,7 +1,7 @@
 <div class="container">
   <section class="module">
-    <div class="module-header">Projekt {{vm.project.id}}
-      <button class="btn btn-success" ui-sref="Projektlista">Vissza</button>
+    <div class="module-header">Projekt
+      <button class="btn btn-success pull-right" ui-sref="Projektlista">Vissza</button>
     </div>
     <div class="module-body">
       <div class="row">
@@ -28,6 +28,8 @@
       </div>
 
       <div>
+        <h3>Iterációk:</h3>
+        <button class="btn btn-info" ng-show="vm.sprintazon!=''">{{vm.sprintazon | date: 'yyyy-MM-dd'}}-{{vm.sprintdue | date: 'yyyy-MM-dd'}}</button>
         <my-chart id="chart1" config="vm.chartConfig"></my-chart>
       </div>
       
