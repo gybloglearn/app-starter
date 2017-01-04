@@ -19,9 +19,12 @@ define([], function () {
 
       sprintService.getAll().then(function (resp) {
         vm.sprint = resp.data;
-        var thisprojectsprint = $filter('asp')(vm.sprint, vm.project.id);
+	console.log(vm.project.id);
+        //var thisprojectsprint = $filter('asp')(vm.sprint, vm.project.id);
+	vm.thisprojectsprint = $filter('orderBy')($filter('filter')(vm.sprint, vm.project.id), "id", true);
+	console.log(thisprojectsprint);
         if (vm.project.status != 0) {
-          generateChartConfig(thisprojectsprint[0]);
+          generateChartConfig(vm.thisprojectsprint[0]);
         }
       });
 
