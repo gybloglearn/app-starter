@@ -29,10 +29,12 @@
 
       <div>
         <h3>Iterációk:</h3>
-        <button class="btn btn-info" ng-show="vm.sprintazon!=''">{{vm.sprintazon | date: 'yyyy-MM-dd'}}-{{vm.sprintdue | date: 'yyyy-MM-dd'}}</button>
+        <ul class="nav nav-tabs" ng-show="vm.sprintazon!=''">
+          <li ng-repeat="item in vm.thisprojectsprint track by $index"><a href="" data-toggle="tab" ng-click="vm.clickDate(item)">{{item.id | date: 'yyyy-MM-dd'}} - {{item.due | date: 'yyyy-MM-dd'}}</a></li>
+        </ul>
         <my-chart id="chart1" config="vm.chartConfig"></my-chart>
       </div>
-      
+
     </div>
     <div class="module-footer"></div>
   </section>
