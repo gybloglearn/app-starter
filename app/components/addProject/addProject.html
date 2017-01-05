@@ -5,51 +5,78 @@
     <div class="module-body">
       <!-- első sor-->
       <div class="row" style="margin-top:10px">
-        <div class="col-sm-3">
-          <div class="input-group">
-            <span class="input-group-addon">Dátum:</span>
-            <span type="text" class="form-control">{{vm.datum}}</span>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="input-group">
-            <span class="input-group-addon">Projekt:</span>
-            <input type="text" class="form-control" ng-model="vm.data.name" placeholder="Kötelező kitölteni">
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="input-group">
-            <span class="input-group-addon">Felelős:</span>
-            <input type="text" class="form-control" ng-model="vm.data.responsible" readonly>
-          </div>
-        </div>
-      </div>
-      <!-- második sor-->
-      <div class="row" style="margin-top:10px">
-        <div class="col-sm-7">
-          <div class="input-group">
-            <span class="input-group-addon">Részletes leírás:</span>
-            <textarea class="form-control" rows="4" ng-model="vm.data.description"></textarea>
-          </div>
-        </div>
-        <!--div class="col-sm-3">
-          <div class="input-group">
-            <span class="input-group-addon">Várható befejezés:</span>
-            <span type="text" class="form-control" ng-model="vm.data.due">{{vm.hatarido}}</span>
-          </div>
-        </div-->
-        <div class="col-sm-2">
-          <button class="btn btn-primary" ng-click="vm.save()" ng-disabled="!vm.data.name  || vm.showmessage">Felvesz</button>
-        </div>
-        <!-- ADD FEEDBACK MESSAGE -->
-        <div class="col-sm-2">
-          <div class="alert alert-success" ng-show="vm.showmessage">
-            <strong>Sikeres felvitel! </strong>{{vm.showtitle}}
-          </div>
-        </div>
+<div class="col-sm-3">
+  <div class="input-group">
+    <span class="input-group-addon">Dátum:</span>
+    <span type="text" class="form-control">{{vm.datum}}</span>
+  </div>
+</div>
+<div class="col-sm-4">
+  <div class="input-group">
+    <span class="input-group-addon">Projekt:</span>
+    <input type="text" class="form-control" ng-model="vm.data.name" placeholder="Kötelező kitölteni">
+  </div>
+</div>
+<div class="col-sm-4">
+  <div class="input-group">
+    <span class="input-group-addon">Felelős:</span>
+    <input type="text" class="form-control" ng-model="vm.data.responsible" readonly>
+  </div>
+</div>
+</div>
+<!-- második sor-->
+<div class="row" style="margin-top:10px">
+<div class="col-sm-3">
+  <div class="input-group">
+    <span class="input-group-addon">Gyakoriság:</span>
+    <select ng-model="" class="form-control">
+             <option value="">Napi</option>
+             <option value="">Heti</option>
+             <option value="">Havi</option>
+             </select>
+  </div>
+</div>
+<div class="col-sm-4">
+  <div class="input-group">
+    <span class="input-group-addon">Riport elkészítése:</span>
+    <select ng-model="" class="form-control">
+             <option value="">Kevesebb mint 10 perc</option>
+             <option value="">Több mint 10 perc de kevesebb mint 60 perc</option>
+             <option value="">Több mint 60 perc</option>
+             </select>
+  </div>
+</div>
+<div class="col-sm-4">
+  <div class="input-group">
+    <span class="input-group-addon">Szint:</span>
+    <select ng-model="" class="form-control">
+             <option value="">Technikus</option>
+             <option value="">Területi vezető</option>
+             <option value="">First line menedzsment</option>
+             </select>
+  </div>
+</div>
+</div>
+<!-- harmadik sor-->
+<div class="row" style="margin-top:10px">
+<div class="col-sm-7">
+  <div class="input-group">
+    <span class="input-group-addon">Részletes leírás:</span>
+    <textarea class="form-control" rows="4" ng-model="vm.data.description"></textarea>
+  </div>
+</div>
+<div class="col-sm-2">
+  <button class="btn btn-primary" ng-click="vm.save()" ng-disabled="!vm.data.name  || vm.showmessage">Felvesz</button>
+</div>
+<!-- ADD FEEDBACK MESSAGE -->
+<div class="col-sm-2">
+  <div class="alert alert-success" ng-show="vm.showmessage">
+    <strong>Sikeres felvitel! </strong>{{vm.showtitle}}
+  </div>
+</div>
 
-      </div>
-    </div>
-    <div class="module-footer"></div>
-  </section>
+</div>
+</div>
+<div class="module-footer"></div>
+</section>
 </div>
