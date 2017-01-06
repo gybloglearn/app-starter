@@ -3,6 +3,7 @@ define([], function () {
   function Controller($filter, tasksService, $cookies, $rootScope, $state, sprintService) {
     var vm = this;
     vm.updatetask = updatetask;
+    vm.duplicate=duplicate;
 
     activate();
     vm.task = [];
@@ -42,6 +43,16 @@ define([], function () {
     function updatetask() {
       tasksService.put(vm.edit).then(function (resp) {
         vm.edit = '';
+      });
+    }
+
+    function duplicate(item)
+    {
+      item.id=new Date().getTime();
+      item.sprint=null;
+      console.log(item);
+      tasksService.post(item).then(function (resp){
+
       });
     }
 
