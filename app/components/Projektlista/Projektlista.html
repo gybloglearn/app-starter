@@ -14,10 +14,22 @@
 </div>
 </div>
 
-<div class="col-sm-3" style="margin-top:20px">
+<div class="col-sm-3" style="margin-top:20px" ng-show="(user.username == '212434909' || user.username == '502678184')">
 <div class="form-group">
   <span class="control-label" style="color:#FFFFFF">Felelős:</span>
 <input type="text" ng-model="vm.search.responsible" class="form-group">
+</div>
+</div>
+
+<div class="col-sm-3" style="margin-top:20px">
+<div class="form-group">
+  <span class="control-label" style="color:#FFFFFF">Riport gyakorisága:</span>
+<select ng-model="vm.search.freqvency" class="form-control">
+						    <option value="">Mind</option>
+                <option value="Napi">Napi</option>
+                <option value="Heti">Heti</option>
+                <option value="Havi">Havi</option>
+            </select>
 </div>
 </div>
 
@@ -32,7 +44,6 @@
             </select>
 </div>
 </div>
-
 
 </div>
 </div>
@@ -86,31 +97,31 @@
 <section class="module" ng-show="vm.edit" style="margin-top:20px">
 <div class="module-header">Projekt módosítása</div>
 <div class="module-body">
-<div class="row" style="margin-top:10px">
-  <div class="col-sm-3">
-    <div class="input-group">
-      <span class="input-group-addon">Név:</span>
-      <input type="text" class="form-control" ng-model="vm.edit.name">
-    </div>
-  </div>
-
-  <div class="col-sm-6">
-    <div class="input-group">
-      <span class="input-group-addon">Részletes leírás:</span>
-      <textarea class="form-control" rows="4" ng-model="vm.edit.description"></textarea>
-    </div>
+  <div class="row" style="margin-top:10px">
+<div class="col-sm-3">
+  <div class="input-group">
+    <span class="input-group-addon">Név:</span>
+    <input type="text" class="form-control" ng-model="vm.edit.name">
   </div>
 </div>
 
-  
+<div class="col-sm-6">
+  <div class="input-group">
+    <span class="input-group-addon">Részletes leírás:</span>
+    <textarea class="form-control" rows="4" ng-model="vm.edit.description"></textarea>
+  </div>
+</div>
+</div>
+
+
 <div class="row" style="margin-top:10px">
 <div class="col-sm-3">
   <div class="input-group">
     <span class="input-group-addon">Gyakoriság:</span>
     <select ng-model="vm.edit.freqvency" class="form-control">
-             <option value="napi">Napi</option>
-             <option value="heti">Heti</option>
-             <option value="havi">Havi</option>
+             <option value="Napi">Napi</option>
+             <option value="Heti">Heti</option>
+             <option value="Havi">Havi</option>
              </select>
   </div>
 </div>

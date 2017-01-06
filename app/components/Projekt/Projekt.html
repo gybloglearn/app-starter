@@ -27,6 +27,29 @@
         </div>
       </div>
 
+<div class="row" style="margin-top:10px">
+      <div class="col-sm-4">
+          <div class="input-group">
+            <span class="input-group-addon">Gyakoriság:</span>
+            <input type="text" class="form-control" ng-model="vm.project.freqvency" readonly>
+          </div>
+        </div>
+
+      <div class="col-sm-4">
+          <div class="input-group">
+            <span class="input-group-addon">Riport elkészítése:</span>
+            <input type="text" class="form-control" ng-model="vm.project.reporttime" readonly>
+          </div>
+        </div>
+
+      <div class="col-sm-4">
+          <div class="input-group">
+            <span class="input-group-addon">Szint:</span>
+            <input type="text" class="form-control" ng-model="vm.project.level" readonly>
+          </div>
+        </div>
+        </div>
+
       <div>
         <h3>Iterációk:</h3>
         <ul class="nav nav-tabs" ng-show="vm.sprintazon!=''">
