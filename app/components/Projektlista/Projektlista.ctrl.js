@@ -34,7 +34,7 @@ define([], function () {
     }
 
     function updateproject() {
-      projectsService.put(vm.edit).then(function (resp) {
+      projectService.put(vm.edit).then(function (resp) {
         vm.edit = '';
       });
     }
@@ -64,6 +64,6 @@ define([], function () {
 
 
   }
-  Controller.$inject = ['$filter', 'projectsService', '$state', '$rootScope', '$cookies', 'sprintService'];
+  Controller.$inject = ['$filter', 'projectService', '$state', '$rootScope', '$cookies', 'sprintService'];
   return Controller;
 });
