@@ -34,7 +34,7 @@ define([], function () {
     }
 
     function updateproject() {
-      tasksService.put(vm.edit).then(function (resp) {
+      projectsService.put(vm.edit).then(function (resp) {
         vm.edit = '';
       });
     }
