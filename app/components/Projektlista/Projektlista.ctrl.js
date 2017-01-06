@@ -18,7 +18,7 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      projectService.getAll().then(function (resp) {
+      projectsService.getAll().then(function (resp) {
         if ($rootScope.user.username != "212434909" && $rootScope.user.username != "502678184") {
           vm.project = $filter('filter')(resp.data, { 'responsible': $rootScope.user.displayname });
         }
