@@ -1,6 +1,6 @@
 define([], function () {
   'use strict';
-  function Controller($filter, projectService, $state, $rootScope, $cookies, sprintService) {
+  function Controller($filter, projectsService, $state, $rootScope, $cookies, sprintService) {
     var vm = this;
     vm.updateproject = updateproject;
     vm.addSprint = addSprint;
@@ -34,7 +34,7 @@ define([], function () {
     }
 
     function updateproject() {
-      projectService.put(vm.edit).then(function (resp) {
+      projectsService.put(vm.edit).then(function (resp) {
         vm.edit = '';
       });
     }
@@ -64,6 +64,6 @@ define([], function () {
 
 
   }
-  Controller.$inject = ['$filter', 'projectService', '$state', '$rootScope', '$cookies', 'sprintService'];
+  Controller.$inject = ['$filter', 'projectsService', '$state', '$rootScope', '$cookies', 'sprintService'];
   return Controller;
 });
