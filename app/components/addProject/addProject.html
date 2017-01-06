@@ -29,30 +29,30 @@
 <div class="col-sm-3">
   <div class="input-group">
     <span class="input-group-addon">Gyakoriság:</span>
-    <select ng-model="" class="form-control">
-             <option value="">Napi</option>
-             <option value="">Heti</option>
-             <option value="">Havi</option>
+    <select ng-model="vm.data.freqvency" class="form-control">
+             <option value="napi">Napi</option>
+             <option value="heti">Heti</option>
+             <option value="havi">Havi</option>
              </select>
   </div>
 </div>
 <div class="col-sm-4">
   <div class="input-group">
     <span class="input-group-addon">Riport elkészítése:</span>
-    <select ng-model="" class="form-control">
-             <option value="">Kevesebb mint 10 perc</option>
-             <option value="">Több mint 10 perc de kevesebb mint 60 perc</option>
-             <option value="">Több mint 60 perc</option>
+    <select ng-model="vm.data.reporttime" class="form-control">
+             <option value="10-">Kevesebb mint 10 perc</option>
+             <option value="10+">Több mint 10 perc de kevesebb mint 60 perc</option>
+             <option value="60+">Több mint 60 perc</option>
              </select>
   </div>
 </div>
 <div class="col-sm-4">
   <div class="input-group">
     <span class="input-group-addon">Szint:</span>
-    <select ng-model="" class="form-control">
-             <option value="">Technikus</option>
-             <option value="">Területi vezető</option>
-             <option value="">First line menedzsment</option>
+    <select ng-model="vm.data.level" class="form-control">
+             <option value="Technikus">Technikus</option>
+             <option value="Terület vezető">Terület vezető</option>
+             <option value="First line m">First line menedzsment</option>
              </select>
   </div>
 </div>
@@ -66,7 +66,8 @@
   </div>
 </div>
 <div class="col-sm-2">
-  <button class="btn btn-primary" ng-click="vm.save()" ng-disabled="!vm.data.name  || vm.showmessage">Felvesz</button>
+  <button class="btn btn-primary" ng-click="vm.save()" ng-disabled="!vm.data.name  || vm.showmessage || !vm.data.freqvency || !vm.data.reporttime || !vm.data.level">
+    Felvesz</button>
 </div>
 <!-- ADD FEEDBACK MESSAGE -->
 <div class="col-sm-2">
