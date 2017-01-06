@@ -5,7 +5,8 @@ define([], function () {
     var service = {
       getAll: getAll,
       get: get,
-      post: post
+      post: post,
+      put: put
     };
 
     return service;
@@ -28,6 +29,15 @@ define([], function () {
     function post(data) {
       var req = {
         method: 'POST',
+        url: '//3.228.180.15/ticketapi/project/' + data.id,
+        data:data,
+        headers: {"Content-Type":"application/json"}
+      };
+      return $http(req);
+    }
+    function put(data) {
+      var req = {
+        method: 'PUT',
         url: '//3.228.180.15/ticketapi/project/' + data.id,
         data:data,
         headers: {"Content-Type":"application/json"}
