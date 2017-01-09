@@ -1,9 +1,11 @@
 define([], function () {
   'use strict';
-  function Controller($filter, tasksService, $cookies, $rootScope, $state, sprintService) {
+  function Controller($filter, tasksService, $timeout, $cookies, $rootScope, $state, sprintService) {
     var vm = this;
     vm.updatetask = updatetask;
-    vm.duplicate=duplicate;
+    vm.duplicate = duplicate;
+    vm.itemname = null;
+    vm.showmessage = false;
 
     activate();
     vm.task = [];
@@ -12,12 +14,11 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      if ($rootScope.user.username != "212434909" && $rootScope.user.username != "502678184")
-      {
+      if ($rootScope.user.username != "212434909" && $rootScope.user.username != "502678184") {
         $state.go('Forbidden');
       }
       tasksService.getAll().then(function (resp) {
-        vm.task = $filter('filter')(resp.data, {'status': '!5'});
+        vm.task = $filter('filter')(resp.data, { 'status': '!5' });
       });
 
       sprintService.getAll().then(function (resp) {
@@ -46,18 +47,22 @@ define([], function () {
       });
     }
 
-    function duplicate(item)
-    {
-      item.id=new Date().getTime();
-      item.sprint=null;
-      console.log(item);
-      tasksService.post(item).then(function (resp){
-
+    function duplicate(item) {
+      item.id = new Date().getTime();
+      item.sprint = null;
+      tasksService.post(item).then(function (resp) {
+        vm.showmessage = true;
+        vm.taskname = item.task;
+        $timeout(function () {
+          vm.showmessage = false;
+          vm.itemname = null;
+          vm.showtitle = '';
+        }, 5000);
       });
     }
 
 
   }
-  Controller.$inject = ['$filter', 'tasksService', '$cookies', '$rootScope', '$state', 'sprintService'];
+  Controller.$inject = ['$filter', 'tasksService', '$timeout', '$cookies', '$rootScope', '$state', 'sprintService'];
   return Controller;
 });

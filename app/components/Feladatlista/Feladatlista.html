@@ -90,6 +90,7 @@
         <div class="btn-group btn-group-sm">
           <button class="btn btn-primary" ng-click="vm.edit = item"><i class="icon-edit" title="Szerekesztés"></i></button>
           <button class="btn btn-success" ng-click="vm.duplicate(item)"><i class="icon-tags" title="Duplikál"></i></button>
+          <span class="label label-success" ng-show="vm.showmessage && item.task==vm.taskname">Sikeres duplikáció</span>
         </div>
       </td>
     </tr>
