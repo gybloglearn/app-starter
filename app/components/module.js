@@ -4,16 +4,26 @@ define([
   './start/start.ctrl',
   './login/login.ctrl',
   './services/login.service',
-  './services/data.service'
-  /* files */
+  './services/data.service',
+  './Potting/Potting.ctrl',
+  './services/PottingService.service',
+  './directives/datepicker',
+  './directives/mychart',
+  './filters/unique'
+	/* files */
 ], function(
   configFunction,
   runFunction,
   startController,
   loginController,
   loginService,
-  dataService
-/* names */) {
+  dataService,
+  PottingController,
+  PottingService,
+  datepicker,
+  mychart,
+  unique
+	/* names */) {
 
   // Link all components to the module !!!
 
@@ -24,5 +34,10 @@ define([
   app.service('Login', loginService);
   app.controller('StartController', startController);
   app.controller('LoginController', loginController);
-  /* controllers */
+  app.controller('PottingController', PottingController);
+	app.service('PottingService', PottingService);
+  app.directive('datepicker',datepicker);
+  app.directive('mychart',mychart);
+  app.filter('unique',unique)
+		/* controllers */
 });
