@@ -4,7 +4,7 @@ define([], function () {
     var vm = this;
     vm.updatetask = updatetask;
     vm.duplicate = duplicate;
-    vm.itemname = null;
+    vm.oldid = null;
     vm.showmessage = false;
 
     activate();
@@ -48,15 +48,16 @@ define([], function () {
     }
 
     function duplicate(item) {
+      vm.oldid = item.id;
       item.id = new Date().getTime();
       item.sprint = null;
       tasksService.post(item).then(function (resp) {
         vm.showmessage = true;
-        vm.taskname = item.task;
         $timeout(function () {
           vm.showmessage = false;
-          vm.itemname = null;
+          vm.oldid = null;
           vm.showtitle = '';
+          $state.go("Feladatlista", {}, {reload:true});
         }, 5000);
       });
     }
