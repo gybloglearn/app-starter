@@ -46,6 +46,7 @@ define([], function () {
 
 
     function load(mch, datum) {
+      vm.dis=true;
       vm.shiftid = null;
       vm.p = [];
       vm.inpotting_de = [];
@@ -78,7 +79,7 @@ define([], function () {
 
       PottingService.get(mch, datum).then(function (response) {
         vm.p = response.data;
-        //vm.egyedi = $filter('unique')(vm.p, 'name');
+        vm.dis=false;
         var j = 0;
         var k = 0;
         var l = 0;
