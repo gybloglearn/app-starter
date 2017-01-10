@@ -22,15 +22,106 @@
   <hr>
   <div class="row">
     <h1>Délelőtt</h1>
-    <div class="row">
-      <div class="col-sm-4">
-      </div>
-      <div class="col-sm-4">
-      </div>
-      <div class="col-sm-4">
-      </div>
-    </div>
-  </div>
+    <div class="row" style="margin-top:30px">
+<div class="col-sm-4">
+  <h1 class="text-center" style="font-size:6em">{{vm.suminpotting}}
+<br>
+<small style="font-size:20px">db</small>
+</h1>
+<h2 class="text-center">
+  {{vm.suminpotting_aeq}}
+  <small>AEQ</small>
+</h2>
+<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#inpotting_de">POTTING BE részletek
+<i class="icon-chevron-right"></i>
+</h3>
+<div class="collapse" id="inpotting_de">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Típus</th>
+        <th>Darab</th>
+        <th>AEQ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in vm.inpotting" class="ng-scope">
+        <td>{{item.name}}</td>
+        <td>{{item.amount}}</td>
+        <td>{{item.aeq}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+<div class="col-sm-4">
+  <h1 class="text-center" style="font-size:6em">{{vm.sump3potting}}
+<br>
+<small style="font-size:20px">db</small>
+</h1>
+<h2 class="text-center">
+  {{vm.sump3potting_aeq}}
+  <small>AEQ</small>
+</h2>
+<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#p3potting_de">POTTING FORDÍTÁS részletek
+<i class="icon-chevron-right"></i>
+</h3>
+<div class="collapse" id="p3potting_de">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Típus</th>
+        <th>Darab</th>
+        <th>AEQ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in vm.p3potting" class="ng-scope">
+        <td>{{item.name}}</td>
+        <td>{{item.amount}}</td>
+        <td>{{item.aeq}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+<div class="col-sm-4">
+  <h1 class="text-center" style="font-size:6em">{{vm.sumoutpotting}}
+<br>
+<small style="font-size:20px">db</small>
+</h1>
+<h2 class="text-center">
+  {{vm.sumoutpotting_aeq}}
+  <small>AEQ</small>
+</h2>
+<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#outpotting_de">POTTING KI részletek
+<i class="icon-chevron-right"></i>
+</h3>
+<div class="collapse" id="outpotting_de">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Típus</th>
+        <th>Darab</th>
+        <th>AEQ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in vm.outpotting" class="ng-scope">
+        <td>{{item.name}}</td>
+        <td>{{item.amount}}</td>
+        <td>{{item.aeq}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+</div>
+</div>
+<hr>
+<div class="row">
+  <h1>Délután</h1>
+</div>
 </div>
 <div class="module-footer"></div>
 </section>

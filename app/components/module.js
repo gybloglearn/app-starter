@@ -9,7 +9,9 @@ define([
   './services/PottingService.service',
   './directives/datepicker',
   './directives/mychart',
-  './filters/unique'
+  './filters/unique',
+  './filters/sumdb',
+  './filters/sumaeq'
 	/* files */
 ], function(
   configFunction,
@@ -22,7 +24,9 @@ define([
   PottingService,
   datepicker,
   mychart,
-  unique
+  unique,
+  sumdb,
+  sumaeq
 	/* names */) {
 
   // Link all components to the module !!!
@@ -38,6 +42,8 @@ define([
 	app.service('PottingService', PottingService);
   app.directive('datepicker',datepicker);
   app.directive('mychart',mychart);
-  app.filter('unique',unique)
+  app.filter('unique',unique);
+  app.filter('sumdb',sumdb);
+  app.filter('sumaeq',sumaeq)
 		/* controllers */
 });
