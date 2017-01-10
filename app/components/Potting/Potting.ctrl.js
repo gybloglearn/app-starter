@@ -36,6 +36,13 @@ define([], function () {
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.allpotting = ["Potting4", "Potting3", "Potting2"];
     vm.load = load;
+    vm.datumszam = vm.datum;
+
+    vm.datszam = csere;
+    function csere() {
+      vm.szam = new Date(vm.datum);
+      vm.datumszam = $filter('date')(vm.szam, 'yyyy-MM-dd');
+    }
 
 
     function load(mch, datum) {

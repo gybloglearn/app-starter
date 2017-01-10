@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <section class="module">
     <div class="module-header">
-      <h1 class="text-center">Potting Report-{{vm.datum}}</h1>
+      <h1 class="text-center">Potting Report-{{vm.datumszam}}</h1>
       <ul class="nav nav-tabs" style="margin-top:10px">
 <li ng-repeat="item in vm.allpotting track by $index">
   <a data-toggle="tab" href="" ng-click="vm.mch=item;vm.load(vm.mch,vm.datum)">{{item}}</a>
@@ -13,7 +13,7 @@
   <span class="input-group-addon">Dátum:</span>
   <input type="text" class="datepicker form-control" ng-model="vm.datum">
   <div class="input-group-btn">
-    <a href="" class="btn btn-info" ng-click="vm.load(vm.mch,vm.datum)">Betöltés</a>
+    <a href="" class="btn btn-info" ng-click="vm.load(vm.mch,vm.datum);vm.datszam()">Betöltés</a>
   </div>
 </div>
 </div>
