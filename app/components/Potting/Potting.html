@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container">
   <section class="module">
     <div class="module-header">
       <h1 class="text-center">Potting Report-{{vm.datumszam}}</h1>
@@ -13,7 +13,20 @@
   <span class="input-group-addon">Dátum:</span>
   <input type="text" class="datepicker form-control" ng-model="vm.datum">
   <div class="input-group-btn">
-    <a href="" class="btn btn-primary" ng-click="vm.load(vm.mch,vm.datum);vm.datszam()" ng-disabled="vm.dis">Betöltés</a>
+    <a href="" class="btn btn-primary" ng-click="vm.load(vm.mch,vm.datum);vm.datszam()" ng-disabled="vm.dis || vm.tobbnapos">Betöltés</a>
+  </div>
+</div>
+</div>
+<button class="btn btn-default pull-right" ng-class="{'btn-info':vm.tobbnapos}"  ng-click="vm.tobbnapos=!vm.tobbnapos">Többnapos nézet</button>
+<div class="col-sm-10">
+<div class="input-group" ng-show="vm.tobbnapos">
+  <span class="input-group-addon">Dátum:</span>
+  <input type="text" class="datepicker form-control" ng-model="vm.datum">
+  <span class="input-group-addon">tól</span>
+  <input type="text" class="datepicker form-control" ng-model="vm.datum">
+  <span class="input-group-addon">ig</span>
+  <div class="input-group-btn">
+    <a href="" class="btn btn-primary" ng-click="">Betöltés</a>
   </div>
 </div>
 </div>
