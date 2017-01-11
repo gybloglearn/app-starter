@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('Mtf', {
+		url: '/Mtf',
+		templateUrl: './app/components/Mtf/Mtf.html',
+		controller: 'MtfController',
+		controllerAs: 'vm'
+	});
 
   }
   ConfigFunction.$inject = ['$urlRouterProvider', '$stateProvider'];

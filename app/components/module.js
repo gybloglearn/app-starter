@@ -4,16 +4,28 @@ define([
   './start/start.ctrl',
   './login/login.ctrl',
   './services/login.service',
-  './services/data.service'
-  /* files */
+  './services/data.service',
+  './Mtf/Mtf.ctrl',
+  './services/MtfService.service',
+  './directives/datepicker',
+  './directives/mychart',
+  './filters/sumdb',
+  './filters/sumaeq'
+	/* files */
 ], function(
   configFunction,
   runFunction,
   startController,
   loginController,
   loginService,
-  dataService
-/* names */) {
+  dataService,
+  MtfController,
+  MtfService,
+  datepicker,
+  mychart,
+  sumdb,
+  sumaeq
+	/* names */) {
 
   // Link all components to the module !!!
 
@@ -24,5 +36,11 @@ define([
   app.service('Login', loginService);
   app.controller('StartController', startController);
   app.controller('LoginController', loginController);
-  /* controllers */
+  app.controller('MtfController', MtfController);
+	app.service('MtfService', MtfService);
+  app.directive('datepicker',datepicker);
+  app.directive('mychart',mychart);
+  app.filter('sumdb',sumdb);
+  app.filter('sumaeq',sumaeq)
+		/* controllers */
 });

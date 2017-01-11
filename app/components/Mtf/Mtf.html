@@ -1,0 +1,83 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">MTF Report-{{vm.datumszam}}</h1>
+      <div class="col-sm-6" style="margin-top:20px">
+<div class="input-group">
+  <span class="input-group-addon">Előző napok megtekintése:</span>
+  <input type="text" class="datepicker form-control" ng-model="vm.datum">
+  <div class="input-group-btn">
+    <a href="" class="btn btn-primary" ng-click="vm.oldday_load(vm.datum);vm.datszam()">Betöltés</a>
+    <a href="" class="btn btn-default" ng-click="vm.today_load(vm.linktoday);vm.datszam()">Vissza a mai napra</a>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="module-body">
+  <hr>
+  <div class="row">
+    <h1>Délelőtt</h1>
+  </div>
+  <div class="row" style="margin-top:30px">
+<div class="col-sm-6">
+  <h1 class="text-center" style="font-size:6em">
+    {{vm.sumkihozatal_de_aeq}}
+<br>
+<small style="font-size:20px">AEQ</small>
+</h1>
+<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#aeq_de">Kihozatal részletek
+<i class="icon-chevron-right"></i>
+</h3>
+<div class="collapse" id="aeq_de">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Típus</th>
+        <th>Darab</th>
+        <th>AEQ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in vm.kihozatal_de" class="ng-scope">
+        <td>{{item.name}}</td>
+        <td>{{item.amount}}</td>
+        <td>{{item.aeq | number:2}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+<div class="col-sm-6">
+  <h1 class="text-center" style="font-size:6em">
+    {{vm.sumbokes_de}}
+<br>
+<small style="font-size:20px">ÖSSZES BÖKÉS</small>
+</h1>
+<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#bokes_de">Kihozatal részletek
+<i class="icon-chevron-right"></i>
+</h3>
+<div class="collapse" id="bokes_de">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Típus</th>
+        <th>Bökés</th>
+        <th>Bökés/AEQ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in vm.bokes_de" class="ng-scope">
+        <td>{{item.name}}</td>
+        <td>{{item.amount}}</td>
+        <td>{{(item.amount/item.aeq) | number:2}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+</div>
+</div>
+<div class="module-footer"></div>
+</section>
+</div>
