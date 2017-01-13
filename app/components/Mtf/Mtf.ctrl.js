@@ -10,7 +10,11 @@ define([], function () {
     vm.bokes_du = [];
     vm.bokes_ej = [];
     vm.sumkihozatal_de_aeq = 0;
+    vm.sumkihozatal_du_aeq = 0;
+    vm.sumkihozatal_ej_aeq = 0;
     vm.sumbokes_de=0;
+    vm.sumbokes_du=0;
+    vm.sumbokes_ej=0;
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.linktoday = $filter('date')(new Date() - (1000 * 3600) + (15 * 60 * 1000), 'MMddHH');
     vm.linkoldday = $filter('date')(vm.datum, 'MMdd');
@@ -32,11 +36,20 @@ define([], function () {
       vm.bokes_du = [];
       vm.bokes_ej = [];
       vm.sumkihozatal_de_aeq = 0;
+      vm.sumkihozatal_du_aeq = 0;
+      vm.sumkihozatal_ej_aeq = 0;
       vm.sumbokes_de=0;
+      vm.sumbokes_du=0;
+      vm.sumbokes_ej=0;
       var j = 0;
       var k=0;
+      var l=0;
+      var m=0;
+      var n=0;
+      var o=0;
       vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
       vm.mtf = [];
+
       MtfService.gettoday(linktoday).then(function (response) {
         vm.mtf = response.data[0].data;
 
@@ -58,12 +71,68 @@ define([], function () {
           else if (mystring.includes(substring2) && vm.mtf[i].shiftnum == 1) {
             vm.bokes_de[k] = vm.mtf[i];
             vm.bokes_de[k].name = mystring.substr(0, mystring.length - 10);
+            for(var b=0;b<vm.kihozatal_de.length;b++)
+            {
+              if(vm.kihozatal_de[b].name==vm.bokes_de[k].name)
+              {
+                vm.bokes_de[k].aeq=vm.kihozatal_de[b].aeq;
+              }
+            }
             k++
           }
+          else if (mystring.includes(substring1) && vm.mtf[i].shiftnum == 2) {
+            vm.kihozatal_du[l] = vm.mtf[i];
+            vm.kihozatal_du[l].name = mystring.substr(0, mystring.length - 7);
+            for (var a = 0; a < vm.aeqs.length; a++) {
+              if (vm.kihozatal_du[l].name == vm.aeqs[a].name) {
+                vm.kihozatal_du[l].aeq = vm.kihozatal_du[l].amount * vm.aeqs[a].amount;
+              }
+            }
+            l++
+          }
+          else if (mystring.includes(substring2) && vm.mtf[i].shiftnum == 2) {
+            vm.bokes_du[m] = vm.mtf[i];
+            vm.bokes_du[m].name = mystring.substr(0, mystring.length - 10);
+            for(var b=0;b<vm.kihozatal_de.length;b++)
+            {
+              if(vm.kihozatal_du[b].name==vm.bokes_du[m].name)
+              {
+                vm.bokes_du[m].aeq=vm.kihozatal_du[b].aeq;
+              }
+            }
+            m++
+          }
+           else if (mystring.includes(substring1) && vm.mtf[i].shiftnum == 3) {
+            vm.kihozatal_ej[n] = vm.mtf[i];
+            vm.kihozatal_ej[n].name = mystring.substr(0, mystring.length - 7);
+            for (var a = 0; a < vm.aeqs.length; a++) {
+              if (vm.kihozatal_ej[n].name == vm.aeqs[a].name) {
+                vm.kihozatal_ej[n].aeq = vm.kihozatal_ej[n].amount * vm.aeqs[a].amount;
+              }
+            }
+            n++
+          }
+          else if (mystring.includes(substring2) && vm.mtf[i].shiftnum == 3) {
+            vm.bokes_ej[o] = vm.mtf[i];
+            vm.bokes_ej[o].name = mystring.substr(0, mystring.length - 10);
+            for(var b=0;b<vm.kihozatal_de.length;b++)
+            {
+              if(vm.kihozatal_ej[b].name==vm.bokes_ej[o].name)
+              {
+                vm.bokes_ej[o].aeq=vm.kihozatal_ej[b].aeq;
+              }
+            }
+            o++
+          }
         }
+
         console.log(vm.bokes_de);
         vm.sumkihozatal_de_aeq = $filter('sumaeq')(vm.kihozatal_de);
         vm.sumbokes_de=$filter('sumdb')(vm.bokes_de);
+        vm.sumkihozatal_du_aeq = $filter('sumaeq')(vm.kihozatal_du);
+        vm.sumbokes_du=$filter('sumdb')(vm.bokes_du);
+        vm.sumkihozatal_ej_aeq = $filter('sumaeq')(vm.kihozatal_ej);
+        vm.sumbokes_ej=$filter('sumdb')(vm.bokes_ej);
       });
     }
 
