@@ -241,6 +241,7 @@ define([], function () {
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       today_load(vm.linktoday);
+      //console.log($filter('shift')(1,new Date().getTime()));
     }
 
     vm.aeqs = [

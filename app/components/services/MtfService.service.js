@@ -22,7 +22,7 @@ define([], function () {
     function getoldday(some) {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15/getReports/files/mtf_'+ some+'05.json'
+        url: 'http://3.228.180.15/getReports/files/mtf_'+ some +'05.json'
       };
       return $http(req);
     }
