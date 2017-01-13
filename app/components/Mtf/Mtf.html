@@ -7,8 +7,8 @@
   <span class="input-group-addon">Előző napok megtekintése:</span>
   <input type="text" class="datepicker form-control" ng-model="vm.datum">
   <div class="input-group-btn">
-    <a href="" class="btn btn-primary" ng-click="vm.oldday_load(vm.datum);vm.datszam()">Betöltés</a>
-    <a href="" class="btn btn-default" ng-click="vm.today_load(vm.linktoday);vm.datszam()">Vissza a mai napra</a>
+    <a href="" class="btn btn-primary" ng-click="vm.oldday_load(vm.datum);vm.datszam()" ng-disabled="!vm.datum">Betöltés</a>
+    <a href="" class="btn btn-default" ng-click="vm.today_load(vm.linktoday);vm.datszam();vm.datum=null">Vissza a mai napra</a>
   </div>
 </div>
 </div>

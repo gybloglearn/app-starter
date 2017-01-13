@@ -10,7 +10,8 @@ define([
   './directives/datepicker',
   './directives/mychart',
   './filters/sumdb',
-  './filters/sumaeq'
+  './filters/sumaeq',
+  './filters/change'
 	/* files */
 ], function(
   configFunction,
@@ -24,7 +25,8 @@ define([
   datepicker,
   mychart,
   sumdb,
-  sumaeq
+  sumaeq,
+  change
 	/* names */) {
 
   // Link all components to the module !!!
@@ -41,6 +43,7 @@ define([
   app.directive('datepicker',datepicker);
   app.directive('mychart',mychart);
   app.filter('sumdb',sumdb);
-  app.filter('sumaeq',sumaeq)
+  app.filter('sumaeq',sumaeq);
+  app.filter('change',change)
 		/* controllers */
 });
