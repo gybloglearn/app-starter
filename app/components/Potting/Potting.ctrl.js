@@ -35,25 +35,25 @@ define([], function () {
     vm.mch = "Potting4"
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.allpotting = ["Potting4", "Potting3", "Potting2"];
-    vm.szak_de=$filter('shift')(1,vm.datum);
-    vm.szak_du=$filter('shift')(2,vm.datum);
-    vm.szak_ej=$filter('shift')(3,vm.datum);
+    vm.szak_de = $filter('shift')(1, vm.datum);
+    vm.szak_du = $filter('shift')(2, vm.datum);
+    vm.szak_ej = $filter('shift')(3, vm.datum);
     vm.load = load;
-    vm.load_more=load_more;
+    vm.load_more = load_more;
     vm.datumszam = vm.datum;
 
     vm.datszam = csere;
     function csere() {
       vm.szam = new Date(vm.datum);
       vm.datumszam = $filter('date')(vm.szam, 'yyyy-MM-dd');
-      vm.szak_de=$filter('shift')(1,vm.datumszam);
-      vm.szak_du=$filter('shift')(2,vm.datumszam);
-      vm.szak_ej=$filter('shift')(3,vm.datumszam);
+      vm.szak_de = $filter('shift')(1, vm.datumszam);
+      vm.szak_du = $filter('shift')(2, vm.datumszam);
+      vm.szak_ej = $filter('shift')(3, vm.datumszam);
     }
 
 
     function load(mch, datum) {
-      vm.dis=true;
+      vm.dis = true;
       vm.shiftid = null;
       vm.p = [];
       vm.inpotting_de = [];
@@ -86,7 +86,7 @@ define([], function () {
 
       PottingService.get(mch, datum).then(function (response) {
         vm.p = response.data;
-        vm.dis=false;
+        vm.dis = false;
         var j = 0;
         var k = 0;
         var l = 0;
@@ -213,12 +213,54 @@ define([], function () {
       });
     }
 
-     function load_more(mch, kezdodatum, vegdatum)
-     {
-       PottingService.getdays(mch, kezdodatum, vegdatum).then(function (response) {
+    function load_more(mch, kezdodatum, vegdatum) {
+      PottingService.getdays(mch, kezdodatum, vegdatum).then(function (response) {
         vm.moredays = response.data;
-       });
-     }
+
+        for (var i = 0; i < vm.moredays.length; i++) {
+          var nowstring = vm.moredays[i].name;
+          var substring1 = "_IN-IN";
+          var substring2 = "_P3-P3";
+          var substring3 = "_OUT-OUT";
+
+          if (nowstring.includes(substring1)) {
+            nowstring = nowstring.substr(0, nowstring.length - 6);
+            for (var j = 0; j < vm.aeqs.length; j++) {
+              if (nowstring == vm.aeqs[j].name) {
+                vm.moredays[i].aeq = vm.moredays[i].amount * vm.aeqs[j].amount;
+              }
+            }
+          }
+
+          else if (nowstring.includes(substring2)) {
+            nowstring = nowstring.substr(0, nowstring.length - 6);
+            for (var j = 0; j < vm.aeqs.length; j++) {
+              if (nowstring == vm.aeqs[j].name) {
+                vm.moredays[i].aeq = vm.moredays[i].amount * vm.aeqs[j].amount;
+              }
+            }
+          }
+          else if (nowstring.includes(substring3)) {
+            nowstring = nowstring.substr(0, nowstring.length - 8);
+            for (var j = 0; j < vm.aeqs.length; j++) {
+              if (nowstring == vm.aeqs[j].name) {
+                vm.moredays[i].aeq = vm.moredays[i].amount * vm.aeqs[j].amount;
+              }
+            }
+          }
+          if (vm.moredays[i].shiftnum == 1) {
+            vm.moredays[i].shiftname = $filter('shift')(1, vm.moredays[i].days);
+          }
+          else if (vm.moredays[i].shiftnum == 2) {
+            vm.moredays[i].shiftname = $filter('shift')(2, vm.moredays[i].days);
+          }
+          else if (vm.moredays[i].shiftnum == 3) {
+            vm.moredays[i].shiftname = $filter('shift')(3, vm.moredays[i].days);
+          }
+        }
+        console.log(vm.moredays);
+      });
+    }
 
 
     activate();
