@@ -1,7 +1,8 @@
 <div class="container-fluid">
   <section class="module">
     <div class="module-header">
-      <h1 class="text-center">Potting Report-{{vm.datumszam}}</h1>
+      <h1 class="text-center" ng-hide="vm.tobbnapos">Potting Report-{{vm.datumszam}}</h1>
+      <h1 class="text-center" ng-hide="!vm.tobbnapos">Betöltésre kerülő időszak: {{vm.start}}-{{vm.finish}}</h1>
       <ul class="nav nav-tabs" style="margin-top:10px">
 <li ng-repeat="item in vm.allpotting track by $index">
   <a data-toggle="tab" href="" ng-click="vm.mch=item;vm.load(vm.mch,vm.datum)" ng-hide="vm.dis">{{item}}</a>
@@ -9,7 +10,7 @@
 </ul>
 <h1 class="text-center" style="margin-top:10px">{{vm.mch}}</h1>
 <div class="col-sm-4" style="margin-top:10px">
-<div class="input-group">
+<div class="input-group" ng-hide="vm.tobbnapos">
   <span class="input-group-addon">Dátum:</span>
   <input type="text" class="datepicker form-control" ng-model="vm.datum">
   <div class="input-group-btn">
@@ -21,17 +22,17 @@
 <div class="col-sm-10">
 <div class="input-group" ng-show="vm.tobbnapos">
   <span class="input-group-addon">Dátum:</span>
-  <input type="text" class="datepicker form-control" ng-model="vm.datum">
+  <input type="text" class="datepicker form-control" ng-model="vm.start">
   <span class="input-group-addon">tól</span>
-  <input type="text" class="datepicker form-control" ng-model="vm.datum">
+  <input type="text" class="datepicker form-control" ng-model="vm.finish">
   <span class="input-group-addon">ig</span>
   <div class="input-group-btn">
-    <a href="" class="btn btn-primary" ng-click="">Betöltés</a>
+    <a href="" class="btn btn-primary" ng-click="vm.load_more(vm.mch,vm.start,vm.finish)" ng-disabled="vm.finish<=vm.start">Betöltés</a>
   </div>
 </div>
 </div>
 </div>
-<div class="module-body">
+<div class="module-body" ng-hide="vm.tobbnapos">
   <hr>
 
 

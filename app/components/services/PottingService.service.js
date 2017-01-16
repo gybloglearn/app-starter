@@ -22,7 +22,7 @@ define([], function () {
     function getdays(mch, kezdodatum, vegdatum) {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15/getReports/pottingreport.php?mch=' + mch + '&startdate=' + kezdodatum + '&enddate' + vegdatum
+        url: 'http://3.228.180.15/getReports/pottingreport.php?mch=' + mch + '&startdate=' + kezdodatum + '&enddate=' + vegdatum
       };
       return $http(req);
     }

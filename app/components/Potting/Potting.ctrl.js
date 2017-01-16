@@ -3,7 +3,7 @@ define([], function () {
   function Controller(PottingService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
     vm.p = [];
-    vm.egyedi = [];
+    vm.moredays = [];
     vm.shiftid = null;
     vm.inpotting_de = [];
     vm.p3potting_de = [];
@@ -39,6 +39,7 @@ define([], function () {
     vm.szak_du=$filter('shift')(2,vm.datum);
     vm.szak_ej=$filter('shift')(3,vm.datum);
     vm.load = load;
+    vm.load_more=load_more;
     vm.datumszam = vm.datum;
 
     vm.datszam = csere;
@@ -211,6 +212,15 @@ define([], function () {
         vm.sumoutpotting_ej_aeq = $filter('sumaeq')(vm.outpotting_ej);
       });
     }
+
+     function load_more(mch, kezdodatum, vegdatum)
+     {
+       PottingService.getdays(mch, kezdodatum, vegdatum).then(function (response) {
+        vm.moredays = response.data;
+       });
+     }
+
+
     activate();
 
     function activate() {
