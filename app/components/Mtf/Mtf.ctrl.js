@@ -18,6 +18,9 @@ define([], function () {
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.linktoday = $filter('date')(new Date() - (1000 * 3600) + (15 * 60 * 1000), 'MMddHH');
     vm.linkoldday = $filter('date')(vm.datum, 'MMdd');
+    vm.szak_de=$filter('shift')(1,vm.datum);
+    vm.szak_du=$filter('shift')(2,vm.datum);
+    vm.szak_ej=$filter('shift')(3,vm.datum);
     vm.datumszam = vm.datum;
     vm.today_load = today_load;
     vm.oldday_load = oldday_load;
@@ -26,6 +29,9 @@ define([], function () {
     function csere() {
       vm.szam = new Date(vm.datum);
       vm.datumszam = $filter('date')(vm.szam, 'yyyy-MM-dd');
+      vm.szak_de=$filter('shift')(1,vm.datumszam);
+      vm.szak_du=$filter('shift')(2,vm.datumszam);
+      vm.szak_ej=$filter('shift')(3,vm.datumszam);
     }
 
     function today_load(linktoday) {
