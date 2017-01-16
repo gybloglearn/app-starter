@@ -11,7 +11,8 @@ define([
   './directives/mychart',
   './filters/unique',
   './filters/sumdb',
-  './filters/sumaeq'
+  './filters/sumaeq',
+  './filters/shift'
 	/* files */
 ], function(
   configFunction,
@@ -26,7 +27,8 @@ define([
   mychart,
   unique,
   sumdb,
-  sumaeq
+  sumaeq,
+  shift
 	/* names */) {
 
   // Link all components to the module !!!
@@ -44,6 +46,7 @@ define([
   app.directive('mychart',mychart);
   app.filter('unique',unique);
   app.filter('sumdb',sumdb);
-  app.filter('sumaeq',sumaeq)
+  app.filter('sumaeq',sumaeq);
+  app.filter('shift',shift);
 		/* controllers */
 });

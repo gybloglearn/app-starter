@@ -35,6 +35,9 @@ define([], function () {
     vm.mch = "Potting4"
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.allpotting = ["Potting4", "Potting3", "Potting2"];
+    vm.szak_de=$filter('shift')(1,vm.datum);
+    vm.szak_du=$filter('shift')(2,vm.datum);
+    vm.szak_ej=$filter('shift')(3,vm.datum);
     vm.load = load;
     vm.datumszam = vm.datum;
 
@@ -42,6 +45,9 @@ define([], function () {
     function csere() {
       vm.szam = new Date(vm.datum);
       vm.datumszam = $filter('date')(vm.szam, 'yyyy-MM-dd');
+      vm.szak_de=$filter('shift')(1,vm.datumszam);
+      vm.szak_du=$filter('shift')(2,vm.datumszam);
+      vm.szak_ej=$filter('shift')(3,vm.datumszam);
     }
 
 
