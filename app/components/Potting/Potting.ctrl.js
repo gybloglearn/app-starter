@@ -2,214 +2,83 @@ define([], function () {
   'use strict';
   function Controller(PottingService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
-    vm.p = [];
+    vm.potting = [];
     vm.moredays = [];
-    vm.shiftid = null;
-    vm.inpotting_de = [];
-    vm.p3potting_de = [];
-    vm.outpotting_de = [];
-    vm.suminpotting_de = 0;
-    vm.suminpotting_de_aeq = 0;
-    vm.sump3potting_de = 0;
-    vm.sump3potting_de_aeq = 0;
-    vm.sumoutpotting_de = 0;
-    vm.sumoutpotting_de_aeq = 0;
-    vm.inpotting_du = [];
-    vm.p3potting_du = [];
-    vm.outpotting_du = [];
-    vm.suminpotting_du = 0;
-    vm.suminpotting_du_aeq = 0;
-    vm.sump3potting_du = 0;
-    vm.sump3potting_du_aeq = 0;
-    vm.sumoutpotting_du = 0;
-    vm.sumoutpotting_du_aeq = 0;
-    vm.inpotting_ej = [];
-    vm.p3potting_ej = [];
-    vm.outpotting_ej = [];
-    vm.suminpotting_ej = 0;
-    vm.suminpotting_ej_aeq = 0;
-    vm.sump3potting_ej = 0;
-    vm.sump3potting_ej_aeq = 0;
-    vm.sumoutpotting_ej = 0;
-    vm.sumoutpotting_ej_aeq = 0;
     vm.mch = "Potting4"
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.allpotting = ["Potting4", "Potting3", "Potting2"];
-    vm.szak_de = $filter('shift')(1, vm.datum);
-    vm.szak_du = $filter('shift')(2, vm.datum);
-    vm.szak_ej = $filter('shift')(3, vm.datum);
     vm.load = load;
     vm.load_more = load_more;
     vm.datumszam = vm.datum;
-
     vm.datszam = csere;
+
     function csere() {
       vm.szam = new Date(vm.datum);
       vm.datumszam = $filter('date')(vm.szam, 'yyyy-MM-dd');
-      vm.szak_de = $filter('shift')(1, vm.datumszam);
-      vm.szak_du = $filter('shift')(2, vm.datumszam);
-      vm.szak_ej = $filter('shift')(3, vm.datumszam);
     }
+
 
 
     function load(mch, datum) {
       vm.dis = true;
-      vm.shiftid = null;
-      vm.p = [];
-      vm.inpotting_de = [];
-      vm.p3potting_de = [];
-      vm.outpotting_de = [];
-      vm.suminpotting_de = 0;
-      vm.suminpotting_de_aeq = 0;
-      vm.sump3potting_de = 0;
-      vm.sump3potting_de_aeq = 0;
-      vm.sumoutpotting_de = 0;
-      vm.sumoutpotting_de_aeq = 0;
-      vm.inpotting_du = [];
-      vm.p3potting_du = [];
-      vm.outpotting_du = [];
-      vm.suminpotting_du = 0;
-      vm.suminpotting_du_aeq = 0;
-      vm.sump3potting_du = 0;
-      vm.sump3potting_du_aeq = 0;
-      vm.sumoutpotting_du = 0;
-      vm.sumoutpotting_du_aeq = 0;
-      vm.inpotting_ej = [];
-      vm.p3potting_ej = [];
-      vm.outpotting_ej = [];
-      vm.suminpotting_ej = 0;
-      vm.suminpotting_ej_aeq = 0;
-      vm.sump3potting_ej = 0;
-      vm.sump3potting_ej_aeq = 0;
-      vm.sumoutpotting_ej = 0;
-      vm.sumoutpotting_ej_aeq = 0;
+      vm.potting = [];
 
       PottingService.get(mch, datum).then(function (response) {
-        vm.p = response.data;
+        vm.potting = response.data;
         vm.dis = false;
-        var j = 0;
-        var k = 0;
-        var l = 0;
-        var m = 0;
-        var n = 0;
-        var o = 0;
-        var p = 0;
-        var q = 0;
-        var r = 0;
-        for (var i = 0; i < vm.p.length; i++) {
-          var mystring = vm.p[i].name;
+        for(var i=0;i<vm.potting.length;i++)
+        {
+          var mystring=vm.potting[i].name;
           var substring1 = "_IN-IN";
           var substring2 = "_P3-P3";
           var substring3 = "_OUT-OUT";
-          if (mystring.includes(substring1) && vm.p[i].shiftnum == 1) {
-            vm.inpotting_de[j] = vm.p[i];
-            vm.inpotting_de[j].name = mystring.substr(0, mystring.length - 6);
-            for (var a = 0; a < vm.aeqs.length; a++) {
-              if (vm.inpotting_de[j].name == vm.aeqs[a].name) {
-                vm.inpotting_de[j].aeq = vm.inpotting_de[j].amount * vm.aeqs[a].amount;
+
+          if(mystring.includes(substring1))
+          {
+            mystring=mystring.substr(0,mystring.length-6);
+            for (var j = 0; j < vm.aeqs.length; j++){
+              if(mystring==vm.aeqs[j].name)
+              {
+                vm.potting[i].aeq=vm.potting[i].amount*vm.aeqs[j].amount;
               }
             }
-            j++;
           }
-          else if (mystring.includes(substring2) && vm.p[i].shiftnum == 1) {
-            vm.p3potting_de[k] = vm.p[i];
-            vm.p3potting_de[k].name = mystring.substr(0, mystring.length - 6);
-            for (var a = 0; a < vm.aeqs.length; a++) {
-              if (vm.p3potting_de[k].name == vm.aeqs[a].name) {
-                vm.p3potting_de[k].aeq = vm.p3potting_de[k].amount * vm.aeqs[a].amount;
+          else if(mystring.includes(substring2))
+          {
+            mystring=mystring.substr(0,mystring.length-6);
+            for (var j = 0; j < vm.aeqs.length; j++){
+              if(mystring==vm.aeqs[j].name)
+              {
+                vm.potting[i].aeq=vm.potting[i].amount*vm.aeqs[j].amount;
               }
             }
-            k++;
           }
-          else if (mystring.includes(substring3) && vm.p[i].shiftnum == 1) {
-            vm.outpotting_de[l] = vm.p[i];
-            vm.outpotting_de[l].name = mystring.substr(0, mystring.length - 8);
-            for (var a = 0; a < vm.aeqs.length; a++) {
-              if (vm.outpotting_de[l].name == vm.aeqs[a].name) {
-                vm.outpotting_de[l].aeq = vm.outpotting_de[l].amount * vm.aeqs[a].amount;
+          else if(mystring.includes(substring3))
+          {
+            mystring=mystring.substr(0,mystring.length-8);
+            for (var j = 0; j < vm.aeqs.length; j++){
+              if(mystring==vm.aeqs[j].name)
+              {
+                vm.potting[i].aeq=vm.potting[i].amount*vm.aeqs[j].amount;
               }
             }
-            l++;
           }
-          else if (mystring.includes(substring1) && vm.p[i].shiftnum == 2) {
-            vm.inpotting_du[m] = vm.p[i];
-            vm.inpotting_du[m].name = mystring.substr(0, mystring.length - 6);
-            for (var a = 0; a < vm.aeqs.length; a++) {
-              if (vm.inpotting_du[m].name == vm.aeqs[a].name) {
-                vm.inpotting_du[m].aeq = vm.inpotting_du[m].amount * vm.aeqs[a].amount;
-              }
-            }
-            m++;
+
+          if(vm.potting[i].shiftnum==1)
+          {
+            vm.potting[i].shiftname=$filter('shift')(vm.potting[i].shiftnum, vm.potting[i].days);
           }
-          else if (mystring.includes(substring2) && vm.p[i].shiftnum == 2) {
-            vm.p3potting_du[n] = vm.p[i];
-            vm.p3potting_du[n].name = mystring.substr(0, mystring.length - 6);
-            for (var a = 0; a < vm.aeqs.length; a++) {
-              if (vm.p3potting_du[n].name == vm.aeqs[a].name) {
-                vm.p3potting_du[n].aeq = vm.p3potting_du[n].amount * vm.aeqs[a].amount;
-              }
-            }
-            n++;
+          else if(vm.potting[i].shiftnum==2)
+          {
+            vm.potting[i].shiftname=$filter('shift')(vm.potting[i].shiftnum, vm.potting[i].days);
           }
-          else if (mystring.includes(substring3) && vm.p[i].shiftnum == 2) {
-            vm.outpotting_du[o] = vm.p[i];
-            vm.outpotting_du[o].name = mystring.substr(0, mystring.length - 8);
-            for (var a = 0; a < vm.aeqs.length; a++) {
-              if (vm.outpotting_du[o].name == vm.aeqs[a].name) {
-                vm.outpotting_du[o].aeq = vm.outpotting_du[o].amount * vm.aeqs[a].amount;
-              }
-            }
-            o++;
-          }
-          else if (mystring.includes(substring1) && vm.p[i].shiftnum == 3) {
-            vm.inpotting_ej[p] = vm.p[i];
-            vm.inpotting_ej[p].name = mystring.substr(0, mystring.length - 6);
-            for (var a = 0; a < vm.aeqs.length; a++) {
-              if (vm.inpotting_ej[p].name == vm.aeqs[a].name) {
-                vm.inpotting_ej[p].aeq = vm.inpotting_ej[p].amount * vm.aeqs[a].amount;
-              }
-            }
-            p++;
-          }
-          else if (mystring.includes(substring2) && vm.p[i].shiftnum == 3) {
-            vm.p3potting_ej[q] = vm.p[i];
-            vm.p3potting_ej[q].name = mystring.substr(0, mystring.length - 6);
-            for (var a = 0; a < vm.aeqs.length; a++) {
-              if (vm.p3potting_ej[q].name == vm.aeqs[a].name) {
-                vm.p3potting_ej[q].aeq = vm.p3potting_ej[q].amount * vm.aeqs[a].amount;
-              }
-            }
-            q++;
-          }
-          else if (mystring.includes(substring3) && vm.p[i].shiftnum == 3) {
-            vm.outpotting_ej[r] = vm.p[i];
-            vm.outpotting_ej[r].name = mystring.substr(0, mystring.length - 8);
-            for (var a = 0; a < vm.aeqs.length; a++) {
-              if (vm.outpotting_ej[r].name == vm.aeqs[a].name) {
-                vm.outpotting_ej[r].aeq = vm.outpotting_ej[r].amount * vm.aeqs[a].amount;
-              }
-            }
-            r++;
+          else if(vm.potting[i].shiftnum==3)
+          {
+            vm.potting[i].shiftname=$filter('shift')(vm.potting[i].shiftnum, vm.potting[i].days);
           }
         }
-        vm.suminpotting_de = $filter('sumdb')(vm.inpotting_de);
-        vm.suminpotting_de_aeq = $filter('sumaeq')(vm.inpotting_de);
-        vm.sump3potting_de = $filter('sumdb')(vm.p3potting_de);
-        vm.sump3potting_de_aeq = $filter('sumaeq')(vm.p3potting_de);
-        vm.sumoutpotting_de = $filter('sumdb')(vm.outpotting_de);
-        vm.sumoutpotting_de_aeq = $filter('sumaeq')(vm.outpotting_de);
-        vm.suminpotting_du = $filter('sumdb')(vm.inpotting_du);
-        vm.suminpotting_du_aeq = $filter('sumaeq')(vm.inpotting_du);
-        vm.sump3potting_du = $filter('sumdb')(vm.p3potting_du);
-        vm.sump3potting_du_aeq = $filter('sumaeq')(vm.p3potting_du);
-        vm.sumoutpotting_du = $filter('sumdb')(vm.outpotting_du);
-        vm.sumoutpotting_du_aeq = $filter('sumaeq')(vm.outpotting_du);
-        vm.suminpotting_ej = $filter('sumdb')(vm.inpotting_ej);
-        vm.suminpotting_ej_aeq = $filter('sumaeq')(vm.inpotting_ej);
-        vm.sump3potting_ej = $filter('sumdb')(vm.p3potting_ej);
-        vm.sump3potting_ej_aeq = $filter('sumaeq')(vm.p3potting_ej);
-        vm.sumoutpotting_ej = $filter('sumdb')(vm.outpotting_ej);
-        vm.sumoutpotting_ej_aeq = $filter('sumaeq')(vm.outpotting_ej);
+
+        console.log(vm.potting);
       });
     }
 
@@ -259,7 +128,52 @@ define([], function () {
           }
         }
         console.log(vm.moredays);
+          setChart(mch);
       });
+    }
+
+
+    function setChart(mch) {
+      vm.mch = mch;
+      vm.chartConfig = {
+        chart: {
+          type: 'column'
+        },
+        xAxis: {
+          categories: feltolt_days()
+        },
+        yAxis: {
+          title: {
+            text: 'AEQ'
+          }
+        },
+        title: { text: vm.mch },
+        series: [{
+          name: "Délelőtt",
+          data: [1, 25, 6, 7, 30]
+        },
+        {
+          name: "Délután",
+          data: [4, 5, 12, 22, 9]
+        },
+        {
+          name: "Éjszaka",
+          data: [7, 8, 10, 31, 13]
+        }],
+      }
+    }
+
+    function feltolt_days() {
+      var aktday = new Date(vm.kezdo).getTime();
+      var finishday = new Date(vm.vege).getTime();
+      var napok = [];
+      var i = 0;
+      while (aktday <= finishday) {
+        napok[i] = $filter('date')(aktday, 'MM-dd');
+        aktday = aktday + (24 * 3600 * 1000);
+        i++
+      }
+      return napok;
     }
 
 

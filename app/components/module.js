@@ -43,7 +43,7 @@ define([
   app.controller('PottingController', PottingController);
 	app.service('PottingService', PottingService);
   app.directive('datepicker',datepicker);
-  app.directive('mychart',mychart);
+  app.directive('myChart',mychart);
   app.filter('unique',unique);
   app.filter('sumdb',sumdb);
   app.filter('sumaeq',sumaeq);
