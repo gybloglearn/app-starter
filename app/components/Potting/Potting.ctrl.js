@@ -5,13 +5,13 @@ define([], function () {
     vm.potting = [];
     vm.mch = "Potting4"
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.kezdo = $filter('date')(new Date(vm.datum).getTime()-(24*3600*1000), 'yyyy-MM-dd');
+    vm.kezdo = $filter('date')(new Date(vm.datum).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.allpotting = ["Potting4", "Potting3", "Potting2"];
     vm.load = load;
     vm.datumszam = vm.datum;
-    vm.kezdodatumszam=vm.kezdo;
+    vm.kezdodatumszam = vm.kezdo;
     vm.datszam = beallit;
-    vm.helyes=csere;
+    vm.helyes = csere;
     vm.szak_de = $filter('shift')(1, vm.datumszam);
     vm.szak_du = $filter('shift')(2, vm.datumszam);
     vm.szak_ej = $filter('shift')(3, vm.datumszam);
@@ -19,19 +19,18 @@ define([], function () {
 
     function beallit() {
       vm.szam = new Date(vm.datum);
-      vm.masik=new Date(vm.kezdo);
+      vm.masik = new Date(vm.kezdo);
       vm.datumszam = $filter('date')(vm.szam, 'yyyy-MM-dd');
-      vm.kezdodatumszam=$filter('date')(vm.masik,'yyyy-MM-dd');
+      vm.kezdodatumszam = $filter('date')(vm.masik, 'yyyy-MM-dd');
       vm.szak_de = $filter('shift')(1, vm.datumszam);
       vm.szak_du = $filter('shift')(2, vm.datumszam);
       vm.szak_ej = $filter('shift')(3, vm.datumszam);
     }
 
-    function csere(){
-      if(vm.datum<vm.kezdo)
-      {
-        vm.datum=$filter('date')(new Date(),'yyyy-MM-dd');
-        vm.kezdo = $filter('date')(new Date(vm.datum).getTime()-(24*3600*1000), 'yyyy-MM-dd');
+    function csere() {
+      if (vm.datum < vm.kezdo) {
+        vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
+        vm.kezdo = $filter('date')(new Date(vm.datum).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
       }
     }
 
@@ -132,7 +131,7 @@ define([], function () {
       if (vm.tobbnapos) {
         PottingService.getdays(vm.mch, vm.kezdo, vm.datum).then(function (response) {
           vm.potting = response.data;
-          vm.dis=false;
+          vm.dis = false;
 
           for (var i = 0; i < vm.potting.length; i++) {
             var nowstring = vm.potting[i].name;
@@ -179,51 +178,6 @@ define([], function () {
         });
       }
     }
-
-
-    function setChart(mch) {
-      vm.mch = mch;
-      vm.chartConfig = {
-        chart: {
-          type: 'column'
-        },
-        xAxis: {
-          categories: feltolt_days()
-        },
-        yAxis: {
-          title: {
-            text: 'AEQ'
-          }
-        },
-        title: { text: vm.mch },
-        series: [{
-          name: "Délelőtt",
-          data: [1, 25, 6, 7, 30]
-        },
-        {
-          name: "Délután",
-          data: [4, 5, 12, 22, 9]
-        },
-        {
-          name: "Éjszaka",
-          data: [7, 8, 10, 31, 13]
-        }],
-      }
-    }
-
-    function feltolt_days() {
-      var aktday = new Date(vm.kezdo).getTime();
-      var finishday = new Date(vm.vege).getTime();
-      var napok = [];
-      var i = 0;
-      while (aktday <= finishday) {
-        napok[i] = $filter('date')(aktday, 'MM-dd');
-        aktday = aktday + (24 * 3600 * 1000);
-        i++
-      }
-      return napok;
-    }
-
 
     activate();
 
