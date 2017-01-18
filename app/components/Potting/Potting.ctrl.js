@@ -3,172 +3,181 @@ define([], function () {
   function Controller(PottingService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
     vm.potting = [];
-    vm.moredays = [];
     vm.mch = "Potting4"
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
+    vm.kezdo = $filter('date')(new Date(vm.datum).getTime()-(24*3600*1000), 'yyyy-MM-dd');
     vm.allpotting = ["Potting4", "Potting3", "Potting2"];
     vm.load = load;
-    vm.load_more = load_more;
     vm.datumszam = vm.datum;
-    vm.datszam = csere;
+    vm.kezdodatumszam=vm.kezdo;
+    vm.datszam = beallit;
+    vm.helyes=csere;
     vm.szak_de = $filter('shift')(1, vm.datumszam);
     vm.szak_du = $filter('shift')(2, vm.datumszam);
     vm.szak_ej = $filter('shift')(3, vm.datumszam);
     vm.sumdb_sumaeq = [];
 
-    function csere() {
+    function beallit() {
       vm.szam = new Date(vm.datum);
+      vm.masik=new Date(vm.kezdo);
       vm.datumszam = $filter('date')(vm.szam, 'yyyy-MM-dd');
+      vm.kezdodatumszam=$filter('date')(vm.masik,'yyyy-MM-dd');
       vm.szak_de = $filter('shift')(1, vm.datumszam);
       vm.szak_du = $filter('shift')(2, vm.datumszam);
       vm.szak_ej = $filter('shift')(3, vm.datumszam);
     }
 
+    function csere(){
+      if(vm.datum<vm.kezdo)
+      {
+        vm.datum=$filter('date')(new Date(),'yyyy-MM-dd');
+        vm.kezdo = $filter('date')(new Date(vm.datum).getTime()-(24*3600*1000), 'yyyy-MM-dd');
+      }
+    }
 
-
-    function load(mch, datum) {
+    function load() {
       vm.dis = true;
       vm.potting = [];
       vm.sumdb_sumaeq = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-      PottingService.get(mch, datum).then(function (response) {
-        vm.potting = response.data;
-        vm.dis = false;
-        for (var i = 0; i < vm.potting.length; i++) {
-          var mystring = vm.potting[i].name;
-          var substring1 = "_IN-IN";
-          var substring2 = "_P3-P3";
-          var substring3 = "_OUT-OUT";
-          var db = 0;
-          var aeq = 0;
+      if (!vm.tobbnapos) {
+        PottingService.get(vm.mch, vm.datum).then(function (response) {
+          vm.potting = response.data;
+          vm.dis = false;
+          for (var i = 0; i < vm.potting.length; i++) {
+            var mystring = vm.potting[i].name;
+            var substring1 = "_IN-IN";
+            var substring2 = "_P3-P3";
+            var substring3 = "_OUT-OUT";
+            var db = 0;
+            var aeq = 0;
 
-          /*aeq hozzáadása + darab és aeq összesítés 18 elemű tömböt töltünk fel be-db 
-          be-aeq fordít-db fordít-aeq ki-db ki-aeq sorrendben,ezt háromszor egymás után délelőtt,
-          délután éjszaka sorrendben*/
-          if (mystring.includes(substring1)) {
-            mystring = mystring.substr(0, mystring.length - 6);
-            for (var j = 0; j < vm.aeqs.length; j++) {
-              if (mystring == vm.aeqs[j].name) {
-                vm.potting[i].aeq = vm.potting[i].amount * vm.aeqs[j].amount;
+            /*aeq hozzáadása + darab és aeq összesítés 18 elemű tömböt töltünk fel be-db 
+            be-aeq fordít-db fordít-aeq ki-db ki-aeq sorrendben,ezt háromszor egymás után délelőtt,
+            délután éjszaka sorrendben*/
+            if (mystring.includes(substring1)) {
+              mystring = mystring.substr(0, mystring.length - 6);
+              for (var j = 0; j < vm.aeqs.length; j++) {
+                if (mystring == vm.aeqs[j].name) {
+                  vm.potting[i].aeq = vm.potting[i].amount * vm.aeqs[j].amount;
+                }
+              }
+              if (vm.potting[i].shiftnum == 1) {
+                vm.sumdb_sumaeq[0] = vm.sumdb_sumaeq[0] + vm.potting[i].amount;
+                vm.sumdb_sumaeq[1] = vm.sumdb_sumaeq[1] + vm.potting[i].aeq;
+              }
+              else if (vm.potting[i].shiftnum == 2) {
+                vm.sumdb_sumaeq[6] = vm.sumdb_sumaeq[6] + vm.potting[i].amount;
+                vm.sumdb_sumaeq[7] = vm.sumdb_sumaeq[7] + vm.potting[i].aeq;
+              }
+              else if (vm.potting[i].shiftnum == 3) {
+                vm.sumdb_sumaeq[12] = vm.sumdb_sumaeq[12] + vm.potting[i].amount;
+                vm.sumdb_sumaeq[13] = vm.sumdb_sumaeq[13] + vm.potting[i].aeq;
+              }
+            }
+            else if (mystring.includes(substring2)) {
+              mystring = mystring.substr(0, mystring.length - 6);
+              for (var j = 0; j < vm.aeqs.length; j++) {
+                if (mystring == vm.aeqs[j].name) {
+                  vm.potting[i].aeq = vm.potting[i].amount * vm.aeqs[j].amount;
+                }
+              }
+              if (vm.potting[i].shiftnum == 1) {
+                vm.sumdb_sumaeq[2] = vm.sumdb_sumaeq[2] + vm.potting[i].amount;
+                vm.sumdb_sumaeq[3] = vm.sumdb_sumaeq[3] + vm.potting[i].aeq;
+              }
+              else if (vm.potting[i].shiftnum == 2) {
+                vm.sumdb_sumaeq[8] = vm.sumdb_sumaeq[8] + vm.potting[i].amount;
+                vm.sumdb_sumaeq[9] = vm.sumdb_sumaeq[9] + vm.potting[i].aeq;
+              }
+              else if (vm.potting[i].shiftnum == 3) {
+                vm.sumdb_sumaeq[14] = vm.sumdb_sumaeq[14] + vm.potting[i].amount;
+                vm.sumdb_sumaeq[15] = vm.sumdb_sumaeq[15] + vm.potting[i].aeq;
+              }
+            }
+            else if (mystring.includes(substring3)) {
+              mystring = mystring.substr(0, mystring.length - 8);
+              for (var j = 0; j < vm.aeqs.length; j++) {
+                if (mystring == vm.aeqs[j].name) {
+                  vm.potting[i].aeq = vm.potting[i].amount * vm.aeqs[j].amount;
+                }
+              }
+              if (vm.potting[i].shiftnum == 1) {
+                vm.sumdb_sumaeq[4] = vm.sumdb_sumaeq[4] + vm.potting[i].amount;
+                vm.sumdb_sumaeq[5] = vm.sumdb_sumaeq[5] + vm.potting[i].aeq;
+              }
+              else if (vm.potting[i].shiftnum == 2) {
+                vm.sumdb_sumaeq[10] = vm.sumdb_sumaeq[10] + vm.potting[i].amount;
+                vm.sumdb_sumaeq[11] = vm.sumdb_sumaeq[11] + vm.potting[i].aeq;
+              }
+              else if (vm.potting[i].shiftnum == 3) {
+                vm.sumdb_sumaeq[16] = vm.sumdb_sumaeq[16] + vm.potting[i].amount;
+                vm.sumdb_sumaeq[17] = vm.sumdb_sumaeq[17] + vm.potting[i].aeq;
+              }
+            }
+
+            if (vm.potting[i].shiftnum == 1) {
+              vm.potting[i].shiftname = $filter('shift')(vm.potting[i].shiftnum, vm.potting[i].days);
+            }
+            else if (vm.potting[i].shiftnum == 2) {
+              vm.potting[i].shiftname = $filter('shift')(vm.potting[i].shiftnum, vm.potting[i].days);
+            }
+            else if (vm.potting[i].shiftnum == 3) {
+              vm.potting[i].shiftname = $filter('shift')(vm.potting[i].shiftnum, vm.potting[i].days);
+            }
+          }
+        });
+      }
+
+      if (vm.tobbnapos) {
+        PottingService.getdays(vm.mch, vm.kezdo, vm.datum).then(function (response) {
+          vm.potting = response.data;
+          vm.dis=false;
+
+          for (var i = 0; i < vm.potting.length; i++) {
+            var nowstring = vm.potting[i].name;
+            var substring1 = "_IN-IN";
+            var substring2 = "_P3-P3";
+            var substring3 = "_OUT-OUT";
+
+            if (nowstring.includes(substring1)) {
+              nowstring = nowstring.substr(0, nowstring.length - 6);
+              for (var j = 0; j < vm.aeqs.length; j++) {
+                if (nowstring == vm.aeqs[j].name) {
+                  vm.potting[i].aeq = vm.potting[i].amount * vm.aeqs[j].amount;
+                }
+              }
+            }
+
+            else if (nowstring.includes(substring2)) {
+              nowstring = nowstring.substr(0, nowstring.length - 6);
+              for (var j = 0; j < vm.aeqs.length; j++) {
+                if (nowstring == vm.aeqs[j].name) {
+                  vm.potting[i].aeq = vm.potting[i].amount * vm.aeqs[j].amount;
+                }
+              }
+            }
+            else if (nowstring.includes(substring3)) {
+              nowstring = nowstring.substr(0, nowstring.length - 8);
+              for (var j = 0; j < vm.aeqs.length; j++) {
+                if (nowstring == vm.aeqs[j].name) {
+                  vm.potting[i].aeq = vm.potting[i].amount * vm.aeqs[j].amount;
+                }
               }
             }
             if (vm.potting[i].shiftnum == 1) {
-              vm.sumdb_sumaeq[0] = vm.sumdb_sumaeq[0] + vm.potting[i].amount;
-              vm.sumdb_sumaeq[1] = vm.sumdb_sumaeq[1] + vm.potting[i].aeq;
+              vm.potting[i].shiftname = $filter('shift')(1, vm.potting[i].days);
             }
             else if (vm.potting[i].shiftnum == 2) {
-              vm.sumdb_sumaeq[6] = vm.sumdb_sumaeq[6] + vm.potting[i].amount;
-              vm.sumdb_sumaeq[7] = vm.sumdb_sumaeq[7] + vm.potting[i].aeq;
+              vm.potting[i].shiftname = $filter('shift')(2, vm.potting[i].days);
             }
             else if (vm.potting[i].shiftnum == 3) {
-              vm.sumdb_sumaeq[12] = vm.sumdb_sumaeq[12] + vm.potting[i].amount;
-              vm.sumdb_sumaeq[13] = vm.sumdb_sumaeq[13] + vm.potting[i].aeq;
+              vm.potting[i].shiftname = $filter('shift')(3, vm.potting[i].days);
             }
           }
-          else if (mystring.includes(substring2)) {
-            mystring = mystring.substr(0, mystring.length - 6);
-            for (var j = 0; j < vm.aeqs.length; j++) {
-              if (mystring == vm.aeqs[j].name) {
-                vm.potting[i].aeq = vm.potting[i].amount * vm.aeqs[j].amount;
-              }
-            }
-            if (vm.potting[i].shiftnum == 1) {
-              vm.sumdb_sumaeq[2] = vm.sumdb_sumaeq[2] + vm.potting[i].amount;
-              vm.sumdb_sumaeq[3] = vm.sumdb_sumaeq[3] + vm.potting[i].aeq;
-            }
-            else if (vm.potting[i].shiftnum == 2) {
-              vm.sumdb_sumaeq[8] = vm.sumdb_sumaeq[8] + vm.potting[i].amount;
-              vm.sumdb_sumaeq[9] = vm.sumdb_sumaeq[9] + vm.potting[i].aeq;
-            }
-            else if (vm.potting[i].shiftnum == 3) {
-              vm.sumdb_sumaeq[14] = vm.sumdb_sumaeq[14] + vm.potting[i].amount;
-              vm.sumdb_sumaeq[15] = vm.sumdb_sumaeq[15] + vm.potting[i].aeq;
-            }
-          }
-          else if (mystring.includes(substring3)) {
-            mystring = mystring.substr(0, mystring.length - 8);
-            for (var j = 0; j < vm.aeqs.length; j++) {
-              if (mystring == vm.aeqs[j].name) {
-                vm.potting[i].aeq = vm.potting[i].amount * vm.aeqs[j].amount;
-              }
-            }
-            if (vm.potting[i].shiftnum == 1) {
-              vm.sumdb_sumaeq[4] = vm.sumdb_sumaeq[4] + vm.potting[i].amount;
-              vm.sumdb_sumaeq[5] = vm.sumdb_sumaeq[5] + vm.potting[i].aeq;
-            }
-            else if (vm.potting[i].shiftnum == 2) {
-              vm.sumdb_sumaeq[10] = vm.sumdb_sumaeq[10] + vm.potting[i].amount;
-              vm.sumdb_sumaeq[11] = vm.sumdb_sumaeq[11] + vm.potting[i].aeq;
-            }
-            else if (vm.potting[i].shiftnum == 3) {
-              vm.sumdb_sumaeq[16] = vm.sumdb_sumaeq[16] + vm.potting[i].amount;
-              vm.sumdb_sumaeq[17] = vm.sumdb_sumaeq[17] + vm.potting[i].aeq;
-            }
-          }
-
-          if (vm.potting[i].shiftnum == 1) {
-            vm.potting[i].shiftname = $filter('shift')(vm.potting[i].shiftnum, vm.potting[i].days);
-          }
-          else if (vm.potting[i].shiftnum == 2) {
-            vm.potting[i].shiftname = $filter('shift')(vm.potting[i].shiftnum, vm.potting[i].days);
-          }
-          else if (vm.potting[i].shiftnum == 3) {
-            vm.potting[i].shiftname = $filter('shift')(vm.potting[i].shiftnum, vm.potting[i].days);
-          }
-        }
-        console.log(vm.potting);
-        console.log(vm.sumdb_sumaeq);
-      });
-    }
-
-    function load_more(mch, kezdodatum, vegdatum) {
-      PottingService.getdays(mch, kezdodatum, vegdatum).then(function (response) {
-        vm.moredays = response.data;
-
-        for (var i = 0; i < vm.moredays.length; i++) {
-          var nowstring = vm.moredays[i].name;
-          var substring1 = "_IN-IN";
-          var substring2 = "_P3-P3";
-          var substring3 = "_OUT-OUT";
-
-          if (nowstring.includes(substring1)) {
-            nowstring = nowstring.substr(0, nowstring.length - 6);
-            for (var j = 0; j < vm.aeqs.length; j++) {
-              if (nowstring == vm.aeqs[j].name) {
-                vm.moredays[i].aeq = vm.moredays[i].amount * vm.aeqs[j].amount;
-              }
-            }
-          }
-
-          else if (nowstring.includes(substring2)) {
-            nowstring = nowstring.substr(0, nowstring.length - 6);
-            for (var j = 0; j < vm.aeqs.length; j++) {
-              if (nowstring == vm.aeqs[j].name) {
-                vm.moredays[i].aeq = vm.moredays[i].amount * vm.aeqs[j].amount;
-              }
-            }
-          }
-          else if (nowstring.includes(substring3)) {
-            nowstring = nowstring.substr(0, nowstring.length - 8);
-            for (var j = 0; j < vm.aeqs.length; j++) {
-              if (nowstring == vm.aeqs[j].name) {
-                vm.moredays[i].aeq = vm.moredays[i].amount * vm.aeqs[j].amount;
-              }
-            }
-          }
-          if (vm.moredays[i].shiftnum == 1) {
-            vm.moredays[i].shiftname = $filter('shift')(1, vm.moredays[i].days);
-          }
-          else if (vm.moredays[i].shiftnum == 2) {
-            vm.moredays[i].shiftname = $filter('shift')(2, vm.moredays[i].days);
-          }
-          else if (vm.moredays[i].shiftnum == 3) {
-            vm.moredays[i].shiftname = $filter('shift')(3, vm.moredays[i].days);
-          }
-        }
-        console.log(vm.moredays);
-        setChart(mch);
-      });
+          console.log(vm.potting);
+        });
+      }
     }
 
 
@@ -220,7 +229,7 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      load(vm.mch, vm.datum);
+      load();
     }
     vm.aeqs = [
       { name: "Ds12 FLOW", amount: 0.6 },
