@@ -25,16 +25,16 @@
 
 
   <div class="row">
-    <h1>Délelőtt-Szak: {{}}</h1>
+    <h1>Délelőtt-Szak: {{vm.szak_de}}</h1>
   </div>
   <div class="row" style="margin-top:30px">
 <div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{}}
+  <h1 class="text-center" style="font-size:6em">{{vm.sumdb_sumaeq[0]}}
 <br>
 <small style="font-size:20px">db</small>
 </h1>
 <h2 class="text-center">
-  {{}}
+  {{vm.sumdb_sumaeq[1] | number:2}}
   <small>AEQ</small>
 </h2>
 <h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#inpotting_de">POTTING BE részletek
@@ -60,12 +60,12 @@
 </div>
 </div>
 <div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{}}
+  <h1 class="text-center" style="font-size:6em">{{vm.sumdb_sumaeq[2]}}
 <br>
 <small style="font-size:20px">db</small>
 </h1>
 <h2 class="text-center">
-  {{}}
+  {{vm.sumdb_sumaeq[3] | number:2}}
   <small>AEQ</small>
 </h2>
 <h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#p3potting_de">POTTING FORDÍTÁS részletek
@@ -91,12 +91,12 @@
 </div>
 </div>
 <div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{}}
+  <h1 class="text-center" style="font-size:6em">{{vm.sumdb_sumaeq[4]}}
 <br>
 <small style="font-size:20px">db</small>
 </h1>
 <h2 class="text-center">
-  {{}}
+  {{vm.sumdb_sumaeq[5] | number:2}}
   <small>AEQ</small>
 </h2>
 <h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#outpotting_de">POTTING KI részletek
@@ -126,16 +126,16 @@
 
 
 <div class="row">
-  <h1>Délután-Szak: {{}}</h1>
+  <h1>Délután-Szak: {{vm.szak_du}}</h1>
 </div>
 <div class="row" style="margin-top:30px">
 <div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{}}
+  <h1 class="text-center" style="font-size:6em">{{vm.sumdb_sumaeq[6]}}
 <br>
 <small style="font-size:20px">db</small>
 </h1>
 <h2 class="text-center">
-  {{}}
+  {{vm.sumdb_sumaeq[7] | number:2}}
   <small>AEQ</small>
 </h2>
 <h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#inpotting_du">POTTING BE részletek
@@ -151,7 +151,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="ng-scope">
+      <tr ng-repeat="item in vm.potting | filter:{'name':'_IN-IN','shiftnum':'2'}" class="ng-scope">
         <td>{{item.name}}</td>
         <td>{{item.amount}}</td>
         <td>{{item.aeq | number:2}}</td>
@@ -161,12 +161,12 @@
 </div>
 </div>
 <div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{}}
+  <h1 class="text-center" style="font-size:6em">{{vm.sumdb_sumaeq[8]}}
 <br>
 <small style="font-size:20px">db</small>
 </h1>
 <h2 class="text-center">
-  {{}}
+  {{vm.sumdb_sumaeq[9] | number:2}}
   <small>AEQ</small>
 </h2>
 <h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#p3potting_du">POTTING FORDÍTÁS részletek
@@ -182,7 +182,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="ng-scope">
+      <tr ng-repeat="item in vm.potting | filter:{'name':'_P3-P3','shiftnum':'2'}" class="ng-scope">
         <td>{{item.name}}</td>
         <td>{{item.amount}}</td>
         <td>{{item.aeq | number:2}}</td>
@@ -192,12 +192,12 @@
 </div>
 </div>
 <div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{}}
+  <h1 class="text-center" style="font-size:6em">{{vm.sumdb_sumaeq[10]}}
 <br>
 <small style="font-size:20px">db</small>
 </h1>
 <h2 class="text-center">
-  {{}}
+  {{vm.sumdb_sumaeq[11] | number:2}}
   <small>AEQ</small>
 </h2>
 <h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#outpotting_du">POTTING KI részletek
@@ -213,7 +213,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="ng-scope">
+      <tr ng-repeat="item in vm.potting | filter:{'name':'_OUT-OUT','shiftnum':'2'}" class="ng-scope">
         <td>{{item.name}}</td>
         <td>{{item.amount}}</td>
         <td>{{item.aeq | number:2}}</td>
@@ -227,16 +227,16 @@
 
 
 <div class="row">
-  <h1>Éjszaka-Szak: {{}}</h1>
+  <h1>Éjszaka-Szak: {{vm.szak_ej}}</h1>
 </div>
 <div class="row" style="margin-top:30px">
 <div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{}}
+  <h1 class="text-center" style="font-size:6em">{{vm.sumdb_sumaeq[12]}}
 <br>
 <small style="font-size:20px">db</small>
 </h1>
 <h2 class="text-center">
-  {{}}
+  {{vm.sumdb_sumaeq[13] | number:2}}
   <small>AEQ</small>
 </h2>
 <h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#inpotting_ej">POTTING BE részletek
@@ -252,7 +252,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="ng-scope">
+      <tr ng-repeat="item in vm.potting | filter:{'name':'_IN-IN','shiftnum':'3'}" class="ng-scope">
         <td>{{item.name}}</td>
         <td>{{item.amount}}</td>
         <td>{{item.aeq | number:2}}</td>
@@ -262,12 +262,12 @@
 </div>
 </div>
 <div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{}}
+  <h1 class="text-center" style="font-size:6em">{{vm.sumdb_sumaeq[14]}}
 <br>
 <small style="font-size:20px">db</small>
 </h1>
 <h2 class="text-center">
-  {{}}
+  {{vm.sumdb_sumaeq[15] | number:2}}
   <small>AEQ</small>
 </h2>
 <h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#p3potting_ej">POTTING FORDÍTÁS részletek
@@ -283,7 +283,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="ng-scope">
+      <tr ng-repeat="item in vm.potting | filter:{'name':'_P3-P3','shiftnum':'3'}" class="ng-scope">
         <td>{{item.name}}</td>
         <td>{{item.amount}}</td>
         <td>{{item.aeq | number:2}}</td>
@@ -293,12 +293,12 @@
 </div>
 </div>
 <div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{}}
+  <h1 class="text-center" style="font-size:6em">{{vm.sumdb_sumaeq[16]}}
 <br>
 <small style="font-size:20px">db</small>
 </h1>
 <h2 class="text-center">
-  {{}}
+  {{vm.sumdb_sumaeq[17] | number:2}}
   <small>AEQ</small>
 </h2>
 <h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#outpotting_ej">POTTING KI részletek
@@ -314,7 +314,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="ng-scope">
+      <tr ng-repeat="item in vm.potting | filter:{'name':'_OUT-OUT','shiftnum':'3'}" class="ng-scope">
         <td>{{item.name}}</td>
         <td>{{item.amount}}</td>
         <td>{{item.aeq | number:2}}</td>
