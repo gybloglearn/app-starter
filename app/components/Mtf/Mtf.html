@@ -7,8 +7,8 @@
   <span class="input-group-addon">Előző napok megtekintése:</span>
   <input type="text" class="datepicker form-control" ng-model="vm.datum">
   <div class="input-group-btn">
-    <a href="" class="btn btn-primary" ng-click="vm.oldday_load(vm.datum);vm.datszam()" ng-disabled="!vm.datum">Betöltés</a>
-    <a href="" class="btn btn-default" ng-click="vm.today_load(vm.linktoday);vm.datszam();vm.datum=null">Vissza a mai napra</a>
+    <a href="" class="btn btn-primary" ng-click="vm.load_olddays();vm.datszam()" ng-disabled="!vm.datum">Betöltés</a>
+    <a href="" class="btn btn-default" ng-click="vm.load();vm.datszam();vm.datum=null">Vissza a mai napra</a>
   </div>
 </div>
 </div>
@@ -21,7 +21,7 @@
   </div>
   <div class="row" style="margin-top:30px">
 <div class="col-sm-6">
-  <h1 class="text-center" style="font-size:6em"> {{vm.sumkihozatal_de_aeq}}
+  <h1 class="text-center" style="font-size:6em"> {{vm.sumaeq[0] | number:2}}
 <br>
 <small style="font-size:20px">AEQ</small>
 </h1>
@@ -38,8 +38,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in vm.kihozatal_de | orderBy:'aeq':true track by $index" class="ng-scope">
-        <td>{{item.name}}</td>
+      <tr ng-repeat="item in vm.mtf | filter:{'name':'_BP-OUT','shiftnum':'1'} | orderBy:'aeq':true track by $index" class="ng-scope">
+        <td>{{item.name | name_change}}</td>
         <td>{{item.amount}}</td>
         <td>{{item.aeq | number:2}}</td>
       </tr>
@@ -48,7 +48,7 @@
 </div>
 </div>
 <div class="col-sm-6">
-  <h1 class="text-center" style="font-size:6em"> {{vm.sumbokes_de}}
+  <h1 class="text-center" style="font-size:6em"> {{vm.sumbokes[0]}}
 <br>
 <small style="font-size:20px">ÖSSZES BÖKÉS</small>
 </h1>
@@ -65,8 +65,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in vm.bokes_de | orderBy:'amount':true track by $index" class="ng-scope">
-        <td>{{item.name}}</td>
+      <tr ng-repeat="item in vm.mtf | filter:{'name':'_BOK-BOKES','shiftnum':'1'} | orderBy:'amount':true track by $index" class="ng-scope">
+        <td>{{item.name | name_change}}</td>
         <td>{{item.amount}}</td>
         <td>{{(item.amount/item.aeq) | number:2}}</td>
       </tr>
@@ -81,7 +81,7 @@
 </div>
   <div class="row" style="margin-top:30px">
 <div class="col-sm-6">
-  <h1 class="text-center" style="font-size:6em"> {{vm.sumkihozatal_du_aeq}}
+  <h1 class="text-center" style="font-size:6em"> {{vm.sumaeq[1] | number:2}}
 <br>
 <small style="font-size:20px">AEQ</small>
 </h1>
@@ -98,8 +98,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in vm.kihozatal_du | orderBy:'aeq':true track by $index" class="ng-scope">
-        <td>{{item.name}}</td>
+      <tr ng-repeat="item in vm.mtf | filter:{'name':'_BP-OUT','shiftnum':'2'} | orderBy:'aeq':true track by $index" class="ng-scope">
+        <td>{{item.name | name_change}}</td>
         <td>{{item.amount}}</td>
         <td>{{item.aeq | number:2}}</td>
       </tr>
@@ -108,7 +108,7 @@
 </div>
 </div>
 <div class="col-sm-6">
-  <h1 class="text-center" style="font-size:6em"> {{vm.sumbokes_du}}
+  <h1 class="text-center" style="font-size:6em"> {{vm.sumbokes[1]}}
 <br>
 <small style="font-size:20px">ÖSSZES BÖKÉS</small>
 </h1>
@@ -125,8 +125,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in vm.bokes_du | orderBy:'amount':true track by $index" class="ng-scope">
-        <td>{{item.name}}</td>
+      <tr ng-repeat="item in vm.mtf | filter:{'name':'_BOK-BOKES','shiftnum':'2'} | orderBy:'amount':true track by $index" class="ng-scope">
+        <td>{{item.name | name_change}}</td>
         <td>{{item.amount}}</td>
         <td>{{(item.amount/item.aeq) | number:2}}</td>
       </tr>
@@ -141,7 +141,7 @@
 </div>
   <div class="row" style="margin-top:30px">
 <div class="col-sm-6">
-  <h1 class="text-center" style="font-size:6em"> {{vm.sumkihozatal_ej_aeq}}
+  <h1 class="text-center" style="font-size:6em"> {{vm.sumaeq[2] | number:2}}
 <br>
 <small style="font-size:20px">AEQ</small>
 </h1>
@@ -158,8 +158,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in vm.kihozatal_ej | orderBy:'aeq':true track by $index" class="ng-scope">
-        <td>{{item.name}}</td>
+      <tr ng-repeat="item in vm.mtf | filter:{'name':'_BP-OUT','shiftnum':'3'} | orderBy:'aeq':true track by $index" class="ng-scope">
+        <td>{{item.name | name_change}}</td>
         <td>{{item.amount}}</td>
         <td>{{item.aeq | number:2}}</td>
       </tr>
@@ -168,7 +168,7 @@
 </div>
 </div>
 <div class="col-sm-6">
-  <h1 class="text-center" style="font-size:6em"> {{vm.sumbokes_ej}}
+  <h1 class="text-center" style="font-size:6em"> {{vm.sumbokes[2]}}
 <br>
 <small style="font-size:20px">ÖSSZES BÖKÉS</small>
 </h1>
@@ -185,8 +185,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in vm.bokes_ej | orderBy:'amount':true track by $index" class="ng-scope">
-        <td>{{item.name}}</td>
+      <tr ng-repeat="item in vm.mtf | filter:{'name':'_BOK-BOKES','shiftnum':'3'} | orderBy:'amount':true track by $index" class="ng-scope">
+        <td>{{item.name | name_change}}</td>
         <td>{{item.amount}}</td>
         <td>{{(item.amount/item.aeq) | number:2}}</td>
       </tr>

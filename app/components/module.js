@@ -12,7 +12,8 @@ define([
   './filters/sumdb',
   './filters/sumaeq',
   './filters/change',
-  './filters/shift'
+  './filters/shift',
+  './filters/name_change'
 	/* files */
 ], function(
   configFunction,
@@ -28,7 +29,8 @@ define([
   sumdb,
   sumaeq,
   change,
-  shift
+  shift,
+  name_change
 	/* names */) {
 
   // Link all components to the module !!!
@@ -48,5 +50,6 @@ define([
   app.filter('sumaeq',sumaeq);
   app.filter('change',change);
   app.filter('shift',shift);
+  app.filter('name_change',name_change);
 		/* controllers */
 });

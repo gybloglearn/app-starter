@@ -33,7 +33,7 @@
 				<ul class="nav navbar-nav">
 					<!--<li><a ui-sref="start">Start</a></li>-->
 					<!-- links -->
-					<li><a ui-sref="Mtf"><i class="icon-file"></i> Mtf</a></li>
+					<li ng-show="user.displayname"><a ui-sref="Mtf"><i class="icon-file"></i> Mtf</a></li>
 
 				</ul>
 				<ul class="nav navbar-nav pull-right">
@@ -46,7 +46,7 @@
 
 	<div style="margin: 20px auto;" ui-view></div>
 
-<div class="footer">
+<div class="footer" ng-show="user.displayname">
 	<div class="primary">
 		<div class="container">
 			<div class="brand">

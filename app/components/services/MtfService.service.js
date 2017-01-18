@@ -19,10 +19,10 @@ define([], function () {
       return $http(req);
     }
 
-    function getoldday(some) {
+    function getoldday(linkoldday) {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15/getReports/files/mtf_'+ some +'05.json'
+        url: 'http://3.228.180.15/getReports/files/mtf_'+ linkoldday +'05.json'
       };
       return $http(req);
     }
