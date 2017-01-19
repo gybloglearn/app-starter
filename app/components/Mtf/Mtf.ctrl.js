@@ -13,7 +13,7 @@ define([], function () {
     vm.szak_ej = $filter('shift')(3, vm.datum);
     vm.datumszam = vm.datum;
     vm.load = load;
-    vm.load_olddays=load_olddays;
+    vm.load_olddays = load_olddays;
     vm.datszam = beilleszt;
 
     function beilleszt() {
@@ -81,72 +81,107 @@ define([], function () {
           else if (vm.mtf[i].shiftnum == 3) {
             vm.mtf[i].shiftname = $filter('shift')(vm.mtf[i].shiftnum, vm.mtf[i].days);
           }
-          vm.mtf[i].name=$filter('change')(vm.mtf[i].name);
+          vm.mtf[i].name = $filter('change')(vm.mtf[i].name);
+        }
+        var tarolo = "";
+        for (i = 0; i <= vm.mtf.length - 1; i++) {
+          for (j = i + 1; j <= vm.mtf.length - 1; j++) {
+            if (vm.mtf[i].amount < vm.mtf[j].amount) {
+              tarolo = vm.mtf[i];
+              vm.mtf[i] = vm.mtf[j];
+              vm.mtf[j] = tarolo;
+            }
+          }
+        }
+        var hossz=vm.mtf.length;
+        for(var i=0;i<vm.mtf.length;i++)
+        {
+          if(vm.mtf[i].amount==0)
+          {
+            vm.mtf.splice(i,hossz);
+          }
         }
       });
     }
 
-    function load_olddays()
-    {
+    function load_olddays() {
       vm.mtf = [];
       vm.sumaeq = [0, 0, 0];
       vm.sumbokes = [0, 0, 0];
       vm.linkoldday = $filter('date')(new Date(vm.datum).getTime() + (24 * 3600 * 1000), 'MMdd');
 
       MtfService.getoldday(vm.linkoldday).then(function (response) {
-         vm.mtf = response.data[0].data;
- 
-         for (var i = 0; i < vm.mtf.length; i++) {
-           var mystring = vm.mtf[i].name;
-           var substring1 = "_BP-OUT";
-           var substring2 = "_BOK-BOKES";
- 
-           if (mystring.includes(substring1)) {
-             mystring = mystring.substr(0, mystring.length - 7);
-             for (var j = 0; j < vm.aeqs.length; j++) {
-               if (mystring == vm.aeqs[j].name) {
-                 vm.mtf[i].aeq = vm.mtf[i].amount * vm.aeqs[j].amount;
-               }
-             }
-             if (vm.mtf[i].shiftnum == 1) {
-                 vm.sumaeq[0] = vm.sumaeq[0] + vm.mtf[i].aeq;
-               }
-             else if (vm.mtf[i].shiftnum == 2) {
-                 vm.sumaeq[1] = vm.sumaeq[1] + vm.mtf[i].aeq;
-               }
-             else if (vm.mtf[i].shiftnum == 3) {
-                 vm.sumaeq[2] = vm.sumaeq[2] + vm.mtf[i].aeq;
-               }
-           }
-           else if (mystring.includes(substring2)) {
-             mystring = mystring.substr(0, mystring.length - 10);
-             for (var j = 0; j < vm.aeqs.length; j++) {
-               if (mystring == vm.aeqs[j].name) {
-                 vm.mtf[i].aeq = vm.mtf[i].amount * vm.aeqs[j].amount;
-               }
-             }
-             if (vm.mtf[i].shiftnum == 1) {
-                 vm.sumbokes[0] = vm.sumbokes[0] + vm.mtf[i].amount;
-               }
-             else if (vm.mtf[i].shiftnum == 2) {
-                 vm.sumbokes[1] = vm.sumbokes[1] + vm.mtf[i].amount;
-               }
-             else if (vm.mtf[i].shiftnum == 3) {
-                 vm.sumbokes[2] = vm.sumbokes[2] + vm.mtf[i].amount;
-               }
-           }
-           if (vm.mtf[i].shiftnum == 1) {
-             vm.mtf[i].shiftname = $filter('shift')(vm.mtf[i].shiftnum, vm.mtf[i].days);
-           }
-           else if (vm.mtf[i].shiftnum == 2) {
-             vm.mtf[i].shiftname = $filter('shift')(vm.mtf[i].shiftnum, vm.mtf[i].days);
-           }
-           else if (vm.mtf[i].shiftnum == 3) {
-             vm.mtf[i].shiftname = $filter('shift')(vm.mtf[i].shiftnum, vm.mtf[i].days);
-           }
-           vm.mtf[i].name=$filter('change')(vm.mtf[i].name);
-         }
-       });
+        vm.mtf = response.data[0].data;
+
+        for (var i = 0; i < vm.mtf.length; i++) {
+          var mystring = vm.mtf[i].name;
+          var substring1 = "_BP-OUT";
+          var substring2 = "_BOK-BOKES";
+
+          if (mystring.includes(substring1)) {
+            mystring = mystring.substr(0, mystring.length - 7);
+            for (var j = 0; j < vm.aeqs.length; j++) {
+              if (mystring == vm.aeqs[j].name) {
+                vm.mtf[i].aeq = vm.mtf[i].amount * vm.aeqs[j].amount;
+              }
+            }
+            if (vm.mtf[i].shiftnum == 1) {
+              vm.sumaeq[0] = vm.sumaeq[0] + vm.mtf[i].aeq;
+            }
+            else if (vm.mtf[i].shiftnum == 2) {
+              vm.sumaeq[1] = vm.sumaeq[1] + vm.mtf[i].aeq;
+            }
+            else if (vm.mtf[i].shiftnum == 3) {
+              vm.sumaeq[2] = vm.sumaeq[2] + vm.mtf[i].aeq;
+            }
+          }
+          else if (mystring.includes(substring2)) {
+            mystring = mystring.substr(0, mystring.length - 10);
+            for (var j = 0; j < vm.aeqs.length; j++) {
+              if (mystring == vm.aeqs[j].name) {
+                vm.mtf[i].aeq = vm.mtf[i].amount * vm.aeqs[j].amount;
+              }
+            }
+            if (vm.mtf[i].shiftnum == 1) {
+              vm.sumbokes[0] = vm.sumbokes[0] + vm.mtf[i].amount;
+            }
+            else if (vm.mtf[i].shiftnum == 2) {
+              vm.sumbokes[1] = vm.sumbokes[1] + vm.mtf[i].amount;
+            }
+            else if (vm.mtf[i].shiftnum == 3) {
+              vm.sumbokes[2] = vm.sumbokes[2] + vm.mtf[i].amount;
+            }
+          }
+          if (vm.mtf[i].shiftnum == 1) {
+            vm.mtf[i].shiftname = $filter('shift')(vm.mtf[i].shiftnum, vm.mtf[i].days);
+          }
+          else if (vm.mtf[i].shiftnum == 2) {
+            vm.mtf[i].shiftname = $filter('shift')(vm.mtf[i].shiftnum, vm.mtf[i].days);
+          }
+          else if (vm.mtf[i].shiftnum == 3) {
+            vm.mtf[i].shiftname = $filter('shift')(vm.mtf[i].shiftnum, vm.mtf[i].days);
+          }
+          vm.mtf[i].name = $filter('change')(vm.mtf[i].name);
+        }
+        var tarolo = "";
+        for (i = 0; i <= vm.mtf.length - 1; i++) {
+          for (j = i + 1; j <= vm.mtf.length - 1; j++) {
+            if (vm.mtf[i].amount < vm.mtf[j].amount) {
+              tarolo = vm.mtf[i];
+              vm.mtf[i] = vm.mtf[j];
+              vm.mtf[j] = tarolo;
+            }
+          }
+        }
+        var hossz=vm.mtf.length;
+        for(var i=0;i<vm.mtf.length;i++)
+        {
+          if(vm.mtf[i].amount==0)
+          {
+            vm.mtf.splice(i,hossz);
+          }
+        }
+      });
     }
 
     activate();
@@ -163,6 +198,7 @@ define([], function () {
       { name: "ZW230 FLOW", amount: 0.46 },
       { name: "ZW230 CP5", amount: 0.46 },
       { name: "C11CP5", amount: 0.5 },
+      { name: "C11 CP5", amount: 0.5 },
       { name: "C11FLOW", amount: 0.5 },
       { name: "C11 FLOW", amount: 0.5 },
       { name: "D11 CP5", amount: 0.68 },
