@@ -13,7 +13,10 @@ define([
   './filters/sumaeq',
   './filters/change',
   './filters/shift',
-  './filters/name_change'
+  './filters/name_change',
+  './filters/sumField',
+	'./archiv/archiv.ctrl',
+  './services/archiv.service'
 	/* files */
 ], function(
   configFunction,
@@ -30,7 +33,10 @@ define([
   sumaeq,
   change,
   shift,
-  name_change
+  name_change,
+  sumField,
+	archivController,
+  archivService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -51,5 +57,8 @@ define([
   app.filter('change',change);
   app.filter('shift',shift);
   app.filter('name_change',name_change);
+  app.filter('sumField',sumField);
+	app.controller('archivController', archivController);
+	app.service('archivService', archivService);
 		/* controllers */
 });

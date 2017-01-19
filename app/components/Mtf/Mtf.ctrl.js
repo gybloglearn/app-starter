@@ -183,6 +183,7 @@ define([], function () {
         }
       });
     }
+    vm.sdate=new Date().getFullYear() + "-01-01";
 
     activate();
 

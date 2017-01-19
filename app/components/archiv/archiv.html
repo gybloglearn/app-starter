@@ -1,0 +1,21 @@
+<div class="container-fluid">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">MTF Archívum</h1>
+      <div class="col-sm-6" style="margin-top:20px">
+<div class="input-group">
+  <span class="input-group-addon">Betöltésre kerülő időszak:</span>
+  <input type="text" class="datepicker form-control" ng-model="vm.kezdo">
+  <span class="input-group-addon">-tól</span>
+  <input type="text" class="datepicker form-control" ng-model="vm.vege">
+  <span class="input-group-addon">-ig</span>
+  <div class="input-group-btn">
+    <a href="" class="btn btn-primary" ng-click="vm.getD()" ng-disabled="vm.vege<=vm.kezdo">Betöltés</a>
+  </div>
+</div>
+</div>
+    </div>
+    <div class="module-body"></div>
+    <div class="module-footer"></div>
+  </section>
+</div>
