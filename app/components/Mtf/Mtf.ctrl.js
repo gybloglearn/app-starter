@@ -28,6 +28,7 @@ define([], function () {
       vm.mtf = [];
       vm.sumaeq = [0, 0, 0];
       vm.sumbokes = [0, 0, 0];
+      vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
 
       MtfService.gettoday(vm.linktoday).then(function (response) {
         vm.mtf = response.data[0].data;
