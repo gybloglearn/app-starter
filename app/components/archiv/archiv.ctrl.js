@@ -72,6 +72,7 @@ define([], function () {
         vm.days.push(day);
         vm.data.push({ for: day, year: year });
       }
+      console.log(vm.data);
       getData(vm.data);
     }
     function getData(data) {
