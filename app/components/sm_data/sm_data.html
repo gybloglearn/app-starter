@@ -1,0 +1,32 @@
+<div class="container-fluid">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center" ng-hide="vm.tobbnapos">{{vm.sm}}-Report-{{vm.datumszam}}</h1>
+      <div class="col-sm-5" style="margin-top:20px">
+       <div class="input-group">
+         <span class="input-group-addon">Dátum:</span>
+         <input type="text" class="datepicker form-control" ng-model="vm.datum">
+         <div class="input-group-btn">
+           <a href="" class="btn btn-primary" ng-click="vm.load();vm.datszam()" ng-disabled="vm.dis">Betöltés</a>
+         </div>
+       </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="row">
+        <div class="tabbable tabs-left">
+            <ul class="nav nav-tabs">
+                <li ng-repeat="item in vm.sheetmakers track by $index">
+                  <a data-toggle="tab" href="" ng-click="vm.sm=item;vm.load();vm.datszam()" ng-hide="vm.dis">{{item}}</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <my-chart id="chart" config="vm.chartconfig"></my-chart>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>

@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('sm_data', {
+		url: '/sm_data',
+		templateUrl: './app/components/sm_data/sm_data.html',
+		controller: 'sm_dataController',
+		controllerAs: 'vm'
+	});
 
   }
   ConfigFunction.$inject = ['$urlRouterProvider', '$stateProvider'];
