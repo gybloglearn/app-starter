@@ -29,16 +29,16 @@
 			</div>
 		</div>
 		<div class="primary-navbar">
-			<div class="container">
+			<div class="container" ng-show="user.displayname">
 				<ul class="nav navbar-nav">
 					<!--<li><a ui-sref="start">Start</a></li>-->
 					<!-- links -->
-					<li ng-show="user.displayname"><a ui-sref="Potting"><i class="icon-file"></i> Potting</a></li>
+					<li><a ui-sref="Potting"><i class="icon-file"></i> Potting</a></li>
 
 				</ul>
 				<ul class="nav navbar-nav pull-right">
 					<li><a ui-sref="start"><i class="icon-home"></i></a></li>
-					<li><a ui-sref="logout" ng-show="user.displayname"><i class="icon-lock"></i> {{user.displayname}}</a></li>
+					<li><a ui-sref="logout"><i class="icon-lock"></i> {{user.displayname}}</a></li>
 				</ul>
 			</div>
 		</div>
