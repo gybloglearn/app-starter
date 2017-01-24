@@ -15,7 +15,8 @@ define([], function () {
     vm.szak_de = $filter('shift')(1, vm.datumszam);
     vm.szak_du = $filter('shift')(2, vm.datumszam);
     vm.szak_ej = $filter('shift')(3, vm.datumszam);
-    vm.sumdb_sumaeq = [];
+    vm.sumdb = [];
+    vm.sumaeq = [];
 
     function beallit() {
       vm.szam = new Date(vm.datum);
@@ -37,7 +38,8 @@ define([], function () {
     function load() {
       vm.dis = true;
       vm.potting = [];
-      vm.sumdb_sumaeq = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      vm.sumdb = [0,0,0,0,0,0,0,0,0];
+      vm.sumaeq = [0,0,0,0,0,0,0,0,0];
 
       if (!vm.tobbnapos) {
         PottingService.get(vm.mch, vm.datum).then(function (response) {
@@ -51,9 +53,6 @@ define([], function () {
             var db = 0;
             var aeq = 0;
 
-            /*aeq hozzáadása + darab és aeq összesítés 18 elemű tömböt töltünk fel be-db 
-            be-aeq fordít-db fordít-aeq ki-db ki-aeq sorrendben,ezt háromszor egymás után délelőtt,
-            délután éjszaka sorrendben*/
             if (mystring.includes(substring1)) {
               mystring = mystring.substr(0, mystring.length - 6);
               for (var j = 0; j < vm.aeqs.length; j++) {
@@ -62,16 +61,16 @@ define([], function () {
                 }
               }
               if (vm.potting[i].shiftnum == 1) {
-                vm.sumdb_sumaeq[0] = vm.sumdb_sumaeq[0] + vm.potting[i].amount;
-                vm.sumdb_sumaeq[1] = vm.sumdb_sumaeq[1] + vm.potting[i].aeq;
+                vm.sumdb[0]=vm.sumdb[0] + vm.potting[i].amount;
+                vm.sumaeq[0] = vm.sumaeq[0] + vm.potting[i].aeq;
               }
               else if (vm.potting[i].shiftnum == 2) {
-                vm.sumdb_sumaeq[6] = vm.sumdb_sumaeq[6] + vm.potting[i].amount;
-                vm.sumdb_sumaeq[7] = vm.sumdb_sumaeq[7] + vm.potting[i].aeq;
+                vm.sumdb[3]=vm.sumdb[3] + vm.potting[i].amount;
+                vm.sumaeq[3] = vm.sumaeq[3] + vm.potting[i].aeq;
               }
               else if (vm.potting[i].shiftnum == 3) {
-                vm.sumdb_sumaeq[12] = vm.sumdb_sumaeq[12] + vm.potting[i].amount;
-                vm.sumdb_sumaeq[13] = vm.sumdb_sumaeq[13] + vm.potting[i].aeq;
+                vm.sumdb[6]=vm.sumdb[6] + vm.potting[i].amount;
+                vm.sumaeq[6] = vm.sumaeq[6] + vm.potting[i].aeq;
               }
             }
             else if (mystring.includes(substring2)) {
@@ -82,16 +81,16 @@ define([], function () {
                 }
               }
               if (vm.potting[i].shiftnum == 1) {
-                vm.sumdb_sumaeq[2] = vm.sumdb_sumaeq[2] + vm.potting[i].amount;
-                vm.sumdb_sumaeq[3] = vm.sumdb_sumaeq[3] + vm.potting[i].aeq;
+                vm.sumdb[1]=vm.sumdb[1] + vm.potting[i].amount;
+                vm.sumaeq[1] = vm.sumaeq[1] + vm.potting[i].aeq;
               }
               else if (vm.potting[i].shiftnum == 2) {
-                vm.sumdb_sumaeq[8] = vm.sumdb_sumaeq[8] + vm.potting[i].amount;
-                vm.sumdb_sumaeq[9] = vm.sumdb_sumaeq[9] + vm.potting[i].aeq;
+                vm.sumdb[4]=vm.sumdb[4] + vm.potting[i].amount;
+                vm.sumaeq[4] = vm.sumaeq[4] + vm.potting[i].aeq;
               }
               else if (vm.potting[i].shiftnum == 3) {
-                vm.sumdb_sumaeq[14] = vm.sumdb_sumaeq[14] + vm.potting[i].amount;
-                vm.sumdb_sumaeq[15] = vm.sumdb_sumaeq[15] + vm.potting[i].aeq;
+                vm.sumdb[7]=vm.sumdb[7] + vm.potting[i].amount;
+                vm.sumaeq[7] = vm.sumaeq[7] + vm.potting[i].aeq;
               }
             }
             else if (mystring.includes(substring3)) {
@@ -102,16 +101,16 @@ define([], function () {
                 }
               }
               if (vm.potting[i].shiftnum == 1) {
-                vm.sumdb_sumaeq[4] = vm.sumdb_sumaeq[4] + vm.potting[i].amount;
-                vm.sumdb_sumaeq[5] = vm.sumdb_sumaeq[5] + vm.potting[i].aeq;
+                vm.sumdb[2]=vm.sumdb[2] + vm.potting[i].amount;
+                vm.sumaeq[2] = vm.sumaeq[2] + vm.potting[i].aeq;
               }
               else if (vm.potting[i].shiftnum == 2) {
-                vm.sumdb_sumaeq[10] = vm.sumdb_sumaeq[10] + vm.potting[i].amount;
-                vm.sumdb_sumaeq[11] = vm.sumdb_sumaeq[11] + vm.potting[i].aeq;
+                vm.sumdb[5]=vm.sumdb[5] + vm.potting[i].amount;
+                vm.sumaeq[5] = vm.sumaeq[5] + vm.potting[i].aeq;
               }
               else if (vm.potting[i].shiftnum == 3) {
-                vm.sumdb_sumaeq[16] = vm.sumdb_sumaeq[16] + vm.potting[i].amount;
-                vm.sumdb_sumaeq[17] = vm.sumdb_sumaeq[17] + vm.potting[i].aeq;
+                vm.sumdb[8]=vm.sumdb[8] + vm.potting[i].amount;
+                vm.sumaeq[8] = vm.sumaeq[8] + vm.potting[i].aeq;
               }
             }
 
