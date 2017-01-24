@@ -173,7 +173,6 @@ define([], function () {
               vm.potting[i].shiftname = $filter('shift')(3, vm.potting[i].days);
             }
           }
-          console.log(vm.potting);
         });
       }
     }

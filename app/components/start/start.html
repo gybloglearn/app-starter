@@ -1,7 +1,18 @@
-<div class="container">
+<div class="container-fluid">
   <section class="module">
-    <div class="module-header">Start</div>
-    <div class="module-body"></div>
+    <div class="module-header">
+      <h1 class="text-center">{{vm.datum}}</h1>
+      <h1 class="text-center">{{vm.actszak}}-Szak részletek:</h1>
+    </div>
+    <div class="module-body">
+      <table>
+        <tr>
+          <td><my-chart id="chart1" config="vm.chartconfig4"></my-chart></td>
+          <td style="padding-left:10px"><my-chart id="chart2" config="vm.chartconfig3"></my-chart></td>
+          <td style="padding-left:10px"><my-chart id="chart3" config="vm.chartconfig2"></my-chart></td>
+        </tr>
+      </table>
+    </div>
     <div class="module-footer"></div>
   </section>
 </div>
