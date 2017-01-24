@@ -191,8 +191,8 @@ define([], function () {
     }
 
     function choose() {
-      var hour = new Date(vm.datum).getHours();
-      var minute = new Date(vm.datum).getMinutes();
+      var hour = new Date().getHours();
+      var minute = new Date().getMinutes();
       if ((hour == 5 && minute >= 50) || (hour < 13) || (hour == 13 && minute < 50)) {
         vm.actszak = vm.szakok[0];
         vm.actshiftnum = 1;
