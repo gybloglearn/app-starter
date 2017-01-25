@@ -9,7 +9,8 @@ define([
   './services/data.service',
   './services/smdata.service',
   './directives/datepicker',
-  './directives/mychart'
+  './directives/mychart',
+  './filters/unique'
   /* files */
 ], function (
   configFunction,
@@ -22,7 +23,8 @@ define([
   dataService,
   smdataService,
   datepicker,
-  mychart
+  mychart,
+  unique
 	/* names */) {
 
     // Link all components to the module !!!
@@ -39,5 +41,6 @@ define([
     app.service('smdataService', smdataService);
     app.directive('datepicker',datepicker);
     app.directive('myChart',mychart);
+    app.filter('unique',unique);
     /* controllers */
   });

@@ -3,30 +3,112 @@
     <div class="module-header">
       <h1 class="text-center" ng-hide="vm.tobbnapos">{{vm.sm}}-Report-{{vm.datumszam}}</h1>
       <div class="col-sm-5" style="margin-top:20px">
-       <div class="input-group">
-         <span class="input-group-addon">Dátum:</span>
-         <input type="text" class="datepicker form-control" ng-model="vm.datum">
-         <div class="input-group-btn">
-           <a href="" class="btn btn-primary" ng-click="vm.load();vm.datszam()" ng-disabled="vm.dis">Betöltés</a>
-         </div>
-       </div>
+<div class="input-group">
+  <span class="input-group-addon">Dátum:</span>
+  <input type="text" class="datepicker form-control" ng-model="vm.datum">
+  <div class="input-group-btn">
+    <a href="" class="btn btn-primary" ng-click="vm.load();vm.datszam()" ng-disabled="vm.dis">Betöltés</a>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="module-body">
+  <div class="row">
+    <div class="tabbable tabs-left">
+      <ul class="nav nav-tabs">
+        <li ng-repeat="item in vm.sheetmakers track by $index">
+          <a data-toggle="tab" href="" ng-click="vm.sm=item;vm.load();vm.datszam()" ng-hide="vm.dis">{{item}}</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <my-chart id="chart" config="vm.chartconfig"></my-chart>
       </div>
     </div>
-    <div class="module-body">
-      <div class="row">
-        <div class="tabbable tabs-left">
-            <ul class="nav nav-tabs">
-                <li ng-repeat="item in vm.sheetmakers track by $index">
-                  <a data-toggle="tab" href="" ng-click="vm.sm=item;vm.load();vm.datszam()" ng-hide="vm.dis">{{item}}</a>
-                </li>
-            </ul>
+  </div>
+</div>
 
-            <div class="tab-content">
-                <my-chart id="chart" config="vm.chartconfig"></my-chart>
-            </div>
-        </div>
-    </div>
-    </div>
-    <div class="module-footer"></div>
-  </section>
+<div class="module-footer">
+  <div>
+    <button class="btn btn-default pull-right" ng-class="{'btn-info':vm.show}" ng-click="vm.show=!vm.show">Táblázat</button>
+  </div>
+</div>
+<div style="margin-top:50px" ng-show="vm.show">
+<div class="tray filter-tray top">
+  <div class="tray-inner">
+    <div class="filter-rule-group">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <span class="control-label" style="color:#FFFFFF">Eset típus</span>
+<select ng-model="search.Event_type" class="form-control ng-pristine ng-untouched ng-valid">
+                        <option value>Mind</option>
+                        <option value="Downtime">Downtime</option>
+                        <option value="Modul Start">Modul Start</option>
+                        <option value="Sheet Production">Sheet Production</option>
+                        <option value="Sheet Scrap">Sheet Scrap</option>
+                    </select>
+</div>
+</div>
+
+<div class="col-sm-3">
+  <div class="form-group">
+    <span class="control-label" style="color:#FFFFFF">Eset csoport</span>
+<select ng-model="search.Ev_Group" class="form-control ng-pristine ng-untouched ng-valid">
+                        <option value>Mind</option>
+                        <option value="Muszaki technikai okok">Muszaki technikai okok</option>
+                        <option value="Szervezesi veszteseg">Szervezesi veszteseg</option>
+                        <option value="Tervezett veszteseg">Tervezett veszteseg</option>
+                    </select>
+</div>
+</div>
+
+<div class="col-sm-3">
+  <div class="form-group">
+    <span class="control-label" style="color:#FFFFFF">Eset alcsoport</span>
+<select ng-model="search.Event_SubGroup" class="form-control ng-pristine ng-untouched ng-valid">
+						<option ng-repeat="item in vm.egyedi | filter:{'Ev_Group':search.Ev_Group} | orderBy:'Event_SubGroup'" value="{{item.Event_SubGroup}}">{{item.Event_SubGroup?item.Event_SubGroup:"Mind"}}</option>
+                    </select>
+</div>
+</div>
+
+<div class="col-sm-3">
+  <div class="form-group">
+    <span class="control-label" style="color:#FFFFFF">Szak</span>
+<select ng-model="search.Shift_Name" class="form-control ng-pristine ng-untouched ng-valid">
+                        <option value>Mind</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+						            <option value="D">D</option>
+                    </select>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th rowspan=2 ng-click="vm.order='timestamp';vm.asc=!vm.asc;">Időbélyeg</th>
+      <th ng-click="vm.order='Event_time';vm.asc=!vm.asc;">Eset Idő</th>
+      <th rowspan=2 ng-click="vm.order='Event_type';vm.asc=!vm.asc;">Eset típus</th>
+      <th rowspan=2 ng-click="vm.order='Ev_Group';vm.asc=!vm.asc;">Eset csoport</th>
+      <th rowspan=2 ng-click="vm.order='Event_SubGroup';vm.asc=!vm.asc;">Eset alcsoport</th>
+      <th colspan=2>Szak</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in vm.sm_datas | orderBy:vm.order:vm.asc | filter: search track by $index" class="ng-scope">
+      <td>{{item.timestamp | date: 'y-M-d hh:mm'}}</td>
+      <td>{{item.Event_time}}</td>
+      <td>{{item.Event_type}}</td>
+      <td>{{item.Ev_Group}}</td>
+      <td>{{item.Event_SubGroup}}</td>
+      <td>{{item.Shift_Name}}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</section>
 </div>

@@ -4,6 +4,7 @@ define([], function () {
     var vm = this;
     vm.sm_datas = [];
     vm.darab = [];
+    vm.egyedi = [];
     vm.sm = "SM4";
     vm.sheetmakers = ["SM1", "SM2", "SM3", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
@@ -11,6 +12,10 @@ define([], function () {
     vm.load = load;
     vm.datszam = beallit;
     feltolt_zero(vm.darab);
+    var allando = [];
+    for (var i = 0; i < 24; i++) {
+      allando[i] = 34;
+    }
 
     function beallit() {
       vm.szam = new Date(vm.datum);
@@ -23,6 +28,7 @@ define([], function () {
       vm.sm_datas = [];
       smdataService.get(vm.datum, vm.sm).then(function (response) {
         vm.sm_datas = response.data;
+        vm.egyedi = $filter('unique')(vm.sm_datas, 'Event_SubGroup');
         vm.dis = false;
         var nowsm = vm.sm;
         for (var i = 0; i < vm.sm_datas.length; i++) {
@@ -51,11 +57,19 @@ define([], function () {
         },
         title: { text: nowsm + " SOE report" },
         subtitle: { text: 'Forrás: MES adatbázis' },
-        series: [{
-          name: 'Termelt lap',
-          color: "#00b300",
-          data: vm.darab
-        }],
+        series: [
+          {
+            type: "line",
+            name: 'Órai cél',
+            data: allando
+          },
+          {
+            name: 'Termelt lap',
+            color: "#00b300",
+            data: vm.darab
+          }
+        ],
+
 
         xAxis: [
           { categories: feltolt_hour() },
@@ -79,23 +93,23 @@ define([], function () {
       return szamok;
     }
 
-    function feltolt_zero(nulla)
-    {
-      for(var i=0;i<24;i++)
-      {
-        nulla[i]=0;
+    function feltolt_zero(nulla) {
+      for (var i = 0; i < 24; i++) {
+        nulla[i] = 0;
       }
       return nulla;
     }
 
     function hour_grop(itemtype, itemtime) {
+      var szamvaltozo = new Date(itemtime).getHours() * 60 + new Date(itemtime).getMinutes();
+      //console.log(szamvaltozo);
       for (var i = 0; i < 18; i++) {
-        if (itemtype == "Sheet Production" && new Date(itemtime).getHours() == i + 6) {
+        if (itemtype == "Sheet Production" && (szamvaltozo >= ((i + 5) * 60 + 50) && szamvaltozo < (i + 6) * 60 + 50)) {
           vm.darab[i]++
         }
       }
       for (var i = 18; i < 24; i++) {
-        if (itemtype == "Sheet Production" && new Date(itemtime).getHours() == i - 18) {
+        if (itemtype == "Sheet Production" && (szamvaltozo >= (i - 18) * 60 - 10) && szamvaltozo < ((i - 17) * 60 - 10)) {
           vm.darab[i]++
         }
       }
