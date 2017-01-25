@@ -9,10 +9,11 @@ define([], function () {
     vm.actszak = "";
     vm.actshiftnum = null;
     vm.allpotting = ["Potting4", "Potting3", "Potting2"];
+    vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.szakok[0] = $filter('shift')(1, vm.datum);
-    vm.szakok[1] = $filter('shift')(2, vm.datum);
-    vm.szakok[2] = $filter('shift')(3, new Date().getTime()-((5*60+50)*60*1000));
+    vm.szakok[0] = $filter('shift')(1, new Date().getTime());
+    vm.szakok[1] = $filter('shift')(2, new Date().getTime());
+    vm.szakok[2] = $filter('shift')(3, new Date().getTime() - ((5 * 60 + 50) * 60 * 1000));
 
     activate();
 
