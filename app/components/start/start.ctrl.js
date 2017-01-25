@@ -12,7 +12,7 @@ define([], function () {
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.szakok[0] = $filter('shift')(1, vm.datum);
     vm.szakok[1] = $filter('shift')(2, vm.datum);
-    vm.szakok[2] = $filter('shift')(3, vm.datum);
+    vm.szakok[2] = $filter('shift')(3, new Date().getTime()-((5*60+50)*60*1000));
 
     activate();
 
