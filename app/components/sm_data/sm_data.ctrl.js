@@ -6,7 +6,7 @@ define([], function () {
     vm.darab = [];
     vm.egyedi = [];
     vm.sm = "SM4";
-    vm.sheetmakers = ["SM1", "SM2", "SM3", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
+    vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.datumszam = vm.datum;
     vm.load = load;
@@ -34,7 +34,6 @@ define([], function () {
         for (var i = 0; i < vm.sm_datas.length; i++) {
           hour_grop(vm.sm_datas[i].Event_type, vm.sm_datas[i].timestamp)
         }
-        console.log(vm.darab);
         setChart(nowsm);
       });
 
@@ -104,12 +103,12 @@ define([], function () {
       var szamvaltozo = new Date(itemtime).getHours() * 60 + new Date(itemtime).getMinutes();
       //console.log(szamvaltozo);
       for (var i = 0; i < 18; i++) {
-        if (itemtype == "Sheet Production" && (szamvaltozo >= ((i + 5) * 60 + 50) && szamvaltozo < (i + 6) * 60 + 50)) {
+        if (itemtype == "Sheet Production" && (szamvaltozo >= ((i + 5) * 60 + 50)) && szamvaltozo < ((i + 6) * 60 + 50)) {
           vm.darab[i]++
         }
       }
       for (var i = 18; i < 24; i++) {
-        if (itemtype == "Sheet Production" && (szamvaltozo >= (i - 18) * 60 - 10) && szamvaltozo < ((i - 17) * 60 - 10)) {
+        if (itemtype == "Sheet Production" && (szamvaltozo >= ((i - 18) * 60 - 10)) && szamvaltozo < ((i - 17) * 60 - 10)) {
           vm.darab[i]++
         }
       }
