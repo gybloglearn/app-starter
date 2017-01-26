@@ -1,7 +1,70 @@
-<div class="container">
+<div class="container-fluid">
   <section class="module">
-    <div class="module-header">Start</div>
-    <div class="module-body"></div>
+    <div class="module-header">
+      <h1 class="text-center">{{vm.datumszam}}</h1>
+      <h1 class="text-center">{{vm.actszak}}-Szak részletek:</h1>
+    </div>
+    <div class="module-body">
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <h1 class="text-center">SM4</h1>
+          <h3>Összes lap: {{vm.osszeslap[0]}} db</h3>
+          <h3>Jó lap: {{vm.jolap[0]}} db</h3>
+          <h3>Selejt lap: {{vm.osszeslap[0]-vm.jolap[0]}} db</h3>
+        </div>
+        <div class="col-sm-3">
+          <h1 class="text-center">SM5</h1>
+          <h3>Összes lap: {{vm.osszeslap[1]}} db</h3>
+          <h3>Jó lap: {{vm.jolap[1]}} db</h3>
+          <h3>Selejt lap: {{vm.osszeslap[1]-vm.jolap[1]}} db</h3>
+        </div>
+        <div class="col-sm-3">
+        </div>
+        <div class="col-sm-3">
+          <h1 class="text-center">Összesen</h1>
+          <h3>Összes lap: {{vm.osszeslap[0]+vm.osszeslap[1]}} db</h3>
+          <h3>Jó lap: {{vm.jolap[0]+vm.jolap[1]}} db</h3>
+          <h3>Selejt lap: {{(vm.osszeslap[0]-vm.jolap[0])+(vm.osszeslap[1]-vm.jolap[1])}} db</h3>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <h1 class="text-center">SM6</h1>
+          <h3>Összes lap: {{vm.osszeslap[2]}} db</h3>
+          <h3>Jó lap: {{vm.jolap[2]}} db</h3>
+          <h3>Selejt lap: {{vm.osszeslap[2]-vm.jolap[2]}} db</h3>
+        </div>
+        <div class="col-sm-3">
+          <h1 class="text-center">SM7</h1>
+          <h3>Összes lap: {{vm.osszeslap[3]}} db</h3>
+          <h3>Jó lap: {{vm.jolap[3]}} db</h3>
+          <h3>Selejt lap: {{vm.osszeslap[3]-vm.jolap[3]}} db</h3>
+        </div>
+        <div class="col-sm-3">
+          <h1 class="text-center">SM8</h1>
+          <h3>Összes lap: {{vm.osszeslap[4]}} db</h3>
+          <h3>Jó lap: {{vm.jolap[4]}} db</h3>
+          <h3>Selejt lap: {{vm.osszeslap[4]-vm.jolap[4]}} db</h3>
+        </div>
+        <div class="col-sm-3">
+          <h1 class="text-center">Összesen</h1>
+          <h3>Összes lap: {{vm.osszeslap[2]+vm.osszeslap[3]+vm.osszeslap[4]}} db</h3>
+          <h3>Jó lap: {{vm.jolap[2]+vm.jolap[3]+vm.jolap[4]}} db</h3>
+          <h3>Selejt lap: {{(vm.osszeslap[2]-vm.jolap[2])+(vm.osszeslap[3]-vm.jolap[3])+(vm.osszeslap[4]-vm.jolap[4])}} db</h3>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <h1 class="text-center">SM9</h1>
+          <h3>Összes lap: {{vm.osszeslap[5]}} db</h3>
+          <h3>Jó lap: {{vm.jolap[5]}} db</h3>
+          <h3>Selejt lap: {{vm.osszeslap[5]-vm.jolap[5]}} db</h3>
+        </div>
+      </div>
+    </div>
     <div class="module-footer"></div>
   </section>
 </div>

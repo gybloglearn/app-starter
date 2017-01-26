@@ -14,7 +14,7 @@ define([], function () {
     feltolt_zero(vm.darab);
     var allando = [];
     for (var i = 0; i < 24; i++) {
-      allando[i] = 34;
+      allando[i] = 31;
     }
 
     function beallit() {
@@ -51,7 +51,7 @@ define([], function () {
       vm.chartconfig = {
         chart: {
           type: 'column',
-          width: 900,
+          width: 1100,
           height: 360
         },
         title: { text: nowsm + " SOE report" },
