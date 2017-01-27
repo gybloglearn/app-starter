@@ -5,6 +5,7 @@ define([], function () {
     vm.mtf = [];
     vm.sumaeq = [];
     vm.sumbokes = [];
+    vm.mtfaeqs=[];
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.linktoday = $filter('date')(new Date() - (1000 * 3600) + (15 * 60 * 1000), 'MMddHH');
     vm.linkoldday = $filter('date')(vm.datum, 'MMdd');
@@ -26,8 +27,10 @@ define([], function () {
 
     function load() {
       vm.mtf = [];
+      vm.mtfaeqs=[];
       vm.sumaeq = [0, 0, 0];
       vm.sumbokes = [0, 0, 0];
+      var k=0;
       vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
 
       MtfService.gettoday(vm.linktoday).then(function (response) {
@@ -43,6 +46,10 @@ define([], function () {
             for (var j = 0; j < vm.aeqs.length; j++) {
               if (mystring == vm.aeqs[j].name) {
                 vm.mtf[i].aeq = vm.mtf[i].amount * vm.aeqs[j].amount;
+                vm.mtfaeqs[k] = {};
+                vm.mtfaeqs[k].name=mystring;
+                vm.mtfaeqs[k].aeq=vm.mtf[i].aeq;
+                k++;
               }
             }
             if (vm.mtf[i].shiftnum == 1) {
@@ -57,9 +64,11 @@ define([], function () {
           }
           else if (mystring.includes(substring2)) {
             mystring = mystring.substr(0, mystring.length - 10);
-            for (var j = 0; j < vm.aeqs.length; j++) {
-              if (mystring == vm.aeqs[j].name) {
-                vm.mtf[i].aeq = vm.mtf[i].amount * vm.aeqs[j].amount;
+            for(j=0;j<vm.mtfaeqs.length;j++)
+            {
+              if(mystring==vm.mtfaeqs[j].name)
+              {
+                vm.mtf[i].aeq=vm.mtfaeqs[j].aeq;
               }
             }
             if (vm.mtf[i].shiftnum == 1) {
@@ -106,9 +115,11 @@ define([], function () {
 
     function load_olddays() {
       vm.mtf = [];
+      vm.mtfaeqs=[];
       vm.sumaeq = [0, 0, 0];
       vm.sumbokes = [0, 0, 0];
       vm.linkoldday = $filter('date')(new Date(vm.datum).getTime() + (24 * 3600 * 1000), 'MMdd');
+      var k=0;
 
       MtfService.getoldday(vm.linkoldday).then(function (response) {
         vm.mtf = response.data[0].data;
@@ -123,6 +134,10 @@ define([], function () {
             for (var j = 0; j < vm.aeqs.length; j++) {
               if (mystring == vm.aeqs[j].name) {
                 vm.mtf[i].aeq = vm.mtf[i].amount * vm.aeqs[j].amount;
+                 vm.mtfaeqs[k] = {};
+                vm.mtfaeqs[k].name=mystring;
+                vm.mtfaeqs[k].aeq=vm.mtf[i].aeq;
+                k++;
               }
             }
             if (vm.mtf[i].shiftnum == 1) {
@@ -137,9 +152,11 @@ define([], function () {
           }
           else if (mystring.includes(substring2)) {
             mystring = mystring.substr(0, mystring.length - 10);
-            for (var j = 0; j < vm.aeqs.length; j++) {
-              if (mystring == vm.aeqs[j].name) {
-                vm.mtf[i].aeq = vm.mtf[i].amount * vm.aeqs[j].amount;
+            for(j=0;j<vm.mtfaeqs.length;j++)
+            {
+              if(mystring==vm.mtfaeqs[j].name)
+              {
+                vm.mtf[i].aeq=vm.mtfaeqs[j].aeq;
               }
             }
             if (vm.mtf[i].shiftnum == 1) {

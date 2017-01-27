@@ -44,7 +44,7 @@ define([
   var app = angular.module('app', ['ui.router', 'ngCookies']);
   app.config(configFunction);
   app.run(runFunction);
-  app.service('Data', dataService);
+  app.service('dataService', dataService);
   app.service('Login', loginService);
   app.controller('StartController', startController);
   app.controller('LoginController', loginController);
