@@ -22,9 +22,9 @@ define([], function () {
       vm.mtfday = [];
       vm.flow = [];
       vm.cp5 = [];
-      vm.sumdb = [0, 0, 0];
-      vm.sumaeq = [0, 0, 0];
-      vm.sumbokes = [0, 0, 0];
+      vm.sumdb = [0, 0];
+      vm.sumaeq = [0, 0];
+      vm.sumbokes = [0, 0];
       var k = 0;
       var l = 0;
 
@@ -41,16 +41,6 @@ define([], function () {
             for (var j = 0; j < vm.aeqs.length; j++) {
               if (mystring == vm.aeqs[j].name) {
                 vm.mtfday[i].aeq = vm.mtfday[i].amount * vm.aeqs[j].amount;
-                vm.sumdb[2] = vm.sumdb[2] + vm.mtfday[i].amount;
-                vm.sumaeq[2] = vm.sumaeq[2] + vm.mtfday[i].aeq;
-              }
-            }
-          }
-          else if (mystring.includes(substring2)) {
-            mystring = mystring.substr(0, mystring.length - 10);
-            for (var j = 0; j < vm.aeqs.length; j++) {
-              if (mystring == vm.aeqs[j].name) {
-                vm.sumbokes[2] = vm.sumbokes[2] + vm.mtfday[i].amount;
               }
             }
           }
