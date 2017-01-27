@@ -5,7 +5,8 @@
       <h1 class="text-center">{{vm.actszak}}-Szak részletek:</h1>
     </div>
     <div class="module-body">
-      <table>
+      <button class="btn btn-default pull-right" ng-class="{'btn-info':mutat}" ng-click="mutat=!mutat">AEQ Táblázatok</button>
+      <table ng-show="mutat">
         <tr>
           <td><my-chart id="chart1" config="vm.chartconfig4"></my-chart></td>
           <td style="padding-left:10px"><my-chart id="chart2" config="vm.chartconfig3"></my-chart></td>

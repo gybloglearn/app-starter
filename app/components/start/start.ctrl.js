@@ -41,7 +41,7 @@ define([], function () {
                 vm.potting4[i].aeq = vm.potting4[i].amount * vm.aeqs[j].amount;
               }
             }
-            be4 = be4 + vm.potting4[i].amount;
+            be4 = be4 + vm.potting4[i].aeq;
           }
           else if (vm.potting4[i].shiftnum == vm.actshiftnum && mystring.includes(substring2)) {
             mystring = mystring.substr(0, mystring.length - 6);
@@ -50,7 +50,7 @@ define([], function () {
                 vm.potting4[i].aeq = vm.potting4[i].amount * vm.aeqs[j].amount;
               }
             }
-            ford4 = ford4 + vm.potting4[i].amount;
+            ford4 = ford4 + vm.potting4[i].aeq;
           }
           else if (vm.potting4[i].shiftnum == vm.actshiftnum && mystring.includes(substring3)) {
             mystring = mystring.substr(0, mystring.length - 8);
@@ -59,9 +59,12 @@ define([], function () {
                 vm.potting4[i].aeq = vm.potting4[i].amount * vm.aeqs[j].amount;
               }
             }
-            ki4 = ki4 + vm.potting4[i].amount;
+            ki4 = ki4 + vm.potting4[i].aeq;
           }
         }
+        be4.toFixed(2);
+        ford4.toFixed(2);
+        ki4.toFixed(2);
 
         vm.chartconfig4 = {
           chart: {
@@ -92,7 +95,7 @@ define([], function () {
           ],
           yAxis: {
             title: {
-              text: "Darab"
+              text: "AEQ"
             }
           },
         };
@@ -115,7 +118,7 @@ define([], function () {
                 vm.potting3[i].aeq = vm.potting3[i].amount * vm.aeqs[j].amount;
               }
             }
-            be3 = be3 + vm.potting3[i].amount;
+            be3 = be3 + vm.potting3[i].aeq;
           }
           else if (vm.potting3[i].shiftnum == vm.actshiftnum && mystring.includes(substring2)) {
             mystring = mystring.substr(0, mystring.length - 6);
@@ -124,7 +127,7 @@ define([], function () {
                 vm.potting3[i].aeq = vm.potting3[i].amount * vm.aeqs[j].amount;
               }
             }
-            ford3 = ford3 + vm.potting3[i].amount;
+            ford3 = ford3 + vm.potting3[i].aeq;
           }
           else if (vm.potting3[i].shiftnum == vm.actshiftnum && mystring.includes(substring3)) {
             mystring = mystring.substr(0, mystring.length - 8);
@@ -133,9 +136,12 @@ define([], function () {
                 vm.potting3[i].aeq = vm.potting3[i].amount * vm.aeqs[j].amount;
               }
             }
-            ki3 = ki3 + vm.potting3[i].amount;
+            ki3 = ki3 + vm.potting3[i].aeq;
           }
         }
+        be3.toFixed(2);
+        ford3.toFixed(2);
+        ki3.toFixed(2);
 
         vm.chartconfig3 = {
           chart: {
@@ -166,7 +172,7 @@ define([], function () {
           ],
           yAxis: {
             title: {
-              text: "Darab"
+              text: "AEQ"
             }
           },
         };
@@ -189,7 +195,7 @@ define([], function () {
                 vm.potting2[i].aeq = vm.potting2[i].amount * vm.aeqs[j].amount;
               }
             }
-            be2 = be2 + vm.potting2[i].amount;
+            be2 = be2 + vm.potting2[i].aeq;
           }
           else if (vm.potting2[i].shiftnum == vm.actshiftnum && mystring.includes(substring2)) {
             mystring = mystring.substr(0, mystring.length - 6);
@@ -198,7 +204,7 @@ define([], function () {
                 vm.potting2[i].aeq = vm.potting2[i].amount * vm.aeqs[j].amount;
               }
             }
-            ford2 = ford2 + vm.potting2[i].amount;
+            ford2 = ford2 + vm.potting2[i].aeq;
           }
           else if (vm.potting2[i].shiftnum == vm.actshiftnum && mystring.includes(substring3)) {
             mystring = mystring.substr(0, mystring.length - 8);
@@ -207,9 +213,12 @@ define([], function () {
                 vm.potting2[i].aeq = vm.potting2[i].amount * vm.aeqs[j].amount;
               }
             }
-            ki2 = ki2 + vm.potting2[i].amount;
+            ki2 = ki2 + vm.potting2[i].aeq;
           }
         }
+        be2.toFixed(2);
+        ford2.toFixed(2);
+        ki2.toFixed(2);
 
         vm.chartconfig2 = {
           chart: {
@@ -240,7 +249,7 @@ define([], function () {
           ],
           yAxis: {
             title: {
-              text: "Darab"
+              text: "AEQ"
             }
           },
         };
