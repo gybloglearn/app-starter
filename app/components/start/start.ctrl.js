@@ -11,9 +11,9 @@ define([], function () {
     vm.sumbokes = [];
     vm.actszak = "";
     vm.actshiftnum = null;
+    vm.mtfloading = true;
     vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.day = $filter('date')(new Date() - (1000 * 3600) + (15 * 60 * 1000), 'MMddHH');
     vm.szakok[0] = $filter('shift')(1, vm.datum);
     vm.szakok[1] = $filter('shift')(2, vm.datum);
     vm.szakok[2] = $filter('shift')(3, new Date().getTime() - ((5 * 60 + 50) * 60 * 1000));
@@ -28,18 +28,18 @@ define([], function () {
       var k = 0;
       var l = 0;
 
-      dataService.get(vm.day).then(function (response) {
-        vm.mtfday = response.data[0].data;
+      dataService.get(vm.datum).then(function (response) {
+        vm.mtfday = response.data;
+        vm.mtfloading = true;
 
         for (var i = 0; i < vm.mtfday.length; i++) {
           var mystring = vm.mtfday[i].name;
           var substring1 = "_BP-OUT";
-          var substring2 = "_BOK-BOKES";
 
           if (mystring.includes(substring1)) {
-            mystring = mystring.substr(0, mystring.length - 7);
             for (var j = 0; j < vm.aeqs.length; j++) {
-              if (mystring == vm.aeqs[j].name) {
+              var actstring = vm.aeqs[j].name;
+              if (mystring.includes(actstring)) {
                 vm.mtfday[i].aeq = vm.mtfday[i].amount * vm.aeqs[j].amount;
               }
             }
@@ -87,8 +87,7 @@ define([], function () {
             vm.sumbokes[1] = vm.sumbokes[1] + vm.cp5[i].amount;
           }
         }
-        console.log(vm.flow);
-        console.log(vm.cp5);
+        vm.mtfloading = false;
       });
     }
 

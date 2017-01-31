@@ -13,7 +13,7 @@ define([], function () {
     function get(day) {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15/getReports/files/mtf_'+ day +'.json'
+        url: 'http://3.228.180.15/getReports/mtfreport.php?startdate='+ day
       };
       return $http(req);
     }
