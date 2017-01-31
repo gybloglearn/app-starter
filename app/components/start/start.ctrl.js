@@ -13,12 +13,14 @@ define([], function () {
     vm.actshiftnum = null;
     vm.mtfloading = true;
     vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
+    vm.frissites_ideje = $filter('date')(new Date().getTime()+15*60*1000, 'yyyy-MM-dd HH:mm');
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.szakok[0] = $filter('shift')(1, vm.datum);
     vm.szakok[1] = $filter('shift')(2, vm.datum);
     vm.szakok[2] = $filter('shift')(3, new Date().getTime() - ((5 * 60 + 50) * 60 * 1000));
 
     function load() {
+      vm.mtfloading = true;
       vm.mtfday = [];
       vm.flow = [];
       vm.cp5 = [];
@@ -30,7 +32,6 @@ define([], function () {
 
       dataService.get(vm.datum).then(function (response) {
         vm.mtfday = response.data;
-        vm.mtfloading = true;
 
         for (var i = 0; i < vm.mtfday.length; i++) {
           var mystring = vm.mtfday[i].name;
@@ -115,6 +116,16 @@ define([], function () {
         vm.actshiftnum = 3;
       }
     }
+
+    function date_refresh()
+    {
+      vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
+      vm.frissites_ideje = $filter('date')(new Date().getTime()+15*60*1000, 'yyyy-MM-dd HH:mm');
+    }
+
+    var refreshId = setInterval(load, 15*60*1000);
+    var refreshId = setInterval(choose, 15*60*1000);
+    var refreshId = setInterval(date_refresh, 15*60*1000);
 
     vm.aeqs = [
       { name: "Ds12 FLOW", amount: 0.6 },

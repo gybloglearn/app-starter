@@ -2,7 +2,8 @@
   <section class="module">
     <div class="module-header">
       <h1 class="text-center">{{vm.datumszam}}</h1>
-      <h1 class="text-center">{{vm.actszak}}-Szak részletek:</h1>
+      <h2 class="text-center" style="margin-top:10px">Következő frissítés ideje: {{vm.frissites_ideje}}</h2>
+      <h1 class="text-center" style="margin-top:10px">{{vm.actszak}}-Szak részletek:</h1>
     </div>
     <div class="module-body">
       <div class="progress progress-info progress-striped active" ng-hide="!vm.mtfloading">
