@@ -123,9 +123,9 @@ define([], function () {
       vm.frissites_ideje = $filter('date')(new Date().getTime()+15*60*1000, 'yyyy-MM-dd HH:mm');
     }
 
-    var refreshId = setInterval(load, 15*60*1000);
-    var refreshId = setInterval(choose, 15*60*1000);
-    var refreshId = setInterval(date_refresh, 15*60*1000);
+    var refreshload = setInterval(load, 15*60*1000);
+    var refreshchoose = setInterval(choose, 15*60*1000);
+    var refreshdate = setInterval(date_refresh, 15*60*1000);
 
     vm.aeqs = [
       { name: "Ds12 FLOW", amount: 0.6 },
