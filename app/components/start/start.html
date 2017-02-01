@@ -2,7 +2,6 @@
   <section class="module">
     <div class="module-header">
       <h1 class="text-center">{{vm.datumszam}}</h1>
-      <h2 class="text-center" style="margin-top:10px">Következő frissítés ideje: {{vm.frissites_ideje}}</h2>
       <h1 class="text-center" style="margin-top:10px">{{vm.actszak}}-Szak részletek:</h1>
     </div>
     <div class="module-body">
@@ -20,10 +19,10 @@
           <h1>{{vm.sumdb[0]}} db</h1>
         </div>
         <div class="col-sm-2">
-          <h1>{{vm.sumaeq[0] | number:2}} AEQ</h1>
+          <h1>{{vm.sumbokes[0]}} Bökés</h1>
         </div>
         <div class="col-sm-2">
-          <h1>{{vm.sumbokes[0]}} Bökés</h1>
+          <h1>{{vm.sumaeq[0] | number:2}} AEQ</h1>
         </div>
         <div class="col-sm-3">
           <h1>{{vm.sumbokes[0]/vm.sumaeq[0] | number:2}} Bökés/AEQ</h1>
@@ -38,10 +37,10 @@
           <h1>{{vm.sumdb[1]}} db</h1>
         </div>
         <div class="col-sm-2">
-          <h1>{{vm.sumaeq[1] | number:2}} AEQ</h1>
+          <h1>{{vm.sumbokes[1]}} Bökés</h1>
         </div>
         <div class="col-sm-2">
-          <h1>{{vm.sumbokes[1]}} Bökés</h1>
+          <h1>{{vm.sumaeq[1] | number:2}} AEQ</h1>
         </div>
          <div class="col-sm-3">
           <h1>{{vm.sumbokes[1]/vm.sumaeq[1] | number:2}} Bökés/AEQ</h1>
@@ -56,16 +55,19 @@
           <h1>{{vm.sumdb[0]+vm.sumdb[1]}} db</h1>
         </div>
         <div class="col-sm-2">
-          <h1>{{vm.sumaeq[0]+vm.sumaeq[1] | number:2}} AEQ</h1>
-        </div>
-        <div class="col-sm-2">
           <h1>{{vm.sumbokes[0]+vm.sumbokes[1]}} Bökés</h1>
+        </div>
+         <div class="col-sm-2">
+          <h1>{{vm.sumaeq[0]+vm.sumaeq[1] | number:2}} AEQ</h1>
         </div>
          <div class="col-sm-3">
           <h1>{{(vm.sumbokes[0]+vm.sumbokes[1])/(vm.sumaeq[0]+vm.sumaeq[1]) | number:2}} Bökés/AEQ</h1>
         </div>
       </div>
     </div>
-    <div class="module-footer"></div>
+    <div class="module-footer">
+      <hr>
+      <h2 class="text-center" style="margin-top:10px">Következő frissítés ideje: {{vm.frissites_ideje}}</h2>
+    </div>
   </section>
 </div>
