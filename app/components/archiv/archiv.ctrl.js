@@ -72,7 +72,6 @@ define([], function () {
         vm.days.push(day);
         vm.data.push({ for: day, year: year });
       }
-      console.log(vm.data);
       getData(vm.data);
     }
     function getData(data) {
@@ -124,7 +123,7 @@ define([], function () {
           term = parseInt($filter('sumField')(v.data.aeq, 'aeq'));
           bok = parseInt($filter('sumField')(v.data.bokes, 'amount'));
         }
-        
+
         d[0].data.push({ x: v.for, y: (term ? term : 0) });
         d[0].data = $filter('orderBy')(d[0].data, 'x');
         d[1].data.push({ x: v.for, y: (term > 0 ? parseFloat(bok / term) : 0) });
