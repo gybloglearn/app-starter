@@ -26,9 +26,12 @@ define([], function () {
     function load() {
       PottingService.get(vm.allpotting[0], vm.datum).then(function (response) {
         vm.potting4 = response.data;
-        var be4 = 0;
-        var ford4 = 0;
-        var ki4 = 0;
+        var dbbe4 = 0;
+        var dbford4 = 0;
+        var dbki4 = 0;
+        var aeqbe4 = 0;
+        var aeqford4 = 0;
+        var aeqki4 = 0;
         for (var i = 0; i < vm.potting4.length; i++) {
           var mystring = vm.potting4[i].name;
           var substring1 = "_IN-IN";
@@ -41,7 +44,8 @@ define([], function () {
                 vm.potting4[i].aeq = vm.potting4[i].amount * vm.aeqs[j].amount;
               }
             }
-            be4 = be4 + vm.potting4[i].aeq;
+            dbbe4 = dbbe4 + vm.potting4[i].amount;
+            aeqbe4 = aeqbe4 + vm.potting4[i].aeq;
           }
           else if (vm.potting4[i].shiftnum == vm.actshiftnum && mystring.includes(substring2)) {
             mystring = mystring.substr(0, mystring.length - 6);
@@ -50,7 +54,8 @@ define([], function () {
                 vm.potting4[i].aeq = vm.potting4[i].amount * vm.aeqs[j].amount;
               }
             }
-            ford4 = ford4 + vm.potting4[i].aeq;
+            dbford4 = dbford4 + vm.potting4[i].amount;
+            aeqford4 = aeqford4 + vm.potting4[i].aeq;
           }
           else if (vm.potting4[i].shiftnum == vm.actshiftnum && mystring.includes(substring3)) {
             mystring = mystring.substr(0, mystring.length - 8);
@@ -59,35 +64,69 @@ define([], function () {
                 vm.potting4[i].aeq = vm.potting4[i].amount * vm.aeqs[j].amount;
               }
             }
-            ki4 = ki4 + vm.potting4[i].aeq;
+            dbki4 = dbki4 + vm.potting4[i].amount;
+            aeqki4 = aeqki4 + vm.potting4[i].aeq;
           }
         }
-        be4.toFixed(2);
-        ford4.toFixed(2);
-        ki4.toFixed(2);
+        aeqbe4.toFixed(2);
+        aeqford4.toFixed(2);
+        aeqki4.toFixed(2);
 
+        vm.dbchartconfig4 = {
+          chart: {
+            type: 'column',
+            width: 400,
+            height: 300
+          },
+          title: { text: vm.allpotting[0] + "-Darab" },
+          series: [
+            {
+              name: 'Be',
+              color: "#0033cc",
+              data: [dbbe4]
+            },
+            {
+              name: 'Fordít',
+              color: "#ff9900",
+              data: [dbford4]
+            },
+            {
+              name: 'Ki',
+              color: "#00b300",
+              data: [dbki4]
+            }],
+
+          xAxis: [
+            { categories: feltolt_x() },
+          ],
+          yAxis: {
+            title: {
+              text: "Darab"
+            }
+          },
+        };
         vm.chartconfig4 = {
           chart: {
             type: 'column',
             width: 400,
             height: 300
           },
-          title: { text: vm.allpotting[0] },
+          title: { text: vm.allpotting[0] + "-AEQ" },
           series: [
             {
               name: 'Be',
               color: "#0033cc",
-              data: [be4]
+              data: [aeqbe4]
             },
             {
               name: 'Fordít',
               color: "#ff9900",
-              data: [ford4]
+              data: [aeqford4]
             },
             {
               name: 'Ki',
               color: "#00b300",
-              data: [ki4]
+              data: [aeqki4]
             }],
 
           xAxis: [
@@ -99,13 +138,15 @@ define([], function () {
             }
           },
         };
-        console.log(vm.potting4);
       });
       PottingService.get(vm.allpotting[1], vm.datum).then(function (response) {
         vm.potting3 = response.data;
-        var be3 = 0;
-        var ford3 = 0;
-        var ki3 = 0;
+        var dbbe3 = 0;
+        var dbford3 = 0;
+        var dbki3 = 0;
+        var aeqbe3 = 0;
+        var aeqford3 = 0;
+        var aeqki3 = 0;
         for (var i = 0; i < vm.potting3.length; i++) {
           var mystring = vm.potting3[i].name;
           var substring1 = "_IN-IN";
@@ -118,7 +159,8 @@ define([], function () {
                 vm.potting3[i].aeq = vm.potting3[i].amount * vm.aeqs[j].amount;
               }
             }
-            be3 = be3 + vm.potting3[i].aeq;
+            dbbe3 = dbbe3 + vm.potting3[i].amount;
+            aeqbe3 = aeqbe3 + vm.potting3[i].aeq;
           }
           else if (vm.potting3[i].shiftnum == vm.actshiftnum && mystring.includes(substring2)) {
             mystring = mystring.substr(0, mystring.length - 6);
@@ -127,7 +169,8 @@ define([], function () {
                 vm.potting3[i].aeq = vm.potting3[i].amount * vm.aeqs[j].amount;
               }
             }
-            ford3 = ford3 + vm.potting3[i].aeq;
+            dbford3 = dbford3 + vm.potting3[i].amount;
+            aeqford3 = aeqford3 + vm.potting3[i].aeq;
           }
           else if (vm.potting3[i].shiftnum == vm.actshiftnum && mystring.includes(substring3)) {
             mystring = mystring.substr(0, mystring.length - 8);
@@ -136,35 +179,69 @@ define([], function () {
                 vm.potting3[i].aeq = vm.potting3[i].amount * vm.aeqs[j].amount;
               }
             }
-            ki3 = ki3 + vm.potting3[i].aeq;
+            dbki3 = dbki3 + vm.potting3[i].amount;
+            aeqki3 = aeqki3 + vm.potting3[i].aeq;
           }
         }
-        be3.toFixed(2);
-        ford3.toFixed(2);
-        ki3.toFixed(2);
+        aeqbe3.toFixed(2);
+        aeqford3.toFixed(2);
+        aeqki3.toFixed(2);
 
+        vm.dbchartconfig3 = {
+          chart: {
+            type: 'column',
+            width: 400,
+            height: 300
+          },
+          title: { text: vm.allpotting[1] + "-Darab" },
+          series: [
+            {
+              name: 'Be',
+              color: "#0033cc",
+              data: [dbbe3]
+            },
+            {
+              name: 'Fordít',
+              color: "#ff9900",
+              data: [dbford3]
+            },
+            {
+              name: 'Ki',
+              color: "#00b300",
+              data: [dbki3]
+            }],
+
+          xAxis: [
+            { categories: feltolt_x() },
+          ],
+          yAxis: {
+            title: {
+              text: "Darab"
+            }
+          },
+        };
         vm.chartconfig3 = {
           chart: {
             type: 'column',
             width: 400,
             height: 300
           },
-          title: { text: vm.allpotting[1] },
+          title: { text: vm.allpotting[1] + "-AEQ" },
           series: [
             {
               name: 'Be',
               color: "#0033cc",
-              data: [be3]
+              data: [aeqbe3]
             },
             {
               name: 'Fordít',
               color: "#ff9900",
-              data: [ford3]
+              data: [aeqford3]
             },
             {
               name: 'Ki',
               color: "#00b300",
-              data: [ki3]
+              data: [aeqki3]
             }],
 
           xAxis: [
@@ -176,13 +253,15 @@ define([], function () {
             }
           },
         };
-        console.log(vm.potting3);
       });
       PottingService.get(vm.allpotting[2], vm.datum).then(function (response) {
         vm.potting2 = response.data;
-        var be2 = 0;
-        var ford2 = 0;
-        var ki2 = 0;
+        var dbbe2 = 0;
+        var dbford2 = 0;
+        var dbki2 = 0;
+        var aeqbe2 = 0;
+        var aeqford2 = 0;
+        var aeqki2 = 0;
         for (var i = 0; i < vm.potting2.length; i++) {
           var mystring = vm.potting2[i].name;
           var substring1 = "_IN-IN";
@@ -195,7 +274,8 @@ define([], function () {
                 vm.potting2[i].aeq = vm.potting2[i].amount * vm.aeqs[j].amount;
               }
             }
-            be2 = be2 + vm.potting2[i].aeq;
+            dbbe2 = dbbe2 + vm.potting2[i].amount;
+            aeqbe2 = aeqbe2 + vm.potting2[i].aeq;
           }
           else if (vm.potting2[i].shiftnum == vm.actshiftnum && mystring.includes(substring2)) {
             mystring = mystring.substr(0, mystring.length - 6);
@@ -204,7 +284,8 @@ define([], function () {
                 vm.potting2[i].aeq = vm.potting2[i].amount * vm.aeqs[j].amount;
               }
             }
-            ford2 = ford2 + vm.potting2[i].aeq;
+            dbford2 = dbford2 + vm.potting2[i].amount;
+            aeqford2 = aeqford2 + vm.potting2[i].aeq;
           }
           else if (vm.potting2[i].shiftnum == vm.actshiftnum && mystring.includes(substring3)) {
             mystring = mystring.substr(0, mystring.length - 8);
@@ -213,35 +294,69 @@ define([], function () {
                 vm.potting2[i].aeq = vm.potting2[i].amount * vm.aeqs[j].amount;
               }
             }
-            ki2 = ki2 + vm.potting2[i].aeq;
+            dbki2 = dbki2 + vm.potting2[i].amount;
+            aeqki2 = aeqki2 + vm.potting2[i].aeq;
           }
         }
-        be2.toFixed(2);
-        ford2.toFixed(2);
-        ki2.toFixed(2);
+        aeqbe2.toFixed(2);
+        aeqford2.toFixed(2);
+        aeqki2.toFixed(2);
 
+        vm.dbchartconfig2 = {
+          chart: {
+            type: 'column',
+            width: 400,
+            height: 300
+          },
+          title: { text: vm.allpotting[2] + "-Darab" },
+          series: [
+            {
+              name: 'Be',
+              color: "#0033cc",
+              data: [dbbe2]
+            },
+            {
+              name: 'Fordít',
+              color: "#ff9900",
+              data: [dbford2]
+            },
+            {
+              name: 'Ki',
+              color: "#00b300",
+              data: [dbki2]
+            }],
+
+          xAxis: [
+            { categories: feltolt_x() },
+          ],
+          yAxis: {
+            title: {
+              text: "Darab"
+            }
+          },
+        };
         vm.chartconfig2 = {
           chart: {
             type: 'column',
             width: 400,
             height: 300
           },
-          title: { text: vm.allpotting[2] },
+          title: { text: vm.allpotting[2] + "-AEQ" },
           series: [
             {
               name: 'Be',
               color: "#0033cc",
-              data: [be2]
+              data: [aeqbe2]
             },
             {
               name: 'Fordít',
               color: "#ff9900",
-              data: [ford2]
+              data: [aeqford2]
             },
             {
               name: 'Ki',
               color: "#00b300",
-              data: [ki2]
+              data: [aeqki2]
             }],
 
           xAxis: [
@@ -267,7 +382,7 @@ define([], function () {
         vm.actszak = vm.szakok[1];
         vm.actshiftnum = 2;
       }
-      else if ((hour == 21 && minute >= 50) || (hour > 21)|| (hour < 5) || (hour == 5 && minute < 50)) {
+      else if ((hour == 21 && minute >= 50) || (hour > 21) || (hour < 5) || (hour == 5 && minute < 50)) {
         vm.actszak = vm.szakok[2];
         vm.actshiftnum = 3;
       }
