@@ -8,6 +8,7 @@ define([], function () {
     vm.sm = "SM4";
     vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
+    vm.smloading = true;
     vm.datumszam = vm.datum;
     vm.load = load;
     vm.datszam = beallit;
@@ -23,6 +24,7 @@ define([], function () {
     }
 
     function load() {
+      vm.smloading = true;
       vm.dis = true;
       feltolt_zero(vm.darab);
       vm.sm_datas = [];
@@ -35,6 +37,7 @@ define([], function () {
           hour_grop(vm.sm_datas[i].Event_type, vm.sm_datas[i].timestamp)
         }
         setChart(nowsm);
+        vm.smloading = false;
       });
 
     }

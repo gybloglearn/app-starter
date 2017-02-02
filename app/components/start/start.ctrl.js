@@ -13,7 +13,7 @@ define([], function () {
     vm.jolap = [];
     vm.actszak = "";
     vm.actshiftnum = null;
-    vm.sheetmakers = ["SheetMaker4", "SheetMaker5", "SheetMaker6", "SheetMaker7", "SheetMaker8","SheetMaker9"];
+    vm.sheetmakers = ["SheetMaker4", "SheetMaker5", "SheetMaker6", "SheetMaker7", "SheetMaker8", "SheetMaker9"];
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
     vm.szakok[0] = $filter('shift')(1, vm.datum);
@@ -28,8 +28,8 @@ define([], function () {
       vm.sm6 = [];
       vm.sm7 = [];
       vm.sm8 = [];
-      vm.osszeslap = [0, 0, 0, 0, 0,0];
-      vm.jolap = [0, 0, 0, 0, 0,0];
+      vm.osszeslap = [0, 0, 0, 0, 0, 0];
+      vm.jolap = [0, 0, 0, 0, 0, 0];
       var substring1 = "TOTAL";
       var substring2 = "GOOD-GOOD";
 
@@ -54,6 +54,46 @@ define([], function () {
             vm.jolap[1] = vm.jolap[1] + vm.sm5[i].amount;
           }
         }
+        vm.sm5chartconfig = {
+          chart: {
+            type: 'column',
+            width: 300,
+            height: 300
+          },
+          plotOptions: {
+            column: {
+              stacking: 'normal'
+            }
+          },
+          title: { text: vm.sheetmakers[1] },
+          series: [
+            {
+              name: 'Selejt lap',
+              color: "#990000",
+              data: [vm.osszeslap[1] - vm.jolap[1]],
+              stack: 'Összes lap'
+            },
+            {
+              name: 'Jó lap',
+              color: "#00b300",
+              data: [vm.jolap[1]],
+              stack: 'Összes lap'
+            },
+            {
+              name: 'Terv',
+              color: "#0033cc",
+              data: [248]
+            }],
+
+          xAxis: [
+            { categories: feltolt_x() },
+          ],
+          yAxis: {
+            title: {
+              text: "Darab"
+            }
+          },
+        };
       });
       dataService.get(vm.sheetmakers[2], vm.datum).then(function (response) {
         vm.sm6 = response.data;
@@ -65,6 +105,46 @@ define([], function () {
             vm.jolap[2] = vm.jolap[2] + vm.sm6[i].amount;
           }
         }
+        vm.sm6chartconfig = {
+          chart: {
+            type: 'column',
+            width: 300,
+            height: 300
+          },
+          plotOptions: {
+            column: {
+              stacking: 'normal'
+            }
+          },
+          title: { text: vm.sheetmakers[2] },
+          series: [
+            {
+              name: 'Selejt lap',
+              color: "#990000",
+              data: [vm.osszeslap[2] - vm.jolap[2]],
+              stack: 'Összes lap'
+            },
+            {
+              name: 'Jó lap',
+              color: "#00b300",
+              data: [vm.jolap[2]],
+              stack: 'Összes lap'
+            },
+            {
+              name: 'Terv',
+              color: "#0033cc",
+              data: [248]
+            }],
+
+          xAxis: [
+            { categories: feltolt_x() },
+          ],
+          yAxis: {
+            title: {
+              text: "Darab"
+            }
+          },
+        };
       });
       dataService.get(vm.sheetmakers[3], vm.datum).then(function (response) {
         vm.sm7 = response.data;
@@ -124,6 +204,11 @@ define([], function () {
         vm.actszak = vm.szakok[2];
         vm.actshiftnum = 3;
       }
+    }
+
+    function feltolt_x() {
+      var szoveg = ["Tény/Terv"];
+      return szoveg;
     }
   }
   Controller.$inject = ['dataService', '$cookies', '$state', '$rootScope', '$filter'];
