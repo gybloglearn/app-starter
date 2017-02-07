@@ -104,7 +104,6 @@ define([], function () {
 
     function hour_grop(itemtype, itemtime) {
       var szamvaltozo = new Date(itemtime).getHours() * 60 + new Date(itemtime).getMinutes();
-      //console.log(szamvaltozo);
       for (var i = 0; i < 18; i++) {
         if (itemtype == "Sheet Production" && (szamvaltozo >= ((i + 5) * 60 + 50)) && szamvaltozo < ((i + 6) * 60 + 50)) {
           vm.darab[i]++

@@ -2,183 +2,84 @@ define([], function () {
   'use strict';
   function Controller(dataService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
-    vm.sm4 = [];
-    vm.sm5 = [];
-    vm.sm6 = [];
-    vm.sm7 = [];
-    vm.sm8 = [];
-    vm.sm9 = [];
+    vm.actsm = [];
+    vm.allsmsum = [];
     vm.szakok = [];
-    vm.osszeslap = [];
-    vm.jolap = [];
     vm.actszak = "";
     vm.actshiftnum = null;
-    vm.sheetmakers = ["SheetMaker4", "SheetMaker5", "SheetMaker6", "SheetMaker7", "SheetMaker8", "SheetMaker9"];
+    vm.sheetmakers = ["SheetMaker4", "SheetMaker5", "SheetMaker6", "SheetMaker7", "SheetMaker8"];
+    vm.loadsheetmakers = [];
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
     vm.szakok[0] = $filter('shift')(1, vm.datum);
     vm.szakok[1] = $filter('shift')(2, vm.datum);
     vm.szakok[2] = $filter('shift')(3, new Date().getTime() - ((5 * 60 + 50) * 60 * 1000));
     vm.load = load;
-    console.log(vm.szakok);
+
+
 
     function load() {
-      vm.sm4 = [];
-      vm.sm5 = [];
-      vm.sm6 = [];
-      vm.sm7 = [];
-      vm.sm8 = [];
-      vm.osszeslap = [0, 0, 0, 0, 0, 0];
-      vm.jolap = [0, 0, 0, 0, 0, 0];
+      selectsm();
+      vm.allsmsum = [];
       var substring1 = "TOTAL";
       var substring2 = "GOOD-GOOD";
+      var i = 0;
 
-      dataService.get(vm.sheetmakers[0], vm.datum).then(function (response) {
-        vm.sm4 = response.data;
-        for (var i = 0; i < vm.sm4.length; i++) {
-          if (vm.sm4[i].name.includes(substring1) && vm.actshiftnum == vm.sm4[i].shiftnum) {
-            vm.osszeslap[0] = vm.osszeslap[0] + vm.sm4[i].amount;
-          }
-          else if (vm.sm4[i].name.includes(substring2) && vm.actshiftnum == vm.sm4[i].shiftnum) {
-            vm.jolap[0] = vm.jolap[0] + vm.sm4[i].amount;
-          }
-        }
-      });
-      dataService.get(vm.sheetmakers[1], vm.datum).then(function (response) {
-        vm.sm5 = response.data;
-        for (var i = 0; i < vm.sm5.length; i++) {
-          if (vm.sm5[i].name.includes(substring1) && vm.actshiftnum == vm.sm5[i].shiftnum) {
-            vm.osszeslap[1] = vm.osszeslap[1] + vm.sm5[i].amount;
-          }
-          else if (vm.sm5[i].name.includes(substring2) && vm.actshiftnum == vm.sm5[i].shiftnum) {
-            vm.jolap[1] = vm.jolap[1] + vm.sm5[i].amount;
-          }
-        }
-        vm.sm5chartconfig = {
-          chart: {
-            type: 'column',
-            width: 300,
-            height: 300
-          },
-          plotOptions: {
-            column: {
-              stacking: 'normal'
-            }
-          },
-          title: { text: vm.sheetmakers[1] },
-          series: [
-            {
-              name: 'Selejt lap',
-              color: "#990000",
-              data: [vm.osszeslap[1] - vm.jolap[1]],
-              stack: 'Összes lap'
-            },
-            {
-              name: 'Jó lap',
-              color: "#00b300",
-              data: [vm.jolap[1]],
-              stack: 'Összes lap'
-            },
-            {
-              name: 'Terv',
-              color: "#0033cc",
-              data: [248]
-            }],
+      angular.forEach(vm.loadsheetmakers, function (v, k) {
+        dataService.get(v, vm.datum).then(function (response) {
+          var ossz = $filter('sumdb')($filter('filter')(response.data, { 'name': substring1, 'shiftnum': vm.actshiftnum }));
+          var jo = $filter('sumdb')($filter('filter')(response.data, { 'name': substring2, 'shiftnum': vm.actshiftnum }));
+          vm.allsmsum.push({
+            sm: v,
+            osszlap: ossz,
+            jolap: jo,
+            id: "SMchart" + v.substring(11, 10),
+            chartconfig: {
+              chart: {
+                type: 'column',
+                width: 300,
+                height: 300
+              },
+              plotOptions: {
+                column: {
+                  stacking: 'normal'
+                }
+              },
+              title: { text: v },
+              series: [
+                {
+                  name: 'Selejt lap',
+                  color: "#990000",
+                  data: [ossz - jo],
+                  stack: 'Összes lap'
+                },
+                {
+                  name: 'Jó lap',
+                  color: "#00b300",
+                  data: [jo],
+                  stack: 'Összes lap'
+                },
+                {
+                  name: 'Terv',
+                  color: "#0033cc",
+                  data: [248]
+                }],
 
-          xAxis: [
-            { categories: feltolt_x() },
-          ],
-          yAxis: {
-            title: {
-              text: "Darab"
+              xAxis: [
+                { categories: feltolt_x() },
+              ],
+              yAxis: {
+                title: {
+                  text: "Darab"
+                }
+              }
             }
-          },
-        };
+          });
+        });
       });
-      dataService.get(vm.sheetmakers[2], vm.datum).then(function (response) {
-        vm.sm6 = response.data;
-        for (var i = 0; i < vm.sm6.length; i++) {
-          if (vm.sm6[i].name.includes(substring1) && vm.actshiftnum == vm.sm6[i].shiftnum) {
-            vm.osszeslap[2] = vm.osszeslap[2] + vm.sm6[i].amount;
-          }
-          else if (vm.sm6[i].name.includes(substring2) && vm.actshiftnum == vm.sm6[i].shiftnum) {
-            vm.jolap[2] = vm.jolap[2] + vm.sm6[i].amount;
-          }
-        }
-        vm.sm6chartconfig = {
-          chart: {
-            type: 'column',
-            width: 300,
-            height: 300
-          },
-          plotOptions: {
-            column: {
-              stacking: 'normal'
-            }
-          },
-          title: { text: vm.sheetmakers[2] },
-          series: [
-            {
-              name: 'Selejt lap',
-              color: "#990000",
-              data: [vm.osszeslap[2] - vm.jolap[2]],
-              stack: 'Összes lap'
-            },
-            {
-              name: 'Jó lap',
-              color: "#00b300",
-              data: [vm.jolap[2]],
-              stack: 'Összes lap'
-            },
-            {
-              name: 'Terv',
-              color: "#0033cc",
-              data: [248]
-            }],
 
-          xAxis: [
-            { categories: feltolt_x() },
-          ],
-          yAxis: {
-            title: {
-              text: "Darab"
-            }
-          },
-        };
-      });
-      dataService.get(vm.sheetmakers[3], vm.datum).then(function (response) {
-        vm.sm7 = response.data;
-        for (var i = 0; i < vm.sm7.length; i++) {
-          if (vm.sm7[i].name.includes(substring1) && vm.actshiftnum == vm.sm7[i].shiftnum) {
-            vm.osszeslap[3] = vm.osszeslap[3] + vm.sm7[i].amount;
-          }
-          else if (vm.sm7[i].name.includes(substring2) && vm.actshiftnum == vm.sm7[i].shiftnum) {
-            vm.jolap[3] = vm.jolap[3] + vm.sm7[i].amount;
-          }
-        }
-      });
-      dataService.get(vm.sheetmakers[4], vm.datum).then(function (response) {
-        vm.sm8 = response.data;
-        for (var i = 0; i < vm.sm8.length; i++) {
-          if (vm.sm8[i].name.includes(substring1) && vm.actshiftnum == vm.sm8[i].shiftnum) {
-            vm.osszeslap[4] = vm.osszeslap[4] + vm.sm8[i].amount;
-          }
-          else if (vm.sm8[i].name.includes(substring2) && vm.actshiftnum == vm.sm8[i].shiftnum) {
-            vm.jolap[4] = vm.jolap[4] + vm.sm8[i].amount;
-          }
-        }
-      });
-      dataService.get(vm.sheetmakers[5], vm.datum).then(function (response) {
-        vm.sm9 = response.data;
-        for (var i = 0; i < vm.sm9.length; i++) {
-          if (vm.sm9[i].name.includes(substring1) && vm.actshiftnum == vm.sm9[i].shiftnum) {
-            vm.osszeslap[5] = vm.osszeslap[5] + vm.sm9[i].amount;
-          }
-          else if (vm.sm9[i].name.includes(substring2) && vm.actshiftnum == vm.sm9[i].shiftnum) {
-            vm.jolap[5] = vm.jolap[5] + vm.sm9[i].amount;
-          }
-        }
-      });
+
+      vm.loadsheetmakers = [];
     }
 
     activate();
@@ -186,7 +87,6 @@ define([], function () {
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       choose();
-      load();
     }
 
     function choose() {
@@ -209,6 +109,30 @@ define([], function () {
     function feltolt_x() {
       var szoveg = ["Tény/Terv"];
       return szoveg;
+    }
+
+    function selectsm() {
+      var a = 0;
+      if (vm.oksm4 == true) {
+        vm.loadsheetmakers[a] = vm.sheetmakers[0];
+        a++;
+      }
+      if (vm.oksm5 == true) {
+        vm.loadsheetmakers[a] = vm.sheetmakers[1];
+        a++;
+      }
+      if (vm.oksm6 == true) {
+        vm.loadsheetmakers[a] = vm.sheetmakers[2];
+        a++;
+      }
+      if (vm.oksm7 == true) {
+        vm.loadsheetmakers[a] = vm.sheetmakers[3];
+        a++;
+      }
+      if (vm.oksm8 == true) {
+        vm.loadsheetmakers[a] = vm.sheetmakers[4];
+        a++;
+      }
     }
   }
   Controller.$inject = ['dataService', '$cookies', '$state', '$rootScope', '$filter'];
