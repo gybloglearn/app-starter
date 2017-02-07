@@ -8,15 +8,25 @@
       <button class="btn default" ng-class="{'btn-info':vm.oksm6}" ng-click="vm.oksm6=!vm.oksm6">SM6</button>
       <button class="btn default" ng-class="{'btn-info':vm.oksm7}" ng-click="vm.oksm7=!vm.oksm7">SM7</button>
       <button class="btn default" ng-class="{'btn-info':vm.oksm8}" ng-click="vm.oksm8=!vm.oksm8">SM8</button>
-      <button style="margin-left:20px" class="btn btn-primary" ng-click="vm.load()">Betöltés</button>
+      <button style="margin-left:20px" class="btn btn-primary" ng-click="vm.load()" ng-disabled="!vm.oksm4 && !vm.oksm5 && !vm.oksm6 && !vm.oksm7 && !vm.oksm8">
+        Betöltés</button>
     </div>
     <div class="module-body">
       <hr>
+      <div class="progress progress-success progress-striped active" ng-hide="!vm.smloading">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Frissítés...</p>
+        </div>
+      </div>
       <div class="row">
-        <div class="col-sm-3" ng-repeat="item in vm.allsmsum | orderBy:'name'">
+        <div class="col-sm-3" ng-repeat="item in vm.allsmsum | orderBy:'sm'">
           <sm-dir data="item"></sm-dir>
         </div>
       </div>
-      <div class="module-footer"></div>
+      <div class="module-footer">
+        <hr>
+        <h2 class="text-center" style="margin-top:10px" ng-hide="!vm.oksm4 &&!vm.oksm5 &&!vm.oksm6 && !vm.oksm7 && !vm.oksm8">
+          Következő frissítés ideje: {{vm.frissites_ideje}}</h2>
+      </div>
   </section>
   </div>

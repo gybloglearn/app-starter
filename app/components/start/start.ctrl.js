@@ -7,10 +7,12 @@ define([], function () {
     vm.szakok = [];
     vm.actszak = "";
     vm.actshiftnum = null;
+    vm.smloading = false;
     vm.sheetmakers = ["SheetMaker4", "SheetMaker5", "SheetMaker6", "SheetMaker7", "SheetMaker8"];
     vm.loadsheetmakers = [];
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
+    vm.frissites_ideje = $filter('date')(new Date().getTime()+15*60*1000, 'yyyy-MM-dd HH:mm');
     vm.szakok[0] = $filter('shift')(1, vm.datum);
     vm.szakok[1] = $filter('shift')(2, vm.datum);
     vm.szakok[2] = $filter('shift')(3, new Date().getTime() - ((5 * 60 + 50) * 60 * 1000));
@@ -20,6 +22,7 @@ define([], function () {
 
     function load() {
       selectsm();
+      vm.smloading = true;
       vm.allsmsum = [];
       var substring1 = "TOTAL";
       var substring2 = "GOOD-GOOD";
@@ -75,6 +78,7 @@ define([], function () {
               }
             }
           });
+          vm.smloading = false;
         });
       });
 
@@ -110,6 +114,16 @@ define([], function () {
       var szoveg = ["Tény/Terv"];
       return szoveg;
     }
+
+     function date_refresh()
+    {
+      vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
+      vm.frissites_ideje = $filter('date')(new Date().getTime()+15*60*1000, 'yyyy-MM-dd HH:mm');
+    }
+
+    var refreshload = setInterval(load, 15*60*1000);
+    var refreshchoose = setInterval(choose, 15*60*1000);
+    var refreshdate = setInterval(date_refresh, 15*60*1000);
 
     function selectsm() {
       var a = 0;
