@@ -6,22 +6,23 @@ define([], function () {
     vm.allsmsum = [];
     vm.szakok = [];
     vm.actszak = "";
+    vm.tervezett = 248;
+    vm.tervezett_darab = 0;
     vm.actshiftnum = null;
     vm.smloading = false;
     vm.sheetmakers = ["SheetMaker4", "SheetMaker5", "SheetMaker6", "SheetMaker7", "SheetMaker8"];
     vm.loadsheetmakers = [];
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
-    vm.frissites_ideje = $filter('date')(new Date().getTime()+15*60*1000, 'yyyy-MM-dd HH:mm');
+    vm.frissites_ideje = $filter('date')(new Date().getTime() + 15 * 60 * 1000, 'yyyy-MM-dd HH:mm');
     vm.szakok[0] = $filter('shift')(1, vm.datum);
     vm.szakok[1] = $filter('shift')(2, vm.datum);
     vm.szakok[2] = $filter('shift')(3, new Date().getTime() - ((5 * 60 + 50) * 60 * 1000));
     vm.load = load;
 
-
-
     function load() {
       selectsm();
+      plan();
       vm.smloading = true;
       vm.allsmsum = [];
       var substring1 = "TOTAL";
@@ -65,7 +66,7 @@ define([], function () {
                 {
                   name: 'Terv',
                   color: "#0033cc",
-                  data: [248]
+                  data: [vm.tervezett_darab]
                 }],
 
               xAxis: [
@@ -96,6 +97,7 @@ define([], function () {
     function choose() {
       var hour = new Date().getHours();
       var minute = new Date().getMinutes();
+
       if ((hour == 5 && minute >= 50) || (hour < 13) || (hour == 13 && minute < 50)) {
         vm.actszak = vm.szakok[0];
         vm.actshiftnum = 1;
@@ -115,15 +117,15 @@ define([], function () {
       return szoveg;
     }
 
-     function date_refresh()
-    {
+    function date_refresh() {
       vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
-      vm.frissites_ideje = $filter('date')(new Date().getTime()+15*60*1000, 'yyyy-MM-dd HH:mm');
+      vm.frissites_ideje = $filter('date')(new Date().getTime() + 15 * 60 * 1000, 'yyyy-MM-dd HH:mm');
     }
 
-    var refreshload = setInterval(load, 15*60*1000);
-    var refreshchoose = setInterval(choose, 15*60*1000);
-    var refreshdate = setInterval(date_refresh, 15*60*1000);
+    var refreshload = setInterval(load, 15 * 60 * 1000);
+    var refreshchoose = setInterval(choose, 15 * 60 * 1000);
+    var refreshdate = setInterval(date_refresh, 15 * 60 * 1000);
+    var refreshpeace = setInterval(plan, 15 * 60 * 1000);
 
     function selectsm() {
       var a = 0;
@@ -146,6 +148,51 @@ define([], function () {
       if (vm.oksm8 == true) {
         vm.loadsheetmakers[a] = vm.sheetmakers[4];
         a++;
+      }
+    }
+
+    function plan() {
+      var frissites = $filter('date')(new Date().getTime(), 'yyyy-MM-dd HH:mm');
+      var szam = 0;
+      var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
+      vm.tervezett_darab = 0;
+
+      if (vm.actshiftnum == 1) {
+        szorzo = szorzo - (350);
+        szam = (vm.tervezett / 480) * szorzo;
+        vm.tervezett_darab = Math.round(szam);
+        if (vm.tervezett_darab > vm.tervezett) {
+          vm.tervezett_darab = vm.tervezett;
+        }
+        console.log(vm.tervezett_darab);
+      }
+      else if (vm.actshiftnum == 2) {
+        szorzo = szorzo - (830);
+        szam = (vm.tervezett / 480) * szorzo;
+        vm.tervezett_darab = Math.round(szam);
+        if (vm.tervezett_darab > vm.tervezett) {
+          vm.tervezett_darab = vm.tervezett;
+        }
+        console.log(vm.tervezett_darab);
+      }
+      else if (vm.actshiftnum == 3) {
+        if (szorzo >= 1310) {
+          szorzo = szorzo - (1310);
+          szam = (vm.tervezett / 480) * szorzo;
+          vm.tervezett_darab = Math.round(szam);
+          if (vm.tervezett_darab > vm.tervezett) {
+            vm.tervezett_darab = vm.tervezett;
+          }
+        }
+        else {
+          var plus = 130;
+          szorzo = szorzo + plus;
+          szam = (vm.tervezett / 480) * szorzo;
+          vm.tervezett_darab = Math.round(szam);
+          if (vm.tervezett_darab > vm.tervezett) {
+            vm.tervezett_darab = vm.tervezett;
+          }
+        }
       }
     }
   }
