@@ -19,7 +19,7 @@
 					<option ng-repeat="item in vm.sheetmakers track by $index" value="{{item}}">{{item}}</option>
 					</select>
 					<select ng-model="vm.acttype">
-					<option ng-repeat="item in vm.egyedi" value="{{item.name}}">{{item.name}}</option>
+						<option ng-repeat="item in vm.moduls" value="{{item.name}}">{{item.name}}</option>
 					</select>
 					<div class="input-group-btn">
 						<a href="" class="btn btn-primary" ng-click="vm.show()" ng-disabled="vm.dateto<=vm.datefrom">Input mezők</a>
@@ -34,6 +34,7 @@
 						<th>Dátum</th>
 						<th>Gép</th>
 						<th>Termék típus</th>
+						<th>Lapszám</th>
 						<th>Délelőtt</th>
 						<th>Délután</th>
 						<th>Éjszaka</th>
@@ -41,16 +42,22 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="item in vm.datumok" class="ng-scope">
-						<td>{{item}}</td>
-						<td>{{vm.act}}</td>
-						<td>{{vm.acttype}}</td>
-						<td><input type="text" class="form-control" value="{{vm.darab}}"></td>
-						<td><input type="text" class="form-control" value="{{vm.darab}}"></td>
-						<td><input type="text" class="form-control" value="{{vm.darab}}"></td>
+						<td ng-model="vm.data.date"><input type="text" class="form-control" value="{{item}}" readonly></td>
+						<td ng-model="vm.data.id"><input type="text" class="form-control" value="{{vm.act}}" readonly></td>
+						<td ng-model="vm.data.type"><input type="text" class="form-control" value="{{vm.acttype}}" readonly></td>
+						<td ng-model="vm.data.sheetnumber"><input type="text" class="form-control" value="{{(vm.moduls | filter:{'name':vm.acttype})[0].sheets}}" readonly></td>
+						<td ng-model="vm.data.amountshift1"><input type="text" class="form-control" value="{{vm.darab}}"></td>
+						<td ng-model="vm.data.amountshift2"><input type="text" class="form-control" value="{{vm.darab}}"></td>
+						<td ng-model="vm.data.amountshift3"><input type="text" class="form-control" value="{{vm.darab}}"></td>
 					</tr>
 				</tbody>
 			</table>
-			<button class="btn btn-primary" ng-click="vm.mutat=false">Feltölt</button>
+			<div class="col-sm-4">
+				<button class="btn btn-success" ng-click="vm.save;vm.mutat=false" ng-disabled="vm.showmessage || vm.acttype==null">Feltölt</button>
+				<div class="alert alert-success" ng-show="vm.showmessage">
+					<strong>Sikeres felvitel! </strong>{{vm.showtitle}}
+				</div>
+			</div>
 		</div>
 		<div class="module-footer"></div>
 	</section>

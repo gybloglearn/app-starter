@@ -1,12 +1,14 @@
 define([], function () {
   'use strict';
-  function Controller(planService,$filter) {
+  function Controller(planService, $timeout, $filter, $cookies, $state, $rootScope) {
     var vm = this;
     vm.show = show;
+    vm.save = save;
     vm.mutat = false;
-    vm.sheetmakers = ["SheetMaker4", "SheetMaker5", "SheetMaker6", "SheetMaker7", "SheetMaker8"];
+    vm.showmessage = false;
+    vm.sheetmakers = ["SheetMaker1", "SheetMaker2", "SheetMaker4", "SheetMaker5", "SheetMaker6", "SheetMaker7", "SheetMaker8", "SheetMaker9"];
     vm.act = "SheetMaker4";
-    vm.egyedi=[];
+    vm.moduls = [];
 
     function show() {
       vm.datumok = [];
@@ -16,24 +18,34 @@ define([], function () {
         vm.datumok[i] = new Date(vm.datefrom).getTime() + (i * 24 * 3600 * 1000);
         vm.datumok[i] = $filter('date')(vm.datumok[i], 'yyyy-MM-dd');
       }
-      console.log(vm.mezoszam);
-      console.log(vm.datumok);
-      console.log(vm.act);
+    }
+
+    function save() {
+      planService.post(vm.data).then(function (response) {
+        vm.showmessage = true;
+        vm.data = {};
+        $timeout(function () {
+          vm.showmessage = false;
+          vm.showtitle = 'Sikeres feltöltés';
+        }, 5000);
+      });
     }
 
     activate();
 
     function activate() {
+      (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       vm.datefrom = new Date().getTime();
       vm.sdate = new Date().getTime();
       vm.dateto = $filter('date')(vm.datefrom + 7 * 24 * 3600 * 1000, 'yyyy-MM-dd');
       vm.datefrom = $filter('date')(vm.datefrom, 'yyyy-MM-dd');
       planService.getpartnumber().then(function (response) {
-        vm.egyedi = response.data;
+        vm.moduls = response.data;
+        console.log(vm.moduls);
       });
 
     }
   }
-  Controller.$inject = ['planService','$filter'];
+  Controller.$inject = ['planService', '$timeout', '$filter', '$cookies', '$state', '$rootScope'];
   return Controller;
 });
