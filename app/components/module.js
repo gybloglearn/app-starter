@@ -6,15 +6,16 @@ define([
   './services/login.service',
   './services/data.service',
   './sm_data/sm_data.ctrl',
-  './services/data.service',
+  './plan/plan.ctrl',
   './services/smdata.service',
   './directives/datepicker',
   './directives/mychart',
   './directives/SM/sm',
   './filters/unique',
   './filters/shift',
-  './filters/sumdb'
-  /* files */
+  './filters/sumdb',
+  './services/plan.service'
+	/* files */
 ], function (
   configFunction,
   runFunction,
@@ -23,14 +24,15 @@ define([
   loginService,
   dataService,
   sm_dataController,
-  dataService,
+  planController,
   smdataService,
   datepicker,
   mychart,
   smdir,
   unique,
   shift,
-  sumdb
+  sumdb,
+  planService
 	/* names */) {
 
     // Link all components to the module !!!
@@ -43,6 +45,7 @@ define([
     app.controller('StartController', startController);
     app.controller('LoginController', loginController);
     app.controller('sm_dataController', sm_dataController);
+    app.controller('planController', planController);
     app.service('dataService', dataService);
     app.service('smdataService', smdataService);
     app.directive('datepicker',datepicker);
@@ -51,5 +54,6 @@ define([
     app.filter('unique',unique);
     app.filter('shift',shift);
     app.filter('sumdb',sumdb);
-    /* controllers */
+		app.service('planService', planService);
+		/* controllers */
   });

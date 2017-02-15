@@ -1,0 +1,57 @@
+<div class="container-fluid">
+	<section class="module">
+		<div class="module-header">
+			<h1 class="text-center">SM-Tervek</h1>
+			<div class="col-sm-12" style="margin-top:20px">
+				<div class="input-group">
+					<span class="input-group-addon">Feltöltésre kerülő időszak:</span>
+					<input type="text" class="datepicker form-control" ng-model="vm.datefrom" std="{{vm.sdate}}">
+					<span class="input-group-addon">-tól</span>
+					<input type="text" class="datepicker form-control" ng-model="vm.dateto" std="{{vm.sdate}}">
+					<span class="input-group-addon">-ig</span>
+					<span class="input-group-addon">Darab</span>
+					<input type="text" class="form-control" ng-model="vm.darab">
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<div class="input-group">
+					<select ng-model="vm.act">
+					<option ng-repeat="item in vm.sheetmakers track by $index" value="{{item}}">{{item}}</option>
+					</select>
+					<select ng-model="vm.acttype">
+					<option ng-repeat="item in vm.egyedi" value="{{item.name}}">{{item.name}}</option>
+					</select>
+					<div class="input-group-btn">
+						<a href="" class="btn btn-primary" ng-click="vm.show()" ng-disabled="vm.dateto<=vm.datefrom">Input mezők</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="module-body">
+			<table class="table table-condensed" ng-show="vm.mutat">
+				<thead>
+					<tr>
+						<th>Dátum</th>
+						<th>Gép</th>
+						<th>Termék típus</th>
+						<th>Délelőtt</th>
+						<th>Délután</th>
+						<th>Éjszaka</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in vm.datumok" class="ng-scope">
+						<td>{{item}}</td>
+						<td>{{vm.act}}</td>
+						<td>{{vm.acttype}}</td>
+						<td><input type="text" class="form-control" value="{{vm.darab}}"></td>
+						<td><input type="text" class="form-control" value="{{vm.darab}}"></td>
+						<td><input type="text" class="form-control" value="{{vm.darab}}"></td>
+					</tr>
+				</tbody>
+			</table>
+			<button class="btn btn-primary" ng-click="vm.mutat=false">Feltölt</button>
+		</div>
+		<div class="module-footer"></div>
+	</section>
+</div>

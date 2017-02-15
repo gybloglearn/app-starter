@@ -47,6 +47,7 @@ define([], function () {
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       load();
+      vm.edate=new Date().getTime();
     }
 
     function setChart(nowsm) {
