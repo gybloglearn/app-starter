@@ -68,9 +68,6 @@ define([], function () {
             aeqki4 = aeqki4 + vm.potting4[i].aeq;
           }
         }
-        aeqbe4.toFixed(2);
-        aeqford4.toFixed(2);
-        aeqki4.toFixed(2);
 
         vm.dbchartconfig4 = {
           chart: {
@@ -110,6 +107,9 @@ define([], function () {
             type: 'column',
             width: 400,
             height: 300
+          },
+          tooltip:{
+            valueDecimals: 2
           },
           title: { text: vm.allpotting[0] + "-AEQ" },
           series: [
@@ -183,9 +183,6 @@ define([], function () {
             aeqki3 = aeqki3 + vm.potting3[i].aeq;
           }
         }
-        aeqbe3.toFixed(2);
-        aeqford3.toFixed(2);
-        aeqki3.toFixed(2);
 
         vm.dbchartconfig3 = {
           chart: {
@@ -225,6 +222,9 @@ define([], function () {
             type: 'column',
             width: 400,
             height: 300
+          },
+          tooltip:{
+            valueDecimals: 2
           },
           title: { text: vm.allpotting[1] + "-AEQ" },
           series: [
@@ -298,9 +298,6 @@ define([], function () {
             aeqki2 = aeqki2 + vm.potting2[i].aeq;
           }
         }
-        aeqbe2.toFixed(2);
-        aeqford2.toFixed(2);
-        aeqki2.toFixed(2);
 
         vm.dbchartconfig2 = {
           chart: {
@@ -340,6 +337,9 @@ define([], function () {
             type: 'column',
             width: 400,
             height: 300
+          },
+          tooltip:{
+            valueDecimals: 2
           },
           title: { text: vm.allpotting[2] + "-AEQ" },
           series: [

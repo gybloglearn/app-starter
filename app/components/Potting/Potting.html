@@ -1,334 +1,334 @@
-<div class="container-fluid">
-  <section class="module">
-    <div class="module-header">
-      <h1 class="text-center" ng-hide="vm.tobbnapos">Potting Report-{{vm.datumszam}}</h1>
-      <h1 class="text-center" ng-hide="!vm.tobbnapos">Betöltésre került időszak: {{vm.kezdodatumszam}}-{{vm.datumszam}}</h1>
-      <ul class="nav nav-tabs" style="margin-top:10px">
-<li ng-repeat="item in vm.allpotting track by $index">
-  <a data-toggle="tab" href="" ng-click="vm.mch=item;vm.load();vm.datszam()" ng-hide="vm.dis">{{item}}</a>
-</li>
-</ul>
-<h1 class="text-center" style="margin-top:10px">{{vm.mch}}</h1>
-<div class="col-sm-5" style="margin-top:10px">
-<div class="input-group">
-  <span class="input-group-addon">Dátum:</span>
-  <input type="text" class="datepicker form-control" ng-model="vm.kezdo" ng-hide="!vm.tobbnapos">
-  <span class="input-group-addon" ng-hide="!vm.tobbnapos">-tól</span>
-  <input type="text" class="datepicker form-control" ng-model="vm.datum">
-  <span class="input-group-addon" ng-hide="!vm.tobbnapos">-ig</span>
-  <div class="input-group-btn">
-    <a href="" class="btn btn-primary" ng-click="vm.load();vm.datszam()" ng-disabled="vm.dis || ((vm.datum<=vm.kezdo)&& vm.tobbnapos)">Betöltés</a>
-  </div>
-</div>
-</div>
-<button class="btn btn-default pull-right" ng-class="{'btn-info':vm.tobbnapos}" ng-click="vm.helyes();vm.tobbnapos=!vm.tobbnapos;vm.load();vm.datszam()">Többnapos nézet</button>
-</div>
-<div class="module-body" ng-hide="vm.tobbnapos">
-  <hr>
+<div class="container">
+	<section class="module">
+		<div class="module-header">
+			<h1 class="text-center" ng-hide="vm.tobbnapos">Potting Report-{{vm.datumszam}}</h1>
+			<h1 class="text-center" ng-hide="!vm.tobbnapos">Betöltésre került időszak: {{vm.kezdodatumszam}}-{{vm.datumszam}}</h1>
+			<ul class="nav nav-tabs" style="margin-top:10px">
+				<li ng-repeat="item in vm.allpotting track by $index">
+					<a data-toggle="tab" href="" ng-click="vm.mch=item;vm.load();vm.datszam()" ng-hide="vm.dis">{{item}}</a>
+				</li>
+			</ul>
+			<h1 class="text-center" style="margin-top:10px">{{vm.mch}}</h1>
+			<div class="col-sm-5" style="margin-top:10px">
+				<div class="input-group">
+					<span class="input-group-addon">Dátum:</span>
+					<input type="text" class="datepicker form-control" ng-model="vm.kezdo" ng-hide="!vm.tobbnapos">
+					<span class="input-group-addon" ng-hide="!vm.tobbnapos">-tól</span>
+					<input type="text" class="datepicker form-control" ng-model="vm.datum">
+					<span class="input-group-addon" ng-hide="!vm.tobbnapos">-ig</span>
+					<div class="input-group-btn">
+						<a href="" class="btn btn-primary" ng-click="vm.load();vm.datszam()" ng-disabled="vm.dis || ((vm.datum<=vm.kezdo)&& vm.tobbnapos)">Betöltés</a>
+					</div>
+				</div>
+			</div>
+			<button class="btn btn-default pull-right" ng-class="{'btn-info':vm.tobbnapos}" ng-click="vm.helyes();vm.tobbnapos=!vm.tobbnapos;vm.load();vm.datszam()">Többnapos nézet</button>
+		</div>
+		<div class="module-body" ng-hide="vm.tobbnapos">
+			<hr>
 
 
-  <div class="row">
-    <h1>Délelőtt-Szak: {{vm.szak_de}}</h1>
-  </div>
-  <div class="row" style="margin-top:30px">
-<div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{vm.sumdb[0]}}
-<br>
-<small style="font-size:20px">db</small>
-</h1>
-<h2 class="text-center">
-  {{vm.sumaeq[0] | number:2}}
-  <small>AEQ</small>
-</h2>
-<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#inpotting_de">POTTING BE részletek
-<i class="icon-chevron-right"></i>
-</h3>
-<div class="collapse" id="inpotting_de">
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th>Típus</th>
-        <th>Darab</th>
-        <th>AEQ</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="item in vm.potting | filter:{'name':'_IN-IN','shiftnum':'1'}" class="ng-scope">
-        <td>{{item.name | name_change}}</td>
-        <td>{{item.amount}}</td>
-        <td>{{item.aeq | number:2}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-<div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{vm.sumdb[1]}}
-<br>
-<small style="font-size:20px">db</small>
-</h1>
-<h2 class="text-center">
-  {{vm.sumaeq[1] | number:2}}
-  <small>AEQ</small>
-</h2>
-<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#p3potting_de">POTTING FORDÍTÁS részletek
-<i class="icon-chevron-right"></i>
-</h3>
-<div class="collapse" id="p3potting_de">
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th>Típus</th>
-        <th>Darab</th>
-        <th>AEQ</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="item in vm.potting | filter:{'name':'_P3-P3','shiftnum':'1'}" class="ng-scope">
-        <td>{{item.name | name_change}}</td>
-        <td>{{item.amount}}</td>
-        <td>{{item.aeq | number:2}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-<div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{vm.sumdb[2]}}
-<br>
-<small style="font-size:20px">db</small>
-</h1>
-<h2 class="text-center">
-  {{vm.sumaeq[2] | number:2}}
-  <small>AEQ</small>
-</h2>
-<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#outpotting_de">POTTING KI részletek
-<i class="icon-chevron-right"></i>
-</h3>
-<div class="collapse" id="outpotting_de">
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th>Típus</th>
-        <th>Darab</th>
-        <th>AEQ</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="item in vm.potting | filter:{'name':'_OUT-OUT','shiftnum':'1'}" class="ng-scope">
-        <td>{{item.name | name_change}}</td>
-        <td>{{item.amount}}</td>
-        <td>{{item.aeq | number:2}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-</div>
-<hr>
+			<div class="row">
+				<h1>Délelőtt-Szak: {{vm.szak_de}}</h1>
+			</div>
+			<div class="row" style="margin-top:30px">
+				<div class="col-sm-4">
+					<h1 class="text-center" style="font-size:6em">{{vm.sumdb[0]}}
+						<br>
+						<small style="font-size:20px">db</small>
+					</h1>
+					<h2 class="text-center">
+						{{vm.sumaeq[0] | number:2}}
+						<small>AEQ</small>
+					</h2>
+					<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#inpotting_de">POTTING BE részletek
+						<i class="icon-chevron-right"></i>
+					</h3>
+					<div class="collapse" id="inpotting_de">
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>Típus</th>
+									<th>Darab</th>
+									<th>AEQ</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in vm.potting | filter:{'name':'_IN-IN','shiftnum':'1'}" class="ng-scope">
+									<td>{{item.name | name_change}}</td>
+									<td>{{item.amount}}</td>
+									<td>{{item.aeq | number:2}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<h1 class="text-center" style="font-size:6em">{{vm.sumdb[1]}}
+						<br>
+						<small style="font-size:20px">db</small>
+					</h1>
+					<h2 class="text-center">
+						{{vm.sumaeq[1] | number:2}}
+						<small>AEQ</small>
+					</h2>
+					<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#p3potting_de">POTTING FORDÍTÁS részletek
+						<i class="icon-chevron-right"></i>
+					</h3>
+					<div class="collapse" id="p3potting_de">
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>Típus</th>
+									<th>Darab</th>
+									<th>AEQ</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in vm.potting | filter:{'name':'_P3-P3','shiftnum':'1'}" class="ng-scope">
+									<td>{{item.name | name_change}}</td>
+									<td>{{item.amount}}</td>
+									<td>{{item.aeq | number:2}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<h1 class="text-center" style="font-size:6em">{{vm.sumdb[2]}}
+						<br>
+						<small style="font-size:20px">db</small>
+					</h1>
+					<h2 class="text-center">
+						{{vm.sumaeq[2] | number:2}}
+						<small>AEQ</small>
+					</h2>
+					<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#outpotting_de">POTTING KI részletek
+						<i class="icon-chevron-right"></i>
+					</h3>
+					<div class="collapse" id="outpotting_de">
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>Típus</th>
+									<th>Darab</th>
+									<th>AEQ</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in vm.potting | filter:{'name':'_OUT-OUT','shiftnum':'1'}" class="ng-scope">
+									<td>{{item.name | name_change}}</td>
+									<td>{{item.amount}}</td>
+									<td>{{item.aeq | number:2}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<hr>
 
 
-<div class="row">
-  <h1>Délután-Szak: {{vm.szak_du}}</h1>
-</div>
-<div class="row" style="margin-top:30px">
-<div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{vm.sumdb[3]}}
-<br>
-<small style="font-size:20px">db</small>
-</h1>
-<h2 class="text-center">
-  {{vm.sumaeq[3] | number:2}}
-  <small>AEQ</small>
-</h2>
-<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#inpotting_du">POTTING BE részletek
-<i class="icon-chevron-right"></i>
-</h3>
-<div class="collapse" id="inpotting_du">
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th>Típus</th>
-        <th>Darab</th>
-        <th>AEQ</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="item in vm.potting | filter:{'name':'_IN-IN','shiftnum':'2'}" class="ng-scope">
-        <td>{{item.name | name_change}}</td>
-        <td>{{item.amount}}</td>
-        <td>{{item.aeq | number:2}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-<div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{vm.sumdb[4]}}
-<br>
-<small style="font-size:20px">db</small>
-</h1>
-<h2 class="text-center">
-  {{vm.sumaeq[4] | number:2}}
-  <small>AEQ</small>
-</h2>
-<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#p3potting_du">POTTING FORDÍTÁS részletek
-<i class="icon-chevron-right"></i>
-</h3>
-<div class="collapse" id="p3potting_du">
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th>Típus</th>
-        <th>Darab</th>
-        <th>AEQ</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="item in vm.potting | filter:{'name':'_P3-P3','shiftnum':'2'}" class="ng-scope">
-        <td>{{item.name | name_change}}</td>
-        <td>{{item.amount}}</td>
-        <td>{{item.aeq | number:2}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-<div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{vm.sumdb[5]}}
-<br>
-<small style="font-size:20px">db</small>
-</h1>
-<h2 class="text-center">
-  {{vm.sumaeq[5] | number:2}}
-  <small>AEQ</small>
-</h2>
-<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#outpotting_du">POTTING KI részletek
-<i class="icon-chevron-right"></i>
-</h3>
-<div class="collapse" id="outpotting_du">
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th>Típus</th>
-        <th>Darab</th>
-        <th>AEQ</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="item in vm.potting | filter:{'name':'_OUT-OUT','shiftnum':'2'}" class="ng-scope">
-        <td>{{item.name | name_change}}</td>
-        <td>{{item.amount}}</td>
-        <td>{{item.aeq | number:2}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-</div>
-<hr>
+			<div class="row">
+				<h1>Délután-Szak: {{vm.szak_du}}</h1>
+			</div>
+			<div class="row" style="margin-top:30px">
+				<div class="col-sm-4">
+					<h1 class="text-center" style="font-size:6em">{{vm.sumdb[3]}}
+						<br>
+						<small style="font-size:20px">db</small>
+					</h1>
+					<h2 class="text-center">
+						{{vm.sumaeq[3] | number:2}}
+						<small>AEQ</small>
+					</h2>
+					<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#inpotting_du">POTTING BE részletek
+						<i class="icon-chevron-right"></i>
+					</h3>
+					<div class="collapse" id="inpotting_du">
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>Típus</th>
+									<th>Darab</th>
+									<th>AEQ</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in vm.potting | filter:{'name':'_IN-IN','shiftnum':'2'}" class="ng-scope">
+									<td>{{item.name | name_change}}</td>
+									<td>{{item.amount}}</td>
+									<td>{{item.aeq | number:2}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<h1 class="text-center" style="font-size:6em">{{vm.sumdb[4]}}
+						<br>
+						<small style="font-size:20px">db</small>
+					</h1>
+					<h2 class="text-center">
+						{{vm.sumaeq[4] | number:2}}
+						<small>AEQ</small>
+					</h2>
+					<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#p3potting_du">POTTING FORDÍTÁS részletek
+						<i class="icon-chevron-right"></i>
+					</h3>
+					<div class="collapse" id="p3potting_du">
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>Típus</th>
+									<th>Darab</th>
+									<th>AEQ</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in vm.potting | filter:{'name':'_P3-P3','shiftnum':'2'}" class="ng-scope">
+									<td>{{item.name | name_change}}</td>
+									<td>{{item.amount}}</td>
+									<td>{{item.aeq | number:2}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<h1 class="text-center" style="font-size:6em">{{vm.sumdb[5]}}
+						<br>
+						<small style="font-size:20px">db</small>
+					</h1>
+					<h2 class="text-center">
+						{{vm.sumaeq[5] | number:2}}
+						<small>AEQ</small>
+					</h2>
+					<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#outpotting_du">POTTING KI részletek
+						<i class="icon-chevron-right"></i>
+					</h3>
+					<div class="collapse" id="outpotting_du">
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>Típus</th>
+									<th>Darab</th>
+									<th>AEQ</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in vm.potting | filter:{'name':'_OUT-OUT','shiftnum':'2'}" class="ng-scope">
+									<td>{{item.name | name_change}}</td>
+									<td>{{item.amount}}</td>
+									<td>{{item.aeq | number:2}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<hr>
 
 
-<div class="row">
-  <h1>Éjszaka-Szak: {{vm.szak_ej}}</h1>
-</div>
-<div class="row" style="margin-top:30px">
-<div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{vm.sumdb[6]}}
-<br>
-<small style="font-size:20px">db</small>
-</h1>
-<h2 class="text-center">
-  {{vm.sumaeq[6] | number:2}}
-  <small>AEQ</small>
-</h2>
-<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#inpotting_ej">POTTING BE részletek
-<i class="icon-chevron-right"></i>
-</h3>
-<div class="collapse" id="inpotting_ej">
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th>Típus</th>
-        <th>Darab</th>
-        <th>AEQ</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="item in vm.potting | filter:{'name':'_IN-IN','shiftnum':'3'}" class="ng-scope">
-        <td>{{item.name | name_change}}</td>
-        <td>{{item.amount}}</td>
-        <td>{{item.aeq | number:2}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-<div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{vm.sumdb[7]}}
-<br>
-<small style="font-size:20px">db</small>
-</h1>
-<h2 class="text-center">
-  {{vm.sumaeq[7] | number:2}}
-  <small>AEQ</small>
-</h2>
-<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#p3potting_ej">POTTING FORDÍTÁS részletek
-<i class="icon-chevron-right"></i>
-</h3>
-<div class="collapse" id="p3potting_ej">
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th>Típus</th>
-        <th>Darab</th>
-        <th>AEQ</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="item in vm.potting | filter:{'name':'_P3-P3','shiftnum':'3'}" class="ng-scope">
-        <td>{{item.name | name_change}}</td>
-        <td>{{item.amount}}</td>
-        <td>{{item.aeq | number:2}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-<div class="col-sm-4">
-  <h1 class="text-center" style="font-size:6em">{{vm.sumdb[8]}}
-<br>
-<small style="font-size:20px">db</small>
-</h1>
-<h2 class="text-center">
-  {{vm.sumaeq[8] | number:2}}
-  <small>AEQ</small>
-</h2>
-<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#outpotting_ej">POTTING KI részletek
-<i class="icon-chevron-right"></i>
-</h3>
-<div class="collapse" id="outpotting_ej">
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th>Típus</th>
-        <th>Darab</th>
-        <th>AEQ</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="item in vm.potting | filter:{'name':'_OUT-OUT','shiftnum':'3'}" class="ng-scope">
-        <td>{{item.name | name_change}}</td>
-        <td>{{item.amount}}</td>
-        <td>{{item.aeq | number:2}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-</div>
-</div>
-<div class="module-footer">
-</div>
-</section>
+			<div class="row">
+				<h1>Éjszaka-Szak: {{vm.szak_ej}}</h1>
+			</div>
+			<div class="row" style="margin-top:30px">
+				<div class="col-sm-4">
+					<h1 class="text-center" style="font-size:6em">{{vm.sumdb[6]}}
+						<br>
+						<small style="font-size:20px">db</small>
+					</h1>
+					<h2 class="text-center">
+						{{vm.sumaeq[6] | number:2}}
+						<small>AEQ</small>
+					</h2>
+					<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#inpotting_ej">POTTING BE részletek
+						<i class="icon-chevron-right"></i>
+					</h3>
+					<div class="collapse" id="inpotting_ej">
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>Típus</th>
+									<th>Darab</th>
+									<th>AEQ</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in vm.potting | filter:{'name':'_IN-IN','shiftnum':'3'}" class="ng-scope">
+									<td>{{item.name | name_change}}</td>
+									<td>{{item.amount}}</td>
+									<td>{{item.aeq | number:2}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<h1 class="text-center" style="font-size:6em">{{vm.sumdb[7]}}
+						<br>
+						<small style="font-size:20px">db</small>
+					</h1>
+					<h2 class="text-center">
+						{{vm.sumaeq[7] | number:2}}
+						<small>AEQ</small>
+					</h2>
+					<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#p3potting_ej">POTTING FORDÍTÁS részletek
+						<i class="icon-chevron-right"></i>
+					</h3>
+					<div class="collapse" id="p3potting_ej">
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>Típus</th>
+									<th>Darab</th>
+									<th>AEQ</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in vm.potting | filter:{'name':'_P3-P3','shiftnum':'3'}" class="ng-scope">
+									<td>{{item.name | name_change}}</td>
+									<td>{{item.amount}}</td>
+									<td>{{item.aeq | number:2}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<h1 class="text-center" style="font-size:6em">{{vm.sumdb[8]}}
+						<br>
+						<small style="font-size:20px">db</small>
+					</h1>
+					<h2 class="text-center">
+						{{vm.sumaeq[8] | number:2}}
+						<small>AEQ</small>
+					</h2>
+					<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#outpotting_ej">POTTING KI részletek
+						<i class="icon-chevron-right"></i>
+					</h3>
+					<div class="collapse" id="outpotting_ej">
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>Típus</th>
+									<th>Darab</th>
+									<th>AEQ</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in vm.potting | filter:{'name':'_OUT-OUT','shiftnum':'3'}" class="ng-scope">
+									<td>{{item.name | name_change}}</td>
+									<td>{{item.amount}}</td>
+									<td>{{item.aeq | number:2}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="module-footer">
+		</div>
+	</section>
 </div>
