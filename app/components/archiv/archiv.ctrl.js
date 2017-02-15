@@ -158,6 +158,7 @@ define([], function () {
     activate();
 
     function activate() {
+      (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       vm.dateto = new Date().getTime();
       vm.datefrom = $filter('date')(vm.dateto - 7 * 24 * 3600 * 1000, 'yyyy-MM-dd');
       vm.dateto = $filter('date')(vm.dateto, 'yyyy-MM-dd');
