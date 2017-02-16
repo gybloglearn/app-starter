@@ -55,7 +55,7 @@ define([], function () {
       vm.chartconfig = {
         chart: {
           type: 'column',
-          width: 1100,
+          width: 900,
           height: 360
         },
         title: { text: nowsm + " SOE report" },
