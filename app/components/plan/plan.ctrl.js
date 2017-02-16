@@ -4,11 +4,13 @@ define([], function () {
     var vm = this;
     vm.show = show;
     vm.save = save;
+    vm.load=load;
     vm.mutat = false;
     vm.showmessage = false;
     vm.sheetmakers = ["SheetMaker1", "SheetMaker2", "SheetMaker4", "SheetMaker5", "SheetMaker6", "SheetMaker7", "SheetMaker8", "SheetMaker9"];
     vm.act = "SheetMaker4";
     vm.moduls = [];
+    vm.planlist=[];
 
     function show() {
       vm.datumok = [];
@@ -31,6 +33,12 @@ define([], function () {
       });
     }
 
+    function load(){
+      planService.getAll().then(function (response) {
+        vm.planlist = response.data;
+      });
+    }
+
     activate();
 
     function activate() {
@@ -41,9 +49,8 @@ define([], function () {
       vm.datefrom = $filter('date')(vm.datefrom, 'yyyy-MM-dd');
       planService.getpartnumber().then(function (response) {
         vm.moduls = response.data;
-        console.log(vm.moduls);
       });
-
+      load();
     }
   }
   Controller.$inject = ['planService', '$timeout', '$filter', '$cookies', '$state', '$rootScope'];

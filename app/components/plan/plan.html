@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container">
 	<section class="module">
 		<div class="module-header">
 			<h1 class="text-center">SM-Tervek</h1>
@@ -22,7 +22,7 @@
 						<option ng-repeat="item in vm.moduls" value="{{item.name}}">{{item.name}}</option>
 					</select>
 					<div class="input-group-btn">
-						<a href="" class="btn btn-primary" ng-click="vm.show()" ng-disabled="vm.dateto<=vm.datefrom">Input mezők</a>
+						<a href="" class="btn btn-primary" ng-click="vm.show()" ng-disabled="vm.dateto<vm.datefrom">Input mezők</a>
 					</div>
 				</div>
 			</div>
@@ -59,6 +59,66 @@
 				</div>
 			</div>
 		</div>
-		<div class="module-footer"></div>
+		<div class="module-footer">
+			<hr>
+			<h1 class="text-center">Felvett tervek listája</h1>
+			<div class="tray filter-tray top" style="margin-top:20px">
+				<div class="tray-inner">
+					<div class="filter-rule-group">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<span class="control-label" style="color:#FFFFFF">Dátum:</span>
+								<input type="text" ng-model="vm.search.date" class="form-control">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<span class="control-label" style="color:#FFFFFF">Gép:</span>
+								<select ng-model="vm.search.id" class="form-control">
+						    		<option value="">Mind</option>
+                					<option ng-repeat="item in vm.planlist" value="{{item.id}}">{{item.id}}</option>
+            					</select>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<span class="control-label" style="color:#FFFFFF">Termék típus:</span>
+								<select ng-model="vm.search.type" class="form-control">
+						    		<option value="">Mind</option>
+                					<option ng-repeat="item in vm.planlist" value="{{item.type}}"></option>
+            					</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<table class="table table-condensed">
+				<thead>
+					<tr>
+						<th>Dátum</th>
+						<th>Gép</th>
+						<th>Termék típus</th>
+						<th>Lapszám</th>
+						<th>Délelőtt</th>
+						<th>Délután</th>
+						<th>Éjszaka</th>
+						<th>Szerkesztés</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!--tr ng-repeat="item in vm.planlist | filter: search track by $index" class="ng-scope"-->
+					<tr ng-repeat="item in vm.planlist">
+						<td>{{item.date}}</td>
+						<td>{{item.id}}</td>
+						<td>{{item.type}}</td>
+						<td>{{item.sheetnumber}}</td>
+						<td>{{item.amountshift1}}</td>
+						<td>{{item.amountshift2}}</td>
+						<td>{{item.amountshift3}}</td>
+						<td><button class="btn btn-primary" ng-click="vm.edit = item" title="Szerkesztés"><i class="icon-edit"></i></button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</section>
 </div>
