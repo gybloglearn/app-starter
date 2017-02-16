@@ -7,6 +7,7 @@ define([
   './services/data.service',
   './sm_data/sm_data.ctrl',
   './plan/plan.ctrl',
+  './Forbidden/Forbidden.ctrl',
   './services/smdata.service',
   './directives/datepicker',
   './directives/mychart',
@@ -25,6 +26,7 @@ define([
   dataService,
   sm_dataController,
   planController,
+  ForbiddenController,
   smdataService,
   datepicker,
   mychart,
@@ -46,6 +48,7 @@ define([
     app.controller('LoginController', loginController);
     app.controller('sm_dataController', sm_dataController);
     app.controller('planController', planController);
+    app.controller('ForbiddenController', ForbiddenController);
     app.service('dataService', dataService);
     app.service('smdataService', smdataService);
     app.directive('datepicker',datepicker);

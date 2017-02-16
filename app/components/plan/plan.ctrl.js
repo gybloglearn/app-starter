@@ -4,13 +4,13 @@ define([], function () {
     var vm = this;
     vm.show = show;
     vm.save = save;
-    vm.load=load;
+    vm.load = load;
     vm.mutat = false;
     vm.showmessage = false;
     vm.sheetmakers = ["SheetMaker1", "SheetMaker2", "SheetMaker4", "SheetMaker5", "SheetMaker6", "SheetMaker7", "SheetMaker8", "SheetMaker9"];
     vm.act = "SheetMaker4";
     vm.moduls = [];
-    vm.planlist=[];
+    vm.planlist = [];
 
     function show() {
       vm.datumok = [];
@@ -33,7 +33,7 @@ define([], function () {
       });
     }
 
-    function load(){
+    function load() {
       planService.getAll().then(function (response) {
         vm.planlist = response.data;
       });
@@ -43,6 +43,9 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
+      if ($rootScope.user.username != "212434909" && $rootScope.user.username != "502678184" && $rootScope.user.username != "113010451") {
+        $state.go('Forbidden');
+      }
       vm.datefrom = new Date().getTime();
       vm.sdate = new Date().getTime();
       vm.dateto = $filter('date')(vm.datefrom + 7 * 24 * 3600 * 1000, 'yyyy-MM-dd');
