@@ -28,7 +28,6 @@ define([], function () {
         vm.data = {};
         $timeout(function () {
           vm.showmessage = false;
-          vm.showtitle = 'Sikeres feltöltés';
         }, 5000);
       });
     }

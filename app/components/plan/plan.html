@@ -53,9 +53,9 @@
 				</tbody>
 			</table>
 			<div class="col-sm-4">
-				<button class="btn btn-success" ng-click="vm.save;vm.mutat=false" ng-disabled="vm.showmessage || vm.acttype==null">Feltölt</button>
+				<button class="btn btn-success" ng-click="vm.save();vm.mutat=false" ng-disabled="vm.showmessage || vm.acttype==null">Feltölt</button>
 				<div class="alert alert-success" ng-show="vm.showmessage">
-					<strong>Sikeres felvitel! </strong>{{vm.showtitle}}
+					<strong>Sikeres felvitel!</strong>
 				</div>
 			</div>
 		</div>
