@@ -209,6 +209,7 @@ define([], function () {
                 vm.plans[j].plan = vm.plans[j].plan + vm.tervezett_darab;
               }
             }
+            console.log(vm.plans);
           }
         });
       });
