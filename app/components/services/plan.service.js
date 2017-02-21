@@ -36,9 +36,9 @@ define([], function () {
     function post(data) {
       var req = {
         method: 'POST',
-        url: 'http://3.228.180.15/plan/' + data.id,
+        url: 'http://3.228.180.15/planapi/plan/' + data.id,
         data: data,
-        headers: { "Content-Type": "/json" }
+        headers: { "Content-Type": "application/json" }
       };   
       return $http(req);
     }
@@ -47,7 +47,7 @@ define([], function () {
         method: 'PUT',
         url: 'http://3.228.180.15/planapi/plan/' + data.id,
         data: data,
-        headers: { "Content-Type": "/json" }
+        headers: { "Content-Type": "application/json" }
       };
       return $http(req);
     }
