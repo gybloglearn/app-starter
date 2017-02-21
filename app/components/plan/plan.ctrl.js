@@ -6,6 +6,7 @@ define([], function () {
     vm.show = show;
     vm.save = save;
     vm.load = load;
+    vm.updateplan=updateplan;
     vm.mutat = false;
     vm.showmessage = false;
     vm.sheetmakers = ["SheetMaker1", "SheetMaker2", "SheetMaker4", "SheetMaker5", "SheetMaker6", "SheetMaker7", "SheetMaker8", "SheetMaker9"];
@@ -67,6 +68,12 @@ define([], function () {
         vm.moduls = response.data;
       });
       load();
+    }
+
+     function updateplan() {
+       planService.put(vm.edit).then(function (resp) {
+        vm.edit = '';
+      });
     }
   }
   Controller.$inject = ['planService', '$timeout', '$filter', '$cookies', '$state', '$rootScope'];
