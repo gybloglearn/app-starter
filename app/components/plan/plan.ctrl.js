@@ -2,6 +2,7 @@ define([], function () {
   'use strict';
   function Controller(planService, $timeout, $filter, $cookies, $state, $rootScope) {
     var vm = this;
+    vm.data = [];
     vm.show = show;
     vm.save = save;
     vm.load = load;
@@ -16,20 +17,33 @@ define([], function () {
       vm.datumok = [];
       vm.mezoszam = ((new Date(vm.dateto).getTime() - new Date(vm.datefrom).getTime()) / (1000 * 3600 * 24)) + 1;
       vm.mutat = true;
+      vm.data = [];
       for (var i = 0; i < vm.mezoszam; i++) {
         vm.datumok[i] = new Date(vm.datefrom).getTime() + (i * 24 * 3600 * 1000);
         vm.datumok[i] = $filter('date')(vm.datumok[i], 'yyyy-MM-dd');
+        vm.data.push({
+          "date": vm.datumok[i],
+          "id": vm.act,
+          "type": vm.acttype,
+          "sheetnumber": $filter('filter')(vm.moduls, { 'name': vm.acttype })[0].sheets,
+          "amountshift1": vm.darab,
+          "amountshift2": vm.darab,
+          "amountshift3": vm.darab,
+        });
       }
     }
 
     function save() {
-      planService.post(vm.data).then(function (response) {
-        vm.showmessage = true;
-        vm.data = {};
-        $timeout(function () {
-          vm.showmessage = false;
-        }, 5000);
-      });
+      for (var i = 0; i < vm.data.length; i++) {
+
+        planService.post(vm.data[i]).then(function (response) {
+          vm.showmessage = true;
+          vm.data = {};
+        });
+      }
+      $timeout(function () {
+        vm.showmessage = false;
+      }, 5000);
     }
 
     function load() {
@@ -42,7 +56,7 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      if ($rootScope.user.username != "212434909" && $rootScope.user.username != "502678184" && $rootScope.user.username != "113010451"  && $rootScope.user.username != "212422533") {
+      if ($rootScope.user.username != "212434909" && $rootScope.user.username != "502678184" && $rootScope.user.username != "113010451" && $rootScope.user.username != "212422533") {
         $state.go('Forbidden');
       }
       vm.datefrom = new Date().getTime();

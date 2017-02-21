@@ -22,13 +22,14 @@
 						<option ng-repeat="item in vm.moduls" value="{{item.name}}">{{item.name}}</option>
 					</select>
 					<div class="input-group-btn">
-						<a href="" class="btn btn-primary" ng-click="vm.show()" ng-disabled="vm.dateto<vm.datefrom">Input mezők</a>
+						<a href="" class="btn btn-primary" ng-click="vm.show()" ng-disabled="vm.dateto<vm.datefrom">Input mezők generálása</a>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="module-body">
-			<table class="table table-condensed" ng-show="vm.mutat">
+			<div  ng-show="vm.mutat">
+			<table class="table table-condensed">
 				<thead>
 					<tr>
 						<th>Dátum</th>
@@ -41,14 +42,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="item in vm.datumok" class="ng-scope">
-						<td ng-model="vm.data.date"><input type="text" class="form-control" value="{{item}}" readonly></td>
-						<td ng-model="vm.data.id"><input type="text" class="form-control" value="{{vm.act}}" readonly></td>
-						<td ng-model="vm.data.type"><input type="text" class="form-control" value="{{vm.acttype}}" readonly></td>
-						<td ng-model="vm.data.sheetnumber"><input type="text" class="form-control" value="{{(vm.moduls | filter:{'name':vm.acttype})[0].sheets}}" readonly></td>
-						<td ng-model="vm.data.amountshift1"><input type="text" class="form-control" value="{{vm.darab}}"></td>
-						<td ng-model="vm.data.amountshift2"><input type="text" class="form-control" value="{{vm.darab}}"></td>
-						<td ng-model="vm.data.amountshift3"><input type="text" class="form-control" value="{{vm.darab}}"></td>
+					<tr ng-repeat="item in vm.datumok track by $index" class="ng-scope">
+						<td><input ng-model="vm.data[$index].date" type="text" class="form-control" value="{{item}}" readonly></td>
+						<td><input ng-model="vm.data[$index].id" type="text" class="form-control" value="{{vm.act}}" readonly></td>
+						<td><input ng-model="vm.data[$index].type" type="text" class="form-control" value="{{vm.acttype}}" readonly></td>
+						<td><input ng-model="vm.data[$index].sheetnumber" type="text" class="form-control" value="{{(vm.moduls | filter:{'name':vm.acttype})[0].sheets}}" readonly></td>
+						<td><input ng-model="vm.data[$index].amountshift1" type="text" class="form-control"></td>
+						<td><input ng-model="vm.data[$index].amountshift2" type="text" class="form-control"></td>
+						<td><input ng-model="vm.data[$index].amountshift3" type="text" class="form-control"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -57,6 +58,7 @@
 				<div class="alert alert-success" ng-show="vm.showmessage">
 					<strong>Sikeres felvitel!</strong>
 				</div>
+			</div>
 			</div>
 		</div>
 		<div class="module-footer">
@@ -106,8 +108,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<!--tr ng-repeat="item in vm.planlist | filter: search track by $index" class="ng-scope"-->
-					<tr ng-repeat="item in vm.planlist">
+					<tr ng-repeat="item in vm.planlist | filter: search track by $index" class="ng-scope">
 						<td>{{item.date}}</td>
 						<td>{{item.id}}</td>
 						<td>{{item.type}}</td>

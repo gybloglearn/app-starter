@@ -39,7 +39,7 @@ define([], function () {
         url: 'http://3.228.180.15/plan/' + data.id,
         data: data,
         headers: { "Content-Type": "/json" }
-      };
+      };   
       return $http(req);
     }
     function put(data) {
