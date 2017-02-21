@@ -4,9 +4,9 @@ define([], function () {
   function Service($http) {
     var service = {
       getpartnumber: getpartnumber,
-      getAll:getAll,
-      post:post,
-      put:put
+      getAll: getAll,
+      post: post,
+      put: put
     };
 
     return service;
@@ -22,25 +22,32 @@ define([], function () {
     function getAll() {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15'
+        url: 'http://3.228.180.15/planapi/allplans'
+      };
+      return $http(req);
+    }
+    function getsmdate() {
+      var req = {
+        method: 'GET',
+        url: 'http://3.228.180.15/planapi/plan' + id + '/' + date
       };
       return $http(req);
     }
     function post(data) {
       var req = {
         method: 'POST',
-        url: 'http://3.228.180.15',
-        data:data,
-        headers: {"Content-Type":"/json"}
+        url: 'http://3.228.180.15/plan/' + data.id,
+        data: data,
+        headers: { "Content-Type": "/json" }
       };
       return $http(req);
     }
     function put(data) {
       var req = {
         method: 'PUT',
-        url: 'http://3.228.180.15',
-        data:data,
-        headers: {"Content-Type":"/json"}
+        url: 'http://3.228.180.15/planapi/plan/' + data.id,
+        data: data,
+        headers: { "Content-Type": "/json" }
       };
       return $http(req);
     }
