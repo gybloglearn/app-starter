@@ -26,13 +26,6 @@ define([], function () {
       };
       return $http(req);
     }
-    function getsmdate() {
-      var req = {
-        method: 'GET',
-        url: 'http://3.228.180.15/planapi/plan' + id + '/' + date
-      };
-      return $http(req);
-    }
     function post(data) {
       var req = {
         method: 'POST',

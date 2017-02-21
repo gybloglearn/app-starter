@@ -4,9 +4,10 @@ define([], function () {
     var vm = this;
     vm.actsm = [];
     vm.allsmsum = [];
+    vm.allplan = [];
     vm.szakok = [];
+    vm.plans = [];
     vm.actszak = "";
-    vm.tervezett = 248;
     vm.tervezett_darab = 0;
     vm.actshiftnum = null;
     vm.smloading = false;
@@ -35,6 +36,7 @@ define([], function () {
           var jo = $filter('sumdb')($filter('filter')(response.data, { 'name': substring2, 'shiftnum': vm.actshiftnum }));
           vm.allsmsum.push({
             sm: v,
+            terv: $filter('filter')(vm.plans, { "sm": v })[0].plan,
             osszlap: ossz,
             jolap: jo,
             id: "SMchart" + v.substring(11, 10),
@@ -66,7 +68,7 @@ define([], function () {
                 {
                   name: 'Terv',
                   color: "#0033cc",
-                  data: [vm.tervezett_darab]
+                  data: [$filter('filter')(vm.plans, { "sm": v })[0].plan]
                 }],
 
               xAxis: [
@@ -152,48 +154,66 @@ define([], function () {
     }
 
     function plan() {
+      selectsm();
       var frissites = $filter('date')(new Date().getTime(), 'yyyy-MM-dd HH:mm');
-      var szam = 0;
-      var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
-      vm.tervezett_darab = 0;
+      vm.plans = [];
 
-      if (vm.actshiftnum == 1) {
-        szorzo = szorzo - (350);
-        szam = (vm.tervezett / 480) * szorzo;
-        vm.tervezett_darab = Math.round(szam);
-        if (vm.tervezett_darab > vm.tervezett) {
-          vm.tervezett_darab = vm.tervezett;
-        }
-        console.log(vm.tervezett_darab);
-      }
-      else if (vm.actshiftnum == 2) {
-        szorzo = szorzo - (830);
-        szam = (vm.tervezett / 480) * szorzo;
-        vm.tervezett_darab = Math.round(szam);
-        if (vm.tervezett_darab > vm.tervezett) {
-          vm.tervezett_darab = vm.tervezett;
-        }
-        console.log(vm.tervezett_darab);
-      }
-      else if (vm.actshiftnum == 3) {
-        if (szorzo >= 1310) {
-          szorzo = szorzo - (1310);
-          szam = (vm.tervezett / 480) * szorzo;
-          vm.tervezett_darab = Math.round(szam);
-          if (vm.tervezett_darab > vm.tervezett) {
-            vm.tervezett_darab = vm.tervezett;
+      angular.forEach(vm.loadsheetmakers, function (v, k) {
+        dataService.getplan(v, vm.datum).then(function (response) {
+          vm.allplan = response.data;
+          var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
+          for (var i = 0; i < vm.allplan.length; i++) {
+            vm.tervezett = 0;
+            var szam = 0;
+            vm.tervezett_darab = 0;
+
+            if (vm.actshiftnum == 1) {
+              var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
+              vm.tervezett = vm.tervezett + (parseInt(vm.allplan[i].amountshift1) * parseInt(vm.allplan[i].sheetnumber));
+              szorzo = szorzo - (350);
+              szam = (vm.tervezett / 480) * szorzo;
+              vm.tervezett_darab = Math.round(szam);
+            }
+            else if (vm.actshiftnum == 2) {
+              var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
+              vm.tervezett = vm.tervezett + (parseInt(vm.allplan[i].amountshift2) * parseInt(vm.allplan[i].sheetnumber));
+              szorzo = szorzo - (830);
+              szam = (vm.tervezett / 480) * szorzo;
+              vm.tervezett_darab = Math.round(szam);
+            }
+            else if (vm.actshiftnum == 3) {
+              var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
+              vm.tervezett = vm.tervezett + (parseInt(vm.allplan[i].amountshift3) * parseInt(vm.allplan[i].sheetnumber));
+              if (szorzo >= 1310) {
+                szorzo = szorzo - (1310);
+                szam = (vm.tervezett / 480) * szorzo;
+                vm.tervezett_darab = Math.round(szam);
+                if (vm.tervezett_darab > vm.tervezett) {
+                  vm.tervezett_darab = vm.tervezett;
+                }
+              }
+              else {
+                var plus = 130;
+                szorzo = szorzo + plus;
+                szam = (vm.tervezett / 480) * szorzo;
+                vm.tervezett_darab = Math.round(szam);
+                if (vm.tervezett_darab > vm.tervezett) {
+                  vm.tervezett_darab = vm.tervezett;
+                }
+              }
+            }
+            vm.plans.push({ "sm": vm.allplan[i].id, "plan": 0 });
+
+            for (var j = 0; j < vm.plans.length; j++) {
+              if (vm.allplan[i].id == vm.plans[j].sm) {
+                vm.plans[j].plan = vm.plans[j].plan + vm.tervezett_darab;
+              }
+            }
+            console.log(vm.plans);
           }
-        }
-        else {
-          var plus = 130;
-          szorzo = szorzo + plus;
-          szam = (vm.tervezett / 480) * szorzo;
-          vm.tervezett_darab = Math.round(szam);
-          if (vm.tervezett_darab > vm.tervezett) {
-            vm.tervezett_darab = vm.tervezett;
-          }
-        }
-      }
+        });
+      });
+
     }
   }
   Controller.$inject = ['dataService', '$cookies', '$state', '$rootScope', '$filter'];

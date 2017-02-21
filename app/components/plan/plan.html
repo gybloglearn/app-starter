@@ -28,37 +28,37 @@
 			</div>
 		</div>
 		<div class="module-body">
-			<div  ng-show="vm.mutat">
-			<table class="table table-condensed">
-				<thead>
-					<tr>
-						<th>Dátum</th>
-						<th>Gép</th>
-						<th>Termék típus</th>
-						<th>Lapszám</th>
-						<th>Délelőtt</th>
-						<th>Délután</th>
-						<th>Éjszaka</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="item in vm.datumok track by $index" class="ng-scope">
-						<td><input ng-model="vm.data[$index].date" type="text" class="form-control" value="{{item}}" readonly></td>
-						<td><input ng-model="vm.data[$index].id" type="text" class="form-control" value="{{vm.act}}" readonly></td>
-						<td><input ng-model="vm.data[$index].type" type="text" class="form-control" value="{{vm.acttype}}" readonly></td>
-						<td><input ng-model="vm.data[$index].sheetnumber" type="text" class="form-control" value="{{(vm.moduls | filter:{'name':vm.acttype})[0].sheets}}" readonly></td>
-						<td><input ng-model="vm.data[$index].amountshift1" type="text" class="form-control"></td>
-						<td><input ng-model="vm.data[$index].amountshift2" type="text" class="form-control"></td>
-						<td><input ng-model="vm.data[$index].amountshift3" type="text" class="form-control"></td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="col-sm-4">
-				<button class="btn btn-success" ng-click="vm.save();vm.mutat=false" ng-disabled="vm.showmessage || vm.acttype==null">Feltölt</button>
-				<div class="alert alert-success" ng-show="vm.showmessage">
-					<strong>Sikeres felvitel!</strong>
+			<div ng-show="vm.mutat">
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+							<th>Dátum</th>
+							<th>Gép</th>
+							<th>Termék típus</th>
+							<th>Lapszám</th>
+							<th>Délelőtt</th>
+							<th>Délután</th>
+							<th>Éjszaka</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in vm.datumok track by $index" class="ng-scope">
+							<td><input ng-model="vm.data[$index].date" type="text" class="form-control" value="{{item}}" readonly></td>
+							<td><input ng-model="vm.data[$index].id" type="text" class="form-control" value="{{vm.act}}" readonly></td>
+							<td><input ng-model="vm.data[$index].type" type="text" class="form-control" value="{{vm.acttype}}" readonly></td>
+							<td><input ng-model="vm.data[$index].sheetnumber" type="text" class="form-control" value="{{(vm.moduls | filter:{'name':vm.acttype})[0].sheets}}"readonly></td>
+							<td><input ng-model="vm.data[$index].amountshift1" type="text" class="form-control"></td>
+							<td><input ng-model="vm.data[$index].amountshift2" type="text" class="form-control"></td>
+							<td><input ng-model="vm.data[$index].amountshift3" type="text" class="form-control"></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="col-sm-4">
+					<button class="btn btn-success" ng-click="vm.save();vm.mutat=false" ng-disabled="vm.showmessage || vm.acttype==null">Feltölt</button>
+					<div class="alert alert-success" ng-show="vm.showmessage">
+						<strong>Sikeres felvitel!</strong>
+					</div>
 				</div>
-			</div>
 			</div>
 		</div>
 		<div class="module-footer">
@@ -78,7 +78,7 @@
 								<span class="control-label" style="color:#FFFFFF">Gép:</span>
 								<select ng-model="vm.search.id" class="form-control">
 						    		<option value="">Mind</option>
-                					<option ng-repeat="item in vm.planlist" value="{{item.id}}">{{item.id}}</option>
+                					<option ng-repeat="item in vm.planlist | unique:'id'" value="{{item.id}}">{{item.id}}</option>
             					</select>
 							</div>
 						</div>
@@ -87,7 +87,7 @@
 								<span class="control-label" style="color:#FFFFFF">Termék típus:</span>
 								<select ng-model="vm.search.type" class="form-control">
 						    		<option value="">Mind</option>
-                					<option ng-repeat="item in vm.planlist" value="{{item.type}}"></option>
+                					<option ng-repeat="item in vm.planlist | unique:'type'" value="{{item.type}}">{{item.type}}</option>
             					</select>
 							</div>
 						</div>
@@ -97,9 +97,9 @@
 			<table class="table table-condensed">
 				<thead>
 					<tr>
-						<th>Dátum</th>
-						<th>Gép</th>
-						<th>Termék típus</th>
+						<th rowspan=2 ng-click="vm.order='date';vm.asc=!vm.asc;">Dátum</th>
+						<th rowspan=2 ng-click="vm.order='id';vm.asc=!vm.asc;">Gép</th>
+						<th rowspan=2 ng-click="vm.order='type';vm.asc=!vm.asc;">Termék típus</th>
 						<th>Lapszám</th>
 						<th>Délelőtt</th>
 						<th>Délután</th>
@@ -108,7 +108,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="item in vm.planlist | filter: search track by $index" class="ng-scope">
+					<tr ng-repeat="item in vm.planlist | orderBy:vm.order:vm.asc | filter: vm.search track by $index" class="ng-scope">
 						<td>{{item.date}}</td>
 						<td>{{item.id}}</td>
 						<td>{{item.type}}</td>
@@ -116,10 +116,68 @@
 						<td>{{item.amountshift1}}</td>
 						<td>{{item.amountshift2}}</td>
 						<td>{{item.amountshift3}}</td>
-						<td><button class="btn btn-primary" ng-click="vm.edit = item" title="Szerkesztés"><i class="icon-edit"></i></button></td>
+						<td><button class="btn btn-primary" ng-click="vm.edit = item"><i class="icon-edit"></i></button></td>
 					</tr>
 				</tbody>
 			</table>
+		</div>
+	</section>
+
+	<section class="module" ng-show="vm.edit" style="margin-top:20px">
+		<div class="module-header">Terv módosítása</div>
+		<div class="module-body">
+			<div class="row" style="margin-top:10px">
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Dátum:</span>
+						<input type="text" class="form-control" ng-model="vm.edit.date" readonly>
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Gép:</span>
+						<select ng-model="vm.edit.id" class="form-control">
+						<option ng-repeat="item in vm.sheetmakers track by $index" value="{{item}}">{{item}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Termék típus:</span>
+						<select ng-model="vm.edit.type" class="form-control">
+						<option ng-repeat="item in vm.moduls" value="{{item.name}}">{{item.name}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top:10px">
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Délelőtt:</span>
+						<input type="text" class="form-control" ng-model="vm.edit.amountshift1">
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Délután:</span>
+						<input type="text" class="form-control" ng-model="vm.edit.amountshift2">
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Éjszaka:</span>
+						<input type="text" class="form-control" ng-model="vm.edit.amountshift3">
+					</div>
+				</div>
+			</div>
+
+			<div class="btn-group">
+				<button class="btn btn-default" ng-click="vm.edit = '';">Mégse</button>
+				<button class="btn btn-danger" ng-click="vm.updateplan(vm.edit)">Mentés</button>
+			</div>
+
 		</div>
 	</section>
 </div>

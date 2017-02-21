@@ -6,10 +6,12 @@ define([], function () {
     vm.show = show;
     vm.save = save;
     vm.load = load;
+    vm.updateplan=updateplan;
     vm.mutat = false;
     vm.showmessage = false;
     vm.sheetmakers = ["SheetMaker1", "SheetMaker2", "SheetMaker4", "SheetMaker5", "SheetMaker6", "SheetMaker7", "SheetMaker8", "SheetMaker9"];
     vm.act = "SheetMaker4";
+    vm.today = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.moduls = [];
     vm.planlist = [];
 
@@ -48,7 +50,15 @@ define([], function () {
 
     function load() {
       planService.getAll().then(function (response) {
-        vm.planlist = response.data;
+        var res = [];
+        angular.forEach(response.data, function(v){
+          var d = new Date(v.date).getTime();
+          var now = new Date().getTime()-24*3600*1000;
+          if(d >= now){
+            res.push(v);
+          }
+        });
+        vm.planlist = res;
       });
     }
 
@@ -67,6 +77,12 @@ define([], function () {
         vm.moduls = response.data;
       });
       load();
+    }
+
+     function updateplan() {
+       planService.put(vm.edit).then(function (resp) {
+        vm.edit = '';
+      });
     }
   }
   Controller.$inject = ['planService', '$timeout', '$filter', '$cookies', '$state', '$rootScope'];
