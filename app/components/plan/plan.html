@@ -46,8 +46,7 @@
 							<td><input ng-model="vm.data[$index].date" type="text" class="form-control" value="{{item}}" readonly></td>
 							<td><input ng-model="vm.data[$index].id" type="text" class="form-control" value="{{vm.act}}" readonly></td>
 							<td><input ng-model="vm.data[$index].type" type="text" class="form-control" value="{{vm.acttype}}" readonly></td>
-							<td><input ng-model="vm.data[$index].sheetnumber" type="text" class="form-control" value="{{(vm.moduls | filter:{'name':vm.acttype})[0].sheets}}"
-									readonly></td>
+							<td><input ng-model="vm.data[$index].sheetnumber" type="text" class="form-control" value="{{(vm.moduls | filter:{'name':vm.acttype})[0].sheets}}"readonly></td>
 							<td><input ng-model="vm.data[$index].amountshift1" type="text" class="form-control"></td>
 							<td><input ng-model="vm.data[$index].amountshift2" type="text" class="form-control"></td>
 							<td><input ng-model="vm.data[$index].amountshift3" type="text" class="form-control"></td>
