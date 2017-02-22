@@ -8,6 +8,9 @@ define([], function () {
     vm.szervezesi_veszteseg = [];
     vm.tervezett_veszteseg = [];
     vm.muszaki_technikai_okok = [];
+    vm.sum_szervezesi=0;
+    vm.sum_tervezett=0;
+    vm.sum_okok=0;
     vm.sm = "SM4";
     vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
@@ -38,6 +41,9 @@ define([], function () {
       vm.szervezesi_veszteseg = [];
       vm.tervezett_veszteseg = [];
       vm.muszaki_technikai_okok = [];
+      vm.sum_szervezesi=0;
+      vm.sum_tervezett=0;
+      vm.sum_okok=0;
       vm.smloading = true;
       vm.dis = true;
       feltolt_zero(vm.darab);
@@ -52,8 +58,15 @@ define([], function () {
         var nowsm = vm.sm;
         for (var i = 0; i < vm.sm_datas.length; i++) {
           hour_grop(vm.sm_datas[i].Event_type, vm.sm_datas[i].timestamp);
-          leall(vm.sm_datas[i].timestamp, vm.sm_datas[i].Event_type, vm.sm_datas[i].Ev_Group, vm.sm_datas[i].Event_time);
+          leall(vm.sm_datas[i].timestamp, vm.sm_datas[i].Event_type, vm.sm_datas[i].Ev_Group, vm.sm_datas[i].Event_time, vm.sm_datas[i].Shift_Name, vm.sm_datas[i].Shift_ID);
         }
+        vm.sum_szervezesi=sumpie(vm.szervezesi_veszteseg);
+        vm.sum_tervezett=sumpie(vm.tervezett_veszteseg);
+        vm.sum_okok=sumpie(vm.muszaki_technikai_okok);
+        console.log(vm.sum_szervezesi);
+        console.log(vm.sum_tervezett);
+        console.log(vm.sum_okok);
+
         setChart(nowsm);
         vm.smloading = false;
       });
@@ -66,6 +79,17 @@ define([], function () {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       load();
       vm.edate = new Date().getTime();
+    }
+
+    function sumpie(tomb)
+    {
+      var sum=0;
+      for(var a=0;a<tomb.length;a++)
+      {
+        sum=sum+tomb[a].tartam;
+      }
+      sum=sum/60;
+      return sum;
     }
 
     function setChart(nowsm) {
@@ -135,12 +159,14 @@ define([], function () {
       }
     }
 
-    function leall(itemstart, itemtype, itemgroup, itemtime) {
+    function leall(itemstart, itemtype, itemgroup, itemtime, itemshift, itemid) {
       if (itemtype == "Downtime" && itemgroup == "Szervezesi veszteseg") {
         vm.szervezesi_veszteseg[l] = {};
         vm.szervezesi_veszteseg[l].start = itemstart;
         vm.szervezesi_veszteseg[l].tartam = itemtime;
         vm.szervezesi_veszteseg[l].vege = itemstart + (itemtime * 1000);
+        vm.szervezesi_veszteseg[l].szaknev = itemshift;
+        vm.szervezesi_veszteseg[l].szakid = itemid;
         l++;
       }
       if (itemtype == "Downtime" && itemgroup == "Tervezett veszteseg") {
@@ -148,6 +174,8 @@ define([], function () {
         vm.tervezett_veszteseg[j].start = itemstart;
         vm.tervezett_veszteseg[j].tartam = itemtime;
         vm.tervezett_veszteseg[j].vege = itemstart + (itemtime * 1000);
+        vm.tervezett_veszteseg[j].szaknev = itemshift;
+        vm.tervezett_veszteseg[j].szakid = itemid;
         j++;
       }
       if (itemtype == "Downtime" && itemgroup == "Muszaki technikai okok") {
@@ -155,6 +183,8 @@ define([], function () {
         vm.muszaki_technikai_okok[k].start = itemstart;
         vm.muszaki_technikai_okok[k].tartam = itemtime;
         vm.muszaki_technikai_okok[k].vege = itemstart + (itemtime * 1000);
+        vm.muszaki_technikai_okok[k].szaknev = itemshift;
+        vm.muszaki_technikai_okok[k].id= itemid;
         k++;
       }
     }
