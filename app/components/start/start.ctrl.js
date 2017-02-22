@@ -36,7 +36,7 @@ define([], function () {
           var jo = $filter('sumdb')($filter('filter')(response.data, { 'name': substring2, 'shiftnum': vm.actshiftnum }));
           vm.allsmsum.push({
             sm: v,
-            terv: $filter('filter')(vm.plans, { "sm": v })[0].plan,
+            terv: angular.isUndefined($filter('filter')(vm.plans, { "sm": v })[0])==false?$filter('filter')(vm.plans, { "sm": v })[0].plan:0,
             osszlap: ossz,
             jolap: jo,
             id: "SMchart" + v.substring(11, 10),
@@ -68,7 +68,7 @@ define([], function () {
                 {
                   name: 'Terv',
                   color: "#0033cc",
-                  data: [$filter('filter')(vm.plans, { "sm": v })[0].plan]
+                  data: [angular.isUndefined($filter('filter')(vm.plans, { "sm": v })[0])==false?$filter('filter')(vm.plans, { "sm": v })[0].plan:0]
                 }],
 
               xAxis: [
