@@ -141,7 +141,6 @@ define([], function () {
         vm.szervezesi_veszteseg[l].start = itemstart;
         vm.szervezesi_veszteseg[l].tartam = itemtime;
         vm.szervezesi_veszteseg[l].vege = itemstart + (itemtime * 1000);
-        vm.szervezesi_veszteseg_ido[l] = vm.szervezesi_veszteseg[l].start;
         l++;
       }
       if (itemtype == "Downtime" && itemgroup == "Tervezett veszteseg") {
