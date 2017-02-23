@@ -57,7 +57,7 @@ define([], function () {
         console.log(vm.muszaki_technikai_okok);
         for (var i = 0; i < vm.sm_datas.length; i++) {
           hour_grop(vm.sm_datas[i].Event_type, vm.sm_datas[i].timestamp);
-          leall(vm.sm_datas[i].timestamp, vm.sm_datas[i].Event_type, vm.sm_datas[i].Ev_Group, vm.sm_datas[i].Event_time, vm.sm_datas[i].Shift_Name);
+          leall(vm.sm_datas[i].timestamp, vm.sm_datas[i].Event_type, vm.sm_datas[i].Ev_Group, vm.sm_datas[i].Event_time, vm.sm_datas[i].Shift_Name, vm.sm_datas[i].Event_SubGroup, vm.sm_datas[i].Comment);
         }
         vm.sum_szervezesi = sumpie(vm.szervezesi_veszteseg);
         vm.sum_tervezett = sumpie(vm.tervezett_veszteseg);
@@ -116,7 +116,7 @@ define([], function () {
           {
             type: "line",
             name: 'Órai cél',
-            color:"#ff8800",
+            color: "#ff8800",
             data: allando
           },
           {
@@ -273,7 +273,7 @@ define([], function () {
       }
     }
 
-    function leall(itemstart, itemtype, itemgroup, itemtime, itemshift) {
+    function leall(itemstart, itemtype, itemgroup, itemtime, itemshift, itemsub, itemcomment) {
       var szamvaltozo = new Date(itemstart).getHours() * 60 + new Date(itemstart).getMinutes();
       if (itemtype == "Downtime" && itemgroup == "Szervezesi veszteseg") {
         vm.szervezesi_veszteseg[l] = {};
@@ -282,6 +282,8 @@ define([], function () {
         vm.szervezesi_veszteseg[l].x2 = 1000 * 3600 + itemstart + (itemtime * 1000);
         vm.szervezesi_veszteseg[l].szaknev = itemshift;
         vm.szervezesi_veszteseg[l].y = 0.5;
+        vm.szervezesi_veszteseg[l].subgroup = itemsub;
+        vm.szervezesi_veszteseg[l].comment = itemcomment;
 
         if (szamvaltozo >= 350 && szamvaltozo < 830) {
           vm.szervezesi_veszteseg[l].szakszam = 1;
@@ -301,6 +303,9 @@ define([], function () {
         vm.tervezett_veszteseg[j].x2 = 1000 * 3600 + itemstart + (itemtime * 1000);
         vm.tervezett_veszteseg[j].szaknev = itemshift;
         vm.tervezett_veszteseg[j].y = 1.5;
+        vm.tervezett_veszteseg[j].subgroup = itemsub;
+        vm.tervezett_veszteseg[j].comment = itemcomment;
+
         if (szamvaltozo >= 350 && szamvaltozo < 830) {
           vm.tervezett_veszteseg[j].szakszam = 1;
         }
@@ -319,6 +324,9 @@ define([], function () {
         vm.muszaki_technikai_okok[k].x2 = 1000 * 3600 + itemstart + (itemtime * 1000);
         vm.muszaki_technikai_okok[k].szaknev = itemshift;
         vm.muszaki_technikai_okok[k].y = 2.5;
+        vm.muszaki_technikai_okok[k].subgroup = itemsub;
+        vm.muszaki_technikai_okok[k].comment = itemcomment;
+
         if (szamvaltozo >= 350 && szamvaltozo < 830) {
           vm.muszaki_technikai_okok[k].szakszam = 1;
         }
