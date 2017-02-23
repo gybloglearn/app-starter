@@ -14,7 +14,7 @@ define([], function () {
     vm.sm = "SM4";
     vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.smloading = true;
+    vm.today = (new Date().getHours() * 60 + new Date().getMinutes()) - 350;
     vm.datumszam = vm.datum;
     vm.load = load;
     vm.datszam = beallit;
@@ -55,7 +55,6 @@ define([], function () {
         console.log(vm.szervezesi_veszteseg);
         console.log(vm.tervezett_veszteseg);
         console.log(vm.muszaki_technikai_okok);
-        var nowsm = vm.sm;
         for (var i = 0; i < vm.sm_datas.length; i++) {
           hour_grop(vm.sm_datas[i].Event_type, vm.sm_datas[i].timestamp);
           leall(vm.sm_datas[i].timestamp, vm.sm_datas[i].Event_type, vm.sm_datas[i].Ev_Group, vm.sm_datas[i].Event_time, vm.sm_datas[i].Shift_Name);
@@ -67,9 +66,10 @@ define([], function () {
         console.log(vm.sum_tervezett);
         console.log(vm.sum_okok);
 
-        setChart(nowsm);
-        setChartxrange(nowsm);
-        setChartpie(nowsm);
+        daytimechart();
+        setChart(vm.sm);
+        setChartxrange(vm.sm);
+        setChartpie(vm.sm);
         vm.smloading = false;
       });
 
@@ -92,8 +92,18 @@ define([], function () {
       return sum;
     }
 
+    function daytimechart() {
+      var tday = $filter('date')(new Date(), 'yyyy-MM-dd');
+      if (vm.datum < tday) {
+        vm.today = 24 * 60;
+      }
+      else {
+        vm.today = (new Date().getHours() * 60 + new Date().getMinutes()) - 350;
+        console.log(vm.today);
+      }
+    }
+
     function setChart(nowsm) {
-      vm.sm = nowsm;
       vm.chartconfig = {
         chart: {
           type: 'column',
@@ -106,6 +116,7 @@ define([], function () {
           {
             type: "line",
             name: 'Órai cél',
+            color:"#ff8800",
             data: allando
           },
           {
@@ -135,11 +146,11 @@ define([], function () {
           height: 200,
           zoomType: 'x'
         },
-       legend: {
+        legend: {
           floating: false,
           align: 'bottom',
         },
-        xAxis: { title: { text: 'Idő' }, type: 'datetime', dateTimeLabelFormats: { hour: '%d.<br>%H:%M' }, tickInterval: 3600 * 1000},
+        xAxis: { title: { text: 'Idő' }, type: 'datetime', dateTimeLabelFormats: { hour: '%d.<br>%H:%M' }, tickInterval: 3600 * 1000 },
         yAxis: { title: { enabled: false }, min: 0, max: 2, categories: ['Szervezési veszteség', 'Tervezett veszteség', 'Műszaki technikai okok'] },
         series: [
           {
@@ -171,7 +182,7 @@ define([], function () {
           {
             color: '#e60000',
             name: 'Műszaki technikai okok',
-           tooltip: {
+            tooltip: {
               useHTML: true,
               headerFormat: '<b style="color:{series.color};font-weight:bold;">Műszaki technikai okok:</b><br>',
               pointFormat: '<span style="color:{series.color};">{point.categ}</span><br><span style="font-size:1.2em">{point.x:%H:%M:%S} - {point.x2:%H:%M:%S}</span><br><b style="font-size:10px">{point.subgroup}</b><br><i style="font-size:10px">{point.comment}</i>'
@@ -186,15 +197,17 @@ define([], function () {
     }
 
     function setChartpie(nowsm) {
-      vm.sm = nowsm;
       vm.chartconfig_pie = {
         chart: {
           type: 'pie',
           width: 1100,
           height: 400
         },
+        tooltip: {
+          pointFormat: '<b style="color:{point.color};font-size:1.2em;font-weight:bold">{point.percentage:.2f} %</b>'
+        },
         title: { text: "Állásidők eloszlása" },
-        subtitle: { text: "Összes eltelt idő" },
+        subtitle: { text: "Összes eltelt idő: " + vm.today + "perc" },
         plotOptions: {
           pie: {
             center: ['50%', '50%'],
@@ -204,6 +217,11 @@ define([], function () {
         series: [
           {
             data: [{
+              name: 'Elérhető idő',
+              color: "#00b300",
+              y: vm.today - (vm.sum_szervezesi + vm.sum_tervezett + vm.sum_okok)
+            },
+            {
               name: 'Szervezesi veszteseg',
               color: "#cc33ff",
               y: vm.sum_szervezesi
@@ -259,9 +277,9 @@ define([], function () {
       var szamvaltozo = new Date(itemstart).getHours() * 60 + new Date(itemstart).getMinutes();
       if (itemtype == "Downtime" && itemgroup == "Szervezesi veszteseg") {
         vm.szervezesi_veszteseg[l] = {};
-        vm.szervezesi_veszteseg[l].x = itemstart+1000*3600;
+        vm.szervezesi_veszteseg[l].x = itemstart + 1000 * 3600;
         vm.szervezesi_veszteseg[l].tartam = itemtime;
-        vm.szervezesi_veszteseg[l].x2 = 1000*3600+itemstart + (itemtime * 1000);
+        vm.szervezesi_veszteseg[l].x2 = 1000 * 3600 + itemstart + (itemtime * 1000);
         vm.szervezesi_veszteseg[l].szaknev = itemshift;
         vm.szervezesi_veszteseg[l].y = 0.5;
 
@@ -278,9 +296,9 @@ define([], function () {
       }
       if (itemtype == "Downtime" && itemgroup == "Tervezett veszteseg") {
         vm.tervezett_veszteseg[j] = {};
-        vm.tervezett_veszteseg[j].x = itemstart+1000*3600;
+        vm.tervezett_veszteseg[j].x = itemstart + 1000 * 3600;
         vm.tervezett_veszteseg[j].tartam = itemtime;
-        vm.tervezett_veszteseg[j].x2 = 1000*3600+itemstart + (itemtime * 1000);
+        vm.tervezett_veszteseg[j].x2 = 1000 * 3600 + itemstart + (itemtime * 1000);
         vm.tervezett_veszteseg[j].szaknev = itemshift;
         vm.tervezett_veszteseg[j].y = 1.5;
         if (szamvaltozo >= 350 && szamvaltozo < 830) {
@@ -296,9 +314,9 @@ define([], function () {
       }
       if (itemtype == "Downtime" && itemgroup == "Muszaki technikai okok") {
         vm.muszaki_technikai_okok[k] = {};
-        vm.muszaki_technikai_okok[k].x = itemstart+1000*3600;
+        vm.muszaki_technikai_okok[k].x = itemstart + 1000 * 3600;
         vm.muszaki_technikai_okok[k].tartam = itemtime;
-        vm.muszaki_technikai_okok[k].x2 = 1000*3600+itemstart + (itemtime * 1000);
+        vm.muszaki_technikai_okok[k].x2 = 1000 * 3600 + itemstart + (itemtime * 1000);
         vm.muszaki_technikai_okok[k].szaknev = itemshift;
         vm.muszaki_technikai_okok[k].y = 2.5;
         if (szamvaltozo >= 350 && szamvaltozo < 830) {
