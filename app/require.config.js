@@ -68,6 +68,7 @@ require.config({
         'OpenLayers': 'components/open-layers/dist/OpenLayers',
         'map-layerlist': 'components/map-layerlist/js/map-layer-list',
         'highcharts.src': 'components/highcharts-amd/js/highcharts.src',
+        'drilldown.src': 'components/highcharts-amd/js/modules/drilldown.src',
         'highstock.src': 'components/highcharts-amd/js/highstock.src',
         'highcharts-more.src': 'components/highcharts-amd/js/highcharts-more.src',
         'bootstrap-switch': 'components/bootstrap-switch/static/js/bootstrap-switch',
@@ -87,7 +88,7 @@ require.config({
         'angular-resource': 'components/angular.js/angular-resource.min',
         'angular-locale_hu-hu': 'components/angular.js/angular-locale_hu-hu',
         'angular-ui-router': 'components/angular.js/angular-ui-router.min',
-        'app': 'app-starter/app/app',
+        'app': 'bps/app/app',
     },
     'shim': {
         'app': {
@@ -108,6 +109,9 @@ require.config({
   				deps: ['jquery'],
   				exports: 'Typeahead'
   			},
+        'drilldown.src': {
+          deps:['charts']
+        },
   			'bloodhound': {
   				deps: ['jquery'],
   				exports: 'Bloodhound'
