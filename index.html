@@ -13,7 +13,14 @@
     <![endif]-->
 	<script src="../components/modernizr/modernizr.js"></script>
 	<style>
-		[ng\:cloak],[ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {display: none !important;}
+		[ng\:cloak],
+		[ng-cloak],
+		[data-ng-cloak],
+		[x-ng-cloak],
+		.ng-cloak,
+		.x-ng-cloak {
+			display: none !important;
+		}
 	</style>
 </head>
 
@@ -35,7 +42,7 @@
 					<!-- links -->
 					<li><a ui-sref="Mtf"><i class="icon-file"></i>Mtf-Napi jelentések</a></li>
 					<li><a ui-sref="archiv"><i class="icon-file"></i>MTF-Archívum</a></li>
-
+					<li><a ui-sref="pp"><i class="icon-file"></i> Parkoló pálya adatok</a></li>
 				</ul>
 				<ul class="nav navbar-nav pull-right">
 					<li><a ui-sref="start"><i class="icon-home"></i></a></li>
@@ -47,35 +54,35 @@
 
 	<div style="margin: 20px auto;" ui-view></div>
 
-<div class="footer" ng-show="user.displayname">
-	<div class="primary">
-		<div class="container">
-			<div class="brand">
-				<span class="ge-logo"></span>
-				<span>Imagination at work</span>
-			</div>
-			<div class="block pull-right">
-				<ul>
-					<li class="copyright">© 2016 General Electric - GE POWER </li>
-				</ul>
-			</div>
+	<div class="footer" ng-show="user.displayname">
+		<div class="primary">
+			<div class="container">
+				<div class="brand">
+					<span class="ge-logo"></span>
+					<span>Imagination at work</span>
+				</div>
+				<div class="block pull-right">
+					<ul>
+						<li class="copyright">© 2016 General Electric - GE POWER </li>
+					</ul>
+				</div>
 
+			</div>
 		</div>
-	</div>
 
-	<script src="../components/requirejs/require.js"></script>
-	<script src="app/require.config.js"></script>
-	<script>
-				require.config({
-					baseUrl: '../'
+		<script src="../components/requirejs/require.js"></script>
+		<script src="app/require.config.js"></script>
+		<script>
+			require.config({
+				baseUrl: '../'
+			});
+			require(['ge-bootstrap', 'jquery', 'datepicker', 'app', 'charts'], function ($) {
+				$(function () {
+					$('.datapicker').datepicker();
 				});
-				require(['ge-bootstrap', 'jquery', 'datepicker', 'app', 'charts'], function ($) {
-					$(function () {
-						$('.datapicker').datepicker();
-					});
-				});
-			</script>
-<script src="../components/respond/respond.src.js"></script>
+			});
+		</script>
+		<script src="../components/respond/respond.src.js"></script>
 </body>
 
 </html>

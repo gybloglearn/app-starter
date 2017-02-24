@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('pp', {
+		url: '/pp',
+		templateUrl: './app/components/pp/pp.html',
+		controller: 'ppController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('archiv', {
 		url: '/archiv',
 		templateUrl: './app/components/archiv/archiv.html',

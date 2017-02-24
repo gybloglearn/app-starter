@@ -1,0 +1,49 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h3>Parkoló pálya adatok</h3>
+    </div>
+    <div class="module-body">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span class="input-group-addon">Dátumtól:</span>
+            <input class="form-control datepicker" min-date="2017-02-08" ng-model="vm.fr" />
+            <div class="input-group-btn">
+              <button class="btn btn-info" ng-click="vm.getData();">Betöltés</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <mychart id="ppchart" config="vm.chartconf"></mychart>
+      <table class="table table-condensed table-striped table-responsive">
+        <thead>
+          <tr>
+            <th colspan="7" class="essential"><h3 style="color:white;">Több mint 1 hete tartózkodik a parkoló pályán <b>{{vm.tabledata.date}}</b></h3></th>
+          </tr>
+          <tr>
+            <th class="optional">Cikkszám</th>
+            <th class="optional">Megjegyzés</th>
+            <th class="essential">Modulszám</th>
+            <th class="essential">Pozíció</th>
+            <th class="essential">Szak</th>
+            <th class="essential">Állapot</th>
+            <th class="essential">Állapot rögzítés dátuma</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="d in vm.tabledata.data[0].adatok.het1s track by $index">
+            <td class="optional">{{d["Cikkszám"]}}</td>
+            <td class="optional">{{d["Megjegyzés"]}}</td>
+            <td class="essential">{{d["Modulszám"]}}</td>
+            <td class="essential">{{d["Pozíció"]}}</td>
+            <td class="essential">{{d["Szak"]}}</td>
+            <td class="essential">{{d["Állapot"]}}</td>
+            <td class="essential">{{d["Állapot_rögzítés_dátuma"]}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>

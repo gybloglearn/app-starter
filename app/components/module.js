@@ -15,8 +15,11 @@ define([
   './filters/shift',
   './filters/name_change',
   './filters/sumField',
+  './filters/unique',
 	'./archiv/archiv.ctrl',
   './services/archiv.service'
+	, './pp/pp.ctrl'
+	, './services/ppdata.service'
 	/* files */
 ], function(
   configFunction,
@@ -35,8 +38,11 @@ define([
   shift,
   name_change,
   sumField,
+  unique,
 	archivController,
   archivService
+	, ppController
+	, ppdataService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -58,7 +64,10 @@ define([
   app.filter('shift',shift);
   app.filter('name_change',name_change);
   app.filter('sumField',sumField);
+  app.filter('unique',unique);
 	app.controller('archivController', archivController);
 	app.service('archivService', archivService);
+  app.controller('ppController', ppController);
+		app.service('ppdataService', ppdataService);
 		/* controllers */
 });
