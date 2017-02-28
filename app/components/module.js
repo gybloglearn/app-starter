@@ -9,6 +9,7 @@ define([
   './directives/mychart',
   './directives/datepicker',
   './filters/unique'
+	, './BPS/BPS.ctrl'
 	/* files */
 ], function(
   configFunction,
@@ -21,6 +22,7 @@ define([
 , mychart
 , datepicker
 , unique
+	, BPSController
 	/* names */) {
 
   // Link all components to the module !!!
@@ -36,5 +38,6 @@ define([
   app.directive('myChart', mychart);
   app.directive('datepicker', datepicker);
   app.filter('unique', unique);
+		app.controller('BPSController', BPSController);
 		/* controllers */
 });

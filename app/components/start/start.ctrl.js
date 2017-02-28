@@ -45,23 +45,23 @@ define([], function () {
           nap2.push({ name: v.date + "-ig - " + szk, y: v.data[0].nap2, drilldown: "nap2_" + v.date });
           nap2s.push({ name: v.date + "-ig - " + szk, y: v.data[0].nap2s, drilldown: "nap2s_" + v.date });
           het1s.push({ name: v.date + "-ig - " + szk, y: v.data[0].het1s, drilldown: "het1s_" + v.date });
-          if(k == resp.data.length -1){
+          if(k == resp.data.length-1){
             vm.tabledata=v;
           }
         });
         vm.chartconf = {
-          chart: { type: 'column', spacingBottom: 30 },
+          chart: { type: 'column', spacingBottom: 30},
           plotOptions: { column: { stacking: 'normal' , pointPadding: 0, borderWidth:0} },
           tooltip: {shared: true},
-          title: { text: 'Parkoló pálya' },
+          title: { text: 'Parkoló pálya', tickinterval: 1 },
           xAxis: { type: 'category', labels: {rotation: -90, useHTML : true, y: 15, formatter: function(){return '<span style="font-size:1em">' + this.value + '<span>'} }},
           series: [
-            { name: "Szakos elvégzett", color:"#46ad00", data: szak },
-            { name: "2napja elvégzett", color:"#ff9821", data: nap2 },
-            { name: "2 napnál régebb", color:"#de2533", data: nap2s },
-            { name: "1 hétnél régebb", color:"#333333", data: het1s }
+            { name: "Szakos elvégzett", color:"#46ad00", data: szak},
+            { name: "2napja elvégzett", color:"#ff9821", data: nap2},
+            { name: "2 napnál régebb", color:"#de2533", data: nap2s},
+            { name: "1 hétnél régebb", color:"#333333", data: het1s}
           ],
-          drilldown: { series: drill, "cursor": "pointer", "color": "#003399", "fontWeight": "bold", "textDecoration": "none"  }
+          drilldown: { series: drill, activeAxisLabelStyle: { cursor: "default", color: "#333", fontWeight: "normal", textDecoration: "none" }}
         }
       });
     }

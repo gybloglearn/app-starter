@@ -13,6 +13,19 @@ define([], function () {
                 scope.$watch('config', function (newVal, oldVal) {
                     if (newVal) {
                         newVal.chart.renderTo = attrs.id;
+                        function removeClick() {
+                            $('.highcharts-drilldown-axis-label').each(function () {
+                                this.onclick = null;
+                            });
+                        }
+                        newVal.chart.events = {
+                            load: function () {
+                                removeClick();
+                            },
+                            redraw: function () {
+                                removeClick();
+                            }
+                        };
                         var ch = new Highcharts.Chart(newVal);
                     }
                 });
