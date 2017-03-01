@@ -58,23 +58,21 @@ define([], function () {
             a = a;
           }
           else {
-            vm.opdata[a]={}
+            vm.opdata[a] = {}
             vm.opdata[a].operator = actoperator;
-            vm.opdata[a].worktime=0;
-            vm.opdata[a].repair=0;
-            vm.opdata[a].remove=0;
-            vm.opdata[a].moduls=[];
+            vm.opdata[a].worktime = 0;
+            vm.opdata[a].repair = 0;
+            vm.opdata[a].remove = 0;
+            vm.opdata[a].moduls = [];
             a++
           }
 
-          for(var c=0;c<vm.opdata.length;c++)
-          {
-            if(vm.opdata[c].operator==vm.tabledata[k].Operator)
-            {
-              vm.opdata[c].repair=vm.opdata[c].repair+vm.tabledata[k].Repaired;
-              vm.opdata[c].remove=vm.opdata[c].remove+vm.tabledata[k].removed;
-              vm.opdata[c].worktime=vm.opdata[c].worktime+((new Date(vm.tabledata[k].enddate).getTime()-new Date(vm.tabledata[k].startdate).getTime())/(1000*60) );
-              vm.opdata[c].moduls.push([vm.tabledata[k].JobID,vm.tabledata[k].Repaired]);
+          for (var c = 0; c < vm.opdata.length; c++) {
+            if (vm.opdata[c].operator == vm.tabledata[k].Operator) {
+              vm.opdata[c].repair = vm.opdata[c].repair + vm.tabledata[k].Repaired;
+              vm.opdata[c].remove = vm.opdata[c].remove + vm.tabledata[k].removed;
+              vm.opdata[c].worktime = vm.opdata[c].worktime + ((new Date(vm.tabledata[k].enddate).getTime() - new Date(vm.tabledata[k].startdate).getTime()) / (1000 * 60));
+              vm.opdata[c].moduls.push([vm.tabledata[k].JobID, vm.tabledata[k].Repaired]); // modulhoz tartozó bökések elmentése 2 dimenziós tömbbe
             }
           }
 
@@ -99,6 +97,43 @@ define([], function () {
           },
           series: datas
         };
+
+        vm.opchartconfig = {
+          chart: {
+            type: 'column',
+          },
+          plotOptions: {
+            column: {
+              stacking: 'normal'
+            }
+          },
+          title: { text: "Munkaidő/kieső idő arányok" },
+          series: [
+            {
+              name: 'Kieső idő',
+              color: "#ff9821",
+              data: feltolt_x_kieso(vm.opdata),
+              stack: 'Összes idő'
+            },
+            {
+              name: 'Munkaidő',
+              color: "#005cb9",
+              data: feltolt_x_hasznos(vm.opdata),
+              stack: 'Összes idő'
+            }
+          ],
+          xAxis: [
+            {
+              categories: feltolt_y(vm.opdata),
+              title: { text: "Operátor" }
+            },
+          ],
+          yAxis: {
+            title: {
+              text: "Idő(Perc)"
+            }
+          },
+        }
         vm.loading = false;
       });
     }
@@ -107,6 +142,30 @@ define([], function () {
       vm.fr = $filter('date')(vm.n, 'yyyy-MM-dd');
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       getData();
+    }
+
+    function feltolt_x_hasznos(tomb) {
+      var x_adatok = [];
+      for (var i = 0; i < tomb.length; i++) {
+        x_adatok[i] = tomb[i].worktime;
+      }
+      return x_adatok;
+    }
+
+    function feltolt_x_kieso(tomb) {
+      var x_adatok = [];
+      for (var i = 0; i < tomb.length; i++) {
+        x_adatok[i] = 480-tomb[i].worktime;
+      }
+      return x_adatok;
+    }
+
+    function feltolt_y(tomb) {
+      var y_adatok = [];
+      for (var i = 0; i < tomb.length; i++) {
+        y_adatok[i] = tomb[i].operator;
+      }
+      return y_adatok;
     }
   }
   Controller.$inject = ['$cookies', '$state', '$rootScope', 'bpsdataService', '$filter'];
