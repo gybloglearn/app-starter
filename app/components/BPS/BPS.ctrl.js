@@ -74,7 +74,7 @@ define([], function () {
               vm.opdata[c].repair=vm.opdata[c].repair+vm.tabledata[k].Repaired;
               vm.opdata[c].remove=vm.opdata[c].remove+vm.tabledata[k].removed;
               vm.opdata[c].worktime=vm.opdata[c].worktime+((new Date(vm.tabledata[k].enddate).getTime()-new Date(vm.tabledata[k].startdate).getTime())/(1000*60) );
-              vm.opdata[c].moduls.push(vm.tabledata[k].JobID);
+              vm.opdata[c].moduls.push([vm.tabledata[k].JobID,vm.tabledata[k].Repaired]);
             }
           }
 
