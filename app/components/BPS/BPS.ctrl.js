@@ -77,7 +77,6 @@ define([], function () {
           }
 
         }
-        console.log(vm.opdata);
         vm.chartconf = {
           chart: { type: 'xrange', height: 440 },
           xAxis: {
@@ -155,7 +154,12 @@ define([], function () {
     function feltolt_x_kieso(tomb) {
       var x_adatok = [];
       for (var i = 0; i < tomb.length; i++) {
-        x_adatok[i] = 480-tomb[i].worktime;
+        if (tomb[i].worktime < 480) {
+          x_adatok[i] = 480 - tomb[i].worktime;
+        }
+        else {
+          x_adatok[i] = 0;
+        }
       }
       return x_adatok;
     }
