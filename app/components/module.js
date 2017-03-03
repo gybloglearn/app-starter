@@ -4,12 +4,10 @@ define([
   './start/start.ctrl',
   './login/login.ctrl',
   './services/login.service',
-  './services/data.service'
-  , './services/bpsdata.service',
+  './services/data.service',
   './directives/mychart',
   './directives/datepicker',
   './filters/unique'
-	, './BPS/BPS.ctrl'
 	/* files */
 ], function(
   configFunction,
@@ -18,11 +16,9 @@ define([
   loginController,
   loginService,
   dataService
-, bpsdataService
 , mychart
 , datepicker
 , unique
-	, BPSController
 	/* names */) {
 
   // Link all components to the module !!!
@@ -34,10 +30,8 @@ define([
   app.service('Login', loginService);
   app.controller('StartController', startController);
   app.controller('LoginController', loginController);
-  app.service('bpsdataService', bpsdataService);
   app.directive('myChart', mychart);
   app.directive('datepicker', datepicker);
   app.filter('unique', unique);
-		app.controller('BPSController', BPSController);
-		/* controllers */
+	/* controllers */
 });
