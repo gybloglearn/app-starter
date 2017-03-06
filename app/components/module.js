@@ -8,6 +8,8 @@ define([
   './directives/mychart',
   './directives/datepicker',
   './filters/unique'
+  , './filters/sumdb'
+	, './services/smscr.service'
 	/* files */
 ], function(
   configFunction,
@@ -19,6 +21,8 @@ define([
 , mychart
 , datepicker
 , unique
+, sumdb
+	, smscrService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -33,5 +37,7 @@ define([
   app.directive('myChart', mychart);
   app.directive('datepicker', datepicker);
   app.filter('unique', unique);
-	/* controllers */
+  app.filter('sumdb', sumdb);
+	app.service('smscrService', smscrService);
+		/* controllers */
 });

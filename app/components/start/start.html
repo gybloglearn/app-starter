@@ -1,45 +1,141 @@
 <div class="container">
   <section class="module">
     <div class="module-header">
-      <h3>Parkoló pálya adatok</h3>
+
     </div>
     <div class="module-body">
-      <div class="row">
-        <div class="col-sm-6">
+      <!-- DATE Filters -->
+      <!--<div class="row">
+        <div class="col-sm-12">
           <div class="input-group">
             <span class="input-group-addon">Dátumtól:</span>
-            <input class="form-control datepicker" min-date="2017-02-08" ng-model="vm.fr" />
+            <input class="form-control datepicker" ng-model="vm.fr" />
+            <span class="input-group-addon">Dátumtól:</span>
+            <input class="form-control datepicker" ng-model="vm.dt" />
             <div class="input-group-btn">
               <button class="btn btn-info" ng-click="vm.getData();">Betöltés</button>
             </div>
           </div>
         </div>
-      </div>
-      <my-chart id="ppchart" config="vm.chartconf"></my-chart>
-      <table class="table table-condensed table-striped table-responsive">
+      </div>-->
+      <!-- CHART to display data -->
+      <div class="progress progress-info progress-striped active ng-hide" ng-show="vm.loading">
+				<div class="progress-bar" style="width: 100%;">Firssítés</div>
+			</div>
+      <my-chart id="scchart" config="vm.chartconf" ng-hide="vm.loading"></my-chart>
+      <!-- TABLE to display data -->
+      <table class="table table-condensed table-striped table-responsive" ng-hide="vm.loading">
         <thead>
           <tr>
-            <th colspan="7" class="essential"><h3 style="color:white;">Több mint 1 hete tartózkodik a parkoló pályán <b>{{vm.tabledata.date}}</b></h3></th>
+            <th colspan="7" class="essential">
+              <h3 style="color:white;">Selejt lapok</b>
+              </h3>
+            </th>
+            <th>
+              <button class="btn btn-info pull-right" ng-click="vm.redr()"><i class="icon icon-edit"></i> Diagram rajzolása</button>
+            </th>
           </tr>
           <tr>
-            <th class="optional">Cikkszám</th>
-            <th class="optional">Megjegyzés</th>
-            <th class="essential">Modulszám</th>
-            <th class="essential">Pozíció</th>
+            <th colspan="8" class="essential">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="input-group">
+                    <span class="input-group-addon">Dátumtól:</span>
+                    <input class="form-control datepicker" min-date="-30d" ng-model="vm.fr" />
+                    <span class="input-group-addon">Dátumtól:</span>
+                    <input class="form-control datepicker" min-date="-23d" ng-model="vm.dt" />
+                    <div class="input-group-btn">
+                      <button class="btn btn-info" ng-click="vm.getData();">Betöltés</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </th>
+          </tr>
+          <tr>
+            <th class="essential" colspan="8" style="font-size:1.2em"><button class="btn btn-danger" ng-click="vm.filtered={};vm.redr();" >x</button>&nbsp;<b><i ng-show="vm.filtered">Szűrés: </i></b>
+              {{vm.filtered.day}} {{vm.filtered.sm}} {{vm.filtered.shift}} {{vm.filtered.chem}} {{vm.filtered.category}} {{vm.filtered.description}}</th>
+          </tr>
+          <tr>
+            <th colspan="4" class="essential">Össz Lap: <strong>{{ (vm.smprod | filter:vm.filtered.sm | filter:vm.filtered.day) | sumdb:'amount' }}</strong></th>
+            <th colspan="2" class="essential">Össz Selejt Lap: <strong>{{ (vm.tabledata | filter:vm.filtered) | sumdb:'pc' }}</strong></th>
+            <th colspan="2" class="essential">Arány: <strong>{{ ((vm.tabledata | filter:vm.filtered) | sumdb:'pc')/((vm.smprod | filter:vm.filtered.sm | filter:vm.filtered.day) | sumdb:'amount')*100 | number:2 }} %</strong></th>
+          </tr>
+          <tr>
+            <th class="essential">
+              <select ng-model="vm.filtered.day" class="form-control">
+                <option value=""></option>
+                <option ng-repeat="ds in vm.tabledata | unique:'day' track by $index" value="{{ds.day}}">
+                  {{ds.day}}
+                </option>
+              </select>
+            </th>
+            <th class="essential">
+              <select ng-model="vm.filtered.sm" class="form-control">
+                <option value=""></option>
+                <option value="{{ $index > 1 ? $index + 2:$index+1}}" ng-repeat="t in vm.sms track by $index">{{ $index > 1 ? $index + 2: $index + 1}}</option>
+              </select>
+            </th>
+            <th class="essential">
+              <select ng-model="vm.filtered.shift" class="form-control">
+                <option value=""></option>
+                <option ng-repeat="i in ['A','B','C','D']" value="{{i}}">{{i}}</option>
+                </select>
+            </th>
+            <th class="essential">
+              <select ng-model="vm.filtered.type" class="form-control">
+                <option value=""></option>
+                <option ng-repeat="u in vm.tabledata | filter:vm.filtered | unique:'type' track by $index" value="{{u.type}}">{{u.type}}</option>
+              </select>
+            </th>
+            <th class="essential">
+              <select ng-model="vm.filtered.chem" class="form-control">
+                <option value=""></option>
+                <option value="FLOW">FLOW</option>
+                <option value="CP5">CP5</option>
+              </select>
+            </th>
+            <th class="essential">
+              <select ng-model="vm.filtered.category" class="form-control">
+                <option value=""></option>
+                <option value="Lapparaméter">Lap paraméter</option>
+                <option value="Géphiba">Géphiba</option>
+                <option value="Szálhibák">Szálhibák</option>
+                <option value="Egyéb hibák">Egyéb hibák</option>
+                <option value="Robot hiba">Robot hiba</option>
+              </select>
+            </th>
+            <th class="essential">
+              <select ng-model="vm.filtered.description" class="form-control">
+                <option value=""></option>
+                <option ng-repeat="co in vm.tabledata | filter:vm.filtered | unique:'description' track by $index" value="{{co.description}}">
+                  {{co.description}}
+                </option>
+              </select>
+            </th>
+            <th class="essential">&nbsp;</th>
+          </tr>
+          <tr>
+            <th class="essential">Nap</th>
+            <th class="essential">SM</th>
             <th class="essential">Szak</th>
-            <th class="essential">Állapot</th>
-            <th class="essential">Állapot rögzítés dátuma</th>
+            <th class="essential">Típus</th>
+            <th class="essential">Kémia</th>
+            <th class="essential">Kategória</th>
+            <th class="essential">Hiba</th>
+            <th class="essential" width="5%">Darab</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="d in vm.tabledata.data[0].adatok.het1s track by $index">
-            <td class="optional">{{d["Cikkszám"]}}</td>
-            <td class="optional">{{d["Megjegyzés"]}}</td>
-            <td class="essential">{{d["Modulszám"]}}</td>
-            <td class="essential">{{d["Pozíció"]}}</td>
-            <td class="essential">{{d["Szak"]}}</td>
-            <td class="essential">{{d["Állapot"]}}</td>
-            <td class="essential">{{d["Állapot_rögzítés_dátuma"]}}</td>
+          <tr ng-repeat="d in vm.tabledata | filter:vm.filtered track by $index">
+            <td class="essential">{{d.day}}</td>
+            <td class="essential">{{d.sm}}</td>
+            <td class="essential">{{d.shift}}</td>
+            <td class="essential">{{d.type}}</td>
+            <td class="essential">{{d.chem}}</td>
+            <td class="essential">{{d.category}}</td>
+            <td class="essential">{{d.description}}</td>
+            <td class="essential">{{d.pc}}</td>
           </tr>
         </tbody>
       </table>
