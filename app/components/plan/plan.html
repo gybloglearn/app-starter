@@ -22,7 +22,7 @@
 						<option ng-repeat="item in vm.moduls" value="{{item.name}}">{{item.name}}</option>
 					</select>
 					<div class="input-group-btn">
-						<a href="" class="btn btn-primary" ng-click="vm.show()" ng-disabled="vm.dateto<vm.datefrom">Input mezők generálása</a>
+						<a href="" class="btn btn-primary" ng-click="vm.show()" ng-disabled="vm.dateto<vm.datefrom || vm.acttype==null || vm.darab==null">Input mezők generálása</a>
 					</div>
 				</div>
 			</div>
@@ -32,6 +32,7 @@
 				<table class="table table-condensed">
 					<thead>
 						<tr>
+							<th>ID</th>
 							<th>Dátum</th>
 							<th>Gép</th>
 							<th>Termék típus</th>
@@ -43,8 +44,9 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat="item in vm.datumok track by $index" class="ng-scope">
+							<td><input ng-model="vm.data[$index].id" type="text" class="form-control" value="{{vm.id}}" readonly></td>
 							<td><input ng-model="vm.data[$index].date" type="text" class="form-control" value="{{item}}" readonly></td>
-							<td><input ng-model="vm.data[$index].id" type="text" class="form-control" value="{{vm.act}}" readonly></td>
+							<td><input ng-model="vm.data[$index].sm" type="text" class="form-control" value="{{vm.act}}" readonly></td>
 							<td><input ng-model="vm.data[$index].type" type="text" class="form-control" value="{{vm.acttype}}" readonly></td>
 							<td><input ng-model="vm.data[$index].sheetnumber" type="text" class="form-control" value="{{(vm.moduls | filter:{'name':vm.acttype})[0].sheets}}"
 									readonly></td>
@@ -55,7 +57,7 @@
 					</tbody>
 				</table>
 				<div class="col-sm-4">
-					<button class="btn btn-success" ng-click="vm.save();vm.mutat=false" ng-disabled="vm.showmessage || vm.acttype==null">Feltölt</button>
+					<button class="btn btn-success" ng-click="vm.save();vm.mutat=false" ng-disabled="vm.showmessage">Feltölt</button>
 					<div class="alert alert-success" ng-show="vm.showmessage">
 						<strong>Sikeres felvitel!</strong>
 					</div>
@@ -79,7 +81,7 @@
 								<span class="control-label" style="color:#FFFFFF">Gép:</span>
 								<select ng-model="vm.search.id" class="form-control">
 						    		<option value="">Mind</option>
-                					<option ng-repeat="item in vm.planlist | unique:'id'" value="{{item.id}}">{{item.id}}</option>
+                					<option ng-repeat="item in vm.planlist | unique:'sm'" value="{{item.sm}}">{{item.sm}}</option>
             					</select>
 							</div>
 						</div>
@@ -111,7 +113,7 @@
 				<tbody>
 					<tr ng-repeat="item in vm.planlist | orderBy:vm.order:vm.asc | filter: vm.search track by $index" class="ng-scope">
 						<td>{{item.date}}</td>
-						<td>{{item.id}}</td>
+						<td>{{item.sm}}</td>
 						<td>{{item.type}}</td>
 						<td>{{item.sheetnumber}}</td>
 						<td>{{item.amountshift1}}</td>
@@ -143,7 +145,7 @@
 				<div class="col-sm-4">
 					<div class="input-group">
 						<span class="input-group-addon">Gép:</span>
-						<select ng-model="vm.edit.id" class="form-control">
+						<select ng-model="vm.edit.sm" class="form-control">
 						<option ng-repeat="item in vm.sheetmakers track by $index" value="{{item}}">{{item}}</option>
 						</select>
 					</div>

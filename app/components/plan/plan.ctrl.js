@@ -25,8 +25,9 @@ define([], function () {
         vm.datumok[i] = new Date(vm.datefrom).getTime() + (i * 24 * 3600 * 1000);
         vm.datumok[i] = $filter('date')(vm.datumok[i], 'yyyy-MM-dd');
         vm.data.push({
+          "id":vm.id=new Date().getTime()+i,
           "date": vm.datumok[i],
-          "id": vm.act,
+          "sm": vm.act,
           "type": vm.acttype,
           "sheetnumber": $filter('filter')(vm.moduls, { 'name': vm.acttype })[0].sheets,
           "amountshift1": vm.darab,
