@@ -202,10 +202,10 @@ define([], function () {
                 }
               }
             }
-            vm.plans.push({ "sm": vm.allplan[i].id, "plan": 0 });
+            vm.plans.push({ "sm": vm.allplan[i].sm, "plan": 0 });
 
             for (var j = 0; j < vm.plans.length; j++) {
-              if (vm.allplan[i].id == vm.plans[j].sm) {
+              if (vm.allplan[i].sm == vm.plans[j].sm) {
                 vm.plans[j].plan = vm.plans[j].plan + vm.tervezett_darab;
               }
             }
