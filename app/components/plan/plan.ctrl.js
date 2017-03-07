@@ -7,6 +7,7 @@ define([], function () {
     vm.save = save;
     vm.load = load;
     vm.updateplan=updateplan;
+    vm.remove = remove;
     vm.mutat = false;
     vm.showmessage = false;
     vm.sheetmakers = ["SheetMaker1", "SheetMaker2", "SheetMaker4", "SheetMaker5", "SheetMaker6", "SheetMaker7", "SheetMaker8", "SheetMaker9"];
