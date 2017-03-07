@@ -1,7 +1,7 @@
 <div class="container">
 	<section class="module">
 		<div class="module-header">
-			<h3>BP kádak</h3>
+			<h1 class="text-center">BP kádak-{{vm.datumszam}}</h1>
 		</div>
 		<div class="module-body">
 			<div class="progress progress-info progress-striped active" ng-show="vm.loading">
@@ -13,7 +13,8 @@
 						<span class="input-group-addon">Dátumtól:</span>
 						<input class="form-control datepicker" min-date="2017-02-08" ng-model="vm.fr" />
 						<div class="input-group-btn">
-							<button class="btn btn-info" ng-click="vm.getData();">Betöltés</button>
+							<button class="btn btn-info" ng-click="vm.getData();vm.datszam()">Betöltés</button>
+							<button class="btn btn-default" ng-click="vm.getToday();vm.datszam()">Vissza a mai napra</button>
 						</div>
 					</div>
 				</div>

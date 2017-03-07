@@ -7,6 +7,16 @@ define([], function () {
     vm.opdata = [];
     activate();
     vm.getData = getData;
+    vm.getToday=getToday;
+    vm.datumszam = vm.fr;
+    vm.datszam = datszam;
+
+    function datszam()
+    {
+      vm.szam = new Date(vm.fr);
+      vm.datumszam=$filter('date')(vm.szam, 'yyyy-MM-dd');
+    }
+
     function getData() {
       vm.opdata = [];
       var a = 0;
@@ -135,6 +145,12 @@ define([], function () {
         }
         vm.loading = false;
       });
+    }
+
+    function getToday()
+    {
+      vm.fr=$filter('date')(new Date(), 'yyyy-MM-dd');
+      getData();
     }
 
     function activate() {
