@@ -46,7 +46,8 @@
 							<td><input ng-model="vm.data[$index].date" type="text" class="form-control" value="{{item}}" readonly></td>
 							<td><input ng-model="vm.data[$index].id" type="text" class="form-control" value="{{vm.act}}" readonly></td>
 							<td><input ng-model="vm.data[$index].type" type="text" class="form-control" value="{{vm.acttype}}" readonly></td>
-							<td><input ng-model="vm.data[$index].sheetnumber" type="text" class="form-control" value="{{(vm.moduls | filter:{'name':vm.acttype})[0].sheets}}"readonly></td>
+							<td><input ng-model="vm.data[$index].sheetnumber" type="text" class="form-control" value="{{(vm.moduls | filter:{'name':vm.acttype})[0].sheets}}"
+									readonly></td>
 							<td><input ng-model="vm.data[$index].amountshift1" type="text" class="form-control"></td>
 							<td><input ng-model="vm.data[$index].amountshift2" type="text" class="form-control"></td>
 							<td><input ng-model="vm.data[$index].amountshift3" type="text" class="form-control"></td>
@@ -104,7 +105,7 @@
 						<th>Délelőtt</th>
 						<th>Délután</th>
 						<th>Éjszaka</th>
-						<th>Szerkesztés</th>
+						<th>Szerkesztés/Törlés</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -116,7 +117,12 @@
 						<td>{{item.amountshift1}}</td>
 						<td>{{item.amountshift2}}</td>
 						<td>{{item.amountshift3}}</td>
-						<td><button class="btn btn-primary" ng-click="vm.edit = item"><i class="icon-edit"></i></button></td>
+						<td>
+							<div class="btn-group btn-group-sm">
+								<button class="btn btn-primary" ng-click="vm.edit = item"><i class="icon-edit"></i></button>
+								<button class="btn btn-danger" ng-click="vm.remove(item.id,$index)"><i class="icon-trash"></i></button>
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>

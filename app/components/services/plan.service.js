@@ -6,7 +6,8 @@ define([], function () {
       getpartnumber: getpartnumber,
       getAll: getAll,
       post: post,
-      put: put
+      put: put,
+      erase: erase
     };
 
     return service;
@@ -31,7 +32,7 @@ define([], function () {
         method: 'POST',
         url: 'http://3.228.180.15/planapi/plan/' + data.id,
         data: data
-      };   
+      };
       return $http(req);
     }
     function put(data) {
@@ -41,6 +42,13 @@ define([], function () {
         data: data
       };
       return $http(req);
+    }
+    function erase(id) {
+      var request = {
+        method: "DELETE",
+        url: "http://3.228.180.15/planapi/plan/" + id
+      };
+      return $http(request);
     }
   }
   Service.$inject = ['$http'];

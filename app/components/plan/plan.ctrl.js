@@ -84,6 +84,13 @@ define([], function () {
         vm.edit = '';
       });
     }
+
+    function remove(id, index) {
+            planService.erase(id).then(function (resp) {
+                vm.planlist.splice(index, 1);
+            });
+
+        }
   }
   Controller.$inject = ['planService', '$timeout', '$filter', '$cookies', '$state', '$rootScope'];
   return Controller;
