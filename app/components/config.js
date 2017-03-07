@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('BPS', {
+		url: '/BPS',
+		templateUrl: './app/components/BPS/BPS.html',
+		controller: 'BPSController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('pp', {
 		url: '/pp',
 		templateUrl: './app/components/pp/pp.html',

@@ -43,6 +43,7 @@
 					<li><a ui-sref="Mtf"><i class="icon-file"></i>Mtf-Napi jelentések</a></li>
 					<li><a ui-sref="archiv"><i class="icon-file"></i>MTF-Archívum</a></li>
 					<li><a ui-sref="pp"><i class="icon-file"></i> Parkoló pálya adatok</a></li>
+					<li><a ui-sref="BPS"><i class="icon-file"></i> BPS</a></li>
 				</ul>
 				<ul class="nav navbar-nav pull-right">
 					<li><a ui-sref="start"><i class="icon-home"></i></a></li>
@@ -76,7 +77,7 @@
 			require.config({
 				baseUrl: '../'
 			});
-			require(['ge-bootstrap', 'jquery', 'datepicker', 'app', 'charts'], function ($) {
+			require(['ge-bootstrap', 'jquery', 'datepicker', 'ch','app', 'charts'], function ($) {
 				$(function () {
 					$('.datapicker').datepicker();
 				});

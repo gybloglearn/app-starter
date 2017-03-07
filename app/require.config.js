@@ -88,6 +88,7 @@ require.config({
         'angular-locale_hu-hu': 'components/angular.js/angular-locale_hu-hu',
         'angular-ui-router': 'components/angular.js/angular-ui-router.min',
         'app': 'new_mtf/app/app',
+        'ch': 'new_mtf/app/components/ch'
     },
     'shim': {
         'app': {
@@ -108,6 +109,9 @@ require.config({
   				deps: ['jquery'],
   				exports: 'Typeahead'
   			},
+        'ch': {
+          deps: ['charts']
+        },
   			'bloodhound': {
   				deps: ['jquery'],
   				exports: 'Bloodhound'

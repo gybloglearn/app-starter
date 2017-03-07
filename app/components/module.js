@@ -17,9 +17,11 @@ define([
   './filters/sumField',
   './filters/unique',
 	'./archiv/archiv.ctrl',
-  './services/archiv.service'
-	, './pp/pp.ctrl'
-	, './services/ppdata.service'
+  './services/archiv.service',
+  './pp/pp.ctrl',
+  './services/ppdata.service',
+  './BPS/BPS.ctrl',
+  './services/bpsdata.service'
 	/* files */
 ], function(
   configFunction,
@@ -40,9 +42,11 @@ define([
   sumField,
   unique,
 	archivController,
-  archivService
-	, ppController
-	, ppdataService
+  archivService,
+  ppController,
+  ppdataService,
+  BPSController,
+  bpsdataService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -68,6 +72,8 @@ define([
 	app.controller('archivController', archivController);
 	app.service('archivService', archivService);
   app.controller('ppController', ppController);
-		app.service('ppdataService', ppdataService);
+	app.service('ppdataService', ppdataService);
+	app.controller('BPSController', BPSController);
+	app.service('bpsdataService', bpsdataService);
 		/* controllers */
 });
