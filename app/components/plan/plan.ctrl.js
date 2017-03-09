@@ -76,7 +76,7 @@ define([], function () {
       vm.dateto = $filter('date')(vm.datefrom + 7 * 24 * 3600 * 1000, 'yyyy-MM-dd');
       vm.datefrom = $filter('date')(vm.datefrom, 'yyyy-MM-dd');
       planService.getpartnumber().then(function (response) {
-        vm.moduls = response.data;
+      vm.moduls = response.data;
       });
       load();
     }
