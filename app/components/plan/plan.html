@@ -1,0 +1,231 @@
+<div class="container">
+	<section class="module">
+		<div class="module-header">
+			<h1 class="text-center">MTF-Tervek</h1>
+			<div class="col-sm-12" style="margin-top:20px">
+				<div class="input-group">
+					<span class="input-group-addon">Feltöltésre kerülő időszak:</span>
+					<input type="text" class="datepicker form-control" ng-model="vm.datefrom" std="{{vm.sdate}}">
+					<span class="input-group-addon">-tól</span>
+					<input type="text" class="datepicker form-control" ng-model="vm.dateto" std="{{vm.sdate}}">
+					<span class="input-group-addon">-ig</span>
+					<span class="input-group-addon">Darab</span>
+					<input type="text" class="form-control" ng-model="vm.darab">
+				</div>
+			</div>
+
+			<div class="col-sm-12">
+				<div class="input-group">
+					<span class="input-group-addon">Újrateszt</span>
+					<input type="text" class="form-control" ng-model="vm.projectname">
+					<span class="input-group-addon">Kísérlet</span>
+					<input type="text" class="form-control" ng-model="vm.attempt">
+					<span class="input-group-addon">Kísérletet végző</span>
+					<input type="text" class="form-control" ng-model="vm.whogo">
+					<span class="input-group-addon">Hova</span>
+					<input type="text" class="form-control" ng-model="vm.where">
+					<span class="input-group-addon">Mennyi ideig</span>
+					<input type="text" class="form-control" ng-model="vm.period">
+					<span class="input-group-addon">Hány fő kell</span>
+					<input type="text" class="form-control" ng-model="vm.person">
+				</div>
+			</div>
+
+			<div class="col-sm-12">
+				<div class="input-group">
+					<span class="input-group-addon">Típus</span>
+					<select ng-model="vm.type">
+					  <option value="CP5">CP5</option>
+            <option value="FLOW">FLOW</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-sm-12">
+				<div class="input-group">
+					<span class="input-group-addon">Újrateszt menete</span>
+					<textarea class="form-control" rows="3" ng-model="vm.description"></textarea>
+				</div>
+				<div class="input-group-btn">
+					<a href="" class="btn btn-primary" ng-click="vm.show()" ng-disabled="vm.dateto<vm.datefrom || vm.darab==null">Input mezők generálása</a>
+				</div>
+			</div>
+		</div>
+		<div class="module-body">
+			<div ng-show="vm.mutat">
+				<table class="table table-hover table-condensed table-bordered">
+					<thead>
+						<tr>
+							<th colspan="7">Újratesztek</th>
+							<th colspan="5" style="background-color:#005CB9">Kísérletek</th>
+						</tr>
+						<tr>
+							<th>Dátum</th>
+							<th>Újrateszt</th>
+							<th>Termék típus</th>
+							<th>Délelőtt</th>
+							<th>Délután</th>
+							<th>Éjszaka</th>
+							<th>Újrateszt menete</th>
+							<th style="background-color:#005CB9">Kísérlet</th>
+							<th style="background-color:#005CB9">Kísérletet végző</th>
+							<th style="background-color:#005CB9">Hova</th>
+							<th style="background-color:#005CB9">Mennyi idő</th>
+							<th style="background-color:#005CB9">Hány főre van szükség</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in vm.datumok track by $index" class="ng-scope">
+							<td><input ng-model="vm.data[$index].date" type="text" class="form-control" value="{{item}}" readonly></td>
+							<td><input ng-model="vm.data[$index].projectname" type="text" class="form-control" value="{{vm.projectname}}" readonly></td>
+							<td><input ng-model="vm.data[$index].type" type="text" class="form-control" value="{{vm.type}}" readonly></td>
+							<td><input ng-model="vm.data[$index].amountshift1" type="text" class="form-control"></td>
+							<td><input ng-model="vm.data[$index].amountshift2" type="text" class="form-control"></td>
+							<td><input ng-model="vm.data[$index].amountshift3" type="text" class="form-control"></td>
+							<td><input ng-model="vm.data[$index].description" type="text" class="form-control"></td>
+							<td><input ng-model="vm.data[$index].attempt" type="text" class="form-control"></td>
+							<td><input ng-model="vm.data[$index].whogo" type="text" class="form-control"></td>
+							<td><input ng-model="vm.data[$index].where" type="text" class="form-control"></td>
+							<td><input ng-model="vm.data[$index].period" type="text" class="form-control"></td>
+							<td><input ng-model="vm.data[$index].person" type="text" class="form-control"></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="col-sm-4">
+					<button class="btn btn-success" ng-click="vm.save();vm.load();vm.mutat=false" ng-disabled="vm.showmessage">Feltölt</button>
+					<div class="alert alert-success" ng-show="vm.showmessage">
+						<strong>Sikeres felvitel!</strong>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="module-footer">
+			<hr>
+			<h1 class="text-center">Felvett tervek listája</h1>
+			<div class="tray filter-tray top" style="margin-top:20px">
+				<div class="tray-inner">
+					<div class="filter-rule-group">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<span class="control-label" style="color:#FFFFFF">Dátum:</span>
+								<input type="text" ng-model="vm.search.date" class="form-control">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<span class="control-label" style="color:#FFFFFF">Termék típus:</span>
+								<select ng-model="vm.search.type" class="form-control">
+						    		<option value="">Mind</option>
+                		<option ng-repeat="item in vm.planlist | unique:'type'" value="{{item.type}}">{{item.type}}</option>
+            		</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<table class="table table-hover table-condensed table-bordered">
+				<thead>
+					<tr>
+						<th colspan="7">Újratesztek</th>
+						<th colspan="6" style="background-color:#005CB9">Kísérletek</th>
+					</tr>
+					<tr>
+						<th rowspan=2 ng-click="vm.order='date';vm.asc=!vm.asc;">Dátum</th>
+						<th rowspan=2 ng-click="vm.order='projectname';vm.asc=!vm.asc;">Újrateszt</th>
+						<th rowspan=2 ng-click="vm.order='type';vm.asc=!vm.asc;">Termék típus</th>
+						<th>Délelőtt</th>
+						<th>Délután</th>
+						<th>Éjszaka</th>
+						<th>Újrateszt menete</th>
+						<th style="background-color:#005CB9">Kísérlet</th>
+						<th style="background-color:#005CB9">Kísérletet végző</th>
+						<th style="background-color:#005CB9">Hova</th>
+						<th style="background-color:#005CB9">Mennyi idő</th>
+						<th style="background-color:#005CB9">Hány főre van szükség</th>
+						<th style="background-color:#005CB9">Szerkesztés/Törlés</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in vm.planlist | orderBy:vm.order:vm.asc | filter: vm.search track by $index" class="ng-scope">
+						<td>{{item.date}}</td>
+						<td>{{item.projectname}}</td>
+						<td>{{item.type}}</td>
+						<td>{{item.amountshift1}}</td>
+						<td>{{item.amountshift2}}</td>
+						<td>{{item.amountshift3}}</td>
+						<td><button class="btn btn-info" ng-click=""><i class="icon-info-sign"></i></button></td>
+						<td>{{item.attempt}}</td>
+						<td>{{item.whogo}}</td>
+						<td>{{item.where}}</td>
+						<td>{{item.period}}</td>
+						<td>{{item.person}}</td>
+						<td>
+							<div class="btn-group btn-group-sm">
+								<button class="btn btn-primary" ng-click="vm.edit = item"><i class="icon-edit"></i></button>
+								<button class="btn btn-danger" ng-click="vm.remove(item.id,$index)"><i class="icon-trash"></i></button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+	<section class="module" ng-show="vm.edit" style="margin-top:20px">
+		<div class="module-header">Terv módosítása</div>
+		<div class="module-body">
+			<div class="row" style="margin-top:10px">
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Dátum:</span>
+						<input type="text" class="form-control" ng-model="vm.edit.date" readonly>
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Projekt név:</span>
+						<input type="text" class="form-control" ng-model="vm.edit.projectname" readonly>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Termék típus:</span>
+						<select ng-model="vm.type">
+					  <option value="CP5">CP5</option>
+            <option value="FLOW">FLOW</option>
+					</select>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top:10px">
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Délelőtt:</span>
+						<input type="text" class="form-control" ng-model="vm.edit.amountshift1">
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Délután:</span>
+						<input type="text" class="form-control" ng-model="vm.edit.amountshift2">
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Éjszaka:</span>
+						<input type="text" class="form-control" ng-model="vm.edit.amountshift3">
+					</div>
+				</div>
+			</div>
+
+			<div class="btn-group">
+				<button class="btn btn-default" ng-click="vm.edit = '';">Mégse</button>
+				<button class="btn btn-danger" ng-click="vm.updateplan(vm.edit)">Mentés</button>
+			</div>
+
+		</div>
+	</section>
+</div>

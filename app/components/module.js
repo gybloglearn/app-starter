@@ -21,7 +21,9 @@ define([
   './pp/pp.ctrl',
   './services/ppdata.service',
   './BPS/BPS.ctrl',
-  './services/bpsdata.service'
+  './services/bpsdata.service',
+  './plan/plan.ctrl',
+  './services/plan.service'
 	/* files */
 ], function(
   configFunction,
@@ -46,7 +48,9 @@ define([
   ppController,
   ppdataService,
   BPSController,
-  bpsdataService
+  bpsdataService,
+  planController,
+  planService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -75,5 +79,7 @@ define([
 	app.service('ppdataService', ppdataService);
 	app.controller('BPSController', BPSController);
 	app.service('bpsdataService', bpsdataService);
+	app.controller('planController', planController);
+	app.service('planService', planService);
 		/* controllers */
 });
