@@ -157,6 +157,7 @@ define([], function () {
       vm.fr = $filter('date')(vm.n, 'yyyy-MM-dd');
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       getData();
+      vm.edate = $filter('date')(new Date().getTime(),'yyyy-MM-dd');
     }
 
     function feltolt_x_hasznos(tomb) {

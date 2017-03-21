@@ -163,6 +163,7 @@ define([], function () {
       vm.datefrom = $filter('date')(vm.dateto - 7 * 24 * 3600 * 1000, 'yyyy-MM-dd');
       vm.dateto = $filter('date')(vm.dateto, 'yyyy-MM-dd');
       vm.getD();
+      vm.edate = $filter('date')(new Date().getTime(),'yyyy-MM-dd');
     }
   }
   Controller.$inject = ['archivService', '$cookies', '$state', '$rootScope', '$filter'];

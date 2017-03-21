@@ -201,6 +201,7 @@ define([], function () {
       });
     }
     vm.sdate=new Date().getFullYear() + "-01-01";
+    vm.edate = $filter('date')(new Date().getTime()-24*3600*1000,'yyyy-MM-dd');
 
     activate();
 

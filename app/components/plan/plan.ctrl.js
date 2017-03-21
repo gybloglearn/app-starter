@@ -76,6 +76,7 @@ define([], function () {
       vm.dateto = $filter('date')(vm.datefrom + 7 * 24 * 3600 * 1000, 'yyyy-MM-dd');
       vm.datefrom = $filter('date')(vm.datefrom, 'yyyy-MM-dd');
       load();
+      vm.sdate = $filter('date')(new Date().getTime(),'yyyy-MM-dd');
     }
 
     function updateplan() {

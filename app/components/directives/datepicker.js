@@ -15,7 +15,7 @@ define([], function () {
         weekStart: 1,
         calendarWeeks: true,
         startDate: attrs.std,
-        endDate: "-1d",
+        endDate: attrs.end,
         onSelect: function (dateText) {
           var modelPath = $(this).attr('ng-model');
           putObject(modelPath, scope, dateText);
