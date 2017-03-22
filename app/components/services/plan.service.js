@@ -22,7 +22,7 @@ define([], function () {
     function post(data) {
       var req = {
         method: 'POST',
-        url: 'http://3.228.180.15/mtfplan/' + data.id,
+        url: 'http://3.228.180.15/mtfplan/plan/' + data.id,
         data: data
       };
       return $http(req);
@@ -30,7 +30,7 @@ define([], function () {
     function put(data) {
       var req = {
         method: 'PUT',
-        url: 'http://3.228.180.15/mtfplan/' + data.id,
+        url: 'http://3.228.180.15/mtfplan/plan/' + data.id,
         data: data
       };
       return $http(req);
@@ -38,7 +38,7 @@ define([], function () {
     function erase(id) {
       var request = {
         method: "DELETE",
-        url: "http://3.228.180.15/mtfplan/" + id
+        url: "http://3.228.180.15/mtfplan/plan/" + id
       };
       return $http(request);
     }
