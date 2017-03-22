@@ -68,11 +68,7 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      if ($rootScope.user.username != "212434909" && $rootScope.user.username != "502678184" && $rootScope.user.username != "212597831" && $rootScope.user.username != "212422533") {
-        $state.go('Forbidden');
-      }
       vm.datefrom = new Date().getTime();
-      // vm.sdate = new Date().getTime();
       vm.dateto = $filter('date')(vm.datefrom + 7 * 24 * 3600 * 1000, 'yyyy-MM-dd');
       vm.datefrom = $filter('date')(vm.datefrom, 'yyyy-MM-dd');
       load();

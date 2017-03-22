@@ -2,7 +2,7 @@
 	<section class="module">
 		<div class="module-header">
 			<h1 class="text-center">MTF-Tervek</h1>
-			<div class="col-sm-12" style="margin-top:20px">
+			<div ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')" class="col-sm-12" style="margin-top:20px">
 				<div class="input-group">
 					<span class="input-group-addon">Feltöltésre kerülő időszak:</span>
 					<input type="text" class="datepicker form-control" ng-model="vm.datefrom" std="{{vm.sdate}}">
@@ -14,7 +14,7 @@
 				</div>
 			</div>
 
-			<div class="col-sm-12">
+			<div ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')" class="col-sm-12">
 				<div class="input-group">
 					<span class="input-group-addon">Újrateszt</span>
 					<input type="text" class="form-control" ng-model="vm.projectname">
@@ -31,7 +31,7 @@
 				</div>
 			</div>
 
-			<div class="col-sm-12">
+			<div ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')" class="col-sm-12">
 				<div class="input-group">
 					<span class="input-group-addon">Típus</span>
 					<select ng-model="vm.type">
@@ -41,7 +41,7 @@
 				</div>
 			</div>
 
-			<div class="col-sm-12">
+			<div ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')" class="col-sm-12">
 				<div class="input-group">
 					<span class="input-group-addon">Újrateszt menete</span>
 					<textarea class="form-control" rows="3" ng-model="vm.description"></textarea>
@@ -51,7 +51,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="module-body">
+		<div ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')" class="module-body">
 			<div ng-show="vm.mutat">
 				<table class="table table-hover table-condensed table-bordered">
 					<thead>
@@ -143,7 +143,7 @@
 						<th style="background-color:#005CB9">Hova</th>
 						<th style="background-color:#005CB9">Mennyi idő</th>
 						<th style="background-color:#005CB9">Hány főre van szükség</th>
-						<th style="background-color:#005CB9">Szerkesztés/Törlés</th>
+						<th ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')" style="background-color:#005CB9">Szerkesztés/Törlés</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -160,7 +160,7 @@
 						<td>{{item.where}}</td>
 						<td>{{item.period}}</td>
 						<td>{{item.person}}</td>
-						<td>
+						<td ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')">
 							<div class="btn-group btn-group-sm">
 								<button class="btn btn-primary" ng-click="vm.edit = item"><i class="icon-edit"></i></button>
 								<button class="btn btn-danger" ng-click="vm.remove(item.id,$index)"><i class="icon-trash"></i></button>
