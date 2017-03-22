@@ -15,14 +15,14 @@ define([], function () {
     function getAll() {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15/'
+        url: 'http://3.228.180.15/mtfplan/allplans'
       };
       return $http(req);
     }
     function post(data) {
       var req = {
         method: 'POST',
-        url: 'http://3.228.180.15/' + data.id,
+        url: 'http://3.228.180.15/mtfplan/' + data.id,
         data: data
       };
       return $http(req);
@@ -30,7 +30,7 @@ define([], function () {
     function put(data) {
       var req = {
         method: 'PUT',
-        url: 'http://3.228.180.15/' + data.id,
+        url: 'http://3.228.180.15/mtfplan/' + data.id,
         data: data
       };
       return $http(req);
@@ -38,7 +38,7 @@ define([], function () {
     function erase(id) {
       var request = {
         method: "DELETE",
-        url: "http://3.228.180.15/" + id
+        url: "http://3.228.180.15/mtfplan/" + id
       };
       return $http(request);
     }
