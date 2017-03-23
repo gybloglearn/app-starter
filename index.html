@@ -4,13 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>Title</title>
-
+    <link rel="icon" href="/components/brandkit/favicon/favicon.ico">
     <link rel="stylesheet" href="../components_css/iids.css">
     <link rel="stylesheet" href="../components_css/responsive.css">
     <!--[if lte IE 9]>
       <link rel="stylesheet" href="../components_css/ie.css" id="theme-ie" type="text/css">
     <![endif]-->
     <script src="../components/modernizr/modernizr.js"></script>
+    <style>
+		[ng\:cloak],
+		[ng-cloak],
+		[data-ng-cloak],
+		[x-ng-cloak],
+		.ng-cloak,
+		.x-ng-cloak {
+			display: none !important;
+		}
+	</style>    
   </head>
   <body>
 
@@ -19,15 +29,16 @@
 	<div class="navbar-header">
 	  <a href="" class="navbar-brand">
 	    <span class="ge-logo"></span>
-	    <span>Alap lap cím<small><i>GE POWER</i></small></span>
+	    <span>ZW500 Modulgyártási lap<small><i>GE POWER</i></small></span>
 	  </a>
 	</div>
       </div>
       <div class="primary-navbar">
-	<div class="container">
+	<div class="container" ng-show="user.displayname">
 	  <ul class="nav navbar-nav">
 	    <!--<li><a ui-sref="start">Start</a></li>-->
 	    <!-- links -->
+      <li><a ui-sref="moduls"><i class="icon-file"></i> Modulgyártási lap</a></li>
 
 	  </ul>
 	  <ul class="nav navbar-nav pull-right">
@@ -40,7 +51,7 @@
 
     <div style="margin: 20px auto;" ui-view></div>
 
-    <div class="footer" style="position:absolute;bottom:0;right:0;left:0;">
+    <div class="footer" ng-show="user.displayname">
       <div class="primary">
 	<div class="container">
 	  <div class="brand">

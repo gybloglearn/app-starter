@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('moduls', {
+		url: '/moduls',
+		templateUrl: './app/components/moduls/moduls.html',
+		controller: 'modulsController',
+		controllerAs: 'vm'
+	});
 
   }
   ConfigFunction.$inject = ['$urlRouterProvider', '$stateProvider'];
