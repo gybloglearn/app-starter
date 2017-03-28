@@ -30,6 +30,12 @@
 						<div class="filter-rule-group">
 							<div class="col-sm-4">
 								<div class="form-group">
+									<span class="control-label" style="color:#FFFFFF">Kád:</span>
+									<input type="text" ng-model="vm.searchda.machinename" class="form-control">
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
 									<span class="control-label" style="color:#FFFFFF">Operátor:</span>
 									<input type="text" ng-model="vm.searchda.Operator" class="form-control">
 								</div>
@@ -40,19 +46,23 @@
 				<table class="table table-striped table-condensed" id="bpkadak" ng-show="!vm.loading">
 					<thead>
 						<tr>
+							<th>Modul</th>
 							<th>Machinename</th>
 							<th>Operator</th>
 							<th>startdate</th>
 							<th>enddate</th>
+							<th>Time(HH:mm)</th>
 							<th>repaired</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="da in vm.tabledata | orderBy:['machinename','startdate']| filter: vm.searchda track by $index" class="ng-scope">
+							<td>{{da.JobID}}</td>
 							<td>{{da.machinename}}</td>
 							<td>{{da.Operator}}</td>
 							<td>{{da.startdate}}</td>
 							<td>{{da.enddate}}</td>
+							<td>{{da.Time | date:'HH:mm'}}</td>
 							<td>{{da.Repaired}}</td>
 						</tr>
 					</tbody>
@@ -80,7 +90,6 @@
 							<th>Összes bökés</th>
 							<th>Munkaidő(perc)</th>
 							<th>Bökés/perc</th>
-							<th>Operátor által kezelt modulok és bökés számuk</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -90,13 +99,6 @@
 							<td>{{item.repair}}</td>
 							<td>{{item.worktime}}</td>
 							<td>{{item.repair/item.worktime | number:2}}</td>
-							<td>
-								<ul>
-									<li ng-repeat="t in item.moduls track by $index">
-										{{t[0]}} : {{t[1]}}
-									</li>
-								</ul>
-							</td>
 						</tr>
 					</tbody>
 				</table>

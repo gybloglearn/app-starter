@@ -57,6 +57,8 @@ define([], function () {
               }
             }
           }
+          vm.tabledata[k].Time=(new Date(vm.tabledata[k].enddate).getTime()-(new Date(vm.tabledata[k].startdate).getTime() + 3600 * 1000));
+          console.log(vm.tabledata);
           actoperator = vm.tabledata[k].Operator;
           for (var b = 0; b < vm.opdata.length; b++) {
             if (actoperator == vm.opdata[b].operator) {
