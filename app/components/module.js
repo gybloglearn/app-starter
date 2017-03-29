@@ -24,7 +24,8 @@ define([
   './services/bpsdata.service',
   './plan/plan.ctrl',
   './services/plan.service',
-  './newtest/newtest.ctrl'
+  './newtest/newtest.ctrl',
+  './attempt/attempt.ctrl'
 	/* files */
 ], function(
   configFunction,
@@ -52,7 +53,8 @@ define([
   bpsdataService,
   planController,
   planService,
-  newtestController
+  newtestController,
+  attemptController
 	/* names */) {
 
   // Link all components to the module !!!
@@ -84,5 +86,6 @@ define([
 	app.controller('planController', planController);
 	app.service('planService', planService);
 	app.controller('newtestController', newtestController);
+	app.controller('attemptController', attemptController);
 		/* controllers */
 });

@@ -2,22 +2,29 @@
 	<section class="module">
 		<div class="module-header">
 			<h1 class="text-center">MTF-Tervek</h1>
-			<div ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')" class="col-sm-12" style="margin-top:20px">
+			<div ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')"
+				class="col-sm-12" style="margin-top:20px">
+				<ul class="nav nav-tabs" style="margin-top:10px">
+					<li ng-repeat="item in vm.alleventtype track by $index">
+						<a data-toggle="tab" href="" ng-click="vm.eventtype=item;">{{item}}</a>
+					</li>
+				</ul>
 				<div class="input-group">
 					<span class="input-group-addon">Feltöltésre kerülő időszak:</span>
 					<input type="text" class="datepicker form-control" ng-model="vm.datefrom" std="{{vm.sdate}}">
 					<span class="input-group-addon">-tól</span>
 					<input type="text" class="datepicker form-control" ng-model="vm.dateto" std="{{vm.sdate}}">
 					<span class="input-group-addon">-ig</span>
-					<span class="input-group-addon">Darab</span>
-					<input type="text" class="form-control" ng-model="vm.darab">
+					<span class="input-group-addon" ng-show="vm.eventtype=='újrateszt'">Újrateszt</span>
+					<input type="text" class="form-control" ng-model="vm.projectname" ng-show="vm.eventtype=='újrateszt'">
+					<span class="input-group-addon" ng-show="vm.eventtype=='újrateszt'">Darab</span>
+					<input type="text" class="form-control" ng-model="vm.darab" ng-show="vm.eventtype=='újrateszt'">
 				</div>
 			</div>
 
-			<div ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')" class="col-sm-12">
-				<div class="input-group">
-					<span class="input-group-addon">Újrateszt</span>
-					<input type="text" class="form-control" ng-model="vm.projectname">
+			<div ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')"
+				class="col-sm-12">
+				<div class="input-group" ng-show="vm.eventtype=='kísérlet'">
 					<span class="input-group-addon">Kísérlet</span>
 					<input type="text" class="form-control" ng-model="vm.attempt">
 					<span class="input-group-addon">Kísérletet végző</span>
@@ -31,34 +38,29 @@
 				</div>
 			</div>
 
-			<div ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')" class="col-sm-12">
+			<div ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')"
+				class="col-sm-12">
 				<div class="input-group">
+					<span class="input-group-addon">Leírás {{vm.eventtype}}hez</span>
+					<textarea class="form-control" rows="3" ng-model="vm.description"></textarea>
+				</div>
+				<div class="input-group" ng-show="vm.eventtype=='újrateszt'">
 					<span class="input-group-addon">Típus</span>
 					<select ng-model="vm.type">
 					  <option value="CP5">CP5</option>
                       <option value="FLOW">FLOW</option>
 					</select>
 				</div>
-			</div>
-
-			<div ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')" class="col-sm-12">
-				<div class="input-group">
-					<span class="input-group-addon">Újrateszt menete</span>
-					<textarea class="form-control" rows="3" ng-model="vm.description"></textarea>
-				</div>
 				<div class="input-group-btn">
-					<a href="" class="btn btn-primary" ng-click="vm.show()" ng-disabled="vm.dateto<vm.datefrom || vm.darab==null">Input mezők generálása</a>
+					<a href="" class="btn btn-primary" ng-click="vm.show()" ng-disabled="vm.dateto<vm.datefrom">Input mezők generálása</a>
 				</div>
 			</div>
 		</div>
-		<div ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')" class="module-body">
+		<div ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')"
+			class="module-body">
 			<div ng-show="vm.mutat">
-				<table class="table table-hover table-condensed table-bordered">
+				<table class="table table-condensed" ng-show="vm.eventtype=='újrateszt'">
 					<thead>
-						<tr>
-							<th colspan="7">Újratesztek</th>
-							<th colspan="5" style="background-color:#005CB9">Kísérletek</th>
-						</tr>
 						<tr>
 							<th>Dátum</th>
 							<th>Újrateszt</th>
@@ -67,27 +69,41 @@
 							<th>Délután</th>
 							<th>Éjszaka</th>
 							<th>Újrateszt menete</th>
-							<th style="background-color:#005CB9">Kísérlet</th>
-							<th style="background-color:#005CB9">Kísérletet végző</th>
-							<th style="background-color:#005CB9">Hova</th>
-							<th style="background-color:#005CB9">Mennyi idő</th>
-							<th style="background-color:#005CB9">Hány főre van szükség</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="item in vm.datumok track by $index" class="ng-scope">
 							<td><input ng-model="vm.data[$index].date" type="text" class="form-control" value="{{item}}" readonly></td>
-							<td><input ng-model="vm.data[$index].projectname" type="text" class="form-control" value="{{vm.projectname}}" readonly></td>
-							<td><input ng-model="vm.data[$index].type" type="text" class="form-control" value="{{vm.type}}" readonly></td>
+							<td><input ng-model="vm.data[$index].projectname" type="text" class="form-control" value="{{vm.projectname}}"></td>
+							<td><input ng-model="vm.data[$index].type" type="text" class="form-control" value="{{vm.type}}"></td>
 							<td><input ng-model="vm.data[$index].amountshift1" type="text" class="form-control"></td>
 							<td><input ng-model="vm.data[$index].amountshift2" type="text" class="form-control"></td>
 							<td><input ng-model="vm.data[$index].amountshift3" type="text" class="form-control"></td>
 							<td><input ng-model="vm.data[$index].description" type="text" class="form-control"></td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="table table-condensed" ng-show="vm.eventtype=='kísérlet'">
+					<thead>
+						<tr>
+							<th style="background-color:#005CB9">Dátum</th>
+							<th style="background-color:#005CB9">Kísérlet</th>
+							<th style="background-color:#005CB9">Kísérletet végző</th>
+							<th style="background-color:#005CB9">Hova</th>
+							<th style="background-color:#005CB9">Mennyi idő</th>
+							<th style="background-color:#005CB9">Hány főre van szükség</th>
+							<th style="background-color:#005CB9">Kísérlet menete</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in vm.datumok track by $index" class="ng-scope">
+							<td><input ng-model="vm.data[$index].date" type="text" class="form-control" value="{{item}}" readonly></td>
 							<td><input ng-model="vm.data[$index].attempt" type="text" class="form-control"></td>
 							<td><input ng-model="vm.data[$index].whogo" type="text" class="form-control"></td>
 							<td><input ng-model="vm.data[$index].where" type="text" class="form-control"></td>
 							<td><input ng-model="vm.data[$index].period" type="text" class="form-control"></td>
 							<td><input ng-model="vm.data[$index].person" type="text" class="form-control"></td>
+							<td><input ng-model="vm.data[$index].description" type="text" class="form-control"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -124,12 +140,8 @@
 					</div>
 				</div>
 			</div>
-			<table class="table table-hover table-condensed table-bordered">
+			<table class="table table-condensed">
 				<thead>
-					<tr>
-						<th colspan="7">Újratesztek</th>
-						<th colspan="6" style="background-color:#005CB9">Kísérletek</th>
-					</tr>
 					<tr>
 						<th rowspan=2 ng-click="vm.order='date';vm.asc=!vm.asc;">Dátum</th>
 						<th rowspan=2 ng-click="vm.order='projectname';vm.asc=!vm.asc;">Újrateszt</th>
@@ -138,12 +150,7 @@
 						<th>Délután</th>
 						<th>Éjszaka</th>
 						<th>Újrateszt menete</th>
-						<th style="background-color:#005CB9">Kísérlet</th>
-						<th style="background-color:#005CB9">Kísérletet végző</th>
-						<th style="background-color:#005CB9">Hova</th>
-						<th style="background-color:#005CB9">Mennyi idő</th>
-						<th style="background-color:#005CB9">Hány főre van szükség</th>
-						<th ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')" style="background-color:#005CB9">Szerkesztés/Törlés</th>
+						<th ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')">Szerkesztés/Törlés</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -155,14 +162,40 @@
 						<td>{{item.amountshift2}}</td>
 						<td>{{item.amountshift3}}</td>
 						<td><button class="btn btn-info" ui-sref="newtest({newtestobject:item})"><i class="icon-info-sign"></i></button></td>
+						<td ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')">
+							<div class="btn-group btn-group-sm">
+								<button class="btn btn-primary" ng-click="vm.editnewtest = item"><i class="icon-edit"></i></button>
+								<button class="btn btn-danger" ng-click="vm.remove(item.id,$index)"><i class="icon-trash"></i></button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="table table-condensed" style="margin-top:10px">
+				<thead>
+					<tr>
+						<th style="background-color:#005CB9" rowspan=2 ng-click="vm.order='date';vm.asc=!vm.asc;">Dátum</th>
+						<th style="background-color:#005CB9" rowspan=2 ng-click="vm.order='attempt';vm.asc=!vm.asc;">Kísérlet</th>
+						<th style="background-color:#005CB9">Kísérletet végző</th>
+						<th style="background-color:#005CB9">Hova</th>
+						<th style="background-color:#005CB9">Mennyi idő</th>
+						<th style="background-color:#005CB9">Hány főre van szükség</th!>
+						<th style="background-color:#005CB9">Újrateszt menete</th>
+						<th style="background-color:#005CB9" ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')">Szerkesztés/Törlés</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in vm.planlist | orderBy:vm.order:vm.asc | filter: vm.search track by $index" class="ng-scope">
+						<td>{{item.date}}</td>
 						<td>{{item.attempt}}</td>
 						<td>{{item.whogo}}</td>
 						<td>{{item.where}}</td>
 						<td>{{item.period}}</td>
 						<td>{{item.person}}</td>
+						<td><button class="btn btn-info" ui-sref="newtest({attemptobject:item})"><i class="icon-info-sign"></i></button></td>
 						<td ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')">
 							<div class="btn-group btn-group-sm">
-								<button class="btn btn-primary" ng-click="vm.edit = item"><i class="icon-edit"></i></button>
+								<button class="btn btn-primary" ng-click="vm.editattempt = item"><i class="icon-edit"></i></button>
 								<button class="btn btn-danger" ng-click="vm.remove(item.id,$index)"><i class="icon-trash"></i></button>
 							</div>
 						</td>
@@ -172,21 +205,21 @@
 		</div>
 	</section>
 
-	<section class="module" ng-show="vm.edit" style="margin-top:20px">
-		<div class="module-header">Terv módosítása</div>
+	<section class="module" ng-show="vm.editnewtest" style="margin-top:20px">
+		<div class="module-header">Újrateszt módosítása</div>
 		<div class="module-body">
 			<div class="row" style="margin-top:10px">
 				<div class="col-sm-4">
 					<div class="input-group">
 						<span class="input-group-addon">Dátum:</span>
-						<input type="text" class="form-control" ng-model="vm.edit.date" readonly>
+						<input type="text" class="form-control" ng-model="vm.editnewtest.date" readonly>
 					</div>
 				</div>
 
 				<div class="col-sm-4">
 					<div class="input-group">
-						<span class="input-group-addon">Projekt név:</span>
-						<input type="text" class="form-control" ng-model="vm.edit.projectname" readonly>
+						<span class="input-group-addon">Újrateszt neve:</span>
+						<input type="text" class="form-control" ng-model="vm.editnewtest.projectname">
 					</div>
 				</div>
 				<div class="col-sm-4">
@@ -203,27 +236,97 @@
 				<div class="col-sm-4">
 					<div class="input-group">
 						<span class="input-group-addon">Délelőtt:</span>
-						<input type="text" class="form-control" ng-model="vm.edit.amountshift1">
+						<input type="text" class="form-control" ng-model="vm.editnewtesst.amountshift1">
 					</div>
 				</div>
 
 				<div class="col-sm-4">
 					<div class="input-group">
 						<span class="input-group-addon">Délután:</span>
-						<input type="text" class="form-control" ng-model="vm.edit.amountshift2">
+						<input type="text" class="form-control" ng-model="vm.editnewtest.amountshift2">
 					</div>
 				</div>
 				<div class="col-sm-4">
 					<div class="input-group">
 						<span class="input-group-addon">Éjszaka:</span>
-						<input type="text" class="form-control" ng-model="vm.edit.amountshift3">
+						<input type="text" class="form-control" ng-model="vm.editnewtest.amountshift3">
 					</div>
 				</div>
 			</div>
 
+			<div class="row" style="margin-top:10px">
+				<div class="input-group">
+					<span class="input-group-addon">Leírás</span>
+					<textarea class="form-control" rows="3" ng-model="vm.editnewtest.description"></textarea>
+				</div>
+			</div>
+
 			<div class="btn-group">
-				<button class="btn btn-default" ng-click="vm.edit = '';">Mégse</button>
-				<button class="btn btn-danger" ng-click="vm.updateplan(vm.edit)">Mentés</button>
+				<button class="btn btn-default" ng-click="vm.editnewtest = '';">Mégse</button>
+				<button class="btn btn-danger" ng-click="vm.updatenewtest(vm.editnewtest)">Mentés</button>
+			</div>
+
+		</div>
+	</section>
+
+	<section class="module" ng-show="vm.editattempt" style="margin-top:20px">
+		<div class="module-header">Kísérlet módosítása</div>
+		<div class="module-body">
+			<div class="row" style="margin-top:10px">
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Dátum:</span>
+						<input type="text" class="form-control" ng-model="vm.editattempt.date" readonly>
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Kísérlet neve:</span>
+						<input type="text" class="form-control" ng-model="vm.editattempt.attempt">
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Kísérletet végző:</span>
+						<input type="text" class="form-control" ng-model="vm.editattempt.whogo">
+					</div>
+				</div>
+				
+			</div>
+			<div class="row" style="margin-top:10px">
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Hol:</span>
+						<input type="text" class="form-control" ng-model="vm.editattempt.where">
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Idő:</span>
+						<input type="text" class="form-control" ng-model="vm.editattempt.period">
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Hány fő kell:</span>
+						<input type="text" class="form-control" ng-model="vm.editattempt.person">
+					</div>
+				</div>
+			</div>
+
+			<div class="row" style="margin-top:10px">
+				<div class="input-group">
+					<span class="input-group-addon">Leírás</span>
+					<textarea class="form-control" rows="3" ng-model="vm.editattempt.description"></textarea>
+				</div>
+			</div>
+
+			<div class="btn-group">
+				<button class="btn btn-default" ng-click="vm.editattempt = '';">Mégse</button>
+				<button class="btn btn-danger" ng-click="vm.updateattempt(vm.editattempt)">Mentés</button>
 			</div>
 
 		</div>

@@ -4,10 +4,13 @@ define([], function () {
     var vm = this;
     vm.data = [];
     vm.planlist = [];
+    vm.alleventtype=["újrateszt","kísérlet"];
+    vm.eventtype = "újrateszt";
     vm.show = show;
     vm.save = save;
     vm.load = load;
-    vm.updateplan = updateplan;
+    vm.updatenewtest = updatenewtest;
+    vm.updateattempt = updateattempt;
     vm.remove = remove;
     vm.mutat = false;
 
@@ -22,12 +25,13 @@ define([], function () {
         vm.data.push({
           "id": vm.id = new Date().getTime() + i,
           "date": vm.datumok[i],
+          "eventtype": vm.eventtype,
+          "description": vm.description,
           "projectname": vm.projectname,
           "type": vm.type,
           "amountshift1": vm.darab,
           "amountshift2": vm.darab,
           "amountshift3": vm.darab,
-          "description": vm.description,
           "attempt": vm.attempt,
           "whogo": vm.whogo,
           "where": vm.where,
@@ -72,12 +76,18 @@ define([], function () {
       vm.dateto = $filter('date')(vm.datefrom + 7 * 24 * 3600 * 1000, 'yyyy-MM-dd');
       vm.datefrom = $filter('date')(vm.datefrom, 'yyyy-MM-dd');
       load();
-      vm.sdate = $filter('date')(new Date().getTime(),'yyyy-MM-dd');
+      vm.sdate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
     }
 
-    function updateplan() {
-      planService.put(vm.edit).then(function (resp) {
-        vm.edit = '';
+    function updatenewtest() {
+      planService.put(vm.editnewtest).then(function (resp) {
+        vm.editnewtest = '';
+      });
+    }
+
+    function updateattempt() {
+      planService.put(vm.editattempt).then(function (resp) {
+        vm.editattempt = '';
       });
     }
 

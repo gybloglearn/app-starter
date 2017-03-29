@@ -1,0 +1,34 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">Kísérlet
+      <button class="btn btn-success pull-right" ui-sref="plan">Vissza</button>
+    </div>
+    <div class="module-body">
+      <div class="row">
+
+        <div class="col-sm-3">
+          <div class="input-group">
+            <span class="input-group-addon">Kísérlet:</span>
+            <input type="text" class="form-control" ng-model="vm.attemptpage.attempt" readonly>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="input-group">
+            <span class="input-group-addon">Dátum:</span>
+            <input type="text" class="form-control" ng-model="vm.attemptpage.date" readonly>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span class="input-group-addon">Kísérlet menete:</span>
+            <textarea class="form-control" rows="4" ng-model="vm.attemptpage.description" readonly></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>

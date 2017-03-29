@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('attempt', {
+		url: '/attempt',
+		templateUrl: './app/components/attempt/attempt.html',
+		controller: 'attemptController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('newtest', {
 		url: '/newtest',
 		params: {
