@@ -130,13 +130,25 @@
 						</div>
 						<div class="col-sm-4">
 							<div class="form-group">
+								<span class="control-label" style="color:#FFFFFF">Újrateszt:</span>
+								<input type="text" ng-model="vm.search.projectname" class="form-control">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<span class="control-label" style="color:#FFFFFF">Kísérlet:</span>
+								<input type="text" ng-model="vm.search.attempt" class="form-control">
+							</div>
+						</div>
+						<!--div class="col-sm-3">
+							<div class="form-group">
 								<span class="control-label" style="color:#FFFFFF">Termék típus:</span>
 								<select ng-model="vm.search.type" class="form-control">
 						    		<option value="">Mind</option>
-                		<option ng-repeat="item in vm.planlist | unique:'type'" value="{{item.type}}">{{item.type}}</option>
-            		</select>
+                					<option ng-repeat="item in vm.planlist | unique:'type'" value="{{item.type}}">{{item.type}}</option>
+            					</select>
 							</div>
-						</div>
+						</div-->
 					</div>
 				</div>
 			</div>
@@ -154,7 +166,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="item in vm.planlist | orderBy:vm.order:vm.asc | filter: vm.search track by $index" class="ng-scope">
+					<tr ng-repeat="item in vm.planlist | filter:{'eventtype':'újrateszt'} | orderBy:vm.order:vm.asc | filter: vm.search track by $index" class="ng-scope">
 						<td>{{item.date}}</td>
 						<td>{{item.projectname}}</td>
 						<td>{{item.type}}</td>
@@ -180,19 +192,19 @@
 						<th style="background-color:#005CB9">Hova</th>
 						<th style="background-color:#005CB9">Mennyi idő</th>
 						<th style="background-color:#005CB9">Hány főre van szükség</th!>
-						<th style="background-color:#005CB9">Újrateszt menete</th>
+						<th style="background-color:#005CB9">Kísérlet menete</th>
 						<th style="background-color:#005CB9" ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')">Szerkesztés/Törlés</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="item in vm.planlist | orderBy:vm.order:vm.asc | filter: vm.search track by $index" class="ng-scope">
+					<tr ng-repeat="item in vm.planlist | filter:{'eventtype':'kísérlet'} | orderBy:vm.order:vm.asc | filter: vm.search track by $index" class="ng-scope">
 						<td>{{item.date}}</td>
 						<td>{{item.attempt}}</td>
 						<td>{{item.whogo}}</td>
 						<td>{{item.where}}</td>
 						<td>{{item.period}}</td>
 						<td>{{item.person}}</td>
-						<td><button class="btn btn-info" ui-sref="newtest({attemptobject:item})"><i class="icon-info-sign"></i></button></td>
+						<td><button class="btn btn-info" ui-sref="attempt({attemptobject:item})"><i class="icon-info-sign"></i></button></td>
 						<td ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212597831' || user.username=='212422533')">
 							<div class="btn-group btn-group-sm">
 								<button class="btn btn-primary" ng-click="vm.editattempt = item"><i class="icon-edit"></i></button>

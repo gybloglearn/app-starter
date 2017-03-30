@@ -29,6 +29,9 @@ define([], function () {
     /* Add states */
 	$stateProvider.state('attempt', {
 		url: '/attempt',
+		params: {
+			attemptobject: ''
+		},
 		templateUrl: './app/components/attempt/attempt.html',
 		controller: 'attemptController',
 		controllerAs: 'vm'
