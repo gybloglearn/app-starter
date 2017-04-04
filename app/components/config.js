@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('bstat', {
+		url: '/bstat',
+		templateUrl: './app/components/bstat/bstat.html',
+		controller: 'bstatController',
+		controllerAs: 'vm'
+	});
 
   }
   ConfigFunction.$inject = ['$urlRouterProvider', '$stateProvider'];
