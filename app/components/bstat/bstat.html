@@ -30,7 +30,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="item in vm.sumstat">
+					<tr ng-repeat="item in vm.sumstat | filter:{'id':'!Alapállapot'} | filter:{'id':'!Aut. Dolgozik'} | orderBy:'-time'" class="ng-scope">
 						<td>{{item.id}}</td>
 						<td>{{item.time}}</td>
 						<td>{{item.piece}}</td>
