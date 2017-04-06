@@ -13,7 +13,7 @@ define([], function () {
     function get(sdate, edate) {
       var req = {
         method: 'GET',
-        url: 'http://localhost/sr/braidt.php?startdate=' + sdate + '&enddate=' + edate
+        url: 'http://3.228.180.15/getReports/braidt.php?startdate=' + sdate + '&enddate=' + edate
       };
       return $http(req);
     }
