@@ -3,6 +3,7 @@ define([], function () {
   function Controller(statService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
     vm.showsumstat = true;
+    vm.show2table=true;
     vm.stat_data = [];
     vm.sumstat = [];
     vm.startdatum = $filter('date')(new Date().getTime() - (48 * 3600 * 1000), 'yyyy-MM-dd');
@@ -43,6 +44,14 @@ define([], function () {
             if (vm.sumstat[j].id == act) {
               vm.sumstat[j].time = vm.sumstat[j].time + actszam;
               vm.sumstat[j].piece++;
+              if(vm.sumstat[j].min>actszam)
+              {
+                vm.sumstat[j].min=actszam;
+              }
+              else if(vm.sumstat[j].max<actszam)
+              {
+                vm.sumstat[j].max=actszam;
+              }
               talalat++;
             }
           }
@@ -55,6 +64,8 @@ define([], function () {
             vm.sumstat[a].id = act;
             vm.sumstat[a].time = actszam;
             vm.sumstat[a].piece = 1;
+            vm.sumstat[a].min=actszam;
+            vm.sumstat[a].max=actszam;
             a++
           }
         }
@@ -80,7 +91,6 @@ define([], function () {
           hibaido=hibaido+tomb[i].Stat_Time*1;
         }
       }
-      console.log(hibaido);
       setChartpie(vm.drawitem.MName,difference,hibaido);
     }
 
@@ -88,7 +98,7 @@ define([], function () {
       vm.chartconfig_pie = {
         chart: {
           type: 'pie',
-          width: 1100,
+          width: 800,
           height: 400
         },
         tooltip: {
