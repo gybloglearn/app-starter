@@ -55,7 +55,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="data in vm.stat_data " ng-if="data.machine_Stat === vm.itemtype.id">
+            <tr ng-repeat="data in vm.stat_data track by $index " ng-if="data.machine_Stat === vm.itemtype.id" class="ng-scope">
               <td>{{data.MName}}</td>
               <td>{{data.Stat_B}}</td>
               <td>{{data.Stat_J}}</td>
@@ -64,13 +64,16 @@
               <td>{{data.Stat_Time}}</td>
 							<td>
 								<div class="btn-group btn-group-sm">
-									<button class="btn btn-success" ng-click="vm.showsumstat=true;vm.itemtype=''"><i class="icon-arrow-left"></i></button>
-									<button class="btn btn-primary" ng-click=""><i class="icon-bar-chart"></i></button>
+									<button class="btn btn-success" ng-click="vm.showsumstat=true;vm.itemtype='';vm.drawitem=''"><i class="icon-arrow-left"></i></button>
+									<button class="btn btn-primary" ng-click="vm.drawitem=data;vm.drawchart()"><i class="icon-bar-chart"></i></button>
 								</div>
 							</td>
             </tr>
           </tbody>
         </table>
+				<div class="tab-content" ng-show="vm.drawitem">
+						<my-chart id="chart_pie" config="vm.chartconfig_pie"></my-chart>
+				</div>
       </div>
 		</div>
 		<div class="module-footer"></div>

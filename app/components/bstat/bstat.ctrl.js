@@ -5,12 +5,15 @@ define([], function () {
     vm.showsumstat = true;
     vm.stat_data = [];
     vm.sumstat = [];
-    vm.startdatum = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+    vm.startdatum = $filter('date')(new Date().getTime() - (48 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddatum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.load = load;
     vm.startdatumszam = vm.startdatum;
     vm.enddatumszam = vm.enddatum;
     vm.beallit = beallit;
+    vm.drawchart = drawchart;
+    var tomb=[];
+
 
     function beallit() {
       vm.szam1 = new Date(vm.startdatum);
@@ -22,12 +25,14 @@ define([], function () {
     function load() {
       var act = "";
       var actszam = 0;
-      var tomb = [];
       var talalat = 0;
       var a = 0;
+      tomb=[];
+
       vm.dis = true;
       vm.braidtloading = true;
       vm.stat_data = [];
+      vm.sumstat = [];
       statService.get(vm.startdatum, vm.enddatum).then(function (response) {
         vm.stat_data = response.data;
         vm.dis = false;
@@ -53,9 +58,8 @@ define([], function () {
             a++
           }
         }
-        console.log(vm.stat_data);
-        console.log(vm.sumstat);
         vm.braidtloading = false;
+        tomb=vm.stat_data;
       });
     }
     activate();
@@ -63,6 +67,56 @@ define([], function () {
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       load();
+    }
+
+    function drawchart() {
+      var difference = (new Date(vm.enddatumszam).getTime() - new Date(vm.startdatumszam).getTime()) / (60000);
+      var hibaido=0;
+
+      for(var i=0;i<tomb.length;i++)
+      {
+        if(tomb[i].MName==vm.drawitem.MName)
+        {
+          hibaido=hibaido+tomb[i].Stat_Time*1;
+        }
+      }
+      console.log(hibaido);
+      setChartpie(vm.drawitem.MName,difference,hibaido);
+    }
+
+    function setChartpie(name,diff,miss) {
+      vm.chartconfig_pie = {
+        chart: {
+          type: 'pie',
+          width: 1100,
+          height: 400
+        },
+        tooltip: {
+          pointFormat: '<b style="color:{point.color};font-size:1.2em;font-weight:bold">{point.percentage:.2f} %</b>'
+        },
+        title: { text: "Gép: " + name },
+        subtitle: { text: "Összes eltelt idő: " + diff + "perc" },
+        plotOptions: {
+          pie: {
+            center: ['50%', '50%'],
+            showInLegend: true
+          }
+        },
+        series: [
+          {
+            data: [{
+              name: 'Elérhető idő',
+              color: "#00b300",
+              y: diff - miss
+            },
+            {
+              name: 'Kiesés',
+              color: "#e60000",
+              y: miss
+            }]
+          }
+        ],
+      };
     }
   }
   Controller.$inject = ['statService', '$cookies', '$state', '$rootScope', '$filter'];
