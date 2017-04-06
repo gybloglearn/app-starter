@@ -27,6 +27,7 @@
 						<th>Kód</th>
 						<th>Idő (perc)</th>
 						<th>DB</th>
+            <th>Részletek</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -34,9 +35,34 @@
 						<td>{{item.id}}</td>
 						<td>{{item.time}}</td>
 						<td>{{item.piece}}</td>
+						<td><button class="btn btn-info" ng-click="vm.itemtype=item"><i class="icon-info-sign"></i></td>
 					</tr>
 				</tbody>
 			</table>
+
+      <div ng-show="vm.itemtype" style="margin-top:20px">
+        <h1 class="text-center">{{vm.itemtype.id}}-részletek</h1>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Gép</th>
+              <th>Bal oldal</th>
+              <th>Jobb oldal</th>
+              <th>Idő (perc)</th>
+              <th>Típus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="data in vm.stat_data " ng-if="data.machine_Stat === vm.itemtype.id">
+              <td>{{data.MName}}</td>
+              <td>{{data.Stat_B}}</td>
+              <td>{{data.Stat_J}}</td>
+              <td>{{data.Stat_Time}}</td>
+              <td>{{data.machine_Stat}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 		</div>
 		<div class="module-footer"></div>
 	</section>
