@@ -2,9 +2,10 @@ define([], function () {
   'use strict';
   function Controller(statService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
+    vm.showsumstat = true;
     vm.stat_data = [];
     vm.sumstat = [];
-    vm.startdatum = $filter('date')(new Date().getTime()-(24*3600*1000), 'yyyy-MM-dd');
+    vm.startdatum = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddatum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.load = load;
     vm.startdatumszam = vm.startdatum;
@@ -20,7 +21,7 @@ define([], function () {
 
     function load() {
       var act = "";
-      var actszam=0;
+      var actszam = 0;
       var tomb = [];
       var talalat = 0;
       var a = 0;
@@ -32,10 +33,10 @@ define([], function () {
         vm.dis = false;
         for (var i = 0; i < vm.stat_data.length; i++) {
           act = vm.stat_data[i].machine_Stat;
-          actszam=vm.stat_data[i].Stat_Time*1;
+          actszam = vm.stat_data[i].Stat_Time * 1;
           for (var j = 0; j < vm.sumstat.length; j++) {
             if (vm.sumstat[j].id == act) {
-              vm.sumstat[j].time=vm.sumstat[j].time+actszam;
+              vm.sumstat[j].time = vm.sumstat[j].time + actszam;
               vm.sumstat[j].piece++;
               talalat++;
             }
@@ -45,10 +46,10 @@ define([], function () {
             a = a;
           }
           else {
-            vm.sumstat[a]={}
-            vm.sumstat[a].id=act;
-            vm.sumstat[a].time=actszam;
-            vm.sumstat[a].piece=1;
+            vm.sumstat[a] = {}
+            vm.sumstat[a].id = act;
+            vm.sumstat[a].time = actszam;
+            vm.sumstat[a].piece = 1;
             a++
           }
         }

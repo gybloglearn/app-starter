@@ -10,7 +10,7 @@
 					<input type="text" class="datepicker form-control" ng-model="vm.enddatum">
 					<span class="input-group-addon">-ig</span>
 					<div class="input-group-btn">
-						<a href="" class="btn btn-primary" ng-click="vm.load();vm.beallit()" ng-disabled="vm.dis || vm.enddatum<vm.startdatum">Betöltés</a>
+						<a href="" class="btn btn-primary" ng-click="vm.load();vm.beallit()" ng-disabled="vm.dis || vm.enddatum<vm.startdatum || !vm.showsumstat">Betöltés</a>
 					</div>
 				</div>
 			</div>
@@ -21,7 +21,7 @@
 					<p class="text-center">Frissítés...</p>
 				</div>
 			</div>
-			<table class="table table-bordered">
+			<table class="table table-bordered" ng-show="vm.showsumstat">
 				<thead>
 					<tr>
 						<th>Kód</th>
@@ -35,7 +35,7 @@
 						<td>{{item.id}}</td>
 						<td>{{item.time}}</td>
 						<td>{{item.piece}}</td>
-						<td><button class="btn btn-info" ng-click="vm.itemtype=item"><i class="icon-info-sign"></i></td>
+						<td><button class="btn btn-info" ng-click="vm.itemtype=item;vm.showsumstat=false"><i class="icon-info-sign"></i></td>
 					</tr>
 				</tbody>
 			</table>
@@ -48,8 +48,10 @@
               <th>Gép</th>
               <th>Bal oldal</th>
               <th>Jobb oldal</th>
+              <th>Kezdés</th>
+              <th>Befejezés</th>
               <th>Idő (perc)</th>
-              <th>Típus</th>
+              <th>Vissza/Chart</th>
             </tr>
           </thead>
           <tbody>
@@ -57,8 +59,15 @@
               <td>{{data.MName}}</td>
               <td>{{data.Stat_B}}</td>
               <td>{{data.Stat_J}}</td>
+              <td>{{data.StartDate}}</td>
+              <td>{{data.EndDate}}</td>
               <td>{{data.Stat_Time}}</td>
-              <td>{{data.machine_Stat}}</td>
+							<td>
+								<div class="btn-group btn-group-sm">
+									<button class="btn btn-success" ng-click="vm.showsumstat=true;vm.itemtype=''"><i class="icon-arrow-left"></i></button>
+									<button class="btn btn-primary" ng-click=""><i class="icon-bar-chart"></i></button>
+								</div>
+							</td>
             </tr>
           </tbody>
         </table>
