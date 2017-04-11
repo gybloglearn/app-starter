@@ -27,7 +27,7 @@
 						<th>Kód</th>
 						<th>Idő (perc)</th>
 						<th>Legkisebb kieső idő (perc)</th>
-						<th>Lenagyobb kieső idő (perc)</th>
+						<th>Legnagyobb kieső idő (perc)</th>
 						<th>DB</th>
             <th>Részletek</th>
 					</tr>
@@ -78,6 +78,7 @@
       </div>
 			<div class="tab-content" ng-show="vm.drawitem">
 						<my-chart id="chart_pie" config="vm.chartconfig_pie"></my-chart>
+						<my-chart id="chart_xrange" config="vm.chartconfig_xrange"></my-chart>
 						<button class="btn btn-success" ng-click="vm.show2table=true;vm.drawitem=''"><i class="icon-arrow-left"></i></button>
 			</div>
 		</div>
