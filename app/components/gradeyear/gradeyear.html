@@ -1,0 +1,28 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">Grade lekérdezés</h1>
+      <div>
+				<div class="input-group">
+          <select ng-model="vm.type">
+						<option value="ZW05">ZW500</option>
+						<option value="ZW10">ZW1000</option>
+						<option value="ZW15">ZW1500</option>
+					</select>
+					<select ng-model="vm.datum">
+					  <option ng-repeat="item in vm.years track by $index" value="{{item}}">{{item}}</option>
+					</select>
+						<a href="" class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.dis">Betöltés</a>
+				</div>
+			</div>
+    </div>
+    <div class="module-body">
+      <div class="progress progress-info progress-striped active" ng-hide="!vm.gradeloading">
+				<div class="progress-bar" style="width: 100%">
+					<p class="text-center">Betöltés...</p>
+				</div>
+			</div>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>

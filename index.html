@@ -3,14 +3,25 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Title</title>
+    <title>Grade</title>
 
     <link rel="stylesheet" href="../components_css/iids.css">
     <link rel="stylesheet" href="../components_css/responsive.css">
+    <link rel="icon" href="../components/brandkit/favicon/favicon.ico">
     <!--[if lte IE 9]>
       <link rel="stylesheet" href="../components_css/ie.css" id="theme-ie" type="text/css">
     <![endif]-->
     <script src="../components/modernizr/modernizr.js"></script>
+    <style>
+		[ng\:cloak],
+		[ng-cloak],
+		[data-ng-cloak],
+		[x-ng-cloak],
+		.ng-cloak,
+		.x-ng-cloak {
+			display: none !important;
+		}
+	</style>
   </head>
   <body>
 
@@ -19,7 +30,7 @@
 	<div class="navbar-header">
 	  <a href="" class="navbar-brand">
 	    <span class="ge-logo"></span>
-	    <span>Alap lap cím<small><i>GE POWER</i></small></span>
+	    <span>Grade<small><i>GE POWER</i></small></span>
 	  </a>
 	</div>
       </div>
@@ -28,6 +39,7 @@
 	  <ul class="nav navbar-nav">
 	    <!--<li><a ui-sref="start">Start</a></li>-->
 	    <!-- links -->
+      <li><a ui-sref="gradeyear"><i class="icon-file"></i> Gradeyear</a></li>
 
 	  </ul>
 	  <ul class="nav navbar-nav pull-right">
