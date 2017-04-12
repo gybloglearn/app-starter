@@ -4,16 +4,20 @@ define([
   './start/start.ctrl',
   './login/login.ctrl',
   './services/login.service',
-  './services/data.service'
-  /* files */
+  './services/data.service',
+  './services/gradeyear.service',
+  './gradeyear/gradeyear.ctrl'
+	/* files */
 ], function(
   configFunction,
   runFunction,
   startController,
   loginController,
   loginService,
-  dataService
-/* names */) {
+  dataService,
+  gradeyearService,
+  gradeyearController
+	/* names */) {
 
   // Link all components to the module !!!
 
@@ -24,5 +28,7 @@ define([
   app.service('Login', loginService);
   app.controller('StartController', startController);
   app.controller('LoginController', loginController);
-  /* controllers */
+  app.service('gradeyearService', gradeyearService);
+	app.controller('gradeyearController', gradeyearController);
+		/* controllers */
 });

@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('gradeyear', {
+		url: '/gradeyear',
+		templateUrl: './app/components/gradeyear/gradeyear.html',
+		controller: 'gradeyearController',
+		controllerAs: 'vm'
+	});
 
   }
   ConfigFunction.$inject = ['$urlRouterProvider', '$stateProvider'];
