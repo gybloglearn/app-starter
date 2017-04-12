@@ -39,7 +39,10 @@
                 columnType.prototype.translate.apply(this, arguments);
                 var series = this,
                     xAxis = series.xAxis,
-                    metrics = series.columnMetrics;
+                    metrics = series.getColumnMetrics();
+                    //yAxis = series.yAxis;
+                    
+                    //yAxis.closestPointRange = 1;
                 H.each(series.points, function (point) {
                     var barWidth = xAxis.translate(H.pick(point.x2, point.x + (point.len || 0))) - point.plotX;
                     point.shapeArgs = {

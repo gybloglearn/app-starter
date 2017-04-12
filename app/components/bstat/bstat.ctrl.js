@@ -6,12 +6,14 @@ define([], function () {
     vm.show2table = true;
     vm.stat_data = [];
     vm.sumstat = [];
+    vm.machines=[];
     vm.startdatum = $filter('date')(new Date().getTime() - (48 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddatum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.load = load;
     vm.startdatumszam = vm.startdatum;
     vm.enddatumszam = vm.enddatum;
     vm.beallit = beallit;
+    vm.count=count;
     vm.drawchart = drawchart;
     var tomb = [];
     var kodok = [];
@@ -30,6 +32,8 @@ define([], function () {
       var actszam = 0;
       var talalat = 0;
       var a = 0;
+      var ido = 0;
+      var darab = 0;
       tomb = [];
 
       vm.dis = true;
@@ -69,9 +73,19 @@ define([], function () {
             a++
           }
         }
+        for (var k = 0; k < vm.sumstat.length; k++) {
+          if (vm.sumstat[k].id != "Aut. Dolgozik ") {
+            ido = ido + vm.sumstat[k].time;
+            darab = darab + vm.sumstat[k].piece;
+          }
+        }
+        vm.sumstat[a] = {}
+        vm.sumstat[a].id = "Összesen";
+        vm.sumstat[a].time = ido;
+        vm.sumstat[a].piece = darab;
+
         vm.braidtloading = false;
         tomb = vm.stat_data;
-        console.log(vm.stat_data);
       });
     }
     activate();
@@ -79,6 +93,37 @@ define([], function () {
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       load();
+    }
+
+    function count()
+    {
+      vm.machines=[];
+      var talalat = 0;
+      var a = 0;
+      for(var i=0;i<tomb.length;i++)
+      {
+        if(tomb[i].machine_Stat==vm.itemtype.id){
+          for(var j=0;j<vm.machines.length;j++){
+            if(vm.machines[j].nev==tomb[i].MName){
+              vm.machines[j].ido=vm.machines[j].ido+tomb[i].Stat_Time*1;
+              vm.machines[j].darab++;
+              talalat++;
+            }
+          }
+          if (talalat > 0) {
+            talalat = 0;
+            a = a;
+          }
+          else {
+            vm.machines[a] = {}
+            vm.machines[a].nev = tomb[i].MName;
+            vm.machines[a].ido = tomb[i].Stat_Time*1;
+            vm.machines[a].darab = 1;
+            a++
+          }
+        }
+      }
+      console.log(vm.machines);
     }
 
     function drawchart() {
@@ -90,16 +135,17 @@ define([], function () {
       var b = 0;
 
       for (var i = 0; i < tomb.length; i++) {
-        if (tomb[i].MName == vm.drawitem.MName) {
-          
+        if (tomb[i].MName == vm.drawitem.nev) {
+
           if (tomb[i].machine_Stat == "Aut. Dolgozik ") {
             ok[a] = {}
             ok[a].name = tomb[i].MName;
             ok[a].code = tomb[i].machine_Stat;
             ok[a].x = new Date(tomb[i].StartDate).getTime();
-            ok[a].time = tomb[i].Stat_Time * 1* 60000;
+            ok[a].time = tomb[i].Stat_Time * 1 * 60000;
+            ok[a].interval = tomb[i].Stat_Time + " perc";
             ok[a].x2 = new Date(tomb[i].EndDate).getTime();
-            ok[a].y = 0.5;
+            ok[a].y = 0;
             a++
           }
           else {
@@ -109,14 +155,15 @@ define([], function () {
             kodok[b].code = tomb[i].machine_Stat;
             kodok[b].x = new Date(tomb[i].StartDate).getTime();
             kodok[b].time = tomb[i].Stat_Time * 1 * 60000;
+            kodok[b].interval = tomb[i].Stat_Time + " perc";
             kodok[b].x2 = new Date(tomb[i].EndDate).getTime();
-            kodok[b].y = 0.5;
+            kodok[b].y = 0;
             b++
           }
         }
       }
-      setChartpie(vm.drawitem.MName, difference, hibaido);
-      setChartxrange(ok,kodok);
+      setChartpie(vm.drawitem.nev, difference, hibaido);
+      setChartxrange(ok, kodok);
     }
 
     function setChartpie(name, diff, miss) {
@@ -158,7 +205,7 @@ define([], function () {
             name: "kiesesdrill",
             data: [
               {
-                name:"Egyéb",
+                name: "Egyéb",
                 color: "#ddd",
                 y: 12
               },
@@ -173,7 +220,7 @@ define([], function () {
       };
     }
 
-    function setChartxrange(ok,kodok) {
+    function setChartxrange(ok, kodok) {
       vm.chartconfig_xrange = {
         chart: {
           type: 'xrange',
@@ -186,7 +233,7 @@ define([], function () {
           align: 'bottom',
         },
         xAxis: { title: { text: 'Idő' }, type: 'datetime', dateTimeLabelFormats: { hour: '%d.<br>%H:%M' }, tickInterval: 3600 * 1000 },
-        yAxis: { title: { enabled: false }, min: 0, max: 1, categories: ["Kiesés", "Elérhető idő"] },
+        yAxis: { tickInterval:1, title: {enabled: false}, visible:false, categories: ["Idő"]},
         series: [
           {
             color: '#e60000',
@@ -194,7 +241,7 @@ define([], function () {
             tooltip: {
               useHTML: true,
               headerFormat: '<b style="color:{series.color};font-weight:bold;">Kiesés:</b><br>',
-              pointFormat: '<span style="color:{series.color};">{point.categ}</span><br><span style="font-size:1.2em">{point.x:%H:%M:%S} - {point.x2:%H:%M:%S}</span><br><b style="font-size:10px">{point.code}</b><br><i style="font-size:10px"></i>'
+              pointFormat: '<span style="color:{series.color};">{point.categ}</span><br><span style="font-size:1.2em">{point.x:%H:%M:%S} - {point.x2:%H:%M:%S}</span><br><b style="font-size:10px">{point.code}</b><br><i style="font-size:10px">{point.interval}</i>'
             },
             data: kodok,
             borderRadius: 0,
@@ -207,7 +254,7 @@ define([], function () {
             tooltip: {
               useHTML: true,
               headerFormat: '<b style="color:{series.color};font-weight:bold;">Elérhető idő:</b><br>',
-              pointFormat: '<span style="color:{series.color};">{point.categ}</span><br><span style="font-size:1.2em">{point.x:%H:%M:%S} - {point.x2:%H:%M:%S}</span><br><b style="font-size:10px">{point.code}</b><br><i style="font-size:10px"></i>'
+              pointFormat: '<span style="color:{series.color};">{point.categ}</span><br><span style="font-size:1.2em">{point.x:%H:%M:%S} - {point.x2:%H:%M:%S}</span><br><b style="font-size:10px">{point.code}</b><br><i style="font-size:10px">{point.interval}</i>'
             },
             data: ok,
             borderRadius: 0,
