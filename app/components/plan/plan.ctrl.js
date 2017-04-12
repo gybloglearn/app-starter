@@ -8,6 +8,7 @@ define([], function () {
     vm.load = load;
     vm.updateplan=updateplan;
     vm.remove = remove;
+    vm.reloadwebpage=reloadwebpage;
     vm.mutat = false;
     vm.showmessage = false;
     vm.sheetmakers = ["SheetMaker1", "SheetMaker2", "SheetMaker4", "SheetMaker5", "SheetMaker6", "SheetMaker7", "SheetMaker8", "SheetMaker9"];
@@ -93,6 +94,11 @@ define([], function () {
             });
 
         }
+
+    function reloadwebpage()
+    {
+       location.reload();
+    }
   }
   Controller.$inject = ['planService', '$timeout', '$filter', '$cookies', '$state', '$rootScope'];
   return Controller;
