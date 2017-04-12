@@ -97,7 +97,7 @@ define([], function () {
 
     function reloadwebpage()
     {
-       location.reload();
+       $state.go('plan', {reload: true});
     }
   }
   Controller.$inject = ['planService', '$timeout', '$filter', '$cookies', '$state', '$rootScope'];
