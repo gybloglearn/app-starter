@@ -12,6 +12,7 @@ define([], function () {
     vm.updatenewtest = updatenewtest;
     vm.updateattempt = updateattempt;
     vm.remove = remove;
+    vm.reloadwebpage=reloadwebpage;
     vm.mutat = false;
 
     function show() {
@@ -95,7 +96,11 @@ define([], function () {
       planService.erase(id).then(function (resp) {
         vm.planlist.splice(index, 1);
       });
+    }
 
+    function reloadwebpage()
+    {
+       $state.go('plan', {reload: true});
     }
 
   }
