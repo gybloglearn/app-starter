@@ -51,29 +51,51 @@ define([], function () {
         }
 
         for (var i = 0; i < vm.list.length; i++) {
-          var b = 0;
           for (var j = 0; j < vm.datas.length; j++) {
             if (vm.list[i].év == vm.datas[j].year && vm.list[i].hónap == vm.datas[j].month) {
               var actmodul = vm.list[i].ModulType;
-              var actgrade = vm.list[i].grade;
-              var actdb = vm.list[i].db;
               for (var k = 0; k < vm.datas[j].moduls.length; k++) {
-                if (vm.datas[j].moduls[k].name == actmodul && vm.datas[j].moduls[k].grade == actgrade) {
-                  vm.datas[j].moduls[k].piece = vm.datas[j].moduls[k].piece + actdb;
+                if (vm.datas[j].moduls[k].name == actmodul) {
                   talalat++;
                 }
               }
               if (talalat > 0) {
                 talalat = 0;
-                b = b;
               }
               else{
                 vm.datas[j].moduls[k]={}
                 vm.datas[j].moduls[k].name=actmodul;
-                vm.datas[j].moduls[k].grade=actgrade;
-                vm.datas[j].moduls[k].piece=actdb;
+                vm.datas[j].moduls[k].gradespieces=[];
+                vm.datas[j].moduls[k].gradespieces[0]={}
+                vm.datas[j].moduls[k].gradespieces[0].grade="A+";
+                vm.datas[j].moduls[k].gradespieces[0].piece=0;
+                vm.datas[j].moduls[k].gradespieces[1]={}
+                vm.datas[j].moduls[k].gradespieces[1].grade="A-";
+                vm.datas[j].moduls[k].gradespieces[1].piece=0;
+                vm.datas[j].moduls[k].gradespieces[2]={}
+                vm.datas[j].moduls[k].gradespieces[2].grade="Scrap";
+                vm.datas[j].moduls[k].gradespieces[2].piece=0;
               }
 
+            }
+          }
+        }
+
+        for(var i=0;i<vm.list.length;i++){
+          for(var j=0;j<vm.datas.length;j++){
+            if (vm.list[i].év == vm.datas[j].year && vm.list[i].hónap == vm.datas[j].month){
+              var actmodul = vm.list[i].ModulType;
+              var actgrade=vm.list[i].grade;
+              var actpiece=vm.list[i].db;
+              for (var k = 0; k < vm.datas[j].moduls.length; k++){
+                 if (vm.datas[j].moduls[k].name == actmodul){
+                   for(var l=0;l<vm.datas[j].moduls[k].gradespieces.length;l++){
+                     if(vm.datas[j].moduls[k].gradespieces[l].grade==actgrade){
+                       vm.datas[j].moduls[k].gradespieces[l].piece=vm.datas[j].moduls[k].gradespieces[l].piece+actpiece;
+                     }
+                   }
+                 }
+              }
             }
           }
         }
