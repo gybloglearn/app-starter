@@ -7,6 +7,7 @@ define([
   './services/data.service',
   './services/gradeyear.service',
   './gradeyear/gradeyear.ctrl',
+  './directives/mychart',
   './filters/unique'
 	/* files */
 ], function(
@@ -18,6 +19,7 @@ define([
   dataService,
   gradeyearService,
   gradeyearController,
+  mychart,
   unique
 	/* names */) {
 
@@ -32,6 +34,7 @@ define([
   app.controller('LoginController', loginController);
   app.service('gradeyearService', gradeyearService);
 	app.controller('gradeyearController', gradeyearController);
+  app.directive('mychart',mychart);
   app.filter('unique',unique);
 		/* controllers */
 });
