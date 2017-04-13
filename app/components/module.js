@@ -6,7 +6,8 @@ define([
   './services/login.service',
   './services/data.service',
   './services/gradeyear.service',
-  './gradeyear/gradeyear.ctrl'
+  './gradeyear/gradeyear.ctrl',
+  './filters/unique'
 	/* files */
 ], function(
   configFunction,
@@ -16,7 +17,8 @@ define([
   loginService,
   dataService,
   gradeyearService,
-  gradeyearController
+  gradeyearController,
+  unique
 	/* names */) {
 
   // Link all components to the module !!!
@@ -30,5 +32,6 @@ define([
   app.controller('LoginController', loginController);
   app.service('gradeyearService', gradeyearService);
 	app.controller('gradeyearController', gradeyearController);
+  app.filter('unique',unique);
 		/* controllers */
 });

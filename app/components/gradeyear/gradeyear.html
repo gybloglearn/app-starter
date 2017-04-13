@@ -1,10 +1,10 @@
 <div class="container">
-  <section class="module">
-    <div class="module-header">
-      <h1 class="text-center">Grade lekérdezés</h1>
-      <div>
+	<section class="module">
+		<div class="module-header">
+			<h1 class="text-center">Grade lekérdezés</h1>
+			<div>
 				<div class="input-group">
-          <select ng-model="vm.type">
+					<select ng-model="vm.type">
 						<option value="ZW05">ZW500</option>
 						<option value="ZW10">ZW1000</option>
 						<option value="ZW15">ZW1500</option>
@@ -12,17 +12,87 @@
 					<select ng-model="vm.datum">
 					  <option ng-repeat="item in vm.years track by $index" value="{{item}}">{{item}}</option>
 					</select>
-						<a href="" class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.dis">Betöltés</a>
+					<a href="" class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.dis">Betöltés</a>
 				</div>
 			</div>
-    </div>
-    <div class="module-body">
-      <div class="progress progress-info progress-striped active" ng-hide="!vm.gradeloading">
+		</div>
+		<div class="module-body">
+			<div class="progress progress-info progress-striped active" ng-hide="!vm.gradeloading">
 				<div class="progress-bar" style="width: 100%">
 					<p class="text-center">Betöltés...</p>
 				</div>
 			</div>
-    </div>
-    <div class="module-footer"></div>
-  </section>
+
+			<div class="tray filter-tray top" style="margin-top:20px">
+				<div class="tray-inner">
+					<div class="filter-rule-group">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<span class="control-label" style="color:#FFFFFF">Év:</span>
+								<select ng-model="vm.search.year" class="form-control">
+						    		<option value="">Mind</option>
+                		<option ng-repeat="item in vm.datas | unique:'year'" value="{{item.year}}">{{item.year}}</option>
+            		</select>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<span class="control-label" style="color:#FFFFFF">Hónap:</span>
+								<select ng-model="vm.search.month" class="form-control">
+						    		<option value="">Mind</option>
+                		<option ng-repeat="item in vm.datas | unique:'month'" value="{{item.month}}">{{item.month}}</option>
+            		</select>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<span class="control-label" style="color:#FFFFFF">Modul:</span>
+								<select ng-model="vm.search.name" class="form-control">
+						    		<option value="">Mind</option>
+                		<option ng-repeat="item in vm.datas | unique:'name'" value="{{item.name}}">{{item.name}}</option>
+            		</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th rowspan=2 ng-click="vm.order='date';vm.asc=!vm.asc;">Év</th>
+						<th rowspan=2 ng-click="vm.order='date';vm.asc=!vm.asc;">Hónap</th>
+						<th rowspan=2 ng-click="vm.order='date';vm.asc=!vm.asc;">Modul</th>
+						<th>A+</th>
+						<th>A+/Összesen</th>
+						<th>A-</th>
+						<th>A-/Összesen</th>
+						<th>B</th>
+						<th>B/Összesen</th>
+						<th>Scrap</th>
+						<th>Scrap/Összesen</th>
+						<th>Összesen</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in vm.datas | orderBy:vm.order:vm.asc | filter: vm.search track by $index" class="ng-scope">
+						<td>{{item.year}}</td>
+						<td>{{item.month}}</td>
+						<td>{{item.name}}</td>
+						<td>{{item.Aplus}}</td>
+						<td>{{(item.Aplus/item.sum)*100 | number:2}}</td>
+						<td>{{item.Aminus}}</td>
+						<td>{{(item.Aminus/item.sum)*100 | number:2}}</td>
+						<td>{{item.B}}</td>
+						<td>{{(item.B/item.sum)*100 | number:2}}</td>
+						<td>{{item.Scrap}}</td>
+						<td>{{(item.Scrap/item.sum)*100 | number:2}}</td>
+						<td>{{item.sum}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="module-footer"></div>
+	</section>
 </div>
