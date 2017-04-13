@@ -65,10 +65,10 @@
 						<th rowspan=2 ng-click="vm.order='date';vm.asc=!vm.asc;">Modul</th>
 						<th>A+</th>
 						<th>A+/Összesen</th>
-						<th>A-</th>
-						<th>A-/Összesen</th>
-						<th>B</th>
-						<th>B/Összesen</th>
+						<th ng-show="vm.type=='ZW05'">A-</th>
+						<th ng-show="vm.type=='ZW05'">A-/Összesen</th>
+						<th ng-show="vm.type!='ZW05'">B</th>
+						<th ng-show="vm.type!='ZW05'">B/Összesen</th>
 						<th>Scrap</th>
 						<th>Scrap/Összesen</th>
 						<th>Összesen</th>
@@ -80,13 +80,13 @@
 						<td>{{item.month}}</td>
 						<td>{{item.name}}</td>
 						<td>{{item.Aplus}}</td>
-						<td>{{(item.Aplus/item.sum)*100 | number:2}}</td>
-						<td>{{item.Aminus}}</td>
-						<td>{{(item.Aminus/item.sum)*100 | number:2}}</td>
-						<td>{{item.B}}</td>
-						<td>{{(item.B/item.sum)*100 | number:2}}</td>
+						<td>{{(item.Aplus/item.sum)*100 | number:2}} %</td>
+						<td ng-show="vm.type=='ZW05'">{{item.Aminus}}</td>
+						<td ng-show="vm.type=='ZW05'">{{(item.Aminus/item.sum)*100 | number:2}} %</td>
+						<td ng-show="vm.type!='ZW05'">{{item.B}}</td>
+						<td ng-show="vm.type!='ZW05'">{{(item.B/item.sum)*100 | number:2}} %</td>
 						<td>{{item.Scrap}}</td>
-						<td>{{(item.Scrap/item.sum)*100 | number:2}}</td>
+						<td>{{(item.Scrap/item.sum)*100 | number:2}} %</td>
 						<td>{{item.sum}}</td>
 					</tr>
 				</tbody>
