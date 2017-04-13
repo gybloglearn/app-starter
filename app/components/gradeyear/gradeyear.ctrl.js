@@ -8,6 +8,7 @@ define([], function () {
     vm.years = [];
     vm.list = [];
     vm.datas = [];
+    vm.chartsum = [];
     vm.type = "";
     vm.datum = ""
     vm.load = load;
@@ -25,6 +26,7 @@ define([], function () {
       vm.gradeloading = true;
       vm.list = [];
       vm.datas = [];
+      vm.chartsum = [];
       gradeyearService.get(vm.type, vm.datum).then(function (response) {
         vm.list = response.data;
         vm.dis = false;
@@ -89,56 +91,101 @@ define([], function () {
           }
         }
 
-        //console.log(vm.datas);
-        //console.log(vm.list);
+        var ok = 0;
+        var b = 0;
+
+        for (var i = 0; i < vm.datas.length; i++) {
+          var nowyear = vm.datas[i].year;
+          var nowmonth = vm.datas[i].month;
+          for (var j = 0; j < vm.chartsum.length; j++) {
+            if (vm.chartsum[j].allyear == nowyear && vm.chartsum[j].allmonth == nowmonth) {
+              vm.chartsum[j].sumplusa = vm.chartsum[j].sumplusa + vm.datas[i].Aplus;
+              vm.chartsum[j].summinusa = vm.chartsum[j].summinusa + vm.datas[i].Aminus;
+              vm.chartsum[j].sumB = vm.chartsum[j].sumB + vm.datas[i].B;
+              vm.chartsum[j].sumscrap = vm.chartsum[j].sumscrap + vm.datas[i].Scrap;
+              ok++;
+            }
+          }
+          if (ok > 0) {
+            ok = 0;
+            b = b;
+          }
+          else {
+            vm.chartsum[b] = {}
+            vm.chartsum[b].allyear = nowyear;
+            vm.chartsum[b].allmonth = nowmonth;
+            vm.chartsum[b].sumplusa = 0;
+            vm.chartsum[b].sumplusa = vm.chartsum[b].sumplusa + vm.datas[i].Aplus;
+            vm.chartsum[b].summinusa = 0;
+            vm.chartsum[b].summinusa = vm.chartsum[b].summinusa + vm.datas[i].Aminus;
+            vm.chartsum[b].sumB = 0;
+            vm.chartsum[b].sumB = vm.chartsum[b].sumB + vm.datas[i].B;
+            vm.chartsum[b].sumscrap = 0;
+            vm.chartsum[b].sumscrap = vm.chartsum[b].sumscrap + vm.datas[i].Scrap;
+            b++
+          }
+        }
+
         vm.gradechartconfig = {
           chart: {
-            type: 'column',
+            type: 'area'
           },
           plotOptions: {
-            column: {
+            series: {
               stacking: 'normal'
             }
           },
-          title: { text: "Darab arányok" },
-          series: [
-            {
-              name: 'Scrap',
-              color: "#ff0000",
-              data: feltolt_x_Scrap(vm.datas),
-              stack: 'Darab'
-            },
-            {
-              name: 'A-',
-              color: "#ff9900",
-              data: feltolt_x_Aminus(vm.datas),
-              stack: 'Darab'
-            },
-            {
-              name: 'B',
-              color: "#ff9900",
-              data: feltolt_x_B(vm.datas),
-              stack: 'Darab'
-            },
-            {
-              name: 'A+',
-              color: "#00cc00",
-              data: feltolt_x_Aplus(vm.datas),
-              stack: 'Darab'
-            }
-          ],
-          xAxis: [
-            {
-              categories: feltolt_x_name(vm.datas),
-              title: { text: "Év-hónap" }
-            },
-          ],
+          title: {
+            text: "Valami"
+          },
           yAxis: {
             title: {
-              text: "Darab"
-            }
+              text: "Százalék"
+            },
+            tickInterval: 1,
+            max: 10 //ahágy feladat van a sprintben
           },
+          xAxis: {
+            categories: feltolt_X_day(vm.chartsum)
+          },
+          tooltip: { shared: true },
+          series: [
+            {
+              name: 'várakozik',
+              color: '#999999',
+              data: [10, 7, 5, 4, 2, 1]
+            },
+            {
+              name: 'folyamatban',
+              color: '#ffbb33',
+              data: [0, 2, 2, 1, 1, 2]
+            },
+            {
+              name: 'lekódolva',
+              color: '#3399ff',
+              data: [0, 1, 2, 0, 2, 3]
+            },
+            {
+              name: 'tesztelve',
+              color: '#ff3385',
+              data: [0, 0, 1, 3, 2, 4]
+            },
+            {
+              name: 'kész',
+              color: '#ffff33',
+              data: [0, 0, 0, 1, 2, 0]
+            },
+            {
+              name: 'bevezetve',
+              color: '#33ff33',
+              data: [0, 0, 0, 1, 1, 0]
+            }
+          ]
         }
+
+        //console.log(vm.datas);
+        //console.log(vm.list);
+        console.log(vm.chartsum);
       });
     }
 
@@ -149,41 +196,14 @@ define([], function () {
       update_year();
     }
 
-    function feltolt_x_Aplus(tomb) {
+    function feltolt_X_day(tomb) {
       var x_adatok = [];
       for (var i = 0; i < tomb.length; i++) {
-        x_adatok[i] = tomb[i].Aplus;
+        x_adatok[i] = tomb[i].allyear + "-" + tomb[i].allmonth;
       }
       return x_adatok;
     }
-    function feltolt_x_Aminus(tomb) {
-      var x_adatok = [];
-      for (var i = 0; i < tomb.length; i++) {
-        x_adatok[i] = tomb[i].Aminus;
-      }
-      return x_adatok;
-    }
-    function feltolt_x_B(tomb) {
-      var x_adatok = [];
-      for (var i = 0; i < tomb.length; i++) {
-        x_adatok[i] = tomb[i].B;
-      }
-      return x_adatok;
-    }
-    function feltolt_x_Scrap(tomb) {
-      var x_adatok = [];
-      for (var i = 0; i < tomb.length; i++) {
-        x_adatok[i] = tomb[i].Scrap;
-      }
-      return x_adatok;
-    }
-    function feltolt_x_name(tomb) {
-      var x_adatok = [];
-      for (var i = 0; i < tomb.length; i++) {
-        x_adatok[i] = tomb[i].name + "-" + tomb[i].year + "-" + tomb[i].month;
-      }
-      return x_adatok;
-    }
+
   }
   Controller.$inject = ['gradeyearService', '$cookies', '$state', '$rootScope', '$filter'];
   return Controller;
