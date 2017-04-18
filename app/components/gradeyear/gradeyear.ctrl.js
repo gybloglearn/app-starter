@@ -45,6 +45,10 @@ define([], function () {
                 vm.datas[j].Aplus = vm.datas[j].Aplus + actdb;
                 vm.datas[j].sum = vm.datas[j].sum + actdb;
               }
+              else if (actgrade == "A") {
+                vm.datas[j].Aplus = vm.datas[j].Aplus + actdb;
+                vm.datas[j].sum = vm.datas[j].sum + actdb;
+              }
               else if (actgrade == "A-") {
                 vm.datas[j].Aminus = vm.datas[j].Aminus + actdb;
                 vm.datas[j].sum = vm.datas[j].sum + actdb;
@@ -77,6 +81,9 @@ define([], function () {
             if (actgrade == "A+") {
               vm.datas[a].Aplus = vm.datas[a].Aplus + actdb;
             }
+            else if (actgrade == "A") {
+              vm.datas[a].Aplus = vm.datas[a].Aplus + actdb;
+            }
             else if (actgrade == "A-") {
               vm.datas[a].Aminus = vm.datas[a].Aminus + actdb;
             }
@@ -103,6 +110,7 @@ define([], function () {
               vm.chartsum[j].summinusa = vm.chartsum[j].summinusa + vm.datas[i].Aminus;
               vm.chartsum[j].sumB = vm.chartsum[j].sumB + vm.datas[i].B;
               vm.chartsum[j].sumscrap = vm.chartsum[j].sumscrap + vm.datas[i].Scrap;
+              vm.chartsum[j].sumall = vm.chartsum[j].sumall + vm.datas[i].sum;
               ok++;
             }
           }
@@ -122,6 +130,8 @@ define([], function () {
             vm.chartsum[b].sumB = vm.chartsum[b].sumB + vm.datas[i].B;
             vm.chartsum[b].sumscrap = 0;
             vm.chartsum[b].sumscrap = vm.chartsum[b].sumscrap + vm.datas[i].Scrap;
+            vm.chartsum[b].sumall = 0;
+            vm.chartsum[b].sumall = vm.chartsum[b].sumall + vm.datas[i].sum;
             b++
           }
         }
@@ -136,49 +146,42 @@ define([], function () {
             }
           },
           title: {
-            text: "Valami"
+            text: "Grade százalékos megoszlása"
           },
           yAxis: {
             title: {
               text: "Százalék"
             },
-            tickInterval: 1,
-            max: 10 //ahágy feladat van a sprintben
+            tickInterval: 5,
+            max: 100,
+            min: 75 
           },
           xAxis: {
             categories: feltolt_X_day(vm.chartsum)
           },
-          tooltip: { shared: true },
+          tooltip: { shared: true,
+                     valueDecimals: 2
+                   },
           series: [
             {
-              name: 'várakozik',
-              color: '#999999',
-              data: [10, 7, 5, 4, 2, 1]
+              name: 'Scrap',
+              color: '#ff0000',
+              data: feltolt_scrap(vm.chartsum)
             },
             {
-              name: 'folyamatban',
-              color: '#ffbb33',
-              data: [0, 2, 2, 1, 1, 2]
+              name: 'B',
+              color: '#ff9900',
+              data: feltolt_B(vm.chartsum)
             },
             {
-              name: 'lekódolva',
-              color: '#3399ff',
-              data: [0, 1, 2, 0, 2, 3]
+              name: 'A-',
+              color: '#ff9900',
+              data: feltolt_A_minus(vm.chartsum)
             },
             {
-              name: 'tesztelve',
-              color: '#ff3385',
-              data: [0, 0, 1, 3, 2, 4]
-            },
-            {
-              name: 'kész',
-              color: '#ffff33',
-              data: [0, 0, 0, 1, 2, 0]
-            },
-            {
-              name: 'bevezetve',
-              color: '#33ff33',
-              data: [0, 0, 0, 1, 1, 0]
+              name: 'A+',
+              color: '#00ff00',
+              data: feltolt_A_plus(vm.chartsum)
             }
           ]
         }
@@ -200,6 +203,34 @@ define([], function () {
       var x_adatok = [];
       for (var i = 0; i < tomb.length; i++) {
         x_adatok[i] = tomb[i].allyear + "-" + tomb[i].allmonth;
+      }
+      return x_adatok;
+    }
+    function feltolt_scrap(tomb) {
+      var x_adatok = [];
+      for (var i = 0; i < tomb.length; i++) {
+        x_adatok[i] = (tomb[i].sumscrap/tomb[i].sumall)*100;
+      }
+      return x_adatok;
+    }
+    function feltolt_B(tomb) {
+      var x_adatok = [];
+      for (var i = 0; i < tomb.length; i++) {
+        x_adatok[i] = (tomb[i].sumB/tomb[i].sumall)*100;
+      }
+      return x_adatok;
+    }
+    function feltolt_A_minus(tomb) {
+      var x_adatok = [];
+      for (var i = 0; i < tomb.length; i++) {
+        x_adatok[i] = (tomb[i].summinusa/tomb[i].sumall)*100;
+      }
+      return x_adatok;
+    }
+    function feltolt_A_plus(tomb) {
+      var x_adatok = [];
+      for (var i = 0; i < tomb.length; i++) {
+        x_adatok[i] = (tomb[i].sumplusa/tomb[i].sumall)*100;
       }
       return x_adatok;
     }
