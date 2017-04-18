@@ -61,32 +61,50 @@
 				</div>
 			</div>
 
-			<table class="table table-bordered">
+			<table class="table table-bordered" width="100%">
+				<col style="width:5%">
+        		<col style="width:5%">
+        		<col style="width:10%">
+        		<col style="width:5%">
+        		<col style="width:10%">
+        		<col style="width:5%">
+        		<col style="width:10%">
+        		<col style="width:5%">
+        		<col style="width:10%">
+        		<col style="width:5%">
+        		<col style="width:10%">
+        		<col style="width:5%">
+        		<col style="width:10%">
+        		<col style="width:5%">
 				<thead>
 					<tr>
 						<th rowspan=2 ng-click="vm.order='year';vm.asc=!vm.asc;">Év</th>
 						<th rowspan=2 ng-click="vm.order='month';vm.asc=!vm.asc;">Hónap</th>
 						<th rowspan=2 ng-click="vm.order='name';vm.asc=!vm.asc;">Modul</th>
 						<th>A+</th>
-						<th>A+/Összesen</th>
-						<th ng-show="vm.type=='ZW05'">A-</th>
-						<th ng-show="vm.type=='ZW05'">A-/Összesen</th>
+						<th>A+/Össz</th>
+						<th ng-show="vm.type!='ZW15'">A-</th>
+						<th ng-show="vm.type!='ZW15'">A-/Össz</th>
+						<th ng-show="vm.type!='ZW05'">A</th>
+						<th ng-show="vm.type!='ZW05'">A/Össz</th>
 						<th ng-show="vm.type!='ZW05'">B</th>
-						<th ng-show="vm.type!='ZW05'">B/Összesen</th>
+						<th ng-show="vm.type!='ZW05'">B/Össz</th>
 						<th>Scrap</th>
-						<th>Scrap/Összesen</th>
+						<th>Scrap/Össz</th>
 						<th>Összesen</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="item in vm.datas | orderBy:vm.order:vm.asc | filter: vm.search track by $index" class="ng-scope">
+					<tr ng-repeat="item in vm.datas | orderBy:vm.order:vm.asc | filter: vm.search:vm.startswith track by $index" ng-show="item.sum!=0" class="ng-scope">
 						<td>{{item.year}}</td>
 						<td>{{item.month}}</td>
 						<td>{{item.name}}</td>
 						<td>{{item.Aplus}}</td>
 						<td>{{(item.Aplus/item.sum)*100 | number:2}} %</td>
-						<td ng-show="vm.type=='ZW05'">{{item.Aminus}}</td>
-						<td ng-show="vm.type=='ZW05'">{{(item.Aminus/item.sum)*100 | number:2}} %</td>
+						<td ng-show="vm.type!='ZW15'">{{item.Aminus}}</td>
+						<td ng-show="vm.type!='ZW15'">{{(item.Aminus/item.sum)*100 | number:2}} %</td>
+						<td ng-show="vm.type!='ZW05'">{{item.A}}</td>
+						<td ng-show="vm.type!='ZW05'">{{(item.A/item.sum)*100 | number:2}} %</td>
 						<td ng-show="vm.type!='ZW05'">{{item.B}}</td>
 						<td ng-show="vm.type!='ZW05'">{{(item.B/item.sum)*100 | number:2}} %</td>
 						<td>{{item.Scrap}}</td>

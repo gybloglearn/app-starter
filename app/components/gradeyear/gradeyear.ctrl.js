@@ -12,11 +12,17 @@ define([], function () {
     vm.type = "";
     vm.datum = ""
     vm.load = load;
+    vm.startswith=startswith;
 
     function update_year() {
       for (var i = actyear; i >= firstyear; i--) {
         vm.years.push(i);
       }
+    }
+
+    function startswith(actual,expected){
+      var lowerStr = (actual + "").toLocaleLowerCase();
+      return lowerStr.indexOf(expected.toLocaleLowerCase())===0;
     }
 
     function load() {
@@ -33,7 +39,7 @@ define([], function () {
         vm.gradeloading = false;
 
         for (var i = 0; i < vm.list.length; i++) {
-          var actname = vm.list[i].ModulType;
+          var actname = vm.list[i].partgroup;
           var actyear = vm.list[i].év;
           var actmonth = vm.list[i].hónap;
           var actgrade = vm.list[i].grade;
@@ -45,8 +51,8 @@ define([], function () {
                 vm.datas[j].Aplus = vm.datas[j].Aplus + actdb;
                 vm.datas[j].sum = vm.datas[j].sum + actdb;
               }
-              else if (actgrade == "A") {
-                vm.datas[j].Aplus = vm.datas[j].Aplus + actdb;
+              else if (actgrade === "A") {
+                vm.datas[j].A = vm.datas[j].A + actdb;
                 vm.datas[j].sum = vm.datas[j].sum + actdb;
               }
               else if (actgrade == "A-") {
@@ -74,6 +80,7 @@ define([], function () {
             vm.datas[a].year = actyear;
             vm.datas[a].month = actmonth;
             vm.datas[a].Aplus = 0;
+            vm.datas[a].A = 0;
             vm.datas[a].Aminus = 0;
             vm.datas[a].B = 0;
             vm.datas[a].Scrap = 0;
@@ -81,8 +88,8 @@ define([], function () {
             if (actgrade == "A+") {
               vm.datas[a].Aplus = vm.datas[a].Aplus + actdb;
             }
-            else if (actgrade == "A") {
-              vm.datas[a].Aplus = vm.datas[a].Aplus + actdb;
+            else if (actgrade === "A") {
+              vm.datas[a].A = vm.datas[a].A + actdb;
             }
             else if (actgrade == "A-") {
               vm.datas[a].Aminus = vm.datas[a].Aminus + actdb;
@@ -108,6 +115,7 @@ define([], function () {
             if (vm.chartsum[j].allyear == nowyear && vm.chartsum[j].allmonth == nowmonth) {
               vm.chartsum[j].sumplusa = vm.chartsum[j].sumplusa + vm.datas[i].Aplus;
               vm.chartsum[j].summinusa = vm.chartsum[j].summinusa + vm.datas[i].Aminus;
+              vm.chartsum[j].sumA = vm.chartsum[j].sumA + vm.datas[i].A;
               vm.chartsum[j].sumB = vm.chartsum[j].sumB + vm.datas[i].B;
               vm.chartsum[j].sumscrap = vm.chartsum[j].sumscrap + vm.datas[i].Scrap;
               vm.chartsum[j].sumall = vm.chartsum[j].sumall + vm.datas[i].sum;
@@ -126,6 +134,8 @@ define([], function () {
             vm.chartsum[b].sumplusa = vm.chartsum[b].sumplusa + vm.datas[i].Aplus;
             vm.chartsum[b].summinusa = 0;
             vm.chartsum[b].summinusa = vm.chartsum[b].summinusa + vm.datas[i].Aminus;
+            vm.chartsum[b].sumA = 0;
+            vm.chartsum[b].sumA = vm.chartsum[b].sumA + vm.datas[i].A;
             vm.chartsum[b].sumB = 0;
             vm.chartsum[b].sumB = vm.chartsum[b].sumB + vm.datas[i].B;
             vm.chartsum[b].sumscrap = 0;
@@ -172,13 +182,18 @@ define([], function () {
             },
             {
               name: 'B',
-              color: '#ff9900',
+              color: '#ffff00',
               data: feltolt_B(vm.chartsum)
             },
             {
               name: 'A-',
               color: '#ff9900',
               data: feltolt_A_minus(vm.chartsum)
+            },
+            {
+              name: 'A',
+              color: '#ff00ff',
+              data: feltolt_A(vm.chartsum)
             },
             {
               name: 'A+',
@@ -226,6 +241,13 @@ define([], function () {
       var x_adatok = [];
       for (var i = 0; i < tomb.length; i++) {
         x_adatok[i] = (tomb[i].summinusa/tomb[i].sumall)*100;
+      }
+      return x_adatok;
+    }
+    function feltolt_A(tomb) {
+      var x_adatok = [];
+      for (var i = 0; i < tomb.length; i++) {
+        x_adatok[i] = (tomb[i].sumA/tomb[i].sumall)*100;
       }
       return x_adatok;
     }
