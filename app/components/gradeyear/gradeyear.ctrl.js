@@ -138,7 +138,9 @@ define([], function () {
 
         vm.gradechartconfig = {
           chart: {
-            type: 'area'
+            type: 'area',
+            width: 1100,
+            height: 400
           },
           plotOptions: {
             series: {

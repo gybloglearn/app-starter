@@ -23,6 +23,10 @@
 				</div>
 			</div>
 
+			<div ng-hide="vm.gradeloading">
+				<mychart id="gradechart" config="vm.gradechartconfig"></mychart>
+			</div>
+
 			<div class="tray filter-tray top" style="margin-top:20px">
 				<div class="tray-inner">
 					<div class="filter-rule-group">
@@ -93,8 +97,6 @@
 			</table>
 		</div>
 
-		<div class="module-footer">
-			<mychart id="gradechart" config="vm.gradechartconfig"></mychart>
-		</div>
+		<div class="module-footer"></div>
 	</section>
 </div>
