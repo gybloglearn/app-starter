@@ -2,6 +2,7 @@
 	<section class="module">
 		<div class="module-header">
 			<h1 class="text-center">Braidt-Report-{{vm.startdatumszam}}-{{vm.enddatumszam}}</h1>
+			<h3 class="text-center" style="margin-top:20px">{{vm.st}}-{{vm.difference}} perc</h3>
 			<div class="col-sm-6" style="margin-top:20px">
 				<div class="input-group">
 					<span class="input-group-addon">Dátum:</span>
@@ -10,18 +11,26 @@
 					<input type="text" class="datepicker form-control" ng-model="vm.enddatum">
 					<span class="input-group-addon">-ig</span>
 					<div class="input-group-btn">
-						<a href="" class="btn btn-primary" ng-click="vm.load();vm.beallit()" ng-disabled="vm.dis || vm.enddatum<vm.startdatum || !vm.showsumstat">Betöltés</a>
+						<a href="" class="btn btn-primary" ng-click="vm.load();vm.beallit()" ng-disabled="vm.dis || vm.enddatum<=vm.startdatum || !vm.showsumstat">Betöltés</a>
 					</div>
 				</div>
 			</div>
+			<div class="col-sm-12" style="margin-top:20px">
+				<ul class="nav nav-tabs" style="margin-top:10px">
+							<li ng-repeat="item in vm.status track by $index">
+									<a data-toggle="tab" href="" ng-click="vm.st=item" ng-hide="">{{item}}</a>
+							</li>
+				</ul>
+			</div>
 		</div>
+
 		<div class="module-body">
 			<div class="progress progress-success progress-striped active" ng-hide="!vm.braidtloading">
 				<div class="progress-bar" style="width: 100%">
 					<p class="text-center">Frissítés...</p>
 				</div>
 			</div>
-			<table class="table table-bordered" ng-show="vm.showsumstat">
+			<table class="table table-bordered" ng-show="vm.showsumstat &&vm.st=='Állásidők'">
 				<thead>
 					<tr>
 						<th>Kód</th>
@@ -76,6 +85,7 @@
 						<button class="btn btn-success" ng-click="vm.show2table=true;vm.drawitem=''"><i class="icon-arrow-left"></i></button>
 			</div>
 		</div>
+
 		<div class="module-footer"></div>
 	</section>
 </div>

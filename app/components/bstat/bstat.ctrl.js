@@ -6,14 +6,19 @@ define([], function () {
     vm.show2table = true;
     vm.stat_data = [];
     vm.sumstat = [];
-    vm.machines=[];
-    vm.startdatum = $filter('date')(new Date().getTime() - (48 * 3600 * 1000), 'yyyy-MM-dd');
+    vm.machines = [];
+    vm.allmachines = [];
+    vm.status = ["Állásidők", "Termek"];
+    vm.st = "Állásidők";
+    vm.startdatum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.enddatum = $filter('date')(new Date(), 'yyyy-MM-dd');
+    vm.difference = (new Date(vm.enddatumszam).getTime() - new Date(vm.startdatumszam).getTime()) / (60000);
     vm.load = load;
     vm.startdatumszam = vm.startdatum;
     vm.enddatumszam = vm.enddatum;
     vm.beallit = beallit;
-    vm.count=count;
+    vm.count = count;
+    //vm.machinecount=machinecount;
     vm.drawchart = drawchart;
     var tomb = [];
     var kodok = [];
@@ -25,6 +30,7 @@ define([], function () {
       vm.szam2 = new Date(vm.enddatum);
       vm.startdatumszam = $filter('date')(vm.szam1, 'yyyy-MM-dd');
       vm.enddatumszam = $filter('date')(vm.szam2, 'yyyy-MM-dd');
+      vm.difference = (new Date(vm.enddatumszam).getTime() - new Date(vm.startdatumszam).getTime()) / (60000);
     }
 
     function load() {
@@ -86,26 +92,25 @@ define([], function () {
 
         vm.braidtloading = false;
         tomb = vm.stat_data;
+        //console.log(tomb);
+        machinecount();
       });
     }
     activate();
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      load();
     }
 
-    function count()
-    {
-      vm.machines=[];
+    function count() {
+      vm.machines = [];
       var talalat = 0;
       var a = 0;
-      for(var i=0;i<tomb.length;i++)
-      {
-        if(tomb[i].machine_Stat==vm.itemtype.id){
-          for(var j=0;j<vm.machines.length;j++){
-            if(vm.machines[j].nev==tomb[i].MName){
-              vm.machines[j].ido=vm.machines[j].ido+tomb[i].Stat_Time*1;
+      for (var i = 0; i < tomb.length; i++) {
+        if (tomb[i].machine_Stat == vm.itemtype.id) {
+          for (var j = 0; j < vm.machines.length; j++) {
+            if (vm.machines[j].nev == tomb[i].MName) {
+              vm.machines[j].ido = vm.machines[j].ido + tomb[i].Stat_Time * 1;
               vm.machines[j].darab++;
               talalat++;
             }
@@ -117,17 +122,49 @@ define([], function () {
           else {
             vm.machines[a] = {}
             vm.machines[a].nev = tomb[i].MName;
-            vm.machines[a].ido = tomb[i].Stat_Time*1;
+            vm.machines[a].ido = tomb[i].Stat_Time * 1;
             vm.machines[a].darab = 1;
             a++
           }
         }
       }
-      console.log(vm.machines);
+      //console.log(vm.machines);
+    }
+
+    function machinecount() {
+      vm.allmachines = [];
+      var talalat = 0;
+      var a = 0;
+
+      for (var i = 0; i < tomb.length; i++) {
+        var actname = tomb[i].MName;
+        var actroom = (tomb[i].MName.substring(0, 1)) * 1 + 1;
+        if (tomb[i].machine_Stat != "Aut. Dolgozik ") {
+          for (var j = 0; j < vm.allmachines.length; j++) {
+            if (vm.allmachines[j].name == actname) {
+              vm.allmachines[j].badtime = vm.allmachines[j].badtime + tomb[i].Stat_Time * 1;
+              vm.allmachines[j].goodtime = vm.allmachines[j].goodtime - tomb[i].Stat_Time * 1;
+              talalat++;
+            }
+          }
+          if (talalat > 0) {
+            talalat = 0;
+            a = a;
+          }
+          else {
+            vm.allmachines[a] = {}
+            vm.allmachines[a].name = actname;
+            vm.allmachines[a].room = actroom;
+            vm.allmachines[a].goodtime = vm.difference-tomb[i].Stat_Time * 1;
+            vm.allmachines[a].badtime = tomb[i].Stat_Time * 1;
+            a++
+          }
+        }
+      }
+      console.log(vm.allmachines);
     }
 
     function drawchart() {
-      var difference = (new Date(vm.enddatumszam).getTime() - new Date(vm.startdatumszam).getTime()) / (60000);
       var hibaido = 0;
       var kodok = [];
       var ok = [];
@@ -162,7 +199,7 @@ define([], function () {
           }
         }
       }
-      setChartpie(vm.drawitem.nev, difference, hibaido);
+      setChartpie(vm.drawitem.nev, vm.difference, hibaido);
       setChartxrange(ok, kodok);
     }
 
@@ -233,7 +270,7 @@ define([], function () {
           align: 'bottom',
         },
         xAxis: { title: { text: 'Idő' }, type: 'datetime', dateTimeLabelFormats: { hour: '%d.<br>%H:%M' }, tickInterval: 3600 * 1000 },
-        yAxis: { tickInterval:1, title: {enabled: false}, visible:false, categories: ["Idő"]},
+        yAxis: { tickInterval: 1, title: { enabled: false }, visible: false, categories: ["Idő"] },
         series: [
           {
             color: '#e60000',
