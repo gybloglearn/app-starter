@@ -145,6 +145,7 @@ define([], function () {
             b++
           }
         }
+        vm.chartsum = $filter('orderBy')(vm.chartsum, ["allyear","allmonth"]);
 
         vm.gradechartconfig = {
           chart: {
@@ -164,9 +165,9 @@ define([], function () {
             title: {
               text: "Százalék"
             },
-            tickInterval: 5,
+            tickInterval: 2.5,
             max: 100,
-            min: 75 
+            min: 85 
           },
           xAxis: {
             categories: feltolt_X_day(vm.chartsum)
