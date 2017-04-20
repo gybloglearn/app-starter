@@ -8,8 +8,10 @@ define([
   './services/stat.service',
   './bstat/bstat.ctrl',
   './directives/datepicker',
-  './directives/mychart'
-  /* files */
+  './directives/mychart',
+  './Plan/Plan.ctrl',
+  './services/planservice.service'
+	/* files */
 ], function (
   configFunction,
   runFunction,
@@ -20,7 +22,9 @@ define([
   statService,
   bstatController,
   datepicker,
-  mychart
+  mychart,
+  PlanController,
+  planserviceService
 	/* names */) {
 
     // Link all components to the module !!!
@@ -36,5 +40,7 @@ define([
     app.controller('bstatController', bstatController);
     app.directive('datepicker', datepicker);
     app.directive('myChart', mychart);
-    /* controllers */
+    app.controller('PlanController', PlanController);
+		app.service('planserviceService', planserviceService);
+		/* controllers */
   });

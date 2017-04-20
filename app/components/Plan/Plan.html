@@ -1,0 +1,120 @@
+<div class="container">
+	<section class="module">
+
+		<div class="module-header">
+			<h1 class="text-center">Tervek</h1>
+			<div class="col-sm-12" style="margin-top:20px">
+				<div class="input-group">
+					<span class="input-group-addon">Feltöltésre kerülő időszak:</span>
+					<input type="text" class="datepicker form-control" ng-model="vm.datefrom" std="{{vm.sdate}}">
+					<span class="input-group-addon">-tól</span>
+					<input type="text" class="datepicker form-control" ng-model="vm.dateto" std="{{vm.sdate}}">
+					<span class="input-group-addon">-ig</span>
+					<span class="input-group-addon">Terem</span>
+					<input type="text" class="form-control" ng-model="vm.circle">
+					<span class="input-group-addon">Százalékérték</span>
+					<input type="text" class="form-control" ng-model="vm.value">
+					<div class="input-group-btn">
+						<a href="" class="btn btn-primary" ng-click="vm.show()" ng-disabled="vm.dateto<vm.datefrom || !vm.circle || !vm.value">Input mezők generálása</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="module-body">
+			<div ng-show="vm.mutat">
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+							<th>Dátum</th>
+							<th>Kör</th>
+							<th>Százalékérték</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in vm.datumok track by $index" class="ng-scope">
+							<td><input ng-model="vm.data[$index].date" type="text" class="form-control" value="{{item}}" readonly></td>
+							<td><input ng-model="vm.data[$index].circle" type="text" class="form-control" value="{{vm.circle}}"></td>
+							<td><input ng-model="vm.data[$index].value" type="text" class="form-control" value="{{vm.value}}"></td>
+						</tr>
+					</tbody>
+				</table>
+				<button class="btn btn-success" ng-click="vm.save();vm.load();vm.mutat=false;vm.reloadwebpage">Feltölt</button>
+			</div>
+		</div>
+		<div class="module-footer">
+			<hr>
+			<h1 class="text-center">Felvett tervek listája</h1>
+			<div class="tray filter-tray top" style="margin-top:20px">
+				<div class="tray-inner">
+					<div class="filter-rule-group">
+						<div class="col-sm-5">
+							<div class="form-group">
+								<span class="control-label" style="color:#FFFFFF">Dátum:</span>
+								<input type="text" ng-model="vm.search.date" class="form-control">
+							</div>
+						</div>
+						<div class="col-sm-5">
+							<div class="form-group">
+								<span class="control-label" style="color:#FFFFFF">Kör:</span>
+								<input type="text" ng-model="vm.search.circle" class="form-control">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<table class="table table-condensed">
+				<thead>
+					<tr>
+						<th rowspan=2 ng-click="vm.order='date';vm.asc=!vm.asc;">Dátum</th>
+						<th rowspan=2 ng-click="vm.order='circle';vm.asc=!vm.asc;">Kör</th>
+						<th>Százalékérték</th>
+						<th>Szerkesztés/Törlés</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in vm.planlist | orderBy:vm.order:vm.asc | filter: vm.search track by $index" class="ng-scope">
+						<td>{{item.date}}</td>
+						<td>{{item.circle}}</td>
+						<td>{{item.value}}</td>
+						<td>
+							<div class="btn-group btn-group-sm">
+								<button class="btn btn-primary" ng-click="vm.edit = item"><i class="icon-edit"></i></button>
+								<button class="btn btn-danger" ng-click="vm.remove(item.id,$index)"><i class="icon-trash"></i></button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div ng-show="vm.edit" style="margin-top:20px">
+				<h1 class="text-center">Terv módosítása</h1>
+
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Dátum:</span>
+						<input type="text" class="form-control" ng-model="vm.edit.date" readonly>
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Kör:</span>
+						<input type="text" class="form-control" ng-model="vm.edit.circle" readonly>
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Százalékérték:</span>
+						<input type="text" class="form-control" ng-model="vm.edit.value">
+					</div>
+				</div>
+
+				<div class="btn-group">
+					<button class="btn btn-default" ng-click="vm.edit = '';">Mégse</button>
+					<button class="btn btn-danger" ng-click="vm.updateplan(vm.edit)">Mentés</button>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>

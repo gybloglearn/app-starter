@@ -6,9 +6,9 @@
 			<div class="col-sm-6" style="margin-top:20px">
 				<div class="input-group">
 					<span class="input-group-addon">Dátum:</span>
-					<input type="text" class="datepicker form-control" ng-model="vm.startdatum">
+					<input type="text" class="datepicker form-control" ng-model="vm.startdatum" end="{{vm.edate}}">
 					<span class="input-group-addon">-tól</span>
-					<input type="text" class="datepicker form-control" ng-model="vm.enddatum">
+					<input type="text" class="datepicker form-control" ng-model="vm.enddatum" end="{{vm.edate}}">
 					<span class="input-group-addon">-ig</span>
 					<div class="input-group-btn">
 						<a href="" class="btn btn-primary" ng-click="vm.load();vm.beallit()" ng-disabled="vm.dis || vm.enddatum<=vm.startdatum || !vm.showsumstat">Betöltés</a>
@@ -18,7 +18,7 @@
 			<div class="col-sm-12" style="margin-top:20px">
 				<ul class="nav nav-tabs" style="margin-top:10px">
 							<li ng-repeat="item in vm.status track by $index">
-									<a data-toggle="tab" href="" ng-click="vm.st=item" ng-hide="">{{item}}</a>
+									<a data-toggle="tab" href="" ng-click="vm.st=item" ng-hide="vm.dis || !vm.showsumstat">{{item}}</a>
 							</li>
 				</ul>
 			</div>
