@@ -7,7 +7,7 @@ define([], function(){
     function authenticate(){
       Login.auth(vm.data).then(function(resp){
 	// Put user cookie
-	$cookies.putObject('user', resp.data);
+	$cookies.putObject('user', resp.data, {path: "/"});
 	$rootScope.user = resp.data;
 	// REDIRECT to where from
 	var redir = $cookies.get('redir');
