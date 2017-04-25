@@ -28,6 +28,7 @@
 	  <ul class="nav navbar-nav">
 	    <!--<li><a ui-sref="start">Start</a></li>-->
 	    <!-- links -->
+      <li><a ui-sref="qcpage"><i class="icon-file"></i>Qcpage</a></li>
 
 	  </ul>
 	  <ul class="nav navbar-nav pull-right">
@@ -40,7 +41,7 @@
 
     <div style="margin: 20px auto;" ui-view></div>
 
-    <div class="footer" style="position:absolute;bottom:0;right:0;left:0;">
+    <div class="footer">
       <div class="primary">
 	<div class="container">
 	  <div class="brand">
@@ -62,7 +63,11 @@
 require.config({
   baseUrl: '../'
 });
-require (['app']);
+require(['ge-bootstrap', 'jquery','datepicker', 'app', 'charts'], function ($) {
+    $(function () {
+      $('.datapicker').datepicker();
+    });
+  });
       </script>
       <script src="../components/respond/respond.src.js"></script>
   </body>

@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('qcpage', {
+		url: '/qcpage',
+		templateUrl: './app/components/qcpage/qcpage.html',
+		controller: 'qcpageController',
+		controllerAs: 'vm'
+	});
 
   }
   ConfigFunction.$inject = ['$urlRouterProvider', '$stateProvider'];
