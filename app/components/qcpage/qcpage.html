@@ -30,6 +30,24 @@
 					<p class="text-center">Betöltés...</p>
 				</div>
 			</div>
+      
+      <my-chart id="chart" config="vm.QCchartconfig"></my-chart>
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>Dátum</th>
+            <th>Címke</th>
+            <th>Érték</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.data" ng-show="item.Value>0">
+            <td>{{item.Date}}</td>
+            <td>{{item.Label}}</td>
+            <td>{{item.Value}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div class="module-footer"></div>
   </section>

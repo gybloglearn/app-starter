@@ -8,7 +8,8 @@ define([
   './directives/datepicker',
   './directives/mychart',
   './qcpage/qcpage.ctrl',
-  './services/download.service'
+  './services/download.service',
+  './filters/unique'
 	/* files */
 ], function(
   configFunction,
@@ -20,7 +21,8 @@ define([
   datepicker,
   mychart,
   qcpageController,
-  downloadService
+  downloadService,
+  unique
 	/* names */) {
 
   // Link all components to the module !!!
@@ -36,5 +38,6 @@ define([
   app.directive('myChart', mychart);
   app.controller('qcpageController', qcpageController);
   app.service('downloadService', downloadService);
+  app.filter('unique', unique);
 		/* controllers */
 });
