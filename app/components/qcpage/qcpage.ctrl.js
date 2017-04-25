@@ -10,18 +10,16 @@ define([], function () {
     vm.acttime = "nap";
     vm.acttype = "ETF";
     vm.load = load;
-    console.log(vm.enddate);
-
-    /*function beallit(){
-      if(vm.acttime=="nap"){
-      }
-    }*/
 
     function load() {
       vm.data = [];
+      vm.dis = true;
+      vm.QCloading = true;
 
       downloadService.get(vm.startdate, vm.enddate, vm.acttype, vm.acttime).then(function (response) {
         vm.data = response.data;
+        vm.dis = false;
+        vm.QCloading = false;
         console.log(vm.data);
       });
     }
