@@ -13,7 +13,7 @@ define([], function () {
     function get(start, end, typ, category) {
       var req = {
         method: 'GET',
-        url: 'http://localhost/sr/ZW1000Scrap.php?startdate=' + start + '&enddate=' + end + '&datetype=' + typ + '&cat=' + category
+        url: '../../../../getReports/ZW1000Scrap.php?startdate=' + start + '&enddate=' + end + '&datetype=' + typ + '&cat=' + category
       };
       return $http(req);
     }
