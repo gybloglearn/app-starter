@@ -130,7 +130,6 @@ define([], function () {
           }
         }
       }
-      //console.log(vm.machines);
     }
 
     function machinecount() {
@@ -180,56 +179,66 @@ define([], function () {
       for (var i = 0; i < 4; i++) {
         vm.rooms[i] = {}
         vm.rooms[i].room = i;
-        vm.rooms[i].goodtime = 0;
-        vm.rooms[i].badtime = 0;
-        vm.rooms[i].alltime = 0;
-        vm.rooms[i].piece = 0;
+        if (i == 0) {
+          vm.rooms[i].goodtime = 509 * vm.difference;
+          vm.rooms[i].badtime = 0;
+          vm.rooms[i].alltime = 509 * vm.difference;
+          vm.rooms[i].piece = 509;
+        }
+        else if (i == 1) {
+          vm.rooms[i].goodtime = 226 * vm.difference;
+          vm.rooms[i].badtime = 0;
+          vm.rooms[i].alltime = 226 * vm.difference;
+          vm.rooms[i].piece = 226;
+        }
+        else if (i == 2) {
+          vm.rooms[i].goodtime = 355 * vm.difference;
+          vm.rooms[i].badtime = 0;
+          vm.rooms[i].alltime = 355 * vm.difference;
+          vm.rooms[i].piece = 355;
+        }
+        else if (i == 3) {
+          vm.rooms[i].goodtime = 380 * vm.difference;
+          vm.rooms[i].badtime = 0;
+          vm.rooms[i].alltime = 380 * vm.difference;
+          vm.rooms[i].piece = 380;
+        }
       }
 
       for (var i = 0; i < vm.allmachines.length; i++) {
         if (vm.allmachines[i].room == 1) {
-          vm.rooms[0].goodtime += vm.allmachines[i].goodtime;
+          vm.rooms[0].goodtime -= vm.allmachines[i].badtime;
           vm.rooms[0].badtime += vm.allmachines[i].badtime;
-          vm.rooms[0].alltime += vm.allmachines[i].alltime;
-          vm.rooms[0].piece++;
         }
         else if (vm.allmachines[i].room == 2) {
-          vm.rooms[1].goodtime += vm.allmachines[i].goodtime;
+          vm.rooms[1].goodtime -= vm.allmachines[i].badtime;
           vm.rooms[1].badtime += vm.allmachines[i].badtime;
-          vm.rooms[1].alltime += vm.allmachines[i].alltime;
-          vm.rooms[1].piece++;
         }
         else if (vm.allmachines[i].room == 3) {
-          vm.rooms[2].goodtime += vm.allmachines[i].goodtime;
+          vm.rooms[2].goodtime -= vm.allmachines[i].badtime;
           vm.rooms[2].badtime += vm.allmachines[i].badtime;
-          vm.rooms[2].alltime += vm.allmachines[i].alltime;
-          vm.rooms[2].piece++;
         }
         else if (vm.allmachines[i].room == 4) {
-          vm.rooms[3].goodtime += vm.allmachines[i].goodtime;
+          vm.rooms[3].goodtime -= vm.allmachines[i].badtime;
           vm.rooms[3].badtime += vm.allmachines[i].badtime;
-          vm.rooms[3].alltime += vm.allmachines[i].alltime;
-          vm.rooms[3].piece++;
         }
       }
 
       for (var i = 0; i < 14; i++) {
         vm.circles[i] = {}
         vm.circles[i].circle = i + 1;
-        vm.circles[i].goodtime = 0;
+        vm.circles[i].goodtime = 105 * vm.difference;
         vm.circles[i].badtime = 0;
-        vm.circles[i].alltime = 0;
-        vm.circles[i].piece = 0;
+        vm.circles[i].alltime = 105 * vm.difference;
+        vm.circles[i].piece = 105;
       }
 
       for (var i = 0; i < vm.allmachines.length; i++) {
         var actnumber = vm.allmachines[i].circle;
         for (var j = 0; j < vm.circles.length; j++) {
           if (vm.circles[j].circle == actnumber) {
-            vm.circles[j].goodtime += vm.allmachines[i].goodtime;
+            vm.circles[j].goodtime -= vm.allmachines[i].badtime;
             vm.circles[j].badtime += vm.allmachines[i].badtime;
-            vm.circles[j].alltime += vm.allmachines[i].alltime;
-            vm.circles[j].piece++;
           }
         }
       }
