@@ -30,7 +30,7 @@ define([], function () {
               stacking: 'normal'
             }
           },
-          title: { text: "Valami" },
+          title: { text: "ZW1000QC-chart" },
           series: [
             {
               name: 'Scrap',
@@ -129,7 +129,6 @@ define([], function () {
       var act="";
       for(var i=0;i<tomb.length;i++){
         act=tomb[i].Date;
-        console.log(tomb[i].Date);
         for(var j=0;j<x_datum.length;j++){
           if(act==x_datum[j]){
             talalat++;
