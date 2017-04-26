@@ -20,7 +20,7 @@ define([], function () {
     $stateProvider.state('logout', {
       url: '/logout',
       controller: function($cookies, $rootScope, $state) {
-	$cookies.remove('user');
+	$cookies.remove('user', {path:'/'});
 	$rootScope.user = {};
 	$state.go('start', {}, {reload: true});
       }
