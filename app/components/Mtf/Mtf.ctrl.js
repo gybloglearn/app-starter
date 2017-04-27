@@ -63,6 +63,7 @@ define([], function () {
             }
           }
           else if (mystring.includes(substring2)) {
+            mystring = $filter('change')(mystring);
             mystring = mystring.substr(0, mystring.length - 10);
             for(j=0;j<vm.mtfaeqs.length;j++)
             {
@@ -151,6 +152,7 @@ define([], function () {
             }
           }
           else if (mystring.includes(substring2)) {
+            mystring = $filter('change')(mystring);
             mystring = mystring.substr(0, mystring.length - 10);
             for(j=0;j<vm.mtfaeqs.length;j++)
             {
