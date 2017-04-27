@@ -12,14 +12,14 @@
 					<input type="text" class="datepicker form-control" ng-model="vm.enddatum" end="{{vm.edate}}">
 					<span class="input-group-addon">-ig</span>
 					<div class="input-group-btn">
-						<a href="" class="btn btn-primary" ng-click="vm.load();vm.beallit()" ng-disabled="vm.dis || vm.enddatum<=vm.startdatum || !vm.showsumstat">Betöltés</a>
+						<a href="" class="btn btn-primary" ng-click="vm.load();vm.beallit()" ng-disabled="vm.dis || vm.enddatum<=vm.startdatum || !vm.showsumstat || !vm.showcirclestat">Betöltés</a>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-12" style="margin-top:20px">
 				<ul class="nav nav-tabs" style="margin-top:10px">
 							<li ng-repeat="item in vm.status track by $index">
-									<a data-toggle="tab" href="" ng-click="vm.st=item" ng-hide="vm.dis || !vm.showsumstat">{{item}}</a>
+									<a data-toggle="tab" href="" ng-click="vm.st=item" ng-hide="vm.dis || !vm.showsumstat || !vm.showcirclestat">{{item}}</a>
 							</li>
 				</ul>
 			</div>
@@ -83,7 +83,7 @@
 			<div class="tab-content" ng-show="vm.drawitem">
 						<my-chart id="chart_pie" config="vm.chartconfig_pie"></my-chart>
 						<my-chart id="chart_xrange" config="vm.chartconfig_xrange"></my-chart>
-						<button class="btn btn-success" ng-click="vm.show2table=true;vm.drawitem=''"><i class="icon-arrow-left"></i></button>
+						<button class="btn btn-success" ng-click="vm.show2table=true;vm.show3table=true;vm.drawitem=''"><i class="icon-arrow-left"></i></button>
 			</div>
 		</div>
 
@@ -147,33 +147,10 @@
 						</tr>
 					</tbody>
 				</table>
-				<div ng-show="vm.itemcircle">
+				<div ng-show="vm.itemcircle && vm.show3table">
 					<h1 class="text-center" style="margin-bottom:10px">{{vm.itemcircle.circle}}. kör gépei</h1>
-					<div class="col-sm-2" ng-repeat="circle in vm.cmch" style="background-color:{{(circle.hasznos/circle.osszes)*100>90?'green':'red'}};text-align: center"><h3 style="color:#ffffff">{{circle.nev}}-{{(circle.hasznos/circle.osszes)*100 | number:2}} %</h3><button class="btn btn-primary" ng-click=""><i class="icon-bar-chart"></i></button></div>
+					<div class="col-sm-2" ng-repeat="circle in vm.cmch" style="background-color:{{(circle.hasznos/circle.osszes)*100>90?'green':'red'}};text-align: center"><h3 style="color:#ffffff">{{circle.nev}}-{{(circle.hasznos/circle.osszes)*100 | number:2}} %</h3><button class="btn btn-primary" ng-click="vm.drawitem=circle;vm.drawchart();vm.show3table=false"><i class="icon-bar-chart"></i></button></div>
 					<button class="btn btn-success pull-right" ng-click="vm.showcirclestat=true;vm.itemcircle=''"><i class="icon-arrow-left"></i></button>
-					<!--table class="table table-bordered" style="margin-top:10px">
-						<thead>
-							<tr>
-								<th>Gép</th>
-								<th>Jó</th>
-								<th>Rossz</th>
-								<th>Vissza</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="circle in vm.cmch" ng-show="circle.rossz>0">
-								<td>{{circle.nev}}</td>
-								<td>{{circle.hasznos}}</td>
-								<td>{{circle.rossz}}</td>
-								<td>
-									<div class="btn-group btn-group-sm">
-										<button class="btn btn-success" ng-click="vm.showcirclestat=true;vm.itemcircle=''"><i class="icon-arrow-left"></i></button>
-										<button class="btn btn-primary" ng-click="vm.drawitem=data;vm.drawchart();vm.show2table=false"><i class="icon-bar-chart"></i></button>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table-->
 				</div>
 			</div>
 		</div>

@@ -4,6 +4,7 @@ define([], function () {
     var vm = this;
     vm.showsumstat = true;
     vm.show2table = true;
+    vm.show3table = true;
     vm.showcirclestat = true;
     vm.stat_data = [];
     vm.sumstat = [];
