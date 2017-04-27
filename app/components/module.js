@@ -10,7 +10,8 @@ define([
   './directives/datepicker',
   './directives/mychart',
   './Plan/Plan.ctrl',
-  './services/planservice.service'
+  './services/planservice.service',
+  './forbidden/forbidden.ctrl'
 	/* files */
 ], function (
   configFunction,
@@ -24,7 +25,8 @@ define([
   datepicker,
   mychart,
   PlanController,
-  planserviceService
+  planserviceService,
+  forbiddenController
 	/* names */) {
 
     // Link all components to the module !!!
@@ -42,5 +44,6 @@ define([
     app.directive('myChart', mychart);
     app.controller('PlanController', PlanController);
 		app.service('planserviceService', planserviceService);
+		app.controller('forbiddenController', forbiddenController);
 		/* controllers */
   });

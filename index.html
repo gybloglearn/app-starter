@@ -43,7 +43,7 @@
 					<!-- links -->
 
 					<li><a ui-sref="bstat"><i class="icon-file"></i> Braidt</a></li>
-					<li><a ui-sref="Plan"><i class="icon-file"></i> Tervek</a></li>
+					<li ng-show="user.displayname && (user.username=='212434909'||user.username=='502678184' || user.username=='212430692') "><a ui-sref="Plan"><i class="icon-file"></i> Tervek</a></li>
 				</ul>
 				<ul class="nav navbar-nav pull-right">
 					<li><a ui-sref="start"><i class="icon-home"></i></a></li>
@@ -55,7 +55,7 @@
 
 	<div style="margin: 20px auto;" ui-view></div>
 
-	<div class="footer">
+	<div class="footer" ng-show="user.displayname">
 		<div class="primary">
 			<div class="container">
 				<div class="brand">

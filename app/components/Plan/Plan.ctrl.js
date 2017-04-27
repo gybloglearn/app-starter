@@ -71,6 +71,9 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
+      if ($rootScope.user.username != "212434909" && $rootScope.user.username != "502678184" && $rootScope.user.username != "212430692") {
+        $state.go('forbidden');
+      }
       vm.sdate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
     }
   }
