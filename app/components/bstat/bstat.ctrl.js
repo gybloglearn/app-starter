@@ -4,12 +4,14 @@ define([], function () {
     var vm = this;
     vm.showsumstat = true;
     vm.show2table = true;
+    vm.showcirclestat = true;
     vm.stat_data = [];
     vm.sumstat = [];
     vm.machines = [];
     vm.allmachines = [];
     vm.rooms = [];
     vm.circles = [];
+    vm.cmch = [];
     vm.status = ["Állásidők", "Termek", "Körök"];
     vm.st = "Állásidők";
     vm.startdatum = $filter('date')(new Date(), 'yyyy-MM-dd');
@@ -21,6 +23,7 @@ define([], function () {
     vm.beallit = beallit;
     vm.count = count;
     vm.drawchart = drawchart;
+    vm.circledetails = circledetails;
     var tomb = [];
     var kodok = [];
     var ok = [];
@@ -93,7 +96,7 @@ define([], function () {
 
         vm.braidtloading = false;
         tomb = vm.stat_data;
-        //console.log(tomb);
+        console.log(tomb);
         machinecount();
       });
     }
@@ -242,8 +245,30 @@ define([], function () {
           }
         }
       }
-      console.log(vm.allmachines);
-      console.log(vm.circles);
+    }
+
+    function circledetails() {
+      vm.cmch = [];
+      var szam = vm.itemcircle.circle - 1;
+      var a = 0;
+
+      for (var j = 0; j < korok[szam].length; j++) {
+        vm.cmch[a] = {}
+        vm.cmch[a].nev = korok[szam][j];
+        vm.cmch[a].hasznos = vm.difference;
+        vm.cmch[a].rossz = 0;
+        vm.cmch[a].osszes = vm.difference;
+        a++;
+      }
+
+      for (var i = 0; i < tomb.length; i++) {
+        for (var k = 0; k < vm.cmch.length; k++) {
+          if (tomb[i].MName == vm.cmch[k].nev && tomb[i].machine_Stat != "Aut. Dolgozik ") {
+            vm.cmch[k].hasznos -= tomb[i].Stat_Time * 1;
+            vm.cmch[k].rossz += tomb[i].Stat_Time * 1;
+          }
+        }
+      }
     }
 
     function drawchart() {
@@ -314,28 +339,9 @@ define([], function () {
               name: 'Kiesés',
               color: "#e60000",
               y: miss,
-              drilldown: "kiesesdrill"
             }]
           }
         ],
-        drilldown: [
-          {
-            id: "kiesesdrill",
-            name: "kiesesdrill",
-            data: [
-              {
-                name: "Egyéb",
-                color: "#ddd",
-                y: 12
-              },
-              {
-                name: "Más",
-                color: "#aaa",
-                y: 10
-              }
-            ]
-          }
-        ]
       };
     }
 
