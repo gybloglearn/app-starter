@@ -2,7 +2,7 @@ define([], function () {
   'use strict';
   function Controller(Data, $cookies, $state, $rootScope, $filter) {
     var vm = this;
-    vm.weekstart = $filter('date')((new Date().getTime() - 24 * 3600 * 1000), 'yyyy-MM-dd');
+    vm.weekstart = $filter('date')((new Date().getTime() - 7 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.weekend = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.weekstat = [];
     vm.mistakes = [];
@@ -74,8 +74,6 @@ define([], function () {
         }
 
         vm.startloading = false;
-        console.log(vm.weekstat);
-        console.log(vm.mistakes);
       });
     }
     activate();

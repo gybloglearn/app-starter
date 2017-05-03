@@ -148,9 +148,10 @@
 					</tbody>
 				</table>
 				<div ng-show="vm.itemcircle && vm.show3table">
+					<button class="btn btn-success pull-right" ng-click="vm.showcirclestat=true;vm.itemcircle=''"><i class="icon-arrow-left"></i></button>
 					<h1 class="text-center" style="margin-bottom:10px">{{vm.itemcircle.circle}}. kör gépei</h1>
 					<div class="col-sm-2" ng-repeat="circle in vm.cmch" style="background-color:{{(circle.hasznos/circle.osszes)*100>90?'green':'red'}};text-align: center"><h3 style="color:#ffffff">{{circle.nev}}-{{(circle.hasznos/circle.osszes)*100 | number:2}} %</h3><button class="btn btn-primary" ng-click="vm.drawitem=circle;vm.drawchart();vm.show3table=false"><i class="icon-bar-chart"></i></button></div>
-					<button class="btn btn-success pull-right" ng-click="vm.showcirclestat=true;vm.itemcircle=''"><i class="icon-arrow-left"></i></button>
+					<!--button class="btn btn-success pull-right" ng-click="vm.showcirclestat=true;vm.itemcircle=''"><i class="icon-arrow-left"></i></button-->
 				</div>
 			</div>
 		</div>
