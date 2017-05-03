@@ -1,7 +1,16 @@
 <div class="container">
   <section class="module">
-    <div class="module-header">Start</div>
-    <div class="module-body"></div>
+    <div class="module-header">
+      <h1 class="text-center">Heti összesítő-{{vm.weekstart}}-{{vm.weekend}}</h1>
+    </div>
+    <div class="module-body">
+      <div class="progress progress-success progress-striped active" ng-hide="!vm.startloading">
+				<div class="progress-bar" style="width: 100%">
+					<p class="text-center">Frissítés...</p>
+				</div>
+			</div>
+      <my-chart id="chart_bar" config="vm.chartconfig_bar"></my-chart>
+    </div>
     <div class="module-footer"></div>
   </section>
 </div>
