@@ -13,6 +13,7 @@ define([], function () {
     vm.rooms = [];
     vm.circles = [];
     vm.cmch = [];
+    vm.kodok=[];
     vm.status = ["Állásidők", "Termek", "Körök"];
     vm.st = "Állásidők";
     vm.startdatum = $filter('date')(new Date(), 'yyyy-MM-dd');
@@ -97,7 +98,6 @@ define([], function () {
 
         vm.braidtloading = false;
         tomb = vm.stat_data;
-        console.log(tomb);
         machinecount();
       });
     }
@@ -278,6 +278,7 @@ define([], function () {
       var ok = [];
       var a = 0;
       var b = 0;
+      vm.kodok=[];
 
       for (var i = 0; i < tomb.length; i++) {
         if (tomb[i].MName == vm.drawitem.nev) {
@@ -307,8 +308,10 @@ define([], function () {
           }
         }
       }
+      vm.kodok=kodok;
       setChartpie(vm.drawitem.nev, vm.difference, hibaido);
       setChartxrange(ok, kodok);
+
     }
 
     function setChartpie(name, diff, miss) {
