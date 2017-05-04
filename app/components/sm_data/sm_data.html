@@ -40,6 +40,20 @@
 		</div>
 
 		<div class="module-footer">
+			<ul class="nav nav-tabs" style="margin-top:10px">
+				<li ng-repeat="item in vm.downtimes track by $index">
+					<a data-toggle="tab" href="" ng-click="vm.downt=item" ng-hide="vm.dis">{{item}}</a>
+				</li>
+			</ul>
+			<div class="tab-content" ng-show="vm.downt=='Szervezesi veszteseg'">
+				<my-chart id="chart_Szervezesi" config="vm.chartconfig_col1"></my-chart>
+			</div>
+			<div class="tab-content" ng-show="vm.downt=='Tervezett veszteseg'">
+				<my-chart id="chart_Tervezett" config="vm.chartconfig_col2"></my-chart>
+			</div>
+			<div class="tab-content" ng-show="vm.downt=='Műszaki technikai okok'">
+				<my-chart id="chart_Muszaki" config="vm.chartconfig_col3"></my-chart>
+			</div>
 			<div>
 				<button class="btn btn-default pull-right" ng-class="{'btn-info':vm.show}" ng-click="vm.show=!vm.show">Táblázat</button>
 			</div>
@@ -101,22 +115,26 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
+						<th rowspan=2 ng-click="vm.order='Event_type';vm.asc=!vm.asc;">Eset típus</th>
 						<th rowspan=2 ng-click="vm.order='timestamp';vm.asc=!vm.asc;">Időbélyeg</th>
 						<th ng-click="vm.order='Event_time';vm.asc=!vm.asc;">Eset Idő</th>
-						<th rowspan=2 ng-click="vm.order='Event_type';vm.asc=!vm.asc;">Eset típus</th>
+						<th>Szak</th>
 						<th rowspan=2 ng-click="vm.order='Ev_Group';vm.asc=!vm.asc;">Eset csoport</th>
 						<th rowspan=2 ng-click="vm.order='Event_SubGroup';vm.asc=!vm.asc;">Eset alcsoport</th>
-						<th colspan=2>Szak</th>
+						<th>Maximo szám</th>
+						<th>Komment</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="item in vm.sm_datas | orderBy:vm.order:vm.asc | filter: search track by $index" class="ng-scope">
+						<td>{{item.Event_type}}</td>
 						<td>{{item.timestamp | date: 'y-M-d hh:mm'}}</td>
 						<td>{{item.Event_time}}</td>
-						<td>{{item.Event_type}}</td>
+						<td>{{item.Shift_Name}}</td>
 						<td>{{item.Ev_Group}}</td>
 						<td>{{item.Event_SubGroup}}</td>
-						<td>{{item.Shift_Name}}</td>
+						<td>{{item.Maximo_num}}</td>
+						<td>{{item.Comment}}</td>
 					</tr>
 				</tbody>
 			</table>

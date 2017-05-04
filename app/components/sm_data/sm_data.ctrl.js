@@ -8,11 +8,16 @@ define([], function () {
     vm.szervezesi_veszteseg = [];
     vm.tervezett_veszteseg = [];
     vm.muszaki_technikai_okok = [];
+    vm.osszegzo_szervezesi = [];
+    vm.osszegzo_tervezett = [];
+    vm.osszegzo_muszaki = [];
     vm.sum_szervezesi = 0;
     vm.sum_tervezett = 0;
     vm.sum_okok = 0;
     vm.sm = "SM4";
+    vm.downt="Szervezesi veszteseg"
     vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
+    vm.downtimes=["Szervezesi veszteseg","Tervezett veszteseg","Műszaki technikai okok"];
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.today = (new Date().getHours() * 60 + new Date().getMinutes()) - 350;
     vm.datumszam = vm.datum;
@@ -52,24 +57,23 @@ define([], function () {
         vm.sm_datas = response.data;
         vm.egyedi = $filter('unique')(vm.sm_datas, 'Event_SubGroup');
         vm.dis = false;
-        console.log(vm.szervezesi_veszteseg);
-        console.log(vm.tervezett_veszteseg);
-        console.log(vm.muszaki_technikai_okok);
+
         for (var i = 0; i < vm.sm_datas.length; i++) {
           hour_grop(vm.sm_datas[i].Event_type, vm.sm_datas[i].timestamp);
           leall(vm.sm_datas[i].timestamp, vm.sm_datas[i].Event_type, vm.sm_datas[i].Ev_Group, vm.sm_datas[i].Event_time, vm.sm_datas[i].Shift_Name, vm.sm_datas[i].Event_SubGroup, vm.sm_datas[i].Comment);
         }
+        osszegzo(vm.sm_datas);
         vm.sum_szervezesi = sumpie(vm.szervezesi_veszteseg);
         vm.sum_tervezett = sumpie(vm.tervezett_veszteseg);
         vm.sum_okok = sumpie(vm.muszaki_technikai_okok);
-        console.log(vm.sum_szervezesi);
-        console.log(vm.sum_tervezett);
-        console.log(vm.sum_okok);
 
         daytimechart();
         setChart(vm.sm);
         setChartxrange(vm.sm);
         setChartpie(vm.sm);
+        setCol1(vm.sm);
+        setCol2(vm.sm);
+        setCol3(vm.sm);
         vm.smloading = false;
       });
 
@@ -99,7 +103,6 @@ define([], function () {
       }
       else {
         vm.today = (new Date().getHours() * 60 + new Date().getMinutes()) - 350;
-        console.log(vm.today);
       }
     }
 
@@ -241,6 +244,108 @@ define([], function () {
       };
     }
 
+    function setCol1(nowsm){
+      vm.osszegzo_szervezesi = $filter('orderBy')(vm.osszegzo_szervezesi, ["time"]);
+      vm.chartconfig_col1 = {
+        chart: {
+          type: 'column',
+          width: 900,
+          height: 360
+        },
+        title: { text: nowsm + " - Szervezesi veszteseg" },
+        series: [
+          {
+            name: 'Szervezesi veszteseg',
+            color: "#cc33ff",
+            data: feltolt_ido(vm.osszegzo_szervezesi)
+          }
+        ],
+
+
+        xAxis: [
+          { categories: feltolt_tipus(vm.osszegzo_szervezesi) },
+        ],
+        yAxis: {
+          title: {
+            text: "Idő"
+          }
+        },
+      };
+    }
+    function setCol2(nowsm){
+      vm.osszegzo_tervezett = $filter('orderBy')(vm.osszegzo_tervezett, ["time"]);
+      vm.chartconfig_col2 = {
+        chart: {
+          type: 'column',
+          width: 900,
+          height: 360
+        },
+        title: { text: nowsm + " - Tervezett veszteseg" },
+        series: [
+          {
+            name: 'Tervezett veszteseg',
+            color: "#3366ff",
+            data: feltolt_ido(vm.osszegzo_tervezett)
+          }
+        ],
+
+
+        xAxis: [
+          { categories: feltolt_tipus(vm.osszegzo_tervezett) },
+        ],
+        yAxis: {
+          title: {
+            text: "Idő"
+          }
+        },
+      };
+    }
+    function setCol3(nowsm){
+      vm.osszegzo_muszaki = $filter('orderBy')(vm.osszegzo_muszaki, ["time"]);
+      vm.chartconfig_col3 = {
+        chart: {
+          type: 'column',
+          width: 900,
+          height: 360
+        },
+        title: { text: nowsm + " - Műszaki technikai okok" },
+        series: [
+          {
+            name: 'Műszaki technikai okok',
+            color: "#e60000",
+            data: feltolt_ido(vm.osszegzo_muszaki)
+          }
+        ],
+
+
+        xAxis: [
+          { categories: feltolt_tipus(vm.osszegzo_muszaki) },
+        ],
+        yAxis: {
+          title: {
+            text: "Idő"
+          }
+        },
+      };
+    }
+
+    function feltolt_tipus(tomb){
+      var x_adatok=[];
+      for(var i=0;i<tomb.length;i++){
+        x_adatok.push(tomb[i].name);
+      }
+      return x_adatok;
+    }
+
+    function feltolt_ido(tomb){
+      var adatok=[];
+      for(var i=0;i<tomb.length;i++){
+        adatok.push(tomb[i].time);
+      }
+      return adatok;
+
+    }
+
     function feltolt_hour() {
       var szamok = [];
       for (var i = 6; i < 24; i++) {
@@ -275,6 +380,7 @@ define([], function () {
 
     function leall(itemstart, itemtype, itemgroup, itemtime, itemshift, itemsub, itemcomment) {
       var szamvaltozo = new Date(itemstart).getHours() * 60 + new Date(itemstart).getMinutes();
+
       if (itemtype == "Downtime" && itemgroup == "Szervezesi veszteseg") {
         vm.szervezesi_veszteseg[l] = {};
         vm.szervezesi_veszteseg[l].x = itemstart + 1000 * 3600;
@@ -337,6 +443,87 @@ define([], function () {
           vm.muszaki_technikai_okok[k].szakszam = 3;
         }
         k++;
+      }
+    }
+
+    function osszegzo(tomb) {
+      vm.osszegzo_szervezesi = [];
+      vm.osszegzo_tervezett = [];
+      vm.osszegzo_muszaki = [];
+      var a = 0;
+      var b = 0;
+      var c = 0;
+      var talalt = 0;
+
+      for (var i = 0; i < tomb.length; i++) {
+        if (tomb[i].Event_type == "Downtime" && tomb[i].Ev_Group == "Szervezesi veszteseg") {
+          for (var j = 0; j < vm.osszegzo_szervezesi.length; j++) {
+            if (tomb[i].Event_SubGroup == vm.osszegzo_szervezesi[j].name) {
+              vm.osszegzo_szervezesi[j].time += tomb[i].Event_time;
+              vm.osszegzo_szervezesi[j].piece++;
+              talalt++;
+            }
+          }
+          if (talalt > 0) {
+            a = a;
+            talalt = 0;
+          }
+          else {
+            vm.osszegzo_szervezesi[a] = {}
+            vm.osszegzo_szervezesi[a].name = tomb[i].Event_SubGroup;
+            vm.osszegzo_szervezesi[a].time = 0;
+            vm.osszegzo_szervezesi[a].piece = 1;
+            vm.osszegzo_szervezesi[a].time += tomb[i].Event_time;
+            a++;
+          }
+        }
+      }
+
+      for (var i = 0; i < tomb.length; i++) {
+        if (tomb[i].Event_type == "Downtime" && tomb[i].Ev_Group == "Tervezett veszteseg") {
+          for (var j = 0; j < vm.osszegzo_tervezett.length; j++) {
+            if (tomb[i].Event_SubGroup == vm.osszegzo_tervezett[j].name) {
+              vm.osszegzo_tervezett[j].time += tomb[i].Event_time;
+              vm.osszegzo_tervezett[j].piece++;
+              talalt++;
+            }
+          }
+          if (talalt > 0) {
+            b = b;
+            talalt = 0;
+          }
+          else {
+            vm.osszegzo_tervezett[b] = {}
+            vm.osszegzo_tervezett[b].name = tomb[i].Event_SubGroup;
+            vm.osszegzo_tervezett[b].time = 0;
+            vm.osszegzo_tervezett[b].piece = 1;
+            vm.osszegzo_tervezett[b].time += tomb[i].Event_time;
+            b++;
+          }
+        }
+      }
+      for (var i = 0; i < tomb.length; i++) {
+        if (tomb[i].Event_type == "Downtime" && tomb[i].Ev_Group == "Muszaki technikai okok") {
+          for (var j = 0; j < vm.osszegzo_muszaki.length; j++) {
+            if (tomb[i].Event_SubGroup == vm.osszegzo_muszaki[j].name) {
+              vm.osszegzo_muszaki[j].time += tomb[i].Event_time;
+              vm.osszegzo_muszaki[j].piece++;
+              talalt++;
+            }
+          }
+          if (talalt > 0) {
+            c = c;
+            talalt = 0;
+          }
+          else {
+            vm.osszegzo_muszaki[c] = {}
+            vm.osszegzo_muszaki[c].name = tomb[i].Event_SubGroup;
+            vm.osszegzo_muszaki[c].time = 0;
+            vm.osszegzo_muszaki[c].piece = 1;
+            vm.osszegzo_muszaki[c].time += tomb[i].Event_time;
+            c++;
+          }
+        }
       }
     }
 
