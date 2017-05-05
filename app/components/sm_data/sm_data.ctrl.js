@@ -245,7 +245,7 @@ define([], function () {
     }
 
     function setCol1(nowsm){
-      vm.osszegzo_szervezesi = $filter('orderBy')(vm.osszegzo_szervezesi, ["time"]);
+      vm.osszegzo_szervezesi = $filter('orderBy')(vm.osszegzo_szervezesi, ["time"], true);
       vm.chartconfig_col1 = {
         chart: {
           type: 'column',
@@ -273,7 +273,7 @@ define([], function () {
       };
     }
     function setCol2(nowsm){
-      vm.osszegzo_tervezett = $filter('orderBy')(vm.osszegzo_tervezett, ["time"]);
+      vm.osszegzo_tervezett = $filter('orderBy')(vm.osszegzo_tervezett, ["time"], true);
       vm.chartconfig_col2 = {
         chart: {
           type: 'column',
@@ -301,7 +301,7 @@ define([], function () {
       };
     }
     function setCol3(nowsm){
-      vm.osszegzo_muszaki = $filter('orderBy')(vm.osszegzo_muszaki, ["time"]);
+      vm.osszegzo_muszaki = $filter('orderBy')(vm.osszegzo_muszaki, ["time"], true);
       vm.chartconfig_col3 = {
         chart: {
           type: 'column',
@@ -478,6 +478,9 @@ define([], function () {
           }
         }
       }
+      console.log(vm.osszegzo_szervezesi);
+      vm.osszegzo_szervezesi = $filter('orderBy')(vm.osszegzo_szervezesi, 'time', true);
+      console.log(vm.osszegzo_szervezesi);
 
       for (var i = 0; i < tomb.length; i++) {
         if (tomb[i].Event_type == "Downtime" && tomb[i].Ev_Group == "Tervezett veszteseg") {
