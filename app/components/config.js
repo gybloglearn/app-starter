@@ -19,10 +19,10 @@ define([], function () {
     });
     $stateProvider.state('logout', {
       url: '/logout',
-      controller: function($cookies, $rootScope, $state) {
-	$cookies.remove('user');
-	$rootScope.user = {};
-	$state.go('start', {}, {reload: true});
+      controller: function ($cookies, $rootScope, $state) {
+        $cookies.remove('user', {path: '/'});
+        $rootScope.user = {};
+        $state.go('start', {}, { reload: true });
       }
     });
 
