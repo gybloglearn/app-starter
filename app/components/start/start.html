@@ -1,7 +1,48 @@
 <div class="container">
-  <section class="module">
-    <div class="module-header">Start</div>
-    <div class="module-body"></div>
-    <div class="module-footer"></div>
+  <div class="page-header">
+    <h1 class="pull-left voice-brand">Területi Jelentések</h1>
+  </div>
+  <section class="reports module-snapshot col-sm-12 col-md-12 col-lg-12">
+    <div class="row">
+      <section class="module nestable col-sm-4 col-md-4 col-lg-3">
+
+        <div class="module-body">
+          <div class="listData">
+            <ul class="list-unstyled">
+              <li class="reportArea" ng-repeat="i in ['Dashboards','ZW500','ZW1000','ZW1500']">
+                <span class="icon icon-angle-right" ng-hide="vm.category==i"></span><span class="icon icon-angle-down" ng-show="vm.category==i"></span>
+                <strong
+                  ng-click="vm.category==i?vm.category='':vm.category = i;vm.subCategory=''">{{i}}</strong>
+                  <ul class="list-unstyled" ng-show="vm.category==i">
+                    <li ng-repeat="x in vm.lista | filter:{'category':i} track by $index" class="reportLink" ng-class="{'active':x.reports.length>0}"
+                      ng-click="vm.subCategory=x.subCategory">
+                      <span class="icon icon-ico_statistics_sq_sm"></span>&nbsp; {{x.subCategory}}
+                    </li>
+                  </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </section>
+      <section class="module nestable col-sm-7 col-md-8 col-lg-9">
+        <header class="module-header">
+          <h3 class="voice voice-brand pull-left">{{vm.category?vm.category+(vm.subCategory?' - '+vm.subCategory:''):''}}</h3>
+        </header>
+        <div class="module-body">
+          <div class="clearfix" ng-repeat="it in vm.lista | filter:{'category': vm.category, 'subCategory':vm.subCategory} track by $index" ng-show="vm.category?(vm.subCategory?true:false):false">
+          <div class="col-sm-4 col-md-4 thumbnail" ng-repeat="item in it.reports track by $index">
+            <img src="{{item.picture?item.picture:'http://placehold.it/300x200';}}" alt="">
+            <div class="caption">
+              <h5>{{item.title}}</h5>
+              <p>{{item.description}}</p>
+              <p><a class="btn btn-large btn-primary btn-block" href="{{item.link}}" target="_blank">Megnyit</a></p>
+            </div>
+          </div>
+          </div>
+        </div>
+        <footer class="module-footer"></footer>
+      </section>
+    </div>
   </section>
 </div>

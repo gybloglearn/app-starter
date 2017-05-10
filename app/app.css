@@ -1,0 +1,45 @@
+.reportArea {
+  padding: 5px 0 5px 0;
+}
+.reportArea:hover{
+  background-color: #f8f8f8;
+}
+.reportArea strong {
+  margin-left: 10px;
+  cursor: pointer;
+}
+.reportLink {
+  padding: 4px 2px 2px 10px;
+  color: #888;
+  font-size: .9em;
+  text-transform: uppercase;
+}
+.reportLink.active {
+  cursor: pointer;
+  /*color: rgb(155, 205, 65);*/
+  color: #005CB9;
+  border-top: 1px solid #f8f8f8;
+  border-bottom: 1px solid #f8f8f8;
+}
+
+.reportLink.active:hover {
+  /*color: rgb(0, 13, 66);*/
+  color: #46ad00;
+  background-color: #efefef;
+  border-top: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.thumbnail .caption h5 {
+  color: #005CB9;
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+
+  .module-snapshot {
+      /*max-height: 580px;*/
+      max-height: none !important;
+  }
+
+}
