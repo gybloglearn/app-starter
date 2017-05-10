@@ -32,7 +32,7 @@
         <div class="module-body">
           <div class="clearfix" ng-repeat="it in vm.lista | filter:{'category': vm.category, 'subCategory':vm.subCategory} track by $index" ng-show="vm.category?(vm.subCategory?true:false):false">
           <div class="col-sm-4 col-md-4 thumbnail" ng-repeat="item in it.reports track by $index">
-            <img src="{{item.picture?item.picture:'http://placehold.it/300x200';}}" alt="">
+            <img ng-src="{{item.picture?item.picture:'http://placehold.it/300x200';}}" alt="Snapshot">
             <div class="caption">
               <h5>{{item.title}}</h5>
               <p>{{item.description}}</p>
