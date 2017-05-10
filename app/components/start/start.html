@@ -36,7 +36,7 @@
             <div class="caption">
               <h5>{{item.title}}</h5>
               <p>{{item.description}}</p>
-              <p><a class="btn btn-large btn-primary btn-block" href="{{item.link}}" target="_blank">Megnyit</a></p>
+              <p><a class="btn btn-large btn-primary btn-block" href="{{item.link=='Comming soon'?'':item.link}}" ng-disabled="item.link=='Comming soon'" target="_blank">{{item.link=='Comming soon'?item.link + ' - ' + item.week + '.hét':'Megnyit'}}</a></p>
             </div>
           </div>
           </div>

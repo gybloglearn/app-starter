@@ -19,7 +19,12 @@ define([], function () {
           { title: 'OEE', picture: 'app/components/start/oee.jpg', link: 'http://3.228.180.15/new_sm/#/sm_data', description: 'Állásidők eloszlása SM-enként, órai darabszámok, hibapareto' }
         ]
       },
-      { category: 'ZW500', subCategory: 'Potting', reports: [] },
+      {
+        category: 'ZW500', subCategory: 'Potting',
+        reports: [
+          {title : 'SSO track', link: 'Comming soon', week: '2017_21', description: 'Munkaállomásonkénti követetés termelési darabszámokkal, adatokkal.'}
+        ]
+      },
       {
         category: 'ZW500', subCategory: 'MTF',
         reports: [
