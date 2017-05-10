@@ -14,7 +14,7 @@ define([], function () {
       {
         category: 'ZW500', subCategory: 'SheetMaker',
         reports: [
-          { title: 'Scrap', picture: 'app/components/start/smscrap.jpg', link: 'http://3.228.180.13/smscrap/', description: 'Lapselejt kimutatások SM-enként, típusonként, hibakódonként, naponta' },
+          { title: 'Scrap', picture: 'app/components/start/smscrap.jpg', link: '../smscrap/', description: 'Lapselejt kimutatások SM-enként, típusonként, hibakódonként, naponta' },
           { title: 'Production', picture: 'app/components/start/production.jpg', link: 'http://3.228.180.15/new_sm', description: 'Termelt mennyiségek gépenként tervhez hasonlítva' },
           { title: 'OEE', picture: 'app/components/start/oee.jpg', link: 'http://3.228.180.15/new_sm/#/sm_data', description: 'Állásidők eloszlása SM-enként, órai darabszámok, hibapareto' }
         ]
