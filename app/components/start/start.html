@@ -9,12 +9,12 @@
         <div class="module-body">
           <div class="listData">
             <ul class="list-unstyled">
-              <li class="reportArea" ng-repeat="i in ['Dashboards','ZW500','ZW1000','ZW1500']">
+              <li class="reportArea" ng-repeat="i in vm.areas">
                 <span class="icon icon-angle-right" ng-hide="vm.category==i"></span><span class="icon icon-angle-down" ng-show="vm.category==i"></span>
                 <strong
                   ng-click="vm.category==i?vm.category='':vm.category = i;vm.subCategory=''">{{i}}</strong>
                   <ul class="list-unstyled" ng-show="vm.category==i">
-                    <li ng-repeat="x in vm.lista | filter:{'category':i} track by $index" class="reportLink" ng-class="{'active':x.reports.length>0}"
+                    <li ng-repeat="x in vm.list | filter:{'category':i} track by $index" class="reportLink" ng-class="{'active':x.reports.length>0}"
                       ng-click="vm.subCategory=x.subCategory">
                       <span class="icon icon-ico_statistics_sq_sm"></span>&nbsp; {{x.subCategory}}
                     </li>
@@ -30,7 +30,7 @@
           <h3 class="voice voice-brand pull-left">{{vm.category?vm.category+(vm.subCategory?' - '+vm.subCategory:''):''}}</h3>
         </header>
         <div class="module-body">
-          <div class="clearfix" ng-repeat="it in vm.lista | filter:{'category': vm.category, 'subCategory':vm.subCategory} track by $index" ng-show="vm.category?(vm.subCategory?true:false):false">
+          <div class="clearfix" ng-repeat="it in vm.list | filter:{'category': vm.category, 'subCategory':vm.subCategory} track by $index" ng-show="vm.category?(vm.subCategory?true:false):false">
           <div class="col-sm-4 col-md-4 thumbnail" ng-repeat="item in it.reports track by $index">
             <img ng-src="{{item.picture?item.picture:'http://placehold.it/300x200';}}" alt="Snapshot">
             <div class="caption">

@@ -3,7 +3,9 @@ define([], function () {
   function Controller($cookies, $state, $rootScope) {
     var vm = this;
 
-    vm.lista = [
+    vm.areas = ['Dashboards', 'ZW500', 'ZW1000', 'ZW1500', 'ZeeBlok', 'ZeeLung'];
+
+    vm.list = [
       { category: 'Dashboards', subCategory: 'SAP mennyiség', reports: [] },
       { category: 'Dashboards', subCategory: 'Létszám', reports: [] },
       { category: 'ZW500', subCategory: 'Dope', reports: [] },
@@ -40,6 +42,17 @@ define([], function () {
       { category: 'ZW1500', subCategory: 'MTF' },
       { category: 'ZW1500', subCategory: 'Kazetta' },
       { category: 'ZW1500', subCategory: 'Minősítés' },
+      { category: 'ZeeBlok', subCategory: 'Sheet' },
+      { category: 'ZeeBlok', subCategory: 'Potting' },
+      { category: 'ZeeBlok', subCategory: 'MTF' },
+      { category: 'ZeeBlok', subCategory: 'Kazetta' },
+      { category: 'ZeeBlok', subCategory: 'Minősítés' },
+      { category: 'ZeeLung', subCategory: 'Extruder' },
+      { category: 'ZeeLung', subCategory: 'Cord' },
+      { category: 'ZeeLung', subCategory: 'Sheet' },
+      { category: 'ZeeLung', subCategory: 'Potting' },
+      { category: 'ZeeLung', subCategory: 'Kazetta' },
+      { category: 'ZeeLung', subCategory: 'Minősítés' }
     ];
 
     activate();
