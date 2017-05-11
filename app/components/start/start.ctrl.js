@@ -59,9 +59,10 @@ define([], function () {
               name: 'Kiesés',
               color: "#ff0000",
               data: feltolt_adatok(vm.top10),
-              dataLabels: {
-                enabled: true,
-                format: '{point.st}'
+              tooltip: {
+                 useHTML: true,
+              headerFormat: '<b style="color:{series.color};font-weight:bold;">Kiesés:</b><br>',
+              pointFormat: '<span style="font-size:1.2em">{point.st} </span><br><b>{point.y} perc</b><br><i>{point.start} - {point.end}</i>'
               }
             },
           ],
@@ -94,7 +95,9 @@ define([], function () {
       for (var i = 0; i < tomb.length; i++) {
         var d = {}
         d.y = tomb[i].time;
-        d.x = tomb[i].name;
+        d.start = tomb[i].start;
+        d.end = tomb[i].end;
+        /*d.x = tomb[i].name;*/
         d.st = tomb[i].state;
         adatok.push(d);
       }
