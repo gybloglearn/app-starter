@@ -1,0 +1,54 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">ZW1500QC részletek</h1>
+      <div class="col-sm-4" style="margin-top:20px">
+        <span>Csoportosítás:</span>
+        <select ng-model="vm.acttime">
+						<option ng-repeat="item in vm.times" value="{{item}}">{{item}}</option>
+					</select>
+        <select ng-model="vm.acttype">
+						<option ng-repeat="item in vm.type" value="{{item}}">{{item}}</option>
+					</select>
+      </div>
+      <div class="col-sm-6" style="margin-top:20px">
+        <div class="input-group">
+            <span class="input-group-addon">Dátum:</span>
+					  <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-10d">
+					  <span class="input-group-addon">-tól</span>
+					  <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="0d">
+					  <span class="input-group-addon">-ig</span>
+            <div class="input-group-btn">
+						  <a href="" class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.dis || vm.enddate<=vm.startdate">Betöltés</a>
+					  </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="progress progress-danger progress-striped active" ng-hide="!vm.QCloading">
+				<div class="progress-bar" style="width: 100%">
+					<p class="text-center">Betöltés...</p>
+				</div>
+			</div>
+      
+      <my-chart id="chart" config="vm.QCchartconfig"></my-chart>
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th rowspan=2 ng-click="vm.order='Date';vm.asc=!vm.asc;">Dátum</th>
+            <th rowspan=2 ng-click="vm.order='Label';vm.asc=!vm.asc;">Címke</th>
+            <th rowspan=2 ng-click="vm.order='Value';vm.asc=!vm.asc;">Érték (db)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.data | orderBy:vm.order:vm.asc" ng-show="item.Value>0">
+            <td>{{item.Date}}</td>
+            <td>{{item.Label}}</td>
+            <td>{{item.Value}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>
