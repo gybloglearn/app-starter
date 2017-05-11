@@ -29,6 +29,7 @@ define([], function () {
     var tomb = [];
     var kodok = [];
     var ok = [];
+    console.log(vm.enddatum);
 
 
     function beallit() {
