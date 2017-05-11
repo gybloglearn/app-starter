@@ -2,7 +2,7 @@ define([], function () {
   'use strict';
   function Controller(Data, $cookies, $state, $rootScope, $filter) {
     var vm = this;
-    vm.weekstart = $filter('date')((new Date().getTime() - 7 * 24 * 3600 * 1000), 'yyyy-MM-dd');
+    vm.weekstart = $filter('date')((new Date().getTime() - 1 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.weekend = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.weekstat = [];
     vm.mistakes = [];
@@ -22,7 +22,7 @@ define([], function () {
         vm.weekstat = response.data;
 
         for (var i = 0; i < vm.weekstat.length; i++) {
-          if (vm.weekstat[i].machine_Stat != "Aut. Dolgozik ") {
+          if (vm.weekstat[i].machine_Stat != "Aut. Dolgozik " && vm.weekstat[i].machine_Stat != "Alapállapot") {
             vm.mistakes[a] = {}
             vm.mistakes[a].name = vm.weekstat[i].MName;
             vm.mistakes[a].time = vm.weekstat[i].Stat_Time * 1;
@@ -42,6 +42,7 @@ define([], function () {
             }
           }
         }
+        console.log(vm.top10);
 
         for (var i = vm.mistakes.length - 1; i > vm.mistakes.length - 11; i--) {
           vm.top10[b] = vm.mistakes[i];
@@ -58,6 +59,10 @@ define([], function () {
               name: 'Kiesés',
               color: "#ff0000",
               data: feltolt_adatok(vm.top10),
+              dataLabels: {
+                enabled: true,
+                format: '{point.st}'
+              }
             },
           ],
           xAxis: [
@@ -87,7 +92,11 @@ define([], function () {
       var adatok = [];
 
       for (var i = 0; i < tomb.length; i++) {
-        adatok.push(tomb[i].time);
+        var d = {}
+        d.y = tomb[i].time;
+        d.x = tomb[i].name;
+        d.st = tomb[i].state;
+        adatok.push(d);
       }
       return adatok;
     }
