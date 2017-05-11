@@ -4,16 +4,24 @@ define([
   './start/start.ctrl',
   './login/login.ctrl',
   './services/login.service',
-  './services/data.service'
-  /* files */
+  './services/data.service',
+  './qcpage/qcpage.ctrl',
+  './services/download.service',
+  './directives/datepicker',
+  './directives/mychart',
+	/* files */
 ], function(
   configFunction,
   runFunction,
   startController,
   loginController,
   loginService,
-  dataService
-/* names */) {
+  dataService,
+  qcpageController,
+  downloadService,
+  datepicker,
+  mychart,
+	/* names */) {
 
   // Link all components to the module !!!
 
@@ -24,5 +32,9 @@ define([
   app.service('Login', loginService);
   app.controller('StartController', startController);
   app.controller('LoginController', loginController);
-  /* controllers */
+  app.controller('qcpageController', qcpageController);
+	app.service('downloadService', downloadService);
+  app.directive('datepicker', datepicker);
+  app.directive('myChart', mychart);
+		/* controllers */
 });
