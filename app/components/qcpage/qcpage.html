@@ -35,16 +35,26 @@
       <table class="table table-condensed">
         <thead>
           <tr>
-            <th rowspan=2 ng-click="vm.order='Date';vm.asc=!vm.asc;">Dátum</th>
-            <th rowspan=2 ng-click="vm.order='Label';vm.asc=!vm.asc;">Címke</th>
-            <th rowspan=2 ng-click="vm.order='Value';vm.asc=!vm.asc;">Érték (db)</th>
+            <th rowspan=2 ng-click="vm.order='datum';vm.asc=!vm.asc;">Dátum</th>
+            <th rowspan=2 ng-click="vm.order='aplusz';vm.asc=!vm.asc;">A+</th>
+            <th rowspan=2 ng-click="vm.order='a';vm.asc=!vm.asc;">A</th>
+            <th rowspan=2 ng-click="vm.order='b';vm.asc=!vm.asc;">B</th>
+            <th rowspan=2 ng-click="vm.order='notgraded';vm.asc=!vm.asc;">Not Graded</th>
+            <th rowspan=2 ng-click="vm.order='rework';vm.asc=!vm.asc;">Rework</th>
+            <th rowspan=2 ng-click="vm.order='scrap';vm.asc=!vm.asc;">Scrap</th>
+            <th rowspan=2 ng-click="vm.order='osszes';vm.asc=!vm.asc;">Összes</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="item in vm.data | orderBy:vm.order:vm.asc" ng-show="item.Value>0">
-            <td>{{item.Date}}</td>
-            <td>{{item.Label}}</td>
-            <td>{{item.Value}}</td>
+          <tr ng-repeat="item in vm.selectsum | orderBy:vm.order:vm.asc">
+            <td>{{item.datum}}</td>
+            <td>{{item.aplusz}}</td>
+            <td>{{item.a}}</td>
+            <td>{{item.b}}</td>
+            <td>{{item.notgraded}}</td>
+            <td>{{item.rework}}</td>
+            <td>{{item.scrap}}</td>
+            <td>{{item.osszes}}</td>
           </tr>
         </tbody>
       </table>

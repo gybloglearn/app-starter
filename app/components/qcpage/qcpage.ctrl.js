@@ -6,6 +6,7 @@ define([], function () {
     vm.times = ["nap", "hét", "hónap", "év"];
     vm.data = [];
     vm.sum = [];
+    vm.selectsum = [];
     vm.acttime = "nap";
     vm.acttype = "Potting Start";
     vm.load = load;
@@ -13,8 +14,11 @@ define([], function () {
     function load() {
       vm.data = [];
       vm.sum = [];
+      vm.selectsum = [];
       var talalat = 0;
+      var talalt = 0;
       var a = 0;
+      var b = 0;
       vm.dis = true;
       vm.QCloading = true;
 
@@ -40,6 +44,104 @@ define([], function () {
             a++;
           }
         }
+
+        for (var i = 0; i < vm.data.length; i++) {
+          var actdate = vm.data[i].Date;
+          for (var j = 0; j < vm.selectsum.length; j++) {
+            if (actdate == vm.selectsum[j].datum) {
+              if (vm.data[i].Label == "A+") {
+                vm.selectsum[j].aplusz += vm.data[i].Value;
+                vm.selectsum[j].osszes += vm.data[i].Value;
+              }
+              else if (vm.data[i].Label == "A") {
+                vm.selectsum[j].a += vm.data[i].Value;
+                vm.selectsum[j].osszes += vm.data[i].Value;
+              }
+              else if (vm.data[i].Label == "B") {
+                vm.selectsum[j].b += vm.data[i].Value;
+                vm.selectsum[j].osszes += vm.data[i].Value;
+              }
+              else if (vm.data[i].Label == "Not graded") {
+                vm.selectsum[j].notgraded += vm.data[i].Value;
+                vm.selectsum[j].osszes += vm.data[i].Value;
+              }
+              else if (vm.data[i].Label == "Rework") {
+                vm.selectsum[j].rework += vm.data[i].Value;
+                vm.selectsum[j].osszes += vm.data[i].Value;
+              }
+              else if (vm.data[i].Label == "Scrap") {
+                vm.selectsum[j].scrap += vm.data[i].Value;
+                vm.selectsum[j].osszes += vm.data[i].Value;
+              }
+              talalt++
+            }
+          }
+          if (talalt > 0) {
+            b = b;
+            talalt = 0;
+          }
+          else {
+            vm.selectsum[b] = {}
+            vm.selectsum[b].datum = actdate;
+            if (vm.data[i].Label == "A+"){
+              vm.selectsum[b].aplusz = vm.data[i].Value;
+              vm.selectsum[b].a = 0;
+              vm.selectsum[b].b = 0;
+              vm.selectsum[b].notgraded = 0;
+              vm.selectsum[b].rework = 0;
+              vm.selectsum[b].scrap = 0;
+              vm.selectsum[b].osszes = vm.data[i].Value;
+            }
+            else if (vm.data[i].Label == "A"){
+              vm.selectsum[b].aplusz = 0;
+              vm.selectsum[b].a = vm.data[i].Value;
+              vm.selectsum[b].b = 0;
+              vm.selectsum[b].notgraded = 0;
+              vm.selectsum[b].rework = 0;
+              vm.selectsum[b].scrap = 0;
+              vm.selectsum[b].osszes = vm.data[i].Value;
+            }
+            else if (vm.data[i].Label == "B"){
+              vm.selectsum[b].aplusz = 0;
+              vm.selectsum[b].a = 0;
+              vm.selectsum[b].b = vm.data[i].Value;
+              vm.selectsum[b].notgraded = 0;
+              vm.selectsum[b].rework = 0;
+              vm.selectsum[b].scrap = 0;
+              vm.selectsum[b].osszes = vm.data[i].Value;
+            }
+            else if (vm.data[i].Label == "Not graded"){
+              vm.selectsum[b].aplusz = 0;
+              vm.selectsum[b].a = 0;
+              vm.selectsum[b].b = 0;
+              vm.selectsum[b].notgraded = vm.data[i].Value;
+              vm.selectsum[b].rework = 0;
+              vm.selectsum[b].scrap = 0;
+              vm.selectsum[b].osszes = vm.data[i].Value;
+            }
+            else if (vm.data[i].Label == "Rework"){
+              vm.selectsum[b].aplusz = 0;
+              vm.selectsum[b].a = 0;
+              vm.selectsum[b].b = 0;
+              vm.selectsum[b].notgraded = 0;
+              vm.selectsum[b].rework = vm.data[i].Value;
+              vm.selectsum[b].scrap = 0;
+              vm.selectsum[b].osszes = vm.data[i].Value;
+            }
+            else if (vm.data[i].Label == "Scrap"){
+              vm.selectsum[b].aplusz = 0;
+              vm.selectsum[b].a = 0;
+              vm.selectsum[b].b = 0;
+              vm.selectsum[b].notgraded = 0;
+              vm.selectsum[b].rework = 0;
+              vm.selectsum[b].scrap = vm.data[i].Value;
+              vm.selectsum[b].osszes = vm.data[i].Value;
+            }
+            b++;
+          }
+        }
+
+        console.log(vm.selectsum);
 
         vm.dis = false;
         vm.QCloading = false;
@@ -123,7 +225,7 @@ define([], function () {
       vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
     }
 
-     function feltolt_Scrap(tomb, tomb2) {
+    function feltolt_Scrap(tomb, tomb2) {
       var x_scrap = [];
 
       for (var i = 0; i < tomb.length; i++) {
