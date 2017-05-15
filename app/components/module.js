@@ -13,7 +13,9 @@ define([
   './filters/sumdb',
   './filters/sumaeq',
   './filters/shift',
-  './filters/name_change'
+  './filters/name_change',
+  './Pottingsum/Pottingsum.ctrl',
+  './services/Sumservice.service'
 	/* files */
 ], function(
   configFunction,
@@ -30,7 +32,9 @@ define([
   sumdb,
   sumaeq,
   shift,
-  name_change
+  name_change,
+  PottingsumController,
+  SumserviceService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -51,5 +55,7 @@ define([
   app.filter('sumaeq',sumaeq);
   app.filter('shift',shift);
   app.filter('name_change',name_change);
+	app.controller('PottingsumController', PottingsumController);
+	app.service('SumserviceService', SumserviceService);
 		/* controllers */
 });

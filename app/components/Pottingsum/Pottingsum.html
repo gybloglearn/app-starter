@@ -1,0 +1,49 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">{{vm.mch}}-összesítő</h1>
+      <h1 class="text-center">{{vm.datumszam}}</h1>
+      <ul class="nav nav-tabs" style="margin-top:10px">
+				<li ng-repeat="item in vm.pottings track by $index">
+					<a data-toggle="tab" href="" ng-click="vm.mch=item;vm.load()" ng-hide="vm.dis">{{item}}</a>
+				</li>
+			</ul>
+      <div class="col-sm-5">
+        <div class="input-group">
+					<span class="input-group-addon">Dátum:</span>
+					<input type="text" class="datepicker form-control" ng-model="vm.datum">
+					<div class="input-group-btn">
+						<a href="" class="btn btn-primary" ng-click="vm.beallit();vm.load()" ng-disabled="vm.dis">Betöltés</a>
+					</div>
+				</div>
+      </div>
+    </div>
+    <div class="module-body">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>Szak</th>
+            <th>Gélezés</th>
+            <th>Alsó uretán</th>
+            <th>Alsó esztétika</th>
+            <th>Fordítás</th>
+            <th>Felső uretán</th>
+            <th>Felső esztétika</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.selectdatas">
+            <td>{{item.SHIFT}}</td>
+            <td>{{item.GEL_PREP}}</td>
+            <td>{{item.URET_PREP_A}}</td>
+            <td>{{item.POST_URET_A}}</td>
+            <td>{{item.ROT}}</td>
+            <td>{{item.URET_PREP_F}}</td>
+            <td>{{item.POST_URET_F}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>

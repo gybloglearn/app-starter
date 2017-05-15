@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('Pottingsum', {
+		url: '/Pottingsum',
+		templateUrl: './app/components/Pottingsum/Pottingsum.html',
+		controller: 'PottingsumController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('Potting', {
 		url: '/Potting',
 		templateUrl: './app/components/Potting/Potting.html',
