@@ -33,21 +33,39 @@
       
       <my-chart id="chart" config="vm.QCchartconfig"></my-chart>
       <table class="table table-condensed">
-        <thead>
-          <tr>
-            <th>Dátum</th>
-            <th>Címke</th>
-            <th>Érték</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="item in vm.data" ng-show="item.Value>0">
-            <td>{{item.Date}}</td>
-            <td>{{item.Label}}</td>
-            <td>{{item.Value}}</td>
-          </tr>
-        </tbody>
-      </table>
+				<thead>
+					<tr>
+						<th rowspan=2 ng-click="vm.order='datum';vm.asc=!vm.asc;">Dátum</th>
+						<th rowspan=2 ng-click="vm.order='aplusz';vm.asc=!vm.asc;">A+</th>
+						<th>A+/Összes</th>
+						<th rowspan=2 ng-click="vm.order='a';vm.asc=!vm.asc;">A-</th>
+            <th>A-/Összes</th>
+						<th rowspan=2 ng-click="vm.order='b';vm.asc=!vm.asc;">B</th>
+            <th>B/Összes</th>
+						<th rowspan=2 ng-click="vm.order='notgraded';vm.asc=!vm.asc;">Not Graded</th>
+            <th>Not Graded/Összes</th>
+						<th rowspan=2 ng-click="vm.order='scrap';vm.asc=!vm.asc;">Scrap</th>
+            <th>Scrap/Összes</th>
+						<th rowspan=2 ng-click="vm.order='osszes';vm.asc=!vm.asc;">Összes</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in vm.selectsum | orderBy:vm.order:vm.asc">
+						<td>{{item.datum}}</td>
+						<td>{{item.aplusz}}</td>
+						<td>{{(item.aplusz/item.osszes)*100 |number:2}} %</td>
+						<td>{{item.aminus}}</td>
+            <td>{{(item.aminus/item.osszes)*100 |number:2}} %</td>
+						<td>{{item.b}}</td>
+            <td>{{(item.b/item.osszes)*100 |number:2}} %</td>
+						<td>{{item.notgraded}}</td>
+            <td>{{(item.notgraded/item.osszes)*100 |number:2}} %</td>
+						<td>{{item.scrap}}</td>
+            <td>{{(item.scrap/item.osszes)*100 |number:2}} %</td>
+						<td>{{item.osszes}}</td>
+					</tr>
+				</tbody>
+			</table>
     </div>
     <div class="module-footer"></div>
   </section>

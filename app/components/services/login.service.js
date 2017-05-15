@@ -6,8 +6,7 @@ define([], function(){
     function auth(d){
       var req={
 	method:"POST",
-	url: "//3.228.180.15/login/login",
-	//url: "//localhost/login/login",
+	url: "../login/login",
 	data: d
       };
       return $http(req);

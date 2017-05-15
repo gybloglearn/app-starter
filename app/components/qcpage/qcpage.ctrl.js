@@ -6,6 +6,7 @@ define([], function () {
     vm.times = ["nap", "hét", "hónap", "negyedév", "év"];
     vm.data = [];
     vm.sum = [];
+    vm.selectsum = [];
     vm.acttime = "nap";
     vm.acttype = "ETF";
     vm.load = load;
@@ -13,8 +14,11 @@ define([], function () {
     function load() {
       vm.data = [];
       vm.sum = [];
+      vm.selectsum = [];
       var talalat = 0;
+      var talalt = 0;
       var a = 0;
+      var b = 0;
       vm.dis = true;
       vm.QCloading = true;
 
@@ -40,6 +44,90 @@ define([], function () {
             a++;
           }
         }
+
+        for (var i = 0; i < vm.data.length; i++) {
+          var actdate = vm.data[i].Date;
+          for (var j = 0; j < vm.selectsum.length; j++) {
+            if (actdate == vm.selectsum[j].datum) {
+              if (vm.data[i].Label == "A+") {
+                vm.selectsum[j].aplusz += vm.data[i].Value;
+                vm.selectsum[j].osszes += vm.data[i].Value;
+              }
+              else if (vm.data[i].Label == "A-") {
+                vm.selectsum[j].aminus += vm.data[i].Value;
+                vm.selectsum[j].osszes += vm.data[i].Value;
+              }
+              else if (vm.data[i].Label == "B") {
+                vm.selectsum[j].b += vm.data[i].Value;
+                vm.selectsum[j].osszes += vm.data[i].Value;
+              }
+              else if (vm.data[i].Label == "Not graded") {
+                vm.selectsum[j].notgraded += vm.data[i].Value;
+                vm.selectsum[j].osszes += vm.data[i].Value;
+              }
+              else if (vm.data[i].Label == "Scrap") {
+                vm.selectsum[j].scrap += vm.data[i].Value;
+                vm.selectsum[j].osszes += vm.data[i].Value;
+              }
+              talalt++
+            }
+          }
+          if (talalt > 0) {
+            b = b;
+            talalt = 0;
+          }
+          else {
+            vm.selectsum[b] = {}
+            vm.selectsum[b].datum = actdate;
+            if (vm.data[i].Label == "A+"){
+              vm.selectsum[b].aplusz = vm.data[i].Value;
+              vm.selectsum[b].aminus = 0;
+              vm.selectsum[b].b = 0;
+              vm.selectsum[b].notgraded = 0;
+              vm.selectsum[b].scrap = 0;
+              vm.selectsum[b].osszes = vm.data[i].Value;
+            }
+            else if (vm.data[i].Label == "A-"){
+              vm.selectsum[b].aplusz = 0;
+              vm.selectsum[b].aminus = vm.data[i].Value;
+              vm.selectsum[b].b = 0;
+              vm.selectsum[b].notgraded = 0;
+              vm.selectsum[b].rework = 0;
+              vm.selectsum[b].scrap = 0;
+              vm.selectsum[b].osszes = vm.data[i].Value;
+            }
+            else if (vm.data[i].Label == "B"){
+              vm.selectsum[b].aplusz = 0;
+              vm.selectsum[b].aminus = 0;
+              vm.selectsum[b].b = vm.data[i].Value;
+              vm.selectsum[b].notgraded = 0;
+              vm.selectsum[b].rework = 0;
+              vm.selectsum[b].scrap = 0;
+              vm.selectsum[b].osszes = vm.data[i].Value;
+            }
+            else if (vm.data[i].Label == "Not graded"){
+              vm.selectsum[b].aplusz = 0;
+              vm.selectsum[b].aminus = 0;
+              vm.selectsum[b].b = 0;
+              vm.selectsum[b].notgraded = vm.data[i].Value;
+              vm.selectsum[b].rework = 0;
+              vm.selectsum[b].scrap = 0;
+              vm.selectsum[b].osszes = vm.data[i].Value;
+            }
+            else if (vm.data[i].Label == "Scrap"){
+              vm.selectsum[b].aplusz = 0;
+              vm.selectsum[b].aminus = 0;
+              vm.selectsum[b].b = 0;
+              vm.selectsum[b].notgraded = 0;
+              vm.selectsum[b].rework = 0;
+              vm.selectsum[b].scrap = vm.data[i].Value;
+              vm.selectsum[b].osszes = vm.data[i].Value;
+            }
+            b++;
+          }
+        }
+
+        console.log(vm.selectsum);
 
         vm.dis = false;
         vm.QCloading = false;
@@ -77,6 +165,12 @@ define([], function () {
               stack: 'Összes címke'
             },
             {
+              name: 'A-',
+              color: "#cccc00",
+              data: feltolt_A_minus(vm.data, vm.sum),
+              stack: 'Összes címke'
+            },
+            {
               name: 'A+',
               color: "#00cc00",
               data: feltolt_A(vm.data, vm.sum),
@@ -108,7 +202,7 @@ define([], function () {
       vm.startdate = $filter('date')(vm.enddate - (10 * 24 * 3600 * 1000), 'yyyy-MM-dd');
       vm.enddate = $filter('date')(vm.enddate, 'yyyy-MM-dd');
       load();
-      vm.edate = $filter('date')(new Date().getTime(),'yyyy-MM-dd');
+      vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
     }
 
     function feltolt_Scrap(tomb, tomb2) {
@@ -156,6 +250,21 @@ define([], function () {
       return x_B;
     }
 
+    function feltolt_A_minus(tomb, tomb2) {
+      var x_A = [];
+
+      for (var i = 0; i < tomb.length; i++) {
+        if (tomb[i].Label == "A-") {
+          for (var j = 0; j < tomb2.length; j++) {
+            if (tomb[i].Date == tomb2[j].datum) {
+              x_A.push((tomb[i].Value / tomb2[j].osszeg) * 100);
+            }
+          }
+
+        }
+      }
+      return x_A;
+    }
     function feltolt_A(tomb, tomb2) {
       var x_A = [];
 
