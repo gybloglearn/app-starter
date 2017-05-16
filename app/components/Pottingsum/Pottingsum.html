@@ -19,6 +19,14 @@
       </div>
     </div>
     <div class="module-body">
+      <div class="progress progress-warning progress-striped active" ng-hide="!vm.Pottingloading">
+				<div class="progress-bar" style="width: 100%">
+					<p class="text-center">Betöltés...</p>
+				</div>
+			</div>
+      <div class="tab-content">
+						<my-chart id="chart-col" config="vm.chartconfig"></my-chart>
+			</div>
       <table class="table table-condensed">
         <thead>
           <tr>
