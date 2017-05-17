@@ -64,18 +64,19 @@ define([], function () {
       SumserviceService.get(vm.startdate, vm.enddate, vm.mch).then(function (response) {
         vm.data = response.data;
         vm.dis = false;
-        var start1 = 0;
+
         var gelszam1 = 0;
         var uretalso1 = 0;
         var uretalsoesztetika1 = 0;
         var ford1 = 0;
         var uretfelso1 = 0;
         var uretfelsoesztetika1 = 0;
-        var end1 = 0;
 
         for (var i = 0; i < vm.data.length; i++) {
-          var startdate = new Date(vm.data[i].PT_Start_DT).getTime();
+          var startdate1 = $filter('date')(new Date(vm.data[i].PT_Start_DT).getTime(), 'yyyy-MM-dd');
+          var startdate2 = $filter('date')(new Date(vm.data[i].PT_Start_DT).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
           var actszam = new Date(vm.data[i].PT_Start_DT).getHours() * 60 + new Date(vm.data[i].PT_Start_DT).getMinutes();
+
           var startszam = 0;
           if (actszam >= 350 && actszam < 830) {
             startszam = 1;
@@ -88,15 +89,17 @@ define([], function () {
           }
 
           if (actszam < 350 || actszam >= 1310) {
-            vm.data[i].PT_START_S = $filter('shift')(startszam, (startdate - 24 * 3600 * 1000)) + " ";
+            vm.data[i].PT_START_S = $filter('shift')(startszam, startdate2) + " ";
           }
           else {
-            vm.data[i].PT_START_S = $filter('shift')(startszam, startdate) + " ";
+            vm.data[i].PT_START_S = $filter('shift')(startszam, startdate1) + " ";
           }
 
-          var enddate = new Date(vm.data[i].PT_OUT).getTime();
+          var enddate1 = $filter('date')(new Date(vm.data[i].PT_OUT).getTime(), 'yyyy-MM-dd');
+          var enddate2 = $filter('date')(new Date(vm.data[i].PT_OUT).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
           var actszamend = new Date(vm.data[i].PT_OUT).getHours() * 60 + new Date(vm.data[i].PT_OUT).getMinutes();
           var endszam = 0;
+
           if (actszamend >= 350 && actszamend < 830) {
             endszam = 1;
           }
@@ -108,10 +111,10 @@ define([], function () {
           }
 
           if (actszamend < 350 || actszamend >= 1310) {
-            vm.data[i].PT_END_S = $filter('shift')(endszam, (enddate - 24 * 3600 * 1000)) + " ";
+            vm.data[i].PT_END_S = $filter('shift')(endszam, enddate2) + " ";
           }
           else {
-            vm.data[i].PT_END_S = $filter('shift')(endszam, enddate) + " ";
+            vm.data[i].PT_END_S = $filter('shift')(endszam, enddate1) + " ";
           }
         }
 
@@ -120,7 +123,6 @@ define([], function () {
             if (vm.selectdatas[j].SHIFT == vm.data[i].PT_START_S && (new Date(vm.data[i].PT_Start_DT).getTime() < vm.vege) && (new Date(vm.data[i].PT_Start_DT).getTime() >= vm.kezdo)) {
               vm.selectdatas[j].START++;
               vm.selectdatas[j].MODULS[0].push(vm.data[i].JobID);
-              start1++;
             }
             if (vm.selectdatas[j].SHIFT == vm.data[i].PT_GEL_PREP_S && (new Date(vm.data[i].PT_GEL_PREP_DT).getTime() < vm.vege) && (new Date(vm.data[i].PT_GEL_PREP_DT).getTime() >= vm.kezdo)) {
               vm.selectdatas[j].GEL_PREP++;
@@ -155,19 +157,16 @@ define([], function () {
             if (vm.selectdatas[j].SHIFT == vm.data[i].PT_END_S && (new Date(vm.data[i].PT_OUT).getTime() < vm.vege) && (new Date(vm.data[i].PT_OUT).getTime() >= vm.kezdo)) {
               vm.selectdatas[j].END++;
               vm.selectdatas[j].MODULS[7].push(vm.data[i].JobID);
-              end1++;
             }
           }
         }
 
-        var start2 = 0;
         var gelszam2 = 0;
         var uretalso2 = 0;
         var uretalsoesztetika2 = 0;
         var ford2 = 0;
         var uretfelso2 = 0;
         var uretfelsoesztetika2 = 0;
-        var end2 = 0;
 
         for (var i = 0; i < vm.data.length; i++) {
           for (var j = 0; j < vm.selecthour.length; j++) {
@@ -175,7 +174,6 @@ define([], function () {
               var startszamvaltozo = new Date(vm.data[i].PT_Start_DT).getHours() * 60 + new Date(vm.data[i].PT_Start_DT).getMinutes();
               if (startszamvaltozo >= vm.selecthour[j].TIME && startszamvaltozo < vm.selecthour[j].TIME + 60) {
                 vm.selecthour[j].START++;
-                start2++;
               }
             }
             if ((new Date(vm.data[i].PT_GEL_PREP_DT).getTime() < vm.vege) && (new Date(vm.data[i].PT_GEL_PREP_DT).getTime() >= vm.kezdo)) {
@@ -224,24 +222,39 @@ define([], function () {
               var endszamvaltozo = new Date(vm.data[i].PT_OUT).getHours() * 60 + new Date(vm.data[i].PT_OUT).getMinutes();
               if (endszamvaltozo >= vm.selecthour[j].TIME && endszamvaltozo < vm.selecthour[j].TIME + 60) {
                 vm.selecthour[j].END++;
-                end2++;
               }
             }
           }
         }
-        vm.selecthour[18].START += (start1 - start2);
+        var startszamlalo = 0;
+        var endszamlalo = 0;
+
+        for (var i = 0; i < vm.selectdatas.length; i++) {
+          startszamlalo += vm.selectdatas[i].START;
+          endszamlalo += vm.selectdatas[i].END;
+        }
+        for (var i = 0; i < vm.selecthour.length; i++) {
+          startszamlalo -= vm.selecthour[i].START;
+          endszamlalo -= vm.selecthour[i].END;
+        }
+
+
+        console.log(vm.selecthour[18].START);
+        console.log(startszamlalo);
+        vm.selecthour[18].START += startszamlalo;
         vm.selecthour[18].GEL += (gelszam1 - gelszam2);
         vm.selecthour[18].URETA += (uretalso1 - uretalso2);
         vm.selecthour[18].PURETA += (uretalsoesztetika1 - uretalsoesztetika2);
         vm.selecthour[18].ROT += (ford1 - ford2);
         vm.selecthour[18].URETF += (uretfelso1 - uretfelso2);
         vm.selecthour[18].PURETF += (uretfelsoesztetika1 - uretfelsoesztetika2);
-        vm.selecthour[18].END += (end1 - end2);
+        vm.selecthour[18].END += endszamlalo;
 
         setChart(vm.mch);
         vm.Pottingloading = false;
-        console.log(vm.data);
-        console.log(vm.selectdatas);
+        //console.log(vm.data);
+        //console.log(vm.selectdatas);
+        //console.log(vm.selecthour);
       });
     }
 
@@ -310,17 +323,17 @@ define([], function () {
             stack: 'Modulok'
           },
           {
+            name: 'Pottingbe',
+            color: "#006600",
+            data: feltoltbe(vm.selecthour),
+            stack: 'Modulok'
+          },
+          {
             name: 'Gél',
             color: "#33ccff",
             data: feltoltgel(vm.selecthour),
             stack: 'Modulok'
           },
-          {
-            name: 'Pottingbe',
-            color: "#006600",
-            data: feltoltbe(vm.selecthour),
-            stack: 'Modulok'
-          }
         ],
         xAxis: [
           {
