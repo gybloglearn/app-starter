@@ -86,7 +86,13 @@ define([], function () {
           else {
             startszam = 3;
           }
-          vm.data[i].PT_START_S = $filter('shift')(startszam, startdate) + " ";
+
+          if (actszam < 350 || actszam >= 1310) {
+            vm.data[i].PT_START_S = $filter('shift')(startszam, (startdate - 24 * 3600 * 1000)) + " ";
+          }
+          else {
+            vm.data[i].PT_START_S = $filter('shift')(startszam, startdate) + " ";
+          }
 
           var enddate = new Date(vm.data[i].PT_OUT).getTime();
           var actszamend = new Date(vm.data[i].PT_OUT).getHours() * 60 + new Date(vm.data[i].PT_OUT).getMinutes();
@@ -100,7 +106,13 @@ define([], function () {
           else {
             endszam = 3;
           }
-          vm.data[i].PT_END_S = $filter('shift')(endszam, enddate) + " ";
+
+          if (actszamend < 350 || actszamend >= 1310) {
+            vm.data[i].PT_END_S = $filter('shift')(endszam, (enddate - 24 * 3600 * 1000)) + " ";
+          }
+          else {
+            vm.data[i].PT_END_S = $filter('shift')(endszam, enddate) + " ";
+          }
         }
 
         for (var i = 0; i < vm.data.length; i++) {
@@ -228,6 +240,7 @@ define([], function () {
 
         setChart(vm.mch);
         vm.Pottingloading = false;
+        console.log(vm.data);
         console.log(vm.selectdatas);
       });
     }
@@ -236,8 +249,14 @@ define([], function () {
       var year = new Date(vm.datum).getFullYear();
       var month = new Date(vm.datum).getMonth() + 1;
       var day = new Date(vm.datum).getDate();
-      var kezdo = year + "-0" + month + "-" + day + " 05:50:00";
-      var vege = year + "-0" + month + "-" + (day + 1) + " 05:50:00";
+      if (month < 10) {
+        var kezdo = year + "-0" + month + "-" + (day) + " 05:50:00";
+        var vege = year + "-0" + month + "-" + (day + 1) + " 05:50:00";
+      }
+      else {
+        var kezdo = year + "-" + month + "-" + day + " 05:50:00";
+        var vege = year + "-" + month + "-" + (day + 1) + " 05:50:00";
+      }
       vm.kezdo = new Date(kezdo).getTime();
       vm.vege = new Date(vege).getTime();
     }
