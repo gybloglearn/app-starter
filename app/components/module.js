@@ -9,6 +9,7 @@ define([
   './bstat/bstat.ctrl',
   './directives/datepicker',
   './directives/mychart',
+  './directives/ROOM/room',
   './Plan/Plan.ctrl',
   './services/planservice.service',
   './forbidden/forbidden.ctrl'
@@ -24,6 +25,7 @@ define([
   bstatController,
   datepicker,
   mychart,
+  roomdir,
   PlanController,
   planserviceService,
   forbiddenController
@@ -42,6 +44,7 @@ define([
     app.controller('bstatController', bstatController);
     app.directive('datepicker', datepicker);
     app.directive('myChart', mychart);
+    app.directive('roomDir',roomdir);
     app.controller('PlanController', PlanController);
 		app.service('planserviceService', planserviceService);
 		app.controller('forbiddenController', forbiddenController);

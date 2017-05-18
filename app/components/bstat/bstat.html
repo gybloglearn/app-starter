@@ -18,9 +18,9 @@
 			</div>
 			<div class="col-sm-12" style="margin-top:20px">
 				<ul class="nav nav-tabs" style="margin-top:10px">
-							<li ng-repeat="item in vm.status track by $index">
-									<a data-toggle="tab" href="" ng-click="vm.st=item" ng-hide="vm.dis || !vm.showsumstat || !vm.showcirclestat">{{item}}</a>
-							</li>
+					<li ng-repeat="item in vm.status track by $index">
+						<a data-toggle="tab" href="" ng-click="vm.st=item" ng-hide="vm.dis || !vm.showsumstat || !vm.showcirclestat">{{item}}</a>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -39,7 +39,7 @@
 						<th>Legkisebb kieső idő (perc)</th>
 						<th>Legnagyobb kieső idő (perc)</th>
 						<th>DB</th>
-            <th>Részletek</th>
+						<th>Részletek</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -73,104 +73,110 @@
 							<td>
 								<div class="btn-group btn-group-sm">
 									<button class="btn btn-success" ng-click="vm.showsumstat=true;vm.itemtype=''"><i class="icon-arrow-left"></i></button>
-									<button class="btn btn-primary" ng-click="vm.drawitem=data;vm.drawchart();vm.show2table=false"><i class="icon-bar-chart"></i></button>
-								</div>
-							</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-			<div class="tab-content" ng-show="vm.drawitem">
-						<my-chart id="chart_pie" config="vm.chartconfig_pie"></my-chart>
-						<my-chart id="chart_xrange" config="vm.chartconfig_xrange"></my-chart>
-						<table class="table table-bordered">
-							<thead>
-								<tr>
-									<th>Hiba</th>
-									<th>Kezdet</th>
-									<th>Vége</th>
-									<th>Időtartam</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="fault in vm.kodok">
-									<td>{{fault.code}}</td>
-									<td>{{fault.x | date:'yyyy-MM-dd-hh:mm'}}</td>
-									<td>{{fault.x2 | date:'yyyy-MM-dd-hh:mm'}}</td>
-									<td>{{fault.time/60000}}</td>
-								</tr>
-							</tbody>
-						</table>
-						<button class="btn btn-success" ng-click="vm.show2table=true;vm.show3table=true;vm.drawitem=''"><i class="icon-arrow-left"></i></button>
-			</div>
+							<button class="btn btn-primary" ng-click="vm.drawitem=data;vm.drawchart();vm.show2table=false"><i class="icon-bar-chart"></i></button>
 		</div>
+		</td>
+		</tr>
+		</tbody>
+		</table>
+</div>
+<div class="tab-content" ng-show="vm.drawitem">
+	<my-chart id="chart_pie" config="vm.chartconfig_pie"></my-chart>
+	<my-chart id="chart_xrange" config="vm.chartconfig_xrange"></my-chart>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Hiba</th>
+				<th>Kezdet</th>
+				<th>Vége</th>
+				<th>Időtartam</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="fault in vm.kodok">
+				<td>{{fault.code}}</td>
+				<td>{{fault.x | date:'yyyy-MM-dd-hh:mm'}}</td>
+				<td>{{fault.x2 | date:'yyyy-MM-dd-hh:mm'}}</td>
+				<td>{{fault.time/60000}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<button class="btn btn-success" ng-click="vm.show2table=true;vm.show3table=true;vm.drawitem=''"><i class="icon-arrow-left"></i></button>
+</div>
+</div>
 
-		<div class="module-footer">
-			<style>
-      .green {
-              color: #006600;
-             }
-            
-      .red {
-              color: #990000;
-           }
-      </style>
-				<table class="table table-bordered" ng-show="vm.st=='Termek'">
-					<thead>
-						<tr>
-							<th>Terem</th>
-							<th>Gépek száma</th>
-							<th>Hasznos idő (perc)</th>
-							<th>Hasznos idő/Összes idő</th>
-							<th>Kieső idő (perc)</th>
-							<th>Kieső idő/Összes idő</th>
-							<th>Összes idő (perc)</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="item in vm.rooms">
-							<td>{{item.room}}</td>
-							<td>{{item.piece}}</td>
-							<td>{{item.goodtime}}</td>
-							<td>{{(item.goodtime/item.alltime)*100 | number:2}} %</td>
-							<td>{{item.badtime}}</td>
-							<td>{{(item.badtime/item.alltime)*100 | number:2}} %</td>
-							<td>{{item.alltime}}</td>
-						</tr>
-					</tbody>
-				</table>
-				<table class="table table-bordered" ng-show="vm.st=='Körök' && vm.showcirclestat">
-					<thead>
-						<tr>
-							<th rowspan=2 ng-click="vm.order='circle';vm.rsc=!vm.rsc;">Kör</th>
-							<th>Gépek száma</th>
-							<th>Hasznos idő (perc)</th>
-							<th>Hasznos idő/Összes idő</th>
-							<th rowspan=2 ng-click="vm.order='badtime';vm.rsc=!vm.rsc;">Kieső idő (perc)</th>
-							<th rowspan=2 ng-click="vm.order='badtime/alltime';vm.rsc=!vm.rsc;">Kieső idő/Összes idő</th>
-							<th>Összes idő (perc)</th>
-							<th>Részletek</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="item in vm.circles  | orderBy:vm.order:vm.rsc" class="ng-scope">
-							<td>{{item.circle}}</td>
-							<td>{{item.piece}}</td>
-							<td>{{item.goodtime}}</td>
-							<td>{{(item.goodtime/item.alltime)*100 | number:2}} %</td>
-							<td>{{item.badtime}}</td>
-							<td>{{(item.badtime/item.alltime)*100 | number:2}} %</td>
-							<td>{{item.alltime}}</td>
-							<td><button class="btn btn-info" ng-click="vm.itemcircle=item;vm.circledetails();vm.showcirclestat=false"><i class="icon-info-sign"></i></td>
+<div class="module-footer">
+	<style>
+		.green {
+			color: #006600;
+		}
+		
+		.red {
+			color: #990000;
+		}
+	</style>
+	<div class="row" ng-show="vm.st=='Termek'">
+		<div class="col-sm-6" ng-repeat="item in vm.toprooms">
+			<room-dir data="item"></room-dir>
+		</div>
+	</div>
+	<table class="table table-bordered" ng-show="vm.st=='Termek'">
+		<thead>
+			<tr>
+				<th>Terem</th>
+				<th>Gépek száma</th>
+				<th>Hasznos idő (perc)</th>
+				<th>Hasznos idő/Összes idő</th>
+				<th>Kieső idő (perc)</th>
+				<th>Kieső idő/Összes idő</th>
+				<th>Összes idő (perc)</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in vm.rooms">
+				<td>{{item.room}}</td>
+				<td>{{item.piece}}</td>
+				<td>{{item.goodtime}}</td>
+				<td>{{(item.goodtime/item.alltime)*100 | number:2}} %</td>
+				<td>{{item.badtime}}</td>
+				<td>{{(item.badtime/item.alltime)*100 | number:2}} %</td>
+				<td>{{item.alltime}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table table-bordered" ng-show="vm.st=='Körök' && vm.showcirclestat">
+		<thead>
+			<tr>
+				<th rowspan=2 ng-click="vm.order='circle';vm.rsc=!vm.rsc;">Kör</th>
+				<th>Gépek száma</th>
+				<th>Hasznos idő (perc)</th>
+				<th>Hasznos idő/Összes idő</th>
+				<th rowspan=2 ng-click="vm.order='badtime';vm.rsc=!vm.rsc;">Kieső idő (perc)</th>
+				<th rowspan=2 ng-click="vm.order='badtime/alltime';vm.rsc=!vm.rsc;">Kieső idő/Összes idő</th>
+				<th>Összes idő (perc)</th>
+				<th>Részletek</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in vm.circles  | orderBy:vm.order:vm.rsc" class="ng-scope">
+				<td>{{item.circle}}</td>
+				<td>{{item.piece}}</td>
+				<td>{{item.goodtime}}</td>
+				<td>{{(item.goodtime/item.alltime)*100 | number:2}} %</td>
+				<td>{{item.badtime}}</td>
+				<td>{{(item.badtime/item.alltime)*100 | number:2}} %</td>
+				<td>{{item.alltime}}</td>
+				<td><button class="btn btn-info" ng-click="vm.itemcircle=item;vm.circledetails();vm.showcirclestat=false"><i class="icon-info-sign"></i></td>
 						</tr>
 					</tbody>
 				</table>
 				<div ng-show="vm.itemcircle && vm.show3table">
 					<button class="btn btn-success pull-right" ng-click="vm.showcirclestat=true;vm.itemcircle=''"><i class="icon-arrow-left"></i></button>
 					<h1 class="text-center" style="margin-bottom:10px">{{vm.itemcircle.circle}}. kör gépei</h1>
-					<div class="col-sm-2" ng-repeat="circle in vm.cmch" style="background-color:{{(circle.hasznos/circle.osszes)*100>90?'green':'red'}};text-align: center"><h3 style="color:#ffffff">{{circle.nev}}-{{(circle.hasznos/circle.osszes)*100 | number:2}} %</h3><button class="btn btn-primary" ng-click="vm.drawitem=circle;vm.drawchart();vm.show3table=false"><i class="icon-bar-chart"></i></button></div>
-				</div>
-			</div>
-		</div>
-	</section>
+					<div class="col-sm-2" ng-repeat="circle in vm.cmch" style="background-color:{{(circle.hasznos/circle.osszes)*100>90?'green':'red'}};text-align: center">
+						<h3 style="color:#ffffff">{{circle.nev}}-{{(circle.hasznos/circle.osszes)*100 | number:2}} %</h3><button class="btn btn-primary" ng-click="vm.drawitem=circle;vm.drawchart();vm.show3table=false"><i class="icon-bar-chart"></i></button></div>
+</div>
+</div>
+</div>
+</section>
 </div>

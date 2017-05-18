@@ -13,7 +13,8 @@ define([], function () {
     vm.rooms = [];
     vm.circles = [];
     vm.cmch = [];
-    vm.kodok=[];
+    vm.kodok = [];
+    vm.toprooms = [];
     vm.status = ["Állásidők", "Termek", "Körök"];
     vm.st = "Állásidők";
     vm.startdatum = $filter('date')(new Date(), 'yyyy-MM-dd');
@@ -29,7 +30,6 @@ define([], function () {
     var tomb = [];
     var kodok = [];
     var ok = [];
-    console.log(vm.enddatum);
 
 
     function beallit() {
@@ -140,6 +140,7 @@ define([], function () {
     function machinecount() {
       vm.allmachines = [];
       vm.rooms = [];
+      vm.toprooms = [];
       var talalat = 0;
       var a = 0;
 
@@ -162,6 +163,7 @@ define([], function () {
             vm.allmachines[a] = {}
             vm.allmachines[a].name = actname;
             vm.allmachines[a].room = actroom;
+            vm.allmachines[a].type = tomb[i].machine_Stat;
             vm.allmachines[a].goodtime = vm.difference - tomb[i].Stat_Time * 1;
             vm.allmachines[a].badtime = tomb[i].Stat_Time * 1;
             vm.allmachines[a].alltime = vm.difference;
@@ -184,6 +186,15 @@ define([], function () {
       for (var i = 0; i < 4; i++) {
         vm.rooms[i] = {}
         vm.rooms[i].room = i;
+        vm.rooms[i].top1 = 0
+        vm.rooms[i].top2 = 0
+        vm.rooms[i].top3 = 0
+        vm.rooms[i].nametop1 = "";
+        vm.rooms[i].nametop2 = "";
+        vm.rooms[i].nametop3 = "";
+        vm.rooms[i].nametype1 = "";
+        vm.rooms[i].nametype2 = "";
+        vm.rooms[i].nametype3 = "";
         if (i == 0) {
           vm.rooms[i].goodtime = 509 * vm.difference;
           vm.rooms[i].badtime = 0;
@@ -212,21 +223,217 @@ define([], function () {
 
       for (var i = 0; i < vm.allmachines.length; i++) {
         if (vm.allmachines[i].room == 1) {
+
+          var actmch = vm.allmachines[i].name;
+          var acttime = vm.allmachines[i].badtime;
+          var acttype = vm.allmachines[i].type;
+
           vm.rooms[0].goodtime -= vm.allmachines[i].badtime;
           vm.rooms[0].badtime += vm.allmachines[i].badtime;
+
+          if (vm.allmachines[i].type != "Alapállapot") {
+            var csere1 = vm.rooms[0].top1;
+            var csere2 = vm.rooms[0].top2;
+            var nevcsere1 = vm.rooms[0].nametop1;
+            var nevcsere2 = vm.rooms[0].nametop2;
+            var tipcsere1 = vm.rooms[0].nametype1;
+            var tipcsere2 = vm.rooms[0].nametype2;
+
+            if (acttime >= vm.rooms[0].top1) {
+              vm.rooms[0].top1 = acttime;
+              vm.rooms[0].top2 = csere1;
+              vm.rooms[0].top3 = csere2;
+              vm.rooms[0].nametop1 = actmch;
+              vm.rooms[0].nametop2 = nevcsere1;
+              vm.rooms[0].nametop3 = nevcsere2;
+              vm.rooms[0].nametype1 = acttype;
+              vm.rooms[0].nametype2 = tipcsere1;
+              vm.rooms[0].nametype3 = tipcsere2;
+            }
+            else if (acttime < vm.rooms[0].top1 && acttime >= vm.rooms[0].top2) {
+              vm.rooms[0].top2 = acttime;
+              vm.rooms[0].top3 = csere2;
+              vm.rooms[0].nametop2 = actmch;
+              vm.rooms[0].nametop3 = nevcsere2;
+              vm.rooms[0].nametype2 = acttype;
+              vm.rooms[0].nametype3 = tipcsere2;
+            }
+            else if (acttime < vm.rooms[0].top2 && acttime >= vm.rooms[0].top3) {
+              vm.rooms[0].top3 = acttime;
+              vm.rooms[0].nametop3 = actmch;
+              vm.rooms[0].nametype3 = acttype;
+            }
+          }
         }
         else if (vm.allmachines[i].room == 2) {
+
+          var actmch = vm.allmachines[i].name;
+          var acttime = vm.allmachines[i].badtime;
+          var acttype = vm.allmachines[i].type;
+
           vm.rooms[1].goodtime -= vm.allmachines[i].badtime;
           vm.rooms[1].badtime += vm.allmachines[i].badtime;
+
+          if (vm.allmachines[i].type != "Alapállapot") {
+            var csere1 = vm.rooms[1].top1;
+            var csere2 = vm.rooms[1].top2;
+            var nevcsere1 = vm.rooms[1].nametop1;
+            var nevcsere2 = vm.rooms[1].nametop2;
+            var tipcsere1 = vm.rooms[1].nametype1;
+            var tipcsere2 = vm.rooms[1].nametype2;
+
+            if (acttime >= vm.rooms[1].top1) {
+              vm.rooms[1].top1 = acttime;
+              vm.rooms[1].top2 = csere1;
+              vm.rooms[1].top3 = csere2;
+              vm.rooms[1].nametop1 = actmch;
+              vm.rooms[1].nametop2 = nevcsere1;
+              vm.rooms[1].nametop3 = nevcsere2;
+              vm.rooms[1].nametype1 = acttype;
+              vm.rooms[1].nametype2 = tipcsere1;
+              vm.rooms[1].nametype3 = tipcsere2;
+            }
+            else if (acttime < vm.rooms[1].top1 && acttime >= vm.rooms[1].top2) {
+              vm.rooms[1].top2 = acttime;
+              vm.rooms[1].top3 = csere2;
+              vm.rooms[1].nametop2 = actmch;
+              vm.rooms[1].nametop3 = nevcsere2;
+              vm.rooms[1].nametype2 = acttype;
+              vm.rooms[1].nametype3 = tipcsere2;
+            }
+            else if (acttime < vm.rooms[1].top2 && acttime >= vm.rooms[1].top3) {
+              vm.rooms[1].top3 = acttime;
+              vm.rooms[1].nametop3 = actmch;
+              vm.rooms[1].nametype3 = acttype;
+            }
+          }
         }
         else if (vm.allmachines[i].room == 3) {
+
+          var actmch = vm.allmachines[i].name;
+          var acttime = vm.allmachines[i].badtime;
+          var acttype = vm.allmachines[i].type;
+
           vm.rooms[2].goodtime -= vm.allmachines[i].badtime;
           vm.rooms[2].badtime += vm.allmachines[i].badtime;
+
+          if (vm.allmachines[i].type != "Alapállapot") {
+            var csere1 = vm.rooms[2].top1;
+            var csere2 = vm.rooms[2].top2;
+            var nevcsere1 = vm.rooms[2].nametop1;
+            var nevcsere2 = vm.rooms[2].nametop2;
+            var tipcsere1 = vm.rooms[2].nametype1;
+            var tipcsere2 = vm.rooms[2].nametype2;
+
+            if (acttime >= vm.rooms[2].top1) {
+              vm.rooms[2].top1 = acttime;
+              vm.rooms[2].top2 = csere1;
+              vm.rooms[2].top3 = csere2;
+              vm.rooms[2].nametop1 = actmch;
+              vm.rooms[2].nametop2 = nevcsere1;
+              vm.rooms[2].nametop3 = nevcsere2;
+              vm.rooms[2].nametype1 = acttype;
+              vm.rooms[2].nametype2 = tipcsere1;
+              vm.rooms[2].nametype3 = tipcsere2;
+            }
+            else if (acttime < vm.rooms[2].top1 && acttime >= vm.rooms[2].top2) {
+              vm.rooms[2].top2 = acttime;
+              vm.rooms[2].top3 = csere2;
+              vm.rooms[2].nametop2 = actmch;
+              vm.rooms[2].nametop3 = nevcsere2;
+              vm.rooms[2].nametype2 = acttype;
+              vm.rooms[2].nametype3 = tipcsere2;
+            }
+            else if (acttime < vm.rooms[2].top2 && acttime >= vm.rooms[2].top3) {
+              vm.rooms[2].top3 = acttime;
+              vm.rooms[2].nametop3 = actmch;
+              vm.rooms[2].nametype3 = acttype;
+            }
+          }
         }
         else if (vm.allmachines[i].room == 4) {
+
+          var actmch = vm.allmachines[i].name;
+          var acttime = vm.allmachines[i].badtime;
+          var acttype = vm.allmachines[i].type;
+
           vm.rooms[3].goodtime -= vm.allmachines[i].badtime;
           vm.rooms[3].badtime += vm.allmachines[i].badtime;
+
+          if (vm.allmachines[i].type != "Alapállapot") {
+            var csere1 = vm.rooms[3].top1;
+            var csere2 = vm.rooms[3].top2;
+            var nevcsere1 = vm.rooms[3].nametop1;
+            var nevcsere2 = vm.rooms[3].nametop2;
+            var tipcsere1 = vm.rooms[3].nametype1;
+            var tipcsere2 = vm.rooms[3].nametype2;
+
+            if (acttime >= vm.rooms[3].top1) {
+              vm.rooms[3].top1 = acttime;
+              vm.rooms[3].top2 = csere1;
+              vm.rooms[3].top3 = csere2;
+              vm.rooms[3].nametop1 = actmch;
+              vm.rooms[3].nametop2 = nevcsere1;
+              vm.rooms[3].nametop3 = nevcsere2;
+              vm.rooms[3].nametype1 = acttype;
+              vm.rooms[3].nametype2 = tipcsere1;
+              vm.rooms[3].nametype3 = tipcsere2;
+            }
+            else if (acttime < vm.rooms[3].top1 && acttime >= vm.rooms[3].top2) {
+              vm.rooms[3].top2 = acttime;
+              vm.rooms[3].top3 = csere2;
+              vm.rooms[3].nametop2 = actmch;
+              vm.rooms[3].nametop3 = nevcsere2;
+              vm.rooms[3].nametype2 = acttype;
+              vm.rooms[3].nametype3 = tipcsere2;
+            }
+            else if (acttime < vm.rooms[3].top2 && acttime >= vm.rooms[3].top3) {
+              vm.rooms[3].top3 = acttime;
+              vm.rooms[3].nametop3 = actmch;
+              vm.rooms[3].nametype3 = acttype;
+            }
+          }
         }
+      }
+      for (var i = 0; i < vm.rooms.length; i++) {
+        vm.toprooms.push({
+          room: vm.rooms[i].room + ". Terem",
+          id: "Rchart" + i,
+          chartconfig: {
+            chart: {
+              type: 'bar',
+              width: 300,
+              height: 300
+            },
+            series: [
+              {
+                name: vm.rooms[i].nametop3,
+                color: "#cc6633",
+                data: [vm.rooms[i].top3]
+              },
+              {
+                name: vm.rooms[i].nametop2,
+                color: "#cccccc",
+                data: [vm.rooms[i].top2]
+              },
+              {
+                name: vm.rooms[i].nametop1,
+                color: "#ffd700",
+                data: [vm.rooms[i].top1]
+              }],
+
+            xAxis: [
+              {
+                title: { text: "Gép" }
+              },
+            ],
+            yAxis: {
+              title: {
+                text: "Idő (perc)"
+              },
+            },
+          }
+        });
       }
 
       for (var i = 0; i < 14; i++) {
@@ -279,7 +486,7 @@ define([], function () {
       var ok = [];
       var a = 0;
       var b = 0;
-      vm.kodok=[];
+      vm.kodok = [];
 
       for (var i = 0; i < tomb.length; i++) {
         if (tomb[i].MName == vm.drawitem.nev) {
@@ -309,7 +516,7 @@ define([], function () {
           }
         }
       }
-      vm.kodok=kodok;
+      vm.kodok = kodok;
       setChartpie(vm.drawitem.nev, vm.difference, hibaido);
       setChartxrange(ok, kodok);
 
