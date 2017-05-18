@@ -323,17 +323,17 @@ define([], function () {
             stack: 'Modulok'
           },
           {
-            name: 'Pottingbe',
-            color: "#006600",
-            data: feltoltbe(vm.selecthour),
-            stack: 'Modulok'
-          },
-          {
             name: 'Gél',
             color: "#33ccff",
             data: feltoltgel(vm.selecthour),
             stack: 'Modulok'
           },
+          {
+            name: 'Pottingbe',
+            color: "#006600",
+            data: feltoltbe(vm.selecthour),
+            stack: 'Modulok'
+          }
         ],
         xAxis: [
           {
