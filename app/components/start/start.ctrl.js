@@ -54,7 +54,8 @@ define([], function () {
       {
         category: 'ZW1500', subCategory: 'Minősítés',
         reports: [
-          { title: 'MES minősítés', picture: 'app/components/start/zw1500qc.jpg', link: '../ZW1500QC/#/ZW1500Selejt', description: 'A MES rendszerben minősítési report potting és gradeing után, időszakos bontásban' }
+          { title: 'MES minősítés', picture: 'app/components/start/zw1500min.jpg',  link: '../ZW1500QC/#/qcpage', description: 'A MES rendszerben minősítési report potting és gradeing után, időszakos bontásban' },
+          { title: 'ZW1500 Selejt', picture: 'app/components/start/zw1500qc.jpg', link: '../ZW1500QC/#/ZW1500Selejt', description: 'A MES rendszerben könyvelésre került Selejtek hibakódonként, időszakonként' }
         ]
       },
       { category: 'ZeeBlok', subCategory: 'Sheet' },
