@@ -22,7 +22,7 @@ define([], function () {
       {
         category: 'ZW500', subCategory: 'Potting',
         reports: [
-          {title : 'SSO track', link: 'Comming soon', week: '2017_21', description: 'Munkaállomásonkénti követetés termelési darabszámokkal, adatokkal.'}
+          { title: 'SSO track', link: 'Comming soon', week: '2017_21', description: 'Munkaállomásonkénti követetés termelési darabszámokkal, adatokkal.' }
         ]
       },
       {
@@ -41,12 +41,22 @@ define([], function () {
       { category: 'ZW1000', subCategory: 'Potting' },
       { category: 'ZW1000', subCategory: 'ETF' },
       { category: 'ZW1000', subCategory: 'Kazetta' },
-      { category: 'ZW1000', subCategory: 'Minősítés' },
+      {
+        category: 'ZW1000', subCategory: 'Minősítés',
+        reports: [
+          { title: 'MES minősítés', link: 'Comming soon', week: '2017_22', description: 'A MES rendszerben minősítési report potting és gradeing után, időszakos bontásban' }
+        ]
+      },
       { category: 'ZW1500', subCategory: 'Bundle' },
       { category: 'ZW1500', subCategory: 'Potting' },
       { category: 'ZW1500', subCategory: 'MTF' },
       { category: 'ZW1500', subCategory: 'Kazetta' },
-      { category: 'ZW1500', subCategory: 'Minősítés' },
+      {
+        category: 'ZW1500', subCategory: 'Minősítés',
+        reports: [
+          { title: 'MES minősítés', link: 'Comming soon', week: '2017_22', description: 'A MES rendszerben minősítési report potting és gradeing után, időszakos bontásban' }
+        ]
+      },
       { category: 'ZeeBlok', subCategory: 'Sheet' },
       { category: 'ZeeBlok', subCategory: 'Potting' },
       { category: 'ZeeBlok', subCategory: 'MTF' },
