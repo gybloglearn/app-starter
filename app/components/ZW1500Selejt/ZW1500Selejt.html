@@ -1,0 +1,68 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+			<h1 class="text-center">ZW1500 Selejt</h1>
+			<div class="col-sm-4" style="margin-top:20px">
+				<span>Csoportosítás:</span>
+				<select ng-model="vm.acttime">
+						<option ng-repeat="item in vm.times" value="{{item}}">{{item}}</option>
+					</select>
+			</div>
+			<div class="col-sm-6" style="margin-top:20px">
+				<div class="input-group">
+					<span class="input-group-addon">Dátum:</span>
+					<input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-10d">
+					<span class="input-group-addon">-tól</span>
+					<input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="0d">
+					<span class="input-group-addon">-ig</span>
+					<div class="input-group-btn">
+						<a href="" class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.dis || vm.enddate<=vm.startdate">Betöltés</a>
+					</div>
+				</div>
+			</div>
+		</div>
+    <div class="module-body">
+			<div class="progress progress-danger progress-striped active" ng-hide="!vm.loading">
+				<div class="progress-bar" style="width: 100%">
+					<p class="text-center">Betöltés...</p>
+				</div>
+			</div>
+			<my-chart id="chart" config="vm.chartconfig"></my-chart>
+			<table class="table table-condensed">
+				<thead>
+					<tr>
+						<th>Dátum</th>
+						<th>AH</th>
+						<th>Egyéb</th>
+						<th>GH</th>
+						<th>OH</th>
+						<th>OHSL</th>
+						<th>SEH</th>
+						<th>SL</th>
+						<th>OH+GH</th>
+						<th>Összes Selejt</th>
+						<th>Összes</th>
+						<th>Kumulált</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in vm.selectdata">
+						<td>{{item.date}}</td>
+						<td>{{item.AH}}</td>
+						<td>{{item.Egyeb}}</td>
+						<td>{{item.GH}}</td>
+						<td>{{item.OH}}</td>
+						<td>{{item.OHSL}}</td>
+						<td>{{item.SEH}}</td>
+						<td>{{item.SL}}</td>
+						<td>{{item.VegyesOHGH}}</td>
+						<td>{{item.OsszesSelejt}}</td>
+						<td>{{item.Osszes}}</td>
+						<td>{{item.Kumulalt |number:2}} %</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+    <div class="module-footer"></div>
+  </section>
+</div>

@@ -9,6 +9,8 @@ define([
   './services/download.service',
   './directives/datepicker',
   './directives/mychart',
+	'./ZW1500Selejt/ZW1500Selejt.ctrl',
+  './services/ZW1500Selejt.service'
 	/* files */
 ], function(
   configFunction,
@@ -21,6 +23,8 @@ define([
   downloadService,
   datepicker,
   mychart,
+	ZW1500SelejtController,
+  ZW1500SelejtService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -36,5 +40,7 @@ define([
 	app.service('downloadService', downloadService);
   app.directive('datepicker', datepicker);
   app.directive('myChart', mychart);
+	app.controller('ZW1500SelejtController', ZW1500SelejtController);
+	app.service('ZW1500SelejtService', ZW1500SelejtService);
 		/* controllers */
 });

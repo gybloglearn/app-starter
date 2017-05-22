@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('ZW1500Selejt', {
+		url: '/ZW1500Selejt',
+		templateUrl: './app/components/ZW1500Selejt/ZW1500Selejt.html',
+		controller: 'ZW1500SelejtController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('qcpage', {
 		url: '/qcpage',
 		templateUrl: './app/components/qcpage/qcpage.html',
