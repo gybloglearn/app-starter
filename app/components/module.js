@@ -8,7 +8,9 @@ define([
   './Potting/Potting.ctrl',
   './services/PottingService.service',
   './directives/datepicker',
+  './directives/countdown',
   './directives/mychart',
+  './directives/Places/place',
   './filters/unique',
   './filters/sumdb',
   './filters/sumaeq',
@@ -27,7 +29,9 @@ define([
   PottingController,
   PottingService,
   datepicker,
+  countdown,
   mychart,
+  placedir,
   unique,
   sumdb,
   sumaeq,
@@ -49,7 +53,9 @@ define([
   app.controller('PottingController', PottingController);
 	app.service('PottingService', PottingService);
   app.directive('datepicker',datepicker);
+  app.directive('countdown',countdown);
   app.directive('myChart',mychart);
+  app.directive('placeDir',placedir);
   app.filter('unique',unique);
   app.filter('sumdb',sumdb);
   app.filter('sumaeq',sumaeq);

@@ -10,10 +10,10 @@ define([], function () {
 
     ///////////
 
-    function get() {
+    function get(startd, pot, num) {
       var req = {
         method: 'GET',
-        url: '//url//'
+        url: 'app/components/php/PottingDashboard.php?startdate=' + startd + '&machinename=' + pot + '&phasename=' + num
       };
       return $http(req);
     }

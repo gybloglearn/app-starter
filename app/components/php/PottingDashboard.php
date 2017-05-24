@@ -10,7 +10,11 @@ define("UID", $conf["UID"]);
 define("PASWD", $conf["PASWD"]);
 define("SERVICE_URL", $conf["UFURL"]);
 
-define("REPORT", "/MCS/PT_OP_SSO");
+/*define("UID", "report");
+define("PASWD", "Rep@rt01");
+define("SERVICE_URL", "http://10.0.100.52:82/SSRS");*/
+
+define("REPORT", "/MCS/PT_Station_Event_List");
 
 function remove_utf8_bom($text)
 {
@@ -28,6 +32,18 @@ if(isset($_GET["enddate"])){
 // define machines
 $mch = Array("Potting3"=>"Potting3","Potting4"=>"Potting4");
 $machine = $mch[$_GET["machinename"]];
+// define machines
+$phn = Array(
+"Potting Be",
+"Gel Preparation Also F",
+"Uret Prep Also F",
+"Esztetika Also F",
+"Forgatas",
+"Uret Prep Felso F",
+"Esztetika Felso F",
+"Potting ki"
+);
+$phasename = $phn[$_GET["phasename"]];
 
 //get report data
 try
@@ -44,6 +60,9 @@ try
     $params[2]= new ParameterValue();
     $params[2]->Name ="machinename";
     $params[2]->Value = $machine;
+    $params[3]= new ParameterValue();
+    $params[3]->Name ="phasename";
+    $params[3]->Value = $phasename;
     
     $executionInfo = $ssrs_report->SetExecutionParameters2($params, "en-us");
     $csvFormat = new RenderAsCSV();

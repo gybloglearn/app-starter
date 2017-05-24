@@ -1,29 +1,16 @@
 <div class="container-fluid">
   <section class="module">
     <div class="module-header">
-      <h1 class="text-center">{{vm.datumszam}}</h1>
-      <h1 class="text-center">{{vm.actszak}}-Szak részletek:</h1>
+      <h1 class="text-center">{{vm.machine}}-Állomások</h1>
+      <h2 class="text-center">{{vm.actszak}}-szak részletek</h2>
     </div>
     <div class="module-body">
-
-      <button class="btn btn-default pull-right" ng-class="{'btn-info':mutat}" ng-click="mutat=!mutat">AEQ Táblázatok</button>
-      <button class="btn btn-default pull-right" ng-class="{'btn-info':dbmutat}" ng-click="dbmutat=!dbmutat">Darab Táblázatok</button>
-      
-      <table ng-show="dbmutat">
-        <tr>
-          <td><my-chart id="chart1" config="vm.dbchartconfig4"></my-chart></td>
-          <td style="padding-left:10px"><my-chart id="chart2" config="vm.dbchartconfig3"></my-chart></td>
-          <td style="padding-left:10px"><my-chart id="chart3" config="vm.dbchartconfig2"></my-chart></td>
-        </tr>
-      </table>
-      
-      <table ng-show="mutat">
-        <tr>
-          <td><my-chart id="chart4" config="vm.chartconfig4"></my-chart></td>
-          <td style="padding-left:10px"><my-chart id="chart5" config="vm.chartconfig3"></my-chart></td>
-          <td style="padding-left:10px"><my-chart id="chart6" config="vm.chartconfig2"></my-chart></td>
-        </tr>
-      </table>
+      <div class="row">
+        <div class="col-sm-3" ng-repeat="item in vm.places | orderBy:'sor'" style="margin-top:20px">
+          <place-dir data="item"></place-dir>
+          <div countdown date="{{item.timelast}}" class="text-center" style="font-size:4em;margin-top:20px"></div>
+        </div>
+      </div>
     </div>
     <div class="module-footer"></div>
   </section>
