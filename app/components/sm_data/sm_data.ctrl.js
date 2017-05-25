@@ -15,9 +15,9 @@ define([], function () {
     vm.sum_tervezett = 0;
     vm.sum_okok = 0;
     vm.sm = "SM4";
-    vm.downt="Szervezesi veszteseg"
+    vm.downt = "Szervezesi veszteseg"
     vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
-    vm.downtimes=["Szervezesi veszteseg","Tervezett veszteseg","Műszaki technikai okok"];
+    vm.downtimes = ["Szervezesi veszteseg", "Tervezett veszteseg", "Műszaki technikai okok"];
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.today = (new Date().getHours() * 60 + new Date().getMinutes()) - 350;
     vm.datumszam = vm.datum;
@@ -146,7 +146,7 @@ define([], function () {
         chart: {
           type: 'xrange',
           width: 1100,
-          height: 200,
+          height: 225,
           zoomType: 'x'
         },
         legend: {
@@ -244,7 +244,7 @@ define([], function () {
       };
     }
 
-    function setCol1(nowsm){
+    function setCol1(nowsm) {
       vm.osszegzo_szervezesi = $filter('orderBy')(vm.osszegzo_szervezesi, ["time"], true);
       vm.chartconfig_col1 = {
         chart: {
@@ -257,8 +257,13 @@ define([], function () {
           {
             name: 'Szervezesi veszteseg',
             color: "#cc33ff",
-            data: feltolt_ido(vm.osszegzo_szervezesi)
-          }
+            data: feltolt_ido(vm.osszegzo_szervezesi),
+            tooltip: {
+              useHTML: true,
+              headerFormat: '<b style="color:{series.color};font-weight:bold;">Szervezesi veszteseg</b><br>',
+              pointFormat: '<span style="font-size:1.2em">{point.name} </span><br><b>{point.y} perc</b><br><i>{point.piece} db</i>'
+            },
+          },
         ],
 
 
@@ -272,7 +277,7 @@ define([], function () {
         },
       };
     }
-    function setCol2(nowsm){
+    function setCol2(nowsm) {
       vm.osszegzo_tervezett = $filter('orderBy')(vm.osszegzo_tervezett, ["time"], true);
       vm.chartconfig_col2 = {
         chart: {
@@ -285,8 +290,13 @@ define([], function () {
           {
             name: 'Tervezett veszteseg',
             color: "#3366ff",
-            data: feltolt_ido(vm.osszegzo_tervezett)
-          }
+            data: feltolt_ido(vm.osszegzo_tervezett),
+            tooltip: {
+              useHTML: true,
+              headerFormat: '<b style="color:{series.color};font-weight:bold;">Tervezett veszteseg</b><br>',
+              pointFormat: '<span style="font-size:1.2em">{point.name} </span><br><b>{point.y} perc</b><br><i>{point.piece} db</i>'
+            },
+          },
         ],
 
 
@@ -300,7 +310,7 @@ define([], function () {
         },
       };
     }
-    function setCol3(nowsm){
+    function setCol3(nowsm) {
       vm.osszegzo_muszaki = $filter('orderBy')(vm.osszegzo_muszaki, ["time"], true);
       vm.chartconfig_col3 = {
         chart: {
@@ -313,7 +323,12 @@ define([], function () {
           {
             name: 'Műszaki technikai okok',
             color: "#e60000",
-            data: feltolt_ido(vm.osszegzo_muszaki)
+            data: feltolt_ido(vm.osszegzo_muszaki),
+            tooltip: {
+              useHTML: true,
+              headerFormat: '<b style="color:{series.color};font-weight:bold;">Műszaki technikai okok</b><br>',
+              pointFormat: '<span style="font-size:1.2em">{point.name} </span><br><b>{point.y} perc</b><br><i>{point.piece} db</i>'
+            },
           }
         ],
 
@@ -329,19 +344,24 @@ define([], function () {
       };
     }
 
-    function feltolt_tipus(tomb){
-      var x_adatok=[];
-      for(var i=0;i<tomb.length;i++){
+    function feltolt_tipus(tomb) {
+      var x_adatok = [];
+      for (var i = 0; i < tomb.length; i++) {
         x_adatok.push(tomb[i].name);
       }
       return x_adatok;
     }
 
-    function feltolt_ido(tomb){
-      var adatok=[];
-      for(var i=0;i<tomb.length;i++){
-        adatok.push(tomb[i].time);
+    function feltolt_ido(tomb) {
+      var adatok = [];
+      for (var i = 0; i < tomb.length; i++) {
+        var d = {}
+        d.y = tomb[i].time;
+        d.name = tomb[i].name;
+        d.piece = tomb[i].piece;
+        adatok.push(d);
       }
+      console.log(adatok);
       return adatok;
 
     }
