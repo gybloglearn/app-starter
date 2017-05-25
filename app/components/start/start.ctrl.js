@@ -16,9 +16,13 @@ define([], function () {
     vm.szakok[1] = $filter('shift')(2, vm.datum);
     vm.szakok[2] = $filter('shift')(3, new Date().getTime() - ((5 * 60 + 50) * 60 * 1000));
     vm.actszak = "";
+    vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
+    vm.frissites_ideje = $filter('date')(new Date().getTime() + 5 * 60 * 1000, 'yyyy-MM-dd HH:mm');
+    vm.pottloading = false;
 
     function load() {
       vm.places = [];
+      vm.pottloading = true;
       angular.forEach(vm.phasenumbers, function (v, k) {
         dataService.get(vm.datum, vm.machine, v).then(function (response) {
           vm.data[v] = [];
@@ -28,15 +32,50 @@ define([], function () {
           }
           vm.data[v] = response.data;
           vm.places.push({
-            sor:v,
+            sor: v,
             place: allomas(vm.data[v]),
             db: szakdb(vm.data[v]),
             plan: plancreator4(szakallando4),
-            timelast: last(vm.data[v])
+            timelast: last(vm.data[v]),
+            id: "Pottingplace" + v,
+            chartconfig: {
+              chart: {
+                type: 'column',
+                width: 300,
+                height: 300
+              },
+              title: { text: vm.hely[v] },
+              series: [
+                {
+                  name: 'Tény',
+                  color: "#00b300",
+                  data: [szakdb(vm.data[v])],
+                  stack: 'Összes lap'
+                },
+                {
+                  name: 'Terv',
+                  color: "#0033cc",
+                  data: [plancreator4(szakallando4)],
+                }],
+
+              xAxis: [
+                { categories: feltolt_x() },
+              ],
+              yAxis: {
+                title: {
+                  text: "Darab"
+                }
+              }
+            }
           });
+          vm.pottloading = false;
         });
       });
-      //plancreator4(szakallando4);
+    }
+
+    function feltolt_x() {
+      var szoveg = ["Tény/Terv"];
+      return szoveg;
     }
 
     function allomas(tomb) {
@@ -49,23 +88,22 @@ define([], function () {
 
       for (var i = 0; i < tomb.length; i++) {
         var valami = new Date(tomb[i].startdate).getTime();
-        var datumka=new Date(valami).getHours()*60+new Date().getMinutes(valami);
+        var datumka = new Date(valami).getHours() * 60 + new Date().getMinutes(valami);
         if ((nowtime >= 350 && nowtime < 830) && (datumka >= 350 && datumka < 830)) {
           szam++;
         }
         else if ((nowtime >= 830 && nowtime < 1310) && (datumka >= 830 && datumka < 1310)) {
           szam++;
         }
-        else if ((nowtime >= 1310 ||nowtime < 350) && (datumka >= 1310 ||datumka < 350)) {
+        else if ((nowtime >= 1310 || nowtime < 350) && (datumka >= 1310 || datumka < 350)) {
           szam++;
         }
       }
-      return szam/2;
+      return szam / 2;
 
     }
-
+    
     function last(tomb) {
-      var actdata = "";
       var maxnumbers = [];
       vm.difference = [];
       for (var i = 0; i < tomb.length; i++) {
@@ -123,6 +161,15 @@ define([], function () {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       load();
       choose();
+    }
+
+    var refreshload = setInterval(load, 5 * 60 * 1000);
+    var refreshchoose = setInterval(choose, 5 * 60 * 1000);
+    var refreshdate = setInterval(date_refresh, 5 * 60 * 1000);
+
+    function date_refresh() {
+      vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
+      vm.frissites_ideje = $filter('date')(new Date().getTime() + 5 * 60 * 1000, 'yyyy-MM-dd HH:mm');
     }
   }
   Controller.$inject = ['Data', '$cookies', '$state', '$rootScope', '$filter'];
