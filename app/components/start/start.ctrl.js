@@ -6,7 +6,7 @@ define([], function () {
     vm.difference = [];
     vm.szakok = [];
     vm.phasenumbers = [0, 1, 2, 3, 4, 5, 6, 7];
-    vm.hely = ['Potting be', 'Gélezés', 'Uretán alsó', 'Esztétika alsó', 'Fordítás', 'Uretán felső', 'Esztétika felső', 'Potting ki']
+    vm.hely = ['Potting be', 'Előkészítés alsó', 'Gélberakás alsó', 'Esztétika alsó', 'Forgatás', 'Gélberakás felső', 'Esztétika felső', 'Potting ki']
     vm.machine = "Potting4";
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     var szakallando4 = 27;
@@ -88,7 +88,7 @@ define([], function () {
       var szam = 0;
 
       for (var i = 0; i < tomb.length; i++) {
-        var valami = new Date(tomb[i].startdate).getTime();
+        var valami = new Date(tomb[i].startdate);
         var datumka = new Date(valami).getHours() * 60 + new Date().getMinutes(valami);
         if ((nowtime >= 350 && nowtime < 830) && (datumka >= 350 && datumka < 830)) {
           szam++;
@@ -104,6 +104,20 @@ define([], function () {
 
     }
 
+    function szakddb(tomb){
+      var now = new Date();
+      var nh = now.getHours();
+      var nm = now.getMinutes();
+      var nt = nh*60+nm;
+      var sz = 0;
+      for (var i=0;i<tomb.length;i++){
+        var d = new Date(tomb[i].startdate);
+        var h = d.getHours();
+        var m = d.getMinutes();
+        var t = (h*60+m);
+      }
+    }
+
     function last(tomb) {
       var maxnumbers = [];
       vm.difference = [];
@@ -115,7 +129,7 @@ define([], function () {
         }
       }
       for (var i = 0; i < maxnumbers.length; i++) {
-        vm.difference[i] = $filter('date')(maxnumbers[i], "yyyy-MM-dd HH:mm:ss");
+        vm.difference[i] = $filter('date')(maxnumbers[i], "yyyy-MM-dd HH:mm");
       }
       return vm.difference[vm.difference.length - 1];
     }

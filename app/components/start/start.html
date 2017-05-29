@@ -2,7 +2,7 @@
   <section class="module">
     <div class="module-header">
       <h1 class="text-center">{{vm.datumszam}}</h1>
-      <h1 class="text-center" style="margin-top:10px">{{vm.machine}} {{vm.actszak}}-szak részletek</h1>
+      <h1 class="text-center" style="margin-top:10px"><b>{{vm.machine}} - {{vm.actszak}}</b> szak</h1>
     </div>
     <div class="module-body">
       <div class="progress progress-warning progress-striped active" ng-hide="!vm.pottloading">
@@ -12,8 +12,9 @@
       </div>
       <div class="row">
         <div class="col-sm-3" ng-repeat="item in vm.places | orderBy:'sor'">
-          <div style="border: 1px solid #ddd;">
+          <div style="border: 1px solid #ddd; border-radius:3px;overflow:hidden;">
             <place-dir data="item"></place-dir><hr style="margin: 0 auto">
+            <sup style="display:block;margin: 0 0 0 3px;">Előző ciklus vége: {{item.timelast}} </sup>
             <div countdown date="{{item.timelast}}" class="text-center"></div>
           </div>
         </div>
