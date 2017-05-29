@@ -11,9 +11,11 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-2" ng-repeat="item in vm.places | orderBy:'sor'" style="margin-top:20px">
-          <place-dir data="item"></place-dir>
-          <div countdown date="{{item.timelast}}" class="text-center" style="font-size:4em;margin-top:20px;"></div>
+        <div class="col-sm-3" ng-repeat="item in vm.places | orderBy:'sor'">
+          <div style="border: 1px solid #ddd;">
+            <place-dir data="item"></place-dir><hr style="margin: 0 auto">
+            <div countdown date="{{item.timelast}}" class="text-center"></div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,16 +1,19 @@
 <!--direktíva-->
-<div class="place">
+<div class="place" style="padding: 10px;">
     <style>
 		.green {
-			color: #006600;
+			color: #00aa00;
 		}
-		
+
 		.red {
-			color: #990000;
+			color: #ff0000;
 		}
 	</style>
-    <h1 class="text-center">{{data.place}}</h1>
-    <h2 class="text-center" ng-class="{'green':data.db>=data.plan,'red':data.plan>data.db}">Tény:{{data.db}} db</h2>
-    <h2 class="text-center">Terv:{{data.plan}} db</h2>
-    <my-chart id="{{data.id}}" config="data.chartconfig"></my-chart>
+    <h2 class="text-left">{{data.place}}</h2>
+    <!--<h2 class="text-center" ng-class="{'green':data.db>=data.plan,'red':data.plan>data.db}">Tény:{{data.db}} db</h2>
+    <h2 class="text-center">Terv:{{data.plan}} db</h2>-->
+	<h1 class="text-center"><span ng-class="{'green':data.db>=data.plan,'red':data.plan>data.db}">{{data.db}}</span> / <span style="color: rgb(50,150,230)">{{data.plan}}</span></h1>
+	<sup class="text-center" style="display:block;margin-top:10px;">{{ (data.db / data.plan)*100 | number:1}}%</sup>
+	<sup class="text-center" style="display:block;margin-top:10px;">Keret</sup>
+    <!--<my-chart id="{{data.id}}" config="data.chartconfig"></my-chart>-->
 </div>

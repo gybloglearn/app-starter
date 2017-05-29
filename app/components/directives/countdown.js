@@ -10,25 +10,20 @@ define([], function () {
                 $interval(function () {
                     var diff;
                     diff = Math.floor((new Date().getTime()-future.getTime()));
-                    return element.text($filter('date')(diff, "HH:mm:ss","UTC"));
+                    if(diff > (17.7*60*1000)) {
+                        element.attr("style","background-color:red;color:white;font-size:4em;line-height: 1em;");
+                        element.text($filter('date')(diff - (17.7*60*1000), "HH:mm:ss","UTC"));
+                    } else {
+                        element.attr("style", "color:green;background-color:transparent;font-size:4em;line-height:1em;");
+                        element.text($filter('date')((17.7*60*1000) - diff, "HH:mm:ss","UTC"));
+                    }
+                    //element.text($filter('date')(diff, "HH:mm:ss","UTC"));
+                    return element;
                 }, 1000);
             }
         }
         return directive;
     }
-    function dhms(t) {
-                    var hours, minutes, seconds;
-                    hours = Math.floor(t / 3600/1000) % 24;
-                    t += hours * 3600/1000;
-                    minutes = Math.floor(t / 60/1000) % 60;
-                    t += minutes * 60/1000;
-                    seconds = t % 60;
-                    return [
-                        hours,
-                        minutes,
-                        seconds
-                    ].join(':');
-                }
     countdown.$inject = ['$interval', '$filter'];
     return countdown;
 });

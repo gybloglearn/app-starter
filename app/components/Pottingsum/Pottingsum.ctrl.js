@@ -279,11 +279,11 @@ define([], function () {
         chart: {
           type: 'column'
         },
-        plotOptions: {
+        /*plotOptions: {
           column: {
             stacking: 'normal'
           }
-        },
+        },*/
         title: { text: nowpotting + " Report" },
         series: [
           {

@@ -9,7 +9,7 @@ define([], function () {
     vm.hely = ['Potting be', 'Gélezés', 'Uretán alsó', 'Esztétika alsó', 'Fordítás', 'Uretán felső', 'Esztétika felső', 'Potting ki']
     vm.machine = "Potting4";
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
-    var szakallando4 = 32;
+    var szakallando4 = 27;
     vm.actplan = 0;
     vm.places = [];
     vm.szakok[0] = $filter('shift')(1, vm.datum);
@@ -40,21 +40,22 @@ define([], function () {
             id: "Pottingplace" + v,
             chartconfig: {
               chart: {
-                type: 'column',
-                width: 300,
-                height: 300
+                type: 'bar',
+                /*width: 200,*/
+                height: 150
               },
-              title: { text: vm.hely[v] },
+              legend: {verticalAlign: "top", align: "top", floating: false},
+              /*title: { text: vm.hely[v] },*/
               series: [
                 {
                   name: 'Tény',
-                  color: "#00b300",
+                  color: "rgba(150,230,50, .5)",
                   data: [szakdb(vm.data[v])],
                   stack: 'Összes lap'
                 },
                 {
                   name: 'Terv',
-                  color: "#0033cc",
+                  color: "rgba(50,150,230,.5)",
                   data: [plancreator4(szakallando4)],
                 }],
 
@@ -102,7 +103,7 @@ define([], function () {
       return szam / 2;
 
     }
-    
+
     function last(tomb) {
       var maxnumbers = [];
       vm.difference = [];
