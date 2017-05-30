@@ -161,6 +161,8 @@ define([], function () {
           }
         }
 
+        console.log(vm.selectdatas);
+
         var gelszam2 = 0;
         var uretalso2 = 0;
         var uretalsoesztetika2 = 0;
@@ -238,17 +240,26 @@ define([], function () {
           endszamlalo -= vm.selecthour[i].END;
         }
 
-
-        console.log(vm.selecthour[18].START);
-        console.log(startszamlalo);
-        vm.selecthour[18].START += startszamlalo;
+        if (startszamlalo > 0) {
+          vm.selecthour[18].START += startszamlalo;
+        }
+        else {
+          vm.selecthour[18].START = -1 * (startszamlalo);
+          vm.selectdatas[2].START += -2 * (startszamlalo);
+        }
         vm.selecthour[18].GEL += (gelszam1 - gelszam2);
         vm.selecthour[18].URETA += (uretalso1 - uretalso2);
         vm.selecthour[18].PURETA += (uretalsoesztetika1 - uretalsoesztetika2);
         vm.selecthour[18].ROT += (ford1 - ford2);
         vm.selecthour[18].URETF += (uretfelso1 - uretfelso2);
         vm.selecthour[18].PURETF += (uretfelsoesztetika1 - uretfelsoesztetika2);
-        vm.selecthour[18].END += endszamlalo;
+        if (endszamlalo > 0) {
+          vm.selecthour[18].END += endszamlalo;
+        }
+        else {
+          vm.selecthour[18].END = -1 * (endszamlalo);
+          vm.selectdatas[2].END += -2 * (endszamlalo);
+        }
 
         setChart(vm.mch);
         vm.Pottingloading = false;
