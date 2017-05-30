@@ -11,10 +11,10 @@ define([], function () {
                     var diff;
                     diff = Math.floor((new Date().getTime()-future.getTime()));
                     if(diff > (17.7*60*1000)) {
-                        element.attr("style","background-color:red;color:white;font-size:4em;line-height: 1em;");
+                        element.attr("style","background-color:red;color:white;font-size:5.4em;line-height: 1em;");
                         element.text($filter('date')(diff - (17.7*60*1000), "HH:mm:ss","UTC"));
                     } else {
-                        element.attr("style", "color:#00aa00;background-color:transparent;font-size:4em;line-height:1em;");
+                        element.attr("style", "color:#00aa00;background-color:transparent;font-size:5.4em;line-height:1em;");
                         element.text($filter('date')((17.7*60*1000) - diff, "HH:mm:ss","UTC"));
                     }
                     //element.text($filter('date')(diff, "HH:mm:ss","UTC"));

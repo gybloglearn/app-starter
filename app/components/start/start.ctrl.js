@@ -50,13 +50,12 @@ define([], function () {
                 {
                   name: 'Tény',
                   color: "rgba(150,230,50, .5)",
-                  data: [szakdb(vm.data[v])],
-                  stack: 'Összes lap'
+                  data: [szakdb(vm.data[v])]
                 },
                 {
                   name: 'Terv',
                   color: "rgba(50,150,230,.5)",
-                  data: [plancreator4(szakallando4)],
+                  data: [plancreator4(szakallando4)]
                 }],
 
               xAxis: [

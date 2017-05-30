@@ -14,7 +14,7 @@
         <div class="col-sm-3" ng-repeat="item in vm.places | orderBy:'sor'">
           <div style="border: 1px solid #ddd; border-radius:3px;overflow:hidden;">
             <place-dir data="item"></place-dir><hr style="margin: 0 auto">
-            <sup style="display:block;margin: 0 0 0 3px;">Előző ciklus vége: {{item.timelast}} </sup>
+            <sup style="font-size:1em;display:block;margin: 0 0 0 3px;">Előző ciklus vége: {{item.timelast}} </sup>
             <div countdown date="{{item.timelast}}" class="text-center"></div>
           </div>
         </div>
