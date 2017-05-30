@@ -261,7 +261,7 @@ define([], function () {
             tooltip: {
               useHTML: true,
               headerFormat: '<b style="color:{series.color};font-weight:bold;">Szervezesi veszteseg</b><br>',
-              pointFormat: '<span style="font-size:1.2em">{point.name} </span><br><b>{point.y} perc</b><br><i>{point.piece} db</i>'
+              pointFormat: '<span style="font-size:1.2em">{point.name} </span><br><b>{point.y} mp</b><br><i>{point.piece} db</i>'
             },
           },
         ],
@@ -294,7 +294,7 @@ define([], function () {
             tooltip: {
               useHTML: true,
               headerFormat: '<b style="color:{series.color};font-weight:bold;">Tervezett veszteseg</b><br>',
-              pointFormat: '<span style="font-size:1.2em">{point.name} </span><br><b>{point.y} perc</b><br><i>{point.piece} db</i>'
+              pointFormat: '<span style="font-size:1.2em">{point.name} </span><br><b>{point.y} mp</b><br><i>{point.piece} db</i>'
             },
           },
         ],
@@ -327,7 +327,7 @@ define([], function () {
             tooltip: {
               useHTML: true,
               headerFormat: '<b style="color:{series.color};font-weight:bold;">Műszaki technikai okok</b><br>',
-              pointFormat: '<span style="font-size:1.2em">{point.name} </span><br><b>{point.y} perc</b><br><i>{point.piece} db</i>'
+              pointFormat: '<span style="font-size:1.2em">{point.name} </span><br><b>{point.y} mp</b><br><i>{point.piece} db</i>'
             },
           }
         ],
