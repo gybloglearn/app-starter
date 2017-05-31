@@ -1,5 +1,5 @@
 require([
-  './app-starter/app/components/module'
+  './Modulhistory/app/components/module'
 ], function(){
   'use strict';
   angular.bootstrap(document, ['app']);
