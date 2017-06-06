@@ -17,7 +17,8 @@ define([
   './filters/shift',
   './filters/name_change',
   './Pottingsum/Pottingsum.ctrl',
-  './services/Sumservice.service'
+  './services/Sumservice.service',
+  './Operators/Operators.ctrl'
 	/* files */
 ], function(
   configFunction,
@@ -38,7 +39,8 @@ define([
   shift,
   name_change,
   PottingsumController,
-  SumserviceService
+  SumserviceService,
+  OperatorsController
 	/* names */) {
 
   // Link all components to the module !!!
@@ -63,5 +65,6 @@ define([
   app.filter('name_change',name_change);
 	app.controller('PottingsumController', PottingsumController);
 	app.service('SumserviceService', SumserviceService);
+	app.controller('OperatorsController', OperatorsController);
 		/* controllers */
 });
