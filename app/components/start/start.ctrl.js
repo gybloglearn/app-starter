@@ -88,7 +88,7 @@ define([], function () {
 
       for (var i = 0; i < tomb.length; i++) {
         var valami = new Date(tomb[i].startdate);
-        var datumka = new Date(valami).getHours() * 60 + new Date().getMinutes(valami);
+        var datumka = new Date(valami).getHours() * 60 + new Date(valami).getMinutes();
         if ((nowtime >= 350 && nowtime < 830) && (datumka >= 350 && datumka < 830)) {
           szam++;
         }
@@ -114,6 +114,7 @@ define([], function () {
         var h = d.getHours();
         var m = d.getMinutes();
         var t = (h*60+m);
+        console.log(nt + " - " + t);
       }
     }
 
@@ -177,13 +178,13 @@ define([], function () {
       choose();
     }
 
-    var refreshload = setInterval(load, 5 * 60 * 1000);
-    var refreshchoose = setInterval(choose, 5 * 60 * 1000);
-    var refreshdate = setInterval(date_refresh, 5 * 60 * 1000);
+    var refreshload = setInterval(load, 2 * 60 * 1000);
+    var refreshchoose = setInterval(choose, 2 * 60 * 1000);
+    var refreshdate = setInterval(date_refresh, 2 * 60 * 1000);
 
     function date_refresh() {
       vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
-      vm.frissites_ideje = $filter('date')(new Date().getTime() + 5 * 60 * 1000, 'yyyy-MM-dd HH:mm');
+      vm.frissites_ideje = $filter('date')(new Date().getTime() + 2 * 60 * 1000, 'yyyy-MM-dd HH:mm');
     }
   }
   Controller.$inject = ['Data', '$cookies', '$state', '$rootScope', '$filter'];

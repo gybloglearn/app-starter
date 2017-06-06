@@ -1,19 +1,19 @@
-define([], function(){
-  function Service($http){
-    var service= {
+define([], function () {
+  function Service($http) {
+    var service = {
       auth: auth
     };
-    function auth(d){
-      var req={
-	method:"POST",
-	//url: "//3.228.180.15/login/login",
-	url: "../login/login",
-	data: d
+    function auth(d) {
+      var req = {
+        method: "POST",
+        //url: "//3.228.180.15/login/login",
+        url: "../login/login",
+        data: d
       };
       return $http(req);
     }
     return service;
   }
-  Service.$inject=['$http'];
+  Service.$inject = ['$http'];
   return Service;
 });
