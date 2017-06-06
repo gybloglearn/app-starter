@@ -11,7 +11,7 @@ define([], function () {
     vm.hely = ['Potting be', 'Előkészítés alsó', 'Gélberakás alsó', 'Esztétika alsó', 'Forgatás', 'Gélberakás felső', 'Esztétika felső', 'Potting ki']
     vm.machine = "Potting4";
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
-    var szakallando4 = 50;
+    var szakallando4 = 27;
     vm.actplan = 0;
     vm.places = [];
     vm.szakok[0] = $filter('shift')(1, vm.datum);
@@ -19,11 +19,12 @@ define([], function () {
     vm.szakok[2] = $filter('shift')(3, new Date().getTime() - ((5 * 60 + 50) * 60 * 1000));
     vm.actszak = "";
     vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
-    vm.frissites_ideje = $filter('date')(new Date().getTime() + 5 * 60 * 1000, 'yyyy-MM-dd HH:mm');
+    vm.frissites_ideje = $filter('date')(new Date().getTime() + 2 * 60 * 1000, 'yyyy-MM-dd HH:mm');
     vm.pottloading = false;
 
-    function load(valami) {
+    function load() {
       vm.places = [];
+      vm.data = [];
       vm.pottloading = true;
       angular.forEach(vm.phasenumbers, function (v, k) {
         dataService.get(vm.datum, vm.machine, v).then(function (response) {
@@ -36,7 +37,7 @@ define([], function () {
             sor: v,
             place: allomas(vm.data[v]),
             db: szakdb(vm.data[v]),
-            plan: plancreator4(valami),
+            plan: plancreator4(szakallando4),
             timelast: last(vm.data[v]),
             id: "Pottingplace" + v,
             chartconfig: {
@@ -73,45 +74,45 @@ define([], function () {
     }
 
     function loadsheetmakers() {
-      var valami=0;
-      var lekerdezszaknum=1;
-      var substring="GOOD"
+      var valami = 0;
+      var lekerdezszaknum = 1;
+      var substring = "GOOD"
       vm.smdata = [];
 
       var hour = new Date().getHours();
       var minute = new Date().getMinutes();
-      var downdate=$filter('date')(new Date(), 'yyyy-MM-dd');
+      var downdate = $filter('date')(new Date(), 'yyyy-MM-dd');
 
       if ((hour == 5 && minute >= 50) || (hour < 13) || (hour == 13 && minute < 50)) {
-        lekerdezszaknum=3;
-        downdate=$filter('date')((new Date().getTime()-24*3600*1000), 'yyyy-MM-dd');
+        lekerdezszaknum = 3;
+        downdate = $filter('date')((new Date().getTime() - 24 * 3600 * 1000), 'yyyy-MM-dd');
       }
       else if ((hour == 13 && minute >= 50) || (hour < 21) || (hour == 21 && minute < 50)) {
-        lekerdezszaknum=1;
+        lekerdezszaknum = 1;
       }
       else if ((hour == 21 && minute >= 50) || (hour > 21) || (hour < 5) || (hour == 5 && minute < 50)) {
-        lekerdezszaknum=2;
-        if((hour >= 0) || (hour < 5) || (hour == 5 && minute < 50)){
-          downdate=$filter('date')((new Date().getTime()-24*3600*1000), 'yyyy-MM-dd');
+        lekerdezszaknum = 2;
+        if ((hour >= 0) || (hour < 5) || (hour == 5 && minute < 50)) {
+          downdate = $filter('date')((new Date().getTime() - 24 * 3600 * 1000), 'yyyy-MM-dd');
         }
       }
-      
+
       var hany = 0;
       angular.forEach(vm.sheetmakers, function (v, k) {
         dataService.getsm(v, downdate).then(function (response) {
           hany++;
           vm.smdata = response.data;
-          for(var i=0;i<vm.smdata.length;i++){
-            if(vm.smdata[i].amount>0 && vm.smdata[i].name.includes(substring) && lekerdezszaknum==vm.smdata[i].shiftnum){
-              valami+=Math.floor((Math.floor((vm.smdata[i].amount)/12))/2);
+          for (var i = 0; i < vm.smdata.length; i++) {
+            if (vm.smdata[i].amount > 0 && vm.smdata[i].name.includes(substring) && lekerdezszaknum == vm.smdata[i].shiftnum) {
+              valami += Math.floor((Math.floor((vm.smdata[i].amount) / 12)) / 2);
             }
           }
-          if (hany == 3){
-            load(valami);
+          if (hany == 3) {
+            //load(valami);
           }
         });
       });
-      
+
     }
 
     function feltolt_x() {
@@ -154,7 +155,7 @@ define([], function () {
         var d = new Date(tomb[i].startdate);
         var h = d.getHours();
         var m = d.getMinutes();
-        var t = (h*60+m);
+        var t = (h * 60 + m);
       }
     }
 
@@ -214,7 +215,7 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      loadsheetmakers();
+      load();
       choose();
     }
 
