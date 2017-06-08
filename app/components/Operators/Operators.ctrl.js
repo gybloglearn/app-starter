@@ -11,7 +11,7 @@ define([], function () {
     vm.phasenumbers = [0, 1, 2, 3, 4, 5, 6, 7];
     vm.Pottings = ["Potting3", "Potting4"];
     vm.hely = ["Potting be", "Előkészítés alsó", "Gélberakás alsó", "Esztétika alsó", "Forgatás", "Gélberakás felső", "Esztétika felső", "Potting ki"];
-    vm.szakok=[1,2,3]
+    vm.szakok = [1, 2, 3]
     vm.load = load;
     vm.beallit = beallit;
     vm.actshiftnum = 1;
@@ -37,24 +37,25 @@ define([], function () {
           vm.data[v] = response.data;
 
           for (var l = 0; l < vm.data[v].length; l++) {
-            var szam = new Date(vm.data[v][l].startdate)
-            var hour = szam.getHours();
-            var minute = szam.getMilliseconds();
-            var seged = $filter('date')(szam, 'yyyy-MM-dd');
+            var szam = new Date(vm.data[v][l].startdate);
+            var szamvaltozo=szam.getHours()*60+szam.getMinutes();
+            var seged = $filter('date')(szam.getTime()-(5 * 60 + 50) * 60 * 1000, 'yyyy-MM-dd');
+            console.log(seged);
             var szakszam = 0;
-            if ((hour == 5 && minute >= 50) || (hour < 13) || (hour == 13 && minute < 50)) {
+            if (szamvaltozo >= 350 && szamvaltozo < 830) {
               szakszam = 1;
             }
-            else if ((hour == 13 && minute >= 50) || (hour < 21) || (hour == 21 && minute < 50)) {
+            else if (szamvaltozo >= 830 && szamvaltozo < 1310) {
               szakszam = 2;
             }
-            else if ((hour == 21 && minute >= 50) || (hour > 21) || (hour < 5) || (hour == 5 && minute < 50)) {
+            else {
               szakszam = 3;
             }
 
             vm.data[v][l].shift = $filter('shift')(szakszam, seged);
             vm.data[v][l].shiftnumber = szakszam;
           }
+          
           vm.operators[v] = {}
           vm.operators[v].name = vm.hely[v];
           vm.operators[v].operator = [];
