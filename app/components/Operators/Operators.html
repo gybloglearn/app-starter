@@ -1,49 +1,52 @@
 <div class="container">
-  <section class="module">
-    <div class="module-header">
-      <h1 class="text-center">{{vm.actmachine}}-Operátorok</h1>
-      <h2 class="text-center" style="margin-top:10px">{{vm.datumszam}}</h2>
-      <ul class="nav nav-tabs" style="margin-top:10px">
+	<section class="module">
+		<div class="module-header">
+			<h1 class="text-center">{{vm.actmachine}}-Operátorok</h1>
+			<h2 class="text-center" style="margin-top:10px">{{vm.datumszam}}</h2>
+			<ul class="nav nav-tabs" style="margin-top:10px">
 				<li ng-repeat="item in vm.Pottings track by $index">
-					<a data-toggle="tab" href="" ng-click="vm.actmachine=item;vm.load();vm.beallit()" ng-hide="vm.dis">{{item}}</a>
+					<a data-toggle="tab" href="" ng-click="vm.actmachine=item" ng-hide="vm.dis">{{item}}</a>
 				</li>
 			</ul>
-      <div class="col-sm-5">
-        <div class="input-group">
+			<div class="col-sm-7">
+				<div class="tabbable tabs-left">
+					<ul class="nav nav-tabs">
+							<li>
+								<a data-toggle="tab" href="" ng-click="vm.actshiftnum=1" ng-hide="vm.dis">Délelőtt</a>
+							</li>
+							<li>
+								<a data-toggle="tab" href="" ng-click="vm.actshiftnum=2" ng-hide="vm.dis">Délután</a>
+							</li>
+							<li>
+								<a data-toggle="tab" href="" ng-click="vm.actshiftnum=3" ng-hide="vm.dis">Éjszaka</a>
+							</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-sm-5" style="margin-top:60px">
+				<div class="input-group">
 					<span class="input-group-addon">Dátum:</span>
 					<input type="text" class="datepicker form-control" ng-model="vm.datum">
 					<div class="input-group-btn">
 						<a href="" class="btn btn-primary" ng-click="vm.load();vm.beallit()" ng-disabled="vm.dis">Betöltés</a>
 					</div>
 				</div>
-      </div>
-    </div>
-    <div class="module-body">
-      <div class="progress progress-warning progress-striped active" ng-hide="!vm.dis">
+			</div>
+		</div>
+		<div class="module-body">
+			<div class="progress progress-warning progress-striped active" ng-hide="!vm.dis">
 				<div class="progress-bar" style="width: 100%">
 					<p class="text-center">Betöltés...</p>
 				</div>
 			</div>
-      <div class="tab-content">
-						<my-chart id="operatorchart" config="vm.chartconfig"></my-chart>
+			<div class="row">
+				<div class="col-sm-6" ng-repeat="item in vm.OP| orderBy:'sor'">
+					<div style="border: 1px solid #ddd; border-radius:3px;overflow:hidden;height:250px">
+						<op-dir data="item"></op-dir>
+					</div>
+				</div>
 			</div>
-      <table class="table table-condensed">
-        <thead>
-          <tr>
-            <th>Operátor</th>
-            <th>Darab (modul)</th>
-            <th>Munkaidő (perc)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="item in vm.operators">
-            <td>{{item.id}}</td>
-            <td>{{item.db}}</td>
-            <td>{{item.db*8.5}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="module-footer"></div>
-  </section>
+		</div>
+		<div class="module-footer"></div>
+	</section>
 </div>

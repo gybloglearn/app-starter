@@ -11,6 +11,7 @@ define([
   './directives/countdown',
   './directives/mychart',
   './directives/Places/place',
+  './directives/Operators/Op',
   './filters/unique',
   './filters/sumdb',
   './filters/sumaeq',
@@ -33,6 +34,7 @@ define([
   countdown,
   mychart,
   placedir,
+  opdir,
   unique,
   sumdb,
   sumaeq,
@@ -58,6 +60,7 @@ define([
   app.directive('countdown',countdown);
   app.directive('myChart',mychart);
   app.directive('placeDir',placedir);
+  app.directive('opDir',opdir);
   app.filter('unique',unique);
   app.filter('sumdb',sumdb);
   app.filter('sumaeq',sumaeq);
