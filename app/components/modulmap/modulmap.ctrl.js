@@ -12,6 +12,8 @@ define([], function () {
     var tanks = ["Bubble point tank5", "Bubble point tank6", "Bubble point tank7", "Bubble point tank15"];
     var betuk = ["A", "B", "C", "D", "E"];
     var szamok = ["1", "2", "3", "4", "5", "6", "8", "9"];
+    vm.sorok = szamok;
+    vm.oszlop = betuk;
     vm.load = load;
     vm.beilleszt = beilleszt;
 

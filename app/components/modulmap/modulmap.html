@@ -141,49 +141,19 @@
 							background-color: lightgreen;
 						}
 					</style>
-					<div class="row">
-						<div class="blue bgye">10</div>
-						<div class="blue bglgr">0</div>
-						<div class="blue bgor">12</div>
-						<div class="blue bgbl">86,5</div>
-						<div class="blue bggr">1</div>
-					</div>
-					<div class="row">
-						<div class="yellow bggr">2,2</div>
-						<div class="yellow bgor">12,5</div>
-						<div class="yellow bgbr">32,7</div>
-						<div class="yellow bgre">25,5</div>
-					</div>
-					<div class="row">
-						<div class="black bgbr">30</div>
-						<div class="black"></div>
-						<div class="black bgor">28</div>
-						<div class="black"></div>
-					</div>
-					<div class="row">
-						<div class="red"></div>
-						<div class="red"></div>
-						<div class="red bgbl">66</div>
-						<div class="red"></div>
-					</div>
-					<div class="row">
-						<div class="black"></div>
-						<div class="black"></div>
-						<div class="black"></div>
-						<div class="black"></div>
-					</div>
-					<div class="row">
-						<div class="yellow"></div>
-						<div class="yellow"></div>
-						<div class="yellow"></div>
-						<div class="yellow"></div>
-					</div>
-					<div class="row">
-						<div class="blue"></div>
-						<div class="blue"></div>
-						<div class="blue"></div>
-						<div class="blue"></div>
-						<div class="blue"></div>
+					<div class="row" ng-repeat="sor in vm.sorok track by $index">
+						<div ng-if="sor == '1' || sor == '8'">
+							<div ng-repeat="oszlop in vm.oszlop" class="blue">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }}</div>
+						</div>
+						<div ng-if="sor=='2' || sor=='6'">
+							<div ng-repeat="oszlop in vm.oszlop" ng-if="oszlop!='E'" class="yellow">{{ vm.soroszlopbokes|filter:{'azon':oszlop + sor} | sumField:'bokes' | number:0 }} </div>
+						</div>
+						<div ng-if="sor=='3' || sor=='5'">
+							<div ng-repeat="oszlop in ['A','B','C','D']" class="black">{{ vm.soroszlopbokes|filter:{'azon':oszlop + sor} | sumField:'bokes' | number:0 }} </div>
+						</div>
+						<div ng-if="sor=='4'">
+							<div ng-repeat="oszlop in ['A','B','C','D']" class="red">{{ vm.soroszlopbokes|filter:{'azon':oszlop + sor} | sumField:'bokes' | number:0 }} </div>
+						</div>
 					</div>
 				</div>
 			</div>
