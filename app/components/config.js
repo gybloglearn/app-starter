@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('modulmap', {
+		url: '/modulmap',
+		templateUrl: './app/components/modulmap/modulmap.html',
+		controller: 'modulmapController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('attempt', {
 		url: '/attempt',
 		params: {

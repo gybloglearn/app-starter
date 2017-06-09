@@ -1,0 +1,193 @@
+<div class="container">
+	<section class="module">
+		<div class="module-header">
+			<h1 class="text-center">Bökés térkép</h1>
+			<h2 class="text-center" style="margin-top:10px">{{vm.startdatumszam}}-{{vm.enddatumszam}}</h2>
+			<div class="col-sm-6" style="margin-top:10px">
+				<div class="input-group">
+					<span class="input-group-addon">Betöltésre kerülő időszak:</span>
+					<input type="text" class="datepicker form-control" ng-model="vm.startdatum" end="{{vm.edate}}">
+					<span class="input-group-addon">-tól</span>
+					<input type="text" class="datepicker form-control" ng-model="vm.enddatum" end="{{vm.edate}}">
+					<span class="input-group-addon">-ig</span>
+					<div class="input-group-btn">
+						<a href="" class="btn btn-primary" ng-click="vm.load();vm.beilleszt()" ng-disabled="vm.enddatum<=vm.startdatum">Betöltés</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="module-body">
+			<div class="container">
+				<div class="modMap">
+					<style>
+						.modMap {
+							min-width: 450px;
+						}
+						
+						.blue {
+							height: 30px;
+							line-height: 20px;
+							font-size: 12px;
+							text-align: center;
+							float: left;
+							width: 30px;
+							margin-left: 70px;
+							border: 5px solid #00aadd;
+							margin-top: 5px;
+							background-color: white;
+						}
+						
+						.blue:nth-child(1) {
+							margin-left: 0px;
+						}
+						
+						.blue:nth-child(2) {
+							margin-left: 60px;
+						}
+						
+						.blue:nth-child(3) {
+							margin-left: 70px;
+						}
+						
+						.blue:nth-child(4) {
+							margin-left: 70px;
+						}
+						
+						.blue:nth-child(5) {
+							margin-left: 60px;
+						}
+						
+						.yellow,
+						.black,
+						.red {
+							height: 30px;
+							line-height: 20px;
+							text-align: center;
+							float: left;
+							width: 90px;
+							margin-left: 10px;
+							margin-top: 5px;
+							border: 5px solid #ffee00;
+							background-color: white;
+						}
+						
+						.yellow:nth-child(1),
+						.black:nth-child(1),
+						.red:nth-child(1) {
+							margin-left: 10px;
+						}
+						
+						.yellow:nth-child(2),
+						.black:nth-child(2),
+						.red:nth-child(2) {
+							margin-left: 10px;
+						}
+						
+						.yellow:nth-child(3),
+						.black:nth-child(3),
+						.red:nth-child(3) {
+							margin-left: 10px;
+						}
+						
+						.yellow:nth-child(4),
+						.black:nth-child(4),
+						.red:nth-child(4) {
+							margin-left: 10px;
+						}
+						
+						.black {
+							height: 40px;
+							line-height: 30px;
+							text-align: center;
+							border: 5px solid black;
+						}
+						
+						.red {
+							height: 300px;
+							line-height: 290px;
+							text-align: center;
+							border: 5px solid red;
+						}
+						
+						.bgbl {
+							background-color: black;
+							color: white;
+						}
+						
+						.bgbr {
+							background-color: brown;
+							color: white;
+						}
+						
+						.bgre {
+							background-color: red;
+							color: white;
+						}
+						
+						.bgor {
+							background-color: orange;
+						}
+						
+						.bgye {
+							background-color: yellow;
+						}
+						
+						.bggr {
+							background-color: green;
+							color: white;
+						}
+						
+						.bglgr {
+							background-color: lightgreen;
+						}
+					</style>
+					<div class="row">
+						<div class="blue bgye">10</div>
+						<div class="blue bglgr">0</div>
+						<div class="blue bgor">12</div>
+						<div class="blue bgbl">86,5</div>
+						<div class="blue bggr">1</div>
+					</div>
+					<div class="row">
+						<div class="yellow bggr">2,2</div>
+						<div class="yellow bgor">12,5</div>
+						<div class="yellow bgbr">32,7</div>
+						<div class="yellow bgre">25,5</div>
+					</div>
+					<div class="row">
+						<div class="black bgbr">30</div>
+						<div class="black"></div>
+						<div class="black bgor">28</div>
+						<div class="black"></div>
+					</div>
+					<div class="row">
+						<div class="red"></div>
+						<div class="red"></div>
+						<div class="red bgbl">66</div>
+						<div class="red"></div>
+					</div>
+					<div class="row">
+						<div class="black"></div>
+						<div class="black"></div>
+						<div class="black"></div>
+						<div class="black"></div>
+					</div>
+					<div class="row">
+						<div class="yellow"></div>
+						<div class="yellow"></div>
+						<div class="yellow"></div>
+						<div class="yellow"></div>
+					</div>
+					<div class="row">
+						<div class="blue"></div>
+						<div class="blue"></div>
+						<div class="blue"></div>
+						<div class="blue"></div>
+						<div class="blue"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="module-footer"></div>
+	</section>
+</div>

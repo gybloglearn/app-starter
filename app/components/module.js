@@ -25,7 +25,9 @@ define([
   './plan/plan.ctrl',
   './services/plan.service',
   './newtest/newtest.ctrl',
-  './attempt/attempt.ctrl'
+  './attempt/attempt.ctrl',
+  './modulmap/modulmap.ctrl',
+  './services/map.service'
 	/* files */
 ], function(
   configFunction,
@@ -54,7 +56,9 @@ define([
   planController,
   planService,
   newtestController,
-  attemptController
+  attemptController,
+  modulmapController,
+  mapService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -87,5 +91,7 @@ define([
 	app.service('planService', planService);
 	app.controller('newtestController', newtestController);
 	app.controller('attemptController', attemptController);
+	app.controller('modulmapController', modulmapController);
+	app.service('mapService', mapService);
 		/* controllers */
 });
