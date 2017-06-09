@@ -2,6 +2,7 @@ define([], function () {
   'use strict';
   function Controller(mapService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
+    vm.partnumbers = [];
     vm.data = [];
     vm.osszesmodulbokes = [];
     vm.soroszlopbokes = [];
@@ -32,6 +33,7 @@ define([], function () {
             vm.soroszlopbokes[a] = {}
             vm.soroszlopbokes[a].azon = betuk[j] + szamok[i];
             vm.soroszlopbokes[a].bokes = 0;
+            vm.soroszlopbokes[a].aeq = 0;
             vm.soroszlopbokes[a].moduls = [];
             a++;
           }
@@ -41,11 +43,31 @@ define([], function () {
             vm.soroszlopbokes[a] = {}
             vm.soroszlopbokes[a].azon = betuk[j] + szamok[i];
             vm.soroszlopbokes[a].bokes = 0;
+            vm.soroszlopbokes[a].aeq = 0;
             vm.soroszlopbokes[a].moduls = [];
             a++;
           }
         }
       }
+    }
+
+    function getAEQ(tomb, azon) {
+      var aeq = 0;
+      var szam = azon.substring(2, 9);
+      for (var i = 0; i < tomb.length; i++) {
+        if (tomb[i].id == szam) {
+          aeq = parseFloat(tomb[i].aeq);
+        }
+      }
+      return aeq;
+    }
+
+    function loadPartnumbers() {
+      vm.partnumbers = [];
+      mapService.getpartnumber().then(function (response) {
+        vm.partnumbers = response.data; 
+        console.log(vm.partnumbers);
+      });
     }
 
     function load() {
@@ -55,10 +77,11 @@ define([], function () {
       feltoltsoroszlop()
       var talalat = 0;
       var a = 0;
-
+      
       for (var i = 0; i < tanks.length; i++) {
         mapService.get(vm.startdatum, vm.enddatum, tanks[i]).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
+            response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].modul_id1)
             vm.data.push(response.data[j]);
             for (var k = 0; k < vm.osszesmodulbokes.length; k++) {
               if (response.data[j].modul_id1 == vm.osszesmodulbokes[k].modul) {
@@ -92,12 +115,14 @@ define([], function () {
                 }
 
                 vm.soroszlopbokes[l].bokes += response.data[j].bt_kat_db1 * 1;
+                vm.soroszlopbokes[l].aeq += response.data[j].aeq;
                 vm.soroszlopbokes[l].moduls[hossz] = {}
                 vm.soroszlopbokes[l].moduls[hossz].modulazon = response.data[j].modul_id1;
+                vm.soroszlopbokes[l].moduls[hossz].modulaeq = response.data[j].aeq;
                 vm.soroszlopbokes[l].moduls[hossz].modulbokes = response.data[j].bt_kat_db1 * 1;
                 vm.soroszlopbokes[l].moduls[hossz].modulbokeshiba = response.data[j].KatName1;
                 vm.soroszlopbokes[l].moduls[hossz].moduldatum = $filter('date')(new Date(response.data[j].bt_datetime).getTime(), 'yyyy-MM-dd HH:mm');
-                vm.soroszlopbokes[l].moduls[hossz].modulszak = $filter('shift')(szakszam,new Date(response.data[j].bt_datetime).getTime()-(5 * 60 + 50) * 60 * 1000, 'yyyy-MM-dd');
+                vm.soroszlopbokes[l].moduls[hossz].modulszak = $filter('shift')(szakszam, new Date(response.data[j].bt_datetime).getTime() - (5 * 60 + 50) * 60 * 1000, 'yyyy-MM-dd');
               }
             }
           }
@@ -112,6 +137,7 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
+      loadPartnumbers();
       load();
       vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
     }

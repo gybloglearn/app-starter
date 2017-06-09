@@ -3,12 +3,21 @@ define([], function () {
 
   function Service($http) {
     var service = {
-      get: get
+      get: get,
+      getpartnumber: getpartnumber
     };
 
     return service;
 
     ///////////
+
+    function getpartnumber() {
+      var req = {
+        method: 'GET',
+        url: 'http://3.228.180.15/modulapi/mods'
+      };
+      return $http(req);
+    }
 
     function get(start, end, tank) {
       var req = {
