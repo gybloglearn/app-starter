@@ -15,6 +15,13 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-sm-12" style="margin-top:10px">
+				<ul class="nav nav-tabs" style="margin-top:10px">
+					<li ng-repeat="item in vm.esetek track by $index">
+						<a data-toggle="tab" href="" ng-click="vm.eset=item" ng-hide="">{{item}}</a>
+					</li>
+				</ul>
+			</div>
 		</div>
 		<div class="module-body">
 			<div class="container">
@@ -141,18 +148,36 @@
 							background-color: lightgreen;
 						}
 					</style>
-					<div class="row" ng-repeat="sor in vm.sorok track by $index">
+					<div class="row" ng-repeat="sor in vm.sorok track by $index" ng-show="vm.eset=='Bökés'">
 						<div ng-if="sor == '1' || sor == '8'">
 							<div ng-repeat="oszlop in vm.oszlop" class="blue">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }}</div>
 						</div>
 						<div ng-if="sor=='2' || sor=='6'">
-							<div ng-repeat="oszlop in vm.oszlop" ng-if="oszlop!='E'" class="yellow">{{ vm.soroszlopbokes|filter:{'azon':oszlop + sor} | sumField:'bokes' | number:0 }} </div>
+							<div ng-repeat="oszlop in vm.oszlop" ng-if="oszlop!='E'" class="yellow">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }} </div>
 						</div>
 						<div ng-if="sor=='3' || sor=='5'">
-							<div ng-repeat="oszlop in ['A','B','C','D']" class="black">{{ vm.soroszlopbokes|filter:{'azon':oszlop + sor} | sumField:'bokes' | number:0 }} </div>
+							<div ng-repeat="oszlop in ['A','B','C','D']" class="black">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }} </div>
 						</div>
 						<div ng-if="sor=='4'">
-							<div ng-repeat="oszlop in ['A','B','C','D']" class="red">{{ vm.soroszlopbokes|filter:{'azon':oszlop + sor} | sumField:'bokes' | number:0 }} </div>
+							<div ng-repeat="oszlop in ['A','B','C','D']" class="red">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }} </div>
+						</div>
+					</div>
+					<div class="row" ng-repeat="sor in vm.sorok track by $index" ng-show="vm.eset=='Bökés/AEQ'">
+						<div ng-if="sor == '1' || sor == '8'">
+							<div ng-repeat="oszlop in vm.oszlop" class="blue">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes/(vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].aeq
+								| number:2 }}</div>
+						</div>
+						<div ng-if="sor=='2' || sor=='6'">
+							<div ng-repeat="oszlop in vm.oszlop" ng-if="oszlop!='E'" class="yellow">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes/(vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].aeq
+								| number:2 }} </div>
+						</div>
+						<div ng-if="sor=='3' || sor=='5'">
+							<div ng-repeat="oszlop in ['A','B','C','D']" class="black">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes/(vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].aeq
+								| number:2}} </div>
+						</div>
+						<div ng-if="sor=='4'">
+							<div ng-repeat="oszlop in ['A','B','C','D']" class="red">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes/(vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].aeq
+								| number:2 }} </div>
 						</div>
 					</div>
 				</div>

@@ -10,6 +10,8 @@ define([], function () {
     vm.startdatumszam = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddatum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
+    vm.esetek=["Bökés","Bökés/AEQ"];
+    vm.eset="Bökés";
     var tanks = ["Bubble point tank5", "Bubble point tank6", "Bubble point tank7", "Bubble point tank15"];
     var betuk = ["A", "B", "C", "D", "E"];
     var szamok = ["1", "2", "3", "4", "5", "6", "8", "9"];
@@ -93,6 +95,7 @@ define([], function () {
               vm.osszesmodulbokes[a] = {}
               vm.osszesmodulbokes[a].modul = response.data[j].modul_id1;
               vm.osszesmodulbokes[a].bokes = response.data[j].bt_kat_db1 * 1;
+              vm.osszesmodulbokes[a].aeq = response.data[j].aeq;
               a++;
             }
             else {
@@ -128,7 +131,7 @@ define([], function () {
           }
           //console.log(vm.data); 
           console.log(vm.soroszlopbokes);
-          //console.log(vm.osszesmodulbokes);
+          console.log(vm.osszesmodulbokes);
         });
       }
     }
