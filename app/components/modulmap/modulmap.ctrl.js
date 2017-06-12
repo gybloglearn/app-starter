@@ -10,8 +10,11 @@ define([], function () {
     vm.startdatumszam = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddatum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.esetek=["Bökés","Bökés/AEQ"];
-    vm.eset="Bökés";
+    vm.esetek = ["Bökés", "Bökés/AEQ"];
+    vm.eset = "Bökés";
+    vm.tablazatazon = "";
+    vm.tablazat = [];
+    vm.allaeq=0;
     var tanks = ["Bubble point tank5", "Bubble point tank6", "Bubble point tank7", "Bubble point tank15"];
     var betuk = ["A", "B", "C", "D", "E"];
     var szamok = ["1", "2", "3", "4", "5", "6", "8", "9"];
@@ -19,6 +22,12 @@ define([], function () {
     vm.oszlop = betuk;
     vm.load = load;
     vm.beilleszt = beilleszt;
+    vm.tabl = tabl;
+    vm.drawchart = drawchart;
+
+    function tabl(index) {
+      vm.tablazat = $filter('filter')(vm.soroszlopbokes, {azon: index})[0].moduls;
+    }
 
     function beilleszt() {
       var startszam = new Date(vm.startdatum);
@@ -67,8 +76,7 @@ define([], function () {
     function loadPartnumbers() {
       vm.partnumbers = [];
       mapService.getpartnumber().then(function (response) {
-        vm.partnumbers = response.data; 
-        console.log(vm.partnumbers);
+        vm.partnumbers = response.data;
       });
     }
 
@@ -76,10 +84,11 @@ define([], function () {
       vm.data = [];
       vm.osszesmodulbokes = [];
       vm.soroszlopbokes = [];
-      feltoltsoroszlop()
+      feltoltsoroszlop();
+      vm.allaeq=0;
       var talalat = 0;
       var a = 0;
-      
+
       for (var i = 0; i < tanks.length; i++) {
         mapService.get(vm.startdatum, vm.enddatum, tanks[i]).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
@@ -97,6 +106,7 @@ define([], function () {
               vm.osszesmodulbokes[a].bokes = response.data[j].bt_kat_db1 * 1;
               vm.osszesmodulbokes[a].aeq = response.data[j].aeq;
               a++;
+              vm.allaeq+=response.data[j].aeq;
             }
             else {
               talalat = 0;
@@ -124,14 +134,16 @@ define([], function () {
                 vm.soroszlopbokes[l].moduls[hossz].modulaeq = response.data[j].aeq;
                 vm.soroszlopbokes[l].moduls[hossz].modulbokes = response.data[j].bt_kat_db1 * 1;
                 vm.soroszlopbokes[l].moduls[hossz].modulbokeshiba = response.data[j].KatName1;
+                vm.soroszlopbokes[l].moduls[hossz].modultank = response.data[j].tank;
                 vm.soroszlopbokes[l].moduls[hossz].moduldatum = $filter('date')(new Date(response.data[j].bt_datetime).getTime(), 'yyyy-MM-dd HH:mm');
                 vm.soroszlopbokes[l].moduls[hossz].modulszak = $filter('shift')(szakszam, new Date(response.data[j].bt_datetime).getTime() - (5 * 60 + 50) * 60 * 1000, 'yyyy-MM-dd');
               }
             }
           }
+          //console.log(vm.allaeq);
           //console.log(vm.data); 
-          console.log(vm.soroszlopbokes);
-          console.log(vm.osszesmodulbokes);
+          //console.log(vm.soroszlopbokes);
+          //console.log(vm.osszesmodulbokes);
         });
       }
     }
@@ -144,6 +156,82 @@ define([], function () {
       load();
       vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
     }
+
+    function drawchart(index) {
+      var dt = $filter('filter')(vm.soroszlopbokes, {azon: index})[0].moduls;
+      vm.chartconfig = {
+        chart: {
+          type: 'column',
+          width: 500,
+          height: 440
+        },
+        series: [
+          {
+            name: 'Hibák',
+            color: "#3366ff",
+            data: feltolthibadarab(dt),
+            tooltip: {
+              useHTML: true,
+              headerFormat: '<b style="color:{series.color};font-weight:bold;">Hibák</b><br>',
+              pointFormat: '<span style="font-size:1.2em">{point.nev} </span><br><b>{point.y} db</i>'
+            },
+          },
+        ],
+        xAxis: [
+          { categories: [] },
+        ],
+        yAxis: {
+          title: {
+            text: "db"
+          }
+        },
+      };
+    }
+
+    function feltolthibadarab(tomb) {
+      var adatok = [];
+      var a = 0;
+      var talalat = 0;
+      for (var i = 0; i < tomb.length; i++) {
+        var acthiba = tomb[i].modulbokeshiba;
+        for (var j = 0; j < adatok.length; j++) {
+          if (acthiba == adatok[j].nev) {
+            adatok[j].y += tomb[i].modulbokes;
+            talalat++;
+          }
+        }
+        if (talalat > 0) {
+          talalat = 0;
+        }
+        else {
+          adatok[a] = {}
+          adatok[a].nev = acthiba;
+          adatok[a].y = tomb[i].modulbokes;
+          a++;
+        }
+      }
+      return $filter('orderBy')(adatok, 'y', true);
+    }
+
+    function feltolthibanev(tomb) {
+      var x_adatok = [];
+      var talalt = 0;
+      for (var i = 0; i < tomb.length; i++) {
+        for (var j = 0; j < x_adatok.length; j++) {
+          if (tomb[i].modulbokeshiba == x_adatok[j]) {
+            talalt++
+          }
+        }
+        if (talalt > 0) {
+          talalt = 0;
+        }
+        else {
+          x_adatok.push(tomb[i].modulbokeshiba);
+        }
+      }
+      return x_adatok;
+    }
+    
   }
   Controller.$inject = ['mapService', '$cookies', '$state', '$rootScope', '$filter'];
   return Controller;

@@ -11,7 +11,7 @@
 					<input type="text" class="datepicker form-control" ng-model="vm.enddatum" end="{{vm.edate}}">
 					<span class="input-group-addon">-ig</span>
 					<div class="input-group-btn">
-						<a href="" class="btn btn-primary" ng-click="vm.load();vm.beilleszt()" ng-disabled="vm.enddatum<=vm.startdatum">Betöltés</a>
+						<a href="" class="btn btn-primary" ng-click="vm.load();vm.beilleszt();vm.tablazatazon=''" ng-disabled="vm.enddatum<=vm.startdatum">Betöltés</a>
 					</div>
 				</div>
 			</div>
@@ -24,164 +24,198 @@
 			</div>
 		</div>
 		<div class="module-body">
-			<div class="container">
-				<div class="modMap">
-					<style>
-						.modMap {
-							min-width: 450px;
-						}
-						
-						.blue {
-							height: 30px;
-							line-height: 20px;
-							font-size: 12px;
-							text-align: center;
-							float: left;
-							width: 30px;
-							margin-left: 70px;
-							border: 5px solid #00aadd;
-							margin-top: 5px;
-							background-color: white;
-						}
-						
-						.blue:nth-child(1) {
-							margin-left: 0px;
-						}
-						
-						.blue:nth-child(2) {
-							margin-left: 60px;
-						}
-						
-						.blue:nth-child(3) {
-							margin-left: 70px;
-						}
-						
-						.blue:nth-child(4) {
-							margin-left: 70px;
-						}
-						
-						.blue:nth-child(5) {
-							margin-left: 60px;
-						}
-						
-						.yellow,
-						.black,
-						.red {
-							height: 30px;
-							line-height: 20px;
-							text-align: center;
-							float: left;
-							width: 90px;
-							margin-left: 10px;
-							margin-top: 5px;
-							border: 5px solid #ffee00;
-							background-color: white;
-						}
-						
-						.yellow:nth-child(1),
-						.black:nth-child(1),
-						.red:nth-child(1) {
-							margin-left: 10px;
-						}
-						
-						.yellow:nth-child(2),
-						.black:nth-child(2),
-						.red:nth-child(2) {
-							margin-left: 10px;
-						}
-						
-						.yellow:nth-child(3),
-						.black:nth-child(3),
-						.red:nth-child(3) {
-							margin-left: 10px;
-						}
-						
-						.yellow:nth-child(4),
-						.black:nth-child(4),
-						.red:nth-child(4) {
-							margin-left: 10px;
-						}
-						
-						.black {
-							height: 40px;
-							line-height: 30px;
-							text-align: center;
-							border: 5px solid black;
-						}
-						
-						.red {
-							height: 300px;
-							line-height: 290px;
-							text-align: center;
-							border: 5px solid red;
-						}
-						
-						.bgbl {
-							background-color: black;
-							color: white;
-						}
-						
-						.bgbr {
-							background-color: brown;
-							color: white;
-						}
-						
-						.bgre {
-							background-color: red;
-							color: white;
-						}
-						
-						.bgor {
-							background-color: orange;
-						}
-						
-						.bgye {
-							background-color: yellow;
-						}
-						
-						.bggr {
-							background-color: green;
-							color: white;
-						}
-						
-						.bglgr {
-							background-color: lightgreen;
-						}
-					</style>
-					<div class="row" ng-repeat="sor in vm.sorok track by $index" ng-show="vm.eset=='Bökés'">
-						<div ng-if="sor == '1' || sor == '8'">
-							<div ng-repeat="oszlop in vm.oszlop" class="blue">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }}</div>
+			<div class="col-sm-6">
+				<div class="container">
+					<div class="modMap">
+						<style>
+							.modMap {
+								min-width: 450px;
+							}
+							
+							.blue {
+								height: 30px;
+								line-height: 20px;
+								font-size: 12px;
+								text-align: center;
+								float: left;
+								width: 30px;
+								margin-left: 70px;
+								border: 5px solid #00aadd;
+								margin-top: 5px;
+								background-color: white;
+							}
+							
+							.blue:nth-child(1) {
+								margin-left: 0px;
+							}
+							
+							.blue:nth-child(2) {
+								margin-left: 60px;
+							}
+							
+							.blue:nth-child(3) {
+								margin-left: 70px;
+							}
+							
+							.blue:nth-child(4) {
+								margin-left: 70px;
+							}
+							
+							.blue:nth-child(5) {
+								margin-left: 60px;
+							}
+							
+							.yellow,
+							.black,
+							.red {
+								height: 30px;
+								line-height: 20px;
+								text-align: center;
+								float: left;
+								width: 90px;
+								margin-left: 10px;
+								margin-top: 5px;
+								border: 5px solid #ffee00;
+								background-color: white;
+							}
+							
+							.yellow:nth-child(1),
+							.black:nth-child(1),
+							.red:nth-child(1) {
+								margin-left: 10px;
+							}
+							
+							.yellow:nth-child(2),
+							.black:nth-child(2),
+							.red:nth-child(2) {
+								margin-left: 10px;
+							}
+							
+							.yellow:nth-child(3),
+							.black:nth-child(3),
+							.red:nth-child(3) {
+								margin-left: 10px;
+							}
+							
+							.yellow:nth-child(4),
+							.black:nth-child(4),
+							.red:nth-child(4) {
+								margin-left: 10px;
+							}
+							
+							.black {
+								height: 40px;
+								line-height: 30px;
+								text-align: center;
+								border: 5px solid black;
+							}
+							
+							.red {
+								height: 300px;
+								line-height: 290px;
+								text-align: center;
+								border: 5px solid red;
+							}
+							
+							.bgbl {
+								background-color: black;
+								color: white;
+							}
+							
+							.bgbr {
+								background-color: brown;
+								color: white;
+							}
+							
+							.bgre {
+								background-color: red;
+								color: white;
+							}
+							
+							.bgor {
+								background-color: orange;
+							}
+							
+							.bgye {
+								background-color: yellow;
+							}
+							
+							.bggr {
+								background-color: green;
+								color: white;
+							}
+							
+							.bglgr {
+								background-color: lightgreen;
+							}
+						</style>
+						<div class="row" ng-repeat="sor in vm.sorok track by $index" ng-show="vm.eset=='Bökés'">
+							<div ng-if="sor == '1' || sor == '8'">
+								<div ng-repeat="oszlop in vm.oszlop track by $index" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)"
+									class="blue">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }}</div>
+							</div>
+							<div ng-if="sor=='2' || sor=='6'">
+								<div ng-repeat="oszlop in vm.oszlop track by $index" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)"
+									ng-if="oszlop!='E'" class="yellow">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }} </div>
+							</div>
+							<div ng-if="sor=='3' || sor=='5'">
+								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)"
+									class="black">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }} </div>
+							</div>
+							<div ng-if="sor=='4'">
+								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)"
+									class="red">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }} </div>
+							</div>
 						</div>
-						<div ng-if="sor=='2' || sor=='6'">
-							<div ng-repeat="oszlop in vm.oszlop" ng-if="oszlop!='E'" class="yellow">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }} </div>
-						</div>
-						<div ng-if="sor=='3' || sor=='5'">
-							<div ng-repeat="oszlop in ['A','B','C','D']" class="black">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }} </div>
-						</div>
-						<div ng-if="sor=='4'">
-							<div ng-repeat="oszlop in ['A','B','C','D']" class="red">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }} </div>
-						</div>
-					</div>
-					<div class="row" ng-repeat="sor in vm.sorok track by $index" ng-show="vm.eset=='Bökés/AEQ'">
-						<div ng-if="sor == '1' || sor == '8'">
-							<div ng-repeat="oszlop in vm.oszlop" class="blue">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes/(vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].aeq
-								| number:2 }}</div>
-						</div>
-						<div ng-if="sor=='2' || sor=='6'">
-							<div ng-repeat="oszlop in vm.oszlop" ng-if="oszlop!='E'" class="yellow">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes/(vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].aeq
-								| number:2 }} </div>
-						</div>
-						<div ng-if="sor=='3' || sor=='5'">
-							<div ng-repeat="oszlop in ['A','B','C','D']" class="black">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes/(vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].aeq
-								| number:2}} </div>
-						</div>
-						<div ng-if="sor=='4'">
-							<div ng-repeat="oszlop in ['A','B','C','D']" class="red">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes/(vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].aeq
-								| number:2 }} </div>
+						<div class="row" ng-repeat="sor in vm.sorok track by $index" ng-show="vm.eset=='Bökés/AEQ'">
+							<div ng-if="sor == '1' || sor == '8'">
+								<div ng-repeat="oszlop in vm.oszlop" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)" class="blue">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes/vm.allaeq | number:2 }}</div>
+							</div>
+							<div ng-if="sor=='2' || sor=='6'">
+								<div ng-repeat="oszlop in vm.oszlop" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)" ng-if="oszlop!='E'"
+									class="yellow">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes/vm.allaeq | number:2 }} </div>
+							</div>
+							<div ng-if="sor=='3' || sor=='5'">
+								<div ng-repeat="oszlop in ['A','B','C','D']" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)"
+									class="black">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes/vm.allaeq | number:2}} </div>
+							</div>
+							<div ng-if="sor=='4'">
+								<div ng-repeat="oszlop in ['A','B','C','D']" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)"
+									class="red">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes/vm.allaeq | number:2 }} </div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<div class="col-sm-6" ng-show="vm.tablazatazon!=''">
+				<h2 class="text-center">{{vm.tablazatazon}} - hibahely részletek</h2>
+				<mychart id="fieldchart" config="vm.chartconfig"></mychart>
+			</div>
+			<div class="col-sm-12" ng-show="vm.tablazatazon!=''">
+				<table class="table table-striped table-condensed">
+					<thead>
+						<tr>
+							<th>Dátum</th>
+							<th>Modul</th>
+							<th>Hiba</th>
+							<th>Bökés</th>
+							<th>Kád</th>
+							<th>Szak</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="sor in vm.tablazat track by $index">
+							<td>{{sor.moduldatum}}</td>
+							<td>{{sor.modulazon}}</td>
+							<td>{{sor.modulbokeshiba}}</td>
+							<td>{{sor.modulbokes}}</td>
+							<td>{{sor.modultank}}</td>
+							<td>{{sor.modulszak}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
 		</div>
 		<div class="module-footer"></div>
 	</section>
