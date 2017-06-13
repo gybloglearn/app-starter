@@ -24,6 +24,11 @@
 			</div>
 		</div>
 		<div class="module-body">
+			<ul>
+				<li ng-repeat="t in vm.typedb track by $index">
+					{{t.typename}} : {{t.db}} db - {{t.db*t.aeq | number:0}} AEQ
+				</li>
+			</ul>
 			<div class="col-sm-6">
 				<div class="container">
 					<div class="modMap">
@@ -274,9 +279,11 @@
 						.modMaps {
 							min-width: 250px;
 						}
+						
 						.modMaps .col-sm-3 {
 							opacity: 0.5;
 						}
+						
 						.modMaps .col-sm-3:hover {
 							opacity: 1;
 						}

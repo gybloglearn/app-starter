@@ -14,12 +14,12 @@ define([], function () {
     vm.eset = "Bökés";
     vm.tablazatazon = "";
     vm.tablazat = [];
-    vm.allaeq=0;
-    //vm.show=true;
+    vm.allaeq = 0;
+    vm.typedb = [];
     var tanks = ["Bubble point tank5", "Bubble point tank6", "Bubble point tank7", "Bubble point tank15"];
     var betuk = ["A", "B", "C", "D", "E"];
     var szamok = ["1", "2", "3", "4", "5", "6", "8", "9"];
-    vm.kadak=tanks;
+    vm.kadak = tanks;
     vm.sorok = szamok;
     vm.oszlop = betuk;
     vm.load = load;
@@ -28,7 +28,7 @@ define([], function () {
     vm.drawchart = drawchart;
 
     function tabl(index) {
-      vm.tablazat = $filter('filter')(vm.soroszlopbokes, {azon: index})[0].moduls;
+      vm.tablazat = $filter('filter')(vm.soroszlopbokes, { azon: index })[0].moduls;
     }
 
     function beilleszt() {
@@ -75,6 +75,17 @@ define([], function () {
       return aeq;
     }
 
+    function getModulname(tomb, azon) {
+      var name = "";
+      var szam = azon.substring(2, 9);
+      for (var i = 0; i < tomb.length; i++) {
+        if (tomb[i].id == szam) {
+          name = tomb[i].name;
+        }
+      }
+      return name;
+    }
+
     function loadPartnumbers() {
       vm.partnumbers = [];
       mapService.getpartnumber().then(function (response) {
@@ -87,14 +98,16 @@ define([], function () {
       vm.osszesmodulbokes = [];
       vm.soroszlopbokes = [];
       feltoltsoroszlop();
-      vm.allaeq=0;
+      vm.allaeq = 0;
       var talalat = 0;
       var a = 0;
+      var b = 0;
 
       for (var i = 0; i < tanks.length; i++) {
         mapService.get(vm.startdatum, vm.enddatum, tanks[i]).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].modul_id1)
+            response.data[j].modtype = getModulname(vm.partnumbers, response.data[j].modul_id1)
             vm.data.push(response.data[j]);
             for (var k = 0; k < vm.osszesmodulbokes.length; k++) {
               if (response.data[j].modul_id1 == vm.osszesmodulbokes[k].modul) {
@@ -107,8 +120,9 @@ define([], function () {
               vm.osszesmodulbokes[a].modul = response.data[j].modul_id1;
               vm.osszesmodulbokes[a].bokes = response.data[j].bt_kat_db1 * 1;
               vm.osszesmodulbokes[a].aeq = response.data[j].aeq;
+              vm.osszesmodulbokes[a].type = response.data[j].modtype;
               a++;
-              vm.allaeq+=response.data[j].aeq;
+              vm.allaeq += response.data[j].aeq;
             }
             else {
               talalat = 0;
@@ -134,6 +148,7 @@ define([], function () {
                 vm.soroszlopbokes[l].moduls[hossz] = {}
                 vm.soroszlopbokes[l].moduls[hossz].modulazon = response.data[j].modul_id1;
                 vm.soroszlopbokes[l].moduls[hossz].modulaeq = response.data[j].aeq;
+                vm.soroszlopbokes[l].moduls[hossz].modultype = response.data[j].modtype;
                 vm.soroszlopbokes[l].moduls[hossz].modulbokes = response.data[j].bt_kat_db1 * 1;
                 vm.soroszlopbokes[l].moduls[hossz].modulbokeshiba = response.data[j].KatName1;
                 vm.soroszlopbokes[l].moduls[hossz].modultank = response.data[j].tank;
@@ -141,11 +156,32 @@ define([], function () {
                 vm.soroszlopbokes[l].moduls[hossz].modulszak = $filter('shift')(szakszam, new Date(response.data[j].bt_datetime).getTime() - (5 * 60 + 50) * 60 * 1000, 'yyyy-MM-dd');
               }
             }
+
+
+            for (var m = 0; m < vm.typedb.length; m++) {
+              if (response.data[j].modtype == vm.typedb[m].typename) {
+                vm.typedb[m].db++;
+                talalat++;
+              }
+            }
+            if (talalat == 0) {
+              vm.typedb[b] = {}
+              vm.typedb[b].typename = response.data[j].modtype;
+              vm.typedb[b].db = 1;
+              vm.typedb[b].aeq = response.data[j].aeq;
+              b++;
+            }
+            else {
+              talalat = 0;
+            }
+
+
           }
           //console.log(vm.allaeq);
           //console.log(vm.data); 
           console.log(vm.soroszlopbokes);
           //console.log(vm.osszesmodulbokes);
+          //console.log(vm.typedb);
         });
       }
     }
@@ -160,7 +196,7 @@ define([], function () {
     }
 
     function drawchart(index) {
-      var dt = $filter('filter')(vm.soroszlopbokes, {azon: index})[0].moduls;
+      var dt = $filter('filter')(vm.soroszlopbokes, { azon: index })[0].moduls;
       vm.chartconfig = {
         chart: {
           type: 'column',
@@ -233,7 +269,7 @@ define([], function () {
       }
       return x_adatok;
     }
-    
+
   }
   Controller.$inject = ['mapService', '$cookies', '$state', '$rootScope', '$filter'];
   return Controller;
