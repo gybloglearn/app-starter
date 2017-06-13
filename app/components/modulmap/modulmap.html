@@ -43,6 +43,7 @@
 								border: 5px solid #00aadd;
 								margin-top: 5px;
 								background-color: white;
+								cursor: pointer;
 							}
 							
 							.blue:nth-child(1) {
@@ -77,6 +78,7 @@
 								margin-top: 5px;
 								border: 5px solid #ffee00;
 								background-color: white;
+								cursor: pointer;
 							}
 							
 							.yellow:nth-child(1),
@@ -191,20 +193,68 @@
 				<h2 class="text-center">{{vm.tablazatazon}} - hibahely részletek</h2>
 				<mychart id="fieldchart" config="vm.chartconfig"></mychart>
 			</div>
-			<div class="col-sm-12" ng-show="vm.tablazatazon!=''">
+			<div ng-show="vm.tablazatazon!=''">
+				<button class="btn btn-default pull-right" ng-class="{'btn-info':vm.show}" ng-click="vm.show=!vm.show">Táblázat</button>
+			</div>
+			<div class="col-sm-12" ng-show="vm.show" style="margin-top:10px">
+				<div class="tray filter-tray top">
+					<div class="tray-inner">
+						<div class="filter-rule-group">
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<span class="control-label" style="color:#FFFFFF">Modul</span>
+									<input type="text" ng-model="search.modulazon" class="form-group">
+								</div>
+							</div>
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<span class="control-label" style="color:#FFFFFF">Hiba</span>
+									<select ng-model="search.modulbokeshiba" class="form-control ng-pristine ng-untouched ng-valid">
+                        			<option value="">Mind</option>
+                        			<option ng-repeat="item in vm.tablazat|unique:'modulbokeshiba'" value="{{item.modulbokeshiba}}">{{item.modulbokeshiba}}</option>
+                    			</select>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<span class="control-label" style="color:#FFFFFF">Kád</span>
+									<select ng-model="search.modultank" class="form-control ng-pristine ng-untouched ng-valid">
+                        			<option value="">Mind</option>
+                        			<option ng-repeat="item in vm.kadak" value="{{item}}">{{item}}</option>
+                    			</select>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<span class="control-label" style="color:#FFFFFF">Szak</span>
+									<select ng-model="search.modulszak" class="form-control ng-pristine ng-untouched ng-valid">
+                        			<option value>Mind</option>
+                        			<option value="A">A</option>
+                        			<option value="B">B</option>
+                        			<option value="C">C</option>
+						            <option value="D">D</option>
+                    			</select>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
 				<table class="table table-striped table-condensed">
 					<thead>
 						<tr>
-							<th>Dátum</th>
-							<th>Modul</th>
-							<th>Hiba</th>
-							<th>Bökés</th>
+							<th rowspan=2 ng-click="vm.order='moduldatum';vm.asc=!vm.asc;">Dátum</th>
+							<th rowspan=2 ng-click="vm.order='modulazon';vm.asc=!vm.asc;">Modul</th>
+							<th rowspan=2 ng-click="vm.order='modulbokeshiba';vm.asc=!vm.asc;">Hiba</th>
+							<th rowspan=2 ng-click="vm.order='modulbokes';vm.asc=!vm.asc;">Bökés</th>
 							<th>Kád</th>
 							<th>Szak</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="sor in vm.tablazat track by $index">
+						<tr ng-repeat="sor in vm.tablazat | orderBy:vm.order:vm.asc | filter: search track by $index" class="ng-scope">
 							<td>{{sor.moduldatum}}</td>
 							<td>{{sor.modulazon}}</td>
 							<td>{{sor.modulbokeshiba}}</td>
@@ -224,16 +274,22 @@
 						.modMaps {
 							min-width: 250px;
 						}
+						.modMaps .col-sm-3 {
+							opacity: 0.5;
+						}
+						.modMaps .col-sm-3:hover {
+							opacity: 1;
+						}
 						
 						.blues {
 							height: 30px;
-							line-height: 20px;
+							line-height: 25px;
 							font-size: 12px;
 							text-align: center;
 							float: left;
 							width: 30px;
 							margin-left: 70px;
-							border: 5px solid #00aadd;
+							border: 2px solid #00aadd;
 							margin-top: 5px;
 							background-color: white;
 						}
@@ -262,13 +318,13 @@
 						.blacks,
 						.reds {
 							height: 30px;
-							line-height: 20px;
+							line-height: 25px;
 							text-align: center;
 							float: left;
 							width: 50px;
 							margin-left: 10px;
 							margin-top: 5px;
-							border: 5px solid #ffee00;
+							border: 2px solid #ffee00;
 							background-color: white;
 						}
 						
@@ -298,16 +354,16 @@
 						
 						.blacks {
 							height: 40px;
-							line-height: 30px;
+							line-height: 35px;
 							text-align: center;
-							border: 5px solid black;
+							border: 2px solid black;
 						}
 						
 						.reds {
-							height: 300px;
-							line-height: 290px;
+							height: 100px;
+							line-height: 95px;
 							text-align: center;
-							border: 5px solid red;
+							border: 2px solid red;
 						}
 						
 						.bgbls {
@@ -342,7 +398,7 @@
 							background-color: lightgreen;
 						}
 					</style>
-					<div class="col-sm-3" ng-repeat="szak in ['A','B','C','D']">
+					<div class="col-sm-3" ng-show="vm.eset=='Bökés'" ng-repeat="szak in ['A','B','C','D']">
 						<h1 class="text-center">{{szak}}</h1>
 						<div class="row" ng-repeat="sor in vm.sorok track by $index">
 							<div ng-if="sor == '1' || sor == '8'">
@@ -351,8 +407,8 @@
 							</div>
 							<div ng-if="sor=='2' || sor=='6'">
 								<div ng-repeat="oszlop in vm.oszlop track by $index" ng-if="oszlop!='E'" class="yellows">
-									<div>{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':szak} | sumField:'modulbokes'|
-										number:0 }} </div>
+									{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':szak} | sumField:'modulbokes'| number:0
+									}}
 								</div>
 							</div>
 							<div ng-if="sor=='3' || sor=='5'">
@@ -362,6 +418,31 @@
 							<div ng-if="sor=='4'">
 								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="reds">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':szak} | sumField:'modulbokes'
 									| number:0 }} </div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3" ng-show="vm.eset=='Bökés/AEQ'" ng-repeat="szak in ['A','B','C','D']">
+						<h1 class="text-center">{{szak}}</h1>
+						<div class="row" ng-repeat="sor in vm.sorok track by $index">
+							<div ng-if="sor == '1' || sor == '8'">
+								<div ng-repeat="oszlop in vm.oszlop track by $index" class="blues">
+									{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':szak} | sumField: 'modulbokes') / vm.allaeq
+									| number:2}} </div>
+							</div>
+							<div ng-if="sor=='2' || sor=='6'">
+								<div ng-repeat="oszlop in vm.oszlop track by $index" ng-if="oszlop!='E'" class="yellows">
+									{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':szak} | sumField: 'modulbokes') / vm.allaeq
+									| number:2}}
+								</div>
+							</div>
+							<div ng-if="sor=='3' || sor=='5'">
+								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="blacks">{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':szak} | sumField: 'modulbokes')
+									/ vm.allaeq | number:2}}</div>
+							</div>
+							<div ng-if="sor=='4'">
+								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="reds">
+									{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':szak} | sumField: 'modulbokes') / vm.allaeq
+									| number:2}}</div>
 							</div>
 						</div>
 					</div>

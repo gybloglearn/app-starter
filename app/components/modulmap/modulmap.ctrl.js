@@ -15,9 +15,11 @@ define([], function () {
     vm.tablazatazon = "";
     vm.tablazat = [];
     vm.allaeq=0;
+    //vm.show=true;
     var tanks = ["Bubble point tank5", "Bubble point tank6", "Bubble point tank7", "Bubble point tank15"];
     var betuk = ["A", "B", "C", "D", "E"];
     var szamok = ["1", "2", "3", "4", "5", "6", "8", "9"];
+    vm.kadak=tanks;
     vm.sorok = szamok;
     vm.oszlop = betuk;
     vm.load = load;
@@ -142,7 +144,7 @@ define([], function () {
           }
           //console.log(vm.allaeq);
           //console.log(vm.data); 
-          //console.log(vm.soroszlopbokes);
+          console.log(vm.soroszlopbokes);
           //console.log(vm.osszesmodulbokes);
         });
       }
