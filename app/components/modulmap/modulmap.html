@@ -217,6 +217,215 @@
 			</div>
 
 		</div>
-		<div class="module-footer"></div>
+		<div class="module-footer">
+			<div class="col-sm-6">
+				<div class="container">
+					<div class="modMap">
+						<style>
+							.modMap {
+								min-width: 450px;
+							}
+							
+							.blue {
+								height: 30px;
+								line-height: 20px;
+								font-size: 12px;
+								text-align: center;
+								float: left;
+								width: 30px;
+								margin-left: 70px;
+								border: 5px solid #00aadd;
+								margin-top: 5px;
+								background-color: white;
+							}
+							
+							.blue:nth-child(1) {
+								margin-left: 0px;
+							}
+							
+							.blue:nth-child(2) {
+								margin-left: 60px;
+							}
+							
+							.blue:nth-child(3) {
+								margin-left: 70px;
+							}
+							
+							.blue:nth-child(4) {
+								margin-left: 70px;
+							}
+							
+							.blue:nth-child(5) {
+								margin-left: 60px;
+							}
+							
+							.yellow,
+							.black,
+							.red {
+								height: 30px;
+								line-height: 20px;
+								text-align: center;
+								float: left;
+								width: 90px;
+								margin-left: 10px;
+								margin-top: 5px;
+								border: 5px solid #ffee00;
+								background-color: white;
+							}
+							
+							.yellow:nth-child(1),
+							.black:nth-child(1),
+							.red:nth-child(1) {
+								margin-left: 10px;
+							}
+							
+							.yellow:nth-child(2),
+							.black:nth-child(2),
+							.red:nth-child(2) {
+								margin-left: 10px;
+							}
+							
+							.yellow:nth-child(3),
+							.black:nth-child(3),
+							.red:nth-child(3) {
+								margin-left: 10px;
+							}
+							
+							.yellow:nth-child(4),
+							.black:nth-child(4),
+							.red:nth-child(4) {
+								margin-left: 10px;
+							}
+							
+							.black {
+								height: 40px;
+								line-height: 30px;
+								text-align: center;
+								border: 5px solid black;
+							}
+							
+							.red {
+								height: 300px;
+								line-height: 290px;
+								text-align: center;
+								border: 5px solid red;
+							}
+							
+							.bgbl {
+								background-color: black;
+								color: white;
+							}
+							
+							.bgbr {
+								background-color: brown;
+								color: white;
+							}
+							
+							.bgre {
+								background-color: red;
+								color: white;
+							}
+							
+							.bgor {
+								background-color: orange;
+							}
+							
+							.bgye {
+								background-color: yellow;
+							}
+							
+							.bggr {
+								background-color: green;
+								color: white;
+							}
+							
+							.bglgr {
+								background-color: lightgreen;
+							}
+						</style>
+						<div class="row" ng-repeat="sor in vm.sorok track by $index">
+							<div ng-if="sor == '1' || sor == '8'">
+								<div ng-repeat="oszlop in vm.oszlop track by $index" class="blue">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':'A'} | sumField:'modulbokes'
+									| number:0 }} </div>
+							</div>
+							<div ng-if="sor=='2' || sor=='6'">
+								<div ng-repeat="oszlop in vm.oszlop track by $index" ng-if="oszlop!='E'" class="yellow">
+									<div>{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':'A'} | sumField:'modulbokes'|
+										number:0 }} </div>
+								</div>
+							</div>
+							<div ng-if="sor=='3' || sor=='5'">
+								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="black">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':'A'} | sumField:'modulbokes'
+									| number:0 }} </div>
+							</div>
+							<div ng-if="sor=='4'">
+								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="red">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':'A'} | sumField:'modulbokes'
+									| number:0 }} </div>
+							</div>
+						</div>
+						<div class="row" ng-repeat="sor in vm.sorok track by $index">
+							<div ng-if="sor == '1' || sor == '8'">
+								<div ng-repeat="oszlop in vm.oszlop track by $index" class="blue">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':'B'} | sumField:'modulbokes'
+									| number:0 }} </div>
+							</div>
+							<div ng-if="sor=='2' || sor=='6'">
+								<div ng-repeat="oszlop in vm.oszlop track by $index" ng-if="oszlop!='E'" class="yellow">
+									<div>{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':'B'} | sumField:'modulbokes'|
+										number:0 }} </div>
+								</div>
+							</div>
+							<div ng-if="sor=='3' || sor=='5'">
+								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="black">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':'B'} | sumField:'modulbokes'
+									| number:0 }} </div>
+							</div>
+							<div ng-if="sor=='4'">
+								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="red">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':'B'} | sumField:'modulbokes'
+									| number:0 }} </div>
+							</div>
+						</div>
+						<div class="row" ng-repeat="sor in vm.sorok track by $index">
+							<div ng-if="sor == '1' || sor == '8'">
+								<div ng-repeat="oszlop in vm.oszlop track by $index" class="blue">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':'C'} | sumField:'modulbokes'
+									| number:0 }} </div>
+							</div>
+							<div ng-if="sor=='2' || sor=='6'">
+								<div ng-repeat="oszlop in vm.oszlop track by $index" ng-if="oszlop!='E'" class="yellow">
+									<div>{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':'C'} | sumField:'modulbokes'|
+										number:0 }} </div>
+								</div>
+							</div>
+							<div ng-if="sor=='3' || sor=='5'">
+								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="black">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':'C'} | sumField:'modulbokes'
+									| number:0 }} </div>
+							</div>
+							<div ng-if="sor=='4'">
+								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="red">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':'C'} | sumField:'modulbokes'
+									| number:0 }} </div>
+							</div>
+						</div>
+						<div class="row" ng-repeat="sor in vm.sorok track by $index">
+							<div ng-if="sor == '1' || sor == '8'">
+								<div ng-repeat="oszlop in vm.oszlop track by $index" class="blue">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':'D'} | sumField:'modulbokes'
+									| number:0 }} </div>
+							</div>
+							<div ng-if="sor=='2' || sor=='6'">
+								<div ng-repeat="oszlop in vm.oszlop track by $index" ng-if="oszlop!='E'" class="yellow">
+									<div>{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':'D'} | sumField:'modulbokes'|
+										number:0 }} </div>
+								</div>
+							</div>
+							<div ng-if="sor=='3' || sor=='5'">
+								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="black">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':'D'} | sumField:'modulbokes'
+									| number:0 }} </div>
+							</div>
+							<div ng-if="sor=='4'">
+								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="red">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modulszak':'D'} | sumField:'modulbokes'
+									| number:0 }} </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</section>
 </div>
