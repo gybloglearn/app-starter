@@ -18,7 +18,7 @@
 			<div class="col-sm-3" style="margin-top:10px">
 				<div class="input-group">
 					<span class="input-group-addon">Típus:</span>
-					<select ng-model="vm.acttipus" class="form-control ng-pristine ng-untouched ng-valid">
+					<select ng-model="vm.acttipus" class="form-control" ng-change="vm.tablazatazon=''">
                     <option ng-repeat="item in vm.tipusok" value="{{item}}">{{item}}</option>
                 </select>
 				</div>

@@ -212,16 +212,17 @@ define([], function () {
             name: 'Hibák',
             color: "#3366ff",
             data: feltolthibadarab(dt),
+            dataLabels: {enabled: true, style: {"fontSize": "20px"}},
             tooltip: {
               useHTML: true,
               headerFormat: '<b style="color:{series.color};font-weight:bold;">Hibák</b><br>',
-              pointFormat: '<span style="font-size:1.2em">{point.nev} </span><br><b>{point.y} db</i>'
+              pointFormat: '<span style="font-size:1.2em">{point.name} </span><br><b>{point.y} db</i>'
             },
           },
         ],
-        xAxis: [
-          { categories: [] },
-        ],
+        xAxis: {
+          type: 'category'
+        },
         yAxis: {
           title: {
             text: "db"
@@ -300,7 +301,13 @@ define([], function () {
           }
         }
       }
-      return $filter('orderBy')(adatok, 'y', true);
+      var res = [];
+      var k = $filter('orderBy')(adatok, 'y', true);
+      for(var v=0;v<k.length;v++){
+        res[v] = [k[v].nev, k[v].y];
+      }
+      console.log(res);
+      return res;
     }
 
     function feltolthibanev(tomb) {
