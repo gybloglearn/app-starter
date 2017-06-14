@@ -1,7 +1,7 @@
 <div class="container">
 	<section class="module">
 		<div class="module-header">
-			<h1 class="text-center">Bökés térkép -{{vm.acttipus}}</h1>
+			<h1 class="text-center">Bökés térkép - {{vm.acttipus}}</h1>
 			<h2 class="text-center" style="margin-top:10px">{{vm.startdatumszam}}-{{vm.enddatumszam}}</h2>
 			<div class="col-sm-6" style="margin-top:10px">
 				<div class="input-group">
@@ -328,7 +328,7 @@
 			<div ng-show="vm.tablazatazon!='' && vm.acttipus=='Mind'">
 				<button class="btn btn-default pull-right" ng-class="{'btn-info':vm.show}" ng-click="vm.show=!vm.show">Táblázat</button>
 			</div>
-			<div class="col-sm-12" ng-show="vm.show" style="margin-top:10px">
+			<div class="col-sm-12" ng-show="vm.show && vm.tablazatazon!=''" style="margin-top:10px">
 				<div class="tray filter-tray top">
 					<div class="tray-inner">
 						<div class="filter-rule-group">
