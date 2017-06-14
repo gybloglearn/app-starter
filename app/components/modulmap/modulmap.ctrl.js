@@ -95,6 +95,7 @@ define([], function () {
 
     function load() {
       vm.data = [];
+      vm.typedb = [];
       vm.osszesmodulbokes = [];
       vm.soroszlopbokes = [];
       feltoltsoroszlop();
