@@ -11,7 +11,9 @@ define([], function () {
     vm.enddatum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.esetek = ["Bökés", "Bökés/AEQ"];
+    vm.tipusok = ["Mind", "FLOW", "CP5"];
     vm.eset = "Bökés";
+    vm.acttipus = "Mind";
     vm.tablazatazon = "";
     vm.tablazat = [];
     vm.allaeq = 0;
@@ -149,7 +151,8 @@ define([], function () {
                 vm.soroszlopbokes[l].moduls[hossz] = {}
                 vm.soroszlopbokes[l].moduls[hossz].modulazon = response.data[j].modul_id1;
                 vm.soroszlopbokes[l].moduls[hossz].modulaeq = response.data[j].aeq;
-                vm.soroszlopbokes[l].moduls[hossz].modultype = response.data[j].modtype;
+                vm.soroszlopbokes[l].moduls[hossz].modulname = response.data[j].modtype;
+                vm.soroszlopbokes[l].moduls[hossz].modultype = $filter('addtype')(response.data[j].modtype);
                 vm.soroszlopbokes[l].moduls[hossz].modulbokes = response.data[j].bt_kat_db1 * 1;
                 vm.soroszlopbokes[l].moduls[hossz].modulbokeshiba = response.data[j].KatName1;
                 vm.soroszlopbokes[l].moduls[hossz].modultank = response.data[j].tank;
@@ -180,7 +183,7 @@ define([], function () {
           }
           //console.log(vm.allaeq);
           //console.log(vm.data); 
-          console.log(vm.soroszlopbokes);
+          //console.log(vm.soroszlopbokes);
           //console.log(vm.osszesmodulbokes);
           //console.log(vm.typedb);
         });
@@ -231,22 +234,70 @@ define([], function () {
       var adatok = [];
       var a = 0;
       var talalat = 0;
-      for (var i = 0; i < tomb.length; i++) {
-        var acthiba = tomb[i].modulbokeshiba;
-        for (var j = 0; j < adatok.length; j++) {
-          if (acthiba == adatok[j].nev) {
-            adatok[j].y += tomb[i].modulbokes;
-            talalat++;
+      if (vm.acttipus == "Mind") {
+        for (var i = 0; i < tomb.length; i++) {
+          var acthiba = tomb[i].modulbokeshiba;
+          for (var j = 0; j < adatok.length; j++) {
+            if (acthiba == adatok[j].nev) {
+              adatok[j].y += tomb[i].modulbokes;
+              talalat++;
+            }
+          }
+          if (talalat > 0) {
+            talalat = 0;
+          }
+          else {
+            adatok[a] = {}
+            adatok[a].nev = acthiba;
+            adatok[a].y = tomb[i].modulbokes;
+            a++;
           }
         }
-        if (talalat > 0) {
-          talalat = 0;
+      }
+      else if (vm.acttipus == "FLOW") {
+        for (var i = 0; i < tomb.length; i++) {
+          var acthiba = tomb[i].modulbokeshiba;
+          var tip = tomb[i].modultype;
+          for (var j = 0; j < adatok.length; j++) {
+            if (acthiba == adatok[j].nev && tip == "FLOW") {
+              adatok[j].y += tomb[i].modulbokes;
+              talalat++;
+            }
+          }
+          if (talalat > 0) {
+            talalat = 0;
+          }
+          else {
+            if (tip == "FLOW") {
+              adatok[a] = {}
+              adatok[a].nev = acthiba;
+              adatok[a].y = tomb[i].modulbokes;
+              a++;
+            }
+          }
         }
-        else {
-          adatok[a] = {}
-          adatok[a].nev = acthiba;
-          adatok[a].y = tomb[i].modulbokes;
-          a++;
+      }
+      else if (vm.acttipus == "CP5") {
+        for (var i = 0; i < tomb.length; i++) {
+          var acthiba = tomb[i].modulbokeshiba;
+          var tip = tomb[i].modultype;
+          for (var j = 0; j < adatok.length; j++) {
+            if (acthiba == adatok[j].nev && tip == "CP5") {
+              adatok[j].y += tomb[i].modulbokes;
+              talalat++;
+            }
+          }
+          if (talalat > 0) {
+            talalat = 0;
+          }
+          else {
+            if (tip == "CP5") {
+              adatok[a] = {}
+              adatok[a].nev = acthiba;
+              adatok[a].y = tomb[i].modulbokes;
+              a++;
+            }
+          }
         }
       }
       return $filter('orderBy')(adatok, 'y', true);
