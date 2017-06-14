@@ -215,12 +215,13 @@ define([], function () {
           width: 500,
           height: 440
         },
+        title: { text: vm.tablazatazon },
         series: [
           {
             name: 'Hibák',
             color: "#3366ff",
             data: feltolthibadarab(dt),
-            dataLabels: {enabled: true, style: {"fontSize": "20px"}},
+            //dataLabels: {enabled: true, style: {"fontSize": "20px"}},
             tooltip: {
               useHTML: true,
               headerFormat: '<b style="color:{series.color};font-weight:bold;">Hibák</b><br>',
