@@ -76,6 +76,7 @@
 									class="red">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes/vm.allaeq | number:2 }} </div>
 							</div>
 						</div>
+						<!-- FLOW-->
 						<div class="row" ng-repeat="sor in vm.sorok track by $index" ng-show="vm.eset=='Bökés' && vm.acttipus=='FLOW'">
 							<div ng-if="sor == '1' || sor == '8'">
 								<div ng-repeat="oszlop in vm.oszlop track by $index" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)"
@@ -101,24 +102,25 @@
 						<div class="row" ng-repeat="sor in vm.sorok track by $index" ng-show="vm.eset=='Bökés/AEQ' && vm.acttipus=='FLOW'">
 							<div ng-if="sor == '1' || sor == '8'">
 								<div ng-repeat="oszlop in vm.oszlop" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)" class="blue">{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modultype':'FLOW'} | sumField:'modulbokes')
-									/ vm.allaeq | number:2 }}</div>
+									/ vm.allflowaeq | number:2 }}</div>
 							</div>
 							<div ng-if="sor=='2' || sor=='6'">
 								<div ng-repeat="oszlop in vm.oszlop" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)" ng-if="oszlop!='E'"
 									class="yellow">{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modultype':'FLOW'} | sumField:'modulbokes')
-									/ vm.allaeq | number:2 }}</div>
+									/ vm.allflowaeq| number:2 }}</div>
 							</div>
 							<div ng-if="sor=='3' || sor=='5'">
 								<div ng-repeat="oszlop in ['A','B','C','D']" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)"
 									class="black">{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modultype':'FLOW'} | sumField:'modulbokes')
-									/ vm.allaeq | number:2 }}</div>
+									/ vm.allflowaeq | number:2 }}</div>
 							</div>
 							<div ng-if="sor=='4'">
 								<div ng-repeat="oszlop in ['A','B','C','D']" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)"
 									class="red">{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modultype':'FLOW'} | sumField:'modulbokes')
-									/ vm.allaeq | number:2 }}</div>
+									/ vm.allflowaeq | number:2 }}</div>
 							</div>
 						</div>
+						<!--CP5-->
 						<div class="row" ng-repeat="sor in vm.sorok track by $index" ng-show="vm.eset=='Bökés' && vm.acttipus=='CP5'">
 							<div ng-if="sor == '1' || sor == '8'">
 								<div ng-repeat="oszlop in vm.oszlop track by $index" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)"
@@ -144,22 +146,22 @@
 						<div class="row" ng-repeat="sor in vm.sorok track by $index" ng-show="vm.eset=='Bökés/AEQ' && vm.acttipus=='CP5'">
 							<div ng-if="sor == '1' || sor == '8'">
 								<div ng-repeat="oszlop in vm.oszlop" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)" class="blue">{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modultype':'FLOW'} | sumField:'modulbokes')
-									/ vm.allaeq | number:2 }}</div>
+									/ vm.allcp5aeq | number:2 }}</div>
 							</div>
 							<div ng-if="sor=='2' || sor=='6'">
 								<div ng-repeat="oszlop in vm.oszlop" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)" ng-if="oszlop!='E'"
 									class="yellow">{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modultype':'CP5'} | sumField:'modulbokes')
-									/ vm.allaeq | number:2 }}</div>
+									/ vm.allcp5aeq | number:2 }}</div>
 							</div>
 							<div ng-if="sor=='3' || sor=='5'">
 								<div ng-repeat="oszlop in ['A','B','C','D']" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)"
 									class="black">{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modultype':'CP5'} | sumField:'modulbokes')
-									/ vm.allaeq | number:2 }}</div>
+									/ vm.allcp5aeq | number:2 }}</div>
 							</div>
 							<div ng-if="sor=='4'">
 								<div ng-repeat="oszlop in ['A','B','C','D']" ng-click="vm.tablazatazon=oszlop+sor;vm.tabl(oszlop+sor);vm.drawchart(oszlop+sor)"
 									class="red">{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls | filter:{'modultype':'CP5'} | sumField:'modulbokes')
-									/ vm.allaeq | number:2 }}</div>
+									/vm.allcp5aeq | number:2 }}</div>
 							</div>
 						</div>
 					</div>
@@ -222,6 +224,7 @@
 							</div>
 						</div>
 					</div>
+					<!-- Flow-->
 					<div class="col-sm-3" ng-show="vm.eset=='Bökés' && vm.acttipus=='FLOW'" ng-repeat="szak in ['A','B','C','D']">
 						<h1 class="text-center">{{szak}}</h1>
 						<div class="row" ng-repeat="sor in vm.sorok track by $index">
@@ -251,25 +254,26 @@
 							<div ng-if="sor == '1' || sor == '8'">
 								<div ng-repeat="oszlop in vm.oszlop track by $index" class="blues">
 									{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls| filter:{'modultype':'FLOW'} | filter:{'modulszak':szak} |
-									sumField: 'modulbokes') / vm.allaeq | number:2}} </div>
+									sumField: 'modulbokes') / vm.allflowaeq | number:2}} </div>
 							</div>
 							<div ng-if="sor=='2' || sor=='6'">
 								<div ng-repeat="oszlop in vm.oszlop track by $index" ng-if="oszlop!='E'" class="yellows">
 									{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls| filter:{'modultype':'FLOW'} | filter:{'modulszak':szak} |
-									sumField: 'modulbokes') / vm.allaeq | number:2}}
+									sumField: 'modulbokes') / vm.allflowaeq | number:2}}
 								</div>
 							</div>
 							<div ng-if="sor=='3' || sor=='5'">
 								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="blacks">{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls| filter:{'modultype':'FLOW'} | filter:{'modulszak':szak}
-									| sumField: 'modulbokes') / vm.allaeq | number:2}}</div>
+									| sumField: 'modulbokes') /vm.allflowaeq | number:2}}</div>
 							</div>
 							<div ng-if="sor=='4'">
 								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="reds">
 									{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls| filter:{'modultype':'FLOW'} | filter:{'modulszak':szak} |
-									sumField: 'modulbokes') / vm.allaeq | number:2}}</div>
+									sumField: 'modulbokes') / vm.allflowaeq | number:2}}</div>
 							</div>
 						</div>
 					</div>
+					<!-- CP5 -->
 					<div class="col-sm-3" ng-show="vm.eset=='Bökés' && vm.acttipus=='CP5'" ng-repeat="szak in ['A','B','C','D']">
 						<h1 class="text-center">{{szak}}</h1>
 						<div class="row" ng-repeat="sor in vm.sorok track by $index">
@@ -299,24 +303,25 @@
 							<div ng-if="sor == '1' || sor == '8'">
 								<div ng-repeat="oszlop in vm.oszlop track by $index" class="blues">
 									{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls| filter:{'modultype':'CP5'} | filter:{'modulszak':szak} |
-									sumField: 'modulbokes') / vm.allaeq | number:2}} </div>
+									sumField: 'modulbokes') / vm.allcp5aeq | number:2}} </div>
 							</div>
 							<div ng-if="sor=='2' || sor=='6'">
 								<div ng-repeat="oszlop in vm.oszlop track by $index" ng-if="oszlop!='E'" class="yellows">
 									{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls| filter:{'modultype':'CP5'} | filter:{'modulszak':szak} |
-									sumField: 'modulbokes') / vm.allaeq | number:2}}
+									sumField: 'modulbokes') / vm.allcp5aeq | number:2}}
 								</div>
 							</div>
 							<div ng-if="sor=='3' || sor=='5'">
 								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="blacks">{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls| filter:{'modultype':'CP5'} | filter:{'modulszak':szak}
-									| sumField: 'modulbokes') / vm.allaeq | number:2}}</div>
+									| sumField: 'modulbokes') /vm.allcp5aeq | number:2}}</div>
 							</div>
 							<div ng-if="sor=='4'">
 								<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="reds">
 									{{ ((vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].moduls| filter:{'modultype':'CP5'} | filter:{'modulszak':szak} |
-									sumField: 'modulbokes') / vm.allaeq | number:2}}</div>
+									sumField: 'modulbokes') / vm.allcp5aeq | number:2}}</div>
 							</div>
 						</div>
+					</div>
 					</div>
 				</div>
 			</div>

@@ -17,6 +17,8 @@ define([], function () {
     vm.tablazatazon = "";
     vm.tablazat = [];
     vm.allaeq = 0;
+    vm.allflowaeq = 0;
+    vm.allcp5aeq = 0;
     vm.typedb = [];
     var tanks = ["Bubble point tank5", "Bubble point tank6", "Bubble point tank7", "Bubble point tank15"];
     var betuk = ["A", "B", "C", "D", "E"];
@@ -111,6 +113,7 @@ define([], function () {
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].modul_id1)
             response.data[j].modtype = getModulname(vm.partnumbers, response.data[j].modul_id1)
+            response.data[j].tipus = $filter('addtype')(response.data[j].modtype);
             vm.data.push(response.data[j]);
             for (var k = 0; k < vm.osszesmodulbokes.length; k++) {
               if (response.data[j].modul_id1 == vm.osszesmodulbokes[k].modul) {
@@ -126,6 +129,12 @@ define([], function () {
               vm.osszesmodulbokes[a].type = response.data[j].modtype;
               a++;
               vm.allaeq += response.data[j].aeq;
+              if(response.data[j].tipus=="FLOW"){
+                vm.allflowaeq+=response.data[j].aeq;
+              }
+              if(response.data[j].tipus=="CP5"){
+                vm.allcp5aeq+=response.data[j].aeq;
+              }
             }
             else {
               talalat = 0;
@@ -181,7 +190,6 @@ define([], function () {
 
 
           }
-          //console.log(vm.allaeq);
           //console.log(vm.data); 
           //console.log(vm.soroszlopbokes);
           //console.log(vm.osszesmodulbokes);
@@ -306,28 +314,10 @@ define([], function () {
       for(var v=0;v<k.length;v++){
         res[v] = [k[v].nev, k[v].y];
       }
-      console.log(res);
       return res;
     }
 
-    function feltolthibanev(tomb) {
-      var x_adatok = [];
-      var talalt = 0;
-      for (var i = 0; i < tomb.length; i++) {
-        for (var j = 0; j < x_adatok.length; j++) {
-          if (tomb[i].modulbokeshiba == x_adatok[j]) {
-            talalt++
-          }
-        }
-        if (talalt > 0) {
-          talalt = 0;
-        }
-        else {
-          x_adatok.push(tomb[i].modulbokeshiba);
-        }
-      }
-      return x_adatok;
-    }
+    
 
   }
   Controller.$inject = ['mapService', '$cookies', '$state', '$rootScope', '$filter'];
