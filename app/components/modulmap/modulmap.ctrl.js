@@ -10,7 +10,7 @@ define([], function () {
     vm.startdatumszam = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddatum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.esetek = ["Bökés", "Bökés/AEQ","Súlyozott Bökés/AEQ"];
+    vm.esetek = ["Bökés", "Bökés/AEQ", "Súlyozott Bökés/AEQ"];
     vm.tipusok = ["Mind", "FLOW", "CP5"];
     vm.eset = "Bökés";
     vm.acttipus = "Mind";
@@ -105,6 +105,7 @@ define([], function () {
       feltoltsoroszlop();
       vm.allaeq = 0;
       var talalat = 0;
+      var modok = 0;
       var a = 0;
       var b = 0;
 
@@ -126,14 +127,14 @@ define([], function () {
               vm.osszesmodulbokes[a].modul = response.data[j].modul_id1;
               vm.osszesmodulbokes[a].bokes = response.data[j].bt_kat_db1 * 1;
               vm.osszesmodulbokes[a].aeq = response.data[j].aeq;
-              vm.osszesmodulbokes[a].type = response.data[j].modtype;
+              vm.osszesmodulbokes[a].name = response.data[j].modtype;
               a++;
               vm.allaeq += response.data[j].aeq;
-              if(response.data[j].tipus=="FLOW"){
-                vm.allflowaeq+=response.data[j].aeq;
+              if (response.data[j].tipus == "FLOW") {
+                vm.allflowaeq += response.data[j].aeq;
               }
-              if(response.data[j].tipus=="CP5"){
-                vm.allcp5aeq+=response.data[j].aeq;
+              if (response.data[j].tipus == "CP5") {
+                vm.allcp5aeq += response.data[j].aeq;
               }
             }
             else {
@@ -173,7 +174,18 @@ define([], function () {
 
             for (var m = 0; m < vm.typedb.length; m++) {
               if (response.data[j].modtype == vm.typedb[m].typename) {
-                vm.typedb[m].db++;
+                for (var n = 0; n < vm.typedb[m].moduls.length; n++) {
+                  if (vm.typedb[m].moduls[n] == response.data[j].modul_id1) {
+                    modok++
+                  }
+                }
+                if(modok==0){
+                  vm.typedb[m].moduls.push(response.data[j].modul_id1);
+                  vm.typedb[m].db++;
+                }
+                else{
+                  modok=0;
+                }
                 talalat++;
               }
             }
@@ -182,6 +194,8 @@ define([], function () {
               vm.typedb[b].typename = response.data[j].modtype;
               vm.typedb[b].db = 1;
               vm.typedb[b].aeq = response.data[j].aeq;
+              vm.typedb[b].moduls = [];
+              vm.typedb[b].moduls.push(response.data[j].modul_id1);
               b++;
             }
             else {
@@ -189,94 +203,94 @@ define([], function () {
             }
 
           }
-           // PARETO
-            var fir = $filter('limitTo')($filter('orderBy')(vm.soroszlopbokes, 'bokes', true), 20);
-            var pdata = [];
-            var drills = [];
-            var totalbok = $filter('sumField')(vm.soroszlopbokes, 'bokes');
-            var cdata = [];
-            var cumm = 0;
-            for(var d=0;d<fir.length;d++){
-              pdata[d] = {
-                name:fir[d].azon,
-                y:fir[d].bokes,
-                drilldown:fir[d].azon
-              };
-              cumm = cumm + fir[d].bokes;
-              cdata[d] = {
-                name: fir[d].azon,
-                y:parseFloat((cumm/totalbok*100).toFixed(2)),
-                dirlldown: null
-              }
-              var drd = $filter('unique')(fir[d].moduls,'modulbokeshiba');
-              drills[d] = {
-                  id: fir[d].azon,
-                  name: fir[d].azon,
-                  data: []
-              };
-              var adat = [];
-              for(var f=0;f<drd.length;f++){
-                adat[f] = {x:drd[f].modulbokeshiba, y: $filter('sumField')($filter('filter')(fir[d].moduls, {modulbokeshiba:drd[f].modulbokeshiba}), 'modulbokes')*1};
-                  //drills[d].data[f] = [drd[f].modulbokeshiba, $filter('sumField')($filter('filter')(fir[d].moduls, {modulbokeshiba:drd[f].modulbokeshiba}), 'modulbokes')*1];
-                }
-              adat = $filter('orderBy')(adat, 'y', true);
-
-              for(var f=0;f<adat.length;f++){
-                drills[d].data[f] = [adat[f].x, adat[f].y];
-              }
-            }
-            vm.paretoconfig = {
-              chart: {
-                type:'column',
-                height: 350,
-                events: {
-                    drillup: function(event){
-                      for(var i=0;i<this.series.length;i++)
-                      if(this.series[i].name == "Pareto")
-                        this.series[i].show();
-                    }
-                  }
-              },
-              title: {
-                text: "Top 20 Hibapozíció"
-              },
-              xAxis: {
-                type: "category"
-              },
-              yAxis : [
-                {title: {text:'Bökés'}},
-                {title: {text:'Pareto'}, opposite: true}
-              ],
-              plotOptions: {
-                series: {
-                  events: {
-                    click: function(event){
-                      for(var i=0;i<this.chart.series.length;i++)
-                      if(this.chart.series[i].name == "Pareto")
-                        this.chart.series[i].hide();
-                    }
-                  }
-                }
-              },
-              series: [{
-                name: 'Pozíciók',
-                colorByPoint: true, 
-                data: pdata
-              }, {
-                name: 'Pareto', 
-                type: 'line',
-                color: 'red',
-                data: cdata,
-                yAxis: 1
-              }],
-              drilldown: {series: drills}
+          // PARETO
+          var fir = $filter('limitTo')($filter('orderBy')(vm.soroszlopbokes, 'bokes', true), 20);
+          var pdata = [];
+          var drills = [];
+          var totalbok = $filter('sumField')(vm.soroszlopbokes, 'bokes');
+          var cdata = [];
+          var cumm = 0;
+          for (var d = 0; d < fir.length; d++) {
+            pdata[d] = {
+              name: fir[d].azon,
+              y: fir[d].bokes,
+              drilldown: fir[d].azon
             };
+            cumm = cumm + fir[d].bokes;
+            cdata[d] = {
+              name: fir[d].azon,
+              y: parseFloat((cumm / totalbok * 100).toFixed(2)),
+              dirlldown: null
+            }
+            var drd = $filter('unique')(fir[d].moduls, 'modulbokeshiba');
+            drills[d] = {
+              id: fir[d].azon,
+              name: fir[d].azon,
+              data: []
+            };
+            var adat = [];
+            for (var f = 0; f < drd.length; f++) {
+              adat[f] = { x: drd[f].modulbokeshiba, y: $filter('sumField')($filter('filter')(fir[d].moduls, { modulbokeshiba: drd[f].modulbokeshiba }), 'modulbokes') * 1 };
+              //drills[d].data[f] = [drd[f].modulbokeshiba, $filter('sumField')($filter('filter')(fir[d].moduls, {modulbokeshiba:drd[f].modulbokeshiba}), 'modulbokes')*1];
+            }
+            adat = $filter('orderBy')(adat, 'y', true);
+
+            for (var f = 0; f < adat.length; f++) {
+              drills[d].data[f] = [adat[f].x, adat[f].y];
+            }
+          }
+          vm.paretoconfig = {
+            chart: {
+              type: 'column',
+              height: 350,
+              events: {
+                drillup: function (event) {
+                  for (var i = 0; i < this.series.length; i++)
+                    if (this.series[i].name == "Pareto")
+                      this.series[i].show();
+                }
+              }
+            },
+            title: {
+              text: "Top 20 Hibapozíció"
+            },
+            xAxis: {
+              type: "category"
+            },
+            yAxis: [
+              { title: { text: 'Bökés' } },
+              { title: { text: 'Pareto' }, opposite: true }
+            ],
+            plotOptions: {
+              series: {
+                events: {
+                  click: function (event) {
+                    for (var i = 0; i < this.chart.series.length; i++)
+                      if (this.chart.series[i].name == "Pareto")
+                        this.chart.series[i].hide();
+                  }
+                }
+              }
+            },
+            series: [{
+              name: 'Pozíciók',
+              colorByPoint: true,
+              data: pdata
+            }, {
+              name: 'Pareto',
+              type: 'line',
+              color: 'red',
+              data: cdata,
+              yAxis: 1
+            }],
+            drilldown: { series: drills }
+          };
           // -- PARETO END
 
           //console.log(vm.data); 
           //console.log(vm.soroszlopbokes);
           //console.log(vm.osszesmodulbokes);
-          //console.log(vm.typedb);
+          console.log(vm.typedb);
         });
       }
     }
@@ -396,13 +410,13 @@ define([], function () {
       }
       var res = [];
       var k = $filter('orderBy')(adatok, 'y', true);
-      for(var v=0;v<k.length;v++){
+      for (var v = 0; v < k.length; v++) {
         res[v] = [k[v].nev, k[v].y];
       }
       return res;
     }
 
-    
+
 
   }
   Controller.$inject = ['mapService', '$cookies', '$state', '$rootScope', '$filter'];
