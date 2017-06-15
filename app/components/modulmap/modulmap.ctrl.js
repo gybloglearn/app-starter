@@ -288,6 +288,7 @@ define([], function () {
       loadPartnumbers();
       load();
       vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
+      console.log(vm.startdatum);
     }
 
     function drawchart(index) {
