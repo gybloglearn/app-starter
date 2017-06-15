@@ -10,11 +10,12 @@ define([], function () {
     vm.startdatumszam = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddatum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.esetek = ["Bökés", "Bökés/AEQ", "Súlyozott Bökés/AEQ"];
+    vm.esetek = ["Bökés", "Bökés/AEQ", "Súlyozott Bökés/AEQ","Modul"];
     vm.tipusok = ["Mind", "FLOW", "CP5"];
     vm.eset = "Bökés";
     vm.acttipus = "Mind";
     vm.tablazatazon = "";
+    vm.putmodul=[];
     vm.tablazat = [];
     vm.allaeq = 0;
     vm.allflowaeq = 0;
@@ -116,9 +117,14 @@ define([], function () {
             response.data[j].modtype = getModulname(vm.partnumbers, response.data[j].modul_id1)
             response.data[j].tipus = $filter('addtype')(response.data[j].modtype);
             vm.data.push(response.data[j]);
+            var actkom = response.data[j].Oszlop + response.data[j].Sor;
             for (var k = 0; k < vm.osszesmodulbokes.length; k++) {
               if (response.data[j].modul_id1 == vm.osszesmodulbokes[k].modul) {
                 vm.osszesmodulbokes[k].bokes += response.data[j].bt_kat_db1 * 1;
+                var datainter = {}
+                datainter.azon = actkom;
+                datainter.db = response.data[j].bt_kat_db1*1;
+                vm.osszesmodulbokes[k].bokespozbokes.push(datainter);
                 talalat++;
               }
             }
@@ -128,6 +134,11 @@ define([], function () {
               vm.osszesmodulbokes[a].bokes = response.data[j].bt_kat_db1 * 1;
               vm.osszesmodulbokes[a].aeq = response.data[j].aeq;
               vm.osszesmodulbokes[a].name = response.data[j].modtype;
+              vm.osszesmodulbokes[a].bokespozbokes = [];
+              var datainter = {}
+              datainter.azon = actkom;
+              datainter.db = response.data[j].bt_kat_db1*1;
+              vm.osszesmodulbokes[a].bokespozbokes.push(datainter);
               a++;
               vm.allaeq += response.data[j].aeq;
               if (response.data[j].tipus == "FLOW") {
@@ -140,7 +151,7 @@ define([], function () {
             else {
               talalat = 0;
             }
-            var actkom = response.data[j].Oszlop + response.data[j].Sor;
+
             for (var l = 0; l < vm.soroszlopbokes.length; l++) {
               if (actkom == vm.soroszlopbokes[l].azon) {
                 var hossz = vm.soroszlopbokes[l].moduls.length;
@@ -179,12 +190,12 @@ define([], function () {
                     modok++
                   }
                 }
-                if(modok==0){
+                if (modok == 0) {
                   vm.typedb[m].moduls.push(response.data[j].modul_id1);
                   vm.typedb[m].db++;
                 }
-                else{
-                  modok=0;
+                else {
+                  modok = 0;
                 }
                 talalat++;
               }
@@ -289,8 +300,8 @@ define([], function () {
 
           //console.log(vm.data); 
           //console.log(vm.soroszlopbokes);
-          //console.log(vm.osszesmodulbokes);
-          console.log(vm.typedb);
+          console.log(vm.osszesmodulbokes);
+          //console.log(vm.typedb);
         });
       }
     }
@@ -302,7 +313,6 @@ define([], function () {
       loadPartnumbers();
       load();
       vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
-      console.log(vm.startdatum);
     }
 
     function drawchart(index) {
