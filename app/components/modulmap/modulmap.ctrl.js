@@ -10,7 +10,7 @@ define([], function () {
     vm.startdatumszam = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddatum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.esetek = ["Bökés", "Bökés/AEQ"];
+    vm.esetek = ["Bökés", "Bökés/AEQ","Súlyozott Bökés/AEQ"];
     vm.tipusok = ["Mind", "FLOW", "CP5"];
     vm.eset = "Bökés";
     vm.acttipus = "Mind";
@@ -238,7 +238,7 @@ define([], function () {
                   }
               },
               title: {
-                text: "Top 10 Hibapozíció"
+                text: "Top 20 Hibapozíció"
               },
               xAxis: {
                 type: "category"
@@ -317,7 +317,7 @@ define([], function () {
         },
         yAxis: {
           title: {
-            text: "db"
+            text: "Bökés"
           }
         },
       };
