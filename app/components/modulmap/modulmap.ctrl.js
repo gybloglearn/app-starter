@@ -188,8 +188,91 @@ define([], function () {
               talalat = 0;
             }
 
-
           }
+           // PARETO
+            var fir = $filter('limitTo')($filter('orderBy')(vm.soroszlopbokes, 'bokes', true), 20);
+            var pdata = [];
+            var drills = [];
+            var totalbok = $filter('sumField')(vm.soroszlopbokes, 'bokes');
+            var cdata = [];
+            var cumm = 0;
+            for(var d=0;d<fir.length;d++){
+              pdata[d] = {
+                name:fir[d].azon,
+                y:fir[d].bokes,
+                drilldown:fir[d].azon
+              };
+              cumm = cumm + fir[d].bokes;
+              cdata[d] = {
+                name: fir[d].azon,
+                y:parseFloat((cumm/totalbok*100).toFixed(2)),
+                dirlldown: null
+              }
+              var drd = $filter('unique')(fir[d].moduls,'modulbokeshiba');
+              drills[d] = {
+                  id: fir[d].azon,
+                  name: fir[d].azon,
+                  data: []
+              };
+              var adat = [];
+              for(var f=0;f<drd.length;f++){
+                adat[f] = {x:drd[f].modulbokeshiba, y: $filter('sumField')($filter('filter')(fir[d].moduls, {modulbokeshiba:drd[f].modulbokeshiba}), 'modulbokes')*1};
+                  //drills[d].data[f] = [drd[f].modulbokeshiba, $filter('sumField')($filter('filter')(fir[d].moduls, {modulbokeshiba:drd[f].modulbokeshiba}), 'modulbokes')*1];
+                }
+              adat = $filter('orderBy')(adat, 'y', true);
+
+              for(var f=0;f<adat.length;f++){
+                drills[d].data[f] = [adat[f].x, adat[f].y];
+              }
+            }
+            vm.paretoconfig = {
+              chart: {
+                type:'column',
+                height: 350,
+                events: {
+                    drillup: function(event){
+                      for(var i=0;i<this.series.length;i++)
+                      if(this.series[i].name == "Pareto")
+                        this.series[i].show();
+                    }
+                  }
+              },
+              title: {
+                text: "Top 10 Hibapozíció"
+              },
+              xAxis: {
+                type: "category"
+              },
+              yAxis : [
+                {title: {text:'Bökés'}},
+                {title: {text:'Pareto'}, opposite: true}
+              ],
+              plotOptions: {
+                series: {
+                  events: {
+                    click: function(event){
+                      for(var i=0;i<this.chart.series.length;i++)
+                      if(this.chart.series[i].name == "Pareto")
+                        this.chart.series[i].hide();
+                    }
+                  }
+                }
+              },
+              series: [{
+                name: 'Pozíciók',
+                colorByPoint: true, 
+                data: pdata
+              }, {
+                name: 'Pareto', 
+                type: 'line',
+                color: 'red',
+                data: cdata,
+                yAxis: 1
+              }],
+              drilldown: {series: drills}
+            };
+          // -- PARETO END
+
           //console.log(vm.data); 
           //console.log(vm.soroszlopbokes);
           //console.log(vm.osszesmodulbokes);
