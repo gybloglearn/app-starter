@@ -108,7 +108,6 @@ define([], function () {
             }
           }
           if (hany == 3) {
-            //load(valami);
           }
         });
       });
@@ -142,7 +141,6 @@ define([], function () {
         }
       }
       return szam / 2;
-
     }
 
     function szakddb(tomb) {

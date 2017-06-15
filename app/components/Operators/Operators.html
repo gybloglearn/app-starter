@@ -1,24 +1,26 @@
 <div class="container">
 	<section class="module">
 		<div class="module-header">
-			<h1 class="text-center">{{vm.actmachine}}-Operátorok</h1>
+			<h1 class="text-center" ng-if="vm.actshiftnum==1">{{vm.actmachine}}-Operátorok-Délelőtt</h1>
+			<h1 class="text-center" ng-if="vm.actshiftnum==2">{{vm.actmachine}}-Operátorok-Délután</h1>
+			<h1 class="text-center" ng-if="vm.actshiftnum==3">{{vm.actmachine}}-Operátorok-Éjszaka</h1>
 			<h2 class="text-center" style="margin-top:10px">{{vm.datumszam}}</h2>
 			<ul class="nav nav-tabs" style="margin-top:10px">
 				<li ng-repeat="item in vm.Pottings track by $index">
-					<a data-toggle="tab" href="" ng-click="vm.actmachine=item" ng-hide="vm.dis">{{item}}</a>
+					<a data-toggle="tab" href="" ng-click="vm.actmachine=item;vm.load()" ng-hide="vm.dis">{{item}}</a>
 				</li>
 			</ul>
 			<div class="col-sm-7">
 				<div class="tabbable tabs-left">
 					<ul class="nav nav-tabs">
 							<li>
-								<a data-toggle="tab" href="" ng-click="vm.actshiftnum=1" ng-hide="vm.dis">Délelőtt</a>
+								<a data-toggle="tab" href="" ng-click="vm.actshiftnum=1;vm.load()" ng-hide="vm.dis">Délelőtt</a>
 							</li>
 							<li>
-								<a data-toggle="tab" href="" ng-click="vm.actshiftnum=2" ng-hide="vm.dis">Délután</a>
+								<a data-toggle="tab" href="" ng-click="vm.actshiftnum=2;vm.load()" ng-hide="vm.dis">Délután</a>
 							</li>
 							<li>
-								<a data-toggle="tab" href="" ng-click="vm.actshiftnum=3" ng-hide="vm.dis">Éjszaka</a>
+								<a data-toggle="tab" href="" ng-click="vm.actshiftnum=3;vm.load()" ng-hide="vm.dis">Éjszaka</a>
 							</li>
 					</ul>
 				</div>

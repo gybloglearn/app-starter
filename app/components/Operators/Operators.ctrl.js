@@ -15,7 +15,6 @@ define([], function () {
     vm.load = load;
     vm.beallit = beallit;
     vm.actshiftnum = 1;
-    //vm.dis = false;
 
     function beallit() {
       vm.datumszam = $filter('date')(new Date(vm.datum).getTime(), 'yyyy-MM-dd');
@@ -40,7 +39,6 @@ define([], function () {
             var szam = new Date(vm.data[v][l].startdate);
             var szamvaltozo=szam.getHours()*60+szam.getMinutes();
             var seged = $filter('date')(szam.getTime()-(5 * 60 + 50) * 60 * 1000, 'yyyy-MM-dd');
-            console.log(seged);
             var szakszam = 0;
             if (szamvaltozo >= 350 && szamvaltozo < 830) {
               szakszam = 1;
