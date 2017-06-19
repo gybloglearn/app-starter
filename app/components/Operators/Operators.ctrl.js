@@ -37,8 +37,8 @@ define([], function () {
 
           for (var l = 0; l < vm.data[v].length; l++) {
             var szam = new Date(vm.data[v][l].startdate);
-            var szamvaltozo=szam.getHours()*60+szam.getMinutes();
-            var seged = $filter('date')(szam.getTime()-(5 * 60 + 50) * 60 * 1000, 'yyyy-MM-dd');
+            var szamvaltozo = szam.getHours() * 60 + szam.getMinutes();
+            var seged = $filter('date')(szam.getTime() - (5 * 60 + 50) * 60 * 1000, 'yyyy-MM-dd');
             var szakszam = 0;
             if (szamvaltozo >= 350 && szamvaltozo < 830) {
               szakszam = 1;
@@ -53,7 +53,7 @@ define([], function () {
             vm.data[v][l].shift = $filter('shift')(szakszam, seged);
             vm.data[v][l].shiftnumber = szakszam;
           }
-          
+
           vm.operators[v] = {}
           vm.operators[v].name = vm.hely[v];
           vm.operators[v].operator = [];
@@ -66,6 +66,8 @@ define([], function () {
               for (var j = 0; j < vm.operators[v].operator.length; j++) {
                 if (actoperator == vm.operators[v].operator[j].id) {
                   vm.operators[v].operator[j].db++;
+                  vm.operators[v].operator[j].cycletime += new Date(vm.data[v][i].startdate).getTime() - new Date(vm.operators[v].operator[j].lasttime).getTime();
+                  vm.operators[v].operator[j].lasttime = vm.data[v][i].startdate;
                   talalat++;
                 }
               }
@@ -74,6 +76,8 @@ define([], function () {
                 vm.operators[v].operator[a].shift = vm.data[v][i].shift;
                 vm.operators[v].operator[a].id = actoperator;
                 vm.operators[v].operator[a].db = 1;
+                vm.operators[v].operator[a].cycletime = 0;
+                vm.operators[v].operator[a].lasttime = vm.data[v][i].startdate;
                 a++;
               }
               else {
@@ -81,6 +85,7 @@ define([], function () {
               }
             }
           }
+          console.log(vm.operators[v]);
           vm.OP.push({
             sor: v,
             place: vm.operators[v].name,
@@ -103,7 +108,7 @@ define([], function () {
       var a = 0;
       var opk = [];
       for (var i = 0; i < tomb.length; i++) {
-        opk[a] = "Operátor:" + tomb[i].id + " - " + tomb[i].db + "db";
+        opk[a] = "Operátor:" + tomb[i].id + " - " + Math.round(tomb[i].db / 2) + "db" + " Átlagos ciklusidő: " + $filter('date')(tomb[i].cycletime / tomb[i].db, 'mm:ss');
         a++;
       }
       return opk;
