@@ -6,7 +6,8 @@ define([
   './services/login.service',
   './services/data.service',
   './services/history.service',
-  './history/history.ctrl'
+  './history/history.ctrl',
+  './filters/unique'
 	/* files */
 ], function(
   configFunction,
@@ -16,7 +17,8 @@ define([
   loginService,
   dataService,
   historyService,
-  historyController
+  historyController,
+  unique
 	/* names */) {
 
   // Link all components to the module !!!
@@ -30,5 +32,6 @@ define([
   app.controller('LoginController', loginController);
   app.service('historyService', historyService);
 	app.controller('historyController', historyController);
+  app.filter('unique',unique);
 	/* controllers */
 });

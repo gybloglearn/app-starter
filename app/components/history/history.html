@@ -32,342 +32,282 @@
 			</div>
 		</div>
 		<div class="module-body">
-       <div class="progress progress-warning progress-striped active" ng-hide="!vm.loading">
-        <div class="progress-bar" style="width: 100%">
-          <p class="text-center">Betöltés...</p>
-        </div>
-      </div>
-      <div>
-			<!-- col-1 !-->
-			<div class="col-sm-6">
-				<table class="table table-condensed">
-					<tr style="color:#00cc00">
-						<td style="color:#000000">Lapgyártás</td>
-						<td>Lapgyártó száma: {{vm.moduldata[0].SM_machinename}}</td>
-						<td>Dátum: {{vm.moduldata[0].SM_Startdate}}</td>
-						<td>Gépk.Op ID: {{vm.moduldata[0].SM_OP1}}</td>
-					</tr>
-					<tr style="color:#00cc00">
-						<td>Keret/oldal: {{vm.moduldata[0].Side_id}}</td>
-						<td>Fésű: {{vm.moduldata[0].SM_Fesu_ID}}</td>
-						<td>Eltáv. szálak: {{vm.moduldata[0].sm_removedfibers}}</td>
-						<td>Hot melt lot: {{vm.moduldata[0].sm_hotmelt}}</td>
-					</tr>
-				</table>
-				<h5 style="color:#0033cc">*Lapellenőrzés:"Lapdurrogtatás":ha volt,talált hibák száma feltüntetendő</h5>
-				<h5>Spool ID:</h5>
-				<div class="col-sm-6" style="height:80px;owerflow:hidden">
-					<table class="table table-bordered" style="height:80px;background-color:#ffffff">
-						<tr>
-							<td>1</td>
-							<td>{{vm.moduldata[0].SM_Spool1}}</td>
-							<td>2</td>
-							<td>{{vm.moduldata[0].SM_Spool2}}</td>
-							<td>3</td>
-							<td>{{vm.moduldata[0].SM_Spool3}}</td>
-						</tr>
-						<tr>
-							<td>4</td>
-							<td>{{vm.moduldata[0].SM_Spool4}}</td>
-							<td>5</td>
-							<td>{{vm.moduldata[0].SM_Spool5}}</td>
-							<td>6</td>
-							<td>{{vm.moduldata[0].SM_Spool6}}</td>
-						</tr>
-					</table>
+			<div class="progress progress-warning progress-striped active" ng-hide="!vm.loading">
+				<div class="progress-bar" style="width: 100%">
+					<p class="text-center">Betöltés...</p>
 				</div>
-				<div class="col-sm-3" style="height:80px;owerflow:hidden">
-					<table class="table table-bordered" style="height:80px;background-color:#ffffff">
-						<tr>
-							<td style="color:#00cc00">Szálkenési ID</td>
-							<td style="color:#0033cc">Lap ell*</td>
-						</tr>
-						<tr>
-							<td>{{vm.moduldata[0].kenesid}}</td>
-							<td></td>
-						</tr>
-					</table>
-				</div>
-				<div class="col-sm-3" style="height:80px;owerflow:hidden">
-					<table class="table table-bordered" style="height:80px;background-color:#ffffff">
-						<tr>
-							<td>Op ID</td>
-							<td>Műszak</td>
-						</tr>
-						<tr>
-							<td>{{vm.moduldata[0].SM_OP1}}</td>
-							<td>{{vm.moduldata[0].SM_startshift}}</td>
-						</tr>
-					</table>
-				</div>
-				<div class="col-sm-6" style="height:80px;owerflow:hidden">
-					<table class="table table-bordered" style="height:80px;background-color:#ffffff">
-						<tr>
-							<td>1</td>
-							<td>{{vm.moduldata[0].SM_Spool1_2}}</td>
-							<td>2</td>
-							<td>{{vm.moduldata[0].SM_Spool2_2}}</td>
-							<td>3</td>
-							<td>{{vm.moduldata[0].SM_Spool3_2}}</td>
-						</tr>
-						<tr>
-							<td>4</td>
-							<td>{{vm.moduldata[0].SM_Spool4_2}}</td>
-							<td>5</td>
-							<td>{{vm.moduldata[0].SM_Spool5_2}}</td>
-							<td>6</td>
-							<td>{{vm.moduldata[0].SM_Spool6_2}}</td>
-						</tr>
-					</table>
-				</div>
-				<div class="col-sm-3" style="height:80px;owerflow:hidden">
-					<table class="table table-bordered" style="height:80px;background-color:#ffffff">
-						<tr>
-							<td style="color:#00cc00">Szálkenési ID</td>
-							<td style="color:#0033cc">Lap ell*</td>
-						</tr>
-						<tr>
-							<td>{{vm.moduldata[0].kenesid}}</td>
-							<td></td>
-						</tr>
-					</table>
-				</div>
-				<div class="col-sm-3" style="height:80px;owerflow:hidden">
-					<table class="table table-bordered" style="height:80px;background-color:#ffffff">
-						<tr>
-							<td>Op ID</td>
-							<td>Műszak</td>
-						</tr>
-						<tr>
-							<td>{{vm.moduldata[0].SM_OP2}}</td>
-							<td>{{vm.moduldata[0].SM_startshift}}</td>
-						</tr>
-					</table>
-				</div>
-				<h5>Szárítóba lépés:</h5>
-				<table class="table table-condensed">
-					<tr style="color:#00cc00">
-						<td>Dátum: {{vm.moduldata[0].Drying_startDate}}</td>
-						<td>Idő:</td>
-						<td>Op.ID:</td>
-						<td>Műsz: {{vm.moduldata[0].Drying_startshift}}</td>
-					</tr>
-				</table>
-				<table class="table table-condensed">
-					<tr>
-						<td>Tokozás:</td>
-						<td>POT ID: {{vm.moduldata[0].potting_machine}}</td>
-					</tr>
-				</table>
-				<div class="col-sm-6">
-					<h5>Első öntés:</h5>
-					<table class="table table-bordered" style="background-color:#ffffff">
-						<tr>
-							<td style="color:#00cc00">Esztétikai öntés,(op.ID/szak)</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td style="color:#00cc00">Idő</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td style="color:#00cc00">Dátum/Műszak</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td style="color:#00cc00">Előkészítő</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td style="color:#00cc00">Tokozó</td>
-							<td></td>
-						</tr>
-					</table>
-				</div>
-				<div class="col-sm-6">
-					<h5>Második öntés:</h5>
-					<table class="table table-bordered" style="background-color:#ffffff">
-						<tr>
-							<td style="color:#00cc00">Esztétikai öntés,(op.ID/szak)</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td style="color:#00cc00">Idő</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td style="color:#00cc00">Dátum/Műszak</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td style="color:#00cc00">Előkészítő</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td style="color:#00cc00">Tokozó</td>
-							<td></td>
-						</tr>
-					</table>
-				</div>
-				<table class="table table-condensed">
-					<tr style="color:#00cc00">
-						<td style="color:#000000">Kilépés a pottingból</td>
-						<td>Dátum: {{vm.moduldata[0].Potting_EndDate}}</td>
-						<td>Idő:</td>
-						<td>Op.ID:</td>
-						<td>Műsz.: {{vm.moduldata[0].Potting_endshift}}</td>
-					</tr>
-				</table>
-				<h5 style="text-align:center">Modul tesztelés</h5>
-				<table class="table table-bordered" style="background-color:#ffffff">
-					<tr>
-						<td style="color:#00cc00">Klórozás</td>
-						<td>{{vm.moduldata[0].Chlorinating_machine}}</td>
-					</tr>
-					<tr>
-						<td style="color:#00cc00">Dátum</td>
-						<td>{{vm.moduldata[0].Chlorinating_startDate}}</td>
-					</tr>
-					<tr>
-						<td style="color:#00cc00">Op ID</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td style="color:#00cc00">Kád</td>
-						<td>{{vm.moduldata[0].bp_machine}}</td>
-					</tr>
-					<tr>
-						<td style="color:#00cc00">Rekesz</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td style="color:#00cc00">Indítás</td>
-						<td>{{vm.moduldata[0].bp_startdate}}</td>
-					</tr>
-					<tr>
-						<td style="color:#00cc00">Befejezés</td>
-						<td>{{vm.moduldata[0].bp_enddate}}</td>
-					</tr>
-				</table>
-				<!-- col-2 !-->
 			</div>
-			<div class="col-sm-6">
-				<table class="table table-condensed">
-					<tr>
-						<td>Buborékpont ellenőrzés</td>
-						<td style="color:#00cc00">FLOw esetében max. 3 teszt végezhető!</td>
-					</tr>
-				</table>
-				<table class="table table-bordered" style="background-color:#ffffff">
-					<tr style="color:#00cc00">
-						<td></td>
-						<td>uretán t.</td>
-						<td>teszt2</td>
-						<td>teszt3</td>
-						<td>teszt4</td>
-						<td>teszt5</td>
-						<td>teszt6</td>
-						<td>Össz.</td>
-					</tr>
-					<tr>
-						<td style="color:#00cc00">nyomás</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td style="color:#00cc00">javítás</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td style="color:#00cc00">kivágás</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td style="color:#00cc00">kád</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td style="color:#00cc00">Op ID</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td style="color:#00cc00">Műszak</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td style="color:#00cc00">Dátum</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</table>
+			<div>
+				<!-- col-1 !-->
 				<div class="col-sm-6">
+					<table class="table table-condensed">
+						<tr style="color:#00cc00">
+							<td style="color:#000000">Lapgyártás</td>
+							<td>Lapgyártó száma: {{vm.moduldata[0].SM_machinename}}</td>
+							<td>Dátum: {{vm.moduldata[0].SM_Startdate}}</td>
+							<td>Gépk.Op ID: {{vm.moduldata[0].SM_OP1}}</td>
+						</tr>
+						<tr style="color:#00cc00">
+							<td>Keret/oldal: {{vm.moduldata[0].Side_id}}</td>
+							<td>Fésű: {{vm.moduldata[0].SM_Fesu_ID}}</td>
+							<td>Eltáv. szálak: {{vm.moduldata[0].sm_removedfibers}}</td>
+							<td>Hot melt lot: {{vm.moduldata[0].sm_hotmelt}}</td>
+						</tr>
+					</table>
+					<h5 style="color:#0033cc">*Lapellenőrzés:"Lapdurrogtatás":ha volt,talált hibák száma feltüntetendő</h5>
+					<h5>Spool ID:</h5>
+					<div class="col-sm-6" style="height:80px;owerflow:hidden">
+						<table class="table table-bordered" style="height:80px;background-color:#ffffff">
+							<tr>
+								<td>1</td>
+								<td>{{vm.moduldata[0].SM_Spool1}}</td>
+								<td>2</td>
+								<td>{{vm.moduldata[0].SM_Spool2}}</td>
+								<td>3</td>
+								<td>{{vm.moduldata[0].SM_Spool3}}</td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td>{{vm.moduldata[0].SM_Spool4}}</td>
+								<td>5</td>
+								<td>{{vm.moduldata[0].SM_Spool5}}</td>
+								<td>6</td>
+								<td>{{vm.moduldata[0].SM_Spool6}}</td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-sm-3" style="height:80px;owerflow:hidden">
+						<table class="table table-bordered" style="height:80px;background-color:#ffffff">
+							<tr>
+								<td style="color:#00cc00">Szálkenési ID</td>
+								<td style="color:#0033cc">Lap ell*</td>
+							</tr>
+							<tr>
+								<td>{{vm.moduldata[0].kenesid}}</td>
+								<td></td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-sm-3" style="height:80px;owerflow:hidden">
+						<table class="table table-bordered" style="height:80px;background-color:#ffffff">
+							<tr>
+								<td>Op ID</td>
+								<td>Műszak</td>
+							</tr>
+							<tr>
+								<td>{{vm.moduldata[0].SM_OP1}}</td>
+								<td>{{vm.moduldata[0].SM_startshift}}</td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-sm-6" style="height:80px;owerflow:hidden">
+						<table class="table table-bordered" style="height:80px;background-color:#ffffff">
+							<tr>
+								<td>1</td>
+								<td>{{vm.moduldata[0].SM_Spool1_2}}</td>
+								<td>2</td>
+								<td>{{vm.moduldata[0].SM_Spool2_2}}</td>
+								<td>3</td>
+								<td>{{vm.moduldata[0].SM_Spool3_2}}</td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td>{{vm.moduldata[0].SM_Spool4_2}}</td>
+								<td>5</td>
+								<td>{{vm.moduldata[0].SM_Spool5_2}}</td>
+								<td>6</td>
+								<td>{{vm.moduldata[0].SM_Spool6_2}}</td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-sm-3" style="height:80px;owerflow:hidden">
+						<table class="table table-bordered" style="height:80px;background-color:#ffffff">
+							<tr>
+								<td style="color:#00cc00">Szálkenési ID</td>
+								<td style="color:#0033cc">Lap ell*</td>
+							</tr>
+							<tr>
+								<td>{{vm.moduldata[0].kenesid}}</td>
+								<td></td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-sm-3" style="height:80px;owerflow:hidden">
+						<table class="table table-bordered" style="height:80px;background-color:#ffffff">
+							<tr>
+								<td>Op ID</td>
+								<td>Műszak</td>
+							</tr>
+							<tr>
+								<td>{{vm.moduldata[0].SM_OP2}}</td>
+								<td>{{vm.moduldata[0].SM_startshift}}</td>
+							</tr>
+						</table>
+					</div>
+					<h5>Szárítóba lépés:</h5>
+					<table class="table table-condensed">
+						<tr style="color:#00cc00">
+							<td>Dátum: {{vm.moduldata[0].Drying_startDate}}</td>
+							<td>Idő:</td>
+							<td>Op.ID:</td>
+							<td>Műsz: {{vm.moduldata[0].Drying_startshift}}</td>
+						</tr>
+					</table>
+					<table class="table table-condensed">
+						<tr>
+							<td>Tokozás:</td>
+							<td>POT ID: {{vm.moduldata[0].potting_machine}}</td>
+						</tr>
+					</table>
+					<div class="col-sm-6">
+						<h5>Első öntés:</h5>
+						<table class="table table-bordered" style="background-color:#ffffff">
+							<tr>
+								<td style="color:#00cc00">Esztétikai öntés,(op.ID/szak)</td>
+								<td>{{vm.moduldata[0].pt_post_uret_prep_a_OP}}/{{vm.moduldata[0].pt_post_uret_prep_a_s}}</td>
+							</tr>
+							<tr>
+								<td style="color:#00cc00">Idő</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td style="color:#00cc00">Dátum/Műszak</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td style="color:#00cc00">Előkészítő</td>
+								<td>{{vm.moduldata[0].pt_gel_prep_dt}}/{{vm.moduldata[0].pt_gel_prep_s}}</td>
+							</tr>
+							<tr>
+								<td style="color:#00cc00">Tokozó</td>
+								<td>{{vm.moduldata[0].pt_uret_prep_a_dt}}/{{vm.moduldata[0].pt_uret_prep_a_s}}</td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-sm-6">
+						<h5>Második öntés:</h5>
+						<table class="table table-bordered" style="background-color:#ffffff">
+							<tr>
+								<td style="color:#00cc00">Esztétikai öntés,(op.ID/szak)</td>
+								<td>{{vm.moduldata[0].pt_post_uret_prep_F_OP}}/{{vm.moduldata[0].pt_post_uret_prep_F_s}}</td>
+							</tr>
+							<tr>
+								<td style="color:#00cc00">Idő</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td style="color:#00cc00">Dátum/Műszak</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td style="color:#00cc00">Előkészítő</td>
+								<td>{{vm.moduldata[0].pt_gel_prep_dt}}/{{vm.moduldata[0].pt_gel_prep_s}}</td>
+							</tr>
+							<tr>
+								<td style="color:#00cc00">Tokozó</td>
+								<td>{{vm.moduldata[0].pt_uret_prep_F_dt}}/{{vm.moduldata[0].pt_uret_prep_F_s}}</td>
+							</tr>
+						</table>
+					</div>
+					<table class="table table-condensed">
+						<tr style="color:#00cc00">
+							<td style="color:#000000">Kilépés a pottingból</td>
+							<td>Dátum: {{vm.moduldata[0].Potting_EndDate}}</td>
+							<td>Idő:</td>
+							<td>Op.ID:</td>
+							<td>Műsz.: {{vm.moduldata[0].Potting_endshift}}</td>
+						</tr>
+					</table>
+					<h5 style="text-align:center">Modul tesztelés</h5>
+					<table class="table table-bordered" style="background-color:#ffffff">
+						<tr>
+							<td style="color:#00cc00">Klórozás</td>
+							<td>{{vm.moduldata[0].Chlorinating_machine}}</td>
+						</tr>
+						<tr>
+							<td style="color:#00cc00">Dátum</td>
+							<td>{{vm.moduldata[0].Chlorinating_startDate}}</td>
+						</tr>
+						<tr>
+							<td style="color:#00cc00">Op ID</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td style="color:#00cc00">Kád</td>
+							<td>{{vm.moduldata[0].bp_machine}}</td>
+						</tr>
+						<tr>
+							<td style="color:#00cc00">Rekesz</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td style="color:#00cc00">Indítás</td>
+							<td>{{vm.moduldata[0].bp_startdate}}</td>
+						</tr>
+						<tr>
+							<td style="color:#00cc00">Befejezés</td>
+							<td>{{vm.moduldata[0].bp_enddate}}</td>
+						</tr>
+					</table>
+					<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#map">Bökés Térkép
+						<i class="icon-chevron-down"></i>
+					</h3>
+				</div>
+				<!-- col-2 !-->
+				<div class="col-sm-6">
+					<table class="table table-condensed">
+						<tr>
+							<td>Buborékpont ellenőrzés</td>
+							<td style="color:#00cc00">FLOw esetében max. 3 teszt végezhető!</td>
+						</tr>
+					</table>
 					<table class="table table-bordered" style="background-color:#ffffff">
 						<tr style="color:#00cc00">
-							<td style="color:#000000">2 perces PDT teszt</td>
-							<td>1</td>
-							<td>2</td>
-							<td>3</td>
+							<td></td>
+							<td>uretán t.</td>
+							<td>teszt2</td>
+							<td>teszt3</td>
+							<td>teszt4</td>
+							<td>teszt5</td>
+							<td>teszt6</td>
+							<td>Össz.</td>
 						</tr>
 						<tr>
-							<td style="color:#00cc00">Kezdőnyomás</td>
+							<td style="color:#00cc00">nyomás</td>
 							<td></td>
 							<td></td>
 							<td></td>
-						</tr>
-						<tr>
-							<td style="color:#00cc00">Végnyomás</td>
 							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td style="color:#00cc00">Nyomás különbség</td>
 							<td></td>
 							<td></td>
 							<td></td>
 						</tr>
 						<tr>
-							<td style="color:#00cc00">x-re sikeres teszt</td>
+							<td style="color:#00cc00">javítás</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td style="color:#00cc00">kivágás</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td style="color:#00cc00">kád</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -377,9 +317,7 @@
 							<td></td>
 							<td></td>
 							<td></td>
-						</tr>
-						<tr>
-							<td style="color:#00cc00">Csoportvezető</td>
+							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -389,84 +327,172 @@
 							<td></td>
 							<td></td>
 							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
 						</tr>
 						<tr>
 							<td style="color:#00cc00">Dátum</td>
 							<td></td>
 							<td></td>
 							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</table>
+					<div class="col-sm-6">
+						<table class="table table-bordered" style="background-color:#ffffff">
+							<tr style="color:#00cc00">
+								<td style="color:#000000">2 perces PDT teszt</td>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+							</tr>
+							<tr>
+								<td style="color:#00cc00">Kezdőnyomás</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td style="color:#00cc00">Végnyomás</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td style="color:#00cc00">Nyomás különbség</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td style="color:#00cc00">x-re sikeres teszt</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td style="color:#00cc00">Op ID</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td style="color:#00cc00">Csoportvezető</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td style="color:#00cc00">Műszak</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td style="color:#00cc00">Dátum</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-sm-6" style="margin-top:10px">
+						<div class="col-sm-12" style="border-style:solid;height:450px">
+							<h3>Uretánhiba</h3>
+							<div class="row">
+								<div class="col-sm-12">
+									<h3 style="color:#00cc00">1. Impregnálás ideje</h3>
+								</div>
+								<div class="col-sm-12">
+									<h3 style="color:#00cc00">Be</h3>
+									<input type="text" class="form-control" style="background-color:#ffffff" readonly>
+								</div>
+								<div class="col-sm-12">
+									<h3 style="color:#00cc00">Ki</h3>
+									<input type="text" class="form-control" style="background-color:#ffffff" readonly>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<h3 style="color:#00cc00">2. Impregnálás ideje</h3>
+								</div>
+								<div class="col-sm-12">
+									<h3 style="color:#00cc00">Be</h3>
+									<input type="text" class="form-control" style="background-color:#ffffff" readonly>
+								</div>
+								<div class="col-sm-12">
+									<h3 style="color:#00cc00">Ki</h3>
+									<input type="text" class="form-control" style="background-color:#ffffff" readonly>
+								</div>
+							</div>
+						</div>
+					</div>
+					<table class="table table-condensed">
+						<tr>
+							<td>Impregnálás</td>
+							<td style="color:#00cc00">Dátum</td>
+						</tr>
+					</table>
+					<table class="table table-bordered" style="background-color:#ffffff">
+						<tr>
+							<td style="color:#00cc00">Kád/rekesz</td>
+							<td></td>
+							<td style="color:#00cc00">Op ID/műsz.</td>
+							<td></td>
+							<td style="color:#00cc00">Idő be/ki</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td style="color:#00cc00">Kád/rekesz</td>
+							<td></td>
+							<td style="color:#00cc00">Op ID/műsz.</td>
+							<td></td>
+							<td style="color:#00cc00">Idő be/ki</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td style="color:#00cc00">Kád/rekesz</td>
+							<td></td>
+							<td style="color:#00cc00">Op ID/műsz.</td>
+							<td></td>
+							<td style="color:#00cc00">Idő be/ki</td>
+							<td></td>
+							<td></td>
 						</tr>
 					</table>
 				</div>
-				<div class="col-sm-6" style="margin-top:10px">
-					<div class="col-sm-12" style="border-style:solid">
-						<h3>Uretánhiba</h3>
-						<div class="row">
-							<div class="col-sm-12">
-								<h3 style="color:#00cc00">1. Impregnálás ideje</h3>
-							</div>
-							<div class="col-sm-12">
-								<h3 style="color:#00cc00">Be</h3>
-								<input type="text" class="form-control">
-							</div>
-							<div class="col-sm-12">
-								<h3 style="color:#00cc00">Ki</h3>
-								<input type="text" class="form-control">
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-12">
-								<h3 style="color:#00cc00">2. Impregnálás ideje</h3>
-							</div>
-							<div class="col-sm-12">
-								<h3 style="color:#00cc00">Be</h3>
-								<input type="text" class="form-control">
-							</div>
-							<div class="col-sm-12">
-								<h3 style="color:#00cc00">Ki</h3>
-								<input type="text" class="form-control">
+			</div>
+		</div>
+		<div class="module-footer">
+			<div class="collapse" id="map">
+				<div class="col-sm-6">
+					<div class="container">
+						<div class="modMap">
+							<div class="row" ng-repeat="sor in vm.sorok track by $index">
+								<div ng-if="sor == '1' || sor == '8'">
+									<div ng-repeat="oszlop in vm.oszlop track by $index" class="blue">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }}</div>
+								</div>
+								<div ng-if="sor=='2' || sor=='6'">
+									<div ng-repeat="oszlop in vm.oszlop track by $index" ng-if="oszlop!='E'" class="yellow">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }} </div>
+								</div>
+								<div ng-if="sor=='3' || sor=='5'">
+									<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="black">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }} </div>
+								</div>
+								<div ng-if="sor=='4'">
+									<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" class="red">{{ (vm.soroszlopbokes|filter:{'azon':oszlop + sor})[0].bokes | number:0 }} </div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<table class="table table-condensed">
-					<tr>
-						<td>Impregnálás</td>
-						<td style="color:#00cc00">Dátum</td>
-					</tr>
-				</table>
-				<table class="table table-bordered" style="background-color:#ffffff">
-					<tr>
-						<td style="color:#00cc00">Kád/rekesz</td>
-						<td></td>
-						<td style="color:#00cc00">Op ID/műsz.</td>
-						<td></td>
-						<td style="color:#00cc00">Idő be/ki</td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td style="color:#00cc00">Kád/rekesz</td>
-						<td></td>
-						<td style="color:#00cc00">Op ID/műsz.</td>
-						<td></td>
-						<td style="color:#00cc00">Idő be/ki</td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td style="color:#00cc00">Kád/rekesz</td>
-						<td></td>
-						<td style="color:#00cc00">Op ID/műsz.</td>
-						<td></td>
-						<td style="color:#00cc00">Idő be/ki</td>
-						<td></td>
-						<td></td>
-					</tr>
-				</table>
 			</div>
 		</div>
-    </div>
-		<div class="module-footer"></div>
 	</section>
 </div>

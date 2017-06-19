@@ -4,7 +4,8 @@ define([], function () {
   function Service($http) {
     var service = {
       getpartnumber: getpartnumber,
-      getmodul: getmodul
+      getmodul: getmodul,
+      getmap:getmap
     };
 
     return service;
@@ -22,6 +23,13 @@ define([], function () {
       var req = {
         method: 'GET',
         url: 'app/components/PHP/ModulHistory.php?startdate=' + date + '&modulid=' + id
+      };
+      return $http(req);
+    }
+    function getmap(start, end, tank) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/MTF_BT.php?startdate=' + start + '&enddate=' + end + '&machineid=' + tank
       };
       return $http(req);
     }
