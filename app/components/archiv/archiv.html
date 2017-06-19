@@ -5,9 +5,9 @@
       <div class="col-sm-6" style="margin-top:20px">
 <div class="input-group">
   <span class="input-group-addon">Betöltésre kerülő időszak:</span>
-  <input type="text" class="datepicker form-control" ng-model="vm.datefrom" end="{{vm.edate}}">
+  <input type="text" class="datepicker form-control" ng-model="vm.datefrom"  setdate="-7d" end="{{vm.edate}}">
   <span class="input-group-addon">-tól</span>
-  <input type="text" class="datepicker form-control" ng-model="vm.dateto" end="{{vm.edate}}">
+  <input type="text" class="datepicker form-control" ng-model="vm.dateto" setdate="0d" end="{{vm.edate}}">
   <span class="input-group-addon">-ig</span>
   <div class="input-group-btn">
     <a href="" class="btn btn-primary" ng-click="vm.getD()" ng-disabled="vm.dateto<=vm.datefrom">Betöltés</a>
