@@ -146,7 +146,7 @@
 						}
 						
 						.blues:nth-child(1) {
-							margin-left: 0px;
+							margin-left: 15px;
 						}
 						
 						.blues:nth-child(2) {
@@ -182,7 +182,7 @@
 						.yellows:nth-child(1),
 						.blacks:nth-child(1),
 						.reds:nth-child(1) {
-							margin-left: 10px;
+							margin-left: 25px;
 						}
 						
 						.yellows:nth-child(2),

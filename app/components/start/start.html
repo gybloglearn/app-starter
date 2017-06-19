@@ -6,11 +6,11 @@
     </div>
     <div class="module-body">
       <style>
-      .green {
+      .greenn {
               color: green;
              }
             
-      .red {
+      .redn {
               color: red;
            }
       </style>
@@ -34,7 +34,7 @@
           <h1>{{vm.sumaeq[0] | number:2}} AEQ</h1>
         </div>
         <div class="col-sm-3">
-          <h1 ng-class="{'green':vm.sumbokes[0]/vm.sumaeq[0]<30,'red':vm.sumbokes[0]/vm.sumaeq[0]>=30}">{{vm.sumbokes[0]/vm.sumaeq[0] | number:2}} Bökés/AEQ</h1>
+          <h1 ng-class="{'greenn':vm.sumbokes[0]/vm.sumaeq[0]<30,'redn':vm.sumbokes[0]/vm.sumaeq[0]>=30}">{{vm.sumbokes[0]/vm.sumaeq[0] | number:2}} Bökés/AEQ</h1>
         </div>
       </div>
       <hr>
@@ -52,7 +52,7 @@
           <h1>{{vm.sumaeq[1] | number:2}} AEQ</h1>
         </div>
          <div class="col-sm-2">
-          <h1 ng-class="{'green':vm.sumbokes[1]/vm.sumaeq[1]<20,'red':vm.sumbokes[1]/vm.sumaeq[1]>=20}">{{vm.sumbokes[1]/vm.sumaeq[1] | number:2}} Bökés/AEQ</h1>
+          <h1 ng-class="{'greenn':vm.sumbokes[1]/vm.sumaeq[1]<20,'redn':vm.sumbokes[1]/vm.sumaeq[1]>=20}">{{vm.sumbokes[1]/vm.sumaeq[1] | number:2}} Bökés/AEQ</h1>
         </div>
       </div>
       <hr>
@@ -70,7 +70,7 @@
           <h1>{{vm.sumaeq[0]+vm.sumaeq[1] | number:2}} AEQ</h1>
         </div>
          <div class="col-sm-3">
-          <h1 ng-class="{'green':(vm.sumbokes[0]+vm.sumbokes[1])/(vm.sumaeq[0]+vm.sumaeq[1])<30,'red':(vm.sumbokes[0]+vm.sumbokes[1])/(vm.sumaeq[0]+vm.sumaeq[1])>=30}">{{(vm.sumbokes[0]+vm.sumbokes[1])/(vm.sumaeq[0]+vm.sumaeq[1]) | number:2}} Bökés/AEQ</h1>
+          <h1 ng-class="{'greenn':(vm.sumbokes[0]+vm.sumbokes[1])/(vm.sumaeq[0]+vm.sumaeq[1])<30,'redn':(vm.sumbokes[0]+vm.sumbokes[1])/(vm.sumaeq[0]+vm.sumaeq[1])>=30}">{{(vm.sumbokes[0]+vm.sumbokes[1])/(vm.sumaeq[0]+vm.sumaeq[1]) | number:2}} Bökés/AEQ</h1>
         </div>
       </div>
     </div>
