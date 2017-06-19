@@ -15,6 +15,7 @@ define([], function () {
     vm.eset = "Bökés";
     vm.acttipus = "Mind";
     vm.tablazatazon = "";
+    vm.modulnevazon="";
     vm.putmodul=[];
     vm.tablazat = [];
     vm.allaeq = 0;
@@ -24,6 +25,7 @@ define([], function () {
     var tanks = ["Bubble point tank5", "Bubble point tank6", "Bubble point tank7", "Bubble point tank15"];
     var betuk = ["A", "B", "C", "D", "E"];
     var szamok = ["1", "2", "3", "4", "5", "6", "8", "9"];
+    vm.mtfload = true;
     vm.kadak = tanks;
     vm.sorok = szamok;
     vm.oszlop = betuk;
@@ -99,6 +101,7 @@ define([], function () {
     }
 
     function load() {
+      vm.mtfload = true;
       vm.data = [];
       vm.typedb = [];
       vm.osszesmodulbokes = [];
@@ -302,6 +305,7 @@ define([], function () {
           //console.log(vm.soroszlopbokes);
           console.log(vm.osszesmodulbokes);
           //console.log(vm.typedb);
+          vm.mtfload = false;
         });
       }
     }
