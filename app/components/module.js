@@ -15,7 +15,10 @@ define([
   './filters/unique',
   './filters/shift',
   './filters/sumdb',
-  './services/plan.service'
+  './filters/sumField',
+  './services/plan.service',
+  './smweek/smweek.ctrl',
+  './services/weekly.service'
 	/* files */
 ], function (
   configFunction,
@@ -34,7 +37,10 @@ define([
   unique,
   shift,
   sumdb,
-  planService
+  sumField,
+  planService,
+  smweekController,
+  weeklyService
 	/* names */) {
 
     // Link all components to the module !!!
@@ -57,6 +63,9 @@ define([
     app.filter('unique',unique);
     app.filter('shift',shift);
     app.filter('sumdb',sumdb);
+    app.filter('sumField',sumField);
 		app.service('planService', planService);
+		app.controller('smweekController', smweekController);
+		app.service('weeklyService', weeklyService);
 		/* controllers */
   });

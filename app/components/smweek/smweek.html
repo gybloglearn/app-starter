@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">SM Heti összesítő</h1>
+      <h3 class="text-center">(10080 perc)</h3>
+    </div>
+    <div class="module-body">
+      <div class="row">
+        <div class="col-sm-4" ng-repeat="item in vm.sheets" style="border: 1px solid #ddd; border-radius:3px;overflow:hidden;">
+          <h1 class="text-center">{{item}}</h1>
+          <h2>Műszaki okok: {{ (vm.data | filter:{'Machine':item} | filter:{'Ev_Group': 'Muszaki technikai okok'} | sumField:'Event_time')/60
+            | number:0 }} perc</h2>
+          <h2>Szervezési: {{ (vm.data | filter:{'Machine':item} | filter:{'Ev_Group': 'Szervezesi veszteseg'} | sumField:'Event_time')/60
+            | number:0 }} perc</h2>
+          <h2>Tervezett: {{ (vm.data | filter:{'Machine':item} | filter:{'Ev_Group': 'Tervezett veszteseg'} | sumField:'Event_time')/60
+            | number:0 }} perc</h2>
+          <h2 class="text-right">Hasznos idő: {{10080- (vm.data | filter:{'Machine':item} | sumField:'Event_time')/60
+            | number:0 }} perc</h2>
+        </div>
+        <div class="col-sm-4" style="border: 1px solid #ddd; border-radius:3px;overflow:hidden;">
+          <h1 class="text-center">Összesen</h1>
+          <h2>Műszaki okok: {{ (vm.data | filter:{'Ev_Group': 'Muszaki technikai okok'} | sumField:'Event_time')/60 | number:0
+            }} perc</h2>
+          <h2>Szervezési: {{ (vm.data | filter:{'Ev_Group': 'Szervezesi veszteseg'} | sumField:'Event_time')/60 | number:0 }}
+            perc</h2>
+          <h2>Tervezett: {{ (vm.data | filter:{'Ev_Group': 'Tervezett veszteseg'} | sumField:'Event_time')/60 | number:0 }} perc</h2>
+          <h2 class="text-right">Hasznos idő: {{10080*7- (vm.data | sumField:'Event_time')/60
+            | number:0 }} perc</h2>
+        </div>
+      </div>
+    </div>
+    <div class="module-footer">
+
+    </div>
+  </section>
+</div>

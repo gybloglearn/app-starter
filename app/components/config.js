@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('smweek', {
+		url: '/smweek',
+		templateUrl: './app/components/smweek/smweek.html',
+		controller: 'smweekController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('Forbidden', {
 		url: '/Forbidden',
 		templateUrl: './app/components/Forbidden/Forbidden.html',
