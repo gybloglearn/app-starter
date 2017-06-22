@@ -66,7 +66,7 @@ define([], function () {
       for (var i = 0; i < fau.length; i++) {
         fdata[i] = {
           name: fau[i].code,
-          y: Math.round(fau[i].time/60)
+          y: Math.round(fau[i].time / 60)
         }
       }
 
@@ -205,7 +205,9 @@ define([], function () {
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       create_monday();
-      load();
+      if (vm.a > 1) {
+        load();
+      }
     }
   }
   Controller.$inject = ['weeklyService', '$cookies', '$state', '$rootScope', '$filter'];
