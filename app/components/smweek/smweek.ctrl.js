@@ -5,11 +5,13 @@ define([], function () {
     vm.yesterday = $filter('date')(new Date().getTime() - 24 * 3600 * 1000, 'yyyy-MM-dd');
     vm.monday = $filter('date')(new Date(), 'yyyy-MM-dd');
     var sheets = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
+    vm.actsm = "Mind";
     vm.sheets = sheets;
     vm.data = [];
     vm.fault = [];
     vm.smstand = [];
     vm.a = 0;
+    vm.selectsmfault=selectsmfault;
 
     function create_monday() {
       vm.a = new Date().getDay();
@@ -21,13 +23,62 @@ define([], function () {
       }
     }
 
+    function selectsmfault(tomb) {
+      vm.fault = [];
+      var b = 0;
+      var talalt = 0;
+
+      if (vm.actsm == "Mind") {
+        for (var i = 0; i < tomb.length; i++) {
+          for (var j = 0; j < vm.fault.length; j++) {
+            if (tomb[i].Event_SubGroup == vm.fault[j].code) {
+              vm.fault[j].time += tomb[i].Event_time;
+              talalt++;
+            }
+          }
+          if (talalt == 0) {
+            vm.fault[b] = {}
+            vm.fault[b].code = tomb[i].Event_SubGroup;
+            vm.fault[b].group = tomb[i].Ev_Group;
+            vm.fault[b].time = tomb[i].Event_time;
+            b++;
+          }
+          else {
+            talalt = 0;
+          }
+        }
+      }
+      else {
+        for (var i = 0; i < tomb.length; i++) {
+          if (tomb[i].Machine == vm.actsm) {
+            for (var j = 0; j < vm.fault.length; j++) {
+              if (tomb[i].Event_SubGroup == vm.fault[j].code) {
+                vm.fault[j].time += tomb[i].Event_time;
+                talalt++;
+              }
+            }
+            if (talalt == 0) {
+              vm.fault[b] = {}
+              vm.fault[b].code = tomb[i].Event_SubGroup;
+              vm.fault[b].group = tomb[i].Ev_Group;
+              vm.fault[b].time = tomb[i].Event_time;
+              b++;
+            }
+            else {
+              talalt = 0;
+            }
+          }
+        }
+      }
+      setfaultChart(vm.fault);
+    }
+
     function load() {
       vm.data = [];
-      vm.fault = [];
+
       vm.smstand = [];
       vm.loading = true;
       var val = 0;
-      var b = 0;
       var c = 0;
       var talalt = 0;
 
@@ -37,24 +88,8 @@ define([], function () {
           vm.data = vm.data.concat(response.data);
           if (val == 8) {
             vm.loading = false;
-            for (var i = 0; i < vm.data.length; i++) {
-              for (var j = 0; j < vm.fault.length; j++) {
-                if (vm.data[i].Event_SubGroup == vm.fault[j].code) {
-                  vm.fault[j].time += vm.data[i].Event_time;
-                  talalt++;
-                }
-              }
-              if (talalt == 0) {
-                vm.fault[b] = {}
-                vm.fault[b].code = vm.data[i].Event_SubGroup;
-                vm.fault[b].group = vm.data[i].Ev_Group;
-                vm.fault[b].time = vm.data[i].Event_time;
-                b++;
-              }
-              else {
-                talalt = 0;
-              }
-            }
+            selectsmfault(vm.data);
+
             for (var i = 0; i < vm.data.length; i++) {
               for (var j = 0; j < vm.smstand.length; j++) {
                 if (vm.data[i].Machine == vm.smstand[j].mac) {
@@ -73,7 +108,6 @@ define([], function () {
               }
             }
             setsmsChart(vm.smstand);
-            setfaultChart(vm.fault);
             setChart(vm.data);
           }
         });
@@ -95,7 +129,7 @@ define([], function () {
         chart: {
           type: 'column',
         },
-        title: { text: "TOP 10 hiba" },
+        title: { text: "TOP 10 hiba - " + vm.actsm },
         series: [{
           name: 'Hibák',
           colorByPoint: true,
