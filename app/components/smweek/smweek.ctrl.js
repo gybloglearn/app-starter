@@ -8,6 +8,7 @@ define([], function () {
     vm.sheets = sheets;
     vm.data = [];
     vm.fault = [];
+    vm.smstand = [];
     vm.a = 0;
 
     function create_monday() {
@@ -23,9 +24,11 @@ define([], function () {
     function load() {
       vm.data = [];
       vm.fault = [];
+      vm.smstand = [];
       vm.loading = true;
       var val = 0;
       var b = 0;
+      var c = 0;
       var talalt = 0;
 
       angular.forEach(sheets, function (v, k) {
@@ -52,6 +55,24 @@ define([], function () {
                 talalt = 0;
               }
             }
+            for (var i = 0; i < vm.data.length; i++) {
+              for (var j = 0; j < vm.smstand.length; j++) {
+                if (vm.data[i].Machine == vm.smstand[j].mac) {
+                  vm.smstand[j].time += vm.data[i].Event_time;
+                  talalt++;
+                }
+              }
+              if (talalt == 0) {
+                vm.smstand[c] = {}
+                vm.smstand[c].mac = vm.data[i].Machine;
+                vm.smstand[c].time = vm.data[i].Event_time;
+                c++;
+              }
+              else {
+                talalt = 0;
+              }
+            }
+            setsmsChart(vm.smstand);
             setfaultChart(vm.fault);
             setChart(vm.data);
           }
@@ -198,6 +219,36 @@ define([], function () {
       }
       hb[0] = ((jo - hiba) / jo) * 100;
       return hb;
+    }
+
+    function setsmsChart(stand) {
+      var std = $filter('orderBy')(stand, 'time', true);
+      var stdata = [];
+
+      for (var i = 0; i < std.length; i++) {
+        stdata[i] = {
+          name: std[i].mac,
+          y: Math.round(std[i].time / 60)
+        }
+      }
+
+      vm.smsChartconfig = {
+        chart: {
+          type: 'column',
+        },
+        title: { text: "Állás eloszlása gépek szerint" },
+        series: [{
+          name: 'Állás',
+          colorByPoint: true,
+          data: stdata
+        }],
+        xAxis: {
+          type: "category"
+        },
+        yAxis: [
+          { title: { text: 'Perc' } }
+        ],
+      }
     }
 
     activate();
