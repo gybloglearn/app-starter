@@ -10,13 +10,13 @@ define([], function () {
     vm.sheetmakers = ["SheetMaker6", "SheetMaker7", "SheetMaker8"];
     vm.hely = ['Potting be', 'Előkészítés alsó', 'Gélberakás alsó', 'Esztétika alsó', 'Forgatás', 'Gélberakás felső', 'Esztétika felső', 'Potting ki']
     vm.machine = "Potting4";
-    vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
+    vm.datum = $filter('date')(new Date().getTime() - ((5 * 60 + 50) * 60 * 1000), 'yyyy-MM-dd');
     var szakallando4 = 27;
     vm.actplan = 0;
     vm.places = [];
     vm.szakok[0] = $filter('shift')(1, vm.datum);
     vm.szakok[1] = $filter('shift')(2, vm.datum);
-    vm.szakok[2] = $filter('shift')(3, new Date().getTime() - ((5 * 60 + 50) * 60 * 1000));
+    vm.szakok[2] = $filter('shift')(3, vm.datum);
     vm.actszak = "";
     vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
     vm.frissites_ideje = $filter('date')(new Date().getTime() + 2 * 60 * 1000, 'yyyy-MM-dd HH:mm');
