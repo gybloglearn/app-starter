@@ -305,11 +305,9 @@ define([], function () {
 
           //console.log(vm.data); 
           //console.log(vm.soroszlopbokes);
-          console.log(vm.osszesmodulbokes);
+          //console.log(vm.osszesmodulbokes);
           //console.log(vm.typedb);
           vm.mtfload = false;
-          console.log(vm.allaeq);
-          console.log(vm.allflowaeq);
         });
       }
     }
