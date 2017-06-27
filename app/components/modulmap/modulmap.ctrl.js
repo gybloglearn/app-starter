@@ -10,13 +10,13 @@ define([], function () {
     vm.startdatumszam = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddatum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.esetek = ["Bökés", "Bökés/AEQ", "Súlyozott Bökés/AEQ","Modul"];
+    vm.esetek = ["Bökés", "Bökés/AEQ", "Súlyozott Bökés/AEQ", "Modul"];
     vm.tipusok = ["Mind", "FLOW", "CP5"];
     vm.eset = "Bökés";
     vm.acttipus = "Mind";
     vm.tablazatazon = "";
-    vm.modulnevazon="";
-    vm.putmodul=[];
+    vm.modulnevazon = "";
+    vm.putmodul = [];
     vm.tablazat = [];
     vm.allaeq = 0;
     vm.allflowaeq = 0;
@@ -108,6 +108,8 @@ define([], function () {
       vm.soroszlopbokes = [];
       feltoltsoroszlop();
       vm.allaeq = 0;
+      vm.allflowaeq = 0;
+      vm.allcp5aeq = 0;
       var talalat = 0;
       var modok = 0;
       var a = 0;
@@ -126,7 +128,7 @@ define([], function () {
                 vm.osszesmodulbokes[k].bokes += response.data[j].bt_kat_db1 * 1;
                 var datainter = {}
                 datainter.azon = actkom;
-                datainter.db = response.data[j].bt_kat_db1*1;
+                datainter.db = response.data[j].bt_kat_db1 * 1;
                 vm.osszesmodulbokes[k].bokespozbokes.push(datainter);
                 talalat++;
               }
@@ -140,7 +142,7 @@ define([], function () {
               vm.osszesmodulbokes[a].bokespozbokes = [];
               var datainter = {}
               datainter.azon = actkom;
-              datainter.db = response.data[j].bt_kat_db1*1;
+              datainter.db = response.data[j].bt_kat_db1 * 1;
               vm.osszesmodulbokes[a].bokespozbokes.push(datainter);
               a++;
               vm.allaeq += response.data[j].aeq;
@@ -306,6 +308,8 @@ define([], function () {
           console.log(vm.osszesmodulbokes);
           //console.log(vm.typedb);
           vm.mtfload = false;
+          console.log(vm.allaeq);
+          console.log(vm.allflowaeq);
         });
       }
     }
