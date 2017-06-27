@@ -23,7 +23,7 @@ function remove_utf8_bom($text)
     return $text;
 }
 // set Parameters from get
-$startdate = date("m/d/Y H:i:s", strtotime($_GET["startdate"] . " 05:50:00"));
+$startdate = date("m/d/Y H:i:s", strtotime($_GET["startdate"] . " 05:50:00") - 7*24*60*60);
 if(isset($_GET["enddate"])){
   $enddate = date("m/d/Y H:i:s", strtotime($_GET["enddate"] . " 05:50:00"));
 } else {
@@ -47,10 +47,10 @@ try
     $params[1]->Value = $enddate;
     $params[2]= new ParameterValue();
     $params[2]->Name ="partnumber";
-    $params[2]->Value = "";
+    $params[2]->Value = substr($modulid, 2, 7);
     $params[3]= new ParameterValue();
     $params[3]->Name ="datetype";
-    $params[3]->Value =7;
+    $params[3]->Value = 7;
     $params[4]= new ParameterValue();
     $params[4]->Name ="modulid";
     $params[4]->Value = $modulid;
@@ -106,8 +106,11 @@ try
     }
     return $re;
   }
+  //echo $result;
   $result = explode("|",remove_utf8_bom($result));
+  //var_dump(explode("×",$result[4]));
   $results = fill(3,count($result)-2,$result);
+  //var_dump($results);
   echo json_encode(convert($results));
 	} catch (SSRSReportException $sr){
 	  echo $sr->GetErrorMessage();

@@ -65,6 +65,15 @@ define([], function () {
       historyService.getmodul(datum, code).then(function (response) {
         vm.moduldata = response.data;
         console.log(vm.moduldata);
+        vm.d = [];
+
+        for (var property in vm.moduldata[0]) {
+          if (vm.moduldata[0].hasOwnProperty(property)) {
+            // do stuff
+            vm.d.push({"name":property, "value":vm.moduldata[0][property]});
+          }
+        }
+        console.log(vm.d);
         vm.loading = false;
         loadmap($filter('date')(new Date(vm.moduldata[0].bp_startdate).getTime(), 'yyyy-MM-dd'), $filter('date')(new Date(vm.moduldata[0].bp_enddate).getTime() + 24 * 3600 * 1000, 'yyyy-MM-dd'), vm.moduldata[0].bp_machine);
       });
@@ -79,7 +88,7 @@ define([], function () {
     function loadmap(st, ed, tk) {
       feltoltsoroszlop();
       vm.map = [];
-  
+
       historyService.getmap(st, ed, tk).then(function (response) {
         for (var i = 0; i < response.data.length; i++) {
           if (response.data[i].modul_id1 == vm.code) {
@@ -89,9 +98,10 @@ define([], function () {
         for (var j = 0; j < vm.map.length; j++) {
           var actkom = vm.map[j].Oszlop + vm.map[j].Sor;
           for (var k = 0; k < vm.soroszlopbokes.length; k++) {
-          if (actkom==vm.soroszlopbokes[k].azon){
-            vm.soroszlopbokes[k].bokes+=vm.map[j].bt_kat_db1*1;
-          }}
+            if (actkom == vm.soroszlopbokes[k].azon) {
+              vm.soroszlopbokes[k].bokes += vm.map[j].bt_kat_db1 * 1;
+            }
+          }
         }
         console.log(vm.soroszlopbokes);
       });

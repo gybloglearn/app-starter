@@ -13,7 +13,7 @@
 								border: 5px solid #00aadd;
 								margin-top: 5px;
 								background-color: white;
-								cursor: pointer;
+								
 							}
 							
 							.blue:nth-child(1) {
@@ -48,7 +48,7 @@
 								margin-top: 5px;
 								border: 5px solid #ffee00;
 								background-color: white;
-								cursor: pointer;
+								
 							}
 							
 							.yellow:nth-child(1),
