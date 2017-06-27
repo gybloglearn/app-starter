@@ -73,7 +73,7 @@ define([], function () {
       });
     }
 
-    function loadsheetmakers() {
+    /*function loadsheetmakers() {
       var valami = 0;
       var lekerdezszaknum = 1;
       var substring = "GOOD"
@@ -112,7 +112,7 @@ define([], function () {
         });
       });
 
-    }
+    }*/
 
     function feltolt_x() {
       var szoveg = ["Tény/Terv"];
@@ -125,25 +125,35 @@ define([], function () {
 
     function szakdb(tomb) {
       var nowtime = new Date().getHours() * 60 + new Date().getMinutes();
-      var szam = 0;
+      var szamde = 0;
+      var szamdu = 0;
+      var szamej = 0;
 
       for (var i = 0; i < tomb.length; i++) {
         var valami = new Date(tomb[i].startdate);
         var datumka = new Date(valami).getHours() * 60 + new Date(valami).getMinutes();
-        if ((nowtime >= 350 && nowtime < 830) && (datumka >= 350 && datumka < 830)) {
-          szam++;
+        if (datumka >= 350 && datumka < 830) {
+          szamde++;
         }
-        else if ((nowtime >= 830 && nowtime < 1310) && (datumka >= 830 && datumka < 1310)) {
-          szam++;
+        else if (datumka >= 830 && datumka < 1310) {
+          szamdu++;
         }
-        else if ((nowtime >= 1310 || nowtime < 350) && (datumka >= 1310 || datumka < 350)) {
-          szam++;
+        else {
+          szamej++;
         }
       }
-      return szam / 2;
+      if (nowtime >= 350 && nowtime < 830) {
+        return szamde / 2;
+      }
+      else if (nowtime >= 830 && nowtime < 1310) {
+        return szamdu / 2;
+      }
+      else {
+        return szamej / 2;
+      }
     }
 
-    function szakddb(tomb) {
+    /*function szakddb(tomb) {
       var now = new Date();
       var nh = now.getHours();
       var nm = now.getMinutes();
@@ -155,7 +165,7 @@ define([], function () {
         var m = d.getMinutes();
         var t = (h * 60 + m);
       }
-    }
+    }*/
 
     function last(tomb) {
       var maxnumbers = [];
@@ -195,16 +205,15 @@ define([], function () {
     }
 
     function choose() {
-      var hour = new Date().getHours();
-      var minute = new Date().getMinutes();
+      var szamvaltozo = new Date().getHours() * 60 + new Date().getMinutes();
 
-      if ((hour == 5 && minute >= 50) || (hour < 13) || (hour == 13 && minute < 50)) {
+      if (szamvaltozo >= 350 && szamvaltozo < 830) {
         vm.actszak = vm.szakok[0];
       }
-      else if ((hour == 13 && minute >= 50) || (hour < 21) || (hour == 21 && minute < 50)) {
+      else if (szamvaltozo >= 830 && szamvaltozo < 1310) {
         vm.actszak = vm.szakok[1];
       }
-      else if ((hour == 21 && minute >= 50) || (hour > 21) || (hour < 5) || (hour == 5 && minute < 50)) {
+      else {
         vm.actszak = vm.szakok[2];
       }
     }
@@ -213,12 +222,12 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      load();
       choose();
+      load();
     }
 
-    var refreshload = setInterval(load, 2 * 60 * 1000);
     var refreshchoose = setInterval(choose, 2 * 60 * 1000);
+    var refreshload = setInterval(load, 2 * 60 * 1000);
     var refreshdate = setInterval(date_refresh, 2 * 60 * 1000);
 
     function date_refresh() {
