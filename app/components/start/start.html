@@ -1,7 +1,28 @@
-<div class="container">
+<div class="container-fluid">
   <section class="module">
-    <div class="module-header">Start</div>
-    <div class="module-body"></div>
-    <div class="module-footer"></div>
+    <div class="module-header">
+      <h1 class="text-center">{{vm.datumszam}}</h1>
+      <h1 class="text-center" style="margin-top:10px"><b>Potting4 - {{vm.actszak}}</b> szak</h1>
+    </div>
+    <div class="module-body">
+      <div class="progress progress-warning progress-striped active" ng-hide="!vm.pottloading">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Frissítés...</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3" ng-repeat="item in vm.places | orderBy:'sor'">
+          <div style="border: 1px solid #ddd; border-radius:3px;overflow:hidden;">
+            <place-dir data="item"></place-dir><hr style="margin: 0 auto">
+            <br><sup style="font-size:1em;display:block;margin: 3px 0 10px 5px;">Előző ciklus vége: {{item.timelast}} </sup>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-footer">
+        <hr>
+        <h2 class="text-center" style="margin-top:10px">Következő frissítés ideje: {{vm.frissites_ideje}}</h2>
+        <div class="text-center"><a class="btn btn-success pull-right" href="../new_potting">Vissza</a></div>
+      </div>
   </section>
 </div>

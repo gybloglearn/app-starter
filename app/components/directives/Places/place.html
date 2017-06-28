@@ -1,0 +1,25 @@
+<!--direktíva-->
+<div class="place" style="padding: 10px 10px 0px 10px;">
+	<style>
+		.green {
+			color: #00aa00;
+		}
+
+		.red {
+			color: #ff0000;
+		}
+	</style>
+	<div class="row">
+		<div class="col-xs-12">
+			<h2 class="text-center" style="height:auto;font-size:2.5em;line-height:1em;">{{data.place}}</h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<h1 class="text-center" style="height:auto;font-size:6.5em;line-height:1.3em;"><b ng-class="{'green':data.db>=data.plan,'red':data.plan>data.db}">{{data.db}}</b> / <b style="color: rgb(50,150,230)">{{data.plan}}</b></h1>
+			<sup class="text-center" style="font-size:1em;display:block;margin-top:20px;">{{ (data.db / data.plan)*100 | number:1}}%</sup>
+			<sup class="text-center" style="font-size:1em;display:block;margin-top:20px;">Keret</sup><br>
+		</div>
+	</div>
+	<!--<my-chart id="{{data.id}}" config="data.chartconfig"></my-chart>-->
+</div>
