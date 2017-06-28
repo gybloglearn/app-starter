@@ -1,19 +1,23 @@
 define([], function () {
   'use strict';
-  function Controller(historyService, $cookies, $state, $rootScope, $filter) {
+  function Controller(eventService, historyService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
-    var datum = $filter('date')(new Date(), 'yyyy-MM-dd');
+    vm.data = [];
+    vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     var code_part;
     vm.beviheto = false;
     vm.code = '';
     vm.partnumbers = [];
     vm.moduldata = [];
+    vm.planlist=[];
     vm.map = [];
     vm.soroszlopbokes = [];
     var betuk = ["A", "B", "C", "D", "E"];
     var szamok = ["1", "2", "3", "4", "5", "6", "8", "9"];
+    vm.alleventtype = ["SM", "Potting", "MTF"];
+    vm.eventtype = "SM";
     vm.create_code = create_code;
-    vm.load = load;
+    vm.save = save;
     vm.check = check;
     vm.loading = false;
     vm.sorok = szamok;
@@ -44,7 +48,8 @@ define([], function () {
     function create_code() {
       var new_code = '99' + vm.part + code_part;
       vm.code = new_code;
-      vm.load(new_code);
+      load(new_code);
+      loadplan(new_code);
     }
 
     function check(input) {
@@ -62,7 +67,7 @@ define([], function () {
     function load(code) {
       vm.loading = true;
       vm.moduldata = [];
-      historyService.getmodul(datum, code).then(function (response) {
+      historyService.getmodul(vm.datum, code).then(function (response) {
         vm.moduldata = response.data;
         console.log(vm.moduldata);
         vm.d = [];
@@ -70,12 +75,19 @@ define([], function () {
         for (var property in vm.moduldata[0]) {
           if (vm.moduldata[0].hasOwnProperty(property)) {
             // do stuff
-            vm.d.push({"name":property, "value":vm.moduldata[0][property]});
+            vm.d.push({ "name": property, "value": vm.moduldata[0][property] });
           }
         }
         console.log(vm.d);
         vm.loading = false;
         loadmap($filter('date')(new Date(vm.moduldata[0].bp_startdate).getTime(), 'yyyy-MM-dd'), $filter('date')(new Date(vm.moduldata[0].bp_enddate).getTime() + 24 * 3600 * 1000, 'yyyy-MM-dd'), vm.moduldata[0].bp_machine);
+      });
+    }
+
+    function loadplan(modul){
+      vm.planlist=[];
+      eventService.get(modul).then(function(response){
+        vm.planlist=response.data;
       });
     }
 
@@ -107,13 +119,30 @@ define([], function () {
       });
     }
 
+    function save() {
+      vm.data.id = new Date().getTime();
+      vm.data.date = vm.datum;
+      vm.data.eventtype = vm.eventtype;
+      vm.data.modul = vm.code;
+      console.log(vm.data);
+      eventService.post(vm.data).then(function (resp) {
+        vm.showmessage = true;
+        vm.data = {};
+        $timeout(function () {
+          vm.showmessage = false;
+          vm.showtitle = '';
+        }, 5000);
+      });
+    }
+
     activate();
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       loadPartnumber();
     }
+
   }
-  Controller.$inject = ['historyService', '$cookies', '$state', '$rootScope', '$filter'];
+  Controller.$inject = ['eventService','historyService', '$cookies', '$state', '$rootScope', '$filter'];
   return Controller;
 });
