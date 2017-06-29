@@ -432,8 +432,6 @@ define([], function () {
       return res;
     }
 
-console.log(vm.actcode);
-
   }
   Controller.$inject = ['mapService', '$cookies', '$state', '$rootScope', '$filter'];
   return Controller;
