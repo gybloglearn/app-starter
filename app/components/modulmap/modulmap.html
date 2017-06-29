@@ -94,7 +94,7 @@
 							</div>
 						</div>
 						<div ng-show="vm.eset=='Modul' && vm.acttipus=='Mind'">
-							<h3 style="margin-left:75px">ID: {{vm.modulnevazon}}</h3>
+							<h3 style="margin-left:75px" ng-show="vm.modulnevazon"><a class="btn btn-large btn-info" target="_blank" href="../Modulhistory/#/history/{{vm.modulnevazon}}">{{vm.modulnevazon}}</a></h3>
 							<div class="row" ng-repeat="sor in vm.sorok track by $index">
 								<div ng-if="sor == '1' || sor == '8'">
 									<div ng-repeat="oszlop in vm.oszlop track by $index" class="blue">{{ (vm.putmodul|filter:{'azon':oszlop + sor})| sumField:'db' | number:0 }}</div>
@@ -256,6 +256,7 @@
 							<th>Név</th>
 							<th>Bökés</th>
 							<th>Bökés részletek</th>
+							<!--<th>Modul részletek</th>-->
 						</tr>
 					</thead>
 					<tbody>
@@ -264,6 +265,7 @@
 							<td>{{item.name}}</td>
 							<td>{{item.bokes}}</td>
 							<td ng-click="vm.putmodul=item.bokespozbokes;vm.modulnevazon=item.modul"><i class="icon-info-sign"></i></td>
+							<!--<td><div class="text-center"><a class="btn btn-primary" ng-click="vm.actcode=item.modul" href="../Modulhistory/#/history">History</a></div></td>-->
 						</tr>
 					</tbody>
 				</table>
