@@ -1,8 +1,7 @@
 define([], function () {
   'use strict';
-  function Controller(eventService, historyService, $cookies, $state, $rootScope, $filter) {
+  function Controller(eventService, historyService, $cookies, $state, $rootScope, $filter, $timeout) {
     var vm = this;
-    vm.data = [];
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     var code_part;
     vm.beviheto = false;
@@ -120,11 +119,12 @@ define([], function () {
     }
 
     function save() {
+      vm.data = {};
       vm.data.id = new Date().getTime();
       vm.data.date = vm.datum;
       vm.data.eventtype = vm.eventtype;
       vm.data.modul = vm.code;
-      console.log(vm.data);
+      vm.data.description = vm.description;
       eventService.post(vm.data).then(function (resp) {
         vm.showmessage = true;
         vm.data = {};
@@ -143,6 +143,6 @@ define([], function () {
     }
 
   }
-  Controller.$inject = ['eventService','historyService', '$cookies', '$state', '$rootScope', '$filter'];
+  Controller.$inject = ['eventService','historyService', '$cookies', '$state', '$rootScope', '$filter','$timeout'];
   return Controller;
 });
