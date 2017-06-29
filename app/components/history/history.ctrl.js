@@ -125,12 +125,15 @@ define([], function () {
       vm.data.eventtype = vm.eventtype;
       vm.data.modul = vm.code;
       vm.data.description = vm.description;
+      vm.data.sso = $rootScope.user.username;
+      vm.data.name = $rootScope.user.displayname;
       eventService.post(vm.data).then(function (resp) {
         vm.showmessage = true;
         vm.data = {};
         $timeout(function () {
           vm.showmessage = false;
           vm.showtitle = '';
+          loadplan(vm.code)
         }, 5000);
       });
     }
@@ -146,6 +149,7 @@ define([], function () {
         vm.part = modid.substr(2,7);
         vm.valid = modid.substr(9, 18);
         load(modid);
+        loadplan(modid);
       }
     }
 

@@ -37,32 +37,36 @@
 					<p class="text-center">Betöltés...</p>
 				</div>
 			</div>
-			<div>
+			<div ng-show="user.displayname && (user.username=='212434909'|| user.username=='502678184' || user.username=='212319674' || user.username=='113007549' || user.username=='113011028' || user.username=='113009480' || user.username=='113005514' || user.username=='113005858' || user.username=='113005432' || user.username=='113005836' || user.username=='212422533' || user.username=='212557160')">
 				<button class="btn btn-default pull-right" ng-class="{'btn-info':vm.show}" ng-click="vm.show=!vm.show">Felvitel</button>
-			</div>
-			<div ng-show="vm.show">
-				<div ng-show="user.displayname" class="col-sm-12" style="margin-top:20px">
-					<ul class="nav nav-tabs" style="margin-top:10px">
-						<li ng-repeat="item in vm.alleventtype track by $index">
-							<a data-toggle="tab" href="" ng-click="vm.eventtype=item;">{{item}}</a>
-						</li>
-					</ul>
-					<div class="input-group">
-						<span class="input-group-addon">Dátum</span>
-						<input type="text" class="form-control" ng-model="vm.datum" readonly>
-						<span class="input-group-addon">Terület</span>
-						<input type="text" class="form-control" ng-model="vm.eventtype" readonly>
-						<span class="input-group-addon">Modul</span>
-						<input type="text" class="form-control" ng-model="vm.code" readonly>
-					</div>
-					<div class="input-group" style="margin-top:20px">
-						<span class="input-group-addon">Megjegyzés</span>
-						<textarea class="form-control" rows="4" ng-model="vm.description"></textarea>
-					</div>
-					<div class="col-sm-4" style="margin-top:10px">
-						<button class="btn btn-success" ng-click="vm.save()" ng-disabled="vm.code==''">Feltölt</button>
-						<div class="alert alert-success" ng-show="vm.showmessage">
-							<strong>Sikeres felvitel!</strong>
+				<div ng-show="vm.show">
+					<div class="col-sm-12" style="margin-top:20px">
+						<ul class="nav nav-tabs" style="margin-top:10px">
+							<li ng-repeat="item in vm.alleventtype track by $index">
+								<a data-toggle="tab" href="" ng-click="vm.eventtype=item;">{{item}}</a>
+							</li>
+						</ul>
+						<div class="input-group">
+							<span class="input-group-addon">SSO</span>
+							<input type="text" class="form-control" ng-model="user.username" readonly>
+							<span class="input-group-addon">Név</span>
+							<input type="text" class="form-control" ng-model="user.displayname" readonly>
+							<span class="input-group-addon">Dátum</span>
+							<input type="text" class="form-control" ng-model="vm.datum" readonly>
+							<span class="input-group-addon">Terület</span>
+							<input type="text" class="form-control" ng-model="vm.eventtype" readonly>
+							<span class="input-group-addon">Modul</span>
+							<input type="text" class="form-control" ng-model="vm.code" readonly>
+						</div>
+						<div class="input-group" style="margin-top:20px">
+							<span class="input-group-addon">Megjegyzés</span>
+							<textarea class="form-control" rows="4" ng-model="vm.description"></textarea>
+						</div>
+						<div class="col-sm-4" style="margin-top:10px">
+							<button class="btn btn-success" ng-click="vm.save()" ng-disabled="vm.code==''">Feltölt</button>
+							<div class="alert alert-success" ng-show="vm.showmessage">
+								<strong>Sikeres felvitel!</strong>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -76,16 +80,12 @@
 				</table>
 			</div>
 			<div class="clearfix"></div>
-			<div class="col-sm-6">
-				<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#map">Bökés Térkép
-					<i class="icon-chevron-down"></i>
-				</h3>
-			</div>
-			<div class="col-sm-6">
-				<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#megj">Megzegyzés a modulhoz
-					<i class="icon-chevron-down"></i>
-				</h3>
-			</div>
+			<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#map">Bökés Térkép
+				<i class="icon-chevron-down"></i>
+			</h3>
+			<h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#megj">Megzegyzés a modulhoz
+				<i class="icon-chevron-down"></i>
+			</h3>
 		</div>
 		<div class="module-footer">
 			<div class="collapse" id="map">
@@ -115,6 +115,8 @@
 					<table class="table table-condensed">
 						<thead>
 							<tr>
+								<th>SSO</th>
+								<th>Név</th>
 								<th>Dátum</th>
 								<th>Terület</th>
 								<th>Modul</th>
@@ -123,6 +125,8 @@
 						</thead>
 						<tbody>
 							<tr ng-repeat="item in vm.planlist">
+								<td>{{item.sso}}</td>
+								<td>{{item.name}}</td>
 								<td>{{item.date}}</td>
 								<td>{{item.eventtype}}</td>
 								<td>{{item.modul}}</td>
