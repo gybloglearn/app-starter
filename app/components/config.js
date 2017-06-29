@@ -28,7 +28,7 @@ define([], function () {
 
     /* Add states */
 	$stateProvider.state('history', {
-		url: '/history',
+		url: '/history/:modulid',
 		templateUrl: './app/components/history/history.html',
 		controller: 'historyController',
 		controllerAs: 'vm'

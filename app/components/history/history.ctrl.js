@@ -1,6 +1,6 @@
 define([], function () {
   'use strict';
-  function Controller(eventService, historyService, $cookies, $state, $rootScope, $filter, $timeout) {
+  function Controller(eventService, historyService, $cookies, $state, $rootScope, $filter, $timeout, $stateParams) {
     var vm = this;
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     var code_part;
@@ -8,7 +8,7 @@ define([], function () {
     vm.code = '';
     vm.partnumbers = [];
     vm.moduldata = [];
-    vm.planlist=[];
+    vm.planlist = [];
     vm.map = [];
     vm.soroszlopbokes = [];
     var betuk = ["A", "B", "C", "D", "E"];
@@ -68,7 +68,7 @@ define([], function () {
       vm.moduldata = [];
       historyService.getmodul(vm.datum, code).then(function (response) {
         vm.moduldata = response.data;
-        console.log(vm.moduldata);
+
         vm.d = [];
 
         for (var property in vm.moduldata[0]) {
@@ -83,10 +83,10 @@ define([], function () {
       });
     }
 
-    function loadplan(modul){
-      vm.planlist=[];
-      eventService.get(modul).then(function(response){
-        vm.planlist=response.data;
+    function loadplan(modul) {
+      vm.planlist = [];
+      eventService.get(modul).then(function (response) {
+        vm.planlist = response.data;
       });
     }
 
@@ -140,9 +140,16 @@ define([], function () {
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       loadPartnumber();
+      if($stateParams.modulid){
+        var modid = $stateParams.modulid;
+        vm.code = modid;
+        vm.part = modid.substr(2,7);
+        vm.valid = modid.substr(9, 18);
+        load(modid);
+      }
     }
 
   }
-  Controller.$inject = ['eventService','historyService', '$cookies', '$state', '$rootScope', '$filter','$timeout'];
+  Controller.$inject = ['eventService', 'historyService', '$cookies', '$state', '$rootScope', '$filter', '$timeout', '$stateParams'];
   return Controller;
 });
