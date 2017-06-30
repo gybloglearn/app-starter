@@ -62,7 +62,7 @@
 			<div class="tray filter-tray top">
 				<div class="tray-inner">
 					<div class="filter-rule-group">
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							<div class="form-group">
 								<span class="control-label" style="color:#FFFFFF">Eset típus</span>
 								<select ng-model="search.Event_type" class="form-control ng-pristine ng-untouched ng-valid">
@@ -75,7 +75,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							<div class="form-group">
 								<span class="control-label" style="color:#FFFFFF">Eset csoport</span>
 								<select ng-model="search.Ev_Group" class="form-control ng-pristine ng-untouched ng-valid">
@@ -87,7 +87,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							<div class="form-group">
 								<span class="control-label" style="color:#FFFFFF">Eset alcsoport</span>
 								<select ng-model="search.Event_SubGroup" class="form-control ng-pristine ng-untouched ng-valid">
@@ -96,7 +96,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							<div class="form-group">
 								<span class="control-label" style="color:#FFFFFF">Szak</span>
 								<select ng-model="search.Shift_Name" class="form-control ng-pristine ng-untouched ng-valid">
@@ -109,6 +109,13 @@
 							</div>
 						</div>
 
+						<div class="col-sm-2">
+							<div class="form-group">
+								<span class="control-label" style="color: #ffffff">MaximoSzám</span>
+								<input class="form-control" type="text" ng-model="search.Maximo_num">
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -117,7 +124,9 @@
 					<tr>
 						<th rowspan=2 ng-click="vm.order='Event_type';vm.asc=!vm.asc;">Eset típus</th>
 						<th rowspan=2 ng-click="vm.order='timestamp';vm.asc=!vm.asc;">Időbélyeg</th>
-						<th ng-click="vm.order='Event_time';vm.asc=!vm.asc;">Eset Idő</th>
+						<th ng-click="vm.order='Event_time';vm.asc=!vm.asc;">Eset Idő<br>
+							Össz: <b>{{ (vm.sm_datas | filter: search | sumField: 'Event_time')/60 | number:0 }}</b> (perc)
+						</th>
 						<th>Szak</th>
 						<th rowspan=2 ng-click="vm.order='Ev_Group';vm.asc=!vm.asc;">Eset csoport</th>
 						<th rowspan=2 ng-click="vm.order='Event_SubGroup';vm.asc=!vm.asc;">Eset alcsoport</th>
