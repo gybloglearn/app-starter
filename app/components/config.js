@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('cl4', {
+		url: '/cl4',
+		templateUrl: './app/components/cl4/cl4.html',
+		controller: 'cl4Controller',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('modulmap', {
 		url: '/modulmap',
 		templateUrl: './app/components/modulmap/modulmap.html',

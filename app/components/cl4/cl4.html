@@ -1,0 +1,33 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">X3 részletek</h1>
+      <div class="col-sm-6" style="margin-top:10px">
+        <div class="input-group">
+          <span class="input-group-addon">Dátum</span>
+          <input class="form-control datepicker" setdate="0d" end="{{vm.edate}}" ng-model="vm.enddate" />
+          <div class="input-group-btn">
+            <button class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.mtfld">Betöltés</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="progress progress-info progress-striped active" ng-hide="!vm.mtfld">
+          <div class="progress-bar" style="width: 100%">
+            <p class="text-center">Betöltés</p>
+          </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="input-group">
+          <span class="input-group-addon">Eset</span>
+          <select ng-model="vm.chartstate" class="form-control" ng-change="vm.selectchart(vm.selectday)">
+                <option ng-repeat="item in vm.charlist|unique" value="{{item}}">{{item}}</option>
+            </select>
+        </div>
+        <mychart id="chart" config="vm.chartconfig"></mychart>
+      </div>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>
