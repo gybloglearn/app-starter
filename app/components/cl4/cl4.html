@@ -1,22 +1,22 @@
 <div class="container">
   <section class="module">
     <div class="module-header">
-      <h1 class="text-center">X3 részletek</h1>
+      <h1 class="text-center">X3 részletek-{{vm.datumszam}}</h1>
       <div class="col-sm-6" style="margin-top:10px">
         <div class="input-group">
           <span class="input-group-addon">Dátum</span>
-          <input class="form-control datepicker" setdate="0d" end="{{vm.edate}}" ng-model="vm.enddate" />
+          <input class="form-control datepicker" setdate="0d" end="{{vm.edate}}" ng-model="vm.startdate" />
           <div class="input-group-btn">
-            <button class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.mtfld">Betöltés</button>
+            <button class="btn btn-primary" ng-click="vm.beilleszt();vm.load()" ng-disabled="vm.mtfld">Betöltés</button>
           </div>
         </div>
       </div>
     </div>
     <div class="module-body">
       <div class="progress progress-info progress-striped active" ng-hide="!vm.mtfld">
-          <div class="progress-bar" style="width: 100%">
-            <p class="text-center">Betöltés</p>
-          </div>
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Betöltés</p>
+        </div>
       </div>
       <div class="col-sm-12">
         <div class="input-group">
@@ -27,7 +27,67 @@
         </div>
         <mychart id="chart" config="vm.chartconfig"></mychart>
       </div>
+      <div>
+        <button class="btn btn-default pull-right" ng-class="{'btn-info':vm.show}" ng-click="vm.show=!vm.show">Táblázat</button>
+      </div>
     </div>
-    <div class="module-footer"></div>
+    <div class="module-footer">
+      <div style="margin-top:50px" ng-show="vm.show">
+        <div class="tray filter-tray top">
+          <div class="tray-inner">
+            <div class="filter-rule-group">
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <span class="control-label" style="color:#FFFFFF">Státusz</span>
+                  <select ng-model="search.Status_name1" class="form-control">
+                    <option  value="">Mind</option>
+                    <option ng-repeat="item in vm.charlist|unique" value="{{item}}">{{item}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-2">
+							  <div class="form-group">
+								  <span class="control-label" style="color:#FFFFFF">Keret</span>
+								  <input type="text" ng-model="search.Keret_id" class="form-control">
+							  </div>
+						</div>
+              <div class="col-sm-3">
+							  <div class="form-group">
+								  <span class="control-label" style="color:#FFFFFF">Modul 1</span>
+								  <input type="text" ng-model="search.Modul_ID1" class="form-control">
+							  </div>
+						</div>
+              <div class="col-sm-3">
+							  <div class="form-group">
+								  <span class="control-label" style="color:#FFFFFF">Modul 2</span>
+								  <input type="text" ng-model="search.Modul_ID2" class="form-control">
+							  </div>
+						</div>
+            </div>
+          </div>
+        </div>
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Státusz</th>
+              <th rowspan=2 ng-click="vm.order='PLC_Timestamp';vm.asc=!vm.asc;">Idő</th>
+              <th>Keret</th>
+              <th>Modul 1</th>
+              <th>Modul 2</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="dt in vm.data | orderBy:vm.order:vm.asc | filter: search track by $index" class="ng-scope">
+              <td>{{dt.Status_name1}}</td>
+              <td>{{dt.PLC_Timestamp}}</td>
+              <td>{{dt.Keret_id}}</td>
+              <td>{{dt.Modul_ID1}}</td>
+              <td>{{dt.Modul_ID2}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </section>
 </div>

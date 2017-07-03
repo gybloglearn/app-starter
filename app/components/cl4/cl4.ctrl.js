@@ -6,9 +6,10 @@ define([], function () {
     vm.selectday = [];
     vm.charlist = [];
     vm.chartstate = "A keretet elvitték (nyugtázás a fénykapunál)"
-    //vm.startdate = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
-    vm.enddate = $filter('date')(new Date(), 'yyyy-MM-dd');
+    vm.startdate = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.edate = $filter('date')(new Date(), 'yyyy-MM-dd');
+    vm.datumszam = vm.startdate;
+    vm.beilleszt=beilleszt;
     vm.load = load;
     vm.selectchart = selectchart;
 
@@ -25,6 +26,11 @@ define([], function () {
       }
     }
 
+    function beilleszt() {
+      var szam = new Date(vm.startdate);
+      vm.datumszam = $filter('date')(szam, 'yyyy-MM-dd');
+    }
+
     function load() {
       vm.mtfld=true;
       update_selectday();
@@ -32,7 +38,7 @@ define([], function () {
       var talalt = false;
 
 
-      cl4Service.get(vm.enddate).then(function (response) {
+      cl4Service.get(vm.startdate).then(function (response) {
         vm.data = response.data;
         for (var i = 0; i < vm.data.length; i++) {
           var actstate = vm.data[i].Status_name1;
