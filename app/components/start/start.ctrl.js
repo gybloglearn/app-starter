@@ -3,6 +3,7 @@ define([], function () {
   function Controller(dataService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
     vm.data = [];
+    vm.dryingdata = [];
     vm.difference = [];
     vm.szakok = [];
     vm.smdata = [];
@@ -11,6 +12,7 @@ define([], function () {
     vm.datum = $filter('date')(new Date().getTime() - ((5 * 60 + 50) * 60 * 1000), 'yyyy-MM-dd');
     var szakallando3 = 20;
     vm.actplan = 0;
+    vm.usenumber=0;
     vm.places = [];
     vm.szakok[0] = $filter('shift')(1, vm.datum);
     vm.szakok[1] = $filter('shift')(2, vm.datum);
@@ -69,6 +71,19 @@ define([], function () {
           });
           vm.pottloading = false;
         });
+      });
+    }
+
+    function loaddrying() {
+      vm.dryingdata = [];
+      vm.usenumber = 0;
+      dataService.getdrying().then(function (response) {
+        vm.dryingdata = response.data;
+        for(var i=0;i<vm.dryingdata.length;i++){
+          if(vm.dryingdata[i].Time_to_Go<4){
+            vm.usenumber+=1;
+          }
+        }
       });
     }
 
@@ -167,10 +182,12 @@ define([], function () {
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       choose();
+      loaddrying();
       load();
     }
 
     var refreshchoose = setInterval(choose, 2 * 60 * 1000);
+    var refreshloaddrying = setInterval(loaddrying, 2 * 60 * 1000);
     var refreshload = setInterval(load, 2 * 60 * 1000);
     var refreshdate = setInterval(date_refresh, 2 * 60 * 1000);
 
