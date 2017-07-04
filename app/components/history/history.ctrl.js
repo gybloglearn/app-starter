@@ -21,6 +21,7 @@ define([], function () {
     vm.loading = false;
     vm.sorok = szamok;
     vm.oszlop = betuk;
+    vm.tablesave = tablesave
 
     function feltoltsoroszlop() {
       var a = 0;
@@ -140,13 +141,30 @@ define([], function () {
 
     activate();
 
+    function tablesave() {
+      var doc = new jsPDF('p', 'pt', 'a4', true);
+      var specialElementHandlers = {
+        'exportTable': function (element, renderer) {
+          return true;
+        }
+      };
+
+
+      doc.fromHTML($('#exportTable').get(0), 15, 15, {
+        'width': 170,
+        'elementHandlers': specialElementHandlers
+      });
+      doc.save(vm.code + '.pdf');
+
+    }
+
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       loadPartnumber();
-      if($stateParams.modulid){
+      if ($stateParams.modulid) {
         var modid = $stateParams.modulid;
         vm.code = modid;
-        vm.part = modid.substr(2,7);
+        vm.part = modid.substr(2, 7);
         vm.valid = modid.substr(9, 18);
         load(modid);
         loadplan(modid);
