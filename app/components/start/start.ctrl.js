@@ -3,7 +3,10 @@ define([], function () {
   function Controller(dataService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
     vm.data = [];
+<<<<<<< HEAD
     vm.dryingdata = [];
+=======
+>>>>>>> 6b0d1e020a01cb7d87a7ffbe01e3770271a6d60f
     vm.difference = [];
     vm.szakok = [];
     vm.smdata = [];
@@ -12,7 +15,10 @@ define([], function () {
     vm.datum = $filter('date')(new Date().getTime() - ((5 * 60 + 50) * 60 * 1000), 'yyyy-MM-dd');
     var szakallando4 = 27;
     vm.actplan = 0;
+<<<<<<< HEAD
     vm.usenumber = 0;
+=======
+>>>>>>> 6b0d1e020a01cb7d87a7ffbe01e3770271a6d60f
     vm.places = [];
     vm.szakok[0] = $filter('shift')(1, vm.datum);
     vm.szakok[1] = $filter('shift')(2, vm.datum);
@@ -73,6 +79,7 @@ define([], function () {
       });
     }
 
+<<<<<<< HEAD
     function loaddrying() {
       vm.dryingdata = [];
       vm.usenumber = 0;
@@ -86,6 +93,8 @@ define([], function () {
       });
     }
 
+=======
+>>>>>>> 6b0d1e020a01cb7d87a7ffbe01e3770271a6d60f
     function feltolt_x() {
       var szoveg = ["Tény/Terv"];
       return szoveg;
@@ -181,12 +190,18 @@ define([], function () {
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       choose();
+<<<<<<< HEAD
       loaddrying();
+=======
+>>>>>>> 6b0d1e020a01cb7d87a7ffbe01e3770271a6d60f
       load();
     }
 
     var refreshchoose = setInterval(choose, 2 * 60 * 1000);
+<<<<<<< HEAD
     var refreshloaddrying = setInterval(loaddrying, 2 * 60 * 1000);
+=======
+>>>>>>> 6b0d1e020a01cb7d87a7ffbe01e3770271a6d60f
     var refreshload = setInterval(load, 2 * 60 * 1000);
     var refreshdate = setInterval(date_refresh, 2 * 60 * 1000);
 
