@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('drying', {
+		url: '/drying',
+		templateUrl: './app/components/drying/drying.html',
+		controller: 'dryingController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('Operators', {
 		url: '/Operators',
 		templateUrl: './app/components/Operators/Operators.html',

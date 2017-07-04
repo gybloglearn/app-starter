@@ -19,7 +19,10 @@ define([
   './filters/name_change',
   './Pottingsum/Pottingsum.ctrl',
   './services/Sumservice.service',
-  './Operators/Operators.ctrl'
+  './Operators/Operators.ctrl',
+  './drying/drying.ctrl',
+  './services/dry.service'
+	
 	/* files */
 ], function(
   configFunction,
@@ -42,7 +45,9 @@ define([
   name_change,
   PottingsumController,
   SumserviceService,
-  OperatorsController
+  OperatorsController,
+  dryingController,
+  dryService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -69,5 +74,7 @@ define([
 	app.controller('PottingsumController', PottingsumController);
 	app.service('SumserviceService', SumserviceService);
 	app.controller('OperatorsController', OperatorsController);
+  app.controller('dryingController', dryingController);
+	app.service('dryService', dryService);
 		/* controllers */
 });
