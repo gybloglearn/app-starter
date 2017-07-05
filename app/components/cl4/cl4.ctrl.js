@@ -3,6 +3,7 @@ define([], function () {
   function Controller(cl4Service, $cookies, $state, $rootScope, $filter) {
     var vm = this;
     vm.data = [];
+    vm.alldata=[];
     vm.selectday = [];
     vm.charlist = [];
     vm.chartstate = "A keretet elvitték (nyugtázás a fénykapunál)"
@@ -11,6 +12,7 @@ define([], function () {
     vm.datumszam = vm.startdate;
     vm.beilleszt=beilleszt;
     vm.load = load;
+    vm.loadall=loadall;
     vm.selectchart = selectchart;
 
     function update_selectday() {
@@ -123,6 +125,14 @@ define([], function () {
       });
     }
 
+    function loadall(){
+      vm.alldata=[];
+
+      cl4Service.getall(vm.startdate).then(function (response) {
+        vm.alldata=response.data;
+      });
+    }
+
     function selectchart(tomb) {
       var resault = [];
       for (var i = 0; i < 24; i++) {
@@ -176,6 +186,7 @@ define([], function () {
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       load();
+      loadall();
     }
   }
   Controller.$inject = ['cl4Service', '$cookies', '$state', '$rootScope', '$filter'];

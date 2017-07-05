@@ -4,7 +4,8 @@ define([], function () {
   function Service($http) {
     var service = {
       get: get,
-      getmulti: getmulti
+      getmulti: getmulti,
+      getall: getall
     };
 
     return service;
@@ -22,6 +23,13 @@ define([], function () {
       var req = {
         method: 'GET',
         url: 'app/components/PHP/CL4.php?startdate=' + startd + '&enddate=' + endd
+      };
+      return $http(req);
+    }
+    function getall(date) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/CL4_Eff.php?startdate=' + date
       };
       return $http(req);
     }

@@ -7,7 +7,7 @@
           <span class="input-group-addon">Dátum</span>
           <input class="form-control datepicker" setdate="0d" end="{{vm.edate}}" ng-model="vm.startdate" />
           <div class="input-group-btn">
-            <button class="btn btn-primary" ng-click="vm.beilleszt();vm.load()" ng-disabled="vm.mtfld">Betöltés</button>
+            <button class="btn btn-primary" ng-click="vm.beilleszt();vm.load();vm.loadall()" ng-disabled="vm.mtfld">Betöltés</button>
           </div>
         </div>
       </div>
@@ -27,8 +27,35 @@
         </div>
         <mychart id="chart" config="vm.chartconfig"></mychart>
       </div>
+      <div class="col-sm-12">
+        <h2 class="text-center">{{vm.datumszam}} összesítő</h2>
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Szak</th>
+              <th>CL3 DB</th>
+              <th>CL3 AEQ</th>
+              <th>DB</th>
+              <th>AEQ</th>
+              <th>Átlagos ciklus</th>
+              <th>Elvitt modulok</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="t in vm.alldata track by $index">
+              <td>{{t.ShiftName}}</td>
+              <td>{{t.CL3_in_QTY}}</td>
+              <td>{{t.CL3_In_AEQ}}</td>
+              <td>{{t.CL_Qty}}</td>
+              <td>{{t.AEQ}}</td>
+              <td>{{t.AVG__CL_cycle}}</td>
+              <td>{{t.ElvittModulok}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <div>
-        <button class="btn btn-default pull-right" ng-class="{'btn-info':vm.show}" ng-click="vm.show=!vm.show">Táblázat</button>
+        <button class="btn btn-default pull-right" ng-class="{'btn-info':vm.show}" ng-click="vm.show=!vm.show">Részletes táblázat</button>
       </div>
     </div>
     <div class="module-footer">
