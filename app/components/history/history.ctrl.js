@@ -151,7 +151,9 @@ define([], function () {
 
 
       doc.fromHTML($('#exportTable').get(0), 15, 15, {
-        'width': 170,
+        'width': 250,
+        'margin':1,
+        'pagesplit': true,
         'elementHandlers': specialElementHandlers
       });
       doc.save(vm.code + '.pdf');
