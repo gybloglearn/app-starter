@@ -3,17 +3,35 @@ define([], function () {
 
   function Service($http) {
     var service = {
-      get: get
+      getpartnumber: getpartnumber,
+      getsm: getsm,
+      getpotting: getpotting
     };
 
     return service;
 
     ///////////
 
-    function get() {
+    function getpartnumber() {
       var req = {
         method: 'GET',
-        url: '//url//'
+        url: 'http://3.228.180.15/modulapi/mods'
+      };
+      return $http(req);
+    }
+
+    function getsm(start, end, mch) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/ZW500_SM.php?startdate=' + start + '&enddate=' + end + '&report_id=' + mch
+      };
+      return $http(req);
+    }
+
+    function getpotting(start, end, mch) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/ZW500_Potting.php?startdate=' + start + '&enddate=' + end + '&report_id=' + mch
       };
       return $http(req);
     }

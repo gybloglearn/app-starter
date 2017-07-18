@@ -1,7 +1,66 @@
-<div class="container">
+<div class="container-fluid">
   <section class="module">
-    <div class="module-header">Start</div>
-    <div class="module-body"></div>
+    <div class="module-header">
+      <h1 class="text-center">ZeeWeed Összesítő {{vm.startdatumszam}}-{{vm.enddatumszam}}</h1>
+      <div class="col-sm-6" style="margin-top:20px">
+        <div class="input-group">
+          <span class="input-group-addon">Dátum</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-7d" end="{{vm.edate}}">
+          <span class="input-group-addon">-tól</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="-1d" end="{{vm.edate}}">
+          <span class="input-group-addon">-ig</span>
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.loadall()" ng-disabled="vm.enddate<=vm.startdate">Betöltés</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <style>
+        .green {
+          color: #006600;
+        }
+
+        .red {
+          color: #990000;
+        }
+        .table thead tr td, .table thead tr th {
+          padding: 20px;
+        }
+      </style>
+      <table class="table responsive">
+        <thead>
+          <tr>
+            <th colspan="9" class="text-center" style="font-size:3em;height:50px;padding: 20px">ZeeWeed 500 + ZeeLung</th>
+          </tr>
+          <tr>
+            <th colspan="1" style="font-size:1.8em">Gépcsoport (AEQ)</th>
+            <th colspan="1" class="text-center" ng-repeat="date in vm.dates" style="font-size:1.8em">{{date}}</th>
+            <th colspan="1" class="text-center" style="font-size:1.8em">Összesen</th>
+          </tr>
+          <tr>
+            <th style="font-size:1.8em">SM</th>
+            <td class="text-center" ng-repeat="item in vm.sumdata" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.smaeq>=210?'green':'red'}};padding:3px;">{{item.smaeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em">{{vm.sumdata|sumField:'smaeq' |number:0}}</td>
+          </tr>
+          <tr>
+            <th style="font-size:1.8em">Potting Be</th>
+            <td class="text-center" ng-repeat="item in vm.sumdata" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.pottbeaeq>=210?'green':'red'}};padding:3px;">{{item.pottbeaeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em">{{vm.sumdata|sumField:'pottbeaeq' |number:0}}</td>
+          </tr>
+          <tr>
+            <th style="font-size:1.8em">Potting Fordít</th>
+            <td class="text-center" ng-repeat="item in vm.sumdata" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.pottfordaeq>=210?'green':'red'}};padding:3px;">{{item.pottfordaeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em">{{vm.sumdata|sumField:'pottfordaeq' |number:0}}</td>
+          </tr>
+          <tr>
+            <th style="font-size:1.8em">Potting Ki</th>
+            <td class="text-center" ng-repeat="item in vm.sumdata" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.pottkiaeq>=210?'green':'red'}};padding:3px;">{{item.pottkiaeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em">{{vm.sumdata|sumField:'pottkiaeq' |number:0}}</td>
+          </tr>
+        </thead>
+      </table>
+    </div>
     <div class="module-footer"></div>
   </section>
 </div>

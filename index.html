@@ -1,69 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Title</title>
 
-    <link rel="stylesheet" href="../components_css/iids.css">
-    <link rel="stylesheet" href="../components_css/responsive.css">
-    <!--[if lte IE 9]>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>UF</title>
+
+  <link rel="stylesheet" href="../components_css/iids.css">
+  <link rel="stylesheet" href="../components_css/responsive.css">
+  <link rel="icon" href="../components/brandkit/favicon/favicon.ico">
+  <!--[if lte IE 9]>
       <link rel="stylesheet" href="../components_css/ie.css" id="theme-ie" type="text/css">
     <![endif]-->
-    <script src="../components/modernizr/modernizr.js"></script>
-  </head>
-  <body>
+  <script src="../components/modernizr/modernizr.js"></script>
+  <style>
+    [ng\:cloak],
+    [ng-cloak],
+    [data-ng-cloak],
+    [x-ng-cloak],
+    .ng-cloak,
+    .x-ng-cloak {
+      display: none !important;
+    }
+  </style>
+</head>
 
-    <nav class="navbar navbar-static-top navbar-default" role="navigation">
-      <div class="container">
-	<div class="navbar-header">
-	  <a href="" class="navbar-brand">
+<body>
+
+  <nav class="navbar navbar-static-top navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="" class="navbar-brand">
 	    <span class="ge-logo"></span>
-	    <span>Alap lap cím<small><i>GE POWER</i></small></span>
+	    <span>UF<small><i>GE POWER</i></small></span>
 	  </a>
-	</div>
       </div>
-      <div class="primary-navbar">
-	<div class="container">
-	  <ul class="nav navbar-nav">
-	    <!--<li><a ui-sref="start">Start</a></li>-->
-	    <!-- links -->
+    </div>
+    <div class="primary-navbar">
+      <div class="container">
+        <ul class="nav navbar-nav">
+          <!--<li><a ui-sref="start">Start</a></li>-->
+          <!-- links -->
 
-	  </ul>
-	  <ul class="nav navbar-nav pull-right">
-	    <li><a ui-sref="start"><i class="icon-home"></i></a></li>
-	    <li><a ui-sref="logout" ng-show="user.displayname"><i class="icon-lock"></i> {{user.displayname}}</a></li>
-	  </ul>
-	</div>
+        </ul>
+        <ul class="nav navbar-nav pull-right">
+          <li><a ui-sref="start"><i class="icon-home"></i></a></li>
+          <li><a ui-sref="logout" ng-show="user.displayname"><i class="icon-lock"></i> {{user.displayname}}</a></li>
+        </ul>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <div style="margin: 20px auto;" ui-view></div>
+  <div style="margin: 20px auto;" ui-view></div>
 
-    <div class="footer" style="position:absolute;bottom:0;right:0;left:0;">
-      <div class="primary">
-	<div class="container">
-	  <div class="brand">
-	    <span class="ge-logo"></span>
-	    <span>Imagination at work</span>
-	  </div>
-	  <div class="block pull-right">
-	    <ul>
-	      <li class="copyright">© 2016 General Electric - GE POWER </li>
-	    </ul>
-	  </div>
+  <div class="footer" style="position:absolute;bottom:0;right:0;left:0;">
+    <div class="primary">
+      <div class="container">
+        <div class="brand">
+          <span class="ge-logo"></span>
+          <span>Imagination at work</span>
+        </div>
+        <div class="block pull-right">
+          <ul>
+            <li class="copyright">© 2016 General Electric - GE POWER </li>
+          </ul>
+        </div>
 
-	</div>
       </div>
+    </div>
 
-      <script src="../components/requirejs/require.js"></script>
-      <script src="app/require.config.js"></script>
-      <script>
-require.config({
-  baseUrl: '../'
-});
-require (['app']);
-      </script>
-      <script src="../components/respond/respond.src.js"></script>
-  </body>
+    <script src="../components/requirejs/require.js"></script>
+    <script src="app/require.config.js"></script>
+    <script>
+      require.config({
+        baseUrl: '../'
+      });
+      require(['ge-bootstrap', 'jquery', 'datepicker', 'app', 'charts'], function ($) {
+        $(function () {
+          $('.datapicker').datepicker();
+        });
+      });
+    </script>
+    <script src="../components/respond/respond.src.js"></script>
+</body>
+
 </html>
