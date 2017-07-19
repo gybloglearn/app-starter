@@ -23,20 +23,29 @@ define([], function () {
       });
     }
 
+    function beallit(){
+      vm.startdatumszam=vm.startdate;
+      vm.enddatumszam=vm.enddate;
+      vm.enddate= $filter('date')(new Date(vm.enddate).getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
+      datediff();
+    }
+
     function datediff() {
       vm.differencedate = 0;
       vm.dates = [];
       vm.sumdata = [];
       vm.differencedate = (new Date(vm.enddatumszam).getTime() - new Date(vm.startdatumszam).getTime()) / (24 * 3600 * 1000);
       for (var i = 0; i <= vm.differencedate; i++) {
-        vm.dates[i] = $filter('date')(new Date().getTime() - ((7 - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
+        vm.dates[i] = $filter('date')(new Date(vm.enddatumszam).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
         vm.sumdata[i] = {}
-        vm.sumdata[i].date = $filter('date')(new Date().getTime() - ((7 - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
+        vm.sumdata[i].date = $filter('date')(new Date(vm.enddatumszam).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
         vm.sumdata[i].smaeq = 0;
         vm.sumdata[i].pottbeaeq = 0;
         vm.sumdata[i].pottfordaeq = 0;
         vm.sumdata[i].pottkiaeq = 0;
       }
+      console.log(vm.dates);
+      console.log(vm.sumdata);
     }
 
 
@@ -83,8 +92,10 @@ define([], function () {
     }
 
     function loadall() {
+      beallit();
       loadsm();
       loadpotting();
+      vm.enddate = vm.enddatumszam;
     }
 
     function getAEQ(tomb, azon, am) {
