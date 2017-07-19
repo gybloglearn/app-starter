@@ -5,7 +5,8 @@ define([], function () {
     vm.data = [];
     vm.selectdatas = [];
     vm.selecthour = [];
-    vm.mch = "Potting4"
+    vm.framemodul = [];
+    vm.mch = "Potting4";
     vm.pottings = ["Potting3", "Potting4"];
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
@@ -71,6 +72,8 @@ define([], function () {
         var ford1 = 0;
         var uretfelso1 = 0;
         var uretfelsoesztetika1 = 0;
+        var framemodulok = 0;
+        var a = 0;
 
         for (var i = 0; i < vm.data.length; i++) {
           var startdate1 = $filter('date')(new Date(vm.data[i].PT_Start_DT).getTime(), 'yyyy-MM-dd');
@@ -161,7 +164,6 @@ define([], function () {
           }
         }
 
-        console.log(vm.selectdatas);
 
         var gelszam2 = 0;
         var uretalso2 = 0;
@@ -261,11 +263,29 @@ define([], function () {
           vm.selectdatas[2].END += -2 * (endszamlalo);
         }
 
+        for (var i = 0; i < vm.data.length; i++) {
+          var substr = vm.data[i].Fixture.substring(6, 9);
+          for (var j = 0; j < vm.framemodul.length; j++) {
+            if (vm.framemodul[j].frame == substr) {
+              vm.framemodul[j].moduls.push(vm.data[i].JobID);
+              framemodulok++;
+            }
+          }
+          if (framemodulok == 0) {
+            vm.framemodul[a] = {}
+            vm.framemodul[a].frame = substr;
+            vm.framemodul[a].moduls = [];
+            vm.framemodul[a].moduls.push(vm.data[i].JobID);
+            a++;
+
+          }
+          else {
+            framemodulok = 0;
+          }
+        }
+
         setChart(vm.mch);
         vm.Pottingloading = false;
-        //console.log(vm.data);
-        //console.log(vm.selectdatas);
-        //console.log(vm.selecthour);
       });
     }
 

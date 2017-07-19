@@ -4,29 +4,29 @@
       <h1 class="text-center">{{vm.mch}}-összesítő</h1>
       <h1 class="text-center">{{vm.datumszam}}</h1>
       <ul class="nav nav-tabs" style="margin-top:10px">
-				<li ng-repeat="item in vm.pottings track by $index">
-					<a data-toggle="tab" href="" ng-click="vm.mch=item;vm.beallit();vm.load()" ng-hide="vm.dis">{{item}}</a>
-				</li>
-			</ul>
+        <li ng-repeat="item in vm.pottings track by $index">
+          <a data-toggle="tab" href="" ng-click="vm.mch=item;vm.beallit();vm.load()" ng-hide="vm.dis">{{item}}</a>
+        </li>
+      </ul>
       <div class="col-sm-5">
         <div class="input-group">
-					<span class="input-group-addon">Dátum:</span>
-					<input type="text" class="datepicker form-control" ng-model="vm.datum">
-					<div class="input-group-btn">
-						<a href="" class="btn btn-primary" ng-click="vm.beallit();vm.load()" ng-disabled="vm.dis">Betöltés</a>
-					</div>
-				</div>
+          <span class="input-group-addon">Dátum:</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.datum">
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.beallit();vm.load()" ng-disabled="vm.dis">Betöltés</a>
+          </div>
+        </div>
       </div>
     </div>
     <div class="module-body">
       <div class="progress progress-warning progress-striped active" ng-hide="!vm.Pottingloading">
-				<div class="progress-bar" style="width: 100%">
-					<p class="text-center">Betöltés...</p>
-				</div>
-			</div>
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Betöltés...</p>
+        </div>
+      </div>
       <div class="tab-content">
-						<my-chart id="chart-col" config="vm.chartconfig"></my-chart>
-			</div>
+        <my-chart id="chart-col" config="vm.chartconfig"></my-chart>
+      </div>
       <table class="table table-condensed">
         <thead>
           <tr>
@@ -56,6 +56,45 @@
         </tbody>
       </table>
     </div>
-    <div class="module-footer"></div>
+    <div class="module-footer">
+      <h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#listtable">Keret és modullista
+        <i class="icon-chevron-right"></i>
+      </h3>
+      <div>
+      <div class="collapse" id="listtable">
+        <div class="tray filter-tray top">
+          <div class="tray-inner">
+            <div class="filter-rule-group">
+
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <span class="control-label" style="color:#FFFFFF">Keret</span>
+                  <input type="text" ng-model="search.frame" class="form-group">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Keret</th>
+              <th>Modulok</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.framemodul | filter: search track by $index" class="ng-scope">
+              <td>{{item.frame}}</td>
+              <td>
+                <ul ng-repeat="mod in item.moduls">
+                  <li><a class="btn btn-large btn-info" target="_blank" href="../Modulhistory/#/history/{{mod}}">{{mod}}</a></li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </section>
 </div>
