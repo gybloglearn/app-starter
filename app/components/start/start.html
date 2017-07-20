@@ -36,27 +36,62 @@
           <tr>
             <th colspan="1" style="font-size:1.8em">Gépcsoport (AEQ)</th>
             <th colspan="1" class="text-center" ng-repeat="date in vm.dates" style="font-size:1.8em">{{date}}</th>
-            <th colspan="1" class="text-center" style="font-size:1.8em">Összesen</th>
           </tr>
           <tr>
             <th style="font-size:1.8em">SM</th>
-            <td class="text-center" ng-repeat="item in vm.sumdata" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.smaeq>=210?'green':'red'}};padding:3px;">{{item.smaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em">{{vm.sumdata|sumField:'smaeq' |number:0}}</td>
+            <td class="text-center" ng-repeat="item in vm.sumdata500" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.smaeq>=210?'green':'red'}};padding:3px;">{{item.smaeq |number:0}}</span></td>
           </tr>
           <tr>
             <th style="font-size:1.8em">Potting Be</th>
-            <td class="text-center" ng-repeat="item in vm.sumdata" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.pottbeaeq>=210?'green':'red'}};padding:3px;">{{item.pottbeaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em">{{vm.sumdata|sumField:'pottbeaeq' |number:0}}</td>
+            <td class="text-center" ng-repeat="item in vm.sumdata500" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.pottbeaeq>=210?'green':'red'}};padding:3px;">{{item.pottbeaeq |number:0}}</span></td>  
           </tr>
           <tr>
             <th style="font-size:1.8em">Potting Fordít</th>
-            <td class="text-center" ng-repeat="item in vm.sumdata" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.pottfordaeq>=210?'green':'red'}};padding:3px;">{{item.pottfordaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em">{{vm.sumdata|sumField:'pottfordaeq' |number:0}}</td>
+            <td class="text-center" ng-repeat="item in vm.sumdata500" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.pottfordaeq>=210?'green':'red'}};padding:3px;">{{item.pottfordaeq |number:0}}</span></td>
           </tr>
           <tr>
             <th style="font-size:1.8em">Potting Ki</th>
-            <td class="text-center" ng-repeat="item in vm.sumdata" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.pottkiaeq>=210?'green':'red'}};padding:3px;">{{item.pottkiaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em">{{vm.sumdata|sumField:'pottkiaeq' |number:0}}</td>
+            <td class="text-center" ng-repeat="item in vm.sumdata500" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.pottkiaeq>=210?'green':'red'}};padding:3px;">{{item.pottkiaeq |number:0}}</span></td>
+          </tr>
+        </thead>
+      </table>
+
+      <table class="table responsive" style="margin-top:40px">
+        <thead>
+          <tr>
+            <th colspan="9" class="text-center" style="font-size:3em;height:50px;padding: 20px">ZeeWeed 1000</th>
+          </tr>
+          <tr>
+            <th colspan="1" style="font-size:1.8em">(AEQ)</th>
+            <th colspan="1" class="text-center" ng-repeat="date in vm.dates" style="font-size:1.8em">{{date}}</th>
+          </tr>
+          <tr>
+            <th style="font-size:1.8em">Gradelt</th>
+            <td class="text-center" ng-repeat="item in vm.sumdata1000" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.sumgoodaeq>=45?'green':'red'}};padding:3px;">{{item.sumgoodaeq |number:0}}</span></td>
+          </tr>
+          <tr>
+            <th style="font-size:1.8em">Selejt</th>
+            <td class="text-center" ng-repeat="item in vm.sumdata1000" style="font-size:3em"><span style="padding:3px;">{{item.sumscrapaeq |number:0}}</span></td>
+          </tr>
+        </thead>
+      </table>
+
+      <table class="table responsive" style="margin-top:40px">
+        <thead>
+          <tr>
+            <th colspan="9" class="text-center" style="font-size:3em;height:50px;padding: 20px">ZeeWeed 1500</th>
+          </tr>
+          <tr>
+            <th colspan="1" style="font-size:1.8em">(AEQ)</th>
+            <th colspan="1" class="text-center" ng-repeat="date in vm.dates" style="font-size:1.8em">{{date}}</th>
+          </tr>
+          <tr>
+            <th style="font-size:1.8em">Gradelt</th>
+            <td class="text-center" ng-repeat="item in vm.sumdata1500" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.sumgoodaeq>=45?'green':'red'}};padding:3px;">{{item.sumgoodaeq |number:0}}</span></td>
+          </tr>
+          <tr>
+            <th style="font-size:1.8em">Selejt</th>
+            <td class="text-center" ng-repeat="item in vm.sumdata1500" style="font-size:3em"><span style="padding:3px;">{{item.sumscrapaeq |number:0}}</span></td>
           </tr>
         </thead>
       </table>

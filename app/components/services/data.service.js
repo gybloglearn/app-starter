@@ -5,7 +5,9 @@ define([], function () {
     var service = {
       getpartnumber: getpartnumber,
       getsm: getsm,
-      getpotting: getpotting
+      getpotting: getpotting,
+      getgradebyd1000: getgradebyd1000,
+      getgradebyd1500: getgradebyd1500
     };
 
     return service;
@@ -32,6 +34,20 @@ define([], function () {
       var req = {
         method: 'GET',
         url: 'app/components/PHP/ZW500_Potting.php?startdate=' + start + '&enddate=' + end + '&report_id=' + mch
+      };
+      return $http(req);
+    }
+    function getgradebyd1000(start, end) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/ZW1000_GradebyDay.php?startdate=' + start + '&enddate=' + end
+      };
+      return $http(req);
+    }
+    function getgradebyd1500(start, end) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/ZW1500_GradebyDay.php?startdate=' + start + '&enddate=' + end
       };
       return $http(req);
     }
