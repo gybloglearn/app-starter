@@ -6,6 +6,7 @@ define([], function () {
       getpartnumber: getpartnumber,
       getsm: getsm,
       getpotting: getpotting,
+      getmtf: getmtf,
       getgradebyd1000: getgradebyd1000,
       getgradebyd1500: getgradebyd1500
     };
@@ -34,6 +35,13 @@ define([], function () {
       var req = {
         method: 'GET',
         url: 'app/components/PHP/ZW500_Potting.php?startdate=' + start + '&enddate=' + end + '&report_id=' + mch
+      };
+      return $http(req);
+    }
+    function getmtf(date) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/MTF/mtf' + date + '.json'
       };
       return $http(req);
     }

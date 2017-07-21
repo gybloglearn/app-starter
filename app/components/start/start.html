@@ -24,10 +24,33 @@
         .red {
           color: #990000;
         }
-        .table thead tr td, .table thead tr th {
+
+        .table thead tr td,
+        .table thead tr th {
           padding: 20px;
         }
       </style>
+      <div class="col-sm-4">
+        <div class="progress progress-success progress-striped active" ng-hide="!vm.smloading">
+          <div class="progress-bar" style="width: 100%">
+            <p class="text-center">SM Frissítés...</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="progress progress-warning progress-striped active" ng-hide="!vm.pottloading">
+          <div class="progress-bar" style="width: 100%">
+            <p class="text-center">Potting Frissítés...</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="progress progress-info progress-striped active" ng-hide="!vm.mtfloading">
+          <div class="progress-bar" style="width: 100%">
+            <p class="text-center">MTF Frissítés...</p>
+          </div>
+        </div>
+      </div>
       <table class="table responsive">
         <thead>
           <tr>
@@ -43,7 +66,7 @@
           </tr>
           <tr>
             <th style="font-size:1.8em">Potting Be</th>
-            <td class="text-center" ng-repeat="item in vm.sumdata500" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.pottbeaeq>=210?'green':'red'}};padding:3px;">{{item.pottbeaeq |number:0}}</span></td>  
+            <td class="text-center" ng-repeat="item in vm.sumdata500" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.pottbeaeq>=210?'green':'red'}};padding:3px;">{{item.pottbeaeq |number:0}}</span></td>
           </tr>
           <tr>
             <th style="font-size:1.8em">Potting Fordít</th>
@@ -53,8 +76,32 @@
             <th style="font-size:1.8em">Potting Ki</th>
             <td class="text-center" ng-repeat="item in vm.sumdata500" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.pottkiaeq>=210?'green':'red'}};padding:3px;">{{item.pottkiaeq |number:0}}</span></td>
           </tr>
+          <tr>
+            <th style="font-size:1.8em">Klórozók Ki</th>
+            <td class="text-center" ng-repeat="item in vm.sumdata500" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.claeq>=210?'green':'red'}};padding:3px;">{{item.claeq |number:0}}</span></td>
+          </tr>
+          <tr>
+            <th style="font-size:1.8em">BP kádak Ki</th>
+            <td class="text-center" ng-repeat="item in vm.sumdata500" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.bpaeq>=235?'green':'red'}};padding:3px;">{{item.bpaeq |number:0}}</span></td>
+          </tr>
+          <tr>
+            <th style="font-size:1.8em">Bökés/AEQ</th>
+            <td class="text-center" ng-repeat="item in vm.sumdata500" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.bokes/item.bpaeq<30?'green':'red'}};padding:3px;">{{item.bokes/item.bpaeq |number:1}}</span></td>
+          </tr>
+          <tr>
+            <th style="font-size:1.8em">Minősített</th>
+            <td class="text-center" ng-repeat="item in vm.sumdata500" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.min>=210?'green':'red'}};padding:3px;">{{item.min |number:0}}</span></td>
+          </tr>
         </thead>
       </table>
+
+      <div class="col-sm-12">
+        <div class="progress progress-danger progress-striped active" ng-hide="!vm.ZW1000loading">
+          <div class="progress-bar" style="width: 100%">
+            <p class="text-center">ZW1000 Frissítés...</p>
+          </div>
+        </div>
+      </div>
 
       <table class="table responsive" style="margin-top:40px">
         <thead>
@@ -66,7 +113,7 @@
             <th colspan="1" class="text-center" ng-repeat="date in vm.dates" style="font-size:1.8em">{{date}}</th>
           </tr>
           <tr>
-            <th style="font-size:1.8em">Gradelt</th>
+            <th style="font-size:1.8em">Minősített</th>
             <td class="text-center" ng-repeat="item in vm.sumdata1000" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.sumgoodaeq>=45?'green':'red'}};padding:3px;">{{item.sumgoodaeq |number:0}}</span></td>
           </tr>
           <tr>
@@ -75,6 +122,14 @@
           </tr>
         </thead>
       </table>
+
+      <div class="col-sm-12">
+        <div class="progress progress-danger progress-striped active" ng-hide="!vm.ZW1500loading">
+          <div class="progress-bar" style="width: 100%">
+            <p class="text-center">ZW1500 Frissítés...</p>
+          </div>
+        </div>
+      </div>
 
       <table class="table responsive" style="margin-top:40px">
         <thead>
@@ -86,7 +141,7 @@
             <th colspan="1" class="text-center" ng-repeat="date in vm.dates" style="font-size:1.8em">{{date}}</th>
           </tr>
           <tr>
-            <th style="font-size:1.8em">Gradelt</th>
+            <th style="font-size:1.8em">Minősített</th>
             <td class="text-center" ng-repeat="item in vm.sumdata1500" style="font-size:3em;color:#ffffff"><span style="background-color:{{item.sumgoodaeq>=45?'green':'red'}};padding:3px;">{{item.sumgoodaeq |number:0}}</span></td>
           </tr>
           <tr>
