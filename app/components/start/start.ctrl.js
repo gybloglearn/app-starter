@@ -8,14 +8,9 @@ define([], function () {
     vm.enddatumszam = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     vm.pottings = ["Potting1-1", "Potting1-2", "Potting2", "Potting3", "Potting4"];
-    vm.AEQ1000 = [0.9, 1.1, 1.2, 1.4];
+    vm.AEQ1000 = [0.9, 1.1, 1, 1.4];
     vm.AEQ1500 = [0.6, 1.2];
     vm.partnumbers = [];
-    vm.smdata = [];
-    vm.pottingdata = [];
-    vm.mtfdata = [];
-    vm.grade1000data = [];
-    vm.grade1500data = [];
     vm.dates = [];
     vm.mtfdates = [];
     vm.sumdata500 = [];
@@ -74,14 +69,12 @@ define([], function () {
 
 
     function loadsm() {
-      vm.smdata = [];
       vm.smloading = true;
       for (var i = 0; i < vm.sheetmakers.length; i++) {
         dataService.getsm(vm.startdate, vm.enddate, vm.sheetmakers[i]).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
             response.data[j].days = response.data[j].days.substring(0, 10);
-            vm.smdata.push(response.data[j]);
             for (var k = 0; k < vm.sumdata500.length; k++) {
               if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "GOOD") {
                 vm.sumdata500[k].smaeq += response.data[j].aeq;
@@ -94,14 +87,12 @@ define([], function () {
     }
 
     function loadpotting() {
-      vm.pottingdata = [];
       vm.pottloading = true;
       for (var i = 0; i < vm.pottings.length; i++) {
         dataService.getpotting(vm.startdate, vm.enddate, vm.pottings[i]).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].aeq = addAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
             response.data[j].days = response.data[j].days.substring(0, 10);
-            vm.pottingdata.push(response.data[j]);
             for (var k = 0; k < vm.sumdata500.length; k++) {
               if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "IN") {
                 vm.sumdata500[k].pottbeaeq += response.data[j].aeq;
@@ -120,7 +111,6 @@ define([], function () {
     }
 
     function loadmtf() {
-      vm.mtfdata = [];
       vm.mtfloading = true;
       for (var i = 0; i < vm.mtfdates.length; i++) {
         dataService.getmtf(vm.mtfdates[i]).then(function (response) {
@@ -134,7 +124,6 @@ define([], function () {
                 response.data[j].aeq = response.data[j].amount * vm.aeqs[l].amount;
               }
             }
-            vm.mtfdata.push(response.data[j]);
             for (var k = 0; k < vm.sumdata500.length; k++) {
               if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "BP-OUT") {
                 vm.sumdata500[k].bpaeq += response.data[j].aeq;
@@ -156,7 +145,6 @@ define([], function () {
     }
 
     function loadgrade1000() {
-      vm.grade1000data = [];
       vm.ZW1000loading=true;
       dataService.getgradebyd1000(vm.startdate, vm.enddate).then(function (response) {
         for (var j = 0; j < response.data.length; j++) {
@@ -164,15 +152,14 @@ define([], function () {
             response.data[j].aeq = response.data[j].cnt * vm.AEQ1000[0];
           }
           else if (response.data[j].descr.includes("550")) {
-            response.data[j].aeq = response.data[j].cnt * vm.AEQ1000[0];
+            response.data[j].aeq = response.data[j].cnt * vm.AEQ1000[1];
           }
-          else if (response.data[j].descr.includes("600")) {
-            response.data[j].aeq = response.data[j].cnt * vm.AEQ1000[0];
+          else if (response.data[j].descr.includes("500")) {
+            response.data[j].aeq = response.data[j].cnt * vm.AEQ1000[2];
           }
           else if (response.data[j].descr.includes("700")) {
-            response.data[j].aeq = response.data[j].cnt * vm.AEQ1000[0];
+            response.data[j].aeq = response.data[j].cnt * vm.AEQ1000[3];
           }
-          vm.grade1000data.push(response.data[j]);
           for (var k = 0; k < vm.sumdata1000.length; k++) {
             if (vm.sumdata1000[k].date == response.data[j].gradeday && response.data[j].MCSGrade == "Scrap") {
               vm.sumdata1000[k].sumscrapaeq += response.data[j].aeq;
@@ -182,13 +169,13 @@ define([], function () {
             }
           }
         }
+        console.log(vm.sumdata1000);
         vm.ZW1000loading=false;
       });
 
     }
     function loadgrade1500() {
       vm.ZW1500loading=true;
-      vm.grade1500data = [];
       dataService.getgradebyd1500(vm.startdate, vm.enddate).then(function (response) {
         for (var j = 0; j < response.data.length; j++) {
           if (response.data[j].descr.includes("short")) {
@@ -197,7 +184,6 @@ define([], function () {
           else {
             response.data[j].aeq = response.data[j].cnt * vm.AEQ1500[1];
           }
-          vm.grade1500data.push(response.data[j]);
           for (var k = 0; k < vm.sumdata1500.length; k++) {
             if (vm.sumdata1500[k].date == response.data[j].gradeday && response.data[j].MCSGrade == "Scrap") {
               vm.sumdata1500[k].sumscrapaeq += response.data[j].aeq;
