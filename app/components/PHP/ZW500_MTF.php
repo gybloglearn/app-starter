@@ -24,7 +24,11 @@ function remove_utf8_bom($text)
 if(isset($_GET["startdate"])){
   $startdate = date("m/d/Y H:i:s", strtotime($_GET["startdate"] . " 05:50:00"));
 } else {
-  $startdate = date("m/d/Y H:i:s", strtotime($argv[1] . " 05:50:00"));
+  if(isset($argv[1])){
+    $startdate = date("m/d/Y H:i:s", strtotime($argv[1] . " 05:50:00"));
+  } else {
+    $startdate = date("m/d/Y H:i:s", strtotime(date("Y-m-d") . "05:50:00")-60*60*24);
+  }
 }
 
 if(isset($_GET["enddate"])){
