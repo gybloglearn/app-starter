@@ -7,9 +7,11 @@ define([
   './services/data.service',
   './directives/datepicker',
   './directives/mychart',
-  './filters/sumField'
-
-  /* files */
+  './directives/SM/sm',
+  './filters/sumField',
+  './filters/sumdb',
+  './dayreport/dayreport.ctrl'
+	/* files */
 ], function(
   configFunction,
   runFunction,
@@ -19,9 +21,11 @@ define([
   dataService,
   datepicker,
   mychart,
-  sumField
-
-/* names */) {
+  smdir,
+  sumField,
+  sumdb,
+  dayreportController
+	/* names */) {
 
   // Link all components to the module !!!
 
@@ -34,6 +38,9 @@ define([
   app.controller('LoginController', loginController);
   app.directive('datepicker',datepicker);
   app.directive('mychart',mychart);
+  app.directive('smDir',smdir);
   app.filter('sumField',sumField);
-  /* controllers */
+  app.filter('sumdb',sumdb);
+  app.controller('dayreportController', dayreportController);
+		/* controllers */
 });

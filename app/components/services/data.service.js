@@ -5,6 +5,7 @@ define([], function () {
     var service = {
       getpartnumber: getpartnumber,
       getsm: getsm,
+      getsoesm: getsoesm,
       getpotting: getpotting,
       getmtf: getmtf,
       getgradebyd1000: getgradebyd1000,
@@ -27,6 +28,13 @@ define([], function () {
       var req = {
         method: 'GET',
         url: 'app/components/PHP/ZW500_SM.php?startdate=' + start + '&enddate=' + end + '&report_id=' + mch
+      };
+      return $http(req);
+    }
+    function getsoesm(date, sm) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/sumsm.php?startdate=' + date + '&mch=' + sm
       };
       return $http(req);
     }

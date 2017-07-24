@@ -1,0 +1,35 @@
+<div class="container-fluid">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">{{vm.datumszam}}-{{vm.actplace}} részletek</h1>
+
+      <ul class="nav nav-tabs" style="margin-top:10px">
+        <li ng-repeat="item in vm.places track by $index">
+          <a data-toggle="tab" href="" ng-click="vm.actplace=item;vm.load()">{{item}}</a>
+        </li>
+      </ul>
+
+      <div class="col-sm-6" style="margin-top:20px">
+        <div class="input-group">
+          <span class="input-group-addon">Dátum</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.actdate" setdate="0d" end="{{vm.today}}">
+          <span class="input-group-addon">-tól</span>
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.load()">Betöltés</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="row">
+        <div class="col-sm-3" ng-repeat="item in vm.smcards| orderBy:'sm'">
+          <div class="card">
+            <sm-dir data="item"></sm-dir>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="module-footer"></div>
+</section>
+</div>

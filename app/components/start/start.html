@@ -103,7 +103,7 @@
           <tr ng-repeat="date in vm.dates track by $index">
             <th class="text-center" style="font-size:1.8em">{{date}}</th>
             <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata1000[$index].sumgoodaeq>=56?'green':'red'}};padding:3px;">{{vm.sumdata1000[$index].sumgoodaeq|number:0}}</span></td>
-            <td class="text-center" style="font-size:3em"><span>{{vm.sumdata1000[$index].sumscrapaeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em"><span>{{vm.sumdata1000[$index].sumscrapaeq |number:1}}</span></td>
           </tr>
         </thead>
       </table>
@@ -129,7 +129,7 @@
           <tr ng-repeat="date in vm.dates track by $index">
             <th class="text-center" style="font-size:1.8em">{{date}}</th>
             <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata1500[$index].sumgoodaeq>=45?'green':'red'}};padding:3px;">{{vm.sumdata1500[$index].sumgoodaeq|number:0}}</span></td>
-            <td class="text-center" style="font-size:3em"><span>{{vm.sumdata1500[$index].sumscrapaeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em"><span>{{vm.sumdata1500[$index].sumscrapaeq |number:1}}</span></td>
           </tr>
         </thead>
       </table>

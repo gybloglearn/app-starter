@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('dayreport', {
+		url: '/dayreport',
+		templateUrl: './app/components/dayreport/dayreport.html',
+		controller: 'dayreportController',
+		controllerAs: 'vm'
+	});
 
   }
   ConfigFunction.$inject = ['$urlRouterProvider', '$stateProvider'];
