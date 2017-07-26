@@ -5,7 +5,7 @@ define([], function () {
     vm.today = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.places = ["SM", "Potting"];
     vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
-    vm.pottings = ["Potting2", "Potting3", "Potting4"];
+    vm.pottings = ["Potting1-1", "Potting1-2", "Potting2", "Potting3", "Potting4"];
     vm.actplace = "SM";
     vm.partnumbers = [];
     vm.smdata = [];
@@ -13,7 +13,7 @@ define([], function () {
     vm.pottdata = [];
     vm.pottcards = [];
     vm.load = load;
-    
+
 
     function loadPartnumbers() {
       vm.partnumbers = [];
@@ -103,7 +103,12 @@ define([], function () {
             response.data[j].days = response.data[j].days.substring(0, 10);
 
           }
-          var pottname = v[0] + v[v.length - 1];
+          if (v == "Potting1-1" || (v == "Potting1-2")) {
+            var pottname = v[0] + v.substring(v.length - 3, v.length);
+          }
+          else {
+            var pottname = v[0] + v[v.length - 1];
+          }
           var bedb = $filter('sumField')($filter('filter')(response.data, { 'category': "IN" }), 'amount');
           var beaeq = $filter('sumField')($filter('filter')(response.data, { 'category': "IN" }), 'aeq');
           var p3db = $filter('sumField')($filter('filter')(response.data, { 'category': "P3" }), 'amount');
@@ -121,7 +126,6 @@ define([], function () {
             kidb: kidb,
             kiaeq: kiaeq,
           };
-          console.log(obj);
           vm.pottcards.push(obj);
         });
       });
