@@ -70,10 +70,10 @@
           </tr>
           <tr ng-repeat="date in vm.dates track by $index">
             <th class="text-center" style="font-size:1.8em">{{date}}</th>
-            <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata500[$index].smaeq>=210?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].smaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata500[$index].pottbeaeq>=210?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].pottbeaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata500[$index].pottfordaeq>=210?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].pottfordaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata500[$index].pottkiaeq>=210?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].pottkiaeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addSMDate(date)"><span style="background-color:{{vm.sumdata500[$index].smaeq>=210?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].smaeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdata500[$index].pottbeaeq>=210?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].pottbeaeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdata500[$index].pottfordaeq>=210?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].pottfordaeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdata500[$index].pottkiaeq>=210?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].pottkiaeq |number:0}}</span></td>
             <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata500[$index].claeq>=210?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].claeq |number:0}}</span></td>
             <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata500[$index].bpaeq>=235?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].bpaeq |number:0}}</span></td>
             <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata500[$index].bokes/vm.sumdata500[$index].bpaeq<30?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].bokes/vm.sumdata500[$index].bpaeq |number:0}}</span></td>
@@ -102,7 +102,7 @@
           </tr>
           <tr ng-repeat="date in vm.dates track by $index">
             <th class="text-center" style="font-size:1.8em">{{date}}</th>
-            <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata1000[$index].sumgoodaeq>=56?'green':'red'}};padding:3px;">{{vm.sumdata1000[$index].sumgoodaeq|number:0}}</span></td>
+            <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata1000[$index].sumgoodaeq>=56?'green':'red'}};padding:3px;">{{vm.sumdata1000[$index].sumgoodaeq|number:1}}</span></td>
             <td class="text-center" style="font-size:3em"><span>{{vm.sumdata1000[$index].sumscrapaeq |number:1}}</span></td>
           </tr>
         </thead>
@@ -128,7 +128,7 @@
           </tr>
           <tr ng-repeat="date in vm.dates track by $index">
             <th class="text-center" style="font-size:1.8em">{{date}}</th>
-            <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata1500[$index].sumgoodaeq>=45?'green':'red'}};padding:3px;">{{vm.sumdata1500[$index].sumgoodaeq|number:0}}</span></td>
+            <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata1500[$index].sumgoodaeq>=45?'green':'red'}};padding:3px;">{{vm.sumdata1500[$index].sumgoodaeq|number:1}}</span></td>
             <td class="text-center" style="font-size:3em"><span>{{vm.sumdata1500[$index].sumscrapaeq |number:1}}</span></td>
           </tr>
         </thead>

@@ -18,6 +18,8 @@ define([], function () {
     vm.sumdata1500 = [];
     vm.differencedate = 0;
     vm.loadall = loadall;
+    vm.addSMDate = addSMDate;
+    vm.addPottDate=addPottDate;
 
     function loadPartnumbers() {
       vm.partnumbers = [];
@@ -145,7 +147,7 @@ define([], function () {
     }
 
     function loadgrade1000() {
-      vm.ZW1000loading=true;
+      vm.ZW1000loading = true;
       dataService.getgradebyd1000(vm.startdate, vm.enddate).then(function (response) {
         for (var j = 0; j < response.data.length; j++) {
           if (response.data[j].descr.includes("450")) {
@@ -169,13 +171,12 @@ define([], function () {
             }
           }
         }
-        console.log(vm.sumdata1000);
-        vm.ZW1000loading=false;
+        vm.ZW1000loading = false;
       });
 
     }
     function loadgrade1500() {
-      vm.ZW1500loading=true;
+      vm.ZW1500loading = true;
       dataService.getgradebyd1500(vm.startdate, vm.enddate).then(function (response) {
         for (var j = 0; j < response.data.length; j++) {
           if (response.data[j].descr.includes("short")) {
@@ -193,7 +194,7 @@ define([], function () {
             }
           }
         }
-        vm.ZW1500loading=false;
+        vm.ZW1500loading = false;
       });
 
     }
@@ -232,6 +233,15 @@ define([], function () {
         }
       }
       return aeq;
+    }
+
+    function addSMDate(datum) {
+      console.log(datum);
+      $state.go('dayreport', { datum: datum, place: "SM" });
+    }
+    function addPottDate(datum) {
+      console.log(datum);
+      $state.go('dayreport', { datum: datum, place: "Potting" });
     }
 
     activate();

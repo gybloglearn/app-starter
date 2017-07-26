@@ -20,19 +20,20 @@ define([], function () {
     $stateProvider.state('logout', {
       url: '/logout',
       controller: function ($cookies, $rootScope, $state) {
-        $cookies.remove('user', {path: '/'});
+        $cookies.remove('user', { path: '/' });
         $rootScope.user = {};
         $state.go('start', {}, { reload: true });
       }
     });
 
     /* Add states */
-	$stateProvider.state('dayreport', {
-		url: '/dayreport',
-		templateUrl: './app/components/dayreport/dayreport.html',
-		controller: 'dayreportController',
-		controllerAs: 'vm'
-	});
+    $stateProvider.state('dayreport', {
+      url: '/dayreport',
+      params: { datum: null, place: null },
+      templateUrl: './app/components/dayreport/dayreport.html',
+      controller: 'dayreportController',
+      controllerAs: 'vm'
+    });
 
   }
   ConfigFunction.$inject = ['$urlRouterProvider', '$stateProvider'];

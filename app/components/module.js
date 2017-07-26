@@ -8,6 +8,7 @@ define([
   './directives/datepicker',
   './directives/mychart',
   './directives/SM/sm',
+  './directives/Potting/potting',
   './filters/sumField',
   './filters/sumdb',
   './dayreport/dayreport.ctrl'
@@ -22,6 +23,7 @@ define([
   datepicker,
   mychart,
   smdir,
+  pottdir,
   sumField,
   sumdb,
   dayreportController
@@ -39,6 +41,7 @@ define([
   app.directive('datepicker',datepicker);
   app.directive('mychart',mychart);
   app.directive('smDir',smdir);
+  app.directive('pottDir',pottdir);
   app.filter('sumField',sumField);
   app.filter('sumdb',sumdb);
   app.controller('dayreportController', dayreportController);
