@@ -7,10 +7,10 @@ define([], function () {
     vm.difference = [];
     vm.szakok = [];
     vm.smdata = [];
+    vm.sheetmakers = ["SheetMaker6", "SheetMaker7", "SheetMaker8"];
     vm.phasenumbers = [0, 1, 2, 3, 4, 5, 6, 7];
     vm.hely = ['Potting be', 'Előkészítés alsó', 'Gélberakás alsó', 'Esztétika alsó', 'Forgatás', 'Gélberakás felső', 'Esztétika felső', 'Potting ki'];
     vm.datum = $filter('date')(new Date().getTime() - ((5 * 60 + 50) * 60 * 1000), 'yyyy-MM-dd');
-    var szakallando4 = 27;
     vm.actplan = 0;
     vm.usenumber = 0;
     vm.places = [];
@@ -22,7 +22,7 @@ define([], function () {
     vm.frissites_ideje = $filter('date')(new Date().getTime() + 2 * 60 * 1000, 'yyyy-MM-dd HH:mm');
     vm.pottloading = false;
 
-    function load() {
+    function load(sz4) {
       vm.places = [];
       vm.data = [];
       vm.pottloading = true;
@@ -37,7 +37,7 @@ define([], function () {
             sor: v,
             place: allomas(vm.data[v]),
             db: szakdb(vm.data[v]),
-            plan: plancreator4(szakallando4),
+            plan: plancreator4(sz4),
             timelast: last(vm.data[v]),
             id: "Pottingplace" + v,
             chartconfig: {
@@ -55,7 +55,7 @@ define([], function () {
                 {
                   name: 'Terv',
                   color: "rgba(50,150,230,.5)",
-                  data: [plancreator4(szakallando4)]
+                  data: [plancreator4(sz4)]
                 }],
 
               xAxis: [
@@ -78,9 +78,9 @@ define([], function () {
       vm.usenumber = 0;
       dataService.getdrying().then(function (response) {
         vm.dryingdata = response.data;
-        for(var i=0;i<vm.dryingdata.length;i++){
-          if(vm.dryingdata[i].Time_to_Go<4){
-            vm.usenumber+=1;
+        for (var i = 0; i < vm.dryingdata.length; i++) {
+          if (vm.dryingdata[i].Time_to_Go < 4) {
+            vm.usenumber += 1;
           }
         }
       });
@@ -141,6 +141,55 @@ define([], function () {
       return vm.difference[vm.difference.length - 1];
     }
 
+    function loadsheetmakers() {
+      var valami = 0;
+      var lekerdezszaknum = 1;
+      var substring = "GOOD"
+      vm.smdata = [];
+
+      var hour = new Date().getHours();
+      var minute = new Date().getMinutes();
+      var downdate = $filter('date')(new Date(), 'yyyy-MM-dd');
+
+      if ((hour == 5 && minute >= 50) || (hour < 13) || (hour == 13 && minute < 50)) {
+        lekerdezszaknum = 3;
+        downdate = $filter('date')((new Date().getTime() - 24 * 3600 * 1000), 'yyyy-MM-dd');
+      }
+      else if ((hour == 13 && minute >= 50) || (hour < 21) || (hour == 21 && minute < 50)) {
+        lekerdezszaknum = 1;
+      }
+      else if ((hour == 21 && minute >= 50) || (hour > 21) || (hour < 5) || (hour == 5 && minute < 50)) {
+        lekerdezszaknum = 2;
+        if ((hour >= 0) || (hour < 5) || (hour == 5 && minute < 50)) {
+          downdate = $filter('date')((new Date().getTime() - 24 * 3600 * 1000), 'yyyy-MM-dd');
+        }
+      }
+
+      var hany = 0;
+      var szakallando4=0;
+      angular.forEach(vm.sheetmakers, function (v, k) {
+        dataService.getsm(v, downdate).then(function (response) {
+          hany++;
+          vm.smdata = response.data;
+          for (var i = 0; i < vm.smdata.length; i++) {
+            if (vm.smdata[i].amount > 0 && vm.smdata[i].name.includes(substring) && lekerdezszaknum == vm.smdata[i].shiftnum) {
+              valami += Math.floor((Math.floor((vm.smdata[i].amount) / 12)) / 2);
+            }
+          }
+          if (hany == 3) {
+            if(valami>=27){
+              szakallando4=27
+            }
+            else{
+              szakallando4=valami;
+            }
+            load(szakallando4);
+          }
+        });
+      });
+
+    }
+
     function plancreator4(szam) {
       var nowhour = new Date().getHours();
       var nowminute = new Date().getMinutes();
@@ -182,12 +231,12 @@ define([], function () {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       choose();
       loaddrying();
-      load();
+      loadsheetmakers();
     }
 
     var refreshchoose = setInterval(choose, 2 * 60 * 1000);
     var refreshloaddrying = setInterval(loaddrying, 2 * 60 * 1000);
-    var refreshload = setInterval(load, 2 * 60 * 1000);
+    var refreshload = setInterval(loadsheetmakers, 2 * 60 * 1000);
     var refreshdate = setInterval(date_refresh, 2 * 60 * 1000);
 
     function date_refresh() {
