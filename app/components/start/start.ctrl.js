@@ -153,6 +153,9 @@ define([], function () {
           if (response.data[j].descr.includes("450")) {
             response.data[j].aeq = response.data[j].cnt * vm.AEQ1000[0];
           }
+          else if (response.data[j].descr.includes("Junior")) {
+            response.data[j].aeq = response.data[j].cnt * 0;
+          }
           else if (response.data[j].descr.includes("550")) {
             response.data[j].aeq = response.data[j].cnt * vm.AEQ1000[1];
           }
