@@ -22,7 +22,7 @@ define([], function () {
     function getsm(sm, date) {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15/getReports/smreport.php?mch=' + sm + '&startdate=' + date
+        url: '../getReports/smreport.php?mch=' + sm + '&startdate=' + date
       };
       return $http(req);
     }
