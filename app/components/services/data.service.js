@@ -4,6 +4,7 @@ define([], function () {
   function Service($http) {
     var service = {
       getpartnumber: getpartnumber,
+      getsl: getsl,
       getsm: getsm,
       getsoesm: getsoesm,
       getpotting: getpotting,
@@ -24,6 +25,13 @@ define([], function () {
       return $http(req);
     }
 
+    function getsl(start, end) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/ZW500_SL.php?startdate=' + start + '&enddate=' + end + '&cat=Day'
+      };
+      return $http(req);
+    }
     function getsm(start, end, mch) {
       var req = {
         method: 'GET',

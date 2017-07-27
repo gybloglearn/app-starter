@@ -35,6 +35,19 @@
           </div>
         </div>
       </div>
+      <div class="row" ng-show="vm.actplace=='SL'">
+        <div class="col-sm-2" ng-repeat="item in vm.slcards| orderBy:'sl'">
+          <div class="card">
+            <sl-dir data="item"></sl-dir>
+          </div>
+        </div>
+        <div class="col-sm-2" ng-repeat="item in vm.sldata">
+          <div class="card">
+            <sl-dir data="item"></sl-dir>
+          </div>
+        </div>
+      </div>
+
       <div class="row" ng-show="vm.actplace=='SM'">
         <div class="col-sm-3" ng-repeat="item in vm.smcards| orderBy:'sm'">
           <div class="card">

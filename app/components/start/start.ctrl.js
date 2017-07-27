@@ -18,8 +18,9 @@ define([], function () {
     vm.sumdata1500 = [];
     vm.differencedate = 0;
     vm.loadall = loadall;
+    vm.addSLDate = addSLDate;
     vm.addSMDate = addSMDate;
-    vm.addPottDate=addPottDate;
+    vm.addPottDate = addPottDate;
 
     function loadPartnumbers() {
       vm.partnumbers = [];
@@ -48,6 +49,7 @@ define([], function () {
         vm.mtfdates[i] = $filter('date')(new Date(vm.enddatumszam).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyyMMdd');
         vm.sumdata500[i] = {}
         vm.sumdata500[i].date = $filter('date')(new Date(vm.enddatumszam).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
+        vm.sumdata500[i].slaeq = 0;
         vm.sumdata500[i].smaeq = 0;
         vm.sumdata500[i].pottbeaeq = 0;
         vm.sumdata500[i].pottfordaeq = 0;
@@ -69,6 +71,18 @@ define([], function () {
       }
     }
 
+
+    function loadsl() {
+      dataService.getsl(vm.startdate, vm.enddate).then(function (response) {
+        for (var j = 0; j < response.data.length; j++) {
+          for (var k = 0; k < vm.sumdata500.length; k++) {
+            if (vm.sumdata500[k].date == response.data[j].item1) {
+              vm.sumdata500[k].slaeq += response.data[j].textbox2 * 1;
+            }
+          }
+        }
+      });
+    }
 
     function loadsm() {
       vm.smloading = true;
@@ -204,6 +218,7 @@ define([], function () {
 
     function loadall() {
       beallit();
+      loadsl();
       loadsm();
       loadpotting();
       loadmtf();
@@ -238,12 +253,15 @@ define([], function () {
       return aeq;
     }
 
+    function addSLDate(datum) {
+      $state.go('dayreport', { datum: datum, place: "SL" });
+    }
+
     function addSMDate(datum) {
-      console.log(datum);
       $state.go('dayreport', { datum: datum, place: "SM" });
     }
+    
     function addPottDate(datum) {
-      console.log(datum);
       $state.go('dayreport', { datum: datum, place: "Potting" });
     }
 
@@ -254,6 +272,7 @@ define([], function () {
       vm.edate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
       datediff();
       loadPartnumbers();
+      loadsl();
       loadsm();
       loadpotting();
       loadmtf();

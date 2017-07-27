@@ -3,11 +3,13 @@ define([], function () {
   function Controller(dataService, $cookies, $stateParams, $rootScope, $filter) {
     var vm = this;
     vm.today = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.places = ["SM", "Potting"];
+    vm.places = ["SL", "SM", "Potting"];
     vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     vm.pottings = ["Potting2", "Potting3", "Potting4"];
-    vm.actplace = "SM";
+    vm.actplace = "SL";
     vm.partnumbers = [];
+    vm.sldata = [];
+    vm.slcards = [];
     vm.smdata = [];
     vm.smcards = [];
     vm.pottdata = [];
@@ -26,12 +28,56 @@ define([], function () {
       vm.datumszam = $filter('date')(new Date(vm.actdate).getTime(), 'yyyy-MM-dd');
       vm.actdateend = $filter('date')(new Date(vm.actdate).getTime() + 24 * 3600 * 1000, 'yyyy-MM-dd');
 
-      if (vm.actplace == "SM") {
+      if (vm.actplace == "SL") {
+        loadsl(vm.actdate, vm.actdateend);
+      }
+      else if (vm.actplace == "SM") {
         loadsm(vm.actdate, vm.actdateend);
       }
       else if (vm.actplace == "Potting") {
         loadpott(vm.actdate, vm.actdateend);
       }
+    }
+
+    function loadsl(st, ed) {
+      st = $filter('date')(new Date(st).getTime() - 24 * 3600 * 1000, 'yyyy-MM-dd');
+      vm.sldata = [];
+      vm.slcards = [];
+
+      vm.sldata[0] = {};
+      vm.sldata[0].sl = "SLS";
+      vm.sldata[0].aeq = 0;
+      vm.sldata[0].meter = 0;
+
+      dataService.getsl(st, ed).then(function (response) {
+        for (var j = 0; j < response.data.length; j++) {
+          var slname = "";
+          if (response.data[j].machine.includes("#3")) {
+            slname = response.data[j].machine[0] + response.data[j].machine[4] + "3";
+          }
+          else if (response.data[j].machine.includes("#4")) {
+            slname = response.data[j].machine[0] + response.data[j].machine[4] + "4";
+          }
+          else if (response.data[j].machine.includes("#136")) {
+            slname = response.data[j].machine[0] + response.data[j].machine[4] + "136";
+          }
+          else if (response.data[j].machine.includes("#236")) {
+            slname = response.data[j].machine[0] + response.data[j].machine[4] + "236";
+          }
+
+          var obj = {};
+          obj = {
+            sl: slname,
+            aeq: response.data[j].textbox2,
+            meter: response.data[j].val
+          };
+          if (vm.actdate == response.data[j].item1) {
+            vm.sldata[0].aeq += response.data[j].textbox2 * 1;
+            vm.sldata[0].meter += response.data[j].val * 1;
+            vm.slcards.push(obj);
+          }
+        }
+      });
     }
 
     function loadsm(st, ed) {
@@ -156,12 +202,12 @@ define([], function () {
           var kiaeq = $filter('sumField')($filter('filter')(response.data, { 'category': "OUT" }), 'aeq');
 
           vm.pottdata[0].potting = "PS";
-          vm.pottdata[0].bedb += bedb*1;
-          vm.pottdata[0].beaeq += beaeq*1;
-          vm.pottdata[0].p3db += p3db*1;
-          vm.pottdata[0].p3aeq += p3aeq*1;
-          vm.pottdata[0].kidb += kidb*1;
-          vm.pottdata[0].kiaeq += kiaeq*1;
+          vm.pottdata[0].bedb += bedb * 1;
+          vm.pottdata[0].beaeq += beaeq * 1;
+          vm.pottdata[0].p3db += p3db * 1;
+          vm.pottdata[0].p3aeq += p3aeq * 1;
+          vm.pottdata[0].kidb += kidb * 1;
+          vm.pottdata[0].kiaeq += kiaeq * 1;
 
           var obj = {};
           obj = {
@@ -212,7 +258,14 @@ define([], function () {
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       loadPartnumbers();
-      if ($stateParams.datum && $stateParams.place == "SM") {
+      if ($stateParams.datum && $stateParams.place == "SL") {
+        vm.actplace = $stateParams.place;
+        vm.actdate = $stateParams.datum;
+        vm.datumszam = $filter('date')(new Date($stateParams.datum).getTime(), 'yyyy-MM-dd');
+        vm.actdateend = $filter('date')(new Date($stateParams.datum).getTime() + 24 * 3600 * 1000, 'yyyy-MM-dd');
+        loadsl(vm.actdate, vm.actdateend);
+      }
+      else if ($stateParams.datum && $stateParams.place == "SM") {
         vm.actplace = $stateParams.place;
         vm.actdate = $stateParams.datum;
         vm.datumszam = $filter('date')(new Date($stateParams.datum).getTime(), 'yyyy-MM-dd');
@@ -230,7 +283,7 @@ define([], function () {
         vm.actdate = $filter('date')(new Date(), 'yyyy-MM-dd');
         vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
         vm.actdateend = $filter('date')(new Date().getTime() + 24 * 3600 * 1000, 'yyyy-MM-dd');
-        loadsm(vm.actdate, vm.actdateend);
+        loadsl(vm.actdate, vm.actdateend);
       }
     }
   }
