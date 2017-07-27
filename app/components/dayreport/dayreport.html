@@ -21,15 +21,40 @@
       </div>
     </div>
     <div class="module-body">
+      <div class="col-sm-12">
+        <div class="progress progress-success progress-striped active" ng-hide="!vm.smloading">
+          <div class="progress-bar" style="width: 100%">
+            <p class="text-center">SM Frissítés...</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="progress progress-warning progress-striped active" ng-hide="!vm.pottloading">
+          <div class="progress-bar" style="width: 100%">
+            <p class="text-center">Potting Frissítés...</p>
+          </div>
+        </div>
+      </div>
       <div class="row" ng-show="vm.actplace=='SM'">
         <div class="col-sm-3" ng-repeat="item in vm.smcards| orderBy:'sm'">
           <div class="card">
             <sm-dir data="item"></sm-dir>
           </div>
         </div>
+        <div class="col-sm-3" ng-repeat="item in vm.smdata">
+          <div class="card">
+            <sm-dir data="item"></sm-dir>
+          </div>
+        </div>
       </div>
+    
       <div class="row" ng-show="vm.actplace=='Potting'">
         <div class="col-sm-2" ng-repeat="item in vm.pottcards | orderBy:'potting'">
+          <div class="card">
+            <pott-dir data="item"></pott-dir>
+          </div>
+        </div>
+        <div class="col-sm-2" ng-repeat="item in vm.pottdata">
           <div class="card">
             <pott-dir data="item"></pott-dir>
           </div>

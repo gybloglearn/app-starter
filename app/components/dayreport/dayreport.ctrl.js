@@ -5,7 +5,7 @@ define([], function () {
     vm.today = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.places = ["SM", "Potting"];
     vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
-    vm.pottings = ["Potting1-1", "Potting1-2", "Potting2", "Potting3", "Potting4"];
+    vm.pottings = ["Potting2", "Potting3", "Potting4"];
     vm.actplace = "SM";
     vm.partnumbers = [];
     vm.smdata = [];
@@ -37,12 +37,28 @@ define([], function () {
     function loadsm(st, ed) {
       vm.smdata = [];
       vm.smcards = [];
+      vm.smloading = true;
+      var load = 0;
+
+      vm.smdata[0] = {};
+      vm.smdata[0].sm = "SMS";
+      vm.smdata[0].osszlap = 0;
+      vm.smdata[0].osszaeq = 0;
+      vm.smdata[0].jolap = 0;
+      vm.smdata[0].joaeq = 0;
+      vm.smdata[0].alltime = 0;
+      vm.smdata[0].downtime = 0;
+      vm.smdata[0].szervezesi = 0;
+      vm.smdata[0].tervezesi = 0;
+      vm.smdata[0].muszaki = 0;
+      vm.smdata[0].kap = 0;
 
       angular.forEach(vm.sheetmakers, function (v, k) {
         var ossz = 0;
         var osszaeq = 0;
         var jo = 0;
         var joaeq = 0;
+        load++;
         dataService.getsm(st, ed, v).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
@@ -65,6 +81,11 @@ define([], function () {
             time = 1440;
           }
 
+          vm.smdata[0].osszlap += ossz;
+          vm.smdata[0].osszaeq += osszaeq * 1;
+          vm.smdata[0].jolap += jo;
+          vm.smdata[0].joaeq += joaeq * 1;
+          vm.smdata[0].alltime += time;
 
           var obj = {};
           obj = {
@@ -81,6 +102,13 @@ define([], function () {
             var terv = $filter('sumField')($filter('filter')(resp.data, { 'Ev_Group': "Tervezett veszteseg" }), 'Event_time');
             var musz = $filter('sumField')($filter('filter')(resp.data, { 'Ev_Group': "Muszaki technikai okok" }), 'Event_time');
             var kapc = (1440 * 60 / 91 / 12 * 0.74) * ((time - (szam / 60)) / 1440);
+
+            vm.smdata[0].downtime += szam / 60;
+            vm.smdata[0].szervezesi += szerv / 60;
+            vm.smdata[0].tervezesi += terv / 60;
+            vm.smdata[0].muszaki += musz / 60;
+            vm.smdata[0].kap += kapc;
+
             obj.downtime = szam / 60;
             obj.szervezesi = szerv / 60;
             obj.tervezesi = terv / 60;
@@ -88,6 +116,9 @@ define([], function () {
             obj.kap = kapc;
             vm.smcards.push(obj);
           });
+          if (load > 7) {
+            vm.smloading = false;
+          }
         });
       });
     }
@@ -95,26 +126,42 @@ define([], function () {
     function loadpott(st, ed) {
       vm.pottdata = [];
       vm.pottcards = [];
+      vm.pottloading = true;
+      var load = 0;
+
+      vm.pottdata[0] = {};
+      vm.pottdata[0].potting = "PS";
+      vm.pottdata[0].bedb = 0;
+      vm.pottdata[0].beaeq = 0;
+      vm.pottdata[0].p3db = 0;
+      vm.pottdata[0].p3aeq = 0;
+      vm.pottdata[0].kidb = 0;
+      vm.pottdata[0].kiaeq = 0;
 
       angular.forEach(vm.pottings, function (v, k) {
+        load++;
         dataService.getpotting(st, ed, v).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].aeq = addAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
             response.data[j].days = response.data[j].days.substring(0, 10);
 
           }
-          if (v == "Potting1-1" || (v == "Potting1-2")) {
-            var pottname = v[0] + v.substring(v.length - 3, v.length);
-          }
-          else {
-            var pottname = v[0] + v[v.length - 1];
-          }
+
+          var pottname = v[0] + v[v.length - 1];
           var bedb = $filter('sumField')($filter('filter')(response.data, { 'category': "IN" }), 'amount');
           var beaeq = $filter('sumField')($filter('filter')(response.data, { 'category': "IN" }), 'aeq');
           var p3db = $filter('sumField')($filter('filter')(response.data, { 'category': "P3" }), 'amount');
           var p3aeq = $filter('sumField')($filter('filter')(response.data, { 'category': "P3" }), 'aeq');
           var kidb = $filter('sumField')($filter('filter')(response.data, { 'category': "OUT" }), 'amount');
           var kiaeq = $filter('sumField')($filter('filter')(response.data, { 'category': "OUT" }), 'aeq');
+
+          vm.pottdata[0].potting = "PS";
+          vm.pottdata[0].bedb += bedb*1;
+          vm.pottdata[0].beaeq += beaeq*1;
+          vm.pottdata[0].p3db += p3db*1;
+          vm.pottdata[0].p3aeq += p3aeq*1;
+          vm.pottdata[0].kidb += kidb*1;
+          vm.pottdata[0].kiaeq += kiaeq*1;
 
           var obj = {};
           obj = {
@@ -127,6 +174,9 @@ define([], function () {
             kiaeq: kiaeq,
           };
           vm.pottcards.push(obj);
+          if (load > 2) {
+            vm.pottloading = false;
+          }
         });
       });
     }
