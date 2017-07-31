@@ -284,12 +284,12 @@ define([], function () {
       vm.pottdata[0].dup3aeq = 0;
       vm.pottdata[0].dukidb = 0;
       vm.pottdata[0].dukiaeq = 0;
-      vm.pottdata[0].dubedb = 0;
-      vm.pottdata[0].dubeaeq = 0;
-      vm.pottdata[0].dup3db = 0;
-      vm.pottdata[0].dup3aeq = 0;
-      vm.pottdata[0].dukidb = 0;
-      vm.pottdata[0].dukiaeq = 0;
+      vm.pottdata[0].ejbedb = 0;
+      vm.pottdata[0].ejbeaeq = 0;
+      vm.pottdata[0].ejp3db = 0;
+      vm.pottdata[0].ejp3aeq = 0;
+      vm.pottdata[0].ejkidb = 0;
+      vm.pottdata[0].ejkiaeq = 0;
 
       angular.forEach(vm.pottings, function (v, k) {
         load++;
