@@ -115,6 +115,21 @@ define([], function () {
       vm.smdata[0].tervezesi = 0;
       vm.smdata[0].muszaki = 0;
       vm.smdata[0].kap = 0;
+      vm.smdata[0].szakde = vm.shifts[0].shift;
+      vm.smdata[0].deosszlap = 0;
+      vm.smdata[0].deosszaeq = 0;
+      vm.smdata[0].dejolap = 0;
+      vm.smdata[0].dejoaeq = 0;
+      vm.smdata[0].szakdu = vm.shifts[1].shift;
+      vm.smdata[0].duosszlap = 0;
+      vm.smdata[0].duosszaeq = 0;
+      vm.smdata[0].dujolap = 0;
+      vm.smdata[0].dujoaeq = 0;
+      vm.smdata[0].szakej = vm.shifts[2].shift;
+      vm.smdata[0].ejosszlap = 0;
+      vm.smdata[0].ejosszaeq = 0;
+      vm.smdata[0].ejjolap = 0;
+      vm.smdata[0].ejjoaeq = 0;
 
       angular.forEach(vm.sheetmakers, function (v, k) {
         var ossz = 0;
@@ -179,15 +194,15 @@ define([], function () {
           vm.smdata[0].jolap += jo;
           vm.smdata[0].joaeq += joaeq * 1;
           vm.smdata[0].alltime += time;
-          vm.smdata[0].deosszlap +=deossz;
+          vm.smdata[0].deosszlap += deossz;
           vm.smdata[0].deosszaeq += deosszaeq * 1;
           vm.smdata[0].dejolap += dejo;
           vm.smdata[0].dejoaeq += dejoaeq * 1;
-          vm.smdata[0].duosszlap +=duossz;
+          vm.smdata[0].duosszlap += duossz;
           vm.smdata[0].duosszaeq += duosszaeq * 1;
           vm.smdata[0].dujolap += dujo;
           vm.smdata[0].dujoaeq += dujoaeq * 1;
-          vm.smdata[0].ejosszlap +=ejossz;
+          vm.smdata[0].ejosszlap += ejossz;
           vm.smdata[0].ejosszaeq += ejosszaeq * 1;
           vm.smdata[0].ejjolap += ejjo;
           vm.smdata[0].ejjoaeq += ejjoaeq * 1;
