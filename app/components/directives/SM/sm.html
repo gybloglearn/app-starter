@@ -38,6 +38,55 @@
             <h2 class="text-center">{{((data.alltime-data.downtime)/data.alltime*100)|number:2}} %</h2>
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#{{data.sm}}">Szakos lebontás <i class="icon-chevron-down"></i></h2>
+        </div>
+    </div>
+    <div class="collapse" id="{{data.sm}}">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2 class="text-center">{{data.szakde}} Szak</h2>
+            </div>
+            <div class="col-sm-7">
+                <h3>Összes lap: {{data.deosszlap}} db={{data.deosszaeq|number:1}} AEQ</h3>
+                <h3>Jó lap: {{data.dejolap}} db={{data.dejoaeq|number:1}} AEQ</h3>
+                <h3>Selejt lap: {{data.deosszlap-data.dejolap}} db={{data.deosszaeq-data.dejoaeq|number:1}} AEQ</h3>
+            </div>
+            <div class="col-sm-5">
+                <h3 class="text-center">Minőség</h3>
+                <h2 class="text-center">{{(data.dejolap/data.deosszlap*100)|number:2}} %</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h2 class="text-center">{{data.szakdu}} Szak</h2>
+            </div>
+            <div class="col-sm-7">
+                <h3>Összes lap: {{data.duosszlap}} db={{data.duosszaeq|number:1}} AEQ</h3>
+                <h3>Jó lap: {{data.dujolap}} db={{data.dujoaeq|number:1}} AEQ</h3>
+                <h3>Selejt lap: {{data.duosszlap-data.dujolap}} db={{data.duosszaeq-data.dujoaeq|number:1}} AEQ</h3>
+            </div>
+            <div class="col-sm-5">
+                <h3 class="text-center">Minőség</h3>
+                <h2 class="text-center">{{(data.dujolap/data.duosszlap*100)|number:2}} %</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h2 class="text-center">{{data.szakej}} Szak</h2>
+            </div>
+            <div class="col-sm-7">
+                <h3>Összes lap: {{data.ejosszlap}} db={{data.ejosszaeq|number:1}} AEQ</h3>
+                <h3>Jó lap: {{data.ejjolap}} db={{data.ejjoaeq|number:1}} AEQ</h3>
+                <h3>Selejt lap: {{data.ejosszlap-data.ejjolap}} db={{data.ejosszaeq-data.ejjoaeq|number:1}} AEQ</h3>
+            </div>
+            <div class="col-sm-5">
+                <h3 class="text-center">Minőség</h3>
+                <h2 class="text-center">{{(data.ejjolap/data.ejosszlap*100)|number:2}} %</h2>
+            </div>
+        </div>
+    </div>
     <div class="oee">
         <div class="progress progress-info">
             <div class="progress-bar" style="width:{{data.joaeq/data.kap*100}}%">Teljesítmény</div>
@@ -52,7 +101,9 @@
         <div class="progress progress-danger">
             <div class="progress-bar" style="width:{{(data.joaeq/data.kap)*(data.jolap/data.osszlap)*((data.alltime-data.downtime)/data.alltime)*100}}%">OEE</div>
         </div>
-        <h2 class="text-center">OEE {{(data.joaeq/data.kap)*(data.jolap/data.osszlap)*((data.alltime-data.downtime)/data.alltime)*100 | number:2}} %</h2>
+        <h2 class="text-center">OEE {{(data.joaeq/data.kap)*(data.jolap/data.osszlap)*((data.alltime-data.downtime)/data.alltime)*100 | number:2}}
+            %
+        </h2>
     </div>
     <div class="clearfix"></div>
 </div>

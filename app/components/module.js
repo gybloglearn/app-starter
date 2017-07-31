@@ -12,6 +12,7 @@ define([
   './directives/Potting/potting',
   './filters/sumField',
   './filters/sumdb',
+  './filters/shift',
   './dayreport/dayreport.ctrl'
 	/* files */
 ], function(
@@ -28,6 +29,7 @@ define([
   pottdir,
   sumField,
   sumdb,
+  shift,
   dayreportController
 	/* names */) {
 
@@ -47,6 +49,7 @@ define([
   app.directive('pottDir',pottdir);
   app.filter('sumField',sumField);
   app.filter('sumdb',sumdb);
+  app.filter('shift',shift);
   app.controller('dayreportController', dayreportController);
 		/* controllers */
 });

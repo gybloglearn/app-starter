@@ -6,7 +6,7 @@ define([], function () {
     vm.startdatumszam = $filter('date')(new Date().getTime() - (7 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddate = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.enddatumszam = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
-    vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
+    vm.sheetmakers = ["SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     vm.pottings = ["Potting1-1", "Potting1-2", "Potting2", "Potting3", "Potting4"];
     vm.AEQ1000 = [0.9, 1.1, 1, 1.4];
     vm.AEQ1500 = [0.6, 1.2];

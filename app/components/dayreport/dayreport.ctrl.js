@@ -14,6 +14,7 @@ define([], function () {
     vm.smcards = [];
     vm.pottdata = [];
     vm.pottcards = [];
+    vm.shifts = [];
     vm.load = load;
 
 
@@ -25,8 +26,24 @@ define([], function () {
     }
 
     function load() {
+      vm.shifts = [];
+
       vm.datumszam = $filter('date')(new Date(vm.actdate).getTime(), 'yyyy-MM-dd');
       vm.actdateend = $filter('date')(new Date(vm.actdate).getTime() + 24 * 3600 * 1000, 'yyyy-MM-dd');
+
+      vm.shifts[0] = {};
+      vm.shifts[0].shiftnum = 1;
+      vm.shifts[0].shift = $filter('shift')(1, vm.datumszam);
+      vm.shifts[0].szak = "DE";
+      vm.shifts[1] = {};
+      vm.shifts[1].shiftnum = 2;
+      vm.shifts[1].shift = $filter('shift')(2, vm.datumszam);
+      vm.shifts[1].szak = "DU";
+      vm.shifts[2] = {};
+      vm.shifts[2].shiftnum = 3;
+      vm.shifts[2].shift = $filter('shift')(3, vm.datumszam);
+      vm.shifts[2].szak = "EJ";
+
 
       if (vm.actplace == "SL") {
         loadsl(vm.actdate, vm.actdateend);
@@ -104,15 +121,45 @@ define([], function () {
         var osszaeq = 0;
         var jo = 0;
         var joaeq = 0;
+        var deossz = 0;
+        var deosszaeq = 0;
+        var dejo = 0;
+        var dejoaeq = 0;
+        var duossz = 0;
+        var duosszaeq = 0;
+        var dujo = 0;
+        var dujoaeq = 0;
+        var ejossz = 0;
+        var ejosszaeq = 0;
+        var ejjo = 0;
+        var ejjoaeq = 0;
         load++;
+
         dataService.getsm(st, ed, v).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
+            response.data[j].shift = $filter('shift')(response.data[j].shiftnum, $filter('date')(new Date(response.data[j].days).getTime(), 'yyyy-MM-dd'));
           }
           ossz = $filter('sumdb')($filter('filter')(response.data, { 'category': 'TOTAL' }));
           osszaeq = $filter('sumField')($filter('filter')(response.data, { 'category': 'TOTAL' }), 'aeq');
           jo = $filter('sumdb')($filter('filter')(response.data, { 'category': 'GOOD' }));
           joaeq = $filter('sumField')($filter('filter')(response.data, { 'category': 'GOOD' }), 'aeq');
+
+          deossz = $filter('sumdb')($filter('filter')(response.data, { 'category': 'TOTAL', 'shiftnum': '1' }));
+          deosszaeq = $filter('sumField')($filter('filter')(response.data, { 'category': 'TOTAL', 'shiftnum': '1' }), 'aeq');
+          dejo = $filter('sumdb')($filter('filter')(response.data, { 'category': 'GOOD', 'shiftnum': '1' }));
+          dejoaeq = $filter('sumField')($filter('filter')(response.data, { 'category': 'GOOD', 'shiftnum': '1' }), 'aeq');
+
+          duossz = $filter('sumdb')($filter('filter')(response.data, { 'category': 'TOTAL', 'shiftnum': '2' }));
+          duosszaeq = $filter('sumField')($filter('filter')(response.data, { 'category': 'TOTAL', 'shiftnum': '2' }), 'aeq');
+          dujo = $filter('sumdb')($filter('filter')(response.data, { 'category': 'GOOD', 'shiftnum': '2' }));
+          dujoaeq = $filter('sumField')($filter('filter')(response.data, { 'category': 'GOOD', 'shiftnum': '2' }), 'aeq');
+
+          ejossz = $filter('sumdb')($filter('filter')(response.data, { 'category': 'TOTAL', 'shiftnum': '3' }));
+          ejosszaeq = $filter('sumField')($filter('filter')(response.data, { 'category': 'TOTAL', 'shiftnum': '3' }), 'aeq');
+          ejjo = $filter('sumdb')($filter('filter')(response.data, { 'category': 'GOOD', 'shiftnum': '3' }));
+          ejjoaeq = $filter('sumField')($filter('filter')(response.data, { 'category': 'GOOD', 'shiftnum': '3' }), 'aeq');
+
           var time = 0;
           if (vm.today == st) {
             var szamom = new Date().getHours() * 60 + new Date().getMinutes();
@@ -132,6 +179,18 @@ define([], function () {
           vm.smdata[0].jolap += jo;
           vm.smdata[0].joaeq += joaeq * 1;
           vm.smdata[0].alltime += time;
+          vm.smdata[0].deosszlap +=deossz;
+          vm.smdata[0].deosszaeq += deosszaeq * 1;
+          vm.smdata[0].dejolap += dejo;
+          vm.smdata[0].dejoaeq += dejoaeq * 1;
+          vm.smdata[0].duosszlap +=duossz;
+          vm.smdata[0].duosszaeq += duosszaeq * 1;
+          vm.smdata[0].dujolap += dujo;
+          vm.smdata[0].dujoaeq += dujoaeq * 1;
+          vm.smdata[0].ejosszlap +=ejossz;
+          vm.smdata[0].ejosszaeq += ejosszaeq * 1;
+          vm.smdata[0].ejjolap += ejjo;
+          vm.smdata[0].ejjoaeq += ejjoaeq * 1;
 
           var obj = {};
           obj = {
@@ -141,6 +200,21 @@ define([], function () {
             jolap: jo,
             joaeq: joaeq,
             alltime: time,
+            szakde: vm.shifts[0].shift,
+            deosszlap: deossz,
+            deosszaeq: deosszaeq,
+            dejolap: dejo,
+            dejoaeq: dejoaeq,
+            szakdu: vm.shifts[1].shift,
+            duosszlap: duossz,
+            duosszaeq: duosszaeq,
+            dujolap: dujo,
+            dujoaeq: dujoaeq,
+            szakej: vm.shifts[2].shift,
+            ejosszlap: ejossz,
+            ejosszaeq: ejosszaeq,
+            ejjolap: ejjo,
+            ejjoaeq: ejjoaeq,
           };
           dataService.getsoesm(st, v).then(function (resp) {
             var szam = $filter('sumField')($filter('filter')(resp.data, { 'Event_type': "Downtime" }), 'Event_time');
@@ -190,9 +264,8 @@ define([], function () {
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].aeq = addAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
             response.data[j].days = response.data[j].days.substring(0, 10);
-
+            response.data[j].shift = $filter('shift')(response.data[j].shiftnum, response.data[j].days);
           }
-
           var pottname = v[0] + v[v.length - 1];
           var bedb = $filter('sumField')($filter('filter')(response.data, { 'category': "IN" }), 'amount');
           var beaeq = $filter('sumField')($filter('filter')(response.data, { 'category': "IN" }), 'aeq');
@@ -258,6 +331,21 @@ define([], function () {
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       loadPartnumbers();
+
+      vm.shifts = [];
+      vm.shifts[0] = {};
+      vm.shifts[0].shiftnum = 1;
+      vm.shifts[0].shift = $filter('shift')(1, $filter('date')(new Date($stateParams.datum).getTime(), 'yyyy-MM-dd'));
+      vm.shifts[0].szak = "DE";
+      vm.shifts[1] = {};
+      vm.shifts[1].shiftnum = 2;
+      vm.shifts[1].shift = $filter('shift')(2, $filter('date')(new Date($stateParams.datum).getTime(), 'yyyy-MM-dd'));
+      vm.shifts[1].szak = "DU";
+      vm.shifts[2] = {};
+      vm.shifts[2].shiftnum = 3;
+      vm.shifts[2].shift = $filter('shift')(3, $filter('date')(new Date($stateParams.datum).getTime(), 'yyyy-MM-dd'));
+      vm.shifts[2].szak = "EJ";
+
       if ($stateParams.datum && $stateParams.place == "SL") {
         vm.actplace = $stateParams.place;
         vm.actdate = $stateParams.datum;
@@ -284,6 +372,18 @@ define([], function () {
         vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
         vm.actdateend = $filter('date')(new Date().getTime() + 24 * 3600 * 1000, 'yyyy-MM-dd');
         loadsl(vm.actdate, vm.actdateend);
+        vm.shifts[0] = {};
+        vm.shifts[0].shiftnum = 1;
+        vm.shifts[0].shift = $filter('shift')(1, vm.datumszam);
+        vm.shifts[0].szak = "DE";
+        vm.shifts[1] = {};
+        vm.shifts[1].shiftnum = 2;
+        vm.shifts[1].shift = $filter('shift')(2, vm.datumszam);
+        vm.shifts[1].szak = "DU";
+        vm.shifts[2] = {};
+        vm.shifts[2].shiftnum = 3;
+        vm.shifts[2].shift = $filter('shift')(3, vm.datumszam);
+        vm.shifts[2].szak = "EJ";
       }
     }
   }
