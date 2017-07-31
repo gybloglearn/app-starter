@@ -14,14 +14,14 @@ define([], function () {
     function get(mod) {
       var req = {
         method: 'GET',
-        url: '//3.228.180.15/History_Plan/' + mod,
+        url: '../History_Plan/' + mod,
       };
       return $http(req);
     }
     function post(data) {
       var req = {
         method: 'POST',
-        url: '//3.228.180.15/History_Plan/plan/' + data.id,
+        url: '../History_Plan/plan/' + data.id,
         data: data,
         headers: { "Content-Type": "application/json" }
       };
