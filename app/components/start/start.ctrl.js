@@ -7,7 +7,7 @@ define([], function () {
     vm.difference = [];
     vm.szakok = [];
     vm.smdata = [];
-    vm.sheetmakers = ["SheetMaker4", "SheetMaker5"];
+    vm.sheetmakers = ["SheetMaker4", "SheetMaker5","SheetMaker9"];
     vm.phasenumbers = [0, 1, 2, 3, 4, 5, 6, 7];
     vm.hely = ['Potting be', 'Előkészítés alsó', 'Gélberakás alsó', 'Esztétika alsó', 'Forgatás', 'Gélberakás felső', 'Esztétika felső', 'Potting ki'];
     vm.datum = $filter('date')(new Date().getTime() - ((5 * 60 + 50) * 60 * 1000), 'yyyy-MM-dd');
@@ -178,7 +178,7 @@ define([], function () {
               valami += Math.floor((Math.floor((vm.smdata[i].amount) / 12)) / 2);
             }
           }
-          if (hany == 2) {
+          if (hany == 3) {
             if(valami>=20){
               szakallando3=20
             }
