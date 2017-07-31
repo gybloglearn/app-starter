@@ -65,6 +65,7 @@
   border: 1px solid #e7e7e7;
   box-shadow: 0 3px 5px rgba(0,0,0,.1);
   margin-top: 30px;
+  padding: 15px;
 }
 .card .title h1 {
   font-size: 20px;
@@ -74,7 +75,7 @@
   /*background: #005CB9;*/
   background: #575757;
   color: white;
-  margin: -25px auto 0 auto;
+  margin: -40px auto 0 auto;
   text-align: center;
   border-radius: 50px;
   box-shadow: 0 3px 5px rgba(0,0,0,.2);
@@ -92,6 +93,7 @@
 .oee {
   border-top: 1px dashed #d8d8d8;
   background: #e8e8e8;
+  margin: 0 -15px -15px -15px;
 }
 .oee .progress {
   margin:5px auto;
