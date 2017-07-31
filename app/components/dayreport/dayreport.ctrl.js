@@ -272,6 +272,24 @@ define([], function () {
       vm.pottdata[0].p3aeq = 0;
       vm.pottdata[0].kidb = 0;
       vm.pottdata[0].kiaeq = 0;
+      vm.pottdata[0].debedb = 0;
+      vm.pottdata[0].debeaeq = 0;
+      vm.pottdata[0].dep3db = 0;
+      vm.pottdata[0].dep3aeq = 0;
+      vm.pottdata[0].dekidb = 0;
+      vm.pottdata[0].dekiaeq = 0;
+      vm.pottdata[0].dubedb = 0;
+      vm.pottdata[0].dubeaeq = 0;
+      vm.pottdata[0].dup3db = 0;
+      vm.pottdata[0].dup3aeq = 0;
+      vm.pottdata[0].dukidb = 0;
+      vm.pottdata[0].dukiaeq = 0;
+      vm.pottdata[0].dubedb = 0;
+      vm.pottdata[0].dubeaeq = 0;
+      vm.pottdata[0].dup3db = 0;
+      vm.pottdata[0].dup3aeq = 0;
+      vm.pottdata[0].dukidb = 0;
+      vm.pottdata[0].dukiaeq = 0;
 
       angular.forEach(vm.pottings, function (v, k) {
         load++;
@@ -289,6 +307,27 @@ define([], function () {
           var kidb = $filter('sumField')($filter('filter')(response.data, { 'category': "OUT" }), 'amount');
           var kiaeq = $filter('sumField')($filter('filter')(response.data, { 'category': "OUT" }), 'aeq');
 
+          var debedb = $filter('sumField')($filter('filter')(response.data, { 'category': "IN", 'shiftnum': '1' }), 'amount');
+          var debeaeq = $filter('sumField')($filter('filter')(response.data, { 'category': "IN", 'shiftnum': '1' }), 'aeq');
+          var dep3db = $filter('sumField')($filter('filter')(response.data, { 'category': "P3", 'shiftnum': '1' }), 'amount');
+          var dep3aeq = $filter('sumField')($filter('filter')(response.data, { 'category': "P3", 'shiftnum': '1' }), 'aeq');
+          var dekidb = $filter('sumField')($filter('filter')(response.data, { 'category': "OUT", 'shiftnum': '1' }), 'amount');
+          var dekiaeq = $filter('sumField')($filter('filter')(response.data, { 'category': "OUT", 'shiftnum': '1' }), 'aeq');
+
+          var dubedb = $filter('sumField')($filter('filter')(response.data, { 'category': "IN", 'shiftnum': '2' }), 'amount');
+          var dubeaeq = $filter('sumField')($filter('filter')(response.data, { 'category': "IN", 'shiftnum': '2' }), 'aeq');
+          var dup3db = $filter('sumField')($filter('filter')(response.data, { 'category': "P3", 'shiftnum': '2' }), 'amount');
+          var dup3aeq = $filter('sumField')($filter('filter')(response.data, { 'category': "P3", 'shiftnum': '2' }), 'aeq');
+          var dukidb = $filter('sumField')($filter('filter')(response.data, { 'category': "OUT", 'shiftnum': '2' }), 'amount');
+          var dukiaeq = $filter('sumField')($filter('filter')(response.data, { 'category': "OUT", 'shiftnum': '2' }), 'aeq');
+
+          var ejbedb = $filter('sumField')($filter('filter')(response.data, { 'category': "IN", 'shiftnum': '3' }), 'amount');
+          var ejbeaeq = $filter('sumField')($filter('filter')(response.data, { 'category': "IN", 'shiftnum': '3' }), 'aeq');
+          var ejp3db = $filter('sumField')($filter('filter')(response.data, { 'category': "P3", 'shiftnum': '3' }), 'amount');
+          var ejp3aeq = $filter('sumField')($filter('filter')(response.data, { 'category': "P3", 'shiftnum': '3' }), 'aeq');
+          var ejkidb = $filter('sumField')($filter('filter')(response.data, { 'category': "OUT", 'shiftnum': '3' }), 'amount');
+          var ejkiaeq = $filter('sumField')($filter('filter')(response.data, { 'category': "OUT", 'shiftnum': '3' }), 'aeq');
+
           vm.pottdata[0].potting = "PS";
           vm.pottdata[0].bedb += bedb * 1;
           vm.pottdata[0].beaeq += beaeq * 1;
@@ -296,6 +335,24 @@ define([], function () {
           vm.pottdata[0].p3aeq += p3aeq * 1;
           vm.pottdata[0].kidb += kidb * 1;
           vm.pottdata[0].kiaeq += kiaeq * 1;
+          vm.pottdata[0].debedb += debedb * 1;
+          vm.pottdata[0].debeaeq += debeaeq * 1;
+          vm.pottdata[0].dep3db += dep3db * 1;
+          vm.pottdata[0].dep3aeq += dep3aeq * 1;
+          vm.pottdata[0].dekidb += dekidb * 1;
+          vm.pottdata[0].dekiaeq += dekiaeq * 1;
+          vm.pottdata[0].dubedb += dubedb * 1;
+          vm.pottdata[0].dubeaeq += dubeaeq * 1;
+          vm.pottdata[0].dup3db += dup3db * 1;
+          vm.pottdata[0].dup3aeq += dup3aeq * 1;
+          vm.pottdata[0].dukidb += dukidb * 1;
+          vm.pottdata[0].dukiaeq += dukiaeq * 1;
+          vm.pottdata[0].ejbedb += ejbedb * 1;
+          vm.pottdata[0].ejbeaeq += ejbeaeq * 1;
+          vm.pottdata[0].ejp3db += ejp3db * 1;
+          vm.pottdata[0].ejp3aeq += ejp3aeq * 1;
+          vm.pottdata[0].ejkidb += ejkidb * 1;
+          vm.pottdata[0].ejkiaeq += ejkiaeq * 1;
 
           var obj = {};
           obj = {
@@ -306,6 +363,27 @@ define([], function () {
             p3aeq: p3aeq,
             kidb: kidb,
             kiaeq: kiaeq,
+            szakde: vm.shifts[0].shift,
+            debedb: debedb,
+            debeaeq: debeaeq,
+            dep3db: dep3db,
+            dep3aeq: dep3aeq,
+            dekidb: dekidb,
+            dekiaeq: dekiaeq,
+            szakdu: vm.shifts[1].shift,
+            dubedb: dubedb,
+            dubeaeq: dubeaeq,
+            dup3db: dup3db,
+            dup3aeq: dup3aeq,
+            dukidb: dukidb,
+            dukiaeq: dukiaeq,
+            szakej: vm.shifts[2].shift,
+            ejbedb: ejbedb,
+            ejbeaeq: ejbeaeq,
+            ejp3db: ejp3db,
+            ejp3aeq: ejp3aeq,
+            ejkidb: ejkidb,
+            ejkiaeq: ejkiaeq,
           };
           vm.pottcards.push(obj);
           if (load > 2) {

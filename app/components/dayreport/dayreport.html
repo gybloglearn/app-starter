@@ -61,12 +61,12 @@
       </div>
     
       <div class="row" ng-show="vm.actplace=='Potting'">
-        <div class="col-sm-2" ng-repeat="item in vm.pottcards | orderBy:'potting'">
+        <div class="col-sm-3" ng-repeat="item in vm.pottcards | orderBy:'potting'">
           <div class="card">
             <pott-dir data="item"></pott-dir>
           </div>
         </div>
-        <div class="col-sm-2" ng-repeat="item in vm.pottdata">
+        <div class="col-sm-3" ng-repeat="item in vm.pottdata">
           <div class="card">
             <pott-dir data="item"></pott-dir>
           </div>
