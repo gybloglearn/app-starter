@@ -497,12 +497,12 @@ define([], function () {
             vm.mtfdata[0].ppedb += response.data[j].amount;
             vm.mtfdata[0].ppeaeq += response.data[j].aeq;
             if (response.data[j].shiftnum == "1") {
-              vm.mtfdata[0].deppendb += response.data[j].amount;
+              vm.mtfdata[0].deppedb += response.data[j].amount;
               vm.mtfdata[0].deppeaeq += response.data[j].aeq;
             }
             else if (response.data[j].shiftnum == "2") {
               vm.mtfdata[0].duppedb += response.data[j].amount;
-              vm.mtfdata[0].dupeeaeq += response.data[j].aeq;
+              vm.mtfdata[0].duppeaeq += response.data[j].aeq;
             }
             else if (response.data[j].shiftnum == "3") {
               vm.mtfdata[0].ejppedb += response.data[j].amount;
@@ -519,7 +519,7 @@ define([], function () {
             }
             else if (response.data[j].shiftnum == "2") {
               vm.mtfdata[0].duppudb += response.data[j].amount;
-              vm.mtfdata[0].dumppuaeq += response.data[j].aeq;
+              vm.mtfdata[0].duppuaeq += response.data[j].aeq;
             }
             else if (response.data[j].shiftnum == "3") {
               vm.mtfdata[0].ejppudb += response.data[j].amount;
