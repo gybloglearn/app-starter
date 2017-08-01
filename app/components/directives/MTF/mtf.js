@@ -1,6 +1,6 @@
 define([], function () {
     'use strict';
-    function sldir() {
+    function mtfdir() {
         var directive = {
             link: link,
             restrict: 'E',
@@ -14,7 +14,7 @@ define([], function () {
                 totaltime: '=',
                 totaldt: '='
             },
-            templateUrl: 'app/components/directives/SL/sl.html'
+            templateUrl: 'app/components/directives/MTF/mtf.html'
         };
         return directive;
         function link(scope, element, attrs) {
@@ -25,5 +25,5 @@ define([], function () {
             });
         }
     }
-    return sldir;
+    return mtfdir;
 });

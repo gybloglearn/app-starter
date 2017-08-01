@@ -1,0 +1,315 @@
+<!--direktíva-->
+<div class="container">
+    <div class="mtfdir">
+        <div class="title">
+            <h1>{{data.mtf}}</h1>
+        </div>
+        <div class="content-text-center">
+            <div class="row">
+                <div class="col-sm-4 text-center">
+                    <div>
+                        <h2 style="background-color:#D3D3D3">Pottingok ki</h2>
+                    </div>
+                    <h1>{{data.mtfindb}}</h1><span style="display: block">db</span>
+                    <h1>{{data.mtfinaeq|number:1}}</h1><span style="display: block">AEQ</span>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <div>
+                        <h2 style="background-color:#D3D3D3">PPE</h2>
+                    </div>
+                    <h1>{{data.ppedb}}</h1><span style="display: block">db</span>
+                    <h1>{{data.ppeaeq|number:1}}</h1><span style="display: block">AEQ</span>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <div>
+                        <h2 style="background-color:#D3D3D3">PPU</h2>
+                    </div>
+                    <h1>{{data.ppudb}}</h1><span style="display: block">db</span>
+                    <h1>{{data.ppuaeq|number:1}}</h1><span style="display: block">AEQ</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 text-center">
+                    <div>
+                        <h2 style="background-color:#D3D3D3">Klórozók ki</h2>
+                    </div>
+                    <h1>{{data.cldb}}</h1><span style="display: block">db</span>
+                    <h1>{{data.claeq|number:1}}</h1><span style="display: block">AEQ</span>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <div>
+                        <h2 style="background-color:#D3D3D3">BP kádak ki</h2>
+                    </div>
+                    <h1>{{data.bpdb}}</h1><span style="display: block">db</span>
+                    <h1>{{data.bpaeq|number:1}}</h1><span style="display: block">AEQ</span>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <div>
+                        <h2 style="background-color:#D3D3D3">Összes bökés</h2>
+                    </div>
+                    <h1>{{data.bokesdb}}</h1><span style="display: block">db</span>
+                    <h1>{{(data.bokesdb/data.bpaeq)|number:1}}</h1><span style="display: block">Bökés/AEQ</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-offset-4 col-sm-4 text-center">
+                    <div>
+                        <h2 style="background-color:#D3D3D3">Minősítés</h2>
+                    </div>
+                    <h1>{{data.mindb}}</h1><span style="display: block">db</span>
+                    <h1>{{data.minaeq|number:1}}</h1><span style="display: block">AEQ</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#{{data.mtf}}">Szakos lebontás <i class="icon-chevron-down"></i></h2>
+                </div>
+                <div class="collapse" id="{{data.mtf}}">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="text-center" style="background-color:#D3D3D3">{{data.szakde}} Szak</h2>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>Pottingok ki</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.demtfindb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.demtfinaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>PPE</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.deppedb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.deppeaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>PPU</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.deppudb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.deppuaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>Klórozók ki</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.decldb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.declaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>BP kádak ki</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.debpdb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.debpaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>Összes bökés</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.debokesdb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{(data.debokesdb/data.debpaeq)|number:1}} Bökés/AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>Minősítés</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.demindb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.deminaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <h2 class="text-center" style="background-color:#D3D3D3">{{data.szakdu}} Szak</h2>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>Pottingok ki</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.dumtfindb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.dumtfinaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>PPE</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.duppedb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.duppeaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>PPU</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.duppudb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.duppuaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>Klórozók ki</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.ducldb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.duclaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>BP kádak ki</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.dubpdb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.dubpaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>Összes bökés</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.dubokesdb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{(data.dubokesdb/data.dubpaeq)|number:1}} Bökés/AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>Minősítés</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.dumindb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.duminaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <h2 class="text-center" style="background-color:#D3D3D3">{{data.szakej}} Szak</h2>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>Pottingok ki</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.ejmtfindb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.ejmtfinaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>PPE</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.ejppedb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.ejppeaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>PPU</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.ejppudb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.ejppuaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>Klórozók ki</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.ejcldb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.ejclaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>BP kádak ki</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.ejbpdb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.ejbpaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>Összes bökés</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.ejbokesdb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{(data.ejbokesdb/data.ejbpaeq)|number:1}} Bökés/AEQ</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>Minősítés</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.ejmindb}} db</h3>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>{{data.ejminaeq|number:1}} AEQ</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

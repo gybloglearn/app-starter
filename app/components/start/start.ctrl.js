@@ -21,6 +21,7 @@ define([], function () {
     vm.addSLDate = addSLDate;
     vm.addSMDate = addSMDate;
     vm.addPottDate = addPottDate;
+    vm.addMTFDate = addMTFDate;
 
     function loadPartnumbers() {
       vm.partnumbers = [];
@@ -263,6 +264,10 @@ define([], function () {
     
     function addPottDate(datum) {
       $state.go('dayreport', { datum: datum, place: "Potting" });
+    }
+
+    function addMTFDate(datum) {
+      $state.go('dayreport', { datum: datum, place: "MTF" });
     }
 
     activate();

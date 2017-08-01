@@ -3,7 +3,7 @@ define([], function () {
   function Controller(dataService, $cookies, $stateParams, $rootScope, $filter) {
     var vm = this;
     vm.today = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.places = ["SL", "SM", "Potting"];
+    vm.places = ["SL", "SM", "Potting", "MTF"];
     vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     vm.pottings = ["Potting2", "Potting3", "Potting4"];
     vm.actplace = "SL";
@@ -14,6 +14,7 @@ define([], function () {
     vm.smcards = [];
     vm.pottdata = [];
     vm.pottcards = [];
+    vm.mtfdata = [];
     vm.shifts = [];
     vm.load = load;
 
@@ -53,6 +54,9 @@ define([], function () {
       }
       else if (vm.actplace == "Potting") {
         loadpott(vm.actdate, vm.actdateend);
+      }
+      else if (vm.actplace == "MTF") {
+        loadmtf(vm.actdate);
       }
     }
 
@@ -396,6 +400,203 @@ define([], function () {
       });
     }
 
+    function loadmtf(st) {
+      st = $filter('date')(new Date(st).getTime(), 'yyyyMMdd');
+      vm.mtfdata = [];
+
+      vm.mtfdata[0] = {};
+      vm.mtfdata[0].mtf = "MTF";
+      vm.mtfdata[0].mtfindb = 0;
+      vm.mtfdata[0].mtfinaeq = 0;
+      vm.mtfdata[0].ppedb = 0;
+      vm.mtfdata[0].ppeaeq = 0;
+      vm.mtfdata[0].ppudb = 0;
+      vm.mtfdata[0].ppuaeq = 0;
+      vm.mtfdata[0].cldb = 0;
+      vm.mtfdata[0].claeq = 0;
+      vm.mtfdata[0].bpdb = 0;
+      vm.mtfdata[0].bpaeq = 0;
+      vm.mtfdata[0].bokesdb = 0;
+      vm.mtfdata[0].mindb = 0;
+      vm.mtfdata[0].minaeq = 0;
+      vm.mtfdata[0].szakde = vm.shifts[0].shift;
+      vm.mtfdata[0].demtfindb = 0;
+      vm.mtfdata[0].demtfinaeq = 0;
+      vm.mtfdata[0].deppedb = 0;
+      vm.mtfdata[0].deppeaeq = 0;
+      vm.mtfdata[0].deppudb = 0;
+      vm.mtfdata[0].deppuaeq = 0;
+      vm.mtfdata[0].decldb = 0;
+      vm.mtfdata[0].declaeq = 0;
+      vm.mtfdata[0].debpdb = 0;
+      vm.mtfdata[0].debpaeq = 0;
+      vm.mtfdata[0].debokesdb = 0;
+      vm.mtfdata[0].demindb = 0;
+      vm.mtfdata[0].deminaeq = 0;
+      vm.mtfdata[0].szakdu = vm.shifts[1].shift;
+      vm.mtfdata[0].dumtfindb = 0;
+      vm.mtfdata[0].dumtfinaeq = 0;
+      vm.mtfdata[0].duppedb = 0;
+      vm.mtfdata[0].duppeaeq = 0;
+      vm.mtfdata[0].duppudb = 0;
+      vm.mtfdata[0].duppuaeq = 0;
+      vm.mtfdata[0].ducldb = 0;
+      vm.mtfdata[0].duclaeq = 0;
+      vm.mtfdata[0].dubpdb = 0;
+      vm.mtfdata[0].dubpaeq = 0;
+      vm.mtfdata[0].dubokesdb = 0;
+      vm.mtfdata[0].dumindb = 0;
+      vm.mtfdata[0].duminaeq = 0;
+      vm.mtfdata[0].szakej = vm.shifts[2].shift;
+      vm.mtfdata[0].ejmtfindb = 0;
+      vm.mtfdata[0].ejmtfinaeq = 0;
+      vm.mtfdata[0].ejppedb = 0;
+      vm.mtfdata[0].ejppeaeq = 0;
+      vm.mtfdata[0].ejppudb = 0;
+      vm.mtfdata[0].ejppuaeq = 0;
+      vm.mtfdata[0].ejcldb = 0;
+      vm.mtfdata[0].ejclaeq = 0;
+      vm.mtfdata[0].ejbpdb = 0;
+      vm.mtfdata[0].ejbpaeq = 0;
+      vm.mtfdata[0].ejbokesdb = 0;
+      vm.mtfdata[0].ejmindb = 0;
+      vm.mtfdata[0].ejminaeq = 0;
+
+      dataService.getmtf(st).then(function (response) {
+
+
+        for (var j = 0; j < response.data.length; j++) {
+          response.data[j].days = response.data[j].days.substring(0, 10);
+          for (var l = 0; l < vm.aeqs.length; l++) {
+            if (response.data[j].type == vm.aeqs[l].name) {
+              response.data[j].aeq = response.data[j].amount * vm.aeqs[l].amount;
+            }
+            else if (response.data[j].place.includes(vm.aeqs[l].name)) {
+              response.data[j].aeq = response.data[j].amount * vm.aeqs[l].amount;
+            }
+          }
+
+          if (response.data[j].category == "POTOUT-OUT") {
+            vm.mtfdata[0].mtfindb += response.data[j].amount;
+            vm.mtfdata[0].mtfinaeq += response.data[j].aeq;
+            if (response.data[j].shiftnum == "1") {
+              vm.mtfdata[0].demtfindb += response.data[j].amount;
+              vm.mtfdata[0].demtfinaeq += response.data[j].aeq;
+            }
+            else if (response.data[j].shiftnum == "2") {
+              vm.mtfdata[0].dumtfindb += response.data[j].amount;
+              vm.mtfdata[0].dumtfinaeq += response.data[j].aeq;
+            }
+            else if (response.data[j].shiftnum == "3") {
+              vm.mtfdata[0].ejmtfindb += response.data[j].amount;
+              vm.mtfdata[0].ejmtfinaeq += response.data[j].aeq;
+            }
+          }
+          
+          else if (response.data[j].category == "PPE-AMOUNT") {
+            vm.mtfdata[0].ppedb += response.data[j].amount;
+            vm.mtfdata[0].ppeaeq += response.data[j].aeq;
+            if (response.data[j].shiftnum == "1") {
+              vm.mtfdata[0].deppendb += response.data[j].amount;
+              vm.mtfdata[0].deppeaeq += response.data[j].aeq;
+            }
+            else if (response.data[j].shiftnum == "2") {
+              vm.mtfdata[0].duppedb += response.data[j].amount;
+              vm.mtfdata[0].dupeeaeq += response.data[j].aeq;
+            }
+            else if (response.data[j].shiftnum == "3") {
+              vm.mtfdata[0].ejppedb += response.data[j].amount;
+              vm.mtfdata[0].ejppeaeq += response.data[j].aeq;
+            }
+          }
+
+          else if (response.data[j].category == "PPU-TOTAL") {
+            vm.mtfdata[0].ppudb += response.data[j].amount;
+            vm.mtfdata[0].ppuaeq += response.data[j].aeq;
+            if (response.data[j].shiftnum == "1") {
+              vm.mtfdata[0].deppudb += response.data[j].amount;
+              vm.mtfdata[0].deppuaeq += response.data[j].aeq;
+            }
+            else if (response.data[j].shiftnum == "2") {
+              vm.mtfdata[0].duppudb += response.data[j].amount;
+              vm.mtfdata[0].dumppuaeq += response.data[j].aeq;
+            }
+            else if (response.data[j].shiftnum == "3") {
+              vm.mtfdata[0].ejppudb += response.data[j].amount;
+              vm.mtfdata[0].ejppuaeq += response.data[j].aeq;
+            }
+          }
+
+          else if (response.data[j].category == "BP-OUT") {
+            vm.mtfdata[0].bpdb += response.data[j].amount;
+            vm.mtfdata[0].bpaeq += response.data[j].aeq;
+            if (response.data[j].shiftnum == "1") {
+              vm.mtfdata[0].debpdb += response.data[j].amount;
+              vm.mtfdata[0].debpaeq += response.data[j].aeq;
+            }
+            else if (response.data[j].shiftnum == "2") {
+              vm.mtfdata[0].dubpdb += response.data[j].amount;
+              vm.mtfdata[0].dubpaeq += response.data[j].aeq;
+            }
+            else if (response.data[j].shiftnum == "3") {
+              vm.mtfdata[0].ejbpdb += response.data[j].amount;
+              vm.mtfdata[0].ejbpaeq += response.data[j].aeq;
+            }
+          }
+
+          else if (response.data[j].category == "CH-OUT") {
+            vm.mtfdata[0].cldb += response.data[j].amount;
+            vm.mtfdata[0].claeq += response.data[j].aeq;
+            if (response.data[j].shiftnum == "1") {
+              vm.mtfdata[0].decldb += response.data[j].amount;
+              vm.mtfdata[0].declaeq += response.data[j].aeq;
+            }
+            else if (response.data[j].shiftnum == "2") {
+              vm.mtfdata[0].ducldb += response.data[j].amount;
+              vm.mtfdata[0].duclaeq += response.data[j].aeq;
+            }
+            else if (response.data[j].shiftnum == "3") {
+              vm.mtfdata[0].ejcldb += response.data[j].amount;
+              vm.mtfdata[0].ejclaeq += response.data[j].aeq;
+            }
+          }
+          else if (response.data[j].category == "BOK-BOKES") {
+            vm.mtfdata[0].bokesdb += response.data[j].amount;
+            vm.mtfdata[0].bokesaeq += response.data[j].aeq;
+            if (response.data[j].shiftnum == "1") {
+              vm.mtfdata[0].debokesdb += response.data[j].amount;
+              vm.mtfdata[0].debokesaeq += response.data[j].aeq;
+            }
+            else if (response.data[j].shiftnum == "2") {
+              vm.mtfdata[0].dubokesdb += response.data[j].amount;
+              vm.mtfdata[0].dubokesaeq += response.data[j].aeq;
+            }
+            else if (response.data[j].shiftnum == "3") {
+              vm.mtfdata[0].ejbokesdb += response.data[j].amount;
+              vm.mtfdata[0].ejbokesaeq += response.data[j].aeq;
+            }
+          }
+          else if (response.data[j].category == "MIN-AMOUNT") {
+            vm.mtfdata[0].mindb += response.data[j].amount;
+            vm.mtfdata[0].minaeq += response.data[j].aeq;
+            if (response.data[j].shiftnum == "1") {
+              vm.mtfdata[0].demindb += response.data[j].amount;
+              vm.mtfdata[0].deminaeq += response.data[j].aeq;
+            }
+            else if (response.data[j].shiftnum == "2") {
+              vm.mtfdata[0].dumindb += response.data[j].amount;
+              vm.mtfdata[0].duminaeq += response.data[j].aeq;
+            }
+            else if (response.data[j].shiftnum == "3") {
+              vm.mtfdata[0].ejmindb += response.data[j].amount;
+              vm.mtfdata[0].ejminaeq += response.data[j].aeq;
+            }
+          }
+        }
+        console.log(vm.mtfdata);
+      });
+    }
+
     activate();
 
     function getAEQ(tomb, azon, am) {
@@ -463,6 +664,13 @@ define([], function () {
         vm.actdateend = $filter('date')(new Date($stateParams.datum).getTime() + 24 * 3600 * 1000, 'yyyy-MM-dd');
         loadpott(vm.actdate, vm.actdateend);
       }
+      else if ($stateParams.datum && $stateParams.place == "MTF") {
+        vm.actplace = $stateParams.place;
+        vm.actdate = $stateParams.datum;
+        vm.datumszam = $filter('date')(new Date($stateParams.datum).getTime(), 'yyyy-MM-dd');
+        vm.actdateend = $filter('date')(new Date($stateParams.datum).getTime() + 24 * 3600 * 1000, 'yyyy-MM-dd');
+        loadmtf(vm.actdate);
+      }
       else {
         vm.actdate = $filter('date')(new Date(), 'yyyy-MM-dd');
         vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
@@ -482,6 +690,30 @@ define([], function () {
         vm.shifts[2].szak = "EJ";
       }
     }
+
+    vm.aeqs = [
+      { name: "Ds12 FLOW", amount: 0.6 },
+      { name: "DS12FLOW", amount: 0.6 },
+      { name: "ZW220 CP5", amount: 0.44 },
+      { name: "ZW230 FLOW", amount: 0.46 },
+      { name: "ZW230 CP5", amount: 0.46 },
+      { name: "C11CP5", amount: 0.5 },
+      { name: "C11 CP5", amount: 0.5 },
+      { name: "C11FLOW", amount: 0.5 },
+      { name: "C11 FLOW", amount: 0.5 },
+      { name: "D11 CP5", amount: 0.68 },
+      { name: "D13 CP5", amount: 0.88 },
+      { name: "D12 FLOW", amount: 0.74 },
+      { name: "DX", amount: 0.74 },
+      { name: "D11 FLOW", amount: 0.68 },
+      { name: "A27 CP5", amount: 1 },
+      { name: "A27 FLOW", amount: 1 },
+      { name: "B32 CP5", amount: 1.3 },
+      { name: "B32 FLOW", amount: 1.3 },
+      { name: "DS- D13 CP5", amount: 0.7 },
+      { name: "DS13CP5", amount: 0.7 },
+      { name: "ZB500S", amount: 0.6 }
+    ];
   }
   Controller.$inject = ['Data', '$cookies', '$stateParams', '$rootScope', '$filter'];
   return Controller;

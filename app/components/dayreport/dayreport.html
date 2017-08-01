@@ -72,6 +72,14 @@
           </div>
         </div>
       </div>
+
+      <div class="row" ng-show="vm.actplace=='MTF'">
+        <div class="col-sm-12" ng-repeat="item in vm.mtfdata">
+          <div class="card">
+            <mtf-dir data="item"></mtf-dir>
+          </div>
+        </div>
+      </div>
     </div>
 </div>
 <div class="module-footer"></div>
