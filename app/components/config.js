@@ -27,6 +27,24 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('type', {
+		url: '/type',
+		templateUrl: './app/components/type/type.html',
+		controller: 'typeController',
+		controllerAs: 'vm'
+	});
+	$stateProvider.state('tmk', {
+		url: '/tmk',
+		templateUrl: './app/components/tmk/tmk.html',
+		controller: 'tmkController',
+		controllerAs: 'vm'
+	});
+	$stateProvider.state('shift', {
+		url: '/shift',
+		templateUrl: './app/components/shift/shift.html',
+		controller: 'shiftController',
+		controllerAs: 'vm'
+	});
 
   }
   ConfigFunction.$inject = ['$urlRouterProvider', '$stateProvider'];

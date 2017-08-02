@@ -1,0 +1,92 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">Karbantartó létszám felvétele</h1>
+      <div class="col-sm-12" style="margin-top:20px">
+        <div class="input-group">
+          <span class="input-group-addon">Feltöltésre kerülő időszak:</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.datefrom" std="{{vm.sdate}}" setdate="0d">
+          <span class="input-group-addon">-tól</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.dateto" std="{{vm.sdate}}" setdate="0d">
+          <span class="input-group-addon">-ig</span>
+          <span class="input-group-addon">Létszam</span>
+          <input type="text" class="form-control" ng-model="vm.darab">
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.show()" ng-disabled="vm.dateto<vm.datefrom || vm.darab==null">Input mezők generálása</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div ng-show="vm.mutat">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Dátum</th>
+              <th>A szak létszám</th>
+              <th>B szak létszám</th>
+              <th>C szak létszám</th>
+              <th>D szak létszám</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.datumok track by $index" class="ng-scope">
+              <td><input ng-model="vm.data[$index].id" type="text" class="form-control" value="{{vm.id}}" readonly></td>
+              <td><input ng-model="vm.data[$index].date" type="text" class="form-control" value="{{item}}" readonly></td>
+              <td><input ng-model="vm.data[$index].numbera" type="text" class="form-control"></td>
+              <td><input ng-model="vm.data[$index].numberb" type="text" class="form-control"></td>
+              <td><input ng-model="vm.data[$index].numberc" type="text" class="form-control"></td>
+              <td><input ng-model="vm.data[$index].numberd" type="text" class="form-control"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="col-sm-4">
+          <button class="btn btn-success" ng-click="vm.save();vm.mutat=false">Feltölt</button>
+        </div>
+      </div>
+    </div>
+    <div class="module-footer">
+      <hr>
+      <h1 class="text-center">Felvett létszámok listája</h1>
+      <div class="tray filter-tray top" style="margin-top:20px">
+        <div class="tray-inner">
+          <div class="filter-rule-group">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Dátum:</span>
+                <input type="text" ng-model="vm.search.date" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th rowspan=2 ng-click="vm.order='date';vm.asc=!vm.asc;">Dátum</th>
+            <th>Létszám (A)</th>
+            <th>Létszám (B)</th>
+            <th>Létszám (C)</th>
+            <th>Létszám (D)</th>
+            <th>Törlés</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.shiftlist | orderBy:vm.order:vm.asc | filter: vm.search track by $index" class="ng-scope">
+            <td>{{item.date}}</td>
+            <td>{{item.numbera}}</td>
+            <td>{{item.numberb}}</td>
+            <td>{{item.numberc}}</td>
+            <td>{{item.numberd}}</td>
+            <td>
+              <div class="btn-group btn-group-sm">
+                <button class="btn btn-danger" ng-click="vm.remove(item.id,$index)"><i class="icon-trash"></i></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
