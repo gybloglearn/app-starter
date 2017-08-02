@@ -593,7 +593,6 @@ define([], function () {
             }
           }
         }
-        console.log(vm.mtfdata);
       });
     }
 
@@ -711,6 +710,7 @@ define([], function () {
       { name: "B32 CP5", amount: 1.3 },
       { name: "B32 FLOW", amount: 1.3 },
       { name: "DS- D13 CP5", amount: 0.7 },
+      { name: " D13 CP5", amount: 0.7 },
       { name: "DS13CP5", amount: 0.7 },
       { name: "ZB500S", amount: 0.6 }
     ];
