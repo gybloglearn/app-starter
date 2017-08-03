@@ -7,7 +7,12 @@ define([], function () {
     vm.load = load;
     vm.remove = remove;
     vm.sheetmakers = ["SheetMaker1", "SheetMaker2", "SheetMaker4", "SheetMaker5", "SheetMaker6", "SheetMaker7", "SheetMaker8", "SheetMaker9"];
+    vm.hours = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
     vm.actsm = "Sheetmaker1";
+    vm.starthour = "8";
+    vm.endhour = "8";
+    vm.startminute = "00";
+    vm.endminute = "00";
 
     function show() {
 
@@ -17,14 +22,14 @@ define([], function () {
       vm.data.push({
         "id": vm.id = new Date().getTime(),
         "sm": vm.actsm,
-        "lastdate": vm.datefrom,
-        "nextdate": vm.dateto,
+        "lastdate": vm.datefrom + " " + vm.starthour + ':' + vm.startminute,
+        "nextdate": vm.dateto + " " + vm.endhour + ':' + vm.endminute,
       });
     }
 
+
     function save() {
       updateService.posttmk(vm.data[0]).then(function (response) {
-        vm.showmessage = true;
       });
     }
 
@@ -59,6 +64,8 @@ define([], function () {
       vm.datefrom = $filter('date')(vm.sdate, 'yyyy-MM-dd');
       load();
     }
+
+    
   }
   Controller.$inject = ['updateService', '$cookies', '$state', '$rootScope', '$filter'];
   return Controller;

@@ -3,19 +3,30 @@ define([], function () {
 
   function Service($http) {
     var service = {
+      getpartnumber: getpartnumber,
       getshift: getshift,
       getAllshift: getAllshift,
       getAlltmk: getAlltmk,
-      getAlltype:getAlltype,
+      getAlltype: getAlltype,
       postshift: postshift,
       posttmk: posttmk,
-      eraseshift:eraseshift,
-      erasetmk:erasetmk
+      posttype:posttype,
+      eraseshift: eraseshift,
+      erasetmk: erasetmk,
+      erasetype: erasetype
     };
 
     return service;
 
     ///////////
+
+    function getpartnumber() {
+      var req = {
+        method: 'GET',
+        url: 'http://3.228.180.15/modulapi/mods'
+      };
+      return $http(req);
+    }
 
     function getshift(datum) {
       var req = {
@@ -61,6 +72,14 @@ define([], function () {
       };
       return $http(req);
     }
+    function posttype(data) {
+      var req = {
+        method: 'POST',
+        url: 'app/components/PHP/kardosbela/' + data.id,
+        data: data
+      };
+      return $http(req);
+    }
     function eraseshift(id) {
       var request = {
         method: "DELETE",
@@ -72,6 +91,13 @@ define([], function () {
       var request = {
         method: "DELETE",
         url: "app/components/PHP/tmk/" + id
+      };
+      return $http(request);
+    }
+    function erasetype(id) {
+      var request = {
+        method: "DELETE",
+        url: "app/components/PHP/kardosbela/" + id
       };
       return $http(request);
     }

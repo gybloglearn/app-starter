@@ -219,9 +219,8 @@
          $mapper=new \DB\Jig\Mapper($db,'kardosbela.json');
 
          $mapper->id=$data->id; //azonosító
-         $mapper->lastdate=$data->lastdate; //előző dátum
+         $mapper->sm=$data->sm; //sm
          $mapper->nextdate=$data->nextdate; //következő dátum
-         $mapper->actproduct=$data->actproduct; //aktuális termék
          $mapper->nextproduct=$data->nextproduct; //következő termék
     
          $mapper->save();
@@ -240,9 +239,7 @@
          $mapper=new \DB\Jig\Mapper($db,'kardosbela.json');
          $kbm=$mapper->load(Array('@id=?',$params['id']));
 
-         $kbm->lastdate=$data->lastdate; //előző dátum
          $kbm->nextdate=$data->nextdate; // következő dátum
-         $kbm->actproduct=$data->actproduct; // aktuális termék
          $kbm->nextproduct=$data->nextproduct; // következő termék
 
          $kbm->save();

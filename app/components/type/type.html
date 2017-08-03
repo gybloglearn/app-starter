@@ -1,7 +1,99 @@
 <div class="container">
   <section class="module">
-    <div class="module-header">Type</div>
-    <div class="module-body"></div>
-    <div class="module-footer"></div>
+    <div class="module-header">
+      <h1 class="text-center">Termékváltás</h1>
+      <div class="col-sm-12" style="margin-top:20px">
+        <div >
+          <!--span class="input-group-addon">Következő termék</span-->
+          <input type="text" class="datepicker form-control" ng-model="vm.datefrom" std="{{vm.sdate}}" setdate="0d">
+          <!--span class="input-group-addon">Óra:</span-->
+          <select ng-model="vm.acthour">
+					<option ng-repeat="item in vm.hours track by $index" value="{{item}}">{{item}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="input-group">
+          <select ng-model="vm.actsm">
+					<option ng-repeat="item in vm.sheetmakers track by $index" value="{{item}}">{{item}}</option>
+          </select>
+          <select ng-model="vm.actproduct">
+						<option ng-repeat="item in vm.moduls" value="{{item.name}}">{{item.name}}</option>
+					</select>
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.show()" ng-disabled="!vm.actproduct">Input mezők generálása</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div ng-show="vm.mutat">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Dátum</th>
+              <th>SM</th>
+              <th>Termék</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.data track by $index" class="ng-scope">
+              <td><input ng-model="vm.data[$index].id" type="text" class="form-control" value="{{vm.id}}" readonly></td>
+              <td><input ng-model="vm.data[$index].nextdate" type="text" class="form-control" value="{{vm.datefrom}}" readonly></td>
+              <td><input ng-model="vm.data[$index].sm" type="text" class="form-control" value="{{vm.actsm}}" readonly></td>
+              <td><input ng-model="vm.data[$index].nextproduct" type="text" class="form-control" value="{{vm.actproduct}}" readonly></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="col-sm-4">
+          <button class="btn btn-success" ng-click="vm.save();vm.load();vm.mutat=false">Feltölt</button>
+        </div>
+      </div>
+    </div>
+    <div class="module-footer">
+      <hr>
+      <h1 class="text-center">Felvett Termékváltások</h1>
+      <div class="tray filter-tray top" style="margin-top:20px">
+        <div class="tray-inner">
+          <div class="filter-rule-group">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">SM:</span>
+                <input type="text" ng-model="vm.search.sm" class="form-control">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Típus:</span>
+                <input type="text" ng-model="vm.search.nextproduct" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th rowspan=2 ng-click="vm.order='date';vm.asc=!vm.asc;">Dátum</th>
+            <th rowspan=2 ng-click="vm.order='date';vm.asc=!vm.asc;">SM</th>
+            <th rowspan=2 ng-click="vm.order='date';vm.asc=!vm.asc;">Termék</th>
+            <th>Törlés</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.typelist | orderBy:vm.order:vm.asc | filter: vm.search track by $index" class="ng-scope">
+            <td>{{item.nextdate}}</td>
+            <td>{{item.sm}}</td>
+            <td>{{item.nextproduct}}</td>
+            <td>
+              <div class="btn-group btn-group-sm">
+                <button class="btn btn-danger" ng-click="vm.remove(item.id,$index)"><i class="icon-trash"></i></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 </div>

@@ -6,20 +6,32 @@
         <div class="input-group">
           <span class="input-group-addon">Előző TMK</span>
           <input type="text" class="datepicker form-control" ng-model="vm.datefrom" setdate="0d">
+          <span class="input-group-addon">Óra:</span>
+          <select ng-model="vm.starthour">
+					<option ng-repeat="item in vm.hours track by $index" value="{{item}}">{{item}}</option>
+          </select>
+          <span class="input-group-addon">Perc:</span>
+          <input type="text" class="form-control" ng-model="vm.startminute">
           <span class="input-group-addon">Következő TMK</span>
           <input type="text" class="datepicker form-control" ng-model="vm.dateto" std="{{vm.sdate}}" setdate="0d">
+          <span class="input-group-addon">Óra:</span>
+          <select ng-model="vm.endhour">
+					<option ng-repeat="item in vm.hours track by $index" value="{{item}}">{{item}}</option>
+          </select>
+          <span class="input-group-addon">Perc:</span>
+          <input type="text" class="form-control" ng-model="vm.endminute">
         </div>
       </div>
       <div class="col-sm-12">
-				<div class="input-group">
-					<select ng-model="vm.actsm">
+        <div class="input-group">
+          <select ng-model="vm.actsm">
 					<option ng-repeat="item in vm.sheetmakers track by $index" value="{{item}}">{{item}}</option>
 					</select>
-					<div class="input-group-btn">
-						<a href="" class="btn btn-primary" ng-click="vm.show()" ng-disabled="vm.dateto<vm.datefrom">Input mezők generálása</a>
-					</div>
-				</div>
-			</div>
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.show()" ng-disabled="vm.dateto<vm.datefrom">Input mezők generálása</a>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="module-body">
       <div ng-show="vm.mutat">
@@ -42,7 +54,7 @@
           </tbody>
         </table>
         <div class="col-sm-4">
-          <button class="btn btn-success" ng-click="vm.save();vm.load();vm.mutat=false">Feltölt</button> 
+          <button class="btn btn-success" ng-click="vm.save();vm.load();vm.mutat=false">Feltölt</button>
         </div>
       </div>
     </div>
