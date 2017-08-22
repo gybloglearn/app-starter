@@ -1,7 +1,66 @@
 <div class="container">
   <section class="module">
-    <div class="module-header">Start</div>
-    <div class="module-body"></div>
+    <div class="module-header">
+      <h1 class="text-center"></h1>
+      <div class="col-sm-5" style="margin-top:20px">
+        <span>Szint:</span>
+        <select ng-model="vm.actlevel">
+					<option ng-repeat="level in vm.levels track by $index" value="{{level}}">{{level}}</option>
+        </select>
+        <span>Terület:</span>
+        <select ng-model="vm.actarea">
+					<option ng-repeat="area in vm.areas track by $index" value="{{area}}">{{area}}</option>
+        </select>
+      </div>
+      <div class="col-sm-6" style="margin-top:20px">
+        <div class="input-group">
+          <span class="input-group-addon">Dátum</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-7d" end="{{vm.today}}">
+          <span class="input-group-addon">-tól</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="-0d" end="{{vm.today}}">
+          <span class="input-group-addon">-ig</span>
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.enddate<=vm.startdate">Betöltés</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="col-sm-12">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th rowspan=2 ng-click="vm.order='Cikkszam';vm.asc=!vm.asc;">Cikkszám</th>
+              <th rowspan=2 ng-click="vm.order='CikkMegnevezes';vm.asc=!vm.asc;">Cikk megnevezés</th>
+              <th rowspan=2 ng-click="vm.order='Mennyiseg';vm.asc=!vm.asc;">Mennyiség</th>
+              <th rowspan=2 ng-click="vm.order='Lokacio';vm.asc=!vm.asc;">Lokáció</th>
+              <th rowspan=2 ng-click="vm.order='Adag_Szeriaszam';vm.asc=!vm.asc;">Adag szériaszám</th>
+              <th rowspan=2 ng-click="vm.order='Konyveles_Datuma';vm.asc=!vm.asc;">Könyvelés dátuma</th>
+              <th rowspan=2 ng-click="vm.order='Bizonylatszam';vm.asc=!vm.asc;">Bizonylatszám</th>
+              <th rowspan=2 ng-click="vm.order='JavaslatTevo';vm.asc=!vm.asc;">Javaslat tevő</th>
+              <th rowspan=2 ng-click="vm.order='JavaslatDatuma';vm.asc=!vm.asc;">Javaslat dátuma</th>
+              <th rowspan=2 ng-click="vm.order='scrapName';vm.asc=!vm.asc;">Scrap név</th>
+              <th rowspan=2 ng-click="vm.order='eScrap_ScrapCode';vm.asc=!vm.asc;">Scrap kód</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.data | orderBy:vm.order:vm.asc | filter: search track by $index" class="ng-scope">
+              <td>{{item.Cikkszam}}</td>
+              <td>{{item.CikkMegnevezes}}</td>
+              <td>{{item.Mennyiseg}}</td>
+              <td>{{item.Lokacio}}</td>
+              <td>{{item.Adag_Szeriaszam}}</td>
+              <td>{{item.Konyveles_Datuma}}</td>
+              <td>{{item.Bizonylatszam}}</td>
+              <td>{{item.JavaslatTevo}}</td>
+              <td>{{item.JavaslatDatuma}}</td>
+              <td>{{item.scrapName}}</td>
+              <td>{{item.eScrap_ScrapCode}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
     <div class="module-footer"></div>
   </section>
 </div>

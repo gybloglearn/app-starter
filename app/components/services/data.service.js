@@ -10,10 +10,10 @@ define([], function () {
 
     ///////////
 
-    function get() {
+    function get(start, end, level, area) {
       var req = {
         method: 'GET',
-        url: '//url//'
+        url: 'app/components/PHP/eScrap.php?startdate=' + start + '&enddate=' + end + '&wrf_level_id=' + level + '&wrf_area=' + area
       };
       return $http(req);
     }
