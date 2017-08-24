@@ -1,0 +1,122 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+.text-ge-blue {color: #005CB9;}
+.text-ge-green {color: #46ad00;}
+.text-ge-red {color: #de2533;}
+.text-ge-light-grey {color: #d8d8d8;}
+.blueBG {background-color: #005CB9;}
+.my-input {
+  background: transparent!important;
+  font-size: inherit!important;
+  color: #005CB9!important;
+  font-weight: bold;
+  text-align: center;
+}
+.high {
+  line-height: 40px;
+  border-bottom: 1px solid #e7e7e7;
+  font-size: 22px;
+}
+.collapser{
+  border-bottom: 1px solid #e7e7e7;
+  display: block;
+}
+.collapser:hover {
+  cursor: pointer;
+}
+.backgrounded {
+  line-height: 40px;
+  font-size: 18px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #d8d8d8;
+}
+
+@media (max-width: 979px) {
+  .module-snapshot .module:first-child+.module {
+      margin-left: 0px;
+  }
+}
+.cap,.plan,.act {
+  height: 5px;
+  margin: 0;
+}
+.cap {
+  background-color: #d8d8d8;
+}
+.plan {
+  background-color: #005CB9;
+}
+.act {
+  background-color: #46ad00;
+  margin-bottom:15px; font-size:.8em; line-height:25px;white-space:nowrap;
+}
+.shower:hover {
+  background: #e7e7e7!important;
+  display: block;
+  cursor:pointer;
+}
+.shower:active {
+  background: #c7c7c7!important;
+}
+.card {
+  background: white;
+  border-radius: 3px;
+  border: 1px solid #e7e7e7;
+  box-shadow: 0 3px 5px rgba(0,0,0,.1);
+  margin-top: 30px;
+  padding: 15px;
+}
+.card .title h1 {
+  font-size: 20px;
+  height: 50px;
+  width: 50px;
+  line-height:50px;
+  /*background: #005CB9;*/
+  background: #575757;
+  color: white;
+  margin: -40px auto 0 auto;
+  text-align: center;
+  border-radius: 50px;
+  box-shadow: 0 3px 5px rgba(0,0,0,.2);
+}
+.card .content .row {
+  width: 100%;
+  margin:0;
+}
+
+.myrule {
+  margin: 5px auto;
+  border-top: 1px solid #d8d8d8;
+  border-bottom: 1px solid #f8f8f8;
+}
+.oee {
+  border-top: 1px dashed #d8d8d8;
+  background: #e8e8e8;
+  margin: 0 -15px -15px -15px;
+}
+.oee .progress {
+  margin:5px auto;
+  width: 80%;
+  box-shadow: none;
+  border:1px solid #d8d8d8;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,.4);
+  background: white;
+}
+.oee .progress .progress-bar {
+  box-shadow: inset 0 2px 5px rgba(0,0,0,.4);
+}
+.popover-content h4 {
+  margin: 5px;
+}
+.popover-content hr {
+  margin: 5px;
+}
+.mybadge {
+  display: block;
+  margin: 0 auto;
+  border-radius: 50%;
+  width: 40px;
+  line-height: 28px;
+  height: 40px;
+}

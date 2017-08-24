@@ -24,6 +24,7 @@ if ( isset( $argv ) ) {
         join( "&", array_slice( $argv, 1 )
     ), $_GET );
 }
+var_dump($_GET);
 
 // set Parameters from get
 $startdate = date("m/d/Y H:i:s", strtotime($_GET["startdate"] . " 05:50:00"));
@@ -69,7 +70,7 @@ $smmch = Array(9, 10, 2595, 2596, 4845, 4846, 4847, 2700);
   }
   $toWrite = Array();
 for($i=0;$i<8;$i++){
-  echo date("Y-m-d H:i:s")."\n";
+  echo date("Y-m-d H:i:s")." - ".$smmch[$i]." - ".$_GET["startdate"]."\n";
   try
   {
       $ssrs_report = new SSRSReport(new Credentials(UID, PASWD), SERVICE_URL);

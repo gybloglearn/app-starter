@@ -3,17 +3,32 @@ define([], function () {
 
   function Service($http) {
     var service = {
-      get: get
+      getpartnumber: getpartnumber,
+      getsmfile: getsmfile,
+      getsm: getsm
     };
 
     return service;
 
     ///////////
-
-    function get(start,end,mch) {
+    function getpartnumber() {
       var req = {
         method: 'GET',
-        url: 'app/components/php/sumsm.php?startdate=' + start + '&enddate=' + end + '&mch=' + mch
+        url: 'http://3.228.180.15/modulapi/mods'
+      };
+      return $http(req);
+    }
+    function getsmfile(date) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/sm/sm' + date + '.json'
+      };
+      return $http(req);
+    }
+    function getsm(start, end, mch) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/ZW500_SM.php?startdate=' + start + '&enddate=' + end + '&report_id=' + mch
       };
       return $http(req);
     }

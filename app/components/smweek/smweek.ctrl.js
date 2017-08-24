@@ -2,297 +2,180 @@ define([], function () {
   'use strict';
   function Controller(weeklyService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
-    vm.yesterday = $filter('date')(new Date().getTime() - 24 * 3600 * 1000, 'yyyy-MM-dd');
-    vm.monday = $filter('date')(new Date(), 'yyyy-MM-dd');
-    var sheets = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
-    vm.actsm = "Mind";
-    vm.sheets = sheets;
-    vm.data = [];
-    vm.fault = [];
-    vm.smstand = [];
-    vm.a = 0;
-    vm.selectsmfault=selectsmfault;
+    vm.partnumbers = [];
+    vm.dates = [];
+    vm.filedatas = [];
+    vm.sm = [];
+    vm.smcards = [];
+    vm.startdate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+    vm.enddate  = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+    vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
+    vm.createdates=createdates;
 
-    function create_monday() {
-      vm.a = new Date().getDay();
-      if (vm.a != 1) {
-        vm.monday = $filter('date')(new Date().getTime() - (vm.a - 1) * 24 * 3600 * 1000, 'yyyy-MM-dd');
-      }
-      else {
-        vm.monday = $filter('date')(new Date(), 'yyyy-MM-dd');
-      }
-    }
-
-    function selectsmfault(tomb) {
-      vm.fault = [];
-      var b = 0;
-      var talalt = 0;
-
-      if (vm.actsm == "Mind") {
-        for (var i = 0; i < tomb.length; i++) {
-          for (var j = 0; j < vm.fault.length; j++) {
-            if (tomb[i].Event_SubGroup == vm.fault[j].code) {
-              vm.fault[j].time += tomb[i].Event_time;
-              talalt++;
-            }
-          }
-          if (talalt == 0) {
-            vm.fault[b] = {}
-            vm.fault[b].code = tomb[i].Event_SubGroup;
-            vm.fault[b].group = tomb[i].Ev_Group;
-            vm.fault[b].time = tomb[i].Event_time;
-            b++;
-          }
-          else {
-            talalt = 0;
-          }
-        }
-      }
-      else {
-        for (var i = 0; i < tomb.length; i++) {
-          if (tomb[i].Machine == vm.actsm) {
-            for (var j = 0; j < vm.fault.length; j++) {
-              if (tomb[i].Event_SubGroup == vm.fault[j].code) {
-                vm.fault[j].time += tomb[i].Event_time;
-                talalt++;
-              }
-            }
-            if (talalt == 0) {
-              vm.fault[b] = {}
-              vm.fault[b].code = tomb[i].Event_SubGroup;
-              vm.fault[b].group = tomb[i].Ev_Group;
-              vm.fault[b].time = tomb[i].Event_time;
-              b++;
-            }
-            else {
-              talalt = 0;
-            }
-          }
-        }
-      }
-      setfaultChart(vm.fault);
-    }
-
-    function load() {
-      vm.data = [];
-
-      vm.smstand = [];
-      vm.loading = true;
-      var val = 0;
-      var c = 0;
-      var talalt = 0;
-
-      angular.forEach(sheets, function (v, k) {
-        weeklyService.get(vm.monday, vm.yesterday, v).then(function (response) {
-          val++;
-          vm.data = vm.data.concat(response.data);
-          if (val == 8) {
-            vm.loading = false;
-            selectsmfault(vm.data);
-
-            for (var i = 0; i < vm.data.length; i++) {
-              for (var j = 0; j < vm.smstand.length; j++) {
-                if (vm.data[i].Machine == vm.smstand[j].mac) {
-                  vm.smstand[j].time += vm.data[i].Event_time;
-                  talalt++;
-                }
-              }
-              if (talalt == 0) {
-                vm.smstand[c] = {}
-                vm.smstand[c].mac = vm.data[i].Machine;
-                vm.smstand[c].time = vm.data[i].Event_time;
-                c++;
-              }
-              else {
-                talalt = 0;
-              }
-            }
-            setsmsChart(vm.smstand);
-            setChart(vm.data);
-          }
-        });
+    function loadPartnumbers() {
+      vm.partnumbers = [];
+      weeklyService.getpartnumber().then(function (response) {
+        vm.partnumbers = response.data;
       });
     }
 
-    function setfaultChart(fa) {
-      var fau = $filter('limitTo')($filter('orderBy')(fa, 'time', true), 10);
-      var fdata = [];
-
-      for (var i = 0; i < fau.length; i++) {
-        fdata[i] = {
-          name: fau[i].code,
-          y: Math.round(fau[i].time / 60)
-        }
+    function createdates(){
+      vm.dates = [];
+      var differencedate = 0;
+      differencedate = (new Date(vm.enddate ).getTime() - new Date(vm.startdate).getTime()) / (24 * 3600 * 1000);
+      for(var i = 0; i <= differencedate; i++){
+        vm.dates[i] = $filter('date')(new Date(vm.enddate ).getTime() - ((differencedate - i) * 24 * 3600 * 1000), 'yyyyMMdd');
       }
-
-      vm.faultChartconfig = {
-        chart: {
-          type: 'column',
-        },
-        title: { text: "TOP 10 hiba - " + vm.actsm },
-        series: [{
-          name: 'Hibák',
-          colorByPoint: true,
-          data: fdata
-        }],
-        xAxis: {
-          type: "category"
-        },
-        yAxis: [
-          { title: { text: 'Perc' } }
-        ],
-      }
+      callsm();
     }
 
-    function setChart(dt) {
-      vm.Chartconfig = {
-        chart: {
-          type: 'column',
-        },
-        plotOptions: {
-          column: {
-            stacking: 'normal'
+    function callsm() {
+      for (var i = 0; i < 8; i++) {
+        vm.sm[i] = {}
+        if (i == 2) {
+          vm.sm[i].id = "SM" + 9;
+        }
+        else {
+          vm.sm[i].id = "SM" + (i + 1);
+        }
+        vm.sm[i].musz = 0;
+        vm.sm[i].szerv = 0;
+        vm.sm[i].terv = 0;
+        vm.sm[i].jo = 0;
+        vm.sm[i].jaeq = 0;
+        vm.sm[i].ossz = 0;
+        vm.sm[i].oaeq = 0;
+      }
+      vm.sm[8] = {}
+      vm.sm[8].id = "SMS";
+      vm.sm[8].musz = 0;
+      vm.sm[8].szerv = 0;
+      vm.sm[8].terv = 0;
+      vm.sm[8].jo = 0;
+      vm.sm[8].jaeq = 0;
+      vm.sm[8].ossz = 0;
+      vm.sm[8].oaeq = 0;
+     
+      loadsmfile();
+    }
+
+    function loadsmfile() {
+      vm.filedatas = [];
+
+      for (var i = 0; i < vm.dates.length; i++) {
+        weeklyService.getsmfile(vm.dates[i]).then(function (response) {
+          for (var j = 0; j < response.data.length; j++) {
+            vm.filedatas.push(response.data[j]);
+            updatedowntime(response.data[j]);
           }
-        },
-        tooltip: {
-          valueDecimals: 2
-        },
-        title: { text: "SM1-SM9 chart" },
-        series: [
-          {
-            name: 'Műszaki technikai okok',
-            color: "#ff0000",
-            data: feltolt_Muszaki(dt),
-            stack: 'Összes'
-          },
-          {
-            name: 'Szervezési veszteség',
-            color: "#dddddd",
-            data: feltolt_Szervezesi(dt),
-            stack: 'Összes'
-          },
-          {
-            name: 'Tervezett veszteség',
-            color: "#0066dd",
-            data: feltolt_Tervezett(dt),
-            stack: 'Összes'
-          },
-          {
-            name: 'Jó',
-            color: "#00ff00",
-            data: feltolt_Jo(dt),
-            stack: 'Összes'
-          },
-        ],
-        xAxis: [
-          { categories: feltolt_x() },
-        ],
-        yAxis: {
-          title: {
-            text: "Százalék"
-          },
-          tickInterval: 20,
-          max: 100
-        },
+          
+        });
+      }
+      lodsm();
+    }
+
+    function updatedowntime(tmb) {
+      for (var j = 0; j < vm.sm.length - 1; j++) {
+        if (vm.sm[j].id == tmb.Machine && tmb.Ev_Group == "Tervezett veszteseg") {
+          vm.sm[j].terv += tmb.Event_time;
+          vm.sm[8].terv += tmb.Event_time;
+        }
+        else if (vm.sm[j].id == tmb.Machine && tmb.Ev_Group == "Szervezesi veszteseg") {
+          vm.sm[j].szerv += tmb.Event_time;
+          vm.sm[8].szerv += tmb.Event_time;
+        }
+        else if (vm.sm[j].id == tmb.Machine && tmb.Ev_Group == "Muszaki technikai okok") {
+          vm.sm[j].musz += tmb.Event_time;
+          vm.sm[8].musz += tmb.Event_time;
+        }
+      }
+      
+    }
+
+    function lodsm() {
+      for (var i = 0; i < vm.sheetmakers.length; i++) {
+        weeklyService.getsm(vm.startdate, vm.enddate, vm.sheetmakers[i]).then(function (response) {
+          for (var j = 0; j < response.data.length; j++) {
+            response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
+
+            for (var k = 0; k < vm.sm.length - 1; k++) {
+              if (response.data[j].shortname == vm.sm[k].id && response.data[j].category == "GOOD") {
+                vm.sm[k].jo += response.data[j].amount;
+                vm.sm[k].jaeq += response.data[j].aeq;
+                vm.sm[8].jo += response.data[j].amount;
+                vm.sm[8].jaeq += response.data[j].aeq;
+              }
+              else if (response.data[j].shortname == vm.sm[k].id && response.data[j].category == "TOTAL") {
+                vm.sm[k].ossz += response.data[j].amount;
+                vm.sm[k].oaeq += response.data[j].aeq;
+                vm.sm[8].ossz += response.data[j].amount;
+                vm.sm[8].oaeq += response.data[j].aeq;
+              }
+            }
+          }
+          console.log(vm.sm);
+          updatecard(vm.sm);
+        });
       }
     }
 
-    function feltolt_x() {
-      var szoveg = ["Hibák százalékos aránya"];
-      return szoveg;
+    function updatecard(smarr) {
+      vm.smcards = [];
+      var smskap = 0;
+      var smstime = 0;
+      for (var i = 0; i < smarr.length - 1; i++) {
+        smskap += (vm.dates.length * 1440 * 60 / 91 / 12 * 0.74) * ((vm.dates.length * 1440 - ((smarr[i].musz + smarr[i].szerv + smarr[i].terv) / 60)) / (vm.dates.length * 1440));
+        smstime += vm.dates.length * 1440;
+        vm.smcards.push({
+          sm: smarr[i].id,
+          osszlap: smarr[i].ossz,
+          osszaeq: smarr[i].oaeq,
+          jolap: smarr[i].jo,
+          joaeq: smarr[i].jaeq,
+          alltime: vm.dates.length * 1440,
+          downtime: (smarr[i].musz + smarr[i].szerv + smarr[i].terv) / 60,
+          muszaki: smarr[i].musz / 60,
+          szervezesi: smarr[i].szerv / 60,
+          tervezesi: smarr[i].terv / 60,
+          kap: (vm.dates.length * 1440 * 60 / 91 / 12 * 0.74) * ((vm.dates.length * 1440 - ((smarr[i].musz + smarr[i].szerv + smarr[i].terv) / 60)) / (vm.dates.length * 1440))
+        })
+      }
+      var obj = {}
+      obj = {
+        sm: smarr[8].id,
+        osszlap: smarr[8].ossz,
+        osszaeq: smarr[8].oaeq,
+        jolap: smarr[8].jo,
+        joaeq: smarr[8].jaeq,
+        alltime: smstime,
+        downtime: (smarr[8].musz + smarr[8].szerv + smarr[8].terv) / 60,
+        muszaki: smarr[8].musz / 60,
+        szervezesi: smarr[8].szerv / 60,
+        tervezesi: smarr[8].terv / 60,
+        kap: smskap
+      }
+      vm.smcards.push(obj);
     }
 
-    function feltolt_Muszaki(tomb) {
-      var hiba = 0;
-      var hb = [];
-
+    function getAEQ(tomb, azon, am) {
+      var aeq = 0;
+      var substr = azon.substring(0, 3);
+      if (substr.substring(0, 2) == "ZL")
+        substr = "ZL";
       for (var i = 0; i < tomb.length; i++) {
-        if (tomb[i].Ev_Group == "Muszaki technikai okok") {
-          hiba += (tomb[i].Event_time) / 60;
+        if (tomb[i].name.includes(substr)) {
+          aeq = (am / parseInt(tomb[i].sheets)) * parseFloat(tomb[i].aeq);
         }
       }
-      hb[0] = (hiba / ((vm.a - 1) * 1440 * 7)) * 100;
-      return hb;
-    }
-
-    function feltolt_Szervezesi(tomb) {
-      var hiba = 0;
-      var hb = [];
-
-      for (var i = 0; i < tomb.length; i++) {
-        if (tomb[i].Ev_Group == "Szervezesi veszteseg") {
-          hiba += (tomb[i].Event_time) / 60;
-        }
-      }
-      hb[0] = (hiba / ((vm.a - 1) * 1440 * 7)) * 100;
-      return hb;
-    }
-
-    function feltolt_Tervezett(tomb) {
-      var hiba = 0;
-      var hb = [];
-
-      for (var i = 0; i < tomb.length; i++) {
-        if (tomb[i].Ev_Group == "Tervezett veszteseg") {
-          hiba += (tomb[i].Event_time) / 60;
-        }
-      }
-      hb[0] = (hiba / ((vm.a - 1) * 1440 * 7)) * 100;
-      return hb;
-    }
-
-    function feltolt_Jo(tomb) {
-      var hiba = 0;
-      var jo = (vm.a - 1) * 1440 * 7;
-      var hb = [];
-
-      for (var i = 0; i < tomb.length; i++) {
-        {
-          hiba += (tomb[i].Event_time) / 60;
-        }
-      }
-      hb[0] = ((jo - hiba) / jo) * 100;
-      return hb;
-    }
-
-    function setsmsChart(stand) {
-      var std = $filter('orderBy')(stand, 'time', true);
-      var stdata = [];
-
-      for (var i = 0; i < std.length; i++) {
-        stdata[i] = {
-          name: std[i].mac,
-          y: Math.round(std[i].time / 60)
-        }
-      }
-
-      vm.smsChartconfig = {
-        chart: {
-          type: 'column',
-        },
-        title: { text: "Állás eloszlása gépek szerint" },
-        series: [{
-          name: 'Állás',
-          colorByPoint: true,
-          data: stdata
-        }],
-        xAxis: {
-          type: "category"
-        },
-        yAxis: [
-          { title: { text: 'Perc' } }
-        ],
-      }
+      return aeq;
     }
 
     activate();
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      create_monday();
-      if (vm.a > 1) {
-        load();
-      }
+      vm.edate= $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+      loadPartnumbers();
     }
   }
   Controller.$inject = ['weeklyService', '$cookies', '$state', '$rootScope', '$filter'];

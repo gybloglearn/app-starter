@@ -12,6 +12,7 @@ define([
   './directives/datepicker',
   './directives/mychart',
   './directives/SM/sm',
+  './directives/SMdays/smdays',
   './filters/unique',
   './filters/shift',
   './filters/sumdb',
@@ -34,6 +35,7 @@ define([
   datepicker,
   mychart,
   smdir,
+  smdaydir,
   unique,
   shift,
   sumdb,
@@ -60,6 +62,7 @@ define([
     app.directive('datepicker',datepicker);
     app.directive('myChart',mychart);
     app.directive('smDir',smdir);
+    app.directive('smdayDir',smdaydir);
     app.filter('unique',unique);
     app.filter('shift',shift);
     app.filter('sumdb',sumdb);
