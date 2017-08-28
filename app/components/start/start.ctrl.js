@@ -9,12 +9,36 @@ define([], function () {
     vm.actlevel = "J1";
     vm.actarea = "WP01";
     vm.data = [];
+    vm.scrapfilter=[];
+    vm.cikkfilter=[];
+    vm.scrapdata=[];
     vm.load = load;
 
     function load() {
       vm.data = [];
+      vm.scrapfilter=[];
+      vm.cikkfilter=[];
+      vm.scrapdata=[];
       dataService.get(vm.startdate, vm.enddate, vm.actlevel, vm.actarea).then(function (response) {
         vm.data = response.data;
+        vm.scrapfilter=$filter('unique')(vm.data,'scrapName');
+        vm.cikkfilter=$filter('unique')(vm.data,'CikkMegnevezes');
+        for(var i=0;i<vm.scrapfilter.length;i++){
+          var obj={};
+          obj={
+            code:vm.scrapfilter[i].scrapName,
+            amount:0
+          };
+          vm.scrapdata.push(obj);
+        }
+        for(var i=0;i<vm.scrapdata.length;i++){
+          for(var j=0;j<vm.data.length;j++){
+            if(vm.scrapdata[i].code==vm.data[j].scrapName){
+              vm.scrapdata[i].amount+=vm.data[j].Mennyiseg*1;
+            }
+          }
+        }
+        console.log(vm.scrapdata);
       });
     }
 

@@ -30,6 +30,48 @@
         <table class="table table-bordered">
           <thead>
             <tr>
+              <th>Scrap név</th>
+              <th>Mennyiség</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="cd in vm.scrapdata">
+              <td>{{cd.code}}</td>
+              <td>{{cd.amount}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-sm-12" style="margin-top:20px">
+        <div class="tray filter-tray top">
+          <div class="tray-inner">
+            <div class="filter-rule-group">
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <span class="control-label" style="color:#FFFFFF">Cikk megnevezés</span>
+                  <select ng-model="search.CikkMegnevezes" class="form-control ng-pristine ng-untouched ng-valid">
+                      <option value="">Mind</option> 
+                      <option ng-repeat="cikk in vm.cikkfilter" value="{{cikk.CikkMegnevezes}}">{{cikk.CikkMegnevezes}}</option> 
+                </select>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <span class="control-label" style="color:#FFFFFF">Scrap név</span>
+                  <select ng-model="search.scrapName" class="form-control ng-pristine ng-untouched ng-valid">
+                      <option value="">Mind</option> 
+                      <option ng-repeat="scrap in vm.scrapfilter" value="{{scrap.scrapName}}">{{scrap.scrapName}}</option> 
+                </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <table class="table table-bordered">
+          <thead>
+            <tr>
               <th rowspan=2 ng-click="vm.order='Cikkszam';vm.asc=!vm.asc;">Cikkszám</th>
               <th rowspan=2 ng-click="vm.order='CikkMegnevezes';vm.asc=!vm.asc;">Cikk megnevezés</th>
               <th rowspan=2 ng-click="vm.order='Mennyiseg';vm.asc=!vm.asc;">Mennyiség</th>

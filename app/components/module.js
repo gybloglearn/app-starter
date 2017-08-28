@@ -6,7 +6,9 @@ define([
   './services/login.service',
   './services/data.service',
   './directives/datepicker',
-  './directives/mychart'
+  './directives/mychart',
+  './filters/unique',
+  './filters/sumField'
   /* files */
 ], function (
   configFunction,
@@ -16,7 +18,9 @@ define([
   loginService,
   dataService,
   datepicker,
-  mychart
+  mychart,
+  unique,
+  sumField
 /* names */) {
 
     // Link all components to the module !!!
@@ -30,5 +34,7 @@ define([
     app.controller('LoginController', loginController);
     app.directive('datepicker', datepicker);
     app.directive('mychart', mychart);
+    app.filter('unique',unique);
+    app.filter('sumField',sumField);
     /* controllers */
   });
