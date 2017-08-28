@@ -1,0 +1,80 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">SL Termelt mennyiségek</h1>
+      <div class="col-sm-3" style="margin-top:20px">
+        <span>Csoportosítás:</span>
+        <select ng-model="vm.actcat" ng-change="vm.load()">
+						<option ng-repeat="item in vm.categories" value="{{item}}">{{item}}</option>
+				</select>
+      </div>
+      <div class="col-sm-6" style="margin-top:20px">
+        <div class="input-group">
+          <span class="input-group-addon">Dátum:</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-7d">
+          <span class="input-group-addon">-tól</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="0d">
+          <span class="input-group-addon">-ig</span>
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.enddate<=vm.startdate">Betöltés</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+
+      <div class="progress progress-danger progress-striped active" ng-hide="!vm.loading">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Betöltés...</p>
+        </div>
+      </div>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th></th>
+            <th colspan="2">SpinLine #2</th>
+            <th colspan="2">SpinLine #3</th>
+            <th colspan="2">SpinLine #4</th>
+            <th colspan="2">SpinLine #136</th>
+            <th colspan="2">SpinLine #236</th>
+            <th colspan="2">Összesen</th>
+          </tr>
+          <tr>
+            <th>Dátum</th>
+            <th>AEQ</th>
+            <th>Méter</th>
+            <th>AEQ</th>
+            <th>Méter</th>
+            <th>AEQ</th>
+            <th>Méter</th>
+            <th>AEQ</th>
+            <th>Méter</th>
+            <th>AEQ</th>
+            <th>Méter</th>
+            <th>AEQ</th>
+            <th>Méter</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.dates track by $index">
+            <th>{{item.item1}}</th>
+            <td>{{(((vm.sldata|filter:{'machine':'SpinLine #2'}:true) | filter:{'item1':item.item1}) | sumField:'textbox2')}}</td>
+            <td>{{(((vm.sldata|filter:{'machine':'SpinLine #2'}:true) | filter:{'item1':item.item1}) | sumField:'val') |number:0}}</td>
+            <td>{{(((vm.sldata|filter:{'machine':'SpinLine #3'}) | filter:{'item1':item.item1}) | sumField:'textbox2')}}</td>
+            <td>{{(((vm.sldata|filter:{'machine':'SpinLine #3'}) | filter:{'item1':item.item1}) | sumField:'val') |number:0}}</td>
+            <td>{{(((vm.sldata|filter:{'machine':'SpinLine #4'}) | filter:{'item1':item.item1}) | sumField:'textbox2')}}</td>
+            <td>{{(((vm.sldata|filter:{'machine':'SpinLine #4'}) | filter:{'item1':item.item1}) | sumField:'val')|number:0}}</td>
+            <td>{{(((vm.sldata|filter:{'machine':'SpinLine #136'}) | filter:{'item1':item.item1}) | sumField:'textbox2')}}</td>
+            <td>{{(((vm.sldata|filter:{'machine':'SpinLine #136'}) | filter:{'item1':item.item1}) | sumField:'val')|number:0}}</td>
+            <td>{{(((vm.sldata|filter:{'machine':'SpinLine #236'}:true) | filter:{'item1':item.item1}) | sumField:'textbox2')}}</td>
+            <td>{{(((vm.sldata|filter:{'machine':'SpinLine #236'}:true) | filter:{'item1':item.item1}) | sumField:'val')|number:0}}</td>
+            <td>{{((vm.sldata | filter:{'item1':item.item1}) | sumField:'textbox2')}}</td>
+            <td>{{((vm.sldata | filter:{'item1':item.item1}) | sumField:'val')|number:0}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>
