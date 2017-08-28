@@ -73,7 +73,10 @@ define([], function () {
       dataService.getsl(st, ed).then(function (response) {
         for (var j = 0; j < response.data.length; j++) {
           var slname = "";
-          if (response.data[j].machine.includes("#3")) {
+          if (response.data[j].machine=="SpinLine #2") {
+            slname = response.data[j].machine[0] + response.data[j].machine[4] + "2";
+          }
+          else if (response.data[j].machine.includes("#3")) {
             slname = response.data[j].machine[0] + response.data[j].machine[4] + "3";
           }
           else if (response.data[j].machine.includes("#4")) {
