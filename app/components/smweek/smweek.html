@@ -1,16 +1,26 @@
-<div class="container-fluid">
+<div class="container">
   <section class="module">
     <div class="module-header">
-      <h1 class="text-center">SM Heti összesítő {{vm.monday}} - {{vm.yesterday}}</h1>
-      <h3 class="text-center">({{(vm.a-1)*1440}} perc)</h3>
-    </div>
-    <div class="module-body">
-      <div class="progress progress-success progress-striped active" ng-hide="!vm.loading">
-        <div class="progress-bar" style="width: 100%">
-          <p class="text-center">Betöltés</p>
+      <div class="col-sm-6" style="margin-top:20px">
+        <div class="input-group">
+          <span class="input-group-addon">Dátum</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-1d" end="{{vm.edate}}">
+          <span class="input-group-addon">-tól</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="-1d" end="{{vm.edate}}">
+          <span class="input-group-addon">-ig</span>
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.createdates()" ng-disabled="vm.enddate<=vm.startdate">Betöltés</a>
+          </div>
         </div>
       </div>
+    </div>
+    <div class="module-body">
       <div class="row">
+<<<<<<< HEAD
+        <div class="col-sm-4" ng-repeat="item in vm.smcards | orderBy:'sm'">
+          <div class="card">
+            <smday-dir data="item"></smday-dir>
+=======
         <div class="col-sm-4" ng-repeat="item in vm.sheets" style="border: 1px solid #ddd; border-radius:3px;overflow:hidden;">
           <h1 class="text-center">{{item}}</h1>
           <h2>Műszaki okok: {{ (vm.data | filter:{'Machine':item} | filter:{'Ev_Group': 'Muszaki technikai okok'} | sumField:'Event_time')/60
@@ -31,26 +41,29 @@
           <h2>Tervezett: {{ (vm.data | filter:{'Ev_Group': 'Tervezett veszteseg'} | sumField:'Event_time')/60 | number:0 }} perc</h2>
           <h2 class="text-right">Elérhető idő: {{vm.a*1440*8- (vm.data | sumField:'Event_time')/60 | number:0 }} perc</h2>
         </div>
+</div>
+<div class="row">
         <div class="col-sm-8">
           <my-chart id="smschart" config="vm.smsChartconfig"></my-chart>
         </div>
         <div class="col-sm-4">
           <my-chart id="chart" config="vm.Chartconfig"></my-chart>
         </div>
-        <div class="col-sm-8">
+</div>
+<div class="row">
+        <div class="col-sm-12">
           <div class="input-group">
             <span class="input-group-addon">SM</span>
             <select ng-model="vm.actsm" class="form-control" ng-change="vm.selectsmfault(vm.data)">
                 <option value="Mind">Mind</option>
                 <option ng-repeat="item in vm.sheets" value="{{item}}">{{item}}</option>
             </select>
+>>>>>>> bd170320c02f8d9112b4da8a02ba679c6e125169
           </div>
-          <my-chart id="fchart" config="vm.faultChartconfig"></my-chart>
         </div>
       </div>
+</div>
     </div>
-    <div class="module-footer">
-
-    </div>
+    <div class="module-footer"></div>
   </section>
 </div>

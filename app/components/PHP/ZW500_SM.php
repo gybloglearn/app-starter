@@ -10,7 +10,7 @@ define("UID", $conf["UID"]);
 define("PASWD", $conf["PASWD"]);
 define("SERVICE_URL", $conf["UFURL"]);
 
-define("REPORT", "/MCS/SM_SOE");
+define("REPORT", "/MCS/ZW500 Shiftreport SM");
 
 function remove_utf8_bom($text)
 {
@@ -20,11 +20,14 @@ function remove_utf8_bom($text)
 }
 // set Parameters from get
 $startdate = date("m/d/Y H:i:s", strtotime($_GET["startdate"] . " 05:50:00"));
-//$enddate = date("m/d/Y H:i:s", strtotime($_GET["enddate"] . " 05:50:00"));
-$enddate = date("m/d/Y H:i:s", strtotime($_GET["enddate"]." 05:50:00") + 60*60*24);
+if(isset($_GET["enddate"])){
+  $enddate = date("m/d/Y H:i:s", strtotime($_GET["enddate"] . " 05:50:00"));
+} else {
+  $enddate = date("m/d/Y H:i:s", strtotime($_GET["startdate"]." 05:50:00") + 60*60*24);
+}
 // define machies
-$mch = Array("SM1"=>9, "SM2"=>10, "SM4"=>2595, "SM5"=>2596, "SM6"=>4845, "SM7"=>4846, "SM8"=>4847, "SM9"=>2700);
-$machine = $mch[$_GET["mch"]];
+$mch = Array("SM1"=>1, "SM2"=>6, "SM4"=>7, "SM5"=>3, "SM6"=>11, "SM7"=>12, "SM8"=>13, "SM9"=>10);
+$machine = $mch[$_GET["report_id"]];
 //get report data
 try
 {
@@ -38,7 +41,7 @@ try
     $params[1]->Name = "enddate";
     $params[1]->Value = $enddate;
     $params[2] = new ParameterValue();
-    $params[2]->Name = "machineList"; 
+    $params[2]->Name = "report_id"; 
     $params[2]->Value = $machine;
     
     $executionInfo = $ssrs_report->SetExecutionParameters2($params, "en-us");
@@ -72,25 +75,28 @@ try
       if($k > 0){
         $row = array();
         foreach($res as $x=>$y){
-          if($r[0][$x] == "timestamp"){
-            $row[$r[0][$x]] = strtotime($y)*1000;
-            $row["week"] = date("W", strtotime($y));
-          } else if ($r[0][$x] == "Event_time"){
+          if ($r[0][$x] == "amount"){
             $row[$r[0][$x]] = intval($y);
+          }
+          else if($r[0][$x]=="name"){
+              $row["machine"] = substr($y, 0, strpos($y, "-"));
+              $row["shortname"] = substr($y, 0, strpos($y, "h")).substr($y, 5, strpos($y, "h")).substr($y, 10, strpos($y, "h"));
+              $row["type"] =  str_replace("_GOOD", "", substr($y, strpos($y,"-")+1, strrpos($y, "-")-strpos($y, "-")-1));
+              $row["category"] = substr($y, strrpos($y, "-")+1);
           } else {
             $row[$r[0][$x]] = $y;
           }
         }
-        if($row["Event_type"] == "Downtime"){
-          $row["Machine"] = $_GET["mch"];
+        
+        if($row["amount"] > 0 && $row["category"] != "AMOUNT")
           array_push($re, $row);
-          }
+        
       }
     }
     return $re;
   }
   $result = explode("|",remove_utf8_bom($result));
-  $results = fill(0,count($result)-2,$result);
+  $results = fill(3,count($result)-2,$result);
   echo json_encode(convert($results));
 	} catch (SSRSReportException $sr){
 	  echo $sr->GetErrorMessage();

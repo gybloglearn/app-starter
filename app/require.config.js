@@ -87,8 +87,8 @@ require.config({
         'angular-resource': 'components/angular.js/angular-resource.min',
         'angular-locale_hu-hu': 'components/angular.js/angular-locale_hu-hu',
         'angular-ui-router': 'components/angular.js/angular-ui-router.min',
-        'app': 'new_sm/app/app',
-        'ch': 'new_sm/app/components/ch'
+        'app': 'sm/app/app',
+        'ch': 'sm/app/components/ch'
     },
     'shim': {
         'app': {
