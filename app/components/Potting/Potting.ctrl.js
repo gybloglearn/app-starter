@@ -38,8 +38,8 @@ define([], function () {
     function load() {
       vm.dis = true;
       vm.potting = [];
-      vm.sumdb = [0,0,0,0,0,0,0,0,0];
-      vm.sumaeq = [0,0,0,0,0,0,0,0,0];
+      vm.sumdb = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+      vm.sumaeq = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
       if (!vm.tobbnapos) {
         PottingService.get(vm.mch, vm.datum).then(function (response) {
@@ -61,15 +61,15 @@ define([], function () {
                 }
               }
               if (vm.potting[i].shiftnum == 1) {
-                vm.sumdb[0]=vm.sumdb[0] + vm.potting[i].amount;
+                vm.sumdb[0] = vm.sumdb[0] + vm.potting[i].amount;
                 vm.sumaeq[0] = vm.sumaeq[0] + vm.potting[i].aeq;
               }
               else if (vm.potting[i].shiftnum == 2) {
-                vm.sumdb[3]=vm.sumdb[3] + vm.potting[i].amount;
+                vm.sumdb[3] = vm.sumdb[3] + vm.potting[i].amount;
                 vm.sumaeq[3] = vm.sumaeq[3] + vm.potting[i].aeq;
               }
               else if (vm.potting[i].shiftnum == 3) {
-                vm.sumdb[6]=vm.sumdb[6] + vm.potting[i].amount;
+                vm.sumdb[6] = vm.sumdb[6] + vm.potting[i].amount;
                 vm.sumaeq[6] = vm.sumaeq[6] + vm.potting[i].aeq;
               }
             }
@@ -81,15 +81,15 @@ define([], function () {
                 }
               }
               if (vm.potting[i].shiftnum == 1) {
-                vm.sumdb[1]=vm.sumdb[1] + vm.potting[i].amount;
+                vm.sumdb[1] = vm.sumdb[1] + vm.potting[i].amount;
                 vm.sumaeq[1] = vm.sumaeq[1] + vm.potting[i].aeq;
               }
               else if (vm.potting[i].shiftnum == 2) {
-                vm.sumdb[4]=vm.sumdb[4] + vm.potting[i].amount;
+                vm.sumdb[4] = vm.sumdb[4] + vm.potting[i].amount;
                 vm.sumaeq[4] = vm.sumaeq[4] + vm.potting[i].aeq;
               }
               else if (vm.potting[i].shiftnum == 3) {
-                vm.sumdb[7]=vm.sumdb[7] + vm.potting[i].amount;
+                vm.sumdb[7] = vm.sumdb[7] + vm.potting[i].amount;
                 vm.sumaeq[7] = vm.sumaeq[7] + vm.potting[i].aeq;
               }
             }
@@ -101,15 +101,15 @@ define([], function () {
                 }
               }
               if (vm.potting[i].shiftnum == 1) {
-                vm.sumdb[2]=vm.sumdb[2] + vm.potting[i].amount;
+                vm.sumdb[2] = vm.sumdb[2] + vm.potting[i].amount;
                 vm.sumaeq[2] = vm.sumaeq[2] + vm.potting[i].aeq;
               }
               else if (vm.potting[i].shiftnum == 2) {
-                vm.sumdb[5]=vm.sumdb[5] + vm.potting[i].amount;
+                vm.sumdb[5] = vm.sumdb[5] + vm.potting[i].amount;
                 vm.sumaeq[5] = vm.sumaeq[5] + vm.potting[i].aeq;
               }
               else if (vm.potting[i].shiftnum == 3) {
-                vm.sumdb[8]=vm.sumdb[8] + vm.potting[i].amount;
+                vm.sumdb[8] = vm.sumdb[8] + vm.potting[i].amount;
                 vm.sumaeq[8] = vm.sumaeq[8] + vm.potting[i].aeq;
               }
             }

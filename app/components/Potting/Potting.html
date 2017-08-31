@@ -21,7 +21,7 @@
 					</div>
 				</div>
 			</div>
-			<button class="btn btn-default pull-right" ng-class="{'btn-info':vm.tobbnapos}" ng-click="vm.helyes();vm.tobbnapos=!vm.tobbnapos;vm.load();vm.datszam()">Többnapos nézet</button>
+			<!--button class="btn btn-default pull-right" ng-class="{'btn-info':vm.tobbnapos}" ng-click="vm.helyes();vm.tobbnapos=!vm.tobbnapos;vm.load();vm.datszam()">Többnapos nézet</button-->
 		</div>
 		<div class="module-body" ng-hide="vm.tobbnapos">
 			<hr>
@@ -128,10 +128,10 @@
 			<hr>
 
 
-			<div class="row">
+			<div class="row" ng-show="vm.szak_du">
 				<h1>Délután-Szak: {{vm.szak_du}}</h1>
 			</div>
-			<div class="row" style="margin-top:30px">
+			<div class="row" style="margin-top:30px" ng-show="vm.szak_du">
 				<div class="col-sm-4">
 					<h1 class="text-center" style="font-size:6em">{{vm.sumdb[3]}}
 						<br>
@@ -226,7 +226,7 @@
 					</div>
 				</div>
 			</div>
-			<hr>
+			<hr ng-show="vm.szak_du">
 
 
 			<div class="row">
