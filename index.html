@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="primary-navbar">
-      <div class="container">
+      <div class="container" ng-show="user.displayname">
         <ul class="nav navbar-nav">
           <!--<li><a ui-sref="start">Start</a></li>-->
           <!-- links -->
@@ -53,7 +53,7 @@
 
   <div style="margin: 20px auto;" ui-view></div>
 
-  <div class="footer">
+  <div class="footer" ng-show="user.displayname">
     <div class="primary">
       <div class="container">
         <div class="brand">
