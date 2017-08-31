@@ -162,14 +162,26 @@ define([], function () {
                 var hossz = vm.soroszlopbokes[l].moduls.length;
                 var szamvaltozo = new Date(response.data[j].bt_datetime).getHours() * 60 + new Date(response.data[j].bt_datetime).getMinutes();
                 var szakszam = 0;
-                if (szamvaltozo >= 350 && szamvaltozo < 830) {
-                  szakszam = 1;
-                }
-                else if (szamvaltozo >= 830 && szamvaltozo < 1310) {
-                  szakszam = 2;
+                var changeshiftdate = new Date('2017-09-01').getTime();
+                var firstdatenum = new Date(vm.startdatumszam).getTime();
+                if (firstdatenum < changeshiftdate) {
+                  if (szamvaltozo >= 350 && szamvaltozo < 1070) {
+                    szakszam = 1;
+                  }
+                  else {
+                    szakszam = 3;
+                  }
                 }
                 else {
-                  szakszam = 3;
+                  if (szamvaltozo >= 350 && szamvaltozo < 830) {
+                    szakszam = 1;
+                  }
+                  else if (szamvaltozo >= 830 && szamvaltozo < 1310) {
+                    szakszam = 2;
+                  }
+                  else {
+                    szakszam = 3;
+                  }
                 }
 
                 vm.soroszlopbokes[l].bokes += response.data[j].bt_kat_db1 * 1;

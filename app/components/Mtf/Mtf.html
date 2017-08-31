@@ -76,10 +76,10 @@
 </div>
 </div>
 <hr>
-<div class="row">
+<div class="row" ng-show="vm.szak_du">
   <h1>Délután-Szak: {{vm.szak_du}}</h1>
 </div>
-  <div class="row" style="margin-top:30px">
+  <div class="row" style="margin-top:30px" ng-show="vm.szak_du">
 <div class="col-sm-6">
   <h1 class="text-center" style="font-size:6em"> {{vm.sumaeq[1] | number:2}}
 <br>
@@ -135,7 +135,7 @@
 </div>
 </div>
 </div>
-<hr>
+<hr ng-show="vm.szak_du">
 <div class="row">
   <h1>Éjszaka-Szak: {{vm.szak_ej}}</h1>
 </div>

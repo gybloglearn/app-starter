@@ -13,7 +13,7 @@ define([], function () {
     vm.actshiftnum = null;
     vm.mtfloading = true;
     vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
-    vm.frissites_ideje = $filter('date')(new Date().getTime()+15*60*1000, 'yyyy-MM-dd HH:mm');
+    vm.frissites_ideje = $filter('date')(new Date().getTime() + 15 * 60 * 1000, 'yyyy-MM-dd HH:mm');
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.szakok[0] = $filter('shift')(1, vm.datum);
     vm.szakok[1] = $filter('shift')(2, vm.datum);
@@ -103,29 +103,42 @@ define([], function () {
     function choose() {
       var hour = new Date().getHours();
       var minute = new Date().getMinutes();
-      if ((hour == 5 && minute >= 50) || (hour < 13) || (hour == 13 && minute < 50)) {
-        vm.actszak = vm.szakok[0];
-        vm.actshiftnum = 1;
+      var changshiftdate = new Date('2017-09-01').getTime();
+      var actdatum = new Date(vm.datum).getTime();
+      if (actdatum >= changshiftdate) {
+        if ((hour == 5 && minute >= 50) || (hour < 17) || (hour == 17 && minute < 50)) {
+          vm.actszak = vm.szakok[0];
+          vm.actshiftnum = 1;
+        }
+        else if ((hour == 17 && minute >= 50) || (hour > 17) || (hour < 5) || (hour == 5 && minute < 50)) {
+          vm.actszak = vm.szakok[2];
+          vm.actshiftnum = 3;
+        }
       }
-      else if ((hour == 13 && minute >= 50) || (hour < 21) || (hour == 21 && minute < 50)) {
-        vm.actszak = vm.szakok[1];
-        vm.actshiftnum = 2;
-      }
-      else if ((hour == 21 && minute >= 50) || (hour > 21) || (hour < 5) || (hour == 5 && minute < 50)) {
-        vm.actszak = vm.szakok[2];
-        vm.actshiftnum = 3;
+      else {
+        if ((hour == 5 && minute >= 50) || (hour < 13) || (hour == 13 && minute < 50)) {
+          vm.actszak = vm.szakok[0];
+          vm.actshiftnum = 1;
+        }
+        else if ((hour == 13 && minute >= 50) || (hour < 21) || (hour == 21 && minute < 50)) {
+          vm.actszak = vm.szakok[1];
+          vm.actshiftnum = 2;
+        }
+        else if ((hour == 21 && minute >= 50) || (hour > 21) || (hour < 5) || (hour == 5 && minute < 50)) {
+          vm.actszak = vm.szakok[2];
+          vm.actshiftnum = 3;
+        }
       }
     }
 
-    function date_refresh()
-    {
+    function date_refresh() {
       vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
-      vm.frissites_ideje = $filter('date')(new Date().getTime()+15*60*1000, 'yyyy-MM-dd HH:mm');
+      vm.frissites_ideje = $filter('date')(new Date().getTime() + 15 * 60 * 1000, 'yyyy-MM-dd HH:mm');
     }
 
-    var refreshload = setInterval(load, 15*60*1000);
-    var refreshchoose = setInterval(choose, 15*60*1000);
-    var refreshdate = setInterval(date_refresh, 15*60*1000);
+    var refreshload = setInterval(load, 15 * 60 * 1000);
+    var refreshchoose = setInterval(choose, 15 * 60 * 1000);
+    var refreshdate = setInterval(date_refresh, 15 * 60 * 1000);
 
     vm.aeqs = [
       { name: "Ds12 FLOW", amount: 0.6 },
