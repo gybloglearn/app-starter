@@ -6,13 +6,15 @@ define([], function () {
     vm.dryingdata = [];
     vm.difference = [];
     vm.szakok = [];
-    vm.smdata = [];
-    vm.sheetmakers = ["SheetMaker6", "SheetMaker7", "SheetMaker8"];
+    //vm.smdata = [];
+    //vm.sheetmakers = ["SheetMaker6", "SheetMaker7", "SheetMaker8"];
+    vm.drynumdata = [];
     vm.phasenumbers = [0, 1, 2, 3, 4, 5, 6, 7];
     vm.hely = ['Potting be', 'Előkészítés alsó', 'Gélberakás alsó', 'Esztétika alsó', 'Forgatás', 'Gélberakás felső', 'Esztétika felső', 'Potting ki'];
     vm.datum = $filter('date')(new Date().getTime() - ((5 * 60 + 50) * 60 * 1000), 'yyyy-MM-dd');
     vm.actplan = 0;
     vm.usenumber = 0;
+    vm.savedate = "";
     vm.places = [];
     vm.szakok[0] = $filter('shift')(1, vm.datum);
     vm.szakok[1] = $filter('shift')(2, vm.datum);
@@ -73,7 +75,7 @@ define([], function () {
       });
     }
 
-    function loaddrying() {
+    /*function loaddrying() {
       vm.dryingdata = [];
       vm.usenumber = 0;
       dataService.getdrying().then(function (response) {
@@ -84,7 +86,7 @@ define([], function () {
           }
         }
       });
-    }
+    }*/
 
     function feltolt_x() {
       var szoveg = ["Tény/Terv"];
@@ -97,31 +99,38 @@ define([], function () {
 
     function szakdb(tomb) {
       var nowtime = new Date().getHours() * 60 + new Date().getMinutes();
-      var szamde = 0;
-      var szamdu = 0;
-      var szamej = 0;
+      var elsohat = 0;
+      var másodikhat = 0;
+      var harmadikhat = 0;
+      var negyedikhat = 0;
 
       for (var i = 0; i < tomb.length; i++) {
         var valami = new Date(tomb[i].startdate);
         var datumka = new Date(valami).getHours() * 60 + new Date(valami).getMinutes();
-        if (datumka >= 350 && datumka < 830) {
-          szamde++;
+        if (datumka >= 350 && datumka < 710) {
+          elsohat++;
         }
-        else if (datumka >= 830 && datumka < 1310) {
-          szamdu++;
+        else if (datumka >= 710 && datumka < 1070) {
+          másodikhat++;
+        }
+        else if (datumka >= 1070 && datumka < 1430) {
+          harmadikhat++;
         }
         else {
-          szamej++;
+          negyedikhat++;
         }
       }
-      if (nowtime >= 350 && nowtime < 830) {
-        return szamde / 2;
+      if (nowtime >= 350 && nowtime < 710) {
+        return elsohat / 2;
       }
-      else if (nowtime >= 830 && nowtime < 1310) {
-        return szamdu / 2;
+      else if (nowtime >= 710 && nowtime < 1070) {
+        return másodikhat / 2;
+      }
+      else if (nowtime >= 1070 && nowtime < 1430) {
+        return harmadikhat / 2;
       }
       else {
-        return szamej / 2;
+        return negyedikhat / 2;
       }
     }
 
@@ -141,7 +150,7 @@ define([], function () {
       return vm.difference[vm.difference.length - 1];
     }
 
-    function loadsheetmakers() {
+    /*function loadsheetmakers() {
       var valami = 0;
       var lekerdezszaknum = 1;
       var substring = "GOOD"
@@ -188,6 +197,29 @@ define([], function () {
         });
       });
 
+    }*/
+
+    function loaddrynum() {
+      vm.usenumber = 0;
+      vm.savedate = "";
+      vm.drynumdata = [];
+      dataService.getdrynum().then(function (response) {
+        for (var i = 0; i < response.data.length; i++) {
+          if (response.data[i].drying == "Drying3") {
+            vm.drynumdata = response.data[i];
+          }
+        }
+        if (vm.drynumdata.frame <= 21) {
+          vm.usenumber = vm.drynumdata.frame;
+        }
+        else{
+          vm.usenumber=21;
+        }
+        vm.savedate = vm.drynumdata.save;
+        vm.todate=$filter('date')(new Date(vm.savedate).getTime()+(6*3600*1000), 'yyyy-MM-dd HH:mm');
+        load(vm.usenumber);
+      });
+
     }
 
     function plancreator4(szam) {
@@ -196,17 +228,20 @@ define([], function () {
       var nowtime = nowhour * 60 + nowminute;
       vm.actplan = 0;
 
-      if (nowtime >= 350 && nowtime < 830) {
-        vm.actplan = Math.round((szam / 480) * (nowtime - 350));
+      if (nowtime >= 350 && nowtime < 710) {
+        vm.actplan = Math.round((szam / 360) * (nowtime - 350));
       }
-      else if (nowtime >= 830 && nowtime < 1310) {
-        vm.actplan = Math.round((szam / 480) * (nowtime - 830));
+      else if (nowtime >= 710 && nowtime < 1070) {
+        vm.actplan = Math.round((szam / 360) * (nowtime - 710));
       }
-      else if (nowtime >= 1310) {
-        vm.actplan = Math.round((szam / 480) * (nowtime - 1310));
+      else if (nowtime >= 1070 && nowtime < 1430) {
+        vm.actplan = Math.round((szam / 360) * (nowtime - 1070));
+      }
+      else if (nowtime >= 1430 && nowtime < 1440) {
+        vm.actplan = Math.round((szam / 360) * (nowtime - 1430));
       }
       else if (nowtime < 350) {
-        vm.actplan = Math.round((szam / 480) * (130 + nowtime));
+        vm.actplan = Math.round((szam / 360) * (130 + nowtime));
       }
       return vm.actplan;
     }
@@ -230,13 +265,15 @@ define([], function () {
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       choose();
-      loaddrying();
-      loadsheetmakers();
+      //loaddrying();
+      loaddrynum();
+      //loadsheetmakers();
     }
 
     var refreshchoose = setInterval(choose, 2 * 60 * 1000);
-    var refreshloaddrying = setInterval(loaddrying, 2 * 60 * 1000);
-    var refreshload = setInterval(loadsheetmakers, 2 * 60 * 1000);
+    var refreshloaddrying = setInterval(loaddrynum, 2 * 60 * 1000);
+    //var refreshloaddrying = setInterval(loaddrying, 2 * 60 * 1000);
+    //var refreshload = setInterval(loadsheetmakers, 2 * 60 * 1000);
     var refreshdate = setInterval(date_refresh, 2 * 60 * 1000);
 
     function date_refresh() {
