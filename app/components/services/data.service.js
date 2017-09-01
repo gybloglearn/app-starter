@@ -5,6 +5,7 @@ define([], function () {
     var service = {
       get: get,
       getsm: getsm,
+      getdrynum: getdrynum,
       getdrying: getdrying
     };
 
@@ -23,6 +24,13 @@ define([], function () {
       var req = {
         method: 'GET',
         url: '../getReports/smreport.php?mch=' + sm + '&startdate=' + date
+      };
+      return $http(req);
+    }
+    function getdrynum() {
+      var req = {
+        method: 'GET',
+        url: '../Potting4Dashboard/app/components/php/Dryingnum/Drynumbers.json'
       };
       return $http(req);
     }
