@@ -7,7 +7,9 @@ define([], function () {
     vm.enddate = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.enddatumszam = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.sheetmakers = ["SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
-    vm.pottings = ["Potting1-1", "Potting1-2", "Potting2", "Potting3", "Potting4"];
+    vm.zbsheetmakers = ["SM1", "SM2"];
+    vm.pottings = ["Potting2", "Potting3", "Potting4"];
+    vm.zbpottings = ["Potting1-1", "Potting1-2"];
     vm.AEQ1000 = [0.9, 1.1, 1, 1.4];
     vm.AEQ1500 = [0.6, 1.2];
     vm.partnumbers = [];
@@ -16,6 +18,7 @@ define([], function () {
     vm.sumdata500 = [];
     vm.sumdata1000 = [];
     vm.sumdata1500 = [];
+    vm.sumdatazb=[];
     vm.differencedate = 0;
     vm.loadall = loadall;
     vm.addSLDate = addSLDate;
@@ -27,6 +30,15 @@ define([], function () {
       vm.partnumbers = [];
       dataService.getpartnumber().then(function (response) {
         vm.partnumbers = response.data;
+        var obj={};
+        obj={
+          id:"0000000",
+          name:"ZB500",
+          aeq:"0.6",
+          sheets:"16"
+        };
+        vm.partnumbers.push(obj);
+        console.log(vm.partnumbers);
       });
     }
 
@@ -44,6 +56,7 @@ define([], function () {
       vm.sumdata500 = [];
       vm.sumdata1000 = [];
       vm.sumdata1500 = [];
+      vm.sumdatazb=[];
       vm.differencedate = (new Date(vm.enddatumszam).getTime() - new Date(vm.startdatumszam).getTime()) / (24 * 3600 * 1000);
       for (var i = 0; i <= vm.differencedate; i++) {
         vm.dates[i] = $filter('date')(new Date(vm.enddatumszam).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
@@ -69,6 +82,13 @@ define([], function () {
         vm.sumdata1500[i].date = $filter('date')(new Date(vm.enddatumszam).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
         vm.sumdata1500[i].sumgoodaeq = 0;
         vm.sumdata1500[i].sumscrapaeq = 0;
+
+        vm.sumdatazb[i]={}
+        vm.sumdatazb[i].date= $filter('date')(new Date(vm.enddatumszam).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
+        vm.sumdatazb[i].smaeq = 0;
+        vm.sumdatazb[i].pottbeaeq = 0;
+        vm.sumdatazb[i].pottfordaeq = 0;
+        vm.sumdatazb[i].pottkiaeq = 0;
       }
     }
 
@@ -103,6 +123,24 @@ define([], function () {
       }
     }
 
+    function loadzbsm() {
+      //vm.smloading = true;
+      for (var i = 0; i < vm.zbsheetmakers.length; i++) {
+        dataService.getsm(vm.startdate, vm.enddate, vm.zbsheetmakers[i]).then(function (response) {
+          for (var j = 0; j < response.data.length; j++) {
+            response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
+            response.data[j].days = response.data[j].days.substring(0, 10);
+            for (var k = 0; k < vm.sumdatazb.length; k++) {
+              if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "GOOD") {
+                vm.sumdatazb[k].smaeq += response.data[j].aeq;
+              }
+            }
+          }
+          //vm.smloading = false;
+        });
+      }
+    }
+
     function loadpotting() {
       vm.pottloading = true;
       for (var i = 0; i < vm.pottings.length; i++) {
@@ -123,6 +161,31 @@ define([], function () {
             }
           }
           vm.pottloading = false;
+        });
+      }
+    }
+
+    function loadzbpotting() {
+      //vm.pottloading = true;
+      for (var i = 0; i < vm.zbpottings.length; i++) {
+        dataService.getpotting(vm.startdate, vm.enddate, vm.zbpottings[i]).then(function (response) {
+          for (var j = 0; j < response.data.length; j++) {
+            response.data[j].aeq = addAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
+            response.data[j].days = response.data[j].days.substring(0, 10);
+            for (var k = 0; k < vm.sumdatazb.length; k++) {
+              if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "IN") {
+                vm.sumdatazb[k].pottbeaeq += response.data[j].aeq;
+              }
+              else if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "P3") {
+                vm.sumdatazb[k].pottfordaeq += response.data[j].aeq;
+              }
+              else if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "OUT") {
+                vm.sumdatazb[k].pottkiaeq += response.data[j].aeq;
+              }
+            }
+          }
+          console.log(response.data);
+          //vm.pottloading = false;
         });
       }
     }
@@ -221,7 +284,9 @@ define([], function () {
       beallit();
       loadsl();
       loadsm();
+      loadzbsm();
       loadpotting();
+      loadzbpotting();
       loadmtf();
       loadgrade1000();
       loadgrade1500();
@@ -279,7 +344,9 @@ define([], function () {
       loadPartnumbers();
       loadsl();
       loadsm();
+      loadzbsm();
       loadpotting();
+      loadzbpotting();
       loadmtf();
       loadgrade1000();
       loadgrade1500();
