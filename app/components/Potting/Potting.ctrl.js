@@ -212,7 +212,8 @@ define([], function () {
       { name: "DS-D11 CP5", amount: 0 },
       { name: "DS-D13 CP5", amount: 0.7 },
       { name: "ZB500S", amount: 0.6 },
-      { name: "D11 K", amount: 0 }
+      { name: "D11 K", amount: 0 },
+      { name: "DX", amount: 0.74 }
     ];
   }
   Controller.$inject = ['PottingService', '$cookies', '$state', '$rootScope', '$filter'];

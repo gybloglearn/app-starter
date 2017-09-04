@@ -16,7 +16,7 @@
 							<li>
 								<a data-toggle="tab" href="" ng-click="vm.actshiftnum=1;vm.load()" ng-hide="vm.dis">Délelőtt</a>
 							</li>
-							<li>
+							<li ng-show="vm.segedszam<vm.switchdate">
 								<a data-toggle="tab" href="" ng-click="vm.actshiftnum=2;vm.load()" ng-hide="vm.dis">Délután</a>
 							</li>
 							<li>

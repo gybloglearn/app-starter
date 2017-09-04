@@ -29,20 +29,45 @@ define([], function () {
       vm.data = [];
       vm.selectdatas = [];
       vm.selecthour = [];
+      var changeshiftnumber = new Date('2017-09-01').getTime();
+      var datenumber = new Date(vm.datumszam).getTime();
 
-      for (var i = 0; i < 3; i++) {
-        vm.selectdatas[i] = {}
-        vm.selectdatas[i].SHIFT = $filter('shift')(i + 1, vm.datum) + " ";
-        vm.selectdatas[i].START = 0;
-        vm.selectdatas[i].GEL_PREP = 0;
-        vm.selectdatas[i].URET_PREP_A = 0;
-        vm.selectdatas[i].POST_URET_A = 0;
-        vm.selectdatas[i].ROT = 0;
-        vm.selectdatas[i].URET_PREP_F = 0;
-        vm.selectdatas[i].POST_URET_F = 0;
-        vm.selectdatas[i].END = 0;
-        vm.selectdatas[i].MODULS = [[], [], [], [], [], [], [], []];
+      if (datenumber >= changeshiftnumber) {
+        for (var i = 0; i < 2; i++) {
+          vm.selectdatas[i] = {}
+          if (i == 1) {
+            vm.selectdatas[i].SHIFT = $filter('shift')(i + 2, vm.datum) + " ";
+          }
+          else {
+            vm.selectdatas[i].SHIFT = $filter('shift')(i + 1, vm.datum) + " ";
+          }
+          vm.selectdatas[i].START = 0;
+          vm.selectdatas[i].GEL_PREP = 0;
+          vm.selectdatas[i].URET_PREP_A = 0;
+          vm.selectdatas[i].POST_URET_A = 0;
+          vm.selectdatas[i].ROT = 0;
+          vm.selectdatas[i].URET_PREP_F = 0;
+          vm.selectdatas[i].POST_URET_F = 0;
+          vm.selectdatas[i].END = 0;
+          vm.selectdatas[i].MODULS = [[], [], [], [], [], [], [], []];
+        }
       }
+      else {
+        for (var i = 0; i < 3; i++) {
+          vm.selectdatas[i] = {}
+          vm.selectdatas[i].SHIFT = $filter('shift')(i + 1, vm.datum) + " ";
+          vm.selectdatas[i].START = 0;
+          vm.selectdatas[i].GEL_PREP = 0;
+          vm.selectdatas[i].URET_PREP_A = 0;
+          vm.selectdatas[i].POST_URET_A = 0;
+          vm.selectdatas[i].ROT = 0;
+          vm.selectdatas[i].URET_PREP_F = 0;
+          vm.selectdatas[i].POST_URET_F = 0;
+          vm.selectdatas[i].END = 0;
+          vm.selectdatas[i].MODULS = [[], [], [], [], [], [], [], []];
+        }
+      }
+      console.log(vm.selectdatas);
 
       for (var i = 0; i < 24; i++) {
         vm.selecthour[i] = {}
@@ -81,43 +106,80 @@ define([], function () {
           var actszam = new Date(vm.data[i].PT_Start_DT).getHours() * 60 + new Date(vm.data[i].PT_Start_DT).getMinutes();
 
           var startszam = 0;
-          if (actszam >= 350 && actszam < 830) {
-            startszam = 1;
-          }
-          else if (actszam >= 830 && actszam < 1310) {
-            startszam = 2;
-          }
-          else {
-            startszam = 3;
+          if (datenumber >= changeshiftnumber) {
+            if (actszam >= 350 && actszam < 1070) {
+              startszam = 1;
+            }
+            else {
+              startszam = 3;
+            }
+
+            if (actszam < 350 || actszam >= 1070) {
+              vm.data[i].PT_START_S = $filter('shift')(startszam, startdate2) + " ";
+            }
+            else {
+              vm.data[i].PT_START_S = $filter('shift')(startszam, startdate1) + " ";
+            }
+
+            var enddate1 = $filter('date')(new Date(vm.data[i].PT_OUT).getTime(), 'yyyy-MM-dd');
+            var enddate2 = $filter('date')(new Date(vm.data[i].PT_OUT).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+            var actszamend = new Date(vm.data[i].PT_OUT).getHours() * 60 + new Date(vm.data[i].PT_OUT).getMinutes();
+            var endszam = 0;
+
+            if (actszamend >= 350 && actszamend < 1070) {
+              endszam = 1;
+            }
+            else {
+              endszam = 3;
+            }
+
+            if (actszamend < 350 || actszamend >= 1070) {
+              vm.data[i].PT_END_S = $filter('shift')(endszam, enddate2) + " ";
+            }
+            else {
+              vm.data[i].PT_END_S = $filter('shift')(endszam, enddate1) + " ";
+            }
           }
 
-          if (actszam < 350 || actszam >= 1310) {
-            vm.data[i].PT_START_S = $filter('shift')(startszam, startdate2) + " ";
-          }
           else {
-            vm.data[i].PT_START_S = $filter('shift')(startszam, startdate1) + " ";
-          }
+            if (actszam >= 350 && actszam < 830) {
+              startszam = 1;
+            }
+            else if (actszam >= 830 && actszam < 1310) {
+              startszam = 2;
+            }
+            else {
+              startszam = 3;
+            }
 
-          var enddate1 = $filter('date')(new Date(vm.data[i].PT_OUT).getTime(), 'yyyy-MM-dd');
-          var enddate2 = $filter('date')(new Date(vm.data[i].PT_OUT).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
-          var actszamend = new Date(vm.data[i].PT_OUT).getHours() * 60 + new Date(vm.data[i].PT_OUT).getMinutes();
-          var endszam = 0;
+            if (actszam < 350 || actszam >= 1310) {
+              vm.data[i].PT_START_S = $filter('shift')(startszam, startdate2) + " ";
+            }
+            else {
+              vm.data[i].PT_START_S = $filter('shift')(startszam, startdate1) + " ";
+            }
 
-          if (actszamend >= 350 && actszamend < 830) {
-            endszam = 1;
-          }
-          else if (actszamend >= 830 && actszamend < 1310) {
-            endszam = 2;
-          }
-          else {
-            endszam = 3;
-          }
+            var enddate1 = $filter('date')(new Date(vm.data[i].PT_OUT).getTime(), 'yyyy-MM-dd');
+            var enddate2 = $filter('date')(new Date(vm.data[i].PT_OUT).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+            var actszamend = new Date(vm.data[i].PT_OUT).getHours() * 60 + new Date(vm.data[i].PT_OUT).getMinutes();
+            var endszam = 0;
 
-          if (actszamend < 350 || actszamend >= 1310) {
-            vm.data[i].PT_END_S = $filter('shift')(endszam, enddate2) + " ";
-          }
-          else {
-            vm.data[i].PT_END_S = $filter('shift')(endszam, enddate1) + " ";
+            if (actszamend >= 350 && actszamend < 830) {
+              endszam = 1;
+            }
+            else if (actszamend >= 830 && actszamend < 1310) {
+              endszam = 2;
+            }
+            else {
+              endszam = 3;
+            }
+
+            if (actszamend < 350 || actszamend >= 1310) {
+              vm.data[i].PT_END_S = $filter('shift')(endszam, enddate2) + " ";
+            }
+            else {
+              vm.data[i].PT_END_S = $filter('shift')(endszam, enddate1) + " ";
+            }
           }
         }
 
@@ -247,7 +309,9 @@ define([], function () {
         }
         else {
           vm.selecthour[18].START = -1 * (startszamlalo);
-          vm.selectdatas[2].START += -2 * (startszamlalo);
+          if (datenumber < changeshiftnumber) {
+            vm.selectdatas[2].START += -2 * (startszamlalo);
+          }
         }
         vm.selecthour[18].GEL += (gelszam1 - gelszam2);
         vm.selecthour[18].URETA += (uretalso1 - uretalso2);
@@ -260,7 +324,9 @@ define([], function () {
         }
         else {
           vm.selecthour[18].END = -1 * (endszamlalo);
-          vm.selectdatas[2].END += -2 * (endszamlalo);
+          if (datenumber < changeshiftnumber) {
+            vm.selectdatas[2].END += -2 * (endszamlalo);
+          }
         }
 
         for (var i = 0; i < vm.data.length; i++) {

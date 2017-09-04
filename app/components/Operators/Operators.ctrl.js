@@ -15,6 +15,7 @@ define([], function () {
     vm.load = load;
     vm.beallit = beallit;
     vm.actshiftnum = 1;
+    vm.switchdate = new Date('2017-09-01').getTime();
 
     function beallit() {
       vm.datumszam = $filter('date')(new Date(vm.datum).getTime(), 'yyyy-MM-dd');
@@ -39,20 +40,31 @@ define([], function () {
             var szam = new Date(vm.data[v][l].startdate);
             var szamvaltozo = szam.getHours() * 60 + szam.getMinutes();
             var seged = $filter('date')(szam.getTime() - (5 * 60 + 50) * 60 * 1000, 'yyyy-MM-dd');
+            vm.segedszam = new Date(seged).getTime();
             var szakszam = 0;
-            if (szamvaltozo >= 350 && szamvaltozo < 830) {
-              szakszam = 1;
-            }
-            else if (szamvaltozo >= 830 && szamvaltozo < 1310) {
-              szakszam = 2;
+            if (vm.segedszam >= vm.switchdate) {
+              if (szamvaltozo >= 350 && szamvaltozo < 1070) {
+                szakszam = 1;
+              }
+              else {
+                szakszam = 3;
+              }
             }
             else {
-              szakszam = 3;
+              if (szamvaltozo >= 350 && szamvaltozo < 830) {
+                szakszam = 1;
+              }
+              else if (szamvaltozo >= 830 && szamvaltozo < 1310) {
+                szakszam = 2;
+              }
+              else {
+                szakszam = 3;
+              }
             }
-
             vm.data[v][l].shift = $filter('shift')(szakszam, seged);
             vm.data[v][l].shiftnumber = szakszam;
           }
+
 
           vm.operators[v] = {}
           vm.operators[v].name = vm.hely[v];
