@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('wip', {
+		url: '/wip',
+		templateUrl: './app/components/wip/wip.html',
+		controller: 'wipController',
+		controllerAs: 'vm'
+	});
 
   }
   ConfigFunction.$inject = ['$urlRouterProvider', '$stateProvider'];
