@@ -8,7 +8,8 @@ define([
   './wip/wip.ctrl',
   './services/wip.service',
   './directives/datepicker',
-  './directives/mychart'
+  './directives/mychart',
+  './filters/unique'
   /* files */
 ], function (
   configFunction,
@@ -21,6 +22,7 @@ define([
   wipService,
   datepicker,
   mychart,
+  unique
 	/* names */) {
 
     // Link all components to the module !!!
@@ -36,5 +38,6 @@ define([
     app.service('wipService', wipService);
     app.directive('datepicker', datepicker);
     app.directive('mychart', mychart);
+    app.filter('unique', unique);
     /* controllers */
   });
