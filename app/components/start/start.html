@@ -1,7 +1,89 @@
 <div class="container">
   <section class="module">
-    <div class="module-header">Start</div>
-    <div class="module-body"></div>
-    <div class="module-footer"></div>
+    <div class="module-header">
+      <div class="row" style="margin-top:10px">
+        <div class="col-sm-4">
+          <div class="input-group">
+            <span class="input-group-addon">Dátum:</span>
+            <input type="text" class="datepicker form-control" ng-model="vm.datum" ng-change="vm.datszam()" setdate="0d" end="{{vm.today}}">
+            <div class="input-group-btn">
+              <a href="" class="btn btn-info" ng-click="vm.load()" ng-disabled="vm.heti">Betöltés</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <div class="input-group-btn">
+              <button class="btn btn-default" ng-class="{'btn-info':vm.heti}" ng-click="vm.heti=!vm.heti;vm.datszam()">Heti</button>
+            </div>
+            <input ng-show="vm.heti" type="text" value="Betöltésre kerülő időszak:" class="form-control" disabled>
+            <div ng-show="vm.heti" class="input-group-addon">
+              {{ (vm.datumszam) }} - {{ vm.datum }}
+            </div>
+            <div class="input-group-btn">
+              <a href="" class="btn btn-info" ng-click="vm.load(vm.datum)" ng-show="vm.heti">Betöltés</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="progress progress-info progress-striped active" ng-hide="!vm.dis">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Betöltés...</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="tabbable tabs-left">
+          <ul class="nav nav-tabs">
+            <li ng-repeat="item in vm.allmachines track by $index"><a data-toggle="tab" href="" ng-click="vm.act=item;vm.set()">{{item}}</a></li>
+          </ul>
+
+          <div class="tab-content">
+            <mychart id="chart" config="vm.chartconfig"></mychart>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4">
+          <h2 class="ng-binding">Summary {{vm.act}}</h2>
+        </div>
+        <div class="col-sm-8">
+          <button class="btn btn-default pull-right" ng-class="{'btn-info':detailsShow}" ng-click="detailsShow=!detailsShow">Show Details</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <h3 class="ng-binding">Total:</h3>
+        </div>
+        <div class="col-sm-8">
+          <h3 class="ng-binding">{{(vm.info | filter:{'Machine':vm.act}).length}}pcs</h3>
+        </div>
+      </div>
+    </div>
+    <div class="module-footer">
+      <table ng-show="detailsShow" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Modul</th>
+            <th>Product</th>
+            <th>Machine</th>
+            <th>State</th>
+            <th>Registered</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.info | filter: vm.act" class="ng-scope">
+            <td>{{item.Modul}}</td>
+            <td>{{item.Product}}</td>
+            <td>{{item.Machine}}</td>
+            <td>{{item.State}}</td>
+            <td>{{item.Daterecorded | date:'yyyy-MM-dd HH:mm'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 </div>

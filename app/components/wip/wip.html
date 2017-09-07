@@ -1,19 +1,6 @@
 <div class="container">
   <section class="module">
-    <div class="module-header"><h1 class="text-center">Wip</h1>
-      <div class="row" style="margin-top:10px">
-        <div class="col-sm-1"></div>
-        <select ng-model="vm.actstat" ng-change="vm.load()">
-					<option ng-repeat="item in vm.allstatus track by $index" value="{{item}}">{{item}}</option>
-        </select>
-        <select ng-model="vm.actpl" ng-change="vm.load()">
-					<option ng-repeat="item in vm.allpl track by $index" value="{{item}}">{{item}}</option>
-        </select>
-        <select ng-model="vm.actpu" ng-change="vm.load()">
-					<option ng-repeat="item in vm.allpu track by $index" value="{{item}}">{{item}}</option>
-        </select>
-      </div>
-    </div>
+    <div class="module-header"><h1 class="text-center">Wip</h1></div>
     <div class="module-body">
         <table class="table table-bordered">
           <thead>

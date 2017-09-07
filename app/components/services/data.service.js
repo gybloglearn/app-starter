@@ -3,17 +3,26 @@ define([], function () {
 
   function Service($http) {
     var service = {
-      get: get
+      get: get,
+      getweek: getweek
     };
 
     return service;
 
     ///////////
 
-    function get() {
+    function get(datum) {
       var req = {
         method: 'GET',
-        url: '//url//'
+        url: 'app/components/PHP/history.php?day=' + datum
+      };
+      return $http(req);
+    }
+
+    function getweek(datum) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/history.php?weekly&day=' + datum
       };
       return $http(req);
     }
