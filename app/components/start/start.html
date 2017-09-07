@@ -1,7 +1,48 @@
 <div class="container">
   <section class="module">
-    <div class="module-header">Start</div>
-    <div class="module-body"></div>
+    <div class="module-header">
+      <div class="col-sm-6" style="margin-top:20px">
+        <div class="input-group">
+          <span class="input-group-addon">Dátum</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="0d" std="2017-09-01">
+          <span class="input-group-addon">-tól</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="0d" std="2017-09-01">
+          <span class="input-group-addon">-ig</span>
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.diff()" ng-disabled="vm.enddate<=vm.startdate">Betöltés</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <table class="table table-hover table-condensed table-bordered">
+        <thead>
+          <tr>
+            <th colspan="1" class="text-center"></th>
+            <th colspan="2" class="text-center">ZW</th>
+            <th colspan="3" class="text-center">F&M</th>
+          </tr>
+          <tr>
+            <th>Dátum</th>
+            <th>Nappal</th>
+            <th>Éjszaka</th>
+            <th>Délelőtt</th>
+            <th>Délután</th>
+            <th>Éjszaka</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.data">
+            <td>{{item.date}}</td>
+            <td>{{item.zwde}}</td>
+            <td>{{item.zwej}}</td>
+            <td>{{item.fmde}}</td>
+            <td>{{item.fmdu}}</td>
+            <td>{{item.fmej}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div class="module-footer"></div>
   </section>
 </div>

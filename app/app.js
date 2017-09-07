@@ -1,5 +1,5 @@
 require([
-  './app-starter/app/components/module'
+  './shiftsystem/app/components/module'
 ], function(){
   'use strict';
   angular.bootstrap(document, ['app']);
