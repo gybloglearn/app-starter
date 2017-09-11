@@ -4,9 +4,9 @@
       <div class="col-sm-6" style="margin-top:20px">
         <div class="input-group">
           <span class="input-group-addon">Dátum</span>
-          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="0d" std="2017-09-01">
+          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="{{vm.startdate}}" std="2017-09-01">
           <span class="input-group-addon">-tól</span>
-          <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="0d" std="2017-09-01">
+          <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="{{vm.enddate}}" std="2017-09-01">
           <span class="input-group-addon">-ig</span>
           <div class="input-group-btn">
             <a href="" class="btn btn-primary" ng-click="vm.diff()" ng-disabled="vm.enddate<=vm.startdate">Betöltés</a>
@@ -19,13 +19,14 @@
         <table class="table table-hover table-condensed table-bordered">
           <thead>
             <tr>
-              <th colspan="1" class="text-center"></th>
-              <th colspan="4" class="text-center">ZeeWeed</th>
+              <th colspan="2" class="text-center"></th>
+              <th colspan="4" class="text-center">UF</th>
               <th colspan="2" class="text-center">Időpontok</th>
               <th colspan="3" class="text-center">F&M</th>
             </tr>
             <tr>
               <th class="text-center">Dátum</th>
+              <th class="text-center">Nap</th>
               <th class="text-center">A</th>
               <th class="text-center">B</th>
               <th class="text-center">C</th>
@@ -40,6 +41,7 @@
           <tbody>
             <tr ng-repeat="item in vm.data">
               <td class="text-center">{{item.date}}</td>
+              <td class="text-center">{{item.day}}</td>
               <td class="text-center" style="color:{{item.zwa=='Pihenő'?'#d9d9d9':(item.zwa=='Nappal'?'#ff9900':'#0033cc')}}">{{item.zwa}}</td>
               <td class="text-center" style="color:{{item.zwb=='Pihenő'?'#d9d9d9':(item.zwb=='Nappal'?'#ff9900':'#0033cc')}}">{{item.zwb}}</td>
               <td class="text-center" style="color:{{item.zwc=='Pihenő'?'#d9d9d9':(item.zwc=='Nappal'?'#ff9900':'#0033cc')}}">{{item.zwc}}</td>

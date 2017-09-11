@@ -2,8 +2,12 @@ define([], function () {
   'use strict';
   function Controller($cookies, $state, $rootScope, $filter) {
     var vm = this;
-    vm.startdate = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.enddate = $filter('date')(new Date(), 'yyyy-MM-dd');
+    var date = new Date();
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    vm.startdate = $filter('date')(firstDay, 'yyyy-MM-dd');
+    vm.enddate = $filter('date')(lastDay, 'yyyy-MM-dd');
+    var napok = ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"]
     vm.data = [];
     vm.diff = datediff;
     //vm.tablesave = tablesave;
@@ -17,7 +21,9 @@ define([], function () {
       for (var i = 0; i <= vm.differencedate; i++) {
         vm.dates[i] = $filter('date')(new Date(vm.enddate).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
         vm.data[i] = {}
+        var a = $filter('date')(new Date(vm.enddate).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
         vm.data[i].date = $filter('date')(new Date(vm.enddate).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
+        vm.data[i].day = napok[new Date(a).getDay()];
         vm.data[i].client = $filter('client')(1, $filter('date')(new Date(vm.enddate).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd'));
         vm.data[i].doctor = $filter('doctor')(1, $filter('date')(new Date(vm.enddate).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd'));
         var zwdeszak = $filter('shift12')(1, $filter('date')(new Date(vm.enddate).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd'));
@@ -114,15 +120,15 @@ define([], function () {
       });
       doc.save(vm.startdate + '-' + vm.enddate + '.pdf');
     }*/
-    
 
 
-      activate();
 
-      function activate() {
-        (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      }
+    activate();
+
+    function activate() {
+      (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
     }
-    Controller.$inject = ['$cookies', '$state', '$rootScope', '$filter'];
-    return Controller;
-  });
+  }
+  Controller.$inject = ['$cookies', '$state', '$rootScope', '$filter'];
+  return Controller;
+});
