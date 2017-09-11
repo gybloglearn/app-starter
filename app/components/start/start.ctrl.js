@@ -102,8 +102,8 @@ define([], function () {
         }
 
       }
-      console.log(vm.data);
-      console.log(vm.dates);
+      //console.log(vm.data);
+      //console.log(vm.dates);
     }
 
     /*function tablesave() {
@@ -127,6 +127,7 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
+			datediff();
     }
   }
   Controller.$inject = ['$cookies', '$state', '$rootScope', '$filter'];
