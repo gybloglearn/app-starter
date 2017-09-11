@@ -7,7 +7,9 @@ define([
   './services/data.service',
   './directives/datepicker',
   './filters/shift12',
-  './filters/shiftfm'
+  './filters/shiftfm',
+  './filters/client',
+  './filters/doctor'
   /* files */
 ], function (
   configFunction,
@@ -18,7 +20,9 @@ define([
   dataService,
   datepicker,
   shift12,
-  shiftfm
+  shiftfm,
+  client,
+  doctor
 /* names */) {
 
     // Link all components to the module !!!
@@ -33,5 +37,7 @@ define([
     app.directive('datepicker', datepicker);
     app.filter('shift12', shift12);
     app.filter('shiftfm', shiftfm);
+    app.filter('client', client);
+    app.filter('doctor', doctor);
     /* controllers */
   });
