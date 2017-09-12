@@ -48,6 +48,12 @@
       </div>
 
       <div class="row" ng-show="vm.actplace=='SM'">
+        <div class="col-sm-6 col-sm-offset-3">
+          <mychart id="ttlsmavailabilitychart" config="vm.ttlsmavailabilitychartconfig"></mychart>
+        </div>
+        <div class="col-sm-12">
+          <mychart id="smavailabilitychart" config="vm.smavailabilitychartconfig"></mychart>
+        </div>
         <div class="col-sm-3" ng-repeat="item in vm.smcards | orderBy:'sm'">
           <div class="card">
             <sm-dir data="item"></sm-dir>
