@@ -9,9 +9,12 @@ define([
   './services/update.service',
   './shift/shift.ctrl',
   './tmk/tmk.ctrl',
-  './type/type.ctrl'
-	/* files */
-], function(
+  './type/type.ctrl',
+  './filters/sumField',
+  './filters/sumdb',
+  './directives/SM/sm'
+  /* files */
+], function (
   configFunction,
   runFunction,
   startController,
@@ -22,22 +25,28 @@ define([
   updateService,
   shiftController,
   tmkController,
-  typeController
+  typeController,
+  sumField,
+  sumdb,
+  smdir
 	/* names */) {
 
-  // Link all components to the module !!!
+    // Link all components to the module !!!
 
-  var app = angular.module('app', ['ui.router', 'ngCookies']);
-  app.config(configFunction);
-  app.run(runFunction);
-  app.service('Data', dataService);
-  app.service('Login', loginService);
-  app.controller('StartController', startController);
-  app.controller('LoginController', loginController);
-  app.directive('datepicker', datepicker);
-  app.service('updateService', updateService);
-	app.controller('shiftController', shiftController);
-	app.controller('tmkController', tmkController);
-	app.controller('typeController', typeController);
-		/* controllers */
-});
+    var app = angular.module('app', ['ui.router', 'ngCookies']);
+    app.config(configFunction);
+    app.run(runFunction);
+    app.service('Data', dataService);
+    app.service('Login', loginService);
+    app.controller('StartController', startController);
+    app.controller('LoginController', loginController);
+    app.directive('datepicker', datepicker);
+    app.service('updateService', updateService);
+    app.controller('shiftController', shiftController);
+    app.controller('tmkController', tmkController);
+    app.controller('typeController', typeController);
+    app.filter('sumField', sumField);
+    app.filter('sumdb', sumdb);
+    app.directive('smDir', smdir);
+    /* controllers */
+  });

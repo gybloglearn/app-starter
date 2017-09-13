@@ -1,0 +1,59 @@
+<!--direktíva-->
+<div class="smdir">
+    <div class="title">
+        <h1>{{data.sm}}</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-7">
+            <h3>Tény:{{data.joaeq|number:1}} AEQ</h3>
+        </div>
+        <div class="col-sm-5">
+            <h3 class="text-center">Teljesítmény</h3>
+            <h2 class="text-center">{{(data.joaeq/data.kap*100)|number:2}} %</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-7">
+            <h3>Összes lap: {{data.osszlap}} db</h3>
+            <h3>Jó lap: {{data.jolap}} db</h3>
+            <h3>Selejt lap: {{data.osszlap-data.jolap}} db</h3>
+        </div>
+        <div class="col-sm-5">
+            <h3 class="text-center">Minőség</h3>
+            <h2 class="text-center">{{(data.jolap/data.osszlap*100)|number:2}} %</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-7">
+            <h3>Állás: {{data.downtime | number:0}} perc</h3>
+            <h3>Szervezési: {{data.szervezesi | number:0}} perc</h3>
+            <h3>Tervezett: {{data.tervezesi | number:0}} perc</h3>
+            <h3>Müszaki: {{data.muszaki | number:0}} perc</h3>
+        </div>
+        <div class="col-sm-5">
+            <h3 class="text-center">Elérhetőség</h3>
+            <h2 class="text-center">{{((data.alltime-data.downtime)/data.alltime*100)|number:2}} %</h2>
+        </div>
+    </div>
+    </div>
+    <div class="oee">
+        <div class="progress progress-info">
+            <div class="progress-bar" style="width:{{data.joaeq/data.kap*100}}%">Teljesítmény</div>
+        </div>
+        <div class="progress progress-warning">
+            <div class="progress-bar" style="width:{{data.jolap/data.osszlap*100}}%">Minőség</div>
+        </div>
+        <div class="progress progress-success">
+            <div class="progress-bar" style="width:{{(data.alltime-data.downtime)/data.alltime*100}}%">Elérhetőség</div>
+        </div>
+        <hr class="myrule">
+        <div class="progress progress-danger">
+            <div class="progress-bar" style="width:{{(data.joaeq/data.kap)*(data.jolap/data.osszlap)*((data.alltime-data.downtime)/data.alltime)*100}}%">OEE</div>
+        </div>
+        <h2 class="text-center">OEE {{(data.joaeq/data.kap)*(data.jolap/data.osszlap)*((data.alltime-data.downtime)/data.alltime)*100 | number:2}}
+            %
+        </h2>
+    </div>
+    <div class="clearfix"></div>
+</div>

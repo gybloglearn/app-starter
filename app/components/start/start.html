@@ -1,7 +1,22 @@
-<div class="container">
+<div class="container-fluid">
   <section class="module">
-    <div class="module-header">Start</div>
-    <div class="module-body"></div>
+    <div class="module-header">
+      <h1 class="text-center">SM részletek</h1>
+    </div>
+    <div class="module-body">
+        <div class="col-sm-12">
+            <div class="progress progress-success progress-striped active" ng-hide="!vm.smloading">
+              <div class="progress-bar" style="width: 100%">
+                <p class="text-center">Betöltés</p>
+              </div>
+            </div>
+          </div>
+      <div class="col-sm-3" ng-repeat="item in vm.smcards | orderBy:'sm'">
+        <div class="card">
+          <sm-dir data="item"></sm-dir>
+        </div>
+      </div>
+    </div>
     <div class="module-footer"></div>
   </section>
 </div>
