@@ -78,7 +78,6 @@ define([], function () {
               }
             }
             obj.terv = vm.tervezett_darab;
-            //vm.smcards.push(obj);
           });
           dataService.getsoesm(vm.datum, v).then(function (resp) {
             var szam = $filter('sumField')($filter('filter')(resp.data, { 'Event_type': "Downtime" }), 'Event_time');
@@ -90,10 +89,56 @@ define([], function () {
             obj.szervezesi = szerv / 60;
             obj.tervezesi = terv / 60;
             obj.muszaki = musz / 60;
+            obj.id= "SMchart" + v,
+            obj.chartconfig= {
+              chart: {
+                type: 'column',
+                width: 300,
+                height: 300
+              },
+              plotOptions: {
+                column: {
+                  stacking: 'normal'
+                }
+              },
+              title: { text: v },
+              series: [
+                {
+                  name: 'Selejt lap',
+                  color: "#990000",
+                  data: [ossz - jo],
+                  stack: 'Összes lap'
+                },
+                {
+                  name: 'Jó lap',
+                  color: "#00b300",
+                  data: [jo],
+                  stack: 'Összes lap'
+                },
+                {
+                  name: 'Terv',
+                  color: "#0033cc",
+                  data: [terv]
+                }],
+
+              xAxis: [
+                { categories: feltolt_x() },
+              ],
+              yAxis: {
+                title: {
+                  text: "Darab"
+                }
+              }
+            }
             vm.smcards.push(obj);
           });
         });
       });
+    }
+
+    function feltolt_x() {
+      var szoveg = ["Tény/Terv"];
+      return szoveg;
     }
 
     function date_refresh() {
