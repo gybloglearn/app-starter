@@ -11,9 +11,7 @@ define([], function () {
 
     function load() {
       vm.smcards = [];
-      vm.smloading = true;
       var frissites = $filter('date')(new Date().getTime(), 'yyyy-MM-dd HH:mm');
-      var load = 0;
 
 
       angular.forEach(vm.sheetmakers, function (v, k) {
@@ -94,10 +92,6 @@ define([], function () {
             obj.muszaki = musz / 60;
             vm.smcards.push(obj);
           });
-
-          if (load > 7) {
-            vm.smloading = false;
-          }
         });
       });
     }
