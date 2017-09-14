@@ -6,7 +6,7 @@ define([], function () {
     vm.end = $filter('date')(new Date().getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
     vm.frissites_ideje = $filter('date')(new Date().getTime() + 15 * 60 * 1000, 'yyyy-MM-dd HH:mm');
-    vm.sheetmakers = ["SM4", "SM5"];
+    vm.sheetmakers = ["SheetMaker4", "SheetMaker5"];
     vm.smcards = [];
 
     function load() {
@@ -22,19 +22,19 @@ define([], function () {
         load++;
 
         dataService.getsm(vm.datum, vm.end, v).then(function (response) {
-          ossz = $filter('sumdb')($filter('filter')(response.data, { 'category': 'TOTAL' }));
-          jo = $filter('sumdb')($filter('filter')(response.data, { 'category': 'GOOD' }));
+          ossz = $filter('sumdb')($filter('filter')(response.data, { 'category': 'TOTAL','shiftnum': vm.actshiftnum }));
+          jo = $filter('sumdb')($filter('filter')(response.data, { 'category': 'GOOD','shiftnum': vm.actshiftnum }));
 
           var obj = {};
           obj = {
-            sm: v,
+            sm: v[0]+v[5]+v[10],
             osszlap: ossz,
             jolap: jo,
 
           };
 
           dataService.getplan(v, vm.datum).then(function (resp) {
-            vm.allplan = response.data;
+            vm.allplan = resp.data;
             vm.tervezett_darab = 0;
 
             if (vm.allplan == "") {
@@ -136,6 +136,19 @@ define([], function () {
       });
     }
 
+    function choose() {
+      var hour = new Date().getHours();
+      var minute = new Date().getMinutes();
+
+      if ((hour == 5 && minute >= 50) || (hour < 17) || (hour == 17 && minute < 50)) {
+        vm.actshiftnum = 1;
+      }
+      else if ((hour == 17 && minute >= 50) || (hour > 17) || (hour < 5) || (hour == 5 && minute < 50)) {
+        vm.actshiftnum = 3;
+      }
+    }
+
+
     function feltolt_x() {
       var szoveg = ["Tény/Terv"];
       return szoveg;
@@ -146,6 +159,7 @@ define([], function () {
       vm.frissites_ideje = $filter('date')(new Date().getTime() + 15 * 60 * 1000, 'yyyy-MM-dd HH:mm');
     }
 
+    var refreshchoose = setInterval(choose, 15 * 60 * 1000);
     var refreshload = setInterval(load, 15 * 60 * 1000);
     var refreshdate = setInterval(date_refresh, 15 * 60 * 1000);
 
@@ -154,7 +168,8 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      load()
+      choose();
+      load();
     }
   }
   Controller.$inject = ['Data', '$cookies', '$state', '$rootScope', '$filter'];

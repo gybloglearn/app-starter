@@ -27,7 +27,7 @@ if(isset($_GET["enddate"])) {
   $enddate = date("m/d/Y H:i:s", strtotime($_GET["startdate"]." 05:50:00") + 60*60*24);
 }
 // define machies
-$mch = Array("SM1"=>9, "SM2"=>10, "SM4"=>2595, "SM5"=>2596, "SM6"=>4845, "SM7"=>4846, "SM8"=>4847, "SM9"=>2700);
+$mch = Array("SheetMaker1"=>9, "SheetMaker2"=>10, "SheetMaker4"=>2595, "SheetMaker5"=>2596, "SheetMaker6"=>4845, "SheetMaker7"=>4846, "SheetMaker8"=>4847, "SheetMaker9"=>2700);
 $machine = $mch[$_GET["mch"]];
 //get report data
 try
