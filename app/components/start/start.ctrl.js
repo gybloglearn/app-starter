@@ -146,7 +146,7 @@ define([], function () {
       for (var i = 0; i < vm.pottings.length; i++) {
         dataService.getpotting(vm.startdate, vm.enddate, vm.pottings[i]).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
-            response.data[j].aeq = addAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
+            response.data[j].aeq = addAEQ(vm.aeqs, response.data[j].type, response.data[j].amount);
             response.data[j].days = response.data[j].days.substring(0, 10);
             for (var k = 0; k < vm.sumdata500.length; k++) {
               if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "IN") {
@@ -313,7 +313,7 @@ define([], function () {
         substr = "ZL";
       for (var i = 0; i < tomb.length; i++) {
         if (tomb[i].name.includes(substr)) {
-          aeq = am * parseFloat(tomb[i].aeq);
+          aeq = am * parseFloat(tomb[i].amount);
         }
       }
       return aeq;
