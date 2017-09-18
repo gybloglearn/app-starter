@@ -10,8 +10,10 @@ define([
   './directives/datepicker',
   './directives/mychart',
   './filters/unique',
-  './filters/sumField'
-  /* files */
+  './filters/sumField',
+  './downtime/downtime.ctrl',
+  './services/downtime.service'
+	/* files */
 ], function (
   configFunction,
   runFunction,
@@ -24,7 +26,9 @@ define([
   datepicker,
   mychart,
   unique,
-  sumField
+  sumField,
+  downtimeController,
+  downtimeService
 	/* names */) {
 
     // Link all components to the module !!!
@@ -42,5 +46,7 @@ define([
     app.directive('myChart', mychart);
     app.filter('unique',unique);
     app.filter('sumField',sumField);
-    /* controllers */
+    app.controller('downtimeController', downtimeController);
+		app.service('downtimeService', downtimeService);
+		/* controllers */
   });

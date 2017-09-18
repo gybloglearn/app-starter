@@ -1,0 +1,21 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">SL Állásidők</h1>
+      <div class="col-sm-6" style="margin-top:20px">
+        <div class="input-group">
+          <span class="input-group-addon">Dátum:</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-14d">
+          <span class="input-group-addon">-tól</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="0d">
+          <span class="input-group-addon">-ig</span>
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.enddate<=vm.startdate">Betöltés</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body"></div>
+    <div class="module-footer"></div>
+  </section>
+</div>
