@@ -78,6 +78,7 @@ define([], function () {
         vm.days.push(day);
         vm.data.push({ for: day, year: year });
       }
+      vm.startdatetoshift=new Date(vm.datefrom).getTime();
       getData(vm.data);
     }
 		function getData(data) {
@@ -165,11 +166,13 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
+      vm.changeshiftdate=new Date('2017-09-01').getTime();
       vm.dateto = new Date().getTime();
       vm.datefrom = $filter('date')(vm.dateto - 7 * 24 * 3600 * 1000, 'yyyy-MM-dd');
       vm.dateto = $filter('date')(vm.dateto, 'yyyy-MM-dd');
       vm.getD();
       vm.edate = $filter('date')(new Date().getTime(),'yyyy-MM-dd');
+      vm.startdatetoshift=new Date(vm.datefrom).getTime();
     }
   }
   Controller.$inject = ['archivService', '$cookies', '$state', '$rootScope', '$filter'];

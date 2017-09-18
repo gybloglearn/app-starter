@@ -12,17 +12,20 @@ define([], function () {
     vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.esetek = ["Bökés", "Bökés/AEQ", "Súlyozott Bökés/AEQ", "Modul"];
     vm.tipusok = ["Mind", "FLOW", "CP5"];
+    vm.reszletestipus = [];
     vm.eset = "Bökés";
     vm.acttipus = "Mind";
+    vm.actreszlettipus = "Mind";
     vm.tablazatazon = "";
     vm.modulnevazon = "";
+    vm.mezo="";
     vm.putmodul = [];
     vm.tablazat = [];
     vm.allaeq = 0;
     vm.allflowaeq = 0;
     vm.allcp5aeq = 0;
     vm.typedb = [];
-    var tanks = ["Bubble point tank5", "Bubble point tank6", "Bubble point tank7", "Bubble point tank15"];
+    var tanks = ["Bubble point tank1", "Bubble point tank2", "Bubble point tank3", "Bubble point tank4", "Bubble point tank5", "Bubble point tank6", "Bubble point tank7", "Bubble point tank12", "Bubble point tank13", "Bubble point tank14", "Bubble point tank15"];
     var betuk = ["A", "B", "C", "D", "E"];
     var szamok = ["1", "2", "3", "4", "5", "6", "8", "9"];
     vm.mtfload = true;
@@ -33,6 +36,7 @@ define([], function () {
     vm.beilleszt = beilleszt;
     vm.tabl = tabl;
     vm.drawchart = drawchart;
+    vm.listreszletes = listreszletes;
 
     function tabl(index) {
       vm.tablazat = $filter('filter')(vm.soroszlopbokes, { azon: index })[0].moduls;
@@ -157,19 +161,32 @@ define([], function () {
               talalat = 0;
             }
 
+
             for (var l = 0; l < vm.soroszlopbokes.length; l++) {
               if (actkom == vm.soroszlopbokes[l].azon) {
                 var hossz = vm.soroszlopbokes[l].moduls.length;
                 var szamvaltozo = new Date(response.data[j].bt_datetime).getHours() * 60 + new Date(response.data[j].bt_datetime).getMinutes();
                 var szakszam = 0;
-                if (szamvaltozo >= 350 && szamvaltozo < 830) {
-                  szakszam = 1;
-                }
-                else if (szamvaltozo >= 830 && szamvaltozo < 1310) {
-                  szakszam = 2;
+                var changeshiftdate = new Date('2017-09-01').getTime();
+                var firstdatenum = new Date(vm.startdatumszam).getTime();
+                if (firstdatenum < changeshiftdate) {
+                  if (szamvaltozo >= 350 && szamvaltozo < 1070) {
+                    szakszam = 1;
+                  }
+                  else {
+                    szakszam = 3;
+                  }
                 }
                 else {
-                  szakszam = 3;
+                  if (szamvaltozo >= 350 && szamvaltozo < 830) {
+                    szakszam = 1;
+                  }
+                  else if (szamvaltozo >= 830 && szamvaltozo < 1310) {
+                    szakszam = 2;
+                  }
+                  else {
+                    szakszam = 3;
+                  }
                 }
 
                 vm.soroszlopbokes[l].bokes += response.data[j].bt_kat_db1 * 1;
@@ -430,6 +447,42 @@ define([], function () {
         res[v] = [k[v].nev, k[v].y];
       }
       return res;
+    }
+
+    function listreszletes(mezo) {
+      
+      vm.mezo=mezo;
+      vm.listdata = [];
+      var tombom1=[];
+      var tombom2=[];
+      for (var i = 0; i < vm.soroszlopbokes.length; i++) {
+        if (mezo == vm.soroszlopbokes[i].azon) {
+          for (var j = 0; j < vm.soroszlopbokes[i].moduls.length; j++) {
+            if (vm.actreszlettipus == vm.soroszlopbokes[i].moduls[j].modulname) {
+              tombom1.push(vm.soroszlopbokes[i].moduls[j]);
+            }
+          }
+        }
+      }
+
+      tombom2=$filter('unique')(tombom1,'modulbokeshiba');
+
+      for(var k=0;k<tombom2.length;k++){
+        var obj={};
+        obj={
+          type:tombom2[k].modulbokeshiba,
+          db:0
+        }
+        vm.listdata.push(obj);
+      }
+
+      for(var a=0;a<tombom1.length;a++){
+        for(var b=0;b<vm.listdata.length;b++){
+          if(tombom1[a].modulbokeshiba==vm.listdata[b].type){
+            vm.listdata[b].db+=tombom1[a].modulbokes;
+          }
+        }
+      }
     }
 
   }
