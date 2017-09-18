@@ -88,8 +88,8 @@ require.config({
         'angular-locale_hu-hu': 'components/angular.js/angular-locale_hu-hu',
         'angular-ui-router': 'components/angular.js/angular-ui-router.min',
         'drilldown': 'components/highcharts-amd/js/modules/drilldown.src',
-        'app': 'new_mtf/app/app',
-        'ch': 'new_mtf/app/components/ch'
+        'app': 'mtf/app/app',
+        'ch': 'mtf/app/components/ch'
     },
     'shim': {
         'app': {

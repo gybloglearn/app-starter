@@ -13,6 +13,7 @@ define([], function () {
       "ZW230 FLOW": 0.46,
       "ZW230 CP5": 0.46,
       "C11CP5": 0.5,
+			"C11 CP5": 0.5,
       "C11FLOW": 0.5,
       //"C11 FLOW": 0.5,
       "D11 CP5": 0.68,
@@ -25,7 +26,8 @@ define([], function () {
       "B32 FLOW": 1.3,
       "DS- D13 CP5": 0.7,
       //"DS13CP5": 0.7,
-      "ZB500S": 0.6
+      "ZB500S": 0.6,
+				"DX": 0.74
     };
 
     vm.mods = [
@@ -33,6 +35,7 @@ define([], function () {
       "ZW230 FLOW",
       "ZW230 CP5",
       "C11CP5",
+				"C11 CP5",
       "C11FLOW",
       "D11 CP5",
       "D11 FLOW",
@@ -40,7 +43,8 @@ define([], function () {
       "Ds12 FLOW",
       "D13 CP5",
       "DS- D13 CP5",
-      "ZB500S"
+      "ZB500S",
+				"DX"
     ];
     vm.bokes = {
       "Ds12 FLOW": 30,
@@ -48,13 +52,15 @@ define([], function () {
       "ZW230 FLOW": 30,
       "ZW230 CP5": 20,
       "C11CP5": 20,
+				"C11 CP5": 20,
       "C11FLOW": 30,
       "D11 CP5": 20,
       "D13 CP5": 20,
       "D12 FLOW": 30,
       "D11 FLOW": 30,
       "DS- D13 CP5": 20,
-      "ZB500S": 50
+      "ZB500S": 50,
+				"DX": 5
     };
 
     function getD() {
@@ -74,7 +80,7 @@ define([], function () {
       }
       getData(vm.data);
     }
-    function getData(data) {
+		function getData(data) {
       angular.forEach(data, function (v, k) {
         archivService.get(v.for, v.year).then(function (response) {
           v.data = separate(response.data[0].data);
