@@ -12,10 +12,13 @@ define([], function () {
     vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.esetek = ["Bökés", "Bökés/AEQ", "Súlyozott Bökés/AEQ", "Modul"];
     vm.tipusok = ["Mind", "FLOW", "CP5"];
+    vm.reszletestipus = [];
     vm.eset = "Bökés";
     vm.acttipus = "Mind";
+    vm.actreszlettipus = "Mind";
     vm.tablazatazon = "";
     vm.modulnevazon = "";
+    vm.mezo="";
     vm.putmodul = [];
     vm.tablazat = [];
     vm.allaeq = 0;
@@ -33,6 +36,7 @@ define([], function () {
     vm.beilleszt = beilleszt;
     vm.tabl = tabl;
     vm.drawchart = drawchart;
+    vm.listreszletes = listreszletes;
 
     function tabl(index) {
       vm.tablazat = $filter('filter')(vm.soroszlopbokes, { azon: index })[0].moduls;
@@ -156,6 +160,7 @@ define([], function () {
             else {
               talalat = 0;
             }
+
 
             for (var l = 0; l < vm.soroszlopbokes.length; l++) {
               if (actkom == vm.soroszlopbokes[l].azon) {
@@ -442,6 +447,42 @@ define([], function () {
         res[v] = [k[v].nev, k[v].y];
       }
       return res;
+    }
+
+    function listreszletes(mezo) {
+      
+      vm.mezo=mezo;
+      vm.listdata = [];
+      var tombom1=[];
+      var tombom2=[];
+      for (var i = 0; i < vm.soroszlopbokes.length; i++) {
+        if (mezo == vm.soroszlopbokes[i].azon) {
+          for (var j = 0; j < vm.soroszlopbokes[i].moduls.length; j++) {
+            if (vm.actreszlettipus == vm.soroszlopbokes[i].moduls[j].modulname) {
+              tombom1.push(vm.soroszlopbokes[i].moduls[j]);
+            }
+          }
+        }
+      }
+
+      tombom2=$filter('unique')(tombom1,'modulbokeshiba');
+
+      for(var k=0;k<tombom2.length;k++){
+        var obj={};
+        obj={
+          type:tombom2[k].modulbokeshiba,
+          db:0
+        }
+        vm.listdata.push(obj);
+      }
+
+      for(var a=0;a<tombom1.length;a++){
+        for(var b=0;b<vm.listdata.length;b++){
+          if(tombom1[a].modulbokeshiba==vm.listdata[b].type){
+            vm.listdata[b].db+=tombom1[a].modulbokes;
+          }
+        }
+      }
     }
 
   }
