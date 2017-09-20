@@ -2,26 +2,29 @@ define([], function () {
   'use strict';
   function Controller(downtimeService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
-    vm.startdate=$filter('date')(new Date().getTime()-(14*24*3600*1000),'yyyy-MM-dd');
-    vm.enddate=$filter('date')(new Date(),'yyyy-MM-dd');
-    vm.data=[];
-    vm.group=[];
-    vm.names=[];
-    vm.load=load;
+    vm.startdate = $filter('date')(new Date().getTime() - (14 * 24 * 3600 * 1000), 'yyyy-MM-dd');
+    vm.enddate = $filter('date')(new Date(), 'yyyy-MM-dd');
+    vm.data = [];
+    vm.group = [];
+    vm.names = [];
+    vm.load = load;
     vm.loading = true;
 
-    function load(){
+    function load() {
       vm.loading = true;
-      vm.data=[];
-      vm.group=[];
-      vm.names=[];
-      var groupfilter=[];
-      var namefilter=[];
+      vm.data = [];
+      vm.group = [];
+      vm.names = [];
+      var groupfilter = [];
+      var namefilter = [];
+      var goodtime = 0;
 
       downtimeService.get(vm.startdate, vm.enddate).then(function (response) {
-        vm.data= response.data;
+        vm.data = response.data;
         groupfilter = $filter('unique')(vm.data, 'Reason_group_Name');
         namefilter = $filter('unique')(vm.data, 'reas_Name');
+
+        goodtime = ((new Date(vm.enddate).getTime() - new Date(vm.startdate).getTime()) / 1000)*2
 
         for (var i = 0; i < groupfilter.length; i++) {
           var obj = {};
@@ -34,38 +37,46 @@ define([], function () {
         for (var i = 0; i < vm.group.length; i++) {
           for (var j = 0; j < vm.data.length; j++) {
             if (vm.group[i].code == vm.data[j].Reason_group_Name) {
-              vm.group[i].amount += vm.data[j].Duration_s_* 1;
+              vm.group[i].amount += vm.data[j].Duration_s_ * 1;
+              goodtime -= vm.data[j].Duration_s_ * 1;
             }
           }
         }
+        var goodobj = {};
+        goodobj = {
+          code: "Elérhető idő",
+          amount: goodtime
+        }
+        vm.group.push(goodobj);
+
         var gr = [];
         var chartdrill = [];
         for (var i = 0; i < vm.group.length; i++) {
           gr.push({ name: vm.group[i].code, y: vm.group[i].amount, drilldown: vm.group[i].code });
-          chartdrill.push({name: vm.group[i].code, id: vm.group[i].code, data: [] });
+          chartdrill.push({ name: vm.group[i].code, id: vm.group[i].code, data: [] });
         }
-        for(var i=0;i<chartdrill.length;i++){
-          for(var j=0;j<namefilter.length;j++){
-            var t=[];
-            var szam=0;
-            for(var k=0;k<vm.data.length;k++){
-              if(vm.data[k].reas_Name==namefilter[j].reas_Name && vm.data[k].Reason_group_Name==chartdrill[i].name){
-                szam+=vm.data[k].Duration_s_* 1;
+        for (var i = 0; i < chartdrill.length; i++) {
+          for (var j = 0; j < namefilter.length; j++) {
+            var t = [];
+            var szam = 0;
+            for (var k = 0; k < vm.data.length; k++) {
+              if (vm.data[k].reas_Name == namefilter[j].reas_Name && vm.data[k].Reason_group_Name == chartdrill[i].name) {
+                szam += vm.data[k].Duration_s_ * 1;
               }
             }
-            t=[namefilter[j].reas_Name,szam];
+            t = [namefilter[j].reas_Name, szam];
             chartdrill[i].data.push(t);
           }
         }
 
         setChartpie(gr, chartdrill);
-        console.log(chartdrill);
+        console.log(goodtime);
         console.log(vm.data);
         vm.loading = false;
       });
     }
 
-    function setChartpie(dt,dd) {
+    function setChartpie(dt, dd) {
       vm.chartconfig_pie = {
         chart: {
           type: 'pie',
@@ -84,7 +95,7 @@ define([], function () {
         },
         series: [
           {
-            name:"adatok",
+            name: "adatok",
             data: dt
           }
         ],
