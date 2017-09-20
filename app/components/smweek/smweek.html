@@ -15,14 +15,70 @@
       </div>
     </div>
     <div class="module-body">
+      <my-chart config="vm.smavailabilitychartconfig" id="chart"></my-chart>
+      <my-chart config="vm.ttlsmavailabilitychartconfig" id="ttlchart"></my-chart>
       <div class="row">
-        <div class="col-sm-4" ng-repeat="item in vm.smcards | orderBy:'sm'">
-          <div class="card">
-            <smday-dir data="item"></smday-dir>
-          </div>
-          </div>
-        </div>
+        <table class="table table-condensed table-striped">
+          <thead>
+            <tr>
+              <th>Machine</th>
+              <th>Ev_Group</th>
+              <th>Event_SubGroup</th>
+              <th>Maximo szám</th>
+              <th>Event_time (sec)</th>
+              <th>Event_time (min)</th>
+              <th>Event_time (hr)</th>
+              <th>Date</th>
+              <th>Shift</th>
+              <th>Comment</th>
+            </tr>
+          </thead>
+          <thead>
+            <tr>
+              <th colspan=2>
+                <div class="form-group">
+                  <select class="form-control" ng-model="vm.search.Machine">
+                    <option value=""></option>
+                    <option value="SM1">SM1</option>
+                    <option value="SM2">SM2</option>
+                    <option value="SM4">SM4</option>
+                    <option value="SM5">SM5</option>
+                    <option value="SM6">SM6</option>
+                    <option value="SM7">SM7</option>
+                    <option value="SM8">SM8</option>
+                    <option value="SM9">SM9</option>
+                  </select>
+                </div>
+              </th>
+              <th colspan=8>
+                <div class="form-group">
+                  <select class="form-control" ng-model="vm.search.Ev_Group">
+                        <option value=""></option>
+                        <option value="Muszaki technikai okok">Műszaki</option>
+                        <option value="Szervezesi veszteseg">Szervezési</option>
+                        <option value="Tervezett veszteseg">Tervezett</option>
+                      </select>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="i in vm.filedatas | filter: vm.search | orderBy: 'Event_time': true | limitTo: 100">
+              <td>{{i.Machine}}</td>
+              <td>{{i.Ev_Group}}</td>
+              <td>{{i.Event_SubGroup}}</td>
+              <td>{{i.Maximo_num}}</td>
+              <td>{{i.Event_time}}</td>
+              <td>{{i.Event_time/60 | number: 0}}</td>
+              <td>{{i.Event_time/60/60 | number: 2}}</td>
+              <td>{{i.timestamp | date: 'yyyy-MM-dd hh:mm:ss'}}</td>
+              <td>{{i.Shift_Name}}</td>
+              <td>{{i.Comment}}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="module-footer"></div>
+    </div>
+    <div class="module-footer"></div>
   </section>
-  </div>
+</div>
