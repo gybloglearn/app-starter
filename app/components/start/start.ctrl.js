@@ -27,7 +27,7 @@ define([], function () {
       vm.smloading = true;
       vm.allsmsum = [];
       var substring1 = "TOTAL";
-      var substring2 = "GOOD-GOOD";
+      var substring2 = "-GOOD";
       var i = 0;
 
       angular.forEach(vm.loadsheetmakers, function (v, k) {

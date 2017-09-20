@@ -137,7 +137,7 @@
 				<tbody>
 					<tr ng-repeat="item in vm.sm_datas | orderBy:vm.order:vm.asc | filter: search track by $index" class="ng-scope">
 						<td>{{item.Event_type}}</td>
-						<td>{{item.timestamp | date: 'y-M-d hh:mm'}}</td>
+						<td>{{item.timestamp | date: 'yyyy-MM-dd HH:mm'}}</td>
 						<td>{{item.Event_time}}</td>
 						<td>{{item.Shift_Name}}</td>
 						<td>{{item.Ev_Group}}</td>
