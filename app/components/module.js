@@ -43,7 +43,7 @@ define([
     app.controller('amountController', amountController);
     app.service('amountService', amountService);
     app.directive('datepicker', datepicker);
-    app.directive('myChart', mychart);
+    app.directive('mychart', mychart);
     app.filter('unique',unique);
     app.filter('sumField',sumField);
     app.controller('downtimeController', downtimeController);
