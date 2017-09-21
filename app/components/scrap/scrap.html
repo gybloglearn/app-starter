@@ -16,7 +16,7 @@
           <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="-0d" end="{{vm.today}}">
           <span class="input-group-addon">-ig</span>
           <div class="input-group-btn">
-            <a href="" class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.enddate<=vm.startdate">Betöltés</a>
+            <a href="" class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.enddate<=vm.startdate;vm.loading">Betöltés</a>
           </div>
         </div>
       </div>
