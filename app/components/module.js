@@ -12,7 +12,9 @@ define([
   './filters/unique',
   './filters/sumField',
   './downtime/downtime.ctrl',
-  './services/downtime.service'
+  './services/downtime.service',
+  './scrap/scrap.ctrl',
+  './services/scrap.service'
 	/* files */
 ], function (
   configFunction,
@@ -28,7 +30,9 @@ define([
   unique,
   sumField,
   downtimeController,
-  downtimeService
+  downtimeService,
+  scrapController,
+  scrapService
 	/* names */) {
 
     // Link all components to the module !!!
@@ -48,5 +52,7 @@ define([
     app.filter('sumField',sumField);
     app.controller('downtimeController', downtimeController);
 		app.service('downtimeService', downtimeService);
+		app.controller('scrapController', scrapController);
+		app.service('scrapService', scrapService);
 		/* controllers */
   });
