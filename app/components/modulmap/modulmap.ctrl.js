@@ -18,7 +18,7 @@ define([], function () {
     vm.actreszlettipus = "Mind";
     vm.tablazatazon = "";
     vm.modulnevazon = "";
-    vm.mezo="";
+    vm.mezo = "";
     vm.putmodul = [];
     vm.tablazat = [];
     vm.allaeq = 0;
@@ -125,6 +125,11 @@ define([], function () {
             response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].modul_id1)
             response.data[j].modtype = getModulname(vm.partnumbers, response.data[j].modul_id1)
             response.data[j].tipus = $filter('addtype')(response.data[j].modtype);
+            if (response.data[j].bt_kat_db1 == "") {
+              response.data[j].bt_kat_db1 = 0;
+            } else {
+              response.data[j].bt_kat_db1 = parseFloat(response.data[j].bt_kat_db1);
+            }
             vm.data.push(response.data[j]);
             var actkom = response.data[j].Oszlop + response.data[j].Sor;
             for (var k = 0; k < vm.osszesmodulbokes.length; k++) {
@@ -320,7 +325,7 @@ define([], function () {
           };
           // -- PARETO END
 
-          //console.log(vm.data); 
+          console.log(vm.data);
           //console.log(vm.soroszlopbokes);
           //console.log(vm.osszesmodulbokes);
           //console.log(vm.typedb);
@@ -450,11 +455,11 @@ define([], function () {
     }
 
     function listreszletes(mezo) {
-      
-      vm.mezo=mezo;
+
+      vm.mezo = mezo;
       vm.listdata = [];
-      var tombom1=[];
-      var tombom2=[];
+      var tombom1 = [];
+      var tombom2 = [];
       for (var i = 0; i < vm.soroszlopbokes.length; i++) {
         if (mezo == vm.soroszlopbokes[i].azon) {
           for (var j = 0; j < vm.soroszlopbokes[i].moduls.length; j++) {
@@ -465,21 +470,21 @@ define([], function () {
         }
       }
 
-      tombom2=$filter('unique')(tombom1,'modulbokeshiba');
+      tombom2 = $filter('unique')(tombom1, 'modulbokeshiba');
 
-      for(var k=0;k<tombom2.length;k++){
-        var obj={};
-        obj={
-          type:tombom2[k].modulbokeshiba,
-          db:0
+      for (var k = 0; k < tombom2.length; k++) {
+        var obj = {};
+        obj = {
+          type: tombom2[k].modulbokeshiba,
+          db: 0
         }
         vm.listdata.push(obj);
       }
 
-      for(var a=0;a<tombom1.length;a++){
-        for(var b=0;b<vm.listdata.length;b++){
-          if(tombom1[a].modulbokeshiba==vm.listdata[b].type){
-            vm.listdata[b].db+=tombom1[a].modulbokes;
+      for (var a = 0; a < tombom1.length; a++) {
+        for (var b = 0; b < vm.listdata.length; b++) {
+          if (tombom1[a].modulbokeshiba == vm.listdata[b].type) {
+            vm.listdata[b].db += tombom1[a].modulbokes;
           }
         }
       }
