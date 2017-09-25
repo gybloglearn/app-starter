@@ -16,44 +16,106 @@
     </div>
 
     <div class="module-body">
-        <table class="table table-hover table-condensed table-bordered">
-          <thead>
-            <tr>
-              <th colspan="2" class="text-center"></th>
-              <th colspan="4" class="text-center">UF</th>
-              <th colspan="2" class="text-center">Időpontok</th>
-              <th colspan="3" class="text-center">F&M</th>
-            </tr>
-            <tr>
-              <th class="text-center">Dátum</th>
-              <th class="text-center">Nap</th>
-              <th class="text-center">A</th>
-              <th class="text-center">B</th>
-              <th class="text-center">C</th>
-              <th class="text-center">D</th>
-              <th class="text-center">Orvosi rendelés</th>
-              <th class="text-center">Bérszámfejtés</th>
-              <th class="text-center">A</th>
-              <th class="text-center">B</th>
-              <th class="text-center">C</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="item in vm.data">
-              <td class="text-center">{{item.date}}</td>
-              <td class="text-center">{{item.day}}</td>
-              <td class="text-center" style="color:{{item.zwa=='Pihenő'?'#d9d9d9':(item.zwa=='Nappal'?'#ff9900':'#0033cc')}}">{{item.zwa}}</td>
-              <td class="text-center" style="color:{{item.zwb=='Pihenő'?'#d9d9d9':(item.zwb=='Nappal'?'#ff9900':'#0033cc')}}">{{item.zwb}}</td>
-              <td class="text-center" style="color:{{item.zwc=='Pihenő'?'#d9d9d9':(item.zwc=='Nappal'?'#ff9900':'#0033cc')}}">{{item.zwc}}</td>
-              <td class="text-center" style="color:{{item.zwd=='Pihenő'?'#d9d9d9':(item.zwd=='Nappal'?'#ff9900':'#0033cc')}}">{{item.zwd}}</td>
-              <td class="text-center">{{item.doctor}}</td>
-              <td class="text-center">{{item.client}}</td>
-              <td class="text-center" style="color:{{item.fma=='Pihenő'?'#d9d9d9':(item.fma=='Délelőtt'?'#ff9900':(item.fma=='Délután'?'#660066':'#0033cc'))}}">{{item.fma}}</td>
-              <td class="text-center" style="color:{{item.fmb=='Pihenő'?'#d9d9d9':(item.fmb=='Délelőtt'?'#ff9900':(item.fmb=='Délután'?'#660066':'#0033cc'))}}">{{item.fmb}}</td>
-              <td class="text-center" style="color:{{item.fmc=='Pihenő'?'#d9d9d9':(item.fmc=='Délelőtt'?'#ff9900':(item.fmc=='Délután'?'#660066':'#0033cc'))}}">{{item.fmc}}</td>
-            </tr>
-          </tbody>
-        </table>
+      <table class="table table-hover table-condensed table-bordered">
+        <thead>
+          <tr>
+            <th class="text-center">Terület</th>
+            <th class="text-center">Területvezető</th>
+            <th class="text-center">A</th>
+            <th class="text-center">B</th>
+            <th class="text-center">C</th>
+            <th class="text-center">D</th>
+          </tr>
+          <tr>
+            <td width="15%" class="text-center">Braiding
+              <br>Dope
+              <br>ZeeWeed
+              <br>QC
+              <br>Karbantartás
+              <br>Raktár
+              <br>F&M
+            </td>
+            <td width="15%" class="text-center">Zimmermann Ádám
+              <br>Vonyó Attila
+              <br>Haltrich Ákos
+              <br>Tóth Viktor
+              <br>Hermann Péter Sándor
+              <br>Pintér Ferenc
+              <br>Krajczár Antal
+            </td>
+            <td width="15%" class="text-center">Csonka Gábor
+              <br>Stuhl Imre
+              <br>Simon László
+              <br>Liptai János Mihály
+              <br>Horváth István
+              <br>Szili Zoltán
+              <br>Baráth Gáborné Éva
+            </td>
+            <td width="15%" class="text-center">Fridrich Tibor
+              <br>Lóczki Ferenc
+              <br>Ambrus Ildikó
+              <br>Nagy Norbert
+              <br>Zámbó Zoltán
+              <br>Szabó Zsolt
+              <br>Micskó Csilla
+            </td>
+            <td width="15%" class="text-center">Somogyi Imréné Éva
+              <br>Vépi Tibor
+              <br>Rózsa Gábor
+              <br>(Bereczkiné) Semsei Mária
+              <br>Gubó Krisztián
+              <br>Fülöp Róbert
+              <br>Rozgonyi Gergely
+            </td>
+            <td width="15%" class="text-center">Maczik Norbert
+              <br>Becher Gábor
+              <br>Kovács Ferenc
+              <br>Tóth Pál
+              <br>Vörös Attila
+              <br>Jámbor István
+              <br>-
+            </td>
+          </tr>
+        </thead>
+      </table>
+      <table class="table table-hover table-condensed table-bordered">
+        <thead>
+          <tr>
+            <th colspan="2" class="text-center"></th>
+            <th colspan="4" class="text-center">UF</th>
+            <th colspan="2" class="text-center">Időpontok</th>
+            <th colspan="3" class="text-center">F&M</th>
+          </tr>
+          <tr>
+            <th class="text-center" width="5%">Dátum</th>
+            <th class="text-center" width="5%">Nap</th>
+            <th class="text-center" width="5%">A</th>
+            <th class="text-center" width="5%">B</th>
+            <th class="text-center" width="5%">C</th>
+            <th class="text-center" width="5%">D</th>
+            <th class="text-center" width="5%">Orvosi rendelés</th>
+            <th class="text-center" width="15%">Bérszámfejtés</th>
+            <th class="text-center" width="5%">A</th>
+            <th class="text-center" width="5%">B</th>
+            <th class="text-center" width="5%">C</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.data">
+            <td class="text-center">{{item.date}}</td>
+            <td class="text-center">{{item.day}}</td>
+            <td class="text-center" style="color:{{item.zwa=='Pihenő'?'#d9d9d9':(item.zwa=='Nappal'?'#ff9900':'#0033cc')}}">{{item.zwa}}</td>
+            <td class="text-center" style="color:{{item.zwb=='Pihenő'?'#d9d9d9':(item.zwb=='Nappal'?'#ff9900':'#0033cc')}}">{{item.zwb}}</td>
+            <td class="text-center" style="color:{{item.zwc=='Pihenő'?'#d9d9d9':(item.zwc=='Nappal'?'#ff9900':'#0033cc')}}">{{item.zwc}}</td>
+            <td class="text-center" style="color:{{item.zwd=='Pihenő'?'#d9d9d9':(item.zwd=='Nappal'?'#ff9900':'#0033cc')}}">{{item.zwd}}</td>
+            <td class="text-center">{{item.doctor}}</td>
+            <td class="text-center">{{item.client}}</td>
+            <td class="text-center" style="color:{{item.fma=='Pihenő'?'#d9d9d9':(item.fma=='Délelőtt'?'#ff9900':(item.fma=='Délután'?'#660066':'#0033cc'))}}">{{item.fma}}</td>
+            <td class="text-center" style="color:{{item.fmb=='Pihenő'?'#d9d9d9':(item.fmb=='Délelőtt'?'#ff9900':(item.fmb=='Délután'?'#660066':'#0033cc'))}}">{{item.fmb}}</td>
+            <td class="text-center" style="color:{{item.fmc=='Pihenő'?'#d9d9d9':(item.fmc=='Délelőtt'?'#ff9900':(item.fmc=='Délután'?'#660066':'#0033cc'))}}">{{item.fmc}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div class="module-footer">
       <!--div class="col-sm-3">
