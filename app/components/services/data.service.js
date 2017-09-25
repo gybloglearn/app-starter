@@ -12,10 +12,10 @@ define([], function () {
 
     ///////////
 
-    function getplan(id, datum) {
+    function getplan() {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15/planapi/plan/' + id + '/' + datum
+        url: '../sm/app/components/PHP/planapi/allplans'
       };
       return $http(req);
     }
