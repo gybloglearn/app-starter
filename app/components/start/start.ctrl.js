@@ -38,7 +38,7 @@ define([], function () {
           sheets:"16"
         };
         vm.partnumbers.push(obj);
-        console.log(vm.partnumbers);
+        //console.log(vm.partnumbers);
       });
     }
 
@@ -184,7 +184,7 @@ define([], function () {
               }
             }
           }
-          console.log(response.data);
+          //console.log(response.data);
           //vm.pottloading = false;
         });
       }
@@ -373,6 +373,7 @@ define([], function () {
       { name: "B32 FLOW", amount: 1.3 },
       { name: "DS- D13 CP5", amount: 0.7 },
       { name: " D13 CP5", amount: 0.7 },
+      { name: "D13 CP5", amount: 0.7 },
       { name: "DS13CP5", amount: 0.7 },
       { name: "ZB500S", amount: 0.6 }
     ];

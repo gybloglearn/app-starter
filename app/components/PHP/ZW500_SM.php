@@ -80,6 +80,8 @@ try
           }
           else if($r[0][$x]=="name"){
               $row["machine"] = substr($y, 0, strpos($y, "-"));
+              $y = str_replace("CS-D13 CP5", "ZW500Ds13 old yarn CP5", $y);
+              $y = str_replace("CS-D12 FLOW", "ZW500Ds12 old yarn FLOW", $y);
               $row["type"] =  str_replace("_GOOD", "", substr($y, strpos($y,"-")+1, strrpos($y, "-")-strpos($y, "-")-1));
               $row["category"] = substr($y, strrpos($y, "-")+1);
           } else {
