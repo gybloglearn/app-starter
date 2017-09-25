@@ -1,7 +1,18 @@
-<div class="container">
+<div class="container-fluid">
   <section class="module">
-    <div class="module-header">Start</div>
-    <div class="module-body"></div>
-    <div class="module-footer"></div>
+    <div class="module-header">
+      <h1 class="text-center">{{vm.datumszam}}</h1>
+      <h2 class="text-center">Következő frissítés ideje: {{vm.frissites_ideje}}</h2>
+    </div>
+    <div class="module-body">
+      <div class="row">
+        <div class="col-sm-4" ng-repeat="item in vm.smcards | orderBy:'sm'">
+          <sm-dir data="item"></sm-dir>
+        </div>
+      </div>
+    </div>
+    <div class="module-footer">
+        <div class="text-center"><a class="btn btn-success pull-right" href="../sm">Vissza</a></div>
+    </div>
   </section>
 </div>

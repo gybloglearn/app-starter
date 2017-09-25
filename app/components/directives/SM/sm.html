@@ -1,0 +1,15 @@
+<!--direktíva-->
+<div class="smdir">
+    <div class="card">
+        <h1 class="title">{{data.sm}}</h1>
+        <h3 class="datatext">Terv: {{data.terv}} db</h3>
+        <h3 class="datatext">Jó lap: {{data.jolap}} db</h3>
+        <h3 class="datatext">Selejt lap: {{data.osszlap-data.jolap}} db</h3>
+        <h3 class="datatext">Összes lap: {{data.osszlap}} db</h3>
+        <my-chart id="{{data.id}}" config="data.chartconfig"></my-chart>
+        <hr>
+        <h3 class="text-right">Szervezési veszteség: {{data.szervezesi|number:0}} perc</h3>
+        <h3 class="text-right">Tervezési veszteség: {{data.tervezesi|number:0}} perc</h3>
+        <h3 class="text-right">Műszaki technikai okok: {{data.muszaki|number:0}} perc</h3>
+    </div>
+</div>

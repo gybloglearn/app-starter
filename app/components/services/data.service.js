@@ -3,17 +3,35 @@ define([], function () {
 
   function Service($http) {
     var service = {
-      get: get
+      getplan: getplan,
+      getsm: getsm,
+      getsoesm: getsoesm
     };
 
     return service;
 
     ///////////
 
-    function get() {
+    function getplan() {
       var req = {
         method: 'GET',
-        url: '//url//'
+        url: '../sm/app/components/PHP/planapi/allplans'
+      };
+      return $http(req);
+    }
+
+    function getsm(start, end, mch) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/ZW500_SM.php?startdate=' + start + '&enddate=' + end + '&report_id=' + mch
+      };
+      return $http(req);
+    }
+
+    function getsoesm(date, sm) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/sumsm.php?startdate=' + date + '&mch=' + sm
       };
       return $http(req);
     }
