@@ -87,6 +87,7 @@ require.config({
         'angular-resource': 'components/angular.js/angular-resource.min',
         'angular-locale_hu-hu': 'components/angular.js/angular-locale_hu-hu',
         'angular-ui-router': 'components/angular.js/angular-ui-router.min',
+        'drilldown': 'components/highcharts-amd/js/modules/drilldown.src',
         'app': 'sm/app/app',
         'ch': 'sm/app/components/ch'
     },
@@ -109,6 +110,9 @@ require.config({
   				deps: ['jquery'],
   				exports: 'Typeahead'
   			},
+        'drilldown': {
+          deps: ['charts']
+        },
         'ch': {
           deps: ['charts']
         },
