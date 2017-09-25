@@ -38,7 +38,6 @@
 							<th>Termék típus</th>
 							<th>Lapszám</th>
 							<th>Délelőtt</th>
-							<th>Délután</th>
 							<th>Éjszaka</th>
 						</tr>
 					</thead>
@@ -51,7 +50,6 @@
 							<td><input ng-model="vm.data[$index].sheetnumber" type="text" class="form-control" value="{{(vm.moduls | filter:{'name':vm.acttype})[0].sheets}}"
 									readonly></td>
 							<td><input ng-model="vm.data[$index].amountshift1" type="text" class="form-control"></td>
-							<td><input ng-model="vm.data[$index].amountshift2" type="text" class="form-control"></td>
 							<td><input ng-model="vm.data[$index].amountshift3" type="text" class="form-control"></td>
 						</tr>
 					</tbody>
@@ -105,7 +103,6 @@
 						<th rowspan=2 ng-click="vm.order='type';vm.asc=!vm.asc;">Termék típus</th>
 						<th>Lapszám</th>
 						<th>Délelőtt</th>
-						<th>Délután</th>
 						<th>Éjszaka</th>
 						<th>Szerkesztés/Törlés</th>
 					</tr>
@@ -117,7 +114,6 @@
 						<td>{{item.type}}</td>
 						<td>{{item.sheetnumber}}</td>
 						<td>{{item.amountshift1}}</td>
-						<td>{{item.amountshift2}}</td>
 						<td>{{item.amountshift3}}</td>
 						<td>
 							<div class="btn-group btn-group-sm">
@@ -167,12 +163,6 @@
 					</div>
 				</div>
 
-				<div class="col-sm-4">
-					<div class="input-group">
-						<span class="input-group-addon">Délután:</span>
-						<input type="text" class="form-control" ng-model="vm.edit.amountshift2">
-					</div>
-				</div>
 				<div class="col-sm-4">
 					<div class="input-group">
 						<span class="input-group-addon">Éjszaka:</span>

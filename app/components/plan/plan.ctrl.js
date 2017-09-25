@@ -32,7 +32,6 @@ define([], function () {
           "type": vm.acttype,
           "sheetnumber": $filter('filter')(vm.moduls, { 'name': vm.acttype })[0].sheets,
           "amountshift1": vm.darab,
-          "amountshift2": vm.darab,
           "amountshift3": vm.darab,
         });
       }
