@@ -1,6 +1,6 @@
 define([], function () {
   'use strict';
-  function Controller(dataService, $cookies, $state, $rootScope, $filter) {
+  function Controller(dataService, $cookies, $state, $rootScope, $filter, $http) {
     var vm = this;
     vm.operators = [];
     vm.OP = [];
@@ -20,8 +20,39 @@ define([], function () {
     function beallit() {
       vm.datumszam = $filter('date')(new Date(vm.datum).getTime(), 'yyyy-MM-dd');
     }
-
     function load() {
+      vm.dis = true;
+      vm.ops = [];
+      $http({ method: 'GET', url: "app/components/Operators/ops.json" }).
+        success(function (data, status) {
+          vm.ops = data;
+        }).
+        error(function (data, status) {
+          console.log(data || "Request failed");
+        });
+      vm.datas = [];
+      angular.forEach(vm.Pottings, function(p, i){
+        angular.forEach(vm.phasenumbers, function(n, j){
+          dataService.get(vm.datum, p, n).
+          success(function(response, status){
+            for(var k=0;k<response.length;k++){
+              response[k].mch = p;
+              response[k].pha = vm.hely[n];
+              vm.datas.push(response[k]);
+            }
+            if(i*j==7){
+              console.log(vm.datas);
+              vm.dis = false;
+            }
+          }).
+          error(function(data, status){
+            console.log(data || "Request failed");
+          });
+        });
+      });
+    }
+
+    /*function load() {
       vm.dis = true;
       vm.OP = [];
       vm.operators = [];
@@ -97,7 +128,7 @@ define([], function () {
               }
             }
           }
-          console.log(vm.operators[v]);
+          //console.log(vm.operators[v]);
           vm.OP.push({
             sor: v,
             place: vm.operators[v].name,
@@ -106,7 +137,7 @@ define([], function () {
           vm.dis = false;
         });
       });
-    }
+    }*/
 
 
     activate();
@@ -116,7 +147,7 @@ define([], function () {
       load();
     }
 
-    function feltoltopazonosito(tomb) {
+    /*function feltoltopazonosito(tomb) {
       var a = 0;
       var opk = [];
       for (var i = 0; i < tomb.length; i++) {
@@ -124,9 +155,9 @@ define([], function () {
         a++;
       }
       return opk;
-    }
+    }*/
 
   }
-  Controller.$inject = ['Data', '$cookies', '$state', '$rootScope', '$filter'];
+  Controller.$inject = ['Data', '$cookies', '$state', '$rootScope', '$filter', '$http'];
   return Controller;
 });

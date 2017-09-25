@@ -1,7 +1,7 @@
 <div class="container">
 	<section class="module">
 		<div class="module-header">
-			<h1 class="text-center" ng-if="vm.actshiftnum==1">{{vm.actmachine}}-Operátorok-Délelőtt</h1>
+			<!--<h1 class="text-center" ng-if="vm.actshiftnum==1">{{vm.actmachine}}-Operátorok-Délelőtt</h1>
 			<h1 class="text-center" ng-if="vm.actshiftnum==2">{{vm.actmachine}}-Operátorok-Délután</h1>
 			<h1 class="text-center" ng-if="vm.actshiftnum==3">{{vm.actmachine}}-Operátorok-Éjszaka</h1>
 			<h2 class="text-center" style="margin-top:10px">{{vm.datumszam}}</h2>
@@ -24,7 +24,7 @@
 							</li>
 					</ul>
 				</div>
-			</div>
+			</div>-->
 			<div class="col-sm-5" style="margin-top:60px">
 				<div class="input-group">
 					<span class="input-group-addon">Dátum:</span>
@@ -41,10 +41,30 @@
 					<p class="text-center">Betöltés...</p>
 				</div>
 			</div>
+			<table class="table table-condensed">
+				<thead>
+					<tr>
+						<th rowspan="2" class="text-center">Operátor</th>
+						<th colspan="8" class="text-center" ng-repeat="pottings in vm.Pottings">{{pottings}}</th>
+					</tr>
+					<tr>
+						<th class="text-center" ng-repeat="hely in vm.hely">{{hely.substr(0,1) + hely.substr(hely.indexOf(' '),2)}}</th>
+						<th class="text-center" ng-repeat="hely in vm.hely">{{hely.substr(0,1) + hely.substr(hely.indexOf(' '),2)}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="op in vm.ops">
+						<td width="30%">{{op.name + " - " + op.sso + " - " + op.shift}}</td>
+						<td ng-repeat="hely in vm.hely">{{ (vm.datas | filter: {mch:'Potting3', pha: hely, operator: op.sso}).length>0?(vm.datas | filter: {mch:'Potting3', pha: hely, operator: op.sso}).length:'' }}</td>
+						<td ng-repeat="hely in vm.hely">{{ (vm.datas | filter: {mch:'Potting4', pha: hely, operator: op.sso}).length>0?(vm.datas | filter: {mch:'Potting4', pha: hely, operator: op.sso}).length:'' }}</td>
+					</tr>
+				</tbody>
+			</table>
 			<div class="row">
 				<div class="col-sm-6" ng-repeat="item in vm.OP| orderBy:'sor'">
 					<div style="border: 1px solid #ddd; border-radius:3px;overflow:hidden;height:260px">
-						<op-dir data="item"></op-dir>
+
+						<!--<op-dir data="item"></op-dir>-->
 					</div>
 				</div>
 			</div>
