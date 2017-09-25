@@ -43,7 +43,7 @@ define([], function () {
               vm.datas.push(response[k]);
             }
             if(i*j==7){
-              console.log(vm.datas);
+              //console.log(vm.datas);
               vm.dis = false;
             }
           }).
