@@ -23,14 +23,14 @@ define([], function () {
     function getAll() {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15/planapi/allplans'
+        url: 'app/components/PHP/planapi/allplans'
       };
       return $http(req);
     }
     function post(data) {
       var req = {
         method: 'POST',
-        url: 'http://3.228.180.15/planapi/plan/' + data.id,
+        url: 'app/components/PHP/planapi/plan/' + data.id,
         data: data
       };
       return $http(req);
@@ -38,7 +38,7 @@ define([], function () {
     function put(data) {
       var req = {
         method: 'PUT',
-        url: 'http://3.228.180.15/planapi/plan/' + data.id,
+        url: 'app/components/PHP/planapi/plan/' + data.id,
         data: data
       };
       return $http(req);
@@ -46,7 +46,7 @@ define([], function () {
     function erase(id) {
       var request = {
         method: "DELETE",
-        url: "http://3.228.180.15/planapi/plan/" + id
+        url: "app/components/PHP/planapi/plan/" + id
       };
       return $http(request);
     }
