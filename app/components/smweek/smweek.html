@@ -15,8 +15,16 @@
       </div>
     </div>
     <div class="module-body">
-      <my-chart config="vm.smavailabilitychartconfig" id="chart"></my-chart>
-      <my-chart config="vm.ttlsmavailabilitychartconfig" id="ttlchart"></my-chart>
+      <div class="col-sm-8">
+        <my-chart config="vm.smavailabilitychartconfig" id="chart"></my-chart>
+      </div>
+      <div class="col-sm-4">
+        <my-chart config="vm.ttlsmavailabilitychartconfig" id="ttlchart"></my-chart>
+      </div>
+      <div class="col-sm-12"><my-chart config="vm.topmconf" id="topm"></my-chart></div>
+      <div class="col-sm-12"><my-chart config="vm.topsconf" id="tops"></my-chart></div>
+      <div class="col-sm-12"><my-chart config="vm.toptconf" id="topt"></my-chart></div>
+
       <div class="row">
         <table class="table table-condensed table-striped">
           <thead>
