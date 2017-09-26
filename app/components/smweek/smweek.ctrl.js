@@ -187,19 +187,79 @@ define([], function () {
         szervezesi.data = $filter('orderBy')(szervezesi.data, 'sm');
         tervezett.data = $filter('orderBy')(tervezett.data, 'sm');
 
-        var tavail = { name: "Elérhetőség", color: "rgb(150,200,100)", data: [{ y: parseFloat((ttla - (ttlm + ttls + ttlt)) / ttla) * 100, min: ttla - (ttlm + ttls + ttlt) }] };
-        var tmuszaki = { name: "Műszaki", color: "rgb(255,0,0)", data: [{ y: parseFloat(ttlm / ttla) * 100, min: ttlm }], drilldown:'top10musz' };
-        var tszervezesi = { name: "Szervezési", color: "rgb(150,150,150)", data: [{ y: parseFloat(ttls / ttla) * 100, min: ttls }], drilldown: 'top10szer' };
-        var ttervezett = { name: "Tervezett", color: "rgb(50,100,200)", data: [{ y: parseFloat(ttlt / ttla) * 100, min: ttlt }], drilldown: 'top10terv' };
-
-        var top10musz = $filter('limitTo')($filter('orderBy')($filter('filter')(vm.filedatas, {Ev_Group:"Muszaki technikai okok"}),'Event_time', true),10);
-        var top10szer = $filter('limitTo')($filter('orderBy')($filter('filter')(vm.filedatas, {Ev_Group:"Szervezesi veszteseg"}),'Event_time', true),10);
-        var top10terv = $filter('limitTo')($filter('orderBy')($filter('filter')(vm.filedatas, {Ev_Group:"Tervezett veszteseg"}),'Event_time', true),10);
-        for(var k=0;k<top10musz.length;k++){
-          top10musz[k] = [top10musz[k].Event_SubGroup, top10musz[k].Event_time];
-          top10szer[k] = [top10szer[k].Event_SubGroup, top10szer[k].Event_time];
-          top10terv[k] = [top10terv[k].Event_SubGroup, top10terv[k].Event_time];
+        // muszaki
+        var topmuszd = $filter('unique')($filter('filter')(vm.filedatas, { Ev_Group: "Muszaki technikai okok" }), "Event_SubGroup");
+        var topm = [];
+        for (var k = 0; k < topmuszd.length; k++) {
+          topm.push({
+            cat: topmuszd[k].Event_SubGroup,
+            y: parseInt($filter('sumField')($filter('filter')(vm.filedatas, {"Event_SubGroup": topmuszd[k].Event_SubGroup}), 'Event_time')/60/60),
+            count: $filter('filter')(vm.filedatas, {"Event_SubGroup": topmuszd[k].Event_SubGroup}).length
+          });
         }
+        topm = $filter('orderBy')(topm, "y", true);
+        var xtopm = [];
+        for(var j=0;j<topm.length;j++)
+          xtopm.push(topm[j].cat);
+        vm.topmconf = {
+          chart: {type: "column", height: 300},legend:{enabled:false},
+          title: {text: "Műszaki technikai okok"},
+          xAxis: {type: "category", categories: xtopm},
+          series: [
+            {name: "Állások", color: "red", data: topm, tooltip: {pointFormat: '<span><span style="color:{series.color};font-weight:bold">{point.y} óra</span> [{point.count} db]</span>'}}
+          ]
+        };
+        // szerv
+        var topszervd = $filter('unique')($filter('filter')(vm.filedatas, { Ev_Group: "Szervezesi veszteseg" }), "Event_SubGroup");
+        var tops = [];
+        for (var k = 0; k < topszervd.length; k++) {
+          tops.push({
+            cat: topszervd[k].Event_SubGroup,
+            y: parseInt($filter('sumField')($filter('filter')(vm.filedatas, {"Event_SubGroup": topszervd[k].Event_SubGroup}), 'Event_time')/60/60),
+            count: $filter('filter')(vm.filedatas, {"Event_SubGroup": topszervd[k].Event_SubGroup}).length
+          });
+        }
+        tops = $filter('orderBy')(tops, "y", true);
+        var xtops = [];
+        for(var j=0;j<tops.length;j++)
+          xtops.push(tops[j].cat);
+        vm.topsconf = {
+          chart: {type: "column", height: 300},legend:{enabled:false},
+          title: {text: "Szervezési veszteség"},
+          xAxis: {type: "category", categories: xtops},
+          series: [
+            {name: "Állások", color: "rgb(150,150,150)", data: tops, tooltip: {pointFormat: '<span><span style="color:{series.color};font-weight:bold">{point.y} óra</span> [{point.count} db]</span>'}}
+          ]
+        };
+
+        // terv
+        var toptervd = $filter('unique')($filter('filter')(vm.filedatas, { Ev_Group: "Tervezett veszteseg" }), "Event_SubGroup");
+        var topt = [];
+        for (var k = 0; k < toptervd.length; k++) {
+          topt.push({
+            cat: toptervd[k].Event_SubGroup,
+            y: parseInt($filter('sumField')($filter('filter')(vm.filedatas, {"Event_SubGroup": toptervd[k].Event_SubGroup}), 'Event_time')/60/60),
+            count: $filter('filter')(vm.filedatas, {"Event_SubGroup": toptervd[k].Event_SubGroup}).length
+          });
+        }
+        topt = $filter('orderBy')(topt, "y", true);
+        var xtopt = [];
+        for(var j=0;j<topt.length;j++)
+          xtopt.push(topt[j].cat);
+        vm.toptconf = {
+          chart: {type: "column", height: 300},legend:{enabled:false},
+          title: {text: "Műszaki technikai okok"},
+          xAxis: {type: "category", categories: xtopt},
+          series: [
+            {name: "Állások", color: "rgb(50,100,200)", data: topt, tooltip: {pointFormat: '<span><span style="color:{series.color};font-weight:bold">{point.y} óra</span> [{point.count} db]</span>'}}
+          ]
+        };
+
+
+        var tavail = { name: "Elérhetőség", color: "rgb(150,200,100)", data: [{ y: parseFloat((ttla - (ttlm + ttls + ttlt)) / ttla) * 100, min: ttla - (ttlm + ttls + ttlt) }] };
+        var tmuszaki = { name: "Műszaki", color: "rgb(255,0,0)", data: [{ y: parseFloat(ttlm / ttla) * 100, min: ttlm }] };
+        var tszervezesi = { name: "Szervezési", color: "rgb(150,150,150)", data: [{ y: parseFloat(ttls / ttla) * 100, min: ttls }] };
+        var ttervezett = { name: "Tervezett", color: "rgb(50,100,200)", data: [{ y: parseFloat(ttlt / ttla) * 100, min: ttlt }] };
 
         vm.smavailabilitychartconfig = {
           chart: { type: 'column', spacingBottom: 30 },
@@ -207,6 +267,7 @@ define([], function () {
           tooltip: { shared: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.2f} %</span> ({point.min:.0f} perc)</span><br/>' },
           title: { text: "SM elérhetőségi adatok " + vm.actdate },
           xAxis: { type: "category", categories: xA, title: { text: "SheetMakerek" } },
+          yAxis: {max: 100},
           series: [
             muszaki, szervezesi, tervezett, avail
           ]
@@ -214,20 +275,17 @@ define([], function () {
         vm.ttlsmavailabilitychartconfig = {
           chart: { type: 'column', spacingBottom: 30 },
           plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0 } },
+          legend: {enabled: false},
           tooltip: { shared: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.2f} %</span> ({point.min:.0f} perc)</span><br/>' },
           title: { text: "SM összesített elérhetőségi adatok" },
           xAxis: { type: "category", categories: ["" + vm.startdate + " - " + vm.enddate], title: { text: "" } },
+          yAxis: {max: 100},
           series: [
             tmuszaki, tszervezesi, ttervezett, tavail
-          ],
-          drilldown: {series: [
-            {name:'top10musz', id:'top10musz', data: top10musz},
-            {name:'top10szer', id:'top10szer', data: top10szer},
-            {name:'top10terv', id:'top10terv', data: top10terv}
-          ]}
+          ]
         };
         //console.log(vm.smavailabilitychartconfig.series);
-        //console.log(vm.ttlsmavailabilitychartconfig);
+        //console.log(vm.ttlsmavailabilitychartconfig.series);
       }
     }
 
