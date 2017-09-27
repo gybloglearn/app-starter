@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('Rewinder', {
+		url: '/Rewinder',
+		templateUrl: './app/components/Rewinder/Rewinder.html',
+		controller: 'RewinderController',
+		controllerAs: 'vm'
+	});
 
   }
   ConfigFunction.$inject = ['$urlRouterProvider', '$stateProvider'];
