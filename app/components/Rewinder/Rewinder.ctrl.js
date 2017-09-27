@@ -3,15 +3,28 @@ define([], function () {
   function Controller(RewinderService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
     vm.datum=$filter('date')(new Date(), 'yyyy-MM-dd');
+    vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.rw1data=[];
     vm.uniquerw1=[];
     vm.selectdata=[];
+    vm.detailsdata=[];
+    vm.actmch="";
+    vm.actshift="";
     vm.load=load;
+    vm.loaddetails=loaddetails;
+    vm.beallit=beallit;
+
+    function beallit() {
+      vm.datumszam = $filter('date')(new Date(vm.datum), 'yyyy-MM-dd');
+    }
 
     function load(){
+      vm.actmch="";
+      vm.actshift="";
       vm.rw1data=[];
       vm.uniquerw1=[];
       vm.selectdata=[];
+      vm.loading1=true;
       RewinderService.getrw1(vm.datum).then(function (response) {
         vm.rw1data=response.data;
         vm.uniquerw1=$filter('unique')(vm.rw1data,'MachineName');
@@ -44,6 +57,16 @@ define([], function () {
             }
           }
         }
+        vm.loading1=false;
+      });
+    }
+
+    function loaddetails(){
+      vm.detailsdata=[];
+      vm.loading2=true;
+      RewinderService.getrw2(vm.datum,vm.actmch,vm.actshift).then(function (response) {
+        vm.detailsdata=response.data;
+        vm.loading2=false;
       });
     }
 

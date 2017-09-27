@@ -1,69 +1,110 @@
 <div class="container">
   <section class="module">
     <div class="module-header">
-      <h1 class="text-center">Rewinder</h1>
+      <h1 class="text-center">Rewinder-{{vm.datumszam}}</h1>
       <div class="col-sm-4" style="margin-top:20px">
         <div class="input-group">
           <span class="input-group-addon">Dátum</span>
           <input type="text" class="datepicker form-control" ng-model="vm.datum" setdate="0d" end="{{vm.edate}}">
           <div class="input-group-btn">
-            <a href="" class="btn btn-primary" ng-click="vm.load()" ng-disabled="">Betöltés</a>
+            <a href="" class="btn btn-primary" ng-click="vm.beallit();vm.load();vm.actmch=''" ng-disabled="vm.loading1">Betöltés</a>
           </div>
         </div>
       </div>
     </div>
     <div class="module-body">
-     
-        <table class="table table-hover table-condensed table-bordered">
+      <div class="progress progress-success progress-striped active" ng-hide="!vm.loading1">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Betöltés</p>
+        </div>
+      </div>
+      <table class="table table-hover table-condensed table-bordered">
+        <thead>
+          <tr>
+            <th colspan="1" class="text-center"></th>
+            <th colspan="3" class="text-center">Nappal</th>
+            <th colspan="3" class="text-center">Éjszaka</th>
+            <th colspan="3" class="text-center">Nap</th>
+          </tr>
+          <tr>
+            <th class="text-center">Gép</th>
+            <th class="text-center">Méter</th>
+            <th class="text-center">AEQ</th>
+            <th class="text-center">Dob</th>
+            <th class="text-center">Méter</th>
+            <th class="text-center">AEQ</th>
+            <th class="text-center">Dob</th>
+            <th class="text-center">Méter</th>
+            <th class="text-center">AEQ</th>
+            <th class="text-center">Dob</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.selectdata">
+            <td class="text-center">{{item.nev}}</td>
+            <td class="text-center"><a style="cursor: pointer" ng-click="vm.actmch=item.nev;vm.actshift='1';vm.loaddetails();">{{item.meternappal}}</a></td>
+            <td class="text-center">{{item.meternappal/9300|number:0}}</td>
+            <td class="text-center">{{item.cnappal}}</td>
+            <td class="text-center"><a style="cursor: pointer" ng-click="vm.actmch=item.nev;vm.actshift='3';vm.loaddetails()">{{item.meterejszaka}}</a></td>
+            <td class="text-center">{{item.meterejszaka/9300|number:0}}</td>
+            <td class="text-center">{{item.cejszaka}}</td>
+            <td class="text-center">{{item.meternapi}}</td>
+            <td class="text-center">{{item.meternapi/9300|number:0}}</td>
+            <td class="text-center">{{item.cnapi}}</td>
+          </tr>
+          <tr>
+            <td class="text-center">Összesen</td>
+            <td class="text-center">{{vm.selectdata| sumField:'meternappal'|number:0}}</td>
+            <td class="text-center">{{(vm.selectdata| sumField:'meternappal')/9300|number:0}}</td>
+            <td class="text-center">{{vm.selectdata| sumField:'cnappal'|number:0}}</td>
+            <td class="text-center">{{vm.selectdata| sumField:'meterejszaka'|number:0}}</td>
+            <td class="text-center">{{(vm.selectdata| sumField:'meterejszaka')/9300|number:0}}</td>
+            <td class="text-center">{{vm.selectdata| sumField:'cejszaka'|number:0}}</td>
+            <td class="text-center">{{vm.selectdata| sumField:'meternapi'|number:0}}</td>
+            <td class="text-center">{{(vm.selectdata| sumField:'meternapi')/9300|number:0}}</td>
+            <td class="text-center">{{vm.selectdata| sumField:'cnapi'|number:0}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="module-footer">
+      <div ng-show="vm.actmch!=''" style="margin-top:10px">
+          <div class="progress progress-warning progress-striped active" ng-hide="!vm.loading2">
+              <div class="progress-bar" style="width: 100%">
+                <p class="text-center">Betöltés</p>
+              </div>
+            </div>
+        <h2 class="text-center">{{vm.actmch}}</h2>
+        <table class="table table-bordered">
           <thead>
             <tr>
-              <th colspan="1" class="text-center"></th>
-              <th colspan="3" class="text-center">Nappal</th>
-              <th colspan="3" class="text-center">Éjszaka</th>
-              <th colspan="3" class="text-center">Nap</th>
-            </tr>
-            <tr>
-              <th class="text-center">Gép</th>
-              <th class="text-center">Méter</th>
-              <th class="text-center">AEQ</th>
-              <th class="text-center">Dob</th>
-              <th class="text-center">Méter</th>
-              <th class="text-center">AEQ</th>
-              <th class="text-center">Dob</th>
-              <th class="text-center">Méter</th>
-              <th class="text-center">AEQ</th>
-              <th class="text-center">Dob</th>
+              <th class="text-center">lotid</th>
+              <th class="text-center">Fonatoló gép</th>
+              <th class="text-center">Hossz</th>
+              <th class="text-center">Össz. Hossz</th>
+              <th class="text-center">Kezdési idő</th>
+              <th class="text-center">Megjegyzés</th>
+              <th class="text-center">Operátor Név</th>
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="item in vm.selectdata">
-              <td class="text-center">{{item.nev}}</td>
-              <td class="text-center">{{item.meternappal}}</td>
-              <td class="text-center">{{item.meternappal/9300|number:0}}</td>
-              <td class="text-center">{{item.cnappal}}</td>
-              <td class="text-center">{{item.meterejszaka}}</td>
-              <td class="text-center">{{item.meterejszaka/9300|number:0}}</td>
-              <td class="text-center">{{item.cejszaka}}</td>
-              <td class="text-center">{{item.meternapi}}</td>
-              <td class="text-center">{{item.meternapi/9300|number:0}}</td>
-              <td class="text-center">{{item.cnapi}}</td>
-            </tr>
-            <tr>
-              <td class="text-center">Összesen</td>
-              <td class="text-center">{{vm.selectdata| sumField:'meternappal'|number:0}}</td>
-              <td class="text-center">{{(vm.selectdata| sumField:'meternappal')/9300|number:0}}</td>
-              <td class="text-center">{{vm.selectdata| sumField:'cnappal'|number:0}}</td>
-              <td class="text-center">{{vm.selectdata| sumField:'meterejszaka'|number:0}}</td>
-              <td class="text-center">{{(vm.selectdata| sumField:'meterejszaka')/9300|number:0}}</td>
-              <td class="text-center">{{vm.selectdata| sumField:'cejszaka'|number:0}}</td>
-              <td class="text-center">{{vm.selectdata| sumField:'meternapi'|number:0}}</td>
-              <td class="text-center">{{(vm.selectdata| sumField:'meternapi')/9300|number:0}}</td>
-              <td class="text-center">{{vm.selectdata| sumField:'cnapi'|number:0}}</td>
+            <style>
+              .gray {
+                background-color: #b3b3b3;
+              }
+            </style>
+            <tr ng-repeat="item in vm.detailsdata" ng-class="item.Alias==''?'gray':''">
+              <td>{{item.Rwndr_Job}}</td>
+              <td>{{item.Alias}}</td>
+              <td>{{item.Braid_Length}}</td>
+              <td>{{item.Braid_Length_Prod1}}</td>
+              <td>{{item.Kezdesi_ido | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td>{{item.Megjegyzes}}</td>
+              <td>{{item.OP_Name}}</td>
             </tr>
           </tbody>
         </table>
-     
+      </div>
     </div>
-    <div class="module-footer"></div>
   </section>
 </div>
