@@ -51,8 +51,14 @@ define([], function () {
 
         var gr = [];
         var chartdrill = [];
+        var colors = [];
+        colors["Elérhető idő"] = "rgb(100,200,50)";
+        colors["Váratlan gépleállás"] = "rgb(255,0,0)";
+        colors["Tervezett állás"] = "rgb(50,100,200)";
+        colors["Fonatoló hiba"] = "rgb(150,150,150)";
+        colors["Operátor hiba"] = "rgb(200,50,200)";
         for (var i = 0; i < vm.group.length; i++) {
-          gr.push({ name: vm.group[i].code, y: vm.group[i].amount, drilldown: vm.group[i].code });
+          gr.push({ name: vm.group[i].code, y: vm.group[i].amount, drilldown: vm.group[i].code, color: colors[vm.group[i].code] });
           chartdrill.push({ name: vm.group[i].code, id: vm.group[i].code, data: [] });
         }
         for (var i = 0; i < chartdrill.length; i++) {
