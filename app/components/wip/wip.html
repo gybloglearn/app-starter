@@ -1,62 +1,40 @@
 <div class="container">
-  <section class="module">
-    <div class="module-header">
-      <h1 class="text-center">Wip</h1>
-    </div>
+  <section class="module-snapshot col-sm-12 col-md-12">
+    <div class="row">
+      <section class="module nestable col-sm-9 col-md-9">
+        <header class="module-header">
+          <h3 class="voice voice-brand pull-left">Wip Report</h3>
+        </header>
+        <div class="module-body">
+          <mychart config="vm.wipchart" id="wipchart"></mychart>
+        </div>
+        <footer class="module-footer"></footer>
+      </section>
+      <section class="module nestable col-sm-3 col-md-3">
 
-    <div class="module-body">
-      <div class="tray filter-tray top">
-        <div class="tray-inner">
-          <div class="filter-rule-group">
-            <div class="col-sm-3">
-              <div class="form-group">
-                <span class="control-label" style="color:#FFFFFF">Machine</span>
-                <select ng-model="search.Machine" class="form-control ng-pristine ng-untouched ng-valid">
-                        <option value="">Mind</option> 
-                        <option ng-repeat="mch in vm.list" value="{{mch.Machine}}">{{mch.Machine}}</option> 
-                  </select>
-              </div>
+        <div class="module-body">
+          <h2 class="voice voice-brand">Heti Wip jelentés</h2>
+          <p>
+            Kérlek válassz az alábbi dátum mezőkből kijelezni kívánt időszakot.
+          </p>
+          <hr>
+          <div>
+            <h2 class="voice voice-brand">Szűrő</h2>
+            <div class="input-group col-sm-12">
+              <span class="input-group-addon">Dátumtól:</span>
+              <input type="text" class="form-control datepicker" ng-model="vm.startdate" setdate="-6d">
             </div>
-            <div class="col-sm-3">
-              <div class="form-group">
-                <span class="control-label" style="color:#FFFFFF">Status</span>
-                <select ng-model="search.Status" class="form-control ng-pristine ng-untouched ng-valid">
-                        <option value="">Mind</option> 
-                        <option ng-repeat="st in vm.status" value="{{st.Status}}">{{st.Status}}</option> 
-                  </select>
-              </div>
+            <div class="input-group col-sm-12">
+              <span class="input-group-addon">Dátumtig:</span>
+              <input type="text" class="form-control datepicker" ng-model="vm.enddate" setdate="0d">
+            </div>
+            <div class="button-group">
+              <button class="btn btn-info" ng-click="vm.filter();"><i class="icon icon-filter"></i> Szűrés</button>
             </div>
           </div>
         </div>
-      </div>
 
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Prod_Desc</th>
-            <th>Prod_Code</th>
-            <th>Modul</th>
-            <th>Machine</th>
-            <th>Status</th>
-            <th>timestamp</th>
-            <th>initdate</th>
-            <th>PO</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="item in vm.data | filter: search:true track by $index" class="ng-scope">
-            <td>{{item.Prod_Desc}}</td>
-            <td>{{item.Prod_Code}}</td>
-            <td>{{item.Modul}}</td>
-            <td>{{item.Machine}}</td>
-            <td>{{item.Status}}</td>
-            <td>{{item.timestamp}}</td>
-            <td>{{item.initdate}}</td>
-            <td>{{item.PO}}</td>
-          </tr>
-        </tbody>
-      </table>
+      </section>
     </div>
-    <div class="module-footer"></div>
   </section>
 </div>

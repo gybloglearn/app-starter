@@ -1,0 +1,63 @@
+
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">Wip</h1>
+    </div>
+
+    <div class="module-body">
+      <div class="tray filter-tray top">
+        <div class="tray-inner">
+          <div class="filter-rule-group">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Machine</span>
+                <select ng-model="search.Machine" class="form-control ng-pristine ng-untouched ng-valid">
+                        <option value="">Mind</option>
+                        <option ng-repeat="mch in vm.list" value="{{mch.Machine}}">{{mch.Machine}}</option>
+                  </select>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Status</span>
+                <select ng-model="search.Status" class="form-control ng-pristine ng-untouched ng-valid">
+                        <option value="">Mind</option>
+                        <option ng-repeat="st in vm.status" value="{{st.Status}}">{{st.Status}}</option>
+                  </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Prod_Desc</th>
+            <th>Prod_Code</th>
+            <th>Modul</th>
+            <th>Machine</th>
+            <th>Status</th>
+            <th>timestamp</th>
+            <th>initdate</th>
+            <th>PO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.data | filter: search:true track by $index" class="ng-scope">
+            <td>{{item.Prod_Desc}}</td>
+            <td>{{item.Prod_Code}}</td>
+            <td>{{item.Modul}}</td>
+            <td>{{item.Machine}}</td>
+            <td>{{item.Status}}</td>
+            <td>{{item.timestamp}}</td>
+            <td>{{item.initdate}}</td>
+            <td>{{item.PO}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>

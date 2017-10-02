@@ -3,19 +3,54 @@ define([], function () {
   function Controller(wipService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
     vm.data = [];
-    vm.list=[];
-    vm.status=[];
-    vm.load=load;
+    vm.list = [];
+    vm.status = [];
+    vm.load = load;
+    vm.filter = filter;
 
+    function filter() {
+      vm.dates = [];
+      var sdt = new Date(vm.startdate).getTime();
+      var edt = new Date(vm.enddate).getTime();
+      var d = (edt - sdt) / (24 * 60 * 60 * 1000);
+      for (var i = 0; i <= d; i++) {
+        var day = $filter('date')(sdt + i * 24 * 60 * 60 * 1000, "yyyyMMdd");
+        wipService.getDays(day).then(function (response) {
+          for (var k = 0; k < response.data.length; k++) {
+            vm.dates.push(response.data[k]);
+          }
+          crChart(vm.dates);
+        });
+      }
+      console.log(vm.dates);
+
+    }
+    function crChart(ser) {
+      var series = [];
+      var xCats = [];
+      for (var i = 0; i < ser.length; i++) {
+        xCats.push(ser[i].file);
+        series.push({ cat: ser[i].file, y: ser[i].data.length });
+      }
+      vm.wipchart = {
+        chart: { type: "line" },
+        title: { text: vm.startdate + " - " + vm.enddate + " WIP alakulása" },
+        subtitle: { text: "forrás: MES" },
+        xAxis: {type: "category", categories: xCats},
+        series: [
+          { name: "WIP szint", data: series }
+        ]
+      };
+    }
     function load() {
       vm.data = [];
-      vm.list=[];
-      vm.status=[];
+      vm.list = [];
+      vm.status = [];
 
       wipService.get("All", "Rolling", "Report To ERP").then(function (response) {
         vm.data = response.data;
-        vm.list=$filter('unique')(vm.data, 'Machine');
-        vm.status=$filter('unique')(vm.data, 'Status');
+        vm.list = $filter('unique')(vm.data, 'Machine');
+        vm.status = $filter('unique')(vm.data, 'Status');
       });
     }
 
@@ -23,7 +58,6 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      load();
     }
   }
   Controller.$inject = ['wipService', '$cookies', '$state', '$rootScope', '$filter'];
