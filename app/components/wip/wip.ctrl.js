@@ -33,7 +33,7 @@ define([], function () {
       }
       series = $filter('orderBy')(series, 'cat');
       for (var j = 0; j < series.length; j++) {
-        xCats.push(series[j].cat);
+        xCats.push(series[j].cat.substr(0,8) + " - " + series[j].cat.substr(8,2));
       }
       vm.wipchart = {
         chart: { type: "line" },
