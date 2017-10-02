@@ -29,8 +29,11 @@ define([], function () {
       var series = [];
       var xCats = [];
       for (var i = 0; i < ser.length; i++) {
-        xCats.push(ser[i].file);
         series.push({ cat: ser[i].file, y: ser[i].data.length });
+      }
+      series = $filter('orderBy')(series, 'cat');
+      for (var j = 0; j < series.length; j++) {
+        xCats.push(series[j].cat);
       }
       vm.wipchart = {
         chart: { type: "line" },
