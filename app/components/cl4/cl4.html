@@ -45,9 +45,9 @@
             <tr ng-repeat="t in vm.alldata track by $index">
               <td>{{t.ShiftName}}</td>
               <td>{{t.CL3_in_QTY}}</td>
-              <td>{{t.CL3_In_AEQ}}</td>
+              <td>{{t.CL3_In_AEQ |number:2}}</td>
               <td>{{t.CL_Qty}}</td>
-              <td>{{t.AEQ}}</td>
+              <td>{{t.AEQ |number:2}}</td>
               <td>{{t.AVG__CL_cycle}}</td>
               <td>{{t.ElvittModulok}}</td>
             </tr>
