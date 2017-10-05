@@ -13,7 +13,7 @@ define([], function () {
     function get(date,sm) {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15/getReports/sm.php?startdate='+ date + '&mch='+ sm
+        url: 'app/components/PHP/smprod.php?startdate='+ date + '&mch='+ sm
       };
       return $http(req);
     }
