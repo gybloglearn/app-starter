@@ -1,13 +1,14 @@
 <?php
 //error_reporting(E_ALL & ~E_NOTICE);
 ini_set('default_socket_timeout', 600);
-set_include_path("bin/");
+//set_include_path("../../../../SSRSReport/bin/");
+set_include_path("../../../../ssrs/bin/");
 require_once("SSRSReport.php");
 
-$conf = parse_ini_file('config.ini');
+$conf = parse_ini_file('../../../../ssrs/config.ini');
 define("UID", $conf["UID"]);
 define("PASWD", $conf["PASWD"]);
-define("SERVICE_URL", $conf["UF_SURL"]);
+define("SERVICE_URL", $conf["UFURL"]);
 
 define("REPORT", "/MCS/Braid_Downtime_MStat");
 

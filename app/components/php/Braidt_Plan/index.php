@@ -43,7 +43,7 @@
          $mapper->date=$data->date; //dátum
          $mapper->circle=$data->circle; //kör
          $mapper->value=$data->value; // százalék érték
-         }
+         
          $mapper->save();
 
          echo "OK";
@@ -86,7 +86,7 @@
          @unlink($plan);
      }
  }
-     $app = require('../f3lib/base.php');
+     $app = require('../../../../../f3lib/base.php');
      $app->map('/plan/@id','Plan');
 
      $app->route('GET /plan/@id/@date',function($app,$params){

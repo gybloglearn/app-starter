@@ -15,14 +15,14 @@ define([], function () {
     function getAll() {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15/'
+        url: 'app/components/php/Braidt_Plan/allplans'
       };
       return $http(req);
     }
     function post(data) {
       var req = {
         method: 'POST',
-        url: 'http://3.228.180.15/' + data.id,
+        url: 'app/components/php/Braidt_Plan/plan/' + data.id,
         data: data
       };
       return $http(req);
@@ -30,7 +30,7 @@ define([], function () {
     function put(data) {
       var req = {
         method: 'PUT',
-        url: 'http://3.228.180.15/' + data.id,
+        url: 'app/components/php/Braidt_Plan/plan/' + data.id,
         data: data
       };
       return $http(req);
@@ -38,7 +38,7 @@ define([], function () {
     function erase(id) {
       var request = {
         method: "DELETE",
-        url: "http://3.228.180.15/" + id
+        url: "app/components/php/Braidt_Plan/plan/" + id
       };
       return $http(request);
     }

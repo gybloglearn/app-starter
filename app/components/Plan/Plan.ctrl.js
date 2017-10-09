@@ -74,6 +74,7 @@ define([], function () {
       if ($rootScope.user.username != "212434909" && $rootScope.user.username != "502678184" && $rootScope.user.username != "212430692") {
         $state.go('forbidden');
       }
+      load();
       vm.sdate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
     }
   }

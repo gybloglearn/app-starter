@@ -13,7 +13,7 @@ define([], function () {
     function get(start,end) {
       var req = {
         method: 'GET',
-         url: 'http://3.228.180.15/getReports/braidt.php?startdate=' + start + '&enddate=' + end
+         url: 'app/components/php/braidt.php?startdate=' + start + '&enddate=' + end
       };
       return $http(req);
     }
