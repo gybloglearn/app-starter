@@ -12,6 +12,10 @@ define([], function () {
     vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     vm.createdates = createdates;
 
+    vm.proddata = [];
+    vm.dayttl = [];
+    vm.days = [];
+
     function loadPartnumbers() {
       vm.partnumbers = [];
       weeklyService.getpartnumber().then(function (response) {
@@ -21,10 +25,14 @@ define([], function () {
 
     function createdates() {
       vm.dates = [];
+      vm.days = [];
       var differencedate = 0;
       differencedate = (new Date(vm.enddate).getTime() - new Date(vm.startdate).getTime()) / (24 * 3600 * 1000);
       for (var i = 0; i <= differencedate; i++) {
         vm.dates[i] = $filter('date')(new Date(vm.enddate).getTime() - ((differencedate - i) * 24 * 3600 * 1000), 'yyyyMMdd');
+        vm.days.push({
+          date: vm.dates[i], joaeq: 0, ttlaeq: 0, jolap: 0, ttllap: 0, lapselejt: 0, terv: 0, szer: 0, musz: 0, ttlido: 0
+        });
       }
       callsm();
     }
@@ -65,6 +73,7 @@ define([], function () {
       for (var i = 0; i < vm.dates.length; i++) {
         weeklyService.getsmfile(vm.dates[i]).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
+            response.data[j].d = $filter('date')(new Date(response.data[j].timestamp), "yyyyMMdd");
             vm.filedatas.push(response.data[j]);
             updatedowntime(response.data[j]);
           }
@@ -93,7 +102,7 @@ define([], function () {
 
     function lodsm() {
       for (var i = 0; i < vm.sheetmakers.length; i++) {
-        weeklyService.getsm(vm.startdate, vm.enddate, vm.sheetmakers[i]).then(function (response) {
+        weeklyService.getsm(vm.startdate, $filter('date')(new Date(vm.enddate).getTime()+24*60*60*1000, "yyyy-MM-dd"), vm.sheetmakers[i]).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
             for (var k = 0; k < vm.sm.length - 1; k++) {
@@ -108,6 +117,19 @@ define([], function () {
                 vm.sm[k].oaeq += response.data[j].aeq;
                 vm.sm[8].ossz += response.data[j].amount;
                 vm.sm[8].oaeq += response.data[j].aeq;
+              }
+            }
+          }
+          for(var j = 0; j < response.data.length; j++){
+            response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
+            for (var k = 0; k < vm.days.length; k++){
+              vm.days[k].ttlido = 7 * 1440;
+              if($filter('date')(new Date(response.data[j].days), "yyyyMMdd") == vm.days[k].date && response.data[j].category == "GOOD"){
+                vm.days[k].joaeq += response.data[j].aeq;
+                vm.days[k].jolap += response.data[j].amount;
+              } else if ($filter('date')(new Date(response.data[j].days), "yyyyMMdd") == vm.days[k].date && response.data[j].category == "TOTAL"){
+                vm.days[k].ttlaeq += response.data[j].aeq;
+                vm.days[k].ttllap += response.data[j].amount;
               }
             }
           }
@@ -140,7 +162,7 @@ define([], function () {
         }
         setCh(vm.smcards);
       }
-      var obj = {}
+      var obj = {};
       obj = {
         sm: smarr[8].id,
         osszlap: smarr[8].ossz,
@@ -158,8 +180,7 @@ define([], function () {
 
     }
     function setCh(ser) {
-      //vm.smavailabilitychartconfig.series = [];
-      //vm.ttlsmavailabilitychartconfig.series = [];
+
       if (ser.length == 7) {
         var avail = { name: "Elérhetőség", color: "rgba(150,200,100,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: '{series.name}: <b style="color:{point.color}">{point.y:.2f}</b><br>' }*/ };
         var muszaki = { name: "Műszaki", color: "rgba(255,0,0,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: "{series.name}: <b style='color:{point.color}'>{point.y:.2f}</b><br>" }*/ };
@@ -284,10 +305,82 @@ define([], function () {
             tmuszaki, tszervezesi, ttervezett, tavail
           ]
         };
+
+          // napi bontó
+        /*for(var x = 0; x < vm.filedatas.length; x++){
+          for(var y = 0; y < vm.days.length ; y++){
+            vm.days[y].lapselejt = vm.days[y].ttllap - vm.days[y].jolap;
+            if($filter('date')(new Date(vm.filedatas[x].timestamp), "yyyyMMdd") == vm.days[y].date){
+              if(vm.filedatas[x].Ev_Group == "Tervezett veszteseg"){
+                vm.days[y].terv += (vm.filedatas[x].Event_time / 60);
+              } else if(vm.filedatas[x].Ev_Group == "Szervezesi veszteseg"){
+                vm.days[y].szer += (vm.filedatas[x].Event_time / 60);
+              }else if(vm.filedatas[x].Ev_Group == "Muszaki technikai okok"){
+                vm.days[y].musz += (vm.filedatas[x].Event_time / 60);
+              }
+            }
+          }
+        }*/
+        for (var x = 0; x < vm.days.length ; x++){
+          vm.days[x].lapselejt = vm.days[x].ttllap - vm.days[x].jolap;
+          vm.days[x].musz = parseFloat($filter('sumField')($filter('filter')(vm.filedatas, {d: vm.days[x].date, Ev_Group: "Muszaki technikai okok"}), "Event_time")) / 60;
+          vm.days[x].szer = parseFloat($filter('sumField')($filter('filter')(vm.filedatas, {d: vm.days[x].date, Ev_Group: "Szervezesi veszteseg"}), "Event_time")) / 60;
+          vm.days[x].terv = parseFloat($filter('sumField')($filter('filter')(vm.filedatas, {d: vm.days[x].date, Ev_Group: "Tervezett veszteseg"}), "Event_time")) / 60;
+        }
+
+        vm.days = $filter('orderBy')(vm.days, 'date');
+        var xDays = [];
+
+        var muszperc = [];
+        var szerperc = [];
+        var tervperc = [];
+        var elerperc = [];
+        var jo = [];
+        var rossz = [];
+        for(var j=0; j < vm.days.length; j++){
+          xDays.push(vm.days[j].date);
+          muszperc.push({cat: vm.days[j].date, y: vm.days[j].musz/vm.days[j].ttlido * 100, min: vm.days[j].musz});
+          szerperc.push({cat: vm.days[j].date, y: vm.days[j].szer/vm.days[j].ttlido * 100, min: vm.days[j].szer});
+          tervperc.push({cat: vm.days[j].date, y: vm.days[j].terv/vm.days[j].ttlido * 100, min: vm.days[j].terv});
+          elerperc.push({cat: vm.days[j].date, y: ((vm.days[j].ttlido - vm.days[j].terv - vm.days[j].szer - vm.days[j].musz)/vm.days[j].ttlido) * 100, min: vm.days[j].ttlido - vm.days[j].musz - vm.days[j].szer - vm.days[j].terv});
+          jo.push({cat: vm.days[j].date, y: vm.days[j].joaeq});
+          rossz.push({cat: vm.days[j].date, y: vm.days[j].lapselejt, p: vm.days[j].lapselejt/vm.days[j].ttllap*100});
+        }
+
+        console.log(vm.days);
+
+        vm.dayavailconfig = {
+          chart: {type: 'column'},
+          title: {text: 'Napi SM Elérhetőség, Termelés és Selejt lapok'},
+          plotOptions: {column: {stacking: 'normal'}},
+          xAxis: {type: 'category', categories: xDays},
+          tooltip: { shared: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.2f} %</span> ({point.min:.0f} perc)</span><br/>' },
+          yAxis: [
+            {max: 100},
+            {opposite: true}
+          ],
+          series: [
+            {name: "Műszaki", color: "rgba(255,0,0,.5)", data: muszperc, yAxis: 0},
+            {name: "Szervezési", color: "rgba(150,150,150,.5)", data: szerperc, yAxis: 0},
+            {name: "Tervezett", color: "rgba(50,100,200,.5)", data: tervperc, yAxis: 0},
+            {name: "Elérhetőség", color: "rgba(150,200,100,.5)", data: elerperc, yAxis: 0},
+            {
+              name: "Lapselejtek", type: "line", color: "rgb(255,200,0)", data: rossz, yAxis: 1,
+              tooltip: { headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.0f} DB</span> ({point.p:.2f} %)</span><br/>' },
+            },
+            {
+              name: "Össz Termelés", type: "line", color: "rgb(150,200,255)", data: jo, yAxis: 1, marker: {enabled: true, color: "rgb(150,200,255)"},
+              tooltip: { headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.0f} AEQ</span></span><br/>' },
+            }
+          ]
+        };
+
         //console.log(vm.smavailabilitychartconfig.series);
         //console.log(vm.ttlsmavailabilitychartconfig.series);
       }
     }
+
+
 
     function getAEQ(tomb, azon, am) {
       var aeq = 0;
