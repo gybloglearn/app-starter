@@ -156,7 +156,7 @@ define([], function () {
         var ejjo = 0;
         var ejjoaeq = 0;
         load++;
-
+        if(v != "SM2") {
         dataService.getsm(st, ed, v).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
@@ -264,10 +264,11 @@ define([], function () {
           });
 
         });
+        }
       });
     }
     function setCh(ser) {
-      if (ser.length == 8) {
+      if (ser.length == 7) {
         var avail = { name: "Elérhetőség", color: "rgba(150,200,100,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: '{series.name}: <b style="color:{point.color}">{point.y:.2f}</b><br>' }*/ };
         var muszaki = { name: "Műszaki", color: "rgba(255,0,0,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: "{series.name}: <b style='color:{point.color}'>{point.y:.2f}</b><br>" }*/ };
         var szervezesi = { name: "Szervezési", color: "rgba(150,150,150,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: "{series.name}: <b style='color:{point.color}'>{point.y:.2f}</b><br>" }*/ };
@@ -301,7 +302,7 @@ define([], function () {
 
         vm.smavailabilitychartconfig = {
           chart: { type: 'column', spacingBottom: 30 },
-          plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0 } },
+          plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0, dataLabels:{enabled: true, format: "<span style='font-weight:bold'>{point.y:.2f} %</span>"} } },
           tooltip: { shared: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.2f} %</span> ({point.min:.0f} perc)</span><br/>' },
           title: { text: "SM elérhetőségi adatok " + vm.actdate },
           xAxis: { type: "category", categories: xA, title: { text: "SheetMakerek" } },
@@ -311,7 +312,7 @@ define([], function () {
         };
         vm.ttlsmavailabilitychartconfig = {
           chart: { type: 'column', spacingBottom: 30 },
-          plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0 } },
+          plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0, dataLabels:{enabled: true, format: "<span>{point.y:.2f} %</span>"} } },
           tooltip: { shared: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.2f} %</span> ({point.min:.0f} perc)</span><br/>' },
           title: { text: "SM összesített elérhetőségi adatok" },
           xAxis: { type: "category", categories: [vm.actdate], title: { text: "" } },

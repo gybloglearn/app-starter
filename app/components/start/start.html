@@ -84,15 +84,14 @@
         </thead>
       </table>
 
-      <!--table class="table responsive">
+      <table class="table responsive">
         <thead>
           <tr>
             <th colspan="10" class="text-center" style="font-size:3em;height:50px;padding: 20px">ZeeBlok (AEQ)</th>
           </tr>
           <tr>
             <th class="text-center" style="font-size:1.8em">Dátum</th>
-            <th class="text-center" style="font-size:1.8em">SL</th>
-            <th class="text-center" style="font-size:1.8em">SM</th>
+            <th colspan="2" class="text-center" style="font-size:1.8em">SM</th>
             <th class="text-center" style="font-size:1.8em">Potting Be</th>
             <th class="text-center" style="font-size:1.8em">Potting Fordít</th>
             <th class="text-center" style="font-size:1.8em">Potting Ki</th>
@@ -103,18 +102,18 @@
           </tr>
           <tr ng-repeat="date in vm.dates track by $index">
             <th class="text-center" style="font-size:1.8em">{{date}}</th>
-            <td class="text-center" style="font-size:1.8em"></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addSMDate(date)"><span style="background-color:{{vm.sumdatazb[$index].smaeq>=215?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].smaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdatazb[$index].pottbeaeq>=215?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].pottbeaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdatazb[$index].pottfordaeq>=215?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].pottfordaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdatazb[$index].pottkiaeq>=215?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].pottkiaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdata500[$index].claeq>=215?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].claeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdata500[$index].bpaeq>=225?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].bpaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdata500[$index].bokes/vm.sumdata500[$index].bpaeq<30?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].bokes/vm.sumdata500[$index].bpaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdata500[$index].min>=215?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].min |number:0}}</span></td>
+            <td colspan="2" class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addSMDate(date)"><span style="background-color:{{vm.sumdatazb[$index].smaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].smaeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdatazb[$index].pottbeaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].pottbeaeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdatazb[$index].pottfordaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].pottfordaeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdatazb[$index].pottkiaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].pottkiaeq |number:0}}</span></td>
+            <td colspan="3"></td>
+            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdatazb[$index].claeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].claeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdatazb[$index].bpaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].bpaeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdatazb[$index].bokes/vm.sumdatazb[$index].bpaeq<30?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].bokes/vm.sumdatazb[$index].bpaeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdatazb[$index].min>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].min |number:0}}</span></td>
           </tr>
         </thead>
-      </table-->
+      </table>
 
       <div class="col-sm-12">
         <div class="progress progress-danger progress-striped active" ng-hide="!vm.ZW1000loading">

@@ -89,6 +89,10 @@ define([], function () {
         vm.sumdatazb[i].pottbeaeq = 0;
         vm.sumdatazb[i].pottfordaeq = 0;
         vm.sumdatazb[i].pottkiaeq = 0;
+        vm.sumdatazb[i].bpaeq = 0;
+        vm.sumdatazb[i].claeq = 0;
+        vm.sumdatazb[i].bokes = 0;
+        vm.sumdatazb[i].min = 0;
       }
     }
 
@@ -204,18 +208,34 @@ define([], function () {
                 response.data[j].aeq = response.data[j].amount * vm.aeqs[l].amount;
               }
             }
+            //ZW500
             for (var k = 0; k < vm.sumdata500.length; k++) {
-              if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "BP-OUT") {
+              if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "BP-OUT" && response.data[j].type != "ZB500S") {
                 vm.sumdata500[k].bpaeq += response.data[j].aeq;
               }
-              else if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "CH-OUT") {
+              else if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "CH-OUT" && response.data[j].type != "ZB500S") {
                 vm.sumdata500[k].claeq += response.data[j].aeq;
               }
-              else if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "BOK-BOKES") {
+              else if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "BOK-BOKES" && response.data[j].type != "ZB500S") {
                 vm.sumdata500[k].bokes += response.data[j].amount;
               }
-              else if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "MIN-AMOUNT") {
+              else if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "MIN-AMOUNT" && response.data[j].place != "ZB500S_MIN") {
                 vm.sumdata500[k].min += response.data[j].aeq;
+              }
+            }
+            //ZB
+            for (var k = 0; k < vm.sumdata500.length; k++) {
+              if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "BP-OUT" && response.data[j].type == "ZB500S") {
+                vm.sumdatazb[k].bpaeq += response.data[j].aeq;
+              }
+              else if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "CH-OUT" && response.data[j].type == "ZB500S") {
+                vm.sumdatazb[k].claeq += response.data[j].aeq;
+              }
+              else if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "BOK-BOKES" && response.data[j].type == "ZB500S") {
+                vm.sumdatazb[k].bokes += response.data[j].amount;
+              }
+              else if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "MIN-AMOUNT" && response.data[j].place == "ZB500S_MIN") {
+                vm.sumdatazb[k].min += response.data[j].aeq;
               }
             }
           }
