@@ -92,9 +92,9 @@
           <tr>
             <th class="text-center" style="font-size:1.8em">Dátum</th>
             <th colspan="2" class="text-center" style="font-size:1.8em">SM</th>
-            <th class="text-center" style="font-size:1.8em">Potting Be</th>
-            <th class="text-center" style="font-size:1.8em">Potting Fordít</th>
-            <th class="text-center" style="font-size:1.8em">Potting Ki</th>
+            <th class="text-center" style="font-size:1.8em">Block be</th>
+            <!--th class="text-center" style="font-size:1.8em">Modul be</th>
+            <th class="text-center" style="font-size:1.8em">Modul ki</th-->
             <th class="text-center" style="font-size:1.8em">Klórozók Ki</th>
             <th class="text-center" style="font-size:1.8em">BP kádak Ki</th>
             <th class="text-center" style="font-size:1.8em">Bökés/AEQ</th>
@@ -104,9 +104,8 @@
             <th class="text-center" style="font-size:1.8em">{{date}}</th>
             <td colspan="2" class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addSMDate(date)"><span style="background-color:{{vm.sumdatazb[$index].smaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].smaeq |number:0}}</span></td>
             <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdatazb[$index].pottbeaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].pottbeaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdatazb[$index].pottfordaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].pottfordaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdatazb[$index].pottkiaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].pottkiaeq |number:0}}</span></td>
-            <td colspan="3"></td>
+            <!--td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdatazb[$index].pottmodbeaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].pottmodbeaeq |number:0}}</span></td>
+            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdatazb[$index].pottkiaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].pottkiaeq |number:0}}</span></td-->
             <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdatazb[$index].claeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].claeq |number:0}}</span></td>
             <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdatazb[$index].bpaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].bpaeq |number:0}}</span></td>
             <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdatazb[$index].bokes/vm.sumdatazb[$index].bpaeq<30?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].bokes/vm.sumdatazb[$index].bpaeq |number:0}}</span></td>
@@ -115,57 +114,63 @@
         </thead>
       </table>
 
-      <div class="col-sm-12">
-        <div class="progress progress-danger progress-striped active" ng-hide="!vm.ZW1000loading">
-          <div class="progress-bar" style="width: 100%">
-            <p class="text-center">ZW1000 Frissítés...</p>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="col-sm-12">
+            <div class="progress progress-danger progress-striped active" ng-hide="!vm.ZW1000loading">
+              <div class="progress-bar" style="width: 100%">
+                <p class="text-center">ZW1000 Frissítés...</p>
+              </div>
+            </div>
           </div>
+
+          <table class="table responsive" style="margin-top:40px">
+            <thead>
+              <tr>
+                <th colspan="3" class="text-center" style="font-size:3em;height:50px;padding: 20px">ZeeWeed 1000 (AEQ)</th>
+              </tr>
+              <tr>
+                <th class="text-center" style="font-size:1.8em">Dátum</th>
+                <th class="text-center" style="font-size:1.8em">Minősített</th>
+                <th class="text-center" style="font-size:1.8em">Selejt</th>
+              </tr>
+              <tr ng-repeat="date in vm.dates track by $index">
+                <th class="text-center" style="font-size:1.8em">{{date}}</th>
+                <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata1000[$index].sumgoodaeq>=56?'green':'red'}};padding:3px;">{{vm.sumdata1000[$index].sumgoodaeq|number:1}}</span></td>
+                <td class="text-center" style="font-size:3em"><span>{{vm.sumdata1000[$index].sumscrapaeq |number:1}}</span></td>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="col-sm-6">
+
+          <div class="col-sm-12">
+            <div class="progress progress-danger progress-striped active" ng-hide="!vm.ZW1500loading">
+              <div class="progress-bar" style="width: 100%">
+                <p class="text-center">ZW1500 Frissítés...</p>
+              </div>
+            </div>
+          </div>
+
+          <table class="table responsive" style="margin-top:40px">
+            <thead>
+              <tr>
+                <th colspan="3" class="text-center" style="font-size:3em;height:50px;padding: 20px">ZeeWeed 1500 (AEQ)</th>
+              </tr>
+              <tr>
+                <th class="text-center" style="font-size:1.8em">Dátum</th>
+                <th class="text-center" style="font-size:1.8em">Minősített</th>
+                <th class="text-center" style="font-size:1.8em">Selejt</th>
+              </tr>
+              <tr ng-repeat="date in vm.dates track by $index">
+                <th class="text-center" style="font-size:1.8em">{{date}}</th>
+                <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata1500[$index].sumgoodaeq>=45?'green':'red'}};padding:3px;">{{vm.sumdata1500[$index].sumgoodaeq|number:1}}</span></td>
+                <td class="text-center" style="font-size:3em"><span>{{vm.sumdata1500[$index].sumscrapaeq |number:1}}</span></td>
+              </tr>
+            </thead>
+          </table>
         </div>
       </div>
-
-      <table class="table responsive" style="margin-top:40px">
-        <thead>
-          <tr>
-            <th colspan="3" class="text-center" style="font-size:3em;height:50px;padding: 20px">ZeeWeed 1000 (AEQ)</th>
-          </tr>
-          <tr>
-            <th class="text-center" style="font-size:1.8em">Dátum</th>
-            <th class="text-center" style="font-size:1.8em">Minősített</th>
-            <th class="text-center" style="font-size:1.8em">Selejt</th>
-          </tr>
-          <tr ng-repeat="date in vm.dates track by $index">
-            <th class="text-center" style="font-size:1.8em">{{date}}</th>
-            <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata1000[$index].sumgoodaeq>=56?'green':'red'}};padding:3px;">{{vm.sumdata1000[$index].sumgoodaeq|number:1}}</span></td>
-            <td class="text-center" style="font-size:3em"><span>{{vm.sumdata1000[$index].sumscrapaeq |number:1}}</span></td>
-          </tr>
-        </thead>
-      </table>
-
-      <div class="col-sm-12">
-        <div class="progress progress-danger progress-striped active" ng-hide="!vm.ZW1500loading">
-          <div class="progress-bar" style="width: 100%">
-            <p class="text-center">ZW1500 Frissítés...</p>
-          </div>
-        </div>
-      </div>
-
-      <table class="table responsive" style="margin-top:40px">
-        <thead>
-          <tr>
-            <th colspan="3" class="text-center" style="font-size:3em;height:50px;padding: 20px">ZeeWeed 1500 (AEQ)</th>
-          </tr>
-          <tr>
-            <th class="text-center" style="font-size:1.8em">Dátum</th>
-            <th class="text-center" style="font-size:1.8em">Minősített</th>
-            <th class="text-center" style="font-size:1.8em">Selejt</th>
-          </tr>
-          <tr ng-repeat="date in vm.dates track by $index">
-            <th class="text-center" style="font-size:1.8em">{{date}}</th>
-            <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata1500[$index].sumgoodaeq>=45?'green':'red'}};padding:3px;">{{vm.sumdata1500[$index].sumgoodaeq|number:1}}</span></td>
-            <td class="text-center" style="font-size:3em"><span>{{vm.sumdata1500[$index].sumscrapaeq |number:1}}</span></td>
-          </tr>
-        </thead>
-      </table>
 
     </div>
     <div class="module-footer"></div>

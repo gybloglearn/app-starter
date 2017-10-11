@@ -18,7 +18,7 @@ define([], function () {
     vm.sumdata500 = [];
     vm.sumdata1000 = [];
     vm.sumdata1500 = [];
-    vm.sumdatazb=[];
+    vm.sumdatazb = [];
     vm.differencedate = 0;
     vm.loadall = loadall;
     vm.addSLDate = addSLDate;
@@ -30,12 +30,12 @@ define([], function () {
       vm.partnumbers = [];
       dataService.getpartnumber().then(function (response) {
         vm.partnumbers = response.data;
-        var obj={};
-        obj={
-          id:"0000000",
-          name:"ZB500",
-          aeq:"0.6",
-          sheets:"16"
+        var obj = {};
+        obj = {
+          id: "0000000",
+          name: "ZB500",
+          aeq: "0.6",
+          sheets: "16"
         };
         vm.partnumbers.push(obj);
         //console.log(vm.partnumbers);
@@ -56,7 +56,7 @@ define([], function () {
       vm.sumdata500 = [];
       vm.sumdata1000 = [];
       vm.sumdata1500 = [];
-      vm.sumdatazb=[];
+      vm.sumdatazb = [];
       vm.differencedate = (new Date(vm.enddatumszam).getTime() - new Date(vm.startdatumszam).getTime()) / (24 * 3600 * 1000);
       for (var i = 0; i <= vm.differencedate; i++) {
         vm.dates[i] = $filter('date')(new Date(vm.enddatumszam).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
@@ -83,11 +83,11 @@ define([], function () {
         vm.sumdata1500[i].sumgoodaeq = 0;
         vm.sumdata1500[i].sumscrapaeq = 0;
 
-        vm.sumdatazb[i]={}
-        vm.sumdatazb[i].date= $filter('date')(new Date(vm.enddatumszam).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
+        vm.sumdatazb[i] = {}
+        vm.sumdatazb[i].date = $filter('date')(new Date(vm.enddatumszam).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
         vm.sumdatazb[i].smaeq = 0;
         vm.sumdatazb[i].pottbeaeq = 0;
-        vm.sumdatazb[i].pottfordaeq = 0;
+        vm.sumdatazb[i].pottmodbeaeq = 0;
         vm.sumdatazb[i].pottkiaeq = 0;
         vm.sumdatazb[i].bpaeq = 0;
         vm.sumdatazb[i].claeq = 0;
@@ -167,32 +167,41 @@ define([], function () {
           vm.pottloading = false;
         });
       }
+      loadzbpotting1();
+      loadzbpotting2();
     }
 
-    function loadzbpotting() {
-      //vm.pottloading = true;
-      for (var i = 0; i < vm.zbpottings.length; i++) {
-        dataService.getpotting(vm.startdate, vm.enddate, vm.zbpottings[i]).then(function (response) {
+    function loadzbpotting1() {
+        dataService.getpotting(vm.startdate, vm.enddate, "Potting1-1").then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
-            response.data[j].aeq = addAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
+            response.data[j].aeq =  (response.data[j].amount/4)*0.6;
             response.data[j].days = response.data[j].days.substring(0, 10);
             for (var k = 0; k < vm.sumdatazb.length; k++) {
               if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "IN") {
                 vm.sumdatazb[k].pottbeaeq += response.data[j].aeq;
               }
-              else if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "P3") {
-                vm.sumdatazb[k].pottfordaeq += response.data[j].aeq;
+            }
+          }  
+        });
+      }
+
+    function loadzbpotting2() {
+        dataService.getpotting(vm.startdate, vm.enddate, "Potting1-2").then(function (response) {
+          for (var j = 0; j < response.data.length; j++) {
+            response.data[j].aeq =  (response.data[j].amount)*0.6;
+            response.data[j].days = response.data[j].days.substring(0, 10);
+            for (var k = 0; k < vm.sumdatazb.length; k++) {
+              if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "IN") {
+                vm.sumdatazb[k].pottmodbeaeq += response.data[j].aeq;
               }
               else if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "OUT") {
                 vm.sumdatazb[k].pottkiaeq += response.data[j].aeq;
               }
             }
-          }
-          //console.log(response.data);
-          //vm.pottloading = false;
+          }  
         });
       }
-    }
+      
 
     function loadmtf() {
       vm.mtfloading = true;
@@ -306,7 +315,6 @@ define([], function () {
       loadsm();
       loadzbsm();
       loadpotting();
-      loadzbpotting();
       loadmtf();
       loadgrade1000();
       loadgrade1500();
@@ -315,7 +323,9 @@ define([], function () {
 
     function getAEQ(tomb, azon, am) {
       var aeq = 0;
-      var substr = azon.substring(0, 3);
+      
+      var substr = azon.indexOf(' ')== -1 ? azon.substring(0,3):azon.substring(0, azon.indexOf(' '));
+      
       if (substr.substring(0, 2) == "ZL")
         substr = "ZL";
       for (var i = 0; i < tomb.length; i++) {
@@ -346,7 +356,7 @@ define([], function () {
     function addSMDate(datum) {
       $state.go('dayreport', { datum: datum, place: "SM" });
     }
-    
+
     function addPottDate(datum) {
       $state.go('dayreport', { datum: datum, place: "Potting" });
     }
@@ -366,7 +376,6 @@ define([], function () {
       loadsm();
       loadzbsm();
       loadpotting();
-      loadzbpotting();
       loadmtf();
       loadgrade1000();
       loadgrade1500();

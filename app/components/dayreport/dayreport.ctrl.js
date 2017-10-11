@@ -161,6 +161,8 @@ define([], function () {
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
             response.data[j].shift = $filter('shift')(response.data[j].shiftnum, $filter('date')(new Date(response.data[j].days).getTime(), 'yyyy-MM-dd'));
+            if(v == "SM9" || v == "SM1")
+              console.log(response.data[j]);
           }
           ossz = $filter('sumdb')($filter('filter')(response.data, { 'category': 'TOTAL' }));
           osszaeq = $filter('sumField')($filter('filter')(response.data, { 'category': 'TOTAL' }), 'aeq');
@@ -663,7 +665,8 @@ define([], function () {
 
     function getAEQ(tomb, azon, am) {
       var aeq = 0;
-      var substr = azon.substring(0, 3);
+      var substr = azon.indexOf(' ')== -1 ? azon.substring(0,3):azon.substring(0, azon.indexOf(' '));
+      console.log(substr);
       if (substr.substring(0, 2) == "ZL")
         substr = "ZL";
       for (var i = 0; i < tomb.length; i++) {
@@ -676,7 +679,7 @@ define([], function () {
 
     function addAEQ(tomb, azon, am) {
       var aeq = 0;
-      var substr = azon.substring(0, 3);
+      var substr = azon.substring(0, azon.indexOf(' '));
       if (substr.substring(0, 2) == "ZL")
         substr = "ZL";
       for (var i = 0; i < tomb.length; i++) {
