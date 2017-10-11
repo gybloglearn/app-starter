@@ -15,8 +15,19 @@
       </div>
     </div>
     <div class="module-body">
-      <my-chart config="vm.smavailabilitychartconfig" id="chart"></my-chart>
-      <my-chart config="vm.ttlsmavailabilitychartconfig" id="ttlchart"></my-chart>
+      <div class="col-sm-12">
+        <my-chart config="vm.dayavailconfig" id="daych"></my-chart>
+      </div>
+      <div class="col-sm-8">
+        <my-chart config="vm.smavailabilitychartconfig" id="chart"></my-chart>
+      </div>
+      <div class="col-sm-4">
+        <my-chart config="vm.ttlsmavailabilitychartconfig" id="ttlchart"></my-chart>
+      </div>
+      <div class="col-sm-12"><my-chart config="vm.topmconf" id="topm"></my-chart></div>
+      <div class="col-sm-12"><my-chart config="vm.topsconf" id="tops"></my-chart></div>
+      <div class="col-sm-12"><my-chart config="vm.toptconf" id="topt"></my-chart></div>
+
       <div class="row">
         <table class="table table-condensed table-striped">
           <thead>
@@ -40,7 +51,7 @@
                   <select class="form-control" ng-model="vm.search.Machine">
                     <option value=""></option>
                     <option value="SM1">SM1</option>
-                    <option value="SM2">SM2</option>
+                    <!--<option value="SM2">SM2</option>-->
                     <option value="SM4">SM4</option>
                     <option value="SM5">SM5</option>
                     <option value="SM6">SM6</option>
@@ -63,7 +74,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="i in vm.filedatas | filter: vm.search | orderBy: 'Event_time': true | limitTo: 100">
+            <tr ng-repeat="i in vm.filedatas | filter: vm.search | orderBy: 'Event_time': true | limitTo: 25">
               <td>{{i.Machine}}</td>
               <td>{{i.Ev_Group}}</td>
               <td>{{i.Event_SubGroup}}</td>

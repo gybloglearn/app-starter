@@ -2,10 +2,10 @@
 //error_reporting(E_ALL & ~E_NOTICE);
 ini_set('default_socket_timeout', 600);
 //set_include_path("../../../../SSRSReport/bin/");
-set_include_path("../../../../ssrs/bin/");
+set_include_path("/var/www/html/ssrs/bin/");
 require_once("SSRSReport.php");
 
-$conf = parse_ini_file('../../../../ssrs/config.ini');
+$conf = parse_ini_file('/var/www/html/ssrs/config.ini');
 define("UID", $conf["UID"]);
 define("PASWD", $conf["PASWD"]);
 define("SERVICE_URL", $conf["UFURL"]);
@@ -24,12 +24,18 @@ if ( isset( $argv ) ) {
         join( "&", array_slice( $argv, 1 )
     ), $_GET );
 }
-var_dump($_GET);
+//var_dump($_GET);
 
 // set Parameters from get
-$startdate = date("m/d/Y H:i:s", strtotime($_GET["startdate"] . " 05:50:00"));
+if(isset($_GET["startdate"])){
+	$startdate = date("m/d/Y H:i:s", strtotime($_GET["startdate"] . " 05:50:00"));
+} else {
+	$startdate = date("m/d/Y H:i:s", strtotime(date("Y-m-d")." 05:50:00") - 24*60*60);
+	$_GET["startdate"] = date("Y-m-d", strtotime(date("Y-m-d"). " 05:50:00") - 24*60*60);
+}
 //$enddate = date("m/d/Y H:i:s", strtotime($_GET["enddate"] . " 05:50:00"));
 $enddate = date("m/d/Y H:i:s", strtotime($_GET["startdate"]." 05:50:00") + 60*60*24);
+
 // define machies
 $mch = Array(9=>"SM1", 10=>"SM2", 2595=>"SM4", 2596=>"SM5", 4845=>"SM6", 4846=>"SM7", 4847=>"SM8", 2700=>"SM9");
 $smmch = Array(9, 10, 2595, 2596, 4845, 4846, 4847, 2700);
@@ -120,7 +126,7 @@ for($i=0;$i<8;$i++){
 
     $toWrite = json_encode($toWrite);
 
-    $myfile=fopen("sm/sm".date("Ymd", strtotime($startdate)).".json","w+");
+    $myfile=fopen("/var/www/html/sm/app/components/PHP/sm/sm".date("Ymd", strtotime($startdate)).".json","w+");
     fwrite($myfile,$toWrite);
     fclose($myfile);
 ?>
