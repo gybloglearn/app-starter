@@ -337,6 +337,7 @@ define([], function () {
         var elerperc = [];
         var jo = [];
         var rossz = [];
+				var cel = [];
         for(var j=0; j < vm.days.length; j++){
           xDays.push(vm.days[j].date);
           muszperc.push({cat: vm.days[j].date, y: vm.days[j].musz/vm.days[j].ttlido * 100, min: vm.days[j].musz});
@@ -345,6 +346,7 @@ define([], function () {
           elerperc.push({cat: vm.days[j].date, y: ((vm.days[j].ttlido - vm.days[j].terv - vm.days[j].szer - vm.days[j].musz)/vm.days[j].ttlido) * 100, min: vm.days[j].ttlido - vm.days[j].musz - vm.days[j].szer - vm.days[j].terv});
           jo.push({cat: vm.days[j].date, y: vm.days[j].joaeq});
           rossz.push({cat: vm.days[j].date, y: vm.days[j].lapselejt, p: vm.days[j].lapselejt/vm.days[j].ttllap*100});
+					cel.push({cat: vm.days[j].date, y: 215});
         }
 
         console.log(vm.days);
@@ -356,8 +358,8 @@ define([], function () {
           xAxis: {type: 'category', categories: xDays},
           tooltip: { shared: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.2f} %</span> ({point.min:.0f} perc)</span><br/>' },
           yAxis: [
-            {max: 100},
-            {opposite: true}
+            {max: 100, title: {text: "Elérhetősgi adatok"}},
+            {opposite: true, title: {text: "AEQ és Lapselejt DB"}}
           ],
           series: [
             {name: "Műszaki", color: "rgba(255,0,0,.5)", data: muszperc, yAxis: 0},
@@ -371,7 +373,11 @@ define([], function () {
             {
               name: "Össz Termelés", type: "line", color: "rgb(150,200,255)", data: jo, yAxis: 1, marker: {enabled: true, color: "rgb(150,200,255)"},
               tooltip: { headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.0f} AEQ</span></span><br/>' },
-            }
+            },
+							{
+								name: "Cél Termelés", type: "line", color: "rgb(100,200,0)", data: cel, yAxis: 1,
+							tooltip: { headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-wieght:bold">{point.y:.0f} AEQ</span></span><br/>' }
+							}
           ]
         };
 
