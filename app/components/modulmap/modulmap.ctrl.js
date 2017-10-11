@@ -25,7 +25,7 @@ define([], function () {
     vm.allflowaeq = 0;
     vm.allcp5aeq = 0;
     vm.typedb = [];
-    var tanks = ["Bubble point tank1", "Bubble point tank2", "Bubble point tank3", "Bubble point tank4", "Bubble point tank5", "Bubble point tank6", "Bubble point tank7", "Bubble point tank12", "Bubble point tank13", "Bubble point tank14", "Bubble point tank15"];
+    var tanks = ["Bubble point tank1", "Bubble point tank2", "Bubble point tank3", "Bubble point tank4", "Bubble point tank5", "Bubble point tank6", "Bubble point tank7", "Bubble point tank12", "Bubble point tank13", "Bubble point tank14", "Bubble point tank15", "Bubble point tank21", "Bubble point tank22", "Bubble point tank23", "Bubble point tank25", "Bubble point tank26"];
     var betuk = ["A", "B", "C", "D", "E"];
     var szamok = ["1", "2", "3", "4", "5", "6", "8", "9"];
     vm.mtfload = true;

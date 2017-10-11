@@ -72,31 +72,31 @@ define([], function () {
       console.log(vm.tabledata.data[0].adatok.szak);
       var content = "";
       //content += ";;;Szakos;;;\r\n";
-      content += "Cikkszám;Megjegyzés;Modulszám;Pozíció;Szak;Állapot;Rögzítés dátuma\r\n";
-      for( var a = 0; a < vm.tabledata.data[0].adatok.szak.length; a++){
-        content += vm.tabledata.data[0].adatok.szak[a].Cikkszám + ";"+ vm.tabledata.data[0].adatok.szak[a].Megjegyzés + ";"+vm.tabledata.data[0].adatok.szak[a].Modulszám + ";"+vm.tabledata.data[0].adatok.szak[a].Pozíció + ";"+vm.tabledata.data[0].adatok.szak[a].Szak + ";"+vm.tabledata.data[0].adatok.szak[a].Állapot + ";"+vm.tabledata.data[0].adatok.szak[a].Állapot_rögzítés_dátuma + ";\r\n";
+      content += "Cikkszám,Megjegyzés,Modulszám,Pozíció,Szak,Állapot,Rögzítés dátuma\r\n";
+      for (var a = 0; a < vm.tabledata.data[0].adatok.szak.length; a++) {
+        content += vm.tabledata.data[0].adatok.szak[a].Cikkszám + "," + vm.tabledata.data[0].adatok.szak[a].Megjegyzés + "," + vm.tabledata.data[0].adatok.szak[a].Modulszám + "," + vm.tabledata.data[0].adatok.szak[a].Pozíció + "," + vm.tabledata.data[0].adatok.szak[a].Szak + "," + vm.tabledata.data[0].adatok.szak[a].Állapot + "," + vm.tabledata.data[0].adatok.szak[a].Állapot_rögzítés_dátuma + ";\r\n";
       }
-      for( var b = 0; b < vm.tabledata.data[0].adatok.nap2.length; b++){
-        content += vm.tabledata.data[0].adatok.nap2[b].Cikkszám + ";"+ vm.tabledata.data[0].adatok.nap2[b].Megjegyzés + ";"+vm.tabledata.data[0].adatok.nap2[b].Modulszám + ";"+vm.tabledata.data[0].adatok.nap2[b].Pozíció + ";"+vm.tabledata.data[0].adatok.nap2[b].Szak + ";"+vm.tabledata.data[0].adatok.nap2[b].Állapot + ";"+vm.tabledata.data[0].adatok.nap2[b].Állapot_rögzítés_dátuma + ";\r\n";
+      for (var b = 0; b < vm.tabledata.data[0].adatok.nap2.length; b++) {
+        content += vm.tabledata.data[0].adatok.nap2[b].Cikkszám + "," + vm.tabledata.data[0].adatok.nap2[b].Megjegyzés + "," + vm.tabledata.data[0].adatok.nap2[b].Modulszám + "," + vm.tabledata.data[0].adatok.nap2[b].Pozíció + "," + vm.tabledata.data[0].adatok.nap2[b].Szak + "," + vm.tabledata.data[0].adatok.nap2[b].Állapot + "," + vm.tabledata.data[0].adatok.nap2[b].Állapot_rögzítés_dátuma + ";\r\n";
       }
-      for( var c = 0; c < vm.tabledata.data[0].adatok.nap2s.length; c++){
-        content += vm.tabledata.data[0].adatok.nap2s[c].Cikkszám + ";"+ vm.tabledata.data[0].adatok.nap2s[c].Megjegyzés + ";"+vm.tabledata.data[0].adatok.nap2s[c].Modulszám + ";"+vm.tabledata.data[0].adatok.nap2s[c].Pozíció + ";"+vm.tabledata.data[0].adatok.nap2s[c].Szak + ";"+vm.tabledata.data[0].adatok.nap2s[c].Állapot + ";"+vm.tabledata.data[0].adatok.nap2s[c].Állapot_rögzítés_dátuma + ";\r\n";
+      for (var c = 0; c < vm.tabledata.data[0].adatok.nap2s.length; c++) {
+        content += vm.tabledata.data[0].adatok.nap2s[c].Cikkszám + "," + vm.tabledata.data[0].adatok.nap2s[c].Megjegyzés + "," + vm.tabledata.data[0].adatok.nap2s[c].Modulszám + "," + vm.tabledata.data[0].adatok.nap2s[c].Pozíció + "," + vm.tabledata.data[0].adatok.nap2s[c].Szak + "," + vm.tabledata.data[0].adatok.nap2s[c].Állapot + "," + vm.tabledata.data[0].adatok.nap2s[c].Állapot_rögzítés_dátuma + ";\r\n";
       }
-      for( var d= 0; d < vm.tabledata.data[0].adatok.het1s.length; d++){
-        content += vm.tabledata.data[0].adatok.het1s[d].Cikkszám + ";"+ vm.tabledata.data[0].adatok.het1s[d].Megjegyzés + ";"+vm.tabledata.data[0].adatok.het1s[d].Modulszám + ";"+vm.tabledata.data[0].adatok.het1s[d].Pozíció + ";"+vm.tabledata.data[0].adatok.het1s[d].Szak + ";"+vm.tabledata.data[0].adatok.het1s[d].Állapot + ";"+vm.tabledata.data[0].adatok.het1s[d].Állapot_rögzítés_dátuma + ";\r\n";
+      for (var d = 0; d < vm.tabledata.data[0].adatok.het1s.length; d++) {
+        content += vm.tabledata.data[0].adatok.het1s[d].Cikkszám + "," + vm.tabledata.data[0].adatok.het1s[d].Megjegyzés + "," + vm.tabledata.data[0].adatok.het1s[d].Modulszám + "," + vm.tabledata.data[0].adatok.het1s[d].Pozíció + "," + vm.tabledata.data[0].adatok.het1s[d].Szak + "," + vm.tabledata.data[0].adatok.het1s[d].Állapot + "," + vm.tabledata.data[0].adatok.het1s[d].Állapot_rögzítés_dátuma + ";\r\n";
       }
-     
+
       /*for( var x = 0; x < vm.tabledata.data[0].length; x++){
-        content += vm.tabledata.data[0].adatok.szak[x].substr(0,1) + vm.tabledata.data[0].adatok.szak[x].substr(vm.tabledata.data[0].adatok.szak[x].indexOf(' '),2) + ";";
+        content += vm.tabledata.data[0].adatok.szak[x].substr(0,1) + vm.tabledata.data[0].adatok.szak[x].substr(vm.tabledata.data[0].adatok.szak[x].indexOf(' '),2) + ",";
       }
       content += "\r\n";
       /*for (var o = 0; o < vm.ops.length; o++) {
-        content += vm.ops[o].sso + ";" + vm.ops[o].shift + ";";
+        content += vm.ops[o].sso + "," + vm.ops[o].shift + ",";
         for (var i = 0; i < vm.tabledata.data[0].length; i++) {
-          content += $filter('filter')(vm.datas, {mch: "Potting3", pha: vm.tabledata.data[0][i], operator: vm.ops[o].sso}).length + ";";
+          content += $filter('filter')(vm.datas, {mch: "Potting3", pha: vm.tabledata.data[0][i], operator: vm.ops[o].sso}).length + ",";
         }
         for (var j = 0; j < vm.tabledata.data[0].length; j++) {
-          content += $filter('filter')(vm.datas, {mch: "Potting4", pha: vm.tabledata.data[0][j], operator: vm.ops[o].sso}).length + ";";
+          content += $filter('filter')(vm.datas, {mch: "Potting4", pha: vm.tabledata.data[0][j], operator: vm.ops[o].sso}).length + ",";
         }
         content += "\r\n";
       }*/
@@ -111,7 +111,7 @@ define([], function () {
       vm.fr = $filter('date')(vm.n, 'yyyy-MM-dd');
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       getData();
-      vm.edate = $filter('date')(new Date().getTime(),'yyyy-MM-dd');
+      vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
     }
   }
   Controller.$inject = ['ppdataService', '$cookies', '$state', '$rootScope', '$filter'];
