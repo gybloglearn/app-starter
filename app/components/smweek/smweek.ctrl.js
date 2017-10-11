@@ -248,7 +248,7 @@ define([], function () {
           xtopt.push(topt[j].cat);
         vm.toptconf = {
           chart: {type: "column", height: 300},legend:{enabled:false},
-          title: {text: "Műszaki technikai okok"},
+          title: {text: "Tervezett veszteség"},
           xAxis: {type: "category", categories: xtopt},
           series: [
             {name: "Állások", color: "rgb(50,100,200)", data: topt, tooltip: {pointFormat: '<span><span style="color:{series.color};font-weight:bold">{point.y} óra</span> [{point.count} db]</span>'}}
