@@ -57,9 +57,15 @@ define([], function () {
         colors["Tervezett állás"] = "rgb(50,100,200)";
         colors["Fonatoló hiba"] = "rgb(150,150,150)";
         colors["Operátor hiba"] = "rgb(200,50,200)";
+        var drillcolors = [];
+        drillcolors["Váratlan gépleállás"] = "rgba(255,0,0,";
+        drillcolors["Tervezett állás"] = "rgba(50,100,200,";
+        drillcolors["Fonatoló hiba"] = "rgba(150,150,150,";
+        drillcolors["Operátor hiba"] = "rgba(200,50,200,";
+
         for (var i = 0; i < vm.group.length; i++) {
           gr.push({ name: vm.group[i].code, y: vm.group[i].amount, drilldown: vm.group[i].code, color: colors[vm.group[i].code] });
-          chartdrill.push({ name: vm.group[i].code, id: vm.group[i].code, data: [] });
+          chartdrill.push({name: vm.group[i].code, id: vm.group[i].code, data: []});
         }
         for (var i = 0; i < chartdrill.length; i++) {
           for (var j = 0; j < namefilter.length; j++) {
@@ -70,14 +76,17 @@ define([], function () {
                 szam += vm.data[k].Duration_s_ * 1;
               }
             }
-            t = [namefilter[j].reas_Name, szam];
-            chartdrill[i].data.push(t);
+            //console.log(drillcolors[chartdrill[i].name] + "." + (9 - (chartdrill[i].data.length * 1.7))*10 + ")");
+            t = {name: namefilter[j].reas_Name, y: szam, color: drillcolors[chartdrill[i].name] + "." + (9 - (chartdrill[i].data.length * 1.7))*10 + ")"};
+            if(szam > 0){
+              chartdrill[i].data.push(t);
+            }
           }
         }
 
         setChartpie(gr, chartdrill);
-        console.log(goodtime);
-        console.log(vm.data);
+        //console.log(chartdrill);
+        //console.log(vm.data);
         vm.loading = false;
       });
     }
