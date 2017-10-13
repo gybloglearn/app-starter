@@ -24,7 +24,7 @@ define([], function () {
         groupfilter = $filter('unique')(vm.data, 'Reason_group_Name');
         namefilter = $filter('unique')(vm.data, 'reas_Name');
 
-        goodtime = ((new Date(vm.enddate).getTime() - new Date(vm.startdate).getTime()) / 1000)*2
+        goodtime = ((new Date(vm.enddate).getTime() - new Date(vm.startdate).getTime()) / 1000) * 2
 
         for (var i = 0; i < groupfilter.length; i++) {
           var obj = {};
@@ -96,7 +96,14 @@ define([], function () {
         plotOptions: {
           pie: {
             center: ['50%', '50%'],
-            showInLegend: false
+            showInLegend: false,
+            dataLabels: {
+              formatter: function(){
+                if(this.percentage > 0){
+                  return '<b>' + this.point.name + ': ' + this.percentage.toFixed(2) + ' %</b>';
+                }
+              }
+            }
           }
         },
         series: [
