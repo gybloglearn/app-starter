@@ -86,7 +86,6 @@ define([], function () {
       vm.chartconfig_pie = {
         chart: {
           type: 'pie',
-          width: 1100,
           height: 400
         },
         tooltip: {
