@@ -21,10 +21,10 @@ define([], function () {
           var osszaeq = 0;
           var jo = 0;
           var joaeq = 0;
-          
+
 
           dataService.getsm(vm.datum, vm.end, v).then(function (response) {
-            plancreator(vm.allplan,v);
+            plancreator(vm.allplan, v);
             ossz = $filter('sumdb')($filter('filter')(response.data, { 'category': 'TOTAL', 'shiftnum': vm.actshiftnum }));
             jo = $filter('sumdb')($filter('filter')(response.data, { 'category': 'GOOD', 'shiftnum': vm.actshiftnum }));
 
@@ -109,28 +109,29 @@ define([], function () {
       }
     }
 
-    function plancreator(tomb,asm) {
+    function plancreator(tomb, asm) {
       choose();
       var frissites = $filter('date')(new Date().getTime(), 'yyyy-MM-dd HH:mm');
+      var actday = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
       vm.tervezett_darab = 0;
 
       if (tomb == "") {
         vm.tervezett_darab = 0;
       }
       else {
-        var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
-        vm.tervezett = 0;
         var szam = 0;
         for (var i = 0; i < tomb.length; i++) {
-          if (tomb[i].sm == asm) {
+          if (tomb[i].sm == asm && actday == tomb[i].date) {
             if (vm.actshiftnum == 1) {
+              vm.tervezett = 0;
               var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
               vm.tervezett += (parseInt(tomb[i].amountshift1) * parseInt(tomb[i].sheetnumber));
               szorzo = szorzo - (350);
               szam = (vm.tervezett / 720) * szorzo;
-              vm.tervezett_darab = Math.round(szam);
+              vm.tervezett_darab += Math.round(szam);
             }
             else if (vm.actshiftnum == 3) {
+              vm.tervezett = 0;
               var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
               vm.tervezett += (parseInt(tomb[i].amountshift3) * parseInt(tomb[i].sheetnumber));
               if (szorzo >= 1070) {
@@ -167,7 +168,7 @@ define([], function () {
       vm.frissites_ideje = $filter('date')(new Date().getTime() + 15 * 60 * 1000, 'yyyy-MM-dd HH:mm');
     }
 
-    
+
     var refreshload = setInterval(load, 15 * 60 * 1000);
     var refreshdate = setInterval(date_refresh, 15 * 60 * 1000);
 
