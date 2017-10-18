@@ -37,6 +37,7 @@ define([], function () {
             };
 
             obj.terv = vm.tervezett_darab;
+            obj.szaklap=vm.szaklap;
 
 
             dataService.getsoesm(vm.datum, v).then(function (respo) {
@@ -114,9 +115,11 @@ define([], function () {
       var frissites = $filter('date')(new Date().getTime(), 'yyyy-MM-dd HH:mm');
       var actday = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
       vm.tervezett_darab = 0;
+      vm.szaklap=0;
 
       if (tomb == "") {
         vm.tervezett_darab = 0;
+        vm.szaklap=0;
       }
       else {
         var szam = 0;
@@ -124,16 +127,20 @@ define([], function () {
           if (tomb[i].sm == asm && actday == tomb[i].date) {
             if (vm.actshiftnum == 1) {
               vm.tervezett = 0;
+              vm.szaklap=0;
               var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
               vm.tervezett += (parseInt(tomb[i].amountshift1) * parseInt(tomb[i].sheetnumber));
+              vm.szaklap+=vm.tervezett;
               szorzo = szorzo - (350);
               szam = (vm.tervezett / 720) * szorzo;
               vm.tervezett_darab += Math.round(szam);
             }
             else if (vm.actshiftnum == 3) {
               vm.tervezett = 0;
+              vm.szaklap=0;
               var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
               vm.tervezett += (parseInt(tomb[i].amountshift3) * parseInt(tomb[i].sheetnumber));
+              vm.szaklap+=vm.tervezett;
               if (szorzo >= 1070) {
                 szorzo = szorzo - (1070);
                 szam = (vm.tervezett / 720) * szorzo;
@@ -169,8 +176,8 @@ define([], function () {
     }
 
     
-    var refreshload = setInterval(load, 15 * 60 * 1000);
-    var refreshdate = setInterval(date_refresh, 15 * 60 * 1000);
+    var refreshload = setInterval(load, 10 * 60 * 1000);
+    var refreshdate = setInterval(date_refresh, 10 * 60 * 1000);
 
 
     activate();

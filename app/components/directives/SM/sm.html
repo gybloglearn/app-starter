@@ -1,7 +1,18 @@
 <!--direktíva-->
 <div class="smdir">
-    <div class="card">
+        <style>
+                .green {
+                    background-color: rgba(0, 255, 0, 0.1)
+                }
+        
+                .red {
+                    background-color: rgba(255, 0, 0, 0.1)
+                }
+            </style>
+    <div class="card {{data.jolap>=data.terv?'green':'red'}}">
         <h1 class="title">{{data.sm}}</h1>
+        <h3 class="datatext">Elkészítendő lapszám: {{data.szaklap}} db</h3>
+        <hr>
         <h3 class="datatext">Terv: {{data.terv}} db</h3>
         <h3 class="datatext">Jó lap: {{data.jolap}} db</h3>
         <h3 class="datatext">Selejt lap: {{data.osszlap-data.jolap}} db</h3>
