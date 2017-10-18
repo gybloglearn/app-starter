@@ -22,7 +22,7 @@ define([], function () {
     }
     function loadops() {
       vm.ops = [];
-      $http({ method: 'GET', url: "app/components/Operators/ops.json" }).
+      $http({ method: 'GET', url: "app/components/Operators/gids.json" }).
         success(function (data, status) {
           vm.ops = data;
         }).
@@ -33,27 +33,79 @@ define([], function () {
     vm.exportToCSV = exportToCSV;
     function exportToCSV() {
       var content = "";
-      content += ";;Potting3;;;;;;;;Potting4;;;;;;;\r\n";
-      content += "SSO;Szak;";
-      for( var x = 0; x < vm.hely.length; x++){
-        content += vm.hely[x].substr(0,1) + vm.hely[x].substr(vm.hely[x].indexOf(' '),2) + ";";
+      content += ";;Potting3;;;;;;;;Potting4;;;;;;;;\r\n";
+      content += "GID;Szak;";
+      for (var x = 0; x < vm.hely.length; x++) {
+        content += vm.hely[x].substr(0, 1) + vm.hely[x].substr(vm.hely[x].indexOf(' '), 2) + ";";
       }
-      for( var x = 0; x < vm.hely.length; x++){
-        content += vm.hely[x].substr(0,1) + vm.hely[x].substr(vm.hely[x].indexOf(' '),2) + ";";
+      for (var x = 0; x < vm.hely.length; x++) {
+        content += vm.hely[x].substr(0, 1) + vm.hely[x].substr(vm.hely[x].indexOf(' '), 2) + ";";
       }
       content += "\r\n";
       for (var o = 0; o < vm.ops.length; o++) {
+        if (vm.ops[o].gid != '') {
+          content += vm.ops[o].gid + ";" + vm.ops[o].shift + ";";
+          for (var i = 0; i < vm.hely.length; i++) {
+            if ($filter('filter')(vm.datas, { mch: "Potting3", pha: vm.hely[i], operator: vm.ops[o].gid }).length > 0)
+              content += $filter('filter')(vm.datas, { mch: "Potting3", pha: vm.hely[i], operator: vm.ops[o].gid }).length + ";";
+            else
+              content += ';';
+          }
+          for (var j = 0; j < vm.hely.length; j++) {
+            if ($filter('filter')(vm.datas, { mch: "Potting4", pha: vm.hely[j], operator: vm.ops[o].gid }).length > 0)
+              content += $filter('filter')(vm.datas, { mch: "Potting4", pha: vm.hely[j], operator: vm.ops[o].gid }).length + ";";
+            else
+              content += ';';
+          }
+          content += "\r\n";
+        }
+      }
+      content += "SSOval;" + "-----;".repeat(17) + "\r\n";
+      for (var o = 0; o < vm.ops.length; o++) {
         content += vm.ops[o].sso + ";" + vm.ops[o].shift + ";";
         for (var i = 0; i < vm.hely.length; i++) {
-          content += $filter('filter')(vm.datas, {mch: "Potting3", pha: vm.hely[i], operator: vm.ops[o].sso}).length + ";";
+          if ($filter('filter')(vm.datas, { mch: "Potting3", pha: vm.hely[i], operator: vm.ops[o].sso }).length > 0)
+            content += $filter('filter')(vm.datas, { mch: "Potting3", pha: vm.hely[i], operator: vm.ops[o].sso }).length + ";";
+          else
+            content += ';';
         }
         for (var j = 0; j < vm.hely.length; j++) {
-          content += $filter('filter')(vm.datas, {mch: "Potting4", pha: vm.hely[j], operator: vm.ops[o].sso}).length + ";";
+          if ($filter('filter')(vm.datas, { mch: "Potting4", pha: vm.hely[j], operator: vm.ops[o].sso }).length > 0)
+            content += $filter('filter')(vm.datas, { mch: "Potting4", pha: vm.hely[j], operator: vm.ops[o].sso }).length + ";";
+          else
+            content += ';';
         }
         content += "\r\n";
       }
+// CReATE download string
+      var d = [];
+      var res = [];
+      d = content.split("\r\n");
+      for (var k = 0; k < d.length; k++) {
+        var h = d[k].split(';');
+        var s = [];
+        if (k > 1 && h[0] != "SSOval") {
+          s[k] = 0;
+          for (var x = 0; x < h.length; x++) {
+            if (x > 1) {
+              if (h[x] == "")
+                h[x] = 0;
+              else
+                h[x] = parseInt(h[x]);
+              s[k] += h[x];
+            }
+          }
+        }
+        if (k <= 1 || h[0] == "SSOval" || s[k] > 0) {
+          var hstr = h.slice(0,-1).join(";");
+          res.push(hstr);
+        }
+      }
+      var str = res.join("\r\n");
+     // console.log(str);
+
       var hiddenElement = document.createElement('a');
-      hiddenElement.href = 'data:attachment/csv;charset=iso-8859-1,' + encodeURI(content);
+      hiddenElement.href = 'data:attachment/csv;charset=iso-8859-1,' + encodeURI(str);
       hiddenElement.target = '_blank';
       hiddenElement.download = 'data_' + vm.datumszam + '.csv';
       hiddenElement.click();

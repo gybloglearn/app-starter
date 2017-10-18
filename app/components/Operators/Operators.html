@@ -32,11 +32,23 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="op in vm.ops">
+					<tr ng-repeat="op in vm.ops" ng-if="((vm.datas | filter: {mch:'Potting3', pha: hely, operator: op.gid}).length>0 || (vm.datas | filter: {mch:'Potting4', pha: hely, operator: op.gid}).length>0) && op.gid != ''">
+						<td width="30%">{{op.name + " - " + op.gid + " - " + op.shift}}</td>
+						<td ng-repeat="hely in vm.hely" style="background-color: {{(vm.datas | filter: {mch:'Potting3', pha: hely, operator: op.gid}).length>0?'#ddd':''}}">{{ (vm.datas | filter: {mch:'Potting3', pha: hely, operator: op.gid}).length>0?(vm.datas | filter: {mch:'Potting3',
+							pha: hely, operator: op.gid}).length:'' }}</td>
+						<td ng-repeat="hely in vm.hely" style="background-color: {{(vm.datas | filter: {mch:'Potting4', pha: hely, operator: op.gid}).length>0?'#bbb':''}}">{{ (vm.datas | filter: {mch:'Potting4', pha: hely, operator: op.gid}).length>0?(vm.datas | filter: {mch:'Potting4',
+							pha: hely, operator: op.gid}).length:'' }}</td>
+					</tr>
+					<tr>
+						<th colspan="17">
+							Még SSOval
+						</th>
+					</tr>
+					<tr ng-repeat="op in vm.ops" ng-if="((vm.datas | filter: {mch:'Potting3', pha: hely, operator: op.sso}).length>0 || (vm.datas | filter: {mch:'Potting4', pha: hely, operator: op.sso}).length>0)">
 						<td width="30%">{{op.name + " - " + op.sso + " - " + op.shift}}</td>
-						<td ng-repeat="hely in vm.hely" style="background-color: {{(vm.datas | filter: {mch:'Potting3', pha: hely, operator: op.sso}).length>0?'#ddd':''}}">{{ (vm.datas | filter: {mch:'Potting3', pha: hely, operator: op.sso}).length>0?(vm.datas | filter: {mch:'Potting3',
+						<td ng-repeat="hely in vm.hely" style="background-color: {{(vm.datas | filter: {mch:'Potting3', pha: hely, operator: op.gid}).length>0?'#ddd':''}}">{{ (vm.datas | filter: {mch:'Potting3', pha: hely, operator: op.sso}).length>0?(vm.datas | filter: {mch:'Potting3',
 							pha: hely, operator: op.sso}).length:'' }}</td>
-						<td ng-repeat="hely in vm.hely" style="background-color: {{(vm.datas | filter: {mch:'Potting4', pha: hely, operator: op.sso}).length>0?'#bbb':''}}">{{ (vm.datas | filter: {mch:'Potting4', pha: hely, operator: op.sso}).length>0?(vm.datas | filter: {mch:'Potting4',
+						<td ng-repeat="hely in vm.hely" style="background-color: {{(vm.datas | filter: {mch:'Potting4', pha: hely, operator: op.gid}).length>0?'#bbb':''}}">{{ (vm.datas | filter: {mch:'Potting4', pha: hely, operator: op.sso}).length>0?(vm.datas | filter: {mch:'Potting4',
 							pha: hely, operator: op.sso}).length:'' }}</td>
 					</tr>
 				</tbody>
