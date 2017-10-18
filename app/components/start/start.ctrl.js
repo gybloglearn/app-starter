@@ -5,7 +5,7 @@ define([], function () {
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.end = $filter('date')(new Date().getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
-    vm.frissites_ideje = $filter('date')(new Date().getTime() + 15 * 60 * 1000, 'yyyy-MM-dd HH:mm');
+    vm.frissites_ideje = $filter('date')(new Date().getTime() + 10 * 60 * 1000, 'yyyy-MM-dd HH:mm');
     vm.sheetmakers = ["SheetMaker4", "SheetMaker5"];
     vm.smcards = [];
 
@@ -21,10 +21,10 @@ define([], function () {
           var osszaeq = 0;
           var jo = 0;
           var joaeq = 0;
-
+          
 
           dataService.getsm(vm.datum, vm.end, v).then(function (response) {
-            plancreator(vm.allplan, v);
+            plancreator(vm.allplan,v);
             ossz = $filter('sumdb')($filter('filter')(response.data, { 'category': 'TOTAL', 'shiftnum': vm.actshiftnum }));
             jo = $filter('sumdb')($filter('filter')(response.data, { 'category': 'GOOD', 'shiftnum': vm.actshiftnum }));
 
@@ -41,10 +41,15 @@ define([], function () {
 
 
             dataService.getsoesm(vm.datum, v).then(function (respo) {
-              var szam = $filter('sumField')($filter('filter')(respo.data, { 'Event_type': "Downtime" }), 'Event_time');
-              var szerv = $filter('sumField')($filter('filter')(respo.data, { 'Ev_Group': "Szervezesi veszteseg" }), 'Event_time');
-              var tervez = $filter('sumField')($filter('filter')(respo.data, { 'Ev_Group': "Tervezett veszteseg" }), 'Event_time');
-              var musz = $filter('sumField')($filter('filter')(respo.data, { 'Ev_Group': "Muszaki technikai okok" }), 'Event_time');
+              var tomb=[];
+              for(var i=0;i<respo.data.length;i++){
+                respo.data[i].shiftnum=respo.data[i].Shift_ID[respo.data[i].Shift_ID.length-1]
+              }
+              tomb=$filter('filter')(respo.data,{'shiftnum':vm.actshiftnum});
+              var szam = $filter('sumField')($filter('filter')(tomb, { 'Event_type': "Downtime" }), 'Event_time');
+              var szerv = $filter('sumField')($filter('filter')(tomb, { 'Ev_Group': "Szervezesi veszteseg" }), 'Event_time');
+              var tervez = $filter('sumField')($filter('filter')(tomb, { 'Ev_Group': "Tervezett veszteseg" }), 'Event_time');
+              var musz = $filter('sumField')($filter('filter')(tomb, { 'Ev_Group': "Muszaki technikai okok" }), 'Event_time');
 
               obj.downtime = szam / 60;
               obj.szervezesi = szerv / 60;
@@ -172,7 +177,7 @@ define([], function () {
 
     function date_refresh() {
       vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
-      vm.frissites_ideje = $filter('date')(new Date().getTime() + 15 * 60 * 1000, 'yyyy-MM-dd HH:mm');
+      vm.frissites_ideje = $filter('date')(new Date().getTime() + 10 * 60 * 1000, 'yyyy-MM-dd HH:mm');
     }
 
 
