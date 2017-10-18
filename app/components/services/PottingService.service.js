@@ -14,7 +14,7 @@ define([], function () {
     function get(mch, datum) {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15/getReports/pottingreport.php?mch=' + mch + '&startdate=' + datum
+        url: 'app/components/php/ZW500_Potting.php?startdate=' + datum + '&report_id=' + mch
       };
       return $http(req);
     }
@@ -22,7 +22,7 @@ define([], function () {
     function getdays(mch, kezdodatum, vegdatum) {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15/getReports/pottingreport.php?mch=' + mch + '&startdate=' + kezdodatum + '&enddate=' + vegdatum
+        url: 'app/components/php/ZW500_Potting.php?startdate=' + kezdodatum + '&enddate=' + vegdatum + '&report_id=' + mch
       };
       return $http(req);
     }

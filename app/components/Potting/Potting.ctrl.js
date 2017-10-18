@@ -41,20 +41,19 @@ define([], function () {
       vm.sumdb = [0, 0, 0, 0, 0, 0, 0, 0, 0];
       vm.sumaeq = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-      if (!vm.tobbnapos) {
+      //if (!vm.tobbnapos) {
         PottingService.get(vm.mch, vm.datum).then(function (response) {
           vm.potting = response.data;
           vm.dis = false;
           for (var i = 0; i < vm.potting.length; i++) {
-            var mystring = vm.potting[i].name;
-            var substring1 = "_IN-IN";
-            var substring2 = "_P3-P3";
-            var substring3 = "_OUT-OUT";
+            var mystring = vm.potting[i].type;
+            var substring1 = "IN";
+            var substring2 = "P3";
+            var substring3 = "OUT";
             var db = 0;
             var aeq = 0;
 
-            if (mystring.includes(substring1)) {
-              mystring = mystring.substr(0, mystring.length - 6);
+            if (vm.potting[i].category==substring1) {
               for (var j = 0; j < vm.aeqs.length; j++) {
                 if (mystring == vm.aeqs[j].name) {
                   vm.potting[i].aeq = vm.potting[i].amount * vm.aeqs[j].amount;
@@ -73,8 +72,7 @@ define([], function () {
                 vm.sumaeq[6] = vm.sumaeq[6] + vm.potting[i].aeq;
               }
             }
-            else if (mystring.includes(substring2)) {
-              mystring = mystring.substr(0, mystring.length - 6);
+            else if (vm.potting[i].category==substring2) {
               for (var j = 0; j < vm.aeqs.length; j++) {
                 if (mystring == vm.aeqs[j].name) {
                   vm.potting[i].aeq = vm.potting[i].amount * vm.aeqs[j].amount;
@@ -93,8 +91,7 @@ define([], function () {
                 vm.sumaeq[7] = vm.sumaeq[7] + vm.potting[i].aeq;
               }
             }
-            else if (mystring.includes(substring3)) {
-              mystring = mystring.substr(0, mystring.length - 8);
+            else if (vm.potting[i].category==substring3) {
               for (var j = 0; j < vm.aeqs.length; j++) {
                 if (mystring == vm.aeqs[j].name) {
                   vm.potting[i].aeq = vm.potting[i].amount * vm.aeqs[j].amount;
@@ -125,7 +122,7 @@ define([], function () {
             }
           }
         });
-      }
+     // }
 
       if (vm.tobbnapos) {
         PottingService.getdays(vm.mch, vm.kezdo, vm.datum).then(function (response) {
