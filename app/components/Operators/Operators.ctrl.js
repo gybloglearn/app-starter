@@ -10,7 +10,7 @@ define([], function () {
     vm.actmachine = "Potting4";
     vm.phasenumbers = [0, 1, 2, 3, 4, 5, 6, 7];
     vm.Pottings = ["Potting3", "Potting4"];
-    vm.hely = ["Potting be", "Előkészítés alsó", "Gélberakás alsó", "Esztétika alsó", "Forgatás", "Gélberakás felső", "Esztétika felső", "Potting ki"];
+    vm.hely = ["Potting be", "Gel Prep Also F", "Uret Prep Also F", "Esztetika Also F", "Forgatas", "Uret Prep Felso F", "Esztetika Felso F", "Potting ki"];
     vm.szakok = [1, 2, 3]
     vm.load = load;
     vm.beallit = beallit;
@@ -36,10 +36,10 @@ define([], function () {
       content += ";;Potting3;;;;;;;;Potting4;;;;;;;;\r\n";
       content += "GID;Szak;";
       for (var x = 0; x < vm.hely.length; x++) {
-        content += vm.hely[x].substr(0, 1) + vm.hely[x].substr(vm.hely[x].indexOf(' '), 2) + ";";
+        content += vm.hely[x] + ";";
       }
       for (var x = 0; x < vm.hely.length; x++) {
-        content += vm.hely[x].substr(0, 1) + vm.hely[x].substr(vm.hely[x].indexOf(' '), 2) + ";";
+        content += vm.hely[x] + ";";
       }
       content += "\r\n";
       for (var o = 0; o < vm.ops.length; o++) {

@@ -38,9 +38,11 @@
 						<th colspan="8" class="text-center" ng-repeat="pottings in vm.Pottings">{{pottings}}</th>
 					</tr>
 					<tr>
-						<th class="text-center">Operátor</th>
-						<th class="text-center" ng-repeat="hely in vm.hely">{{hely.substr(0,1) + hely.substr(hely.indexOf(' '),2)}}</th>
-						<th class="text-center" ng-repeat="hely in vm.hely">{{hely.substr(0,1) + hely.substr(hely.indexOf(' '),2)}}</th>
+						<th class="text-center" style="height: 120px">Operátor</th>
+						<!--<th class="text-center" ng-repeat="hely in vm.hely">{{hely.substr(0,1) + hely.substr(hely.indexOf(' '),2)}}</th>
+						<th class="text-center" ng-repeat="hely in vm.hely">{{hely.substr(0,1) + hely.substr(hely.indexOf(' '),2)}}</th>-->
+						<th class="text-center" ng-repeat="hely in vm.hely"><span style="margin: 0;width: 20px;transform: rotate(-90deg);white-space: nowrap;display: block;">{{hely}}</span></th>
+						<th class="text-center" ng-repeat="hely in vm.hely"><span style="margin: 0;width: 20px;transform: rotate(-90deg);white-space: nowrap;display: block;">{{hely}}</span></th>
 					</tr>
 				</thead>
 				<tbody>
