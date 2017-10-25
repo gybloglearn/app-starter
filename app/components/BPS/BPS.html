@@ -28,16 +28,35 @@
 				<div class="tray filter-tray top" style="margin-top:20px">
 					<div class="tray-inner">
 						<div class="filter-rule-group">
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 								<div class="form-group">
 									<span class="control-label" style="color:#FFFFFF">Kád:</span>
 									<input type="text" ng-model="vm.searchda.machinename" class="form-control">
 								</div>
 							</div>
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 								<div class="form-group">
 									<span class="control-label" style="color:#FFFFFF">Operátor:</span>
 									<input type="text" ng-model="vm.searchda.Operator" class="form-control">
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<span class="control-label" style="color:#FFFFFF">Szak:</span>
+									<select class="form-control" ng-model="vm.searchda.shift">
+										<option value=>Mind</option>
+										<option ng-repeat="item in vm.szakok" value="{{item}}">{{item}}</option>
+						  			</select>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<span class="control-label" style="color:#FFFFFF">Szak:</span>
+									<select class="form-control" ng-model="vm.searchda.shiftnum">
+										<option value=>Mind</option>
+										<option value=1>Nappal</option>
+										<option value=3>Éjszaka</option>
+						  			</select>
 								</div>
 							</div>
 						</div>
@@ -53,6 +72,8 @@
 							<th>enddate</th>
 							<th>Time(HH:mm)</th>
 							<th>repaired</th>
+							<th>Szak</th>
+							<th>Időszak</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -64,6 +85,8 @@
 							<td>{{da.enddate}}</td>
 							<td>{{da.Time | date:'HH:mm'}}</td>
 							<td>{{da.Repaired}}</td>
+							<td>{{da.shift}}</td>
+							<td>{{da.shiftnum|changenum}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -79,6 +102,25 @@
 									<input type="text" ng-model="vm.search.operator" class="form-control">
 								</div>
 							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<span class="control-label" style="color:#FFFFFF">Szak:</span>
+									<select class="form-control" ng-model="vm.search.shift">
+										<option value=>Mind</option>
+										<option ng-repeat="item in vm.szakok" value="{{item}}">{{item}}</option>
+						  			</select>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<span class="control-label" style="color:#FFFFFF">Szak:</span>
+									<select class="form-control" ng-model="vm.search.shiftnum">
+										<option value=>Mind</option>
+										<option value=1>Nappal</option>
+										<option value=3>Éjszaka</option>
+						  			</select>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -90,6 +132,8 @@
 							<th>Összes bökés</th>
 							<th>Munkaidő(perc)</th>
 							<th>Bökés/perc</th>
+							<th>Szak</th>
+							<th>Időszak</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -99,6 +143,8 @@
 							<td>{{item.repair}}</td>
 							<td>{{item.worktime}}</td>
 							<td>{{item.repair/item.worktime | number:2}}</td>
+							<td>{{item.shift}}</td>
+							<td>{{item.shiftnum|changenum}}</td>
 						</tr>
 					</tbody>
 				</table>
