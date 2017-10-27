@@ -67,7 +67,6 @@ define([], function () {
           vm.selectdatas[i].MODULS = [[], [], [], [], [], [], [], []];
         }
       }
-      console.log(vm.selectdatas);
 
       for (var i = 0; i < 24; i++) {
         vm.selecthour[i] = {}
@@ -90,7 +89,9 @@ define([], function () {
       SumserviceService.get(vm.startdate, vm.enddate, vm.mch).then(function (response) {
         vm.data = response.data;
         vm.dis = false;
+        console.log(vm.data);
 
+        var startszam1 = 0;
         var gelszam1 = 0;
         var uretalso1 = 0;
         var uretalsoesztetika1 = 0;
@@ -188,6 +189,7 @@ define([], function () {
             if (vm.selectdatas[j].SHIFT == vm.data[i].PT_START_S && (new Date(vm.data[i].PT_Start_DT).getTime() < vm.vege) && (new Date(vm.data[i].PT_Start_DT).getTime() >= vm.kezdo)) {
               vm.selectdatas[j].START++;
               vm.selectdatas[j].MODULS[0].push(vm.data[i].JobID);
+              startszam1++;
             }
             if (vm.selectdatas[j].SHIFT == vm.data[i].PT_GEL_PREP_S && (new Date(vm.data[i].PT_GEL_PREP_DT).getTime() < vm.vege) && (new Date(vm.data[i].PT_GEL_PREP_DT).getTime() >= vm.kezdo)) {
               vm.selectdatas[j].GEL_PREP++;
@@ -227,6 +229,7 @@ define([], function () {
         }
 
 
+        var startszam2 = 0;
         var gelszam2 = 0;
         var uretalso2 = 0;
         var uretalsoesztetika2 = 0;
@@ -240,6 +243,7 @@ define([], function () {
               var startszamvaltozo = new Date(vm.data[i].PT_Start_DT).getHours() * 60 + new Date(vm.data[i].PT_Start_DT).getMinutes();
               if (startszamvaltozo >= vm.selecthour[j].TIME && startszamvaltozo < vm.selecthour[j].TIME + 60) {
                 vm.selecthour[j].START++;
+                startszam2++;
               }
             }
             if ((new Date(vm.data[i].PT_GEL_PREP_DT).getTime() < vm.vege) && (new Date(vm.data[i].PT_GEL_PREP_DT).getTime() >= vm.kezdo)) {
@@ -304,15 +308,13 @@ define([], function () {
           endszamlalo -= vm.selecthour[i].END;
         }
 
-        if (startszamlalo > 0) {
+        /*if (startszamlalo > 0) {
           vm.selecthour[18].START += startszamlalo;
         }
         else {
           vm.selecthour[18].START = -1 * (startszamlalo);
-          if (datenumber < changeshiftnumber) {
-            vm.selectdatas[2].START += -2 * (startszamlalo);
-          }
-        }
+        }*/
+        vm.selecthour[18].START+=(startszam1-startszam2);
         vm.selecthour[18].GEL += (gelszam1 - gelszam2);
         vm.selecthour[18].URETA += (uretalso1 - uretalso2);
         vm.selecthour[18].PURETA += (uretalsoesztetika1 - uretalsoesztetika2);
