@@ -3,15 +3,23 @@
     <div class="module-header">
       <h1 class="text-center">{{vm.mch}}-összesítő</h1>
       <h1 class="text-center">{{vm.datumszam}}</h1>
-      <ul class="nav nav-tabs" style="margin-top:10px">
-        <li ng-repeat="item in vm.pottings track by $index">
-          <a data-toggle="tab" href="" ng-click="vm.mch=item;vm.beallit();vm.load()" ng-hide="vm.dis">{{item}}</a>
-        </li>
-      </ul>
-      <div class="col-sm-5">
+      <hr>
+      <div class="col-sm-5 col-md-4 col-md-offset-2">
         <div class="input-group">
           <span class="input-group-addon">Dátum:</span>
           <input type="text" class="datepicker form-control" ng-model="vm.datum">
+        </div>
+      </div>
+      <div class="col-sm-5 col-md-4">
+        <div class="input-group">
+          <span class="input-group-addon">Potting:</span>
+          <select name="" id="" class="form-control" ng-model="vm.mch">
+            <option value="{{mch}}" ng-repeat="mch in vm.pottings">{{mch}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-1 col-md-1">
+        <div class="input-group">
           <div class="input-group-btn">
             <a href="" class="btn btn-primary" ng-click="vm.beallit();vm.load()" ng-disabled="vm.dis">Betöltés</a>
           </div>
@@ -19,82 +27,115 @@
       </div>
     </div>
     <div class="module-body">
-      <div class="progress progress-warning progress-striped active" ng-hide="!vm.Pottingloading">
+      <div class="progress progress-warning progress-striped active" ng-hide="!vm.dis">
         <div class="progress-bar" style="width: 100%">
           <p class="text-center">Betöltés...</p>
         </div>
       </div>
-      <div class="tab-content">
-        <my-chart id="chart-col" config="vm.chartconfig"></my-chart>
-      </div>
-      <table class="table table-condensed">
-        <thead>
-          <tr>
-            <th>Szak</th>
-            <th>Potting be</th>
-            <th>Gélezés</th>
-            <th>Alsó uretán</th>
-            <th>Alsó esztétika</th>
-            <th>Fordítás</th>
-            <th>Felső uretán</th>
-            <th>Felső esztétika</th>
-            <th>Potting ki</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="item in vm.selectdatas">
-            <td>{{item.SHIFT}}</td>
-            <td>{{item.START}}</td>
-            <td>{{item.GEL_PREP}}</td>
-            <td>{{item.URET_PREP_A}}</td>
-            <td>{{item.POST_URET_A}}</td>
-            <td>{{item.ROT}}</td>
-            <td>{{item.URET_PREP_F}}</td>
-            <td>{{item.POST_URET_F}}</td>
-            <td>{{item.END}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="module-footer">
-      <h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#listtable">Keret és modullista
-        <i class="icon-chevron-right"></i>
-      </h3>
+
+      <my-chart id="chart" config="vm.chartconfig"></my-chart>
+
       <div>
-      <div class="collapse" id="listtable">
-        <div class="tray filter-tray top">
-          <div class="tray-inner">
-            <div class="filter-rule-group">
-
-              <div class="col-sm-3">
-                <div class="form-group">
-                  <span class="control-label" style="color:#FFFFFF">Keret</span>
-                  <input type="text" ng-model="search.frame" class="form-group">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <table class="table table-condensed">
           <thead>
             <tr>
-              <th>Keret</th>
-              <th>Modulok</th>
+              <th>Szak</th>
+              <th width="10%" ng-repeat="h in vm.hely">{{h}}</th>
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="item in vm.framemodul | filter: search track by $index" class="ng-scope">
-              <td>{{item.frame}}</td>
-              <td>
-                <ul ng-repeat="mod in item.moduls">
-                  <li><a class="btn btn-large btn-info" target="_blank" href="../Modulhistory/#/history/{{mod}}">{{mod}}</a></li>
-                </ul>
-              </td>
+            <tr>
+              <th>{{ 1 | shift:vm.datum }}</th>
+              <th ng-repeat="h in vm.hely track by $index">{{(vm.chartData[$index].data | filter:{'sh':1}) | sumField:'y' | number:0}}</th>
+            </tr>
+            <tr ng-hide="( 2 | shift:vm.datum ) == null">
+              <th>{{ 2 | shift:vm.datum }}</th>
+              <th ng-repeat="h in vm.hely track by $index">{{(vm.chartData[$index].data | filter:{'sh':2}) | sumField:'y' | number:0}}</th>
+            </tr>
+            <tr>
+              <th>{{ 3 | shift:vm.datum }}</th>
+              <th ng-repeat="h in vm.hely track by $index">{{(vm.chartData[$index].data | filter:{'sh':3}) | sumField:'y' | number:0}}</th>
             </tr>
           </tbody>
         </table>
       </div>
+
+      <h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#details">Részletek
+        <i class="icon-chevron-right"></i>
+      </h3>
+      <div class="collapse" id="details">
+        <div class="tray filter-tray top">
+          <div class="tray-inner">
+            <div class="filter-rule-group">
+
+            </div>
+          </div>
+        </div>
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>JobID</th>
+              <th>Fixture</th>
+              <th>PT_Start_DT</th>
+              <th>PT_GEL_PREP_DT</th>
+              <th>PT_URET_PREP_A_DT</th>
+              <th>PT_POST_URET_A_DT</th>
+              <th>PT_ROT_DT</th>
+              <th>PT_URET_PREP_F_DT</th>
+              <th>PT_POST_URET_F_DT</th>
+              <th>PT_OUT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.data track by $index">
+              <td><a href="../Modulhistory/#/history/{{item.JobID }}" target="_blank">{{item.JobID}}</a></td>
+              <td>{{item.Fixture}}</td>
+
+              <td ng-if="vm.vege > item.PT_Start_DT && vm.kezdo <= item.PT_Start_DT">{{item.PT_Start_DT | date:"MMdd HH"}}</td>
+              <td ng-if="vm.kezdo > item.PT_Start_DT || !item.PT_Start_DT" style="color:lightgrey;">{{item.PT_Start_DT | date:"MMdd HH"}}</td>
+
+              <td ng-if="vm.vege > item.PT_GEL_PREP_DT && vm.kezdo <= item.PT_GEL_PREP_DT">{{item.PT_GEL_PREP_DT | date:"MMdd HH"}}</td>
+              <td ng-if="vm.kezdo > item.PT_GEL_PREP_DT || !item.PT_GEL_PREP_DT" style="color:lightgrey;">{{item.PT_GEL_PREP_DT | date:"MMdd HH"}}</td>
+
+              <td ng-if="vm.vege > item.PT_URET_PREP_A_DT && vm.kezdo <= item.PT_URET_PREP_A_DT">{{item.PT_URET_PREP_A_DT | date:"MMdd HH"}}</td>
+              <td ng-if="vm.kezdo > item.PT_URET_PREP_A_DT || !item.PT_URET_PREP_A_DT" style="color:lightgrey;">{{item.PT_URET_PREP_A_DT | date:"MMdd HH"}}</td>
+
+              <td ng-if="vm.vege > item.PT_POST_URET_A_DT && vm.kezdo <= item.PT_POST_URET_A_DT">{{item.PT_POST_URET_A_DT | date:"MMdd HH"}}</td>
+              <td ng-if="vm.kezdo > item.PT_POST_URET_A_DT || !item.PT_POST_URET_A_DT" style="color:lightgrey;">{{item.PT_POST_URET_A_DT | date:"MMdd HH"}}</td>
+
+              <td ng-if="vm.vege > item.PT_ROT_DT && vm.kezdo <= item.PT_ROT_DT">{{item.PT_ROT_DT | date:"MMdd HH"}}</td>
+              <td ng-if="vm.kezdo > item.PT_ROT_DT || !item.PT_ROT_DT" style="color:lightgrey;">{{item.PT_ROT_DT | date:"MMdd HH"}}</td>
+
+              <td ng-if="vm.vege > item.PT_URET_PREP_F_DT && vm.kezdo <= item.PT_URET_PREP_F_DT">{{item.PT_URET_PREP_F_DT | date:"MMdd HH"}}</td>
+              <td ng-if="vm.kezdo > item.PT_URET_PREP_F_DT || !item.PT_URET_PREP_F_DT" style="color:lightgrey;">{{item.PT_URET_PREP_F_DT | date:"MMdd HH"}}</td>
+
+              <td ng-if="vm.vege > item.PT_POST_URET_F_DT && vm.kezdo <= item.PT_POST_URET_F_DT">{{item.PT_POST_URET_F_DT | date:"MMdd HH"}}</td>
+              <td ng-if="vm.kezdo > item.PT_POST_URET_F_DT || !item.PT_POST_URET_F_DT" style="color:lightgrey;">{{item.PT_POST_URET_F_DT | date:"MMdd HH"}}</td>
+
+              <td ng-if="vm.vege > item.PT_OUT && vm.kezdo <= item.PT_OUT">{{item.PT_OUT | date:"MMdd HH"}}</td>
+              <td ng-if="vm.kezdo > item.PT_OUT || !item.PT_OUT" style="color:lightgrey;">{{item.PT_OUT | date:"MMdd HH"}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div class="module-footer">
+
     </div>
   </section>
+</div>
+
+<div class="modal" id="modalT">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3 class="modal-title">Modal Heading</h3>
+      </div>
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
 </div>
