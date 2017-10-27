@@ -17,12 +17,13 @@ define([
   './filters/sumaeq',
   './filters/shift',
   './filters/name_change',
+  './filters/sumField',
   './Pottingsum/Pottingsum.ctrl',
   './services/Sumservice.service',
   './Operators/Operators.ctrl',
   './drying/drying.ctrl',
   './services/dry.service'
-	
+
 	/* files */
 ], function(
   configFunction,
@@ -43,6 +44,7 @@ define([
   sumaeq,
   shift,
   name_change,
+  sumField,
   PottingsumController,
   SumserviceService,
   OperatorsController,
@@ -71,6 +73,7 @@ define([
   app.filter('sumaeq',sumaeq);
   app.filter('shift',shift);
   app.filter('name_change',name_change);
+  app.filter('sumField',sumField);
 	app.controller('PottingsumController', PottingsumController);
 	app.service('SumserviceService', SumserviceService);
 	app.controller('OperatorsController', OperatorsController);
