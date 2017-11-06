@@ -26,26 +26,31 @@
       </div>
     </div>
     <div class="module-body">
-      <div class="col-sm-12">
+      <div class="progress progress-success progress-striped active" ng-hide="!vm.loaddata">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Frissítés...</p>
+        </div>
+      </div>
+      <div class="col-sm-12" ng-show="!vm.loaddata">
         <my-chart config="vm.dayavailconfig" id="daych"></my-chart>
       </div>
-      <div class="col-sm-8">
+      <div class="col-sm-8" ng-show="!vm.loaddata">
         <my-chart config="vm.smavailabilitychartconfig" id="chart"></my-chart>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-4" ng-show="!vm.loaddata">
         <my-chart config="vm.ttlsmavailabilitychartconfig" id="ttlchart"></my-chart>
       </div>
-      <div class="col-sm-12">
+      <div class="col-sm-12" ng-show="!vm.loaddata">
         <my-chart config="vm.topmconf" id="topm"></my-chart>
       </div>
-      <div class="col-sm-12">
+      <div class="col-sm-12" ng-show="!vm.loaddata">
         <my-chart config="vm.topsconf" id="tops"></my-chart>
       </div>
-      <div class="col-sm-12">
+      <div class="col-sm-12" ng-show="!vm.loaddata">
         <my-chart config="vm.toptconf" id="topt"></my-chart>
       </div>
 
-      <div class="row">
+      <div class="row" ng-show="!vm.loaddata">
         <table class="table table-condensed table-striped">
           <thead>
             <tr>
@@ -67,14 +72,7 @@
                 <div class="form-group">
                   <select class="form-control" ng-model="vm.search.Machine">
                     <option value=""></option>
-                    <option value="SM1">SM1</option>
-                    <!--<option value="SM2">SM2</option>-->
-                    <option value="SM4">SM4</option>
-                    <option value="SM5">SM5</option>
-                    <option value="SM6">SM6</option>
-                    <option value="SM7">SM7</option>
-                    <option value="SM8">SM8</option>
-                    <option value="SM9">SM9</option>
+                    <option ng-repeat="it in vm.sheetmakers" value="{{it}}">{{it}}</option>
                   </select>
                 </div>
               </th>

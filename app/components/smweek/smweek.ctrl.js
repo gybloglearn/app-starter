@@ -12,6 +12,7 @@ define([], function () {
     vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     //vm.sheetmakers = ["SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     vm.createdates = createdates;
+    vm.loaddata = false;
 
     vm.proddata = [];
     vm.dayttl = [];
@@ -25,6 +26,7 @@ define([], function () {
     }
 
     function createdates() {
+      vm.loaddata = true;
       vm.dates = [];
       vm.days = [];
       var differencedate = 0;
@@ -70,8 +72,10 @@ define([], function () {
         weeklyService.getsmfile(vm.dates[i]).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].d = $filter('date')(new Date(response.data[j].timestamp), "yyyyMMdd");
-            vm.filedatas.push(response.data[j]);
-            updatedowntime(response.data[j]);
+            if(vm.sheetmakers.indexOf(response.data[j].Machine) > -1) {
+              vm.filedatas.push(response.data[j]);
+              updatedowntime(response.data[j]);
+            }
           }
         });
       }
@@ -328,7 +332,7 @@ define([], function () {
           cel.push({ cat: vm.days[j].date, y: 215 });
         }
 
-        console.log(vm.days);
+        //console.log(vm.days);
 
         vm.dayavailconfig = {
           chart: { type: 'column' },
@@ -360,8 +364,9 @@ define([], function () {
           ]
         };
 
-        console.log(vm.smavailabilitychartconfig.series);
+        //console.log(vm.smavailabilitychartconfig.series);
         //console.log(vm.ttlsmavailabilitychartconfig.series);
+        vm.loaddata = false;
       }
     }
 
