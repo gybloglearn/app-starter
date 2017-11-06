@@ -10,6 +10,7 @@ define([], function () {
     vm.startdate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
+    //vm.sheetmakers = ["SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     vm.createdates = createdates;
 
     vm.proddata = [];
@@ -38,14 +39,9 @@ define([], function () {
     }
 
     function callsm() {
-      for (var i = 0; i < 8; i++) {
-        vm.sm[i] = {}
-        if (i == 2) {
-          vm.sm[i].id = "SM" + 9;
-        }
-        else {
-          vm.sm[i].id = "SM" + (i + 1);
-        }
+      for (var i = 0; i < vm.sheetmakers.length; i++) {
+        vm.sm[i] = {};
+        vm.sm[i].id = vm.sheetmakers[i];
         vm.sm[i].musz = 0;
         vm.sm[i].szerv = 0;
         vm.sm[i].terv = 0;
@@ -105,7 +101,8 @@ define([], function () {
         weeklyService.getsm(vm.startdate, $filter('date')(new Date(vm.enddate).getTime()+24*60*60*1000, "yyyy-MM-dd"), vm.sheetmakers[i]).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
-            for (var k = 0; k < vm.sm.length - 1; k++) {
+            console.log(response.data[j].aeq + " - " + response.data[j].type);
+            for (var k = 0; k < vm.sheetmakers.length - 1; k++) {
               if (response.data[j].shortname == vm.sm[k].id && response.data[j].category == "GOOD") {
                 vm.sm[k].jo += response.data[j].amount;
                 vm.sm[k].jaeq += response.data[j].aeq;
@@ -122,8 +119,9 @@ define([], function () {
           }
           for(var j = 0; j < response.data.length; j++){
             response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
+            console.log(response.data[j].aeq + " - " + response.data[j].type);
             for (var k = 0; k < vm.days.length; k++){
-              vm.days[k].ttlido = 7 * 1440;
+              vm.days[k].ttlido = 6 * 1440;
               if($filter('date')(new Date(response.data[j].days), "yyyyMMdd") == vm.days[k].date && response.data[j].category == "GOOD"){
                 vm.days[k].joaeq += response.data[j].aeq;
                 vm.days[k].jolap += response.data[j].amount;
@@ -181,7 +179,7 @@ define([], function () {
     }
     function setCh(ser) {
 
-      if (ser.length == 7) {
+      if (ser.length == vm.sheetmakers.length) {
         var avail = { name: "Elérhetőség", color: "rgba(150,200,100,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: '{series.name}: <b style="color:{point.color}">{point.y:.2f}</b><br>' }*/ };
         var muszaki = { name: "Műszaki", color: "rgba(255,0,0,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: "{series.name}: <b style='color:{point.color}'>{point.y:.2f}</b><br>" }*/ };
         var szervezesi = { name: "Szervezési", color: "rgba(150,150,150,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: "{series.name}: <b style='color:{point.color}'>{point.y:.2f}</b><br>" }*/ };
@@ -393,6 +391,12 @@ define([], function () {
       var substr = azon.substring(0, 3);
       if (substr.substring(0, 2) == "ZL")
         substr = "ZL";
+      if (azon.indexOf("CS-D12") > -1){
+        substr = "Ds12";
+      }
+      if(azon.indexOf("CS-D13") > -1){
+        substr = "Ds13";
+      }
       for (var i = 0; i < tomb.length; i++) {
         if (tomb[i].name.includes(substr)) {
           aeq = (am / parseInt(tomb[i].sheets)) * parseFloat(tomb[i].aeq);
