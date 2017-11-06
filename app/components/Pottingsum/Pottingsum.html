@@ -13,7 +13,7 @@
       <div class="col-sm-5 col-md-4">
         <div class="input-group">
           <span class="input-group-addon">Potting:</span>
-          <select name="" id="" class="form-control" ng-model="vm.mch">
+          <select name="" id="" class="form-control" ng-model="vm.mch" ng-change="vm.load()">
             <option value="{{mch}}" ng-repeat="mch in vm.pottings">{{mch}}</option>
           </select>
         </div>
@@ -34,6 +34,31 @@
       </div>
 
       <my-chart id="chart" config="vm.chartconfig"></my-chart>
+
+      <div ng-show="vm.mutat">
+        <div class="col-sm-12" style="margin-top:20px">
+          <div class="input-group">
+            <span class="input-group-addon">Név</span>
+            <input type="text" class="form-control" ng-model="user.displayname" readonly>
+            <span class="input-group-addon">Kezdő dátum</span>
+            <input type="text" class="form-control" ng-model="vm.startinfo">
+            <span class="input-group-addon">Vége dátum</span>
+            <input type="text" class="form-control" ng-model="vm.endinfo">
+            <span class="input-group-addon">Állomás</span>
+            <select class="form-control" ng-model="vm.actplace">
+              <option ng-repeat="pl in vm.hely" value="{{pl}}">{{pl}}</option>
+            </select>
+          </div>
+          <div class="input-group" style="margin-top:20px">
+            <span class="input-group-addon">Megjegyzés</span>
+            <textarea class="form-control" rows="4" ng-model="vm.descriptioninfo"></textarea>
+          </div>
+          <div class="col-sm-4" style="margin-top:10px">
+            <button class="btn btn-success" ng-click="vm.saveinfo()" ng-disabled="vm.actplace=='' || vm.descriptioninfo=='' || vm.startinfo==vm.endinfo">Feltölt</button>
+            <button class="btn btn-primary" ng-click="vm.createinfodata={};vm.mutat=false">Mégse</button>
+          </div>
+        </div>
+      </div>
 
       <div>
         <table class="table table-condensed">
