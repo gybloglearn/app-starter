@@ -172,36 +172,36 @@ define([], function () {
     }
 
     function loadzbpotting1() {
-        dataService.getpotting(vm.startdate, vm.enddate, "Potting1-1").then(function (response) {
-          for (var j = 0; j < response.data.length; j++) {
-            response.data[j].aeq =  (response.data[j].amount/4)*0.6;
-            response.data[j].days = response.data[j].days.substring(0, 10);
-            for (var k = 0; k < vm.sumdatazb.length; k++) {
-              if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "IN") {
-                vm.sumdatazb[k].pottbeaeq += response.data[j].aeq;
-              }
+      dataService.getpotting(vm.startdate, vm.enddate, "Potting1-1").then(function (response) {
+        for (var j = 0; j < response.data.length; j++) {
+          response.data[j].aeq = (response.data[j].amount / 4) * 0.6;
+          response.data[j].days = response.data[j].days.substring(0, 10);
+          for (var k = 0; k < vm.sumdatazb.length; k++) {
+            if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "IN") {
+              vm.sumdatazb[k].pottbeaeq += response.data[j].aeq;
             }
-          }  
-        });
-      }
+          }
+        }
+      });
+    }
 
     function loadzbpotting2() {
-        dataService.getpotting(vm.startdate, vm.enddate, "Potting1-2").then(function (response) {
-          for (var j = 0; j < response.data.length; j++) {
-            response.data[j].aeq =  (response.data[j].amount)*0.6;
-            response.data[j].days = response.data[j].days.substring(0, 10);
-            for (var k = 0; k < vm.sumdatazb.length; k++) {
-              if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "IN") {
-                vm.sumdatazb[k].pottmodbeaeq += response.data[j].aeq;
-              }
-              else if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "OUT") {
-                vm.sumdatazb[k].pottkiaeq += response.data[j].aeq;
-              }
+      dataService.getpotting(vm.startdate, vm.enddate, "Potting1-2").then(function (response) {
+        for (var j = 0; j < response.data.length; j++) {
+          response.data[j].aeq = (response.data[j].amount) * 0.6;
+          response.data[j].days = response.data[j].days.substring(0, 10);
+          for (var k = 0; k < vm.sumdatazb.length; k++) {
+            if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "IN") {
+              vm.sumdatazb[k].pottmodbeaeq += response.data[j].aeq;
             }
-          }  
-        });
-      }
-      
+            else if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "OUT") {
+              vm.sumdatazb[k].pottkiaeq += response.data[j].aeq;
+            }
+          }
+        }
+      });
+    }
+
 
     function loadmtf() {
       vm.mtfloading = true;
@@ -210,44 +210,33 @@ define([], function () {
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].days = response.data[j].days.substring(0, 10);
             for (var l = 0; l < vm.aeqs.length; l++) {
-              if (response.data[j].type == vm.aeqs[l].name) {
+              if (response.data[j].type.indexOf(vm.aeqs[l].name) > -1)
                 response.data[j].aeq = response.data[j].amount * vm.aeqs[l].amount;
-              }
-              else if (response.data[j].place.includes(vm.aeqs[l].name)) {
+              else if (response.data[j].place.indexOf(vm.aeqs[l].name) > -1)
                 response.data[j].aeq = response.data[j].amount * vm.aeqs[l].amount;
-              }
             }
-            //ZW500
             for (var k = 0; k < vm.sumdata500.length; k++) {
-              if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "BP-OUT" && response.data[j].type != "ZB500S") {
+              if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "BP-OUT" && response.data[j].type != "ZB500S")
                 vm.sumdata500[k].bpaeq += response.data[j].aeq;
-              }
-              else if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "CH-OUT" && response.data[j].type != "ZB500S") {
+              if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "CH-OUT" && response.data[j].type != "ZB500S")
                 vm.sumdata500[k].claeq += response.data[j].aeq;
-              }
-              else if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "BOK-BOKES" && response.data[j].type != "ZB500S") {
+              if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "BOK-BOKES" && response.data[j].type != "ZB500S")
                 vm.sumdata500[k].bokes += response.data[j].amount;
-              }
-              else if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "MIN-AMOUNT" && response.data[j].place != "ZB500S_MIN") {
+              if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "MIN-AMOUNT" && response.data[j].place != "ZB500S_MIN")
                 vm.sumdata500[k].min += response.data[j].aeq;
-              }
             }
-            //ZB
             for (var k = 0; k < vm.sumdata500.length; k++) {
-              if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "BP-OUT" && response.data[j].type == "ZB500S") {
+              if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "BP-OUT" && response.data[j].type == "ZB500S")
                 vm.sumdatazb[k].bpaeq += response.data[j].aeq;
-              }
-              else if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "CH-OUT" && response.data[j].type == "ZB500S") {
+              if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "CH-OUT" && response.data[j].type == "ZB500S")
                 vm.sumdatazb[k].claeq += response.data[j].aeq;
-              }
-              else if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "BOK-BOKES" && response.data[j].type == "ZB500S") {
+              if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "BOK-BOKES" && response.data[j].type == "ZB500S")
                 vm.sumdatazb[k].bokes += response.data[j].amount;
-              }
-              else if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "MIN-AMOUNT" && response.data[j].place == "ZB500S_MIN") {
+              if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "MIN-AMOUNT" && response.data[j].place == "ZB500S_MIN")
                 vm.sumdatazb[k].min += response.data[j].aeq;
-              }
             }
           }
+
           vm.mtfloading = false;
         });
       }
@@ -323,11 +312,17 @@ define([], function () {
 
     function getAEQ(tomb, azon, am) {
       var aeq = 0;
-      
-      var substr = azon.indexOf(' ')== -1 ? azon.substring(0,3):azon.substring(0, azon.indexOf(' '));
-      
+
+      var substr = azon.indexOf(' ') == -1 ? azon.substring(0, 3) : azon.substring(0, azon.indexOf(' '));
+
       if (substr.substring(0, 2) == "ZL")
         substr = "ZL";
+      if (azon.indexOf('DS -D13') > -1) {
+        substr = 'Ds13'
+      }
+      if (azon.indexOf('DS12') > -1) {
+        substr = "Ds12";
+      }
       for (var i = 0; i < tomb.length; i++) {
         if (tomb[i].name.includes(substr)) {
           aeq = (am / parseInt(tomb[i].sheets)) * parseFloat(tomb[i].aeq);
@@ -341,6 +336,12 @@ define([], function () {
       var substr = azon.substring(0, 3);
       if (substr.substring(0, 2) == "ZL")
         substr = "ZL";
+      if (azon.indexOf('DS -D13') > -1) {
+        substr = "Ds13";
+      }
+      if (azon.indexOf('DS12') > -1) {
+        substr = "Ds12";
+      }
       for (var i = 0; i < tomb.length; i++) {
         if (tomb[i].name.includes(substr)) {
           aeq = am * parseFloat(tomb[i].amount);
