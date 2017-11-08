@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('rewindersum', {
+		url: '/rewindersum',
+		templateUrl: './app/components/rewindersum/rewindersum.html',
+		controller: 'rewindersumController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('Rewinder', {
 		url: '/Rewinder',
 		templateUrl: './app/components/Rewinder/Rewinder.html',

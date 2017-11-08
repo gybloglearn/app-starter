@@ -11,7 +11,10 @@ define([
   './directives/mychart',
   './filters/sumField',
   './filters/sumdb',
-  './filters/unique'
+  './filters/unique',
+  './filters/shift',
+  './rewindersum/rewindersum.ctrl',
+  './services/rewindersum.service'
 	/* files */
 ], function(
   configFunction,
@@ -26,7 +29,10 @@ define([
   mychart,
   sumField,
   sumdb,
-  unique
+  unique,
+  shift,
+  rewindersumController,
+  rewindersumService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -45,5 +51,8 @@ define([
   app.filter('sumField', sumField);
   app.filter('sumdb', sumdb);
   app.filter('unique', unique);
+  app.filter('shift', shift);
+	app.controller('rewindersumController', rewindersumController);
+	app.service('rewindersumService', rewindersumService);
 		/* controllers */
 });
