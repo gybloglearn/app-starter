@@ -10,6 +10,7 @@ define([], function () {
     vm.data=[];
     vm.load=load;
     vm.beallit=beallit;
+    vm.loading=false;
 
     function beallit(){
       vm.startdatenum = $filter('date')(new Date(vm.startdate), 'yyyy-MM-dd');
@@ -18,7 +19,7 @@ define([], function () {
 
     function load(){
       vm.data=[];
-
+      vm.loading=true;
       var datediff=(new Date(vm.enddate).getTime()-new Date(vm.startdate).getTime())/(24*3600*1000)+1;
       for(var i=datediff;i>0;i--){
         var actnum=$filter('date')(new Date(vm.enddate).getTime()-(i-1)*24*3600*1000, 'yyyyMMdd');
@@ -31,6 +32,7 @@ define([], function () {
             vm.data.push(response.data[j])
           }
           createchartdata(vm.data,datediff);
+          vm.loading=false;
         });
       }
     }
@@ -61,11 +63,10 @@ define([], function () {
           }
         }
       }
-      console.log(vm.chartdata);
-      setChart(vm.chartdata);
+      setChart(vm.chartdata,arr);
     }
 
-    function setChart(ar){
+    function setChart(ar1,ar2){
       vm.chartconfig_col={
         chart: {
           type: 'column',
@@ -80,30 +81,33 @@ define([], function () {
           {
             name: 'Nappal AEQ',
             color: "#ff6600",
-            data: nap_aeq(ar),
+            data: nap_aeq(ar1),
             stack: 'AEQ'
           },
           {
             name: 'Éjjel AEQ',
             color: "#0066ff",
-            data: ej_aeq(ar),
+            data: ej_aeq(ar1),
             stack: 'AEQ'
           },
           {
             name: 'Nappal Dob',
             color: "#ffcc00",
-            data: nap_dob(ar),
+            data: nap_dob(ar1),
             stack: 'Dob'
           },
           {
             name: 'Éjjel Dob',
             color: "#00ccff",
-            data: ej_dob(ar),
+            data: ej_dob(ar1),
             stack: 'Dob'
           }],
-          xAxis: [
-            { categories: feltolt_x(ar) },
-          ],
+          drilldown: {
+            series: createdrilldown(ar1,ar2)
+          },
+          xAxis: {
+            type: 'category',
+        },
           yAxis: {
             title: {
               text: "AEQ-Dob"
@@ -115,28 +119,28 @@ define([], function () {
     function nap_aeq(t){
       var daeq=[]
       for(var i=0;i<t.length;i++){
-        daeq.push(parseInt(t[i].dayaeq));
+        daeq.push({name:t[i].date,y:parseInt(t[i].dayaeq), drilldown:t[i].date+"nappalaeq"});
       }
       return daeq;
     }
     function ej_aeq(t){
       var naeq=[]
       for(var i=0;i<t.length;i++){
-        naeq.push(parseInt(t[i].nightaeq));
+        naeq.push({name:t[i].date,y:parseInt(t[i].nightaeq),drilldown:t[i].date+"éjjelaeq"});
       }
       return naeq;
     }
     function nap_dob(t){
       var dd=[]
       for(var i=0;i<t.length;i++){
-        dd.push(t[i].daycount);
+        dd.push({name:t[i].date,y:parseInt(t[i].daycount),drilldown:t[i].date+"nappaldob"});
       }
       return dd;
     }
     function ej_dob(t){
       var nd=[]
       for(var i=0;i<t.length;i++){
-        nd.push(t[i].nightcount);
+        nd.push({name:t[i].date,y:parseInt(t[i].nightcount),drilldown:t[i].date+"éjjeldob"});
       }
       return nd;
     }
@@ -146,6 +150,34 @@ define([], function () {
         dates.push(t[i].date);
       }
       return dates;
+    }
+    function createdrilldown(t1,t2){
+      var dd=[];
+
+
+
+      for(var i=0;i<t1.length;i++){
+        var naeq=[];
+        var eaeq=[];
+        var ndob=[];
+        var edob=[];
+        for(var j=0;j<t2.length;j++)
+        {
+          if(t1[i].date==t2[j].date && t2[j].ShiftNum=="1"){
+            naeq.push([t2[j].MachineName,parseInt(t2[j].ProducedLength/9300)]);
+            ndob.push([t2[j].MachineName,parseInt(t2[j].P_Count)]);
+          }
+          else if(t1[i].date==t2[j].date && t2[j].ShiftNum=="3"){
+            eaeq.push([t2[j].MachineName,parseInt(t2[j].ProducedLength/9300)]);
+            edob.push([t2[j].MachineName,parseInt(t2[j].P_Count)]);
+          }
+        }
+        dd.push({name:t1[i].date+"nappalaeq",id:t1[i].date+"nappalaeq",data:naeq});
+        dd.push({name:t1[i].date+"éjjelaeq",id:t1[i].date+"éjjelaeq",data:eaeq});
+        dd.push({name:t1[i].date+"nappaldob",id:t1[i].date+"nappaldob",data:ndob});
+        dd.push({name:t1[i].date+"éjjeldob",id:t1[i].date+"éjjeldob",data:edob});
+      }
+      return dd;
     }
 
     activate();
