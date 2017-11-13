@@ -223,20 +223,18 @@
           </tr>
         </thead>
         <tbody>
-          <!--tr ng-repeat="days in vm.data | orderBy:'for':true track by $index" class="ng-scope">
-            <td>{{days.for|date:'MM-dd'}}</td>
-            <td class="text-center">{{ days.data.aeq | filter:{'shiftnum':1} | filter:{'name':vm.filterer} | sumField:'aeq' }}</td>
-            <td class="text-center">{{ days.data.bokes | filter:{'shiftnum':1} | filter:{'name':vm.filterer} | sumField:'amount' | number:0 }}</td>
-            <td class="text-right"> {{ (days.data.bokes | filter:{'shiftnum':1} | filter:{'name':vm.filterer} | sumField:'amount') / (days.data.aeq
-              | filter:{'shiftnum':1} | filter:{'name':vm.filterer} | sumField:'aeq') | number:2}} </td>
-            <td class="text-center">{{ days.data.aeq | filter:{'shiftnum':3} | filter:{'name':vm.filterer} | sumField:'aeq' }}</td>
-            <td class="text-center">{{ days.data.bokes | filter:{'shiftnum':3} | filter:{'name':vm.filterer} | sumField:'amount' | number:0 }}</td>
-            <td class="text-right"> {{ (days.data.bokes | filter:{'shiftnum':3} | filter:{'name':vm.filterer} | sumField:'amount') / (days.data.aeq
-              | filter:{'shiftnum':3} | filter:{'name':vm.filterer} | sumField:'aeq') | number:2}} </td>
-            <td class="text-center"><b>{{ days.data.aeq | filter:{'name':vm.filterer} | sumField:'aeq' }}</b></td>
-            <td class="text-center"><b>{{ days.data.bokes | filter:{'name':vm.filterer} | sumField:'amount' | number:0 }}</b></td>
-            <td class="text-right"><b>{{ (days.data.bokes | filter:{'name':vm.filterer} | sumField:'amount') / (days.data.aeq | filter:{'name':vm.filterer} | sumField:'aeq') | number:2}}</b></td>
-          </tr-->
+          <tr ng-repeat="item in vm.tabledata track by $index" class="ng-scope">
+            <td>{{item.day}}</td>
+            <td>{{item.noonaeq | number:2}}</td>
+            <td>{{item.noonbok | number:0}}</td>
+            <td>{{item.noonbok/item.noonaeq| number:2}}</td>
+            <td>{{item.moonaeq | number:2}}</td>
+            <td>{{item.moonbok | number:0}}</td>
+            <td>{{item.moonbok/item.moonaeq| number:2}}</td>
+            <td>{{item.dayaeq | number:2}}</td>
+            <td>{{item.daybok | number:0}}</td>
+            <td>{{item.daybok/item.dayaeq| number:2}}</td>
+          </tr>
         </tbody>
       </table>
     </div>

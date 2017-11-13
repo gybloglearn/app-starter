@@ -240,13 +240,13 @@ define([], function () {
               }
             },
             series: [
-              { name: 'BP-zett AEQ', color: '#44bb22', data: feltolt(chdata), yAxis: 0, dataLabels: { enabled: true, useHTML: true, format: '<b style="color:white">{y}</b>', inside: true, verticalAlign: 'bottom' } },
+              { name: 'BP-zett AEQ', color:'#44bb22', data: feltolt(chdata), yAxis: 0, dataLabels: { enabled: true, useHTML: true, format: '<b style="color:white">{y:.2f}</b>', inside: true, verticalAlign: 'bottom' } },
               { type: 'line', color: 'red', name: 'CÉL BP-zett AEQ', data: targetaeq(), yAxis: 0 },
               { type: 'line', color: '#2288dd', name: 'Bökés / AEQ', data: feltolt_bokes(chdata), yAxis: 1 },
               { type: 'line', color: '#005588', name: 'CÉL Bökés / AEQ', data: targetbokes(), yAxis: 1 },
             ],
           }
-          //createtabledata(chdata);
+          createtabledata(chdata);
         });
       }
     }
@@ -265,6 +265,7 @@ define([], function () {
             obj.y += bpzett[k].aeq;
           }
         }
+        obj.y > 225 ? obj.color='#44bb22' : obj.color='#bb4422';
         bpaeq.push(obj);
       }
       return bpaeq;
@@ -310,23 +311,44 @@ define([], function () {
       return target;
     }
 
-    /*function createtabledata(arr) {
-      console.log(arr);
+    function createtabledata(arr) {
+  
       vm.tabledata = [];
 
       for (var i = 0; i < 7; i++) {
         var actday = $filter('date')(new Date().getTime() - ((7 - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
+        var naeq=0;
+        var eaeq=0;
+        var nbok=0;
+        var ebok=0;
+        for(var j=0;j<arr.length;j++){
+          if(arr[j].date==actday && arr[j].shiftnum==1 && arr[j].name.includes("_BP-OUT")){
+            naeq+=arr[j].aeq;
+          }
+          else if(arr[j].date==actday && arr[j].shiftnum==3 && arr[j].name.includes("_BP-OUT")){
+            eaeq+=arr[j].aeq;
+          }
+          else if(arr[j].date==actday && arr[j].shiftnum==1 && arr[j].name.includes("_BOK-BOKES")){
+            nbok+=arr[j].amount;
+          }
+          else if(arr[j].date==actday && arr[j].shiftnum==3 && arr[j].name.includes("_BOK-BOKES")){
+            ebok+=arr[j].amount;
+          }
+        }
         var obj = {};
         obj = {
           day: actday,
-          //dayaeq: $filter('sumField')($filter('filter')(arr, {shiftnum:1}),'aeq')
-          dayaeq: ($filter('sumField')($filter('filter')($filter('filter')(arr,{date:actday}),{shiftnum:1}),'aeq'))*1
-          
-          
+          noonaeq:naeq,
+          moonaeq:eaeq,
+          dayaeq:naeq+eaeq,
+          noonbok:nbok,
+          moonbok:ebok,
+          daybok:nbok+ebok
         };
-        console.log(obj);
+        vm.tabledata.push(obj);
       }
-    }*/
+      return vm.tabledata;
+    }
 
     activate();
 
