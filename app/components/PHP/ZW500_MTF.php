@@ -2,10 +2,10 @@
 //error_reporting(E_ALL & ~E_NOTICE);
 ini_set('default_socket_timeout', 600);
 //set_include_path("../../../../SSRSReport/bin/");
-set_include_path("../../../../ssrs/bin/");
+set_include_path("/var/www/html/ssrs/bin/");
 require_once("SSRSReport.php");
 
-$conf = parse_ini_file('../../../../ssrs/config.ini');
+$conf = parse_ini_file('/var/www/html/ssrs/config.ini');
 define("UID", $conf["UID"]);
 define("PASWD", $conf["PASWD"]);
 define("SERVICE_URL", $conf["UFURL"]);
@@ -27,7 +27,7 @@ if(isset($_GET["startdate"])){
   if(isset($argv[1])){
     $startdate = date("m/d/Y H:i:s", strtotime($argv[1] . " 05:50:00"));
   } else {
-    $startdate = date("m/d/Y H:i:s", strtotime(date("Y-m-d") . "05:50:00")-60*60*24);
+    $startdate = date("m/d/Y H:i:s", strtotime(date("Y-m-d") . " 05:50:00")-60*60*24);
   }
 }
 
@@ -122,7 +122,7 @@ catch (SSRSReportException $serviceException)
 }
     $toWrite = json_encode($toWrite);
 
-    $myfile=fopen("MTF/mtf".date("Ymd", strtotime($startdate)).".json","w+");
+    $myfile=fopen("/var/www/html/uf/app/components/PHP/MTF/mtf".date("Ymd", strtotime($startdate)).".json","w+");
     fwrite($myfile,$toWrite);
     fclose($myfile);
 ?>
