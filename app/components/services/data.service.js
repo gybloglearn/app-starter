@@ -20,7 +20,7 @@ define([], function () {
     function getpartnumber() {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15/modulapi/mods'
+        url: 'http://3.228.180.13/modulapi/mods'
       };
       return $http(req);
     }
@@ -54,10 +54,17 @@ define([], function () {
       };
       return $http(req);
     }
-    function getmtf(date) {
+    /*function getmtf(date) {
       var req = {
         method: 'GET',
         url: 'app/components/PHP/MTF/mtf' + date + '.json'
+      };
+      return $http(req);
+    }*/
+    function getmtf(date){
+      var req = {
+        method: 'GET',
+        url: 'http://3.228.180.13/uf/app/components/PHP/MTF/mtf' + date + '.json'
       };
       return $http(req);
     }
