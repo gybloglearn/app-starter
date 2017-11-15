@@ -94,9 +94,8 @@ define([], function () {
           xAxis: {
             type: 'datetime', tickInterval: 3600 * 1000,
             plotBands: [
-              { color: "#eee", from: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 5 * 3600 * 1000 + 50 * 60 * 1000, to: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 13 * 3600 * 1000 + 50 * 60 * 1000 },
-              { color: "#ddd", from: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 13 * 3600 * 1000 + 50 * 60 * 1000, to: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 21 * 3600 * 1000 + 50 * 60 * 1000 },
-              { color: "#ccc", from: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 21 * 3600 * 1000 + 50 * 60 * 1000, to: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 29 * 3600 * 1000 + 50 * 60 * 1000 }
+              { color: "#eee", from: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 5 * 3600 * 1000 + 50 * 60 * 1000, to: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 17 * 3600 * 1000 + 50 * 60 * 1000 },
+              { color: "#ddd", from: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 17 * 3600 * 1000 + 50 * 60 * 1000, to: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 29 * 3600 * 1000 + 50 * 60 * 1000 }
             ]
           },
           yAxis: { title: { text: 'UFF' }, min: 0, max: 16, categories: ['BP1', 'BP2', 'BP3', 'BP4', 'BP5', 'BP6', 'BP7', 'BP8', 'BP12', 'BP13', 'BP14', 'BP15', 'BP21', 'BP22', 'BP23', 'BP25', 'BP26'] },
