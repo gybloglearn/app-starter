@@ -12,6 +12,7 @@ define([
   './filters/sumdb',
   './filters/sumaeq',
   './filters/change',
+  './filters/changenum',
   './filters/addtype',
   './filters/shift',
   './filters/name_change',
@@ -46,6 +47,7 @@ define([
   sumdb,
   sumaeq,
   change,
+  changenum,
   addtype,
   shift,
   name_change,
@@ -83,6 +85,7 @@ define([
   app.filter('sumdb',sumdb);
   app.filter('sumaeq',sumaeq);
   app.filter('change',change);
+  app.filter('changenum',changenum);
   app.filter('addtype',addtype);
   app.filter('shift',shift);
   app.filter('name_change',name_change);

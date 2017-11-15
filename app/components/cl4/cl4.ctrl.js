@@ -28,6 +28,36 @@ define([], function () {
       }
     }
 
+    /*function select_3case(arr){
+      vm.chartdata=[];
+      vm.chartdata[0]={};
+      vm.chartdata[0].name="A klórozó robot a keretet berakta az 1-es öblítő kádba";
+      vm.chartdata[0].frames=[];
+      vm.chartdata[1]={};
+      vm.chartdata[1].name="Klórozó robot a keretet berakta a klórozó kádba";
+      vm.chartdata[1].frames=[];
+      vm.chartdata[2]={};
+      vm.chartdata[2].name="A klórozó robot a keretet berakta a 2-es öblítő kádba";
+      vm.chartdata[2].frames=[];
+
+      for(var i=0;i<vm.chartdata.length;i++){
+        for(var j=0;j<arr.length;j++){
+          if(vm.chartdata[i].name==arr[j].Status_name1){
+            var obj={};
+            obj={
+              frame:arr[j].Keret_id,
+              time:arr[j].PLC_Timestamp,
+              modul1:arr[j].Modul_ID1,              
+              modul2:arr[j].Modul_ID2              
+            }
+            vm.chartdata[i].frames.push(obj);
+          }
+        }
+      }
+
+      console.log(vm.chartdata);
+    }
+*/
     function beilleszt() {
       var szam = new Date(vm.startdate);
       vm.datumszam = $filter('date')(szam, 'yyyy-MM-dd');
@@ -122,6 +152,8 @@ define([], function () {
         }
         selectchart(vm.selectday);
         vm.mtfld=false;
+        //console.log(vm.data);
+        //select_3case(vm.data);
       });
     }
 

@@ -7,14 +7,14 @@ define([], function () {
     vm.opdata = [];
     activate();
     vm.getData = getData;
-    vm.getToday=getToday;
+    vm.getToday = getToday;
     vm.datumszam = vm.fr;
     vm.datszam = datszam;
+    vm.szakok=["A","B","C","D"];
 
-    function datszam()
-    {
+    function datszam() {
       vm.szam = new Date(vm.fr);
-      vm.datumszam=$filter('date')(vm.szam, 'yyyy-MM-dd');
+      vm.datumszam = $filter('date')(vm.szam, 'yyyy-MM-dd');
     }
 
     function getData() {
@@ -46,7 +46,9 @@ define([], function () {
         { name: "Kieső idő", color: '#ff9821', borderColor: '#ff9821', data: [], pointWidth: 10 }
       ];
       i.then(function (resp) {
+
         vm.tabledata = $filter('orderBy')(resp.data, ['machinename', 'startdate']);
+
         var actoperator;
         for (var k = 0; k < vm.tabledata.length; k++) {
           for (var j = 0; j < datas.length; j++) {
@@ -57,8 +59,18 @@ define([], function () {
               }
             }
           }
-          vm.tabledata[k].Time=(new Date(vm.tabledata[k].enddate).getTime()-(new Date(vm.tabledata[k].startdate).getTime() + 3600 * 1000));
-          console.log(vm.tabledata);
+          vm.tabledata[k].Time = (new Date(vm.tabledata[k].enddate).getTime() - (new Date(vm.tabledata[k].startdate).getTime() + 3600 * 1000));
+
+          var dt = $filter('date')(new Date(vm.tabledata[k].enddate), 'yyyy-MM-dd');
+          var number = new Date(vm.tabledata[k].enddate).getHours() * 60 + new Date(vm.tabledata[k].enddate).getMinutes();
+          if (number >= 350 && number < 1070) {
+            vm.tabledata[k].shiftnum = 1;
+          }
+          else {
+            vm.tabledata[k].shiftnum = 3;
+          }
+          vm.tabledata[k].shift = $filter('shift')(vm.tabledata[k].shiftnum, dt);
+
           actoperator = vm.tabledata[k].Operator;
           for (var b = 0; b < vm.opdata.length; b++) {
             if (actoperator == vm.opdata[b].operator) {
@@ -75,6 +87,8 @@ define([], function () {
             vm.opdata[a].worktime = 0;
             vm.opdata[a].repair = 0;
             vm.opdata[a].remove = 0;
+            vm.opdata[a].shift=vm.tabledata[k].shift;
+            vm.opdata[a].shiftnum=vm.tabledata[k].shiftnum;
             vm.opdata[a].moduls = [];
             a++
           }
@@ -87,15 +101,19 @@ define([], function () {
               vm.opdata[c].moduls.push([vm.tabledata[k].JobID, vm.tabledata[k].Repaired]); // modulhoz tartozó bökések elmentése 2 dimenziós tömbbe
             }
           }
-
         }
         vm.chartconf = {
           chart: { type: 'xrange', height: 440 },
           xAxis: {
             type: 'datetime', tickInterval: 3600 * 1000,
+            /*plotBands: [
+              { color: "#eee", from: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 5 * 3600 * 1000 + 50 * 60 * 1000, to: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 13 * 3600 * 1000 + 50 * 60 * 1000 },
+              { color: "#ddd", from: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 13 * 3600 * 1000 + 50 * 60 * 1000, to: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 21 * 3600 * 1000 + 50 * 60 * 1000 },
+              { color: "#ccc", from: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 21 * 3600 * 1000 + 50 * 60 * 1000, to: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 29 * 3600 * 1000 + 50 * 60 * 1000 }
+            ]*/
             plotBands: [
               { color: "#eee", from: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 5 * 3600 * 1000 + 50 * 60 * 1000, to: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 17 * 3600 * 1000 + 50 * 60 * 1000 },
-              { color: "#ddd", from: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 17 * 3600 * 1000 + 50 * 60 * 1000, to: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 29 * 3600 * 1000 + 50 * 60 * 1000 }
+              { color: "#ccc", from: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 17 * 3600 * 1000 + 50 * 60 * 1000, to: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 29 * 3600 * 1000 + 50 * 60 * 1000 }
             ]
           },
           yAxis: { title: { text: 'UFF' }, min: 0, max: 16, categories: ['BP1', 'BP2', 'BP3', 'BP4', 'BP5', 'BP6', 'BP7', 'BP8', 'BP12', 'BP13', 'BP14', 'BP15', 'BP21', 'BP22', 'BP23', 'BP25', 'BP26'] },
@@ -148,9 +166,8 @@ define([], function () {
       });
     }
 
-    function getToday()
-    {
-      vm.fr=$filter('date')(new Date(), 'yyyy-MM-dd');
+    function getToday() {
+      vm.fr = $filter('date')(new Date(), 'yyyy-MM-dd');
       getData();
     }
 
@@ -158,7 +175,7 @@ define([], function () {
       vm.fr = $filter('date')(vm.n, 'yyyy-MM-dd');
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       getData();
-      vm.edate = $filter('date')(new Date().getTime(),'yyyy-MM-dd');
+      vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
     }
 
     function feltolt_x_hasznos(tomb) {
@@ -172,8 +189,8 @@ define([], function () {
     function feltolt_x_kieso(tomb) {
       var x_adatok = [];
       for (var i = 0; i < tomb.length; i++) {
-        if (tomb[i].worktime < 480) {
-          x_adatok[i] = 480 - tomb[i].worktime;
+        if (tomb[i].worktime < 720) {
+          x_adatok[i] = 720 - tomb[i].worktime;
         }
         else {
           x_adatok[i] = 0;
