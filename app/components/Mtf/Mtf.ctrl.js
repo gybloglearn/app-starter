@@ -216,7 +216,7 @@ define([], function () {
           }
 
           vm.chartconfig = {
-            chart: { type: 'column' },
+            chart: { type: 'column', height: 300 },
             title: { text: 'Előző 1 hét adatai' },
             xAxis: { type: 'category', crosshair: true },
             tooltip: { shared: true },
@@ -312,7 +312,7 @@ define([], function () {
     }
 
     function createtabledata(arr) {
-  
+
       vm.tabledata = [];
 
       for (var i = 0; i < 7; i++) {
