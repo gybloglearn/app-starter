@@ -113,7 +113,7 @@
           </thead>
           <tbody>
             <tr ng-repeat="item in vm.data track by $index">
-              <td><a href="../Modulhistory/#/history/{{item.JobID }}" target="_blank">{{item.JobID}}</a></td>
+              <td><a href="../modulhistory/#/history/{{item.JobID }}" target="_blank">{{item.JobID}}</a></td>
               <td>{{item.Fixture}}</td>
 
               <td ng-if="vm.vege > item.PT_Start_DT && vm.kezdo <= item.PT_Start_DT">{{item.PT_Start_DT | date:"MMdd HH"}}</td>
