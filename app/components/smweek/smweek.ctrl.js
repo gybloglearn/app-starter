@@ -123,7 +123,7 @@ define([], function () {
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
             for (var k = 0; k < vm.days.length; k++) {
-              vm.days[k].ttlido = 6 * 1440;
+              vm.days[k].ttlido = vm.sheetmakers.length * 1440;
               if ($filter('date')(new Date(response.data[j].days), "yyyyMMdd") == vm.days[k].date && response.data[j].category == "GOOD") {
                 vm.days[k].joaeq += response.data[j].aeq;
                 vm.days[k].jolap += response.data[j].amount;
@@ -332,7 +332,7 @@ define([], function () {
           cel.push({ cat: vm.days[j].date, y: 215 });
         }
 
-        //console.log(vm.days);
+       console.log(vm.days);
 
         vm.dayavailconfig = {
           chart: { type: 'column' },
