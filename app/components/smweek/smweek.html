@@ -2,27 +2,33 @@
   <section class="module">
     <div class="module-header">
       <div class="col-sm-12" style="margin-top:20px">
-        <div class="input-group col-sm-6">
-          <span class="input-group-addon">Dátum</span>
-          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-1d" end="{{vm.edate}}">
-          <span class="input-group-addon">-tól</span>
-          <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="-1d" end="{{vm.edate}}">
-          <span class="input-group-addon">-ig</span>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span class="input-group-addon">Dátum</span>
+            <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-1d" end="{{vm.edate}}">
+            <span class="input-group-addon">-tól</span>
+            <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="-1d" end="{{vm.edate}}">
+            <span class="input-group-addon">-ig</span>
+          </div>
         </div>
-        <div class="input-group col-sm-6  ">
-          <select multiple="multiple" class="form-control" ng-model="vm.sheetmakers">
-            <option value="SM1">SM1</option>
-            <option value="SM2">SM2</option>
-            <option value="SM4">SM4</option>
-            <option value="SM5">SM5</option>
-            <option value="SM6">SM6</option>
-            <option value="SM7">SM7</option>
-            <option value="SM8">SM8</option>
-            <option value="SM9">SM9</option>
-          </select>
-          <span class="input-group-addon">gépek</span>
+        <div class="col-sm-6">
+          <div class="input-group myselector">
+            <select multiple="multiple" class="form-control" ng-model="vm.sheetmakers">
+              <option value="SM1">SM1</option>
+              <option value="SM2">SM2</option>
+              <option value="SM4">SM4</option>
+              <option value="SM5">SM5</option>
+              <option value="SM6">SM6</option>
+              <option value="SM7">SM7</option>
+              <option value="SM8">SM8</option>
+              <option value="SM9">SM9</option>
+            </select>
+            <span class="input-group-addon">gépek</span>
+          </div>
         </div>
+        <div class="col-sm-2 col-sm-offset-5 text-center">
         <a href="" class="btn btn-primary" ng-click="vm.createdates()" ng-disabled="vm.enddate<vm.startdate">Betöltés</a>
+        </div>
       </div>
     </div>
     <div class="module-body">

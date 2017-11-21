@@ -32,6 +32,22 @@
   border-bottom: 1px solid #d8d8d8;
 }
 
+.myselector *{
+  height: auto;
+}
+.myselector select.form-control {
+  height: 52px;
+  padding: 0;
+  overflow: hidden;
+}
+.myselector select.form-control option {
+  display: block;
+  float: left;
+  padding: 5px;
+  width: 25%;
+  text-align: center;
+}
+
 @media (max-width: 979px) {
   .module-snapshot .module:first-child+.module {
       margin-left: 0px;
