@@ -71,7 +71,8 @@ define([], function () {
       for (var i = 0; i < vm.dates.length; i++) {
         weeklyService.getsmfile(vm.dates[i]).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
-            response.data[j].d = $filter('date')(new Date(response.data[j].timestamp), "yyyyMMdd");
+            //response.data[j].d = $filter('date')(new Date(response.data[j].timestamp), "yyyyMMdd");
+            response.data[j].d = response.data[j].Shift_ID.substr(0,8);
             if(vm.sheetmakers.indexOf(response.data[j].Machine) > -1) {
               vm.filedatas.push(response.data[j]);
               updatedowntime(response.data[j]);
@@ -309,6 +310,7 @@ define([], function () {
           vm.days[x].musz = parseFloat($filter('sumField')($filter('filter')(vm.filedatas, { d: vm.days[x].date, Ev_Group: "Muszaki technikai okok" }), "Event_time")) / 60;
           vm.days[x].szer = parseFloat($filter('sumField')($filter('filter')(vm.filedatas, { d: vm.days[x].date, Ev_Group: "Szervezesi veszteseg" }), "Event_time")) / 60;
           vm.days[x].terv = parseFloat($filter('sumField')($filter('filter')(vm.filedatas, { d: vm.days[x].date, Ev_Group: "Tervezett veszteseg" }), "Event_time")) / 60;
+          console.log($filter('filter')(vm.filedatas, {d:vm.days[x].date, Ev_Group: "Muszaki technikai okok" }));
         }
 
         vm.days = $filter('orderBy')(vm.days, 'date');
@@ -332,7 +334,7 @@ define([], function () {
           cel.push({ cat: vm.days[j].date, y: 215 });
         }
 
-       console.log(vm.days);
+
 
         vm.dayavailconfig = {
           chart: { type: 'column' },
