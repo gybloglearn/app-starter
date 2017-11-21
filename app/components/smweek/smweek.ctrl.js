@@ -72,8 +72,8 @@ define([], function () {
         weeklyService.getsmfile(vm.dates[i]).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
             //response.data[j].d = $filter('date')(new Date(response.data[j].timestamp), "yyyyMMdd");
-            response.data[j].d = response.data[j].Shift_ID.substr(0,8);
-            if(vm.sheetmakers.indexOf(response.data[j].Machine) > -1) {
+            response.data[j].d = response.data[j].Shift_ID.substr(0, 8);
+            if (vm.sheetmakers.indexOf(response.data[j].Machine) > -1) {
               vm.filedatas.push(response.data[j]);
               updatedowntime(response.data[j]);
             }
@@ -213,7 +213,7 @@ define([], function () {
         for (var k = 0; k < topmuszd.length; k++) {
           topm.push({
             cat: topmuszd[k].Event_SubGroup,
-            y: parseInt($filter('sumField')($filter('filter')(vm.filedatas, { "Event_SubGroup": topmuszd[k].Event_SubGroup }), 'Event_time') / 60 / 60),
+            y: parseFloat($filter('sumField')($filter('filter')(vm.filedatas, { "Event_SubGroup": topmuszd[k].Event_SubGroup }), 'Event_time') / 60 / 60),
             count: $filter('filter')(vm.filedatas, { "Event_SubGroup": topmuszd[k].Event_SubGroup }).length
           });
         }
@@ -226,7 +226,7 @@ define([], function () {
           title: { text: "Műszaki technikai okok" },
           xAxis: { type: "category", categories: xtopm },
           series: [
-            { name: "Állások", color: "red", data: topm, tooltip: { pointFormat: '<span><span style="color:{series.color};font-weight:bold">{point.y} óra</span> [{point.count} db]</span>' } }
+            { name: "Állások", color: "red", data: topm, tooltip: { pointFormat: '<span><span style="color:{series.color};font-weight:bold">{point.y:.2f} óra</span> [{point.count} db]</span>' } }
           ]
         };
         // szerv
@@ -235,20 +235,22 @@ define([], function () {
         for (var k = 0; k < topszervd.length; k++) {
           tops.push({
             cat: topszervd[k].Event_SubGroup,
-            y: parseInt($filter('sumField')($filter('filter')(vm.filedatas, { "Event_SubGroup": topszervd[k].Event_SubGroup }), 'Event_time') / 60 / 60),
+            y: parseFloat($filter('sumField')($filter('filter')(vm.filedatas, { "Event_SubGroup": topszervd[k].Event_SubGroup }), 'Event_time') / 60 / 60),
             count: $filter('filter')(vm.filedatas, { "Event_SubGroup": topszervd[k].Event_SubGroup }).length
           });
         }
         tops = $filter('orderBy')(tops, "y", true);
         var xtops = [];
+        console.log(tops);
         for (var j = 0; j < tops.length; j++)
           xtops.push(tops[j].cat);
+
         vm.topsconf = {
           chart: { type: "column", height: 300 }, legend: { enabled: false },
           title: { text: "Szervezési veszteség" },
           xAxis: { type: "category", categories: xtops },
           series: [
-            { name: "Állások", color: "rgb(150,150,150)", data: tops, tooltip: { pointFormat: '<span><span style="color:{series.color};font-weight:bold">{point.y} óra</span> [{point.count} db]</span>' } }
+            { name: "Állások", color: "rgb(150,150,150)", data: tops, tooltip: { pointFormat: '<span><span style="color:{series.color};font-weight:bold">{point.y:.2f} óra</span> [{point.count} db]</span>' } }
           ]
         };
 
@@ -258,7 +260,7 @@ define([], function () {
         for (var k = 0; k < toptervd.length; k++) {
           topt.push({
             cat: toptervd[k].Event_SubGroup,
-            y: parseInt($filter('sumField')($filter('filter')(vm.filedatas, { "Event_SubGroup": toptervd[k].Event_SubGroup }), 'Event_time') / 60 / 60),
+            y: parseFloat($filter('sumField')($filter('filter')(vm.filedatas, { "Event_SubGroup": toptervd[k].Event_SubGroup }), 'Event_time') / 60 / 60),
             count: $filter('filter')(vm.filedatas, { "Event_SubGroup": toptervd[k].Event_SubGroup }).length
           });
         }
@@ -271,7 +273,7 @@ define([], function () {
           title: { text: "Tervezett veszteség" },
           xAxis: { type: "category", categories: xtopt },
           series: [
-            { name: "Állások", color: "rgb(50,100,200)", data: topt, tooltip: { pointFormat: '<span><span style="color:{series.color};font-weight:bold">{point.y} óra</span> [{point.count} db]</span>' } }
+            { name: "Állások", color: "rgb(50,100,200)", data: topt, tooltip: { pointFormat: '<span><span style="color:{series.color};font-weight:bold">{point.y:.2f} óra</span> [{point.count} db]</span>' } }
           ]
         };
 
@@ -310,7 +312,7 @@ define([], function () {
           vm.days[x].musz = parseFloat($filter('sumField')($filter('filter')(vm.filedatas, { d: vm.days[x].date, Ev_Group: "Muszaki technikai okok" }), "Event_time")) / 60;
           vm.days[x].szer = parseFloat($filter('sumField')($filter('filter')(vm.filedatas, { d: vm.days[x].date, Ev_Group: "Szervezesi veszteseg" }), "Event_time")) / 60;
           vm.days[x].terv = parseFloat($filter('sumField')($filter('filter')(vm.filedatas, { d: vm.days[x].date, Ev_Group: "Tervezett veszteseg" }), "Event_time")) / 60;
-          console.log($filter('filter')(vm.filedatas, {d:vm.days[x].date, Ev_Group: "Muszaki technikai okok" }));
+          console.log($filter('filter')(vm.filedatas, { d: vm.days[x].date, Ev_Group: "Muszaki technikai okok" }));
         }
 
         vm.days = $filter('orderBy')(vm.days, 'date');
