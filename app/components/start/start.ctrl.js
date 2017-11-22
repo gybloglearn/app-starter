@@ -80,7 +80,8 @@ define([], function () {
             });
           }
         }
-        console.log(vm.sapdata);
+        //console.log(vm.sapdata);
+        populate();
       });
 
       //ZW500
