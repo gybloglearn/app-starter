@@ -1,178 +1,319 @@
 <div class="container-fluid">
-  <section class="module">
-    <div class="module-header">
-      <h1 class="text-center">ZeeWeed Összesítő {{vm.startdatumszam}}-{{vm.enddatumszam}}</h1>
-      <div class="col-sm-6" style="margin-top:20px">
-        <div class="input-group">
-          <span class="input-group-addon">Dátum</span>
-          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-7d" end="{{vm.edate}}">
-          <span class="input-group-addon">-tól</span>
-          <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="-1d" end="{{vm.edate}}">
-          <span class="input-group-addon">-ig</span>
-          <div class="input-group-btn">
-            <a href="" class="btn btn-primary" ng-click="vm.loadall()" ng-disabled="vm.enddate<=vm.startdate">Betöltés</a>
+  <section class="module col-md-10 col-md-offset-1">
+    <section class="module col-sm-3 col-md-3">
+      <div class="module-body">
+        <h2 class="voice voice-brand">UF/MBR Összesítő</h2>
+        <hr>
+        <div>
+          <h2 class="voice voice-brand">
+            <i class="icon-filter"></i> Szűrő</h2>
+          <p>
+            Válassz az alábbi dátum mezőkből kijelezni kívánt időszakot:
+          </p>
+          <div class="input-group col-sm-12">
+            <span class="input-group-addon">Dátumtól:</span>
+            <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-7d" end="{{vm.edate}}">
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="module-body">
-      <style>
-        .green {
-          color: #006600;
-        }
-
-        .red {
-          color: #990000;
-        }
-
-        .table thead tr td,
-        .table thead tr th {
-          padding: 20px;
-        }
-      </style>
-      <div class="col-sm-4">
-        <div class="progress progress-success progress-striped active" ng-hide="!vm.smloading">
-          <div class="progress-bar" style="width: 100%">
-            <p class="text-center">SM Frissítés...</p>
+          <div class="input-group col-sm-12">
+            <span class="input-group-addon">Dátumtig:</span>
+            <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="-1d" end="{{vm.edate}}">
           </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="progress progress-warning progress-striped active" ng-hide="!vm.pottloading">
-          <div class="progress-bar" style="width: 100%">
-            <p class="text-center">Potting Frissítés...</p>
+          <div class="progress progress-info progress-striped active" ng-hide="!vm.load">
+            <div class="progress-bar" style="width: 100%">
+              <p class="text-center">Frissítés...</p>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="progress progress-info progress-striped active" ng-hide="!vm.mtfloading">
-          <div class="progress-bar" style="width: 100%">
-            <p class="text-center">MTF Frissítés...</p>
+          <div class="button-group">
+            <button class="btn btn-info" ng-click="vm.start();" ng-disabled="vm.load">
+              <i class="icon icon-filter"></i> Szűrés</button>
           </div>
+          <br>
         </div>
-      </div>
-
-      <table class="table responsive">
-        <thead>
-          <tr>
-            <th colspan="10" class="text-center" style="font-size:3em;height:50px;padding: 20px">ZeeWeed 500 (AEQ)</th>
-          </tr>
-          <tr>
-            <th class="text-center" style="font-size:1.8em">Dátum</th>
-            <th class="text-center" style="font-size:1.8em">SL</th>
-            <th class="text-center" style="font-size:1.8em">SM</th>
-            <th class="text-center" style="font-size:1.8em">Potting Be</th>
-            <th class="text-center" style="font-size:1.8em">Potting Fordít</th>
-            <th class="text-center" style="font-size:1.8em">Potting Ki</th>
-            <th class="text-center" style="font-size:1.8em">Klórozók Ki</th>
-            <th class="text-center" style="font-size:1.8em">BP kádak Ki</th>
-            <th class="text-center" style="font-size:1.8em">Bökés/AEQ</th>
-            <th class="text-center" style="font-size:1.8em">Minősített</th>
-          </tr>
-          <tr ng-repeat="date in vm.dates track by $index">
-            <th class="text-center" style="font-size:1.8em">{{date}}</th>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addSLDate(date)"><span style="background-color:{{vm.sumdata500[$index].slaeq>=215?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].slaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addSMDate(date)"><span style="background-color:{{vm.sumdata500[$index].smaeq>=215?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].smaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdata500[$index].pottbeaeq>=215?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].pottbeaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdata500[$index].pottfordaeq>=215?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].pottfordaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdata500[$index].pottkiaeq>=215?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].pottkiaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdata500[$index].claeq>=215?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].claeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdata500[$index].bpaeq>=225?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].bpaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdata500[$index].bokes/vm.sumdata500[$index].bpaeq<30?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].bokes/vm.sumdata500[$index].bpaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdata500[$index].min>=215?'green':'red'}};padding:3px;">{{vm.sumdata500[$index].min |number:0}}</span></td>
-          </tr>
-        </thead>
-      </table>
-
-      <table class="table responsive">
-        <thead>
-          <tr>
-            <th colspan="10" class="text-center" style="font-size:3em;height:50px;padding: 20px">ZeeBlok (AEQ)</th>
-          </tr>
-          <tr>
-            <th class="text-center" style="font-size:1.8em">Dátum</th>
-            <th colspan="2" class="text-center" style="font-size:1.8em">SM</th>
-            <th class="text-center" style="font-size:1.8em">Block be</th>
-            <!--th class="text-center" style="font-size:1.8em">Modul be</th>
-            <th class="text-center" style="font-size:1.8em">Modul ki</th-->
-            <th class="text-center" style="font-size:1.8em">Klórozók Ki</th>
-            <th class="text-center" style="font-size:1.8em">BP kádak Ki</th>
-            <th class="text-center" style="font-size:1.8em">Bökés/AEQ</th>
-            <th class="text-center" style="font-size:1.8em">Minősített</th>
-          </tr>
-          <tr ng-repeat="date in vm.dates track by $index">
-            <th class="text-center" style="font-size:1.8em">{{date}}</th>
-            <td colspan="2" class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addSMDate(date)"><span style="background-color:{{vm.sumdatazb[$index].smaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].smaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdatazb[$index].pottbeaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].pottbeaeq |number:0}}</span></td>
-            <!--td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdatazb[$index].pottmodbeaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].pottmodbeaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addPottDate(date)"><span style="background-color:{{vm.sumdatazb[$index].pottkiaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].pottkiaeq |number:0}}</span></td-->
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdatazb[$index].claeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].claeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdatazb[$index].bpaeq>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].bpaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdatazb[$index].bokes/vm.sumdatazb[$index].bpaeq<30?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].bokes/vm.sumdatazb[$index].bpaeq |number:0}}</span></td>
-            <td class="text-center" style="font-size:3em;color:#ffffff;cursor: pointer" ng-click="vm.addMTFDate(date)"><span style="background-color:{{vm.sumdatazb[$index].min>=14.4?'green':'red'}};padding:3px;">{{vm.sumdatazb[$index].min |number:0}}</span></td>
-          </tr>
-        </thead>
-      </table>
-
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="col-sm-12">
-            <div class="progress progress-danger progress-striped active" ng-hide="!vm.ZW1000loading">
-              <div class="progress-bar" style="width: 100%">
-                <p class="text-center">ZW1000 Frissítés...</p>
+        <hr>
+        <div>
+          <h2 class="voice voice-brand">
+            <i class="icon-ico_target_lg"></i> Célok</h2>
+          <p>
+            Változtasd a számokat, a színjelölések módosítására:
+          </p>
+          <div class="tabbable">
+            <ul class="nav nav-tabs">
+              <li class="active">
+                <a href="#zw500targets" data-toggle="tab">500</a>
+              </li>
+              <li>
+                <a href="#zbtargets" data-toggle="tab">ZB</a>
+              </li>
+              <li>
+                <a href="#zw1000targets" data-toggle="tab">1000</a>
+              </li>
+              <li>
+                <a href="#zw1500targets" data-toggle="tab">1500</a>
+              </li>
+            </ul>
+            <div class="tab-content"  style="border: 1px solid #dddddd;border-top: 0;padding: 10px;">
+              <div class="tab-pane active" id="zw500targets">
+                <div class="input-group">
+                  <span class="input-group-addon">500 SM selejt %:</span>
+                  <input type="text" class="form-control text-center" ng-model="vm.rates.smscrap">
+                </div>
+                <div class="input-group">
+                  <span class="input-group-addon">500 Modul selejt %:</span>
+                  <input type="text" class="form-control text-center" ng-model="vm.rates.modscrap">
+                </div>
+                <div class="input-group">
+                  <span class="input-group-addon">500 BP cél AEQ:</span>
+                  <input type="text" class="form-control text-center" ng-model="vm.rates.bp">
+                </div>
+                <div class="input-group">
+                  <span class="input-group-addon">500 Minősítési cél AEQ:</span>
+                  <input type="text" class="form-control text-center" ng-model="vm.rates.min">
+                </div>
+              </div>
+              <div class="tab-pane" id="zbtargets">
+                <div class="input-group">
+                  <span class="input-group-addon">ZB SM selejt %:</span>
+                  <input type="text" class="form-control text-center" ng-model="vm.rates.zbsmscrap">
+                </div>
+                <div class="input-group">
+                  <span class="input-group-addon">ZB Modul selejt %:</span>
+                  <input type="text" class="form-control text-center" ng-model="vm.rates.zbmodscrap">
+                </div>
+                <div class="input-group">
+                  <span class="input-group-addon">ZB BP cél AEQ:</span>
+                  <input type="text" class="form-control text-center" ng-model="vm.rates.zbbp">
+                </div>
+                <div class="input-group">
+                  <span class="input-group-addon">ZB Minősítési cél AEQ:</span>
+                  <input type="text" class="form-control text-center" ng-model="vm.rates.zbmin">
+                </div>
+              </div>
+              <div class="tab-pane" id="zw1000targets">
+                <div class="input-group">
+                  <span class="input-group-addon">ZW1000 Minősítési cél AEQ:</span>
+                  <input type="text" class="form-control text-center" ng-model="vm.rates.zw1000min">
+                </div>
+              </div>
+              <div class="tab-pane" id="zw1500targets">
+                <div class="input-group">
+                  <span class="input-group-addon">ZW1500 Minősítési cél AEQ:</span>
+                  <input type="text" class="form-control text-center" ng-model="vm.rates.zw1500min">
+                </div>
               </div>
             </div>
           </div>
-
-          <table class="table responsive" style="margin-top:40px">
-            <thead>
-              <tr>
-                <th colspan="3" class="text-center" style="font-size:3em;height:50px;padding: 20px">ZeeWeed 1000 (AEQ)</th>
-              </tr>
-              <tr>
-                <th class="text-center" style="font-size:1.8em">Dátum</th>
-                <th class="text-center" style="font-size:1.8em">Minősített</th>
-                <th class="text-center" style="font-size:1.8em">Selejt</th>
-              </tr>
-              <tr ng-repeat="date in vm.dates track by $index">
-                <th class="text-center" style="font-size:1.8em">{{date}}</th>
-                <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata1000[$index].sumgoodaeq>=56?'green':'red'}};padding:3px;">{{vm.sumdata1000[$index].sumgoodaeq|number:1}}</span></td>
-                <td class="text-center" style="font-size:3em"><span>{{vm.sumdata1000[$index].sumscrapaeq |number:1}}</span></td>
-              </tr>
-            </thead>
-          </table>
-        </div>
-        <div class="col-sm-6">
-
-          <div class="col-sm-12">
-            <div class="progress progress-danger progress-striped active" ng-hide="!vm.ZW1500loading">
-              <div class="progress-bar" style="width: 100%">
-                <p class="text-center">ZW1500 Frissítés...</p>
-              </div>
-            </div>
-          </div>
-
-          <table class="table responsive" style="margin-top:40px">
-            <thead>
-              <tr>
-                <th colspan="3" class="text-center" style="font-size:3em;height:50px;padding: 20px">ZeeWeed 1500 (AEQ)</th>
-              </tr>
-              <tr>
-                <th class="text-center" style="font-size:1.8em">Dátum</th>
-                <th class="text-center" style="font-size:1.8em">Minősített</th>
-                <th class="text-center" style="font-size:1.8em">Selejt</th>
-              </tr>
-              <tr ng-repeat="date in vm.dates track by $index">
-                <th class="text-center" style="font-size:1.8em">{{date}}</th>
-                <td class="text-center" style="font-size:3em;color:#ffffff"><span style="background-color:{{vm.sumdata1500[$index].sumgoodaeq>=45?'green':'red'}};padding:3px;">{{vm.sumdata1500[$index].sumgoodaeq|number:1}}</span></td>
-                <td class="text-center" style="font-size:3em"><span>{{vm.sumdata1500[$index].sumscrapaeq |number:1}}</span></td>
-              </tr>
-            </thead>
-          </table>
         </div>
       </div>
-
-    </div>
-    <div class="module-footer"></div>
+    </section>
+    <section class="module col-sm-9 col-md-9">
+      <header class="module-header">
+        <h1 class="voice voice-brand">UF/MBR Összesítő</h1>
+        <hr>
+      </header>
+      <div class="module-body">
+        <h1 class="voice voice-brand">SAP</h1>
+        <table class="table table-condensed table-hover"  style="border: 1px solid #bcbcbc; background-color:white;">
+          <thead>
+            <tr>
+              <th colspan="10">SAP adatok <sup style="color: #888">Frissítve: {{vm.sapdatacrdate}}</sup> <a class="btn btn-info pull-right" ui-sref="sap"><i class="icon-bar-chart"></i> Részletek</a></th>
+            </tr>
+            <tr>
+              <th width="10%" rowspan="2" style="border-right: 1px solid #bcbcbc">Nap</th>
+              <th width="30%" colspan="3" class="text-center" style="border-right: 1px solid #bcbcbc">ZW500</th>
+              <th width="30%" colspan="3" class="text-center" style="border-right: 1px solid #bcbcbc">ZW1000</th>
+              <th width="30%" colspan="3" class="text-center">ZW1500</th>
+            </tr>
+            <tr>
+              <th width="10%">Plan</th>
+              <th width="10%">Actual</th>
+              <th width="10%" style="border-right: 1px solid #bcbcbc">Cumm Diff</th>
+              <th width="10%">Plan</th>
+              <th width="10%">Actual</th>
+              <th width="10%" style="border-right: 1px solid #bcbcbc">Cumm Diff</th>
+              <th width="10%">Plan</th>
+              <th width="10%">Actual</th>
+              <th width="10%">Cumm Diff</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="i in vm.sapdata track by $index">
+              <td style="border-right: 1px solid #bcbcbc">{{i.day}}</td>
+              <td>{{i.zw500p}}</td>
+              <td><b  ng-class="{'text-ge-green':i.zw500a > i.zw500p, 'text-ge-red': i.zw500a < i.zw500p}">{{i.zw500a}}</b></td>
+              <td style="border-right: 1px solid #bcbcbc">
+                {{i.zw500kdiff}}
+                <i ng-show="$index>0 && !vm.trendize($index, 'zw500kdiff')" class="icon-ok-sign text-ge-green"></i>
+                <i ng-show="$index>0 && vm.trendize($index, 'zw500kdiff')" class="icon-warning-sign text-ge-red"></i>
+              </td>
+              <td>{{i.zw1000p}}</td>
+              <td><b ng-class="{'text-ge-green':i.zw1000a > i.zw1000p, 'text-ge-red': i.zw1000a < i.zw1000p}">{{i.zw1000a}}</b></td>
+              <td style="border-right: 1px solid #bcbcbc">
+                {{i.zw1000kdiff}}
+                <i ng-show="$index>0 && !vm.trendizess($index, 'zw1000kdiff')" class="icon-ok-sign text-ge-green"></i>
+                <i ng-show="$index>0 && vm.trendizess($index, 'zw1000kdiff')" class="icon-warning-sign text-ge-red"></i>
+              </td>
+              <td>{{i.zw1500p}}</td>
+              <td><b ng-class="{'text-ge-green':i.zw1500a > i.zw1500p, 'text-ge-red': i.zw1500a < i.zw1500p}">{{i.zw1500a}}</b></td>
+              <td>
+                {{i.zw1500kdiff}}
+                <i ng-show="$index>0 && !vm.trendizess($index, 'zw1500kdiff')" class="icon-ok-sign text-ge-green"></i>
+                <i ng-show="$index>0 && vm.trendizess($index, 'zw1500kdiff')" class="icon-warning-sign text-ge-red"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <h1 class="voice voice-brand">MES</h1>
+        <table class="table table-condensed table-hover" style="border: 1px solid #bcbcbc; background-color:white;">
+          <thead>
+            <tr>
+                <!--<th ng-click="vm.s5=!vm.s5" style="cursor:pointer;border-right:1px solid #bcbcbc;">
+                    <button class="btn btn-info form-control" ng-show="vm.s5"><i class="icon-ico_eye_close_sm"></i> Elrejt</button>
+                    <button class="btn btn-info form-control" ng-show="!vm.s5"><i class="icon-ico_preview_sm"></i> Mutat</button>
+                  </th>-->
+                  <th colspan="9">
+                    ZW500 MES
+                  </th>
+            </tr>
+            <tr>
+              <th width="20%">
+                <span>Nap</span>
+              </th>
+              <th width="10%">
+                <span>SM</span>
+              </th>
+              <th width="10%">
+                <span>Potting BE</span>
+              </th>
+              <th width="10%">
+                <span>Potting FO</span>
+              </th>
+              <th width="10%">
+                <span>Potting KI</span>
+              </th>
+              <th width="10%">
+                <span>Klór KI</span>
+              </th>
+              <th width="10%">
+                <span>BP KI</span>
+              </th>
+              <th width="10%">
+                <span>Bökés / BP Ki</span>
+              </th>
+              <th width="10%">
+                <span>Minősítés</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="i in vm.displaydata track by $index">
+              <td>{{i.day}}</td>
+              <td>
+                {{i.sm | number:1}}
+                <i ng-show="(vm.rates.min/(1-vm.rates.modscrap/100))/(1-vm.rates.smscrap/100) <= i.sm" class="icon-ico_ok_circle_sm text-ge-green"></i>
+                <i ng-show="(vm.rates.min/(1-vm.rates.modscrap/100))/(1-vm.rates.smscrap/100) > i.sm" class="icon-ico_remove_circle_sm text-ge-red"></i>
+                {{i.smscr | number:1}}
+              </td>
+              <td>{{i.pin | number:1}}</td>
+              <td>{{i.pp3 | number:1}}</td>
+              <td>{{i.pou | number:1}}
+                <i ng-show="(vm.rates.min/(1-vm.rates.modscrap/100)) <= i.pou" class="icon-ico_ok_circle_sm text-ge-green"></i>
+                <i ng-show="(vm.rates.min/(1-vm.rates.modscrap/100)) > i.pou" class="icon-ico_remove_circle_sm text-ge-red"></i>
+              </td>
+              <td>{{i.ch | number:1}}</td>
+              <td>
+                {{i.bp | number:1}}
+                <i ng-show="vm.rates.bp <= i.bp" class="icon-ico_ok_circle_sm text-ge-green"></i>
+                <i ng-show="vm.rates.bp > i.bp" class="icon-ico_remove_circle_sm text-ge-red"></i>
+              </td>
+              <td>{{i.bok | number:1}}</td>
+              <td>
+                {{i.min | number:1}}
+                <i ng-show="vm.rates.min <= i.min" class="icon-ico_ok_circle_sm text-ge-green"></i>
+                <i ng-show="vm.rates.min > i.min" class="icon-ico_remove_circle_sm text-ge-red"></i>
+              </td>
+            </tr>
+          </tbody>
+          <thead>
+            <tr>
+              <!--<th ng-click="vm.sh=!vm.sh" style="cursor:pointer;border-right:1px solid #bcbcbc;">
+                  <button class="btn btn-info form-control" ng-show="vm.sh"><i class="icon-ico_eye_close_sm"></i> Elrejt</button>
+                  <button class="btn btn-info form-control" ng-show="!vm.sh"><i class="icon-ico_preview_sm"></i> Mutat</button>
+              </th>-->
+              <th colspan="9" ng-click="vm.sh=!vm.sh">
+                ZeeBlok MES
+              </th>
+            </tr>
+            <tr ng-show="vm.sh">
+              <th width="20%">Nap</th>
+              <th width="10%">SM</th>
+              <th width="10%">Potting BE</th>
+              <th width="10%">Potting FO</th>
+              <th width="10%">Potting KI</th>
+              <th width="10%">Klór KI</th>
+              <th width="10%">BP KI</th>
+              <th width="10%">Bökés / BP Ki</th>
+              <th width="10%">Minősítés</th>
+            </tr>
+          </thead>
+          <tbody ng-show="vm.sh">
+            <tr ng-repeat="i in vm.displaydata track by $index">
+              <td>{{i.day}}</td>
+              <td>{{i.zbsm | number:1}}
+                <i ng-show="(vm.rates.zbmin/(1-vm.rates.zbmodscrap/100))/(1-vm.rates.zbsmscrap/100) <= i.zbsm" class="icon-ico_ok_circle_sm text-ge-green"></i>
+                <i ng-show="(vm.rates.zbmin/(1-vm.rates.zbmodscrap/100))/(1-vm.rates.zbsmscrap/100) > i.zbsm" class="icon-ico_remove_circle_sm text-ge-red"></i>
+              </td>
+              <td>{{i.zbpin | number:1}}</td>
+              <td>{{i.zbpp3 | number:1}}</td>
+              <td>{{i.zbpou | number:1}}</td>
+              <td>{{i.zbch | number:1}}</td>
+              <td>{{i.zbbp | number:1}}
+                <i ng-show="vm.rates.zbbp <= i.zbbp" class="icon-ico_ok_circle_sm text-ge-green"></i>
+                <i ng-show="vm.rates.zbbp > i.zbbp" class="icon-ico_remove_circle_sm text-ge-red"></i>
+              </td>
+              <td>{{i.zbbok | number:1}}</td>
+              <td>{{i.zbmin | number:1}}
+                <i ng-show="vm.rates.zbmin <= i.zbmin" class="icon-ico_ok_circle_sm text-ge-green"></i>
+                <i ng-show="vm.rates.zbmin > i.zbmin" class="icon-ico_remove_circle_sm text-ge-red"></i>
+              </td>
+            </tr>
+          </tbody>
+          <thead>
+            <tr>
+              <!--<th ng-click="vm.s3=!vm.s3" style="cursor:pointer;border-right: 1px solid #bcbcbc">
+                  <button class="btn btn-info form-control" ng-show="vm.s3"><i class="icon-ico_eye_close_sm"></i> Elrejt</button>
+                  <button class="btn btn-info form-control" ng-show="!vm.s3"><i class="icon-ico_preview_sm"></i> Mutat</button>
+              </th>-->
+              <th style="border-right: 1px solid #bcbcbc;"></th>
+              <th colspan="4" style="border-right: 1px solid #bcbcbc;text-align: center;">ZW1000 MES</th>
+              <th colspan="4" class="text-center">ZW1500 MES</th>
+            </tr>
+            <tr>
+              <th style="border-right: 1px solid #bcbcbc">Nap</th>
+              <th colspan="2">AEQ</th>
+              <th colspan="2" style="border-right: 1px solid #bcbcbc">Selejt</th>
+              <th colspan="2">AEQ</th>
+              <th colspan="2">Selejt</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="i in vm.daystocover track by $index">
+              <td style="border-right: 1px solid #bcbcbc">{{i}}</td>
+              <td colspan="2">
+                {{ vm.zw1000 | filter: {'gradeday': i, 'MCSGrade': '!Scrap'} | sumField: 'aeq' | number: 1}}
+                <i ng-show="vm.rates.zw1000min <= (vm.zw1000 | filter: {'gradeday': i, 'MCSGrade': '!Scrap'} | sumField: 'aeq')" class="icon-ico_ok_circle_sm text-ge-green"></i>
+                <i ng-show="vm.rates.zw1000min > (vm.zw1000 | filter: {'gradeday': i, 'MCSGrade': '!Scrap'} | sumField: 'aeq')" class="icon-ico_remove_circle_sm text-ge-red"></i>
+              </td>
+              <td colspan="2" style="border-right: 1px solid #bcbcbc">{{ vm.zw1000 | filter: {'gradeday': i, 'MCSGrade': 'Scrap'} | sumField: 'aeq' | number: 1}}</td>
+              <td colspan="2">
+                {{ vm.zw1500 | filter: {'gradeday': i, 'MCSGrade': '!Scrap'} | sumField: 'aeq' | number: 1}}
+                <i ng-show="vm.rates.zw1500min <= (vm.zw1500 | filter: {'gradeday': i, 'MCSGrade': '!Scrap'} | sumField: 'aeq')" class="icon-ico_ok_circle_sm text-ge-green"></i>
+                <i ng-show="vm.rates.zw1500min > (vm.zw1500 | filter: {'gradeday': i, 'MCSGrade': '!Scrap'} | sumField: 'aeq')" class="icon-ico_remove_circle_sm text-ge-red"></i>
+              </td>
+              <td colspan="2">{{ vm.zw1500 | filter: {'gradeday': i, 'MCSGrade': 'Scrap'} | sumField: 'aeq' | number: 1}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
   </section>
 </div>

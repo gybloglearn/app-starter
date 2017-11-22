@@ -2,409 +2,306 @@ define([], function () {
   'use strict';
   function Controller(dataService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
-    vm.startdate = $filter('date')(new Date().getTime() - (7 * 24 * 3600 * 1000), 'yyyy-MM-dd');
-    vm.startdatumszam = $filter('date')(new Date().getTime() - (7 * 24 * 3600 * 1000), 'yyyy-MM-dd');
-    vm.enddate = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.enddatumszam = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
-    vm.sheetmakers = ["SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
-    vm.zbsheetmakers = ["SM1", "SM2"];
-    vm.pottings = ["Potting2", "Potting3", "Potting4"];
-    vm.zbpottings = ["Potting1-1", "Potting1-2"];
-    vm.AEQ1000 = [0.9, 1.1, 1, 1.4];
-    vm.AEQ1500 = [0.6, 1.2];
-    vm.partnumbers = [];
-    vm.dates = [];
-    vm.mtfdates = [];
-    vm.sumdata500 = [];
-    vm.sumdata1000 = [];
-    vm.sumdata1500 = [];
-    vm.sumdatazb = [];
-    vm.differencedate = 0;
-    vm.loadall = loadall;
-    vm.addSLDate = addSLDate;
-    vm.addSMDate = addSMDate;
-    vm.addPottDate = addPottDate;
-    vm.addMTFDate = addMTFDate;
+    vm.data = [];
+    vm.zbdata = [];
+    vm.zw1000 = [];
+    vm.zw1500 = [];
+    vm.daystocover = [];
+    vm.displaydata = [];
+    vm.trendize = trendize;
+    vm.trendizess = trendizess;
+    vm.zwsm = ["SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
+    vm.zbsm = ["SM1", "SM2"];
+    vm.zwpo = ["Potting2", "Potting3", "Potting4"];
+    vm.zbpo = ["Potting1-1", "Potting1-2"];
+
+    vm.start = start;
 
     function loadPartnumbers() {
       vm.partnumbers = [];
       dataService.getpartnumber().then(function (response) {
         vm.partnumbers = response.data;
-        var obj = {};
-        obj = {
-          id: "0000000",
-          name: "ZB500",
-          aeq: "0.6",
-          sheets: "16"
-        };
-        vm.partnumbers.push(obj);
-        //console.log(vm.partnumbers);
       });
     }
 
-    function beallit() {
-      vm.startdatumszam = vm.startdate;
-      vm.enddatumszam = vm.enddate;
-      vm.enddate = $filter('date')(new Date(vm.enddate).getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
-      datediff();
-    }
-
-    function datediff() {
-      vm.differencedate = 0;
-      vm.dates = [];
-      vm.mtfdates = [];
-      vm.sumdata500 = [];
-      vm.sumdata1000 = [];
-      vm.sumdata1500 = [];
-      vm.sumdatazb = [];
-      vm.differencedate = (new Date(vm.enddatumszam).getTime() - new Date(vm.startdatumszam).getTime()) / (24 * 3600 * 1000);
-      for (var i = 0; i <= vm.differencedate; i++) {
-        vm.dates[i] = $filter('date')(new Date(vm.enddatumszam).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
-        vm.mtfdates[i] = $filter('date')(new Date(vm.enddatumszam).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyyMMdd');
-        vm.sumdata500[i] = {}
-        vm.sumdata500[i].date = $filter('date')(new Date(vm.enddatumszam).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
-        vm.sumdata500[i].slaeq = 0;
-        vm.sumdata500[i].smaeq = 0;
-        vm.sumdata500[i].pottbeaeq = 0;
-        vm.sumdata500[i].pottfordaeq = 0;
-        vm.sumdata500[i].pottkiaeq = 0;
-        vm.sumdata500[i].bpaeq = 0;
-        vm.sumdata500[i].claeq = 0;
-        vm.sumdata500[i].bokes = 0;
-        vm.sumdata500[i].min = 0;
-
-        vm.sumdata1000[i] = {}
-        vm.sumdata1000[i].date = $filter('date')(new Date(vm.enddatumszam).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
-        vm.sumdata1000[i].sumgoodaeq = 0;
-        vm.sumdata1000[i].sumscrapaeq = 0;
-
-        vm.sumdata1500[i] = {}
-        vm.sumdata1500[i].date = $filter('date')(new Date(vm.enddatumszam).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
-        vm.sumdata1500[i].sumgoodaeq = 0;
-        vm.sumdata1500[i].sumscrapaeq = 0;
-
-        vm.sumdatazb[i] = {}
-        vm.sumdatazb[i].date = $filter('date')(new Date(vm.enddatumszam).getTime() - ((vm.differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
-        vm.sumdatazb[i].smaeq = 0;
-        vm.sumdatazb[i].pottbeaeq = 0;
-        vm.sumdatazb[i].pottmodbeaeq = 0;
-        vm.sumdatazb[i].pottkiaeq = 0;
-        vm.sumdatazb[i].bpaeq = 0;
-        vm.sumdatazb[i].claeq = 0;
-        vm.sumdatazb[i].bokes = 0;
-        vm.sumdatazb[i].min = 0;
+    function trendize(index, field) {
+      var act = $filter('filter')(vm.sapdata, { day: vm.displaydata[index].day })[0];
+      var prev = $filter('filter')(vm.sapdata, { day: vm.displaydata[index - 1].day })[0];
+      if (act && prev) {
+          return act[field] > prev[field] ? false : true;
       }
     }
 
-
-    function loadsl() {
-      dataService.getsl(vm.startdate, vm.enddate).then(function (response) {
-        for (var j = 0; j < response.data.length; j++) {
-          for (var k = 0; k < vm.sumdata500.length; k++) {
-            if (vm.sumdata500[k].date == response.data[j].item1) {
-              vm.sumdata500[k].slaeq += response.data[j].textbox2 * 1;
-            }
-          }
-        }
-      });
+    function trendizess(index, field) {
+      var act = $filter('filter')(vm.sapdata, { day: vm.daystocover[index] })[0];
+      var prev = $filter('filter')(vm.sapdata, { day: vm.daystocover[index - 1] })[0];
+      if (act && prev) {
+          return act[field] > prev[field] ? false : true;
+      }
     }
 
-    function loadsm() {
-      vm.smloading = true;
-      for (var i = 0; i < vm.sheetmakers.length; i++) {
-        dataService.getsm(vm.startdate, vm.enddate, vm.sheetmakers[i]).then(function (response) {
-          for (var j = 0; j < response.data.length; j++) {
-            response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
-            response.data[j].days = response.data[j].days.substring(0, 10);
-            for (var k = 0; k < vm.sumdata500.length; k++) {
-              if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "GOOD") {
-                vm.sumdata500[k].smaeq += response.data[j].aeq;
-              }
-            }
+    function start() {
+      vm.load = true;
+      vm.data = [];
+      vm.zbdata = [];
+      vm.zw1000 = [];
+      vm.zw1500 = [];
+      vm.daystocover = [];
+      vm.szamlalo = 0;
+      var ds = (new Date(vm.enddate).getTime() + (24 * 1000 * 60 * 60) - new Date(vm.startdate).getTime()) / (1000 * 24 * 60 * 60);
+      var dt = "";
+
+      for (var i = 0; i < ds; i++) {
+        dt = $filter('date')(new Date(vm.startdate).getTime() + i * 24 * 60 * 60 * 1000, 'yyyy-MM-dd');
+        vm.daystocover.push(dt);
+      }
+
+
+      //SAP
+      vm.sapdata = [];
+      dataService.getsapdata().then(function (response) {
+        var dat = response.data.data;
+        vm.sapdatacrdate = response.data.crdate;
+        for (var i = 0; i < dat.length; i++) {
+          if (new Date(dat[i].NAP).getTime() >= new Date(vm.startdate).getTime() && new Date(dat[i].NAP).getTime() <= new Date(vm.enddate).getTime()) {
+            vm.sapdata.push({
+              day: dat[i].NAP,
+              zw500kdiff: dat[i].ZW0500kummDIFF,
+              zw500p: dat[i].ZW0500Plan,
+              zw500a: dat[i].ZW0500Actual,
+              zw1000p: dat[i].ZW1000Plan,
+              zw1000a: dat[i].ZW1000Actual,
+              zw1000kdiff: dat[i].ZW1000kummDIFF,
+              zw1500p: dat[i].ZW1500Plan,
+              zw1500a: dat[i].ZW1500Actual,
+              zw1500kdiff: dat[i].ZW1500kummDIFF,
+              zbkdiff: dat[i].ZBkummDiff,
+              zlkdiff: dat[i].ZLkummDiff
+            });
           }
-          vm.smloading = false;
+        }
+        console.log(vm.sapdata);
+      });
+
+      //ZW500
+      for (var k = 0; k < vm.zwsm.length; k++) {
+        dataService.getsm(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd'), vm.zwsm[k]).then(function (response) {
+          for (var r = 0; r < response.data.length; r++) {
+            response.data[r].aeq = aeqser(response.data[r].type, true);
+            response.data[r].days = $filter('date')(new Date(response.data[r].days).getTime(), "yyyy-MM-dd");
+            response.data[r].sumaeq = response.data[r].aeq * response.data[r].amount;
+            vm.data.push(response.data[r]);
+          }
+          populate();
+        });
+      }
+      for (var k = 0; k < vm.zwpo.length; k++) {
+        dataService.getpotting(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd'), vm.zwpo[k]).then(function (response) {
+          for (var r = 0; r < response.data.length; r++) {
+            response.data[r].aeq = aeqser(response.data[r].type, false);
+            response.data[r].days = $filter('date')(new Date(response.data[r].days).getTime(), "yyyy-MM-dd");
+            response.data[r].sumaeq = response.data[r].aeq * response.data[r].amount;
+            vm.data.push(response.data[r]);
+          }
+          populate();
+        });
+      }
+      //ZB
+      for (var k = 0; k < vm.zbsm.length; k++) {
+        dataService.getsm(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd'), vm.zbsm[k]).then(function (response) {
+          for (var r = 0; r < response.data.length; r++) {
+            response.data[r].aeq = aeqser(response.data[r].type, true);
+            response.data[r].days = $filter('date')(new Date(response.data[r].days).getTime(), "yyyy-MM-dd");
+            response.data[r].sumaeq = response.data[r].aeq * response.data[r].amount;
+            vm.zbdata.push(response.data[r]);
+          }
+          populate();
+        });
+      }
+      for (var k = 0; k < vm.zbpo.length; k++) {
+        dataService.getpotting(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd'), vm.zbpo[k]).then(function (response) {
+          for (var r = 0; r < response.data.length; r++) {
+            response.data[r].aeq = aeqser(response.data[r].type, false);
+            response.data[r].days = $filter('date')(new Date(response.data[r].days).getTime(), "yyyy-MM-dd");
+            response.data[r].sumaeq = response.data[r].aeq * response.data[r].amount;
+            vm.zbdata.push(response.data[r]);
+          }
+          populate();
+        });
+      }
+
+      for (var k = 0; k < vm.daystocover.length; k++) {
+        dataService.getmtf(vm.daystocover[k].replace(/-/g, '')).then(function (response) {
+          for (var r = 0; r < response.data.length; r++) {
+            if (response.data[r].category != 'BOK-BOKES') {
+              if (response.data[r].category === 'MIN-AMOUNT') {
+                if (response.data[r].type === 'A') {
+                  response.data[r].aeq = aeqser(response.data[r].place.replace('_MIN', ''), false);
+                } else {
+                  response.data[r].aeq = aeqser(response.data[r].place + '-' + response.data[r].type, false);
+                }
+              } else {
+                response.data[r].aeq = aeqser(response.data[r].type, false);
+              }
+              response.data[r].sumaeq = response.data[r].aeq * response.data[r].amount;
+            }
+            response.data[r].days = $filter('date')(new Date(response.data[r].days).getTime(), "yyyy-MM-dd");
+            response.data[r].machine = "MTF";
+            vm.data.push(response.data[r]);
+          }
+          populate();
+        });
+      }
+
+      dataService.getgradebyd1000(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
+        for (var r = 0; r < response.data.length; r++) {
+          response.data[r].cnt = parseInt(response.data[r].cnt);
+          if (response.data[r].descr.includes('450')) {
+            response.data[r].aeq = response.data[r].cnt * 0.9;
+          } else if (response.data[r].descr.includes('550')) {
+            response.data[r].aeq = response.data[r].cnt * 1.1;
+          } if (response.data[r].descr.includes('700')) {
+            response.data[r].aeq = response.data[r].cnt * 1.4;
+          } else {
+            response.data[r].aeq = response.data[r].cnt * 1;
+          }
+          vm.zw1000.push(response.data[r]);
+        }
+
+      });
+      dataService.getgradebyd1500(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
+        for (var r = 0; r < response.data.length; r++) {
+          response.data[r].cnt = parseInt(response.data[r].cnt);
+          if (response.data[r].descr.includes('short')) {
+            response.data[r].aeq = response.data[r].cnt * 0.6;
+          } else {
+            response.data[r].aeq = response.data[r].cnt * 1.2;
+          }
+          vm.zw1500.push(response.data[r]);
+        }
+      });
+
+      vm.rates = {
+        smscrap: 0.8,
+        modscrap: 0.5,
+        bp: 230,
+        min: 220,
+        zbsmscrap: 5,
+        zbmodscrap: 3,
+        zbbp: 0,
+        zbmin: 0,
+        zw1000min: 56,
+        zw1500min: 60
+      }
+
+      //console.log(vm.displaydata);
+    }
+
+    function populate() {
+      vm.szamlalo++;
+      if (vm.szamlalo >= 13 + vm.daystocover.length) {
+        vm.load = false;
+      }
+      vm.displaydata = [];
+      for (var k = 0; k < vm.daystocover.length; k++) {
+        vm.displaydata.push({
+          day: vm.daystocover[k],
+          sm: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'Sheetmaker', category: 'GOOD' }), 'sumaeq'),
+          pin: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'Potting', category: 'IN' }), 'sumaeq'),
+          pp3: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'Potting', category: 'P3' }), 'sumaeq'),
+          pou: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'Potting', category: 'OUT' }), 'sumaeq'),
+          ch: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'CH-OUT', type: '!ZB500S' }), 'sumaeq'),
+          bp: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'BP-OUT', type: '!ZB500S' }), 'sumaeq'),
+          bok: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'BOK-BOKES', type: '!ZB500S' }), 'amount') / $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'BP-OUT', type: '!ZB500S' }), 'sumaeq'),
+          min: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'MIN-AMOUNT', place: '!ZB500S_MIN' }), 'sumaeq'),
+          zbsm: $filter('sumField')($filter('filter')(vm.zbdata, { days: vm.daystocover[k], machine: 'Sheetmaker', category: 'GOOD' }), 'sumaeq'),
+          zbpin: $filter('sumField')($filter('filter')(vm.zbdata, { days: vm.daystocover[k], machine: 'Potting', machine: '!Static Potting S1', category: 'IN' }), 'sumaeq'),
+          zbpp3: $filter('sumField')($filter('filter')(vm.zbdata, { days: vm.daystocover[k], machine: 'Potting', machine: '!Static Potting S1', category: 'P3' }), 'sumaeq'),
+          zbpou: $filter('sumField')($filter('filter')(vm.zbdata, { days: vm.daystocover[k], machine: 'Static Potting S1', category: 'OUT' }), 'sumaeq'),
+          zbch: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'CH-OUT', type: 'ZB500S' }), 'sumaeq'),
+          zbbp: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'BP-OUT', type: 'ZB500S' }), 'sumaeq'),
+          zbbok: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'BOK-BOKES', type: 'ZB500S' }), 'amount') / $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'BP-OUT', type: 'ZB500S' }), 'sumaeq'),
+          zbmin: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'MIN-AMOUNT', place: 'ZB500S_MIN' }), 'sumaeq')
         });
       }
     }
 
-    function loadzbsm() {
-      //vm.smloading = true;
-      for (var i = 0; i < vm.zbsheetmakers.length; i++) {
-        dataService.getsm(vm.startdate, vm.enddate, vm.zbsheetmakers[i]).then(function (response) {
-          for (var j = 0; j < response.data.length; j++) {
-            response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
-            response.data[j].days = response.data[j].days.substring(0, 10);
-            for (var k = 0; k < vm.sumdatazb.length; k++) {
-              if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "GOOD") {
-                vm.sumdatazb[k].smaeq += response.data[j].aeq;
-              }
-            }
-          }
-          //vm.smloading = false;
-        });
-      }
-    }
-
-    function loadpotting() {
-      vm.pottloading = true;
-      for (var i = 0; i < vm.pottings.length; i++) {
-        dataService.getpotting(vm.startdate, vm.enddate, vm.pottings[i]).then(function (response) {
-          for (var j = 0; j < response.data.length; j++) {
-            response.data[j].aeq = addAEQ(vm.aeqs, response.data[j].type, response.data[j].amount);
-            response.data[j].days = response.data[j].days.substring(0, 10);
-            for (var k = 0; k < vm.sumdata500.length; k++) {
-              if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "IN") {
-                vm.sumdata500[k].pottbeaeq += response.data[j].aeq;
-              }
-              else if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "P3") {
-                vm.sumdata500[k].pottfordaeq += response.data[j].aeq;
-              }
-              else if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "OUT") {
-                vm.sumdata500[k].pottkiaeq += response.data[j].aeq;
-              }
-            }
-          }
-          vm.pottloading = false;
-        });
-      }
-      loadzbpotting1();
-      loadzbpotting2();
-    }
-
-    function loadzbpotting1() {
-      dataService.getpotting(vm.startdate, vm.enddate, "Potting1-1").then(function (response) {
-        for (var j = 0; j < response.data.length; j++) {
-          response.data[j].aeq = (response.data[j].amount / 4) * 0.6;
-          response.data[j].days = response.data[j].days.substring(0, 10);
-          for (var k = 0; k < vm.sumdatazb.length; k++) {
-            if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "IN") {
-              vm.sumdatazb[k].pottbeaeq += response.data[j].aeq;
-            }
-          }
-        }
-      });
-    }
-
-    function loadzbpotting2() {
-      dataService.getpotting(vm.startdate, vm.enddate, "Potting1-2").then(function (response) {
-        for (var j = 0; j < response.data.length; j++) {
-          response.data[j].aeq = (response.data[j].amount) * 0.6;
-          response.data[j].days = response.data[j].days.substring(0, 10);
-          for (var k = 0; k < vm.sumdatazb.length; k++) {
-            if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "IN") {
-              vm.sumdatazb[k].pottmodbeaeq += response.data[j].aeq;
-            }
-            else if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "OUT") {
-              vm.sumdatazb[k].pottkiaeq += response.data[j].aeq;
-            }
-          }
-        }
-      });
-    }
-
-
-    function loadmtf() {
-      vm.mtfloading = true;
-      for (var i = 0; i < vm.mtfdates.length; i++) {
-        dataService.getmtf(vm.mtfdates[i]).then(function (response) {
-          for (var j = 0; j < response.data.length; j++) {
-            response.data[j].days = response.data[j].days.substring(0, 10);
-            for (var l = 0; l < vm.aeqs.length; l++) {
-              if (response.data[j].type.indexOf(vm.aeqs[l].name) > -1)
-                response.data[j].aeq = response.data[j].amount * vm.aeqs[l].amount;
-              else if (response.data[j].place.indexOf(vm.aeqs[l].name) > -1)
-                response.data[j].aeq = response.data[j].amount * vm.aeqs[l].amount;
-            }
-            for (var k = 0; k < vm.sumdata500.length; k++) {
-              if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "BP-OUT" && response.data[j].type != "ZB500S")
-                vm.sumdata500[k].bpaeq += response.data[j].aeq;
-              if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "CH-OUT" && response.data[j].type != "ZB500S")
-                vm.sumdata500[k].claeq += response.data[j].aeq;
-              if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "BOK-BOKES" && response.data[j].type != "ZB500S")
-                vm.sumdata500[k].bokes += response.data[j].amount;
-              if (vm.sumdata500[k].date == response.data[j].days && response.data[j].category == "MIN-AMOUNT" && response.data[j].place != "ZB500S_MIN")
-                vm.sumdata500[k].min += response.data[j].aeq;
-            }
-            for (var k = 0; k < vm.sumdata500.length; k++) {
-              if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "BP-OUT" && response.data[j].type == "ZB500S")
-                vm.sumdatazb[k].bpaeq += response.data[j].aeq;
-              if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "CH-OUT" && response.data[j].type == "ZB500S")
-                vm.sumdatazb[k].claeq += response.data[j].aeq;
-              if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "BOK-BOKES" && response.data[j].type == "ZB500S")
-                vm.sumdatazb[k].bokes += response.data[j].amount;
-              if (vm.sumdatazb[k].date == response.data[j].days && response.data[j].category == "MIN-AMOUNT" && response.data[j].place == "ZB500S_MIN")
-                vm.sumdatazb[k].min += response.data[j].aeq;
-            }
-          }
-
-          vm.mtfloading = false;
-        });
-      }
-    }
-
-    function loadgrade1000() {
-      vm.ZW1000loading = true;
-      dataService.getgradebyd1000(vm.startdate, vm.enddate).then(function (response) {
-        for (var j = 0; j < response.data.length; j++) {
-          if (response.data[j].descr.includes("450")) {
-            response.data[j].aeq = response.data[j].cnt * vm.AEQ1000[0];
-          }
-          else if (response.data[j].descr.includes("Junior")) {
-            response.data[j].aeq = response.data[j].cnt * 0;
-          }
-          else if (response.data[j].descr.includes("550")) {
-            response.data[j].aeq = response.data[j].cnt * vm.AEQ1000[1];
-          }
-          else if (response.data[j].descr.includes("500")) {
-            response.data[j].aeq = response.data[j].cnt * vm.AEQ1000[2];
-          }
-          else if (response.data[j].descr.includes("700")) {
-            response.data[j].aeq = response.data[j].cnt * vm.AEQ1000[3];
-          }
-          for (var k = 0; k < vm.sumdata1000.length; k++) {
-            if (vm.sumdata1000[k].date == response.data[j].gradeday && response.data[j].MCSGrade == "Scrap") {
-              vm.sumdata1000[k].sumscrapaeq += response.data[j].aeq;
-            }
-            else if (vm.sumdata1000[k].date == response.data[j].gradeday && response.data[j].MCSGrade != "Scrap") {
-              vm.sumdata1000[k].sumgoodaeq += response.data[j].aeq;
-            }
-          }
-        }
-        vm.ZW1000loading = false;
-      });
-
-    }
-    function loadgrade1500() {
-      vm.ZW1500loading = true;
-      dataService.getgradebyd1500(vm.startdate, vm.enddate).then(function (response) {
-        for (var j = 0; j < response.data.length; j++) {
-          if (response.data[j].descr.includes("short")) {
-            response.data[j].aeq = response.data[j].cnt * vm.AEQ1500[0];
-          }
-          else {
-            response.data[j].aeq = response.data[j].cnt * vm.AEQ1500[1];
-          }
-          for (var k = 0; k < vm.sumdata1500.length; k++) {
-            if (vm.sumdata1500[k].date == response.data[j].gradeday && response.data[j].MCSGrade == "Scrap") {
-              vm.sumdata1500[k].sumscrapaeq += response.data[j].aeq;
-            }
-            else if (vm.sumdata1500[k].date == response.data[j].gradeday && response.data[j].MCSGrade != "Scrap") {
-              vm.sumdata1500[k].sumgoodaeq += response.data[j].aeq;
-            }
-          }
-        }
-        vm.ZW1500loading = false;
-      });
-
-    }
-
-    function loadall() {
-      beallit();
-      loadsl();
-      loadsm();
-      loadzbsm();
-      loadpotting();
-      loadmtf();
-      loadgrade1000();
-      loadgrade1500();
-      vm.enddate = vm.enddatumszam;
-    }
-
-    function getAEQ(tomb, azon, am) {
+    function aeqser(type, forsheet) {
       var aeq = 0;
-
-      var substr = azon.indexOf(' ') == -1 ? azon.substring(0, 3) : azon.substring(0, azon.indexOf(' '));
-
-      if (substr.substring(0, 2) == "ZL")
-        substr = "ZL";
-      if (azon.indexOf('DS -D13') > -1) {
-        substr = 'Ds13'
-      }
-      if (azon.indexOf('DS12') > -1) {
-        substr = "Ds12";
-      }
-      for (var i = 0; i < tomb.length; i++) {
-        if (tomb[i].name.includes(substr)) {
-          aeq = (am / parseInt(tomb[i].sheets)) * parseFloat(tomb[i].aeq);
+      for (var x = 0; x < vm.aeqs.length; x++) {
+        if (vm.aeqs[x].name === type) {
+          if (forsheet) {
+            aeq = vm.aeqs[x].amount / vm.aeqs[x].sheets;
+          } else {
+            aeq = vm.aeqs[x].amount;
+          }
+        } else {
         }
+
       }
       return aeq;
-    }
-
-    function addAEQ(tomb, azon, am) {
-      var aeq = 0;
-      var substr = azon.substring(0, 3);
-      if (substr.substring(0, 2) == "ZL")
-        substr = "ZL";
-      if (azon.indexOf('DS -D13') > -1) {
-        substr = "Ds13";
-      }
-      if (azon.indexOf('DS12') > -1) {
-        substr = "Ds12";
-      }
-      for (var i = 0; i < tomb.length; i++) {
-        if (tomb[i].name.includes(substr)) {
-          aeq = am * parseFloat(tomb[i].amount);
-        }
-      }
-      return aeq;
-    }
-
-    function addSLDate(datum) {
-      $state.go('dayreport', { datum: datum, place: "SL" });
-    }
-
-    function addSMDate(datum) {
-      $state.go('dayreport', { datum: datum, place: "SM" });
-    }
-
-    function addPottDate(datum) {
-      $state.go('dayreport', { datum: datum, place: "Potting" });
-    }
-
-    function addMTFDate(datum) {
-      $state.go('dayreport', { datum: datum, place: "MTF" });
     }
 
     activate();
 
     function activate() {
-      (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      vm.edate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
-      datediff();
-      loadPartnumbers();
-      loadsl();
-      loadsm();
-      loadzbsm();
-      loadpotting();
-      loadmtf();
-      loadgrade1000();
-      loadgrade1500();
+      if (!$cookies.getObject('user')) {
+        $state.go('login')
+      } else {
+        $rootScope.user = $cookies.getObject('user');
+        vm.edate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+        vm.startdate = $filter('date')(new Date().getTime() - 7 * 24 * 1000 * 60 * 60, 'yyyy-MM-dd');
+        vm.enddate = $filter('date')(new Date().getTime() - 24 * 1000 * 60 * 60, 'yyyy-MM-dd');
+
+        //loadPartnumbers();
+        vm.sh = false;
+        vm.s5 = false;
+        vm.s3 = false;
+        start();
+
+      }
     }
 
+    vm.cpxaeqs = [
+      { item: '450', aeq: 0.9 },
+      { item: '550', aeq: 1.1 },
+      { item: '500', aeq: 1 },
+      { item: '700', aeq: 1.4 }
+    ]
+
     vm.aeqs = [
-      { name: "Ds12 FLOW", amount: 0.6 },
-      { name: "DS12FLOW", amount: 0.6 },
-      { name: "ZW220 CP5", amount: 0.44 },
-      { name: "ZW230 FLOW", amount: 0.46 },
-      { name: "ZW230 CP5", amount: 0.46 },
-      { name: "C11CP5", amount: 0.5 },
-      { name: "C11 CP5", amount: 0.5 },
-      { name: "C11FLOW", amount: 0.5 },
-      { name: "C11 FLOW", amount: 0.5 },
-      { name: "D11 CP5", amount: 0.68 },
-      { name: "D13 CP5", amount: 0.88 },
-      { name: "D12 FLOW", amount: 0.74 },
-      { name: "DX", amount: 0.74 },
-      { name: "D11 FLOW", amount: 0.68 },
-      { name: "A27 CP5", amount: 1 },
-      { name: "A27 FLOW", amount: 1 },
-      { name: "B32 CP5", amount: 1.3 },
-      { name: "B32 FLOW", amount: 1.3 },
-      { name: "DS- D13 CP5", amount: 0.7 },
-      { name: " D13 CP5", amount: 0.88 },
-      { name: "DS13CP5", amount: 0.7 },
-      { name: "ZB500S", amount: 0.6 }
+      { name: "Ds12 FLOW", amount: 0.6, sheets: 12 },
+      { name: "DS12FLOW", amount: 0.6, sheets: 12 },
+      { name: "ZW220 CP5", amount: 0.44, sheets: 28 },
+      { name: "ZW230 FLOW", amount: 0.46, sheets: 28 },
+      { name: "ZW230 CP5", amount: 0.46, sheets: 28 },
+      { name: "C11CP5", amount: 0.5, sheets: 11 },
+      { name: "C11 CP5", amount: 0.5, sheets: 11 },
+      { name: "C11FLOW", amount: 0.5, sheets: 11 },
+      { name: "C11 FLOW", amount: 0.5, sheets: 11 },
+      { name: "D11 CP5", amount: 0.68, sheets: 11 },
+      { name: "D13 CP5", amount: 0.88, sheets: 13 },
+      { name: "D12 FLOW", amount: 0.74, sheets: 12 },
+      { name: "DX", amount: 0.74, sheets: 12 },
+      { name: "D11 FLOW", amount: 0.68, sheets: 11 },
+      { name: "A27 CP5", amount: 1, sheets: 27 },
+      { name: "A27 FLOW", amount: 1, sheets: 27 },
+      { name: "B32 CP5", amount: 1.3, sheets: 32 },
+      { name: "B32 FLOW", amount: 1.3, sheets: 32 },
+      { name: "DS- D13 CP5", amount: 0.7, sheets: 13 },
+      { name: "ZW500Ds13 old yarn CP5", amount: 0.7, sheets: 13 },
+      { name: "ZW500Ds13 new yarn CP5", amount: 0.7, sheets: 13 },
+      { name: "ZW500Ds12 old yarn CP5", amount: 0.6, sheets: 12 },
+      { name: "ZW500Ds12 new yarn CP5", amount: 0.6, sheets: 12 },
+      { name: " D13 CP5", amount: 0.88, sheets: 13 },
+      { name: "DS13CP5", amount: 0.7, sheets: 13 },
+      { name: "DS-D13 CP5", amount: 0.7, sheets: 13 },
+      { name: "DS-D13 CP55", amount: 0.7, sheets: 13 },
+      { name: "ZB500S", amount: 0.6, sheets: 16 },
+      { name: "ZB500", amount: 0.6, sheets: 16 },
+      { name: "UBB FLOW", amount: 0.6, sheets: 16 },
+      { name: "UBB CP5", amount: 0.6, sheets: 16 },
+      { name: "UBB Block", amount: 0.6 / 4, sheets: 4 }
     ];
   }
   Controller.$inject = ['Data', '$cookies', '$state', '$rootScope', '$filter'];

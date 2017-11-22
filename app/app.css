@@ -13,6 +13,35 @@
   font-weight: bold;
   text-align: center;
 }
+.table th {
+  font-size: 16px;
+}
+.table th span {
+  overflow: ellipsis;
+  width: 100%;
+  white-space: nowrap;
+}
+.table td {
+  font-size: 16px;
+  white-space: nowrap;
+}
+.table td i {
+  font-size: 17px;
+}
+.table-condensed > thead > tr > th, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > th {
+  padding: 10px;
+}
+.table-condensed > thead > tr > td, .table-condensed > tbody > tr > td, .table-condensed > tfoot > tr > td {
+  padding: 3px;
+  text-align: center;
+}
+
+.nav {
+  margin-bottom: 0;
+}
+ul, ol {
+  margin: 0;
+}
 .high {
   line-height: 40px;
   border-bottom: 1px solid #e7e7e7;

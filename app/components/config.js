@@ -27,6 +27,18 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('today', {
+		url: '/today',
+		templateUrl: './app/components/today/today.html',
+		controller: 'todayController',
+		controllerAs: 'vm'
+	});
+	$stateProvider.state('sap', {
+		url: '/sap',
+		templateUrl: './app/components/sap/sap.html',
+		controller: 'sapController',
+		controllerAs: 'vm'
+	});
     $stateProvider.state('dayreport', {
       url: '/dayreport',
       params: { datum: null, place: null },
