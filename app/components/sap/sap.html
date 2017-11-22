@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="voice voice-brand pull-left">UF/MBR Összesítő</h1>
+      <div class="secondary-nav">
+        <ul class="nav nav-pills">
+          <li ng-class="{'active': vm.q == 1}"><a ng-click='vm.q=1;vm.chartize(vm.data, 1)'>Q1</a></li>
+          <li ng-class="{'active': vm.q == 2}"><a ng-click='vm.q=2;vm.chartize(vm.data, 2)'>Q2</a></li>
+          <li ng-class="{'active': vm.q == 3}"><a ng-click='vm.q=3;vm.chartize(vm.data, 3)'>Q3</a></li>
+          <li ng-class="{'active': vm.q == 4}"><a ng-click='vm.q=4;vm.chartize(vm.data, 4)'>Q4</a></li>
+          <li ng-class="{'active': vm.q == 0}"><a ng-click='vm.q=0;vm.chartize(vm.data, 0)'>FY</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="col-sm-10 col-sm-offset-1">
+        <mychart id="zw500chart" config="vm.zw500chconfig"></mychart>
+      </div>
+      <div class="col-sm-10 col-sm-offset-1">
+        <mychart id="zbchart" config="vm.zbchconfig"></mychart>
+      </div>
+      <div class="col-sm-10 col-sm-offset-1">
+        <mychart id="zlchart" config="vm.zlchconfig"></mychart>
+      </div>
+      <div class="col-sm-10 col-sm-offset-1">
+        <mychart id="zw1000chart" config="vm.zw1000chconfig"></mychart>
+      </div>
+      <div class="col-sm-10 col-sm-offset-1">
+        <mychart id="zw1500chart" config="vm.zw1500chconfig"></mychart>
+      </div>
+    </div>
+  </section>
+</div>
