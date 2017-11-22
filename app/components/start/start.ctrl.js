@@ -81,7 +81,7 @@ define([], function () {
           }
         }
         //console.log(vm.sapdata);
-				populate();
+        populate();
       });
 
       //ZW500
