@@ -7,6 +7,7 @@ define([
   './services/data.service',
   './directives/datepicker',
   './directives/mychart',
+  './directives/mystockchart',
   './directives/SL/sl',
   './directives/SM/sm',
   './directives/Potting/potting',
@@ -15,7 +16,9 @@ define([
   './filters/sumdb',
   './filters/shift',
   './dayreport/dayreport.ctrl'
-  /* files */
+  , './sap/sap.ctrl'
+	, './today/today.ctrl'
+	/* files */
 ], function (
   configFunction,
   runFunction,
@@ -25,6 +28,7 @@ define([
   dataService,
   datepicker,
   mychart,
+  mystockchart,
   sldir,
   smdir,
   pottdir,
@@ -33,6 +37,8 @@ define([
   sumdb,
   shift,
   dayreportController
+	, sapController
+	, todayController
 	/* names */) {
 
     // Link all components to the module !!!
@@ -46,6 +52,7 @@ define([
     app.controller('LoginController', loginController);
     app.directive('datepicker', datepicker);
     app.directive('mychart', mychart);
+    app.directive('mystockchart', mystockchart);
     app.directive('slDir', sldir);
     app.directive('smDir', smdir);
     app.directive('pottDir', pottdir);
@@ -54,5 +61,7 @@ define([
     app.filter('sumdb', sumdb);
     app.filter('shift', shift);
     app.controller('dayreportController', dayreportController);
-    /* controllers */
+    app.controller('sapController', sapController);
+		app.controller('todayController', todayController);
+		/* controllers */
   });

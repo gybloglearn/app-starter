@@ -9,14 +9,23 @@ define([], function () {
       getsoesm: getsoesm,
       getpotting: getpotting,
       getmtf: getmtf,
+      gettodaymtf: gettodaymtf,
       getgradebyd1000: getgradebyd1000,
-      getgradebyd1500: getgradebyd1500
+      getgradebyd1500: getgradebyd1500,
+      getsapdata: getsapdata
     };
 
     return service;
 
     ///////////
 
+    function getsapdata() {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/sapdata.php'
+      };
+      return $http(req);
+    }
     function getpartnumber() {
       var req = {
         method: 'GET',
@@ -65,6 +74,13 @@ define([], function () {
       var req = {
         method: 'GET',
         url: 'http://3.228.180.13/uf/app/components/PHP/MTF/mtf' + date + '.json'
+      };
+      return $http(req);
+    }
+    function gettodaymtf(date){
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/ZW500_MTF_report.php?startdate=' + date
       };
       return $http(req);
     }
