@@ -202,7 +202,7 @@ define([], function () {
         var muszaki = { name: "Műszaki", color: "rgba(255,0,0,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: "{series.name}: <b style='color:{point.color}'>{point.y:.2f}</b><br>" }*/ };
         var szervezesi = { name: "Szervezési", color: "rgba(150,150,150,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: "{series.name}: <b style='color:{point.color}'>{point.y:.2f}</b><br>" }*/ };
         var tervezett = { name: "Tervezett", color: "rgba(50,100,200,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: "{series.name}: <b style='color:{point.color}'>{point.y:.2f}</b><br>" }*/ };
-        var selejt = { yAxis: 1, marker: { enabled: true, borderWidth: 0 }, lineWidth: 0, name: "Selejt", color: "rgba(50,100,200,.5)", data: [], type: 'line', color: 'rgb(255,200,0)', tooltip: { useHTML: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y} DB</span> / {point.lap} ({point.percent:.2f} %)</span><br/>' } };
+        var selejt = { yAxis: 1, marker: { enabled: true, borderWidth: 0 }, dataLabels: {enabled: true, useHTML: true, format: '<span style="color:rgba(0,0,0,1);font-weight:bold">{point.y} lap</span>', allowOverlap: false},  lineWidth: 2, name: "Selejt", color: "rgba(50,100,200,.5)", data: [], type: 'line', color: 'rgb(255,200,0)', tooltip: { useHTML: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y} DB</span> / {point.lap} ({point.percent:.2f} %)</span><br/>' } };
         var ttla = 0;
         var ttlm = 0;
         var ttls = 0;
@@ -306,11 +306,11 @@ define([], function () {
         var tmuszaki = { name: "Műszaki", color: "rgb(255,0,0)", data: [{ y: parseFloat(ttlm / ttla) * 100, min: ttlm }] };
         var tszervezesi = { name: "Szervezési", color: "rgb(150,150,150)", data: [{ y: parseFloat(ttls / ttla) * 100, min: ttls }] };
         var ttervezett = { name: "Tervezett", color: "rgb(50,100,200)", data: [{ y: parseFloat(ttlt / ttla) * 100, min: ttlt }] };
-        var ttselejt = {yAxis: 1,  name: "Selejt", color: 'rgb(250,200,0)', data: [{y:ttlselejt, percent: parseFloat(ttlselejt / ttljolap) * 100}], marker: { enabled: true, borderWidth: 0 }, lineWidth: 0, type: 'line', tooltip: { useHTML: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y} DB</span> / {point.lap} ({point.percent:.2f} %)</span><br/>' } };
+        var ttselejt = { yAxis: 1, name: "Selejt", color: 'rgb(250,200,0)', data: [{y:ttlselejt, percent: parseFloat(ttlselejt / ttljolap) * 100}], marker: { enabled: true, borderWidth: 0 }, lineWidth:0, type: 'line', tooltip: { useHTML: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y} DB</span> / {point.lap} ({point.percent:.2f} %)</span><br/>' } };
         vm.smavailabilitychartconfig = {
-          chart: { type: 'column', spacingBottom: 30 },
-          plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0 } },
-          tooltip: { shared: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.2f} %</span> ({point.min:.0f} perc)</span><br/>' },
+          chart: { type: 'column', spacingBottom: 30},
+          plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0, dataLabels: {enabled: true, allowOverlap: false, zIndex:1, format: "<span style='color:rgba(0,0,0,1)'>{point.y:.2f} %</span>", useHTML: true} } },
+          tooltip: { shared: true,  backgroundColor:'rgba(255,255,255,1)', headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.2f} %</span> ({point.min:.0f} perc)</span><br/>' },
           title: { text: "SM elérhetőségi adatok" },
           xAxis: { type: "category", categories: xA, title: { text: "SheetMakerek" } },
           yAxis: [{ max: 100, title: {text: 'Elérhetőségi adatok %'} }, {opposite: true, title: {text: 'Selejt lapok'}}],
@@ -319,8 +319,8 @@ define([], function () {
           ]
         };
         vm.ttlsmavailabilitychartconfig = {
-          chart: { type: 'column', spacingBottom: 30 },
-          plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0 } },
+          chart: { type: 'column', spacingBottom: 30},
+          plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0 }, dataLabels: {enabled: true} },
           legend: { enabled: false },
           tooltip: { shared: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.2f} %</span> ({point.min:.0f} perc)</span><br/>' },
           title: { text: "SM összesített elérhetőségi adatok" },
