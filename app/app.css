@@ -27,6 +27,11 @@
 .highcharts-data-labels{
   z-index: -1!important;
 }
+table thead tr th,
+table tbody tr td {
+  white-space: nowrap;
+
+}
 .high {
   line-height: 40px;
   border-bottom: 1px solid #e7e7e7;
