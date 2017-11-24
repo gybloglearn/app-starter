@@ -51,6 +51,8 @@ define([], function () {
         vm.sm[i].jaeq = 0;
         vm.sm[i].ossz = 0;
         vm.sm[i].oaeq = 0;
+        vm.sm[i].selejt = 0;
+        vm.sm[i].saeq = 0;
       }
       vm.sm[i + 1] = {}
       vm.sm[i + 1].id = "SMS";
@@ -61,6 +63,8 @@ define([], function () {
       vm.sm[i + 1].jaeq = 0;
       vm.sm[i + 1].ossz = 0;
       vm.sm[i + 1].oaeq = 0;
+      vm.sm[i + 1].selejt = 0;
+      vm.sm[i + 1].saeq = 0;
 
       loadsmfile();
     }
@@ -110,14 +114,22 @@ define([], function () {
               if (response.data[j].shortname == vm.sm[k].id && response.data[j].category == "GOOD") {
                 vm.sm[k].jo += response.data[j].amount;
                 vm.sm[k].jaeq += response.data[j].aeq;
+                vm.sm[k].selejt -= response.data[j].amount;
+                vm.sm[k].saeq -= response.data[j].aeq;
                 vm.sm[vm.sheetmakers.length + 1].jo += response.data[j].amount;
                 vm.sm[vm.sheetmakers.length + 1].jaeq += response.data[j].aeq;
+                vm.sm[vm.sheetmakers.length + 1].selejt -= response.data[j].amount;
+                vm.sm[vm.sheetmakers.length + 1].saeq -= response.data[j].aeq;
               }
               else if (response.data[j].shortname == vm.sm[k].id && response.data[j].category == "TOTAL") {
                 vm.sm[k].ossz += response.data[j].amount;
                 vm.sm[k].oaeq += response.data[j].aeq;
+                vm.sm[k].selejt += response.data[j].amount;
+                vm.sm[k].saeq += response.data[j].aeq;
                 vm.sm[vm.sheetmakers.length + 1].ossz += response.data[j].amount;
                 vm.sm[vm.sheetmakers.length + 1].oaeq += response.data[j].aeq;
+                vm.sm[vm.sheetmakers.length + 1].selejt += response.data[j].amount;
+                vm.sm[vm.sheetmakers.length + 1].saeq += response.data[j].aeq;
               }
             }
           }
@@ -134,6 +146,7 @@ define([], function () {
               }
             }
           }
+          console.log(vm.sm);
           updatecard(vm.sm);
         });
       }
@@ -152,6 +165,8 @@ define([], function () {
           osszaeq: smarr[i].oaeq,
           jolap: smarr[i].jo,
           joaeq: smarr[i].jaeq,
+          selejt: smarr[i].selejt,
+          saeq: smarr[i].saeq,
           alltime: vm.dates.length * 1440,
           downtime: (smarr[i].musz + smarr[i].szerv + smarr[i].terv) / 60,
           muszaki: smarr[i].musz / 60,
@@ -168,6 +183,8 @@ define([], function () {
         osszaeq: smarr[vm.sheetmakers.length + 1].oaeq,
         jolap: smarr[vm.sheetmakers.length + 1].jo,
         joaeq: smarr[vm.sheetmakers.length + 1].jaeq,
+        selejt: smarr[vm.sheetmakers.length + 1].selejt,
+        saeq: smarr[vm.sheetmakers.length + 1].saeq,
         alltime: smstime,
         downtime: (smarr[vm.sheetmakers.length + 1].musz + smarr[vm.sheetmakers.length + 1].szerv + smarr[vm.sheetmakers.length + 1].terv) / 60,
         muszaki: smarr[vm.sheetmakers.length + 1].musz / 60,
@@ -185,10 +202,13 @@ define([], function () {
         var muszaki = { name: "Műszaki", color: "rgba(255,0,0,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: "{series.name}: <b style='color:{point.color}'>{point.y:.2f}</b><br>" }*/ };
         var szervezesi = { name: "Szervezési", color: "rgba(150,150,150,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: "{series.name}: <b style='color:{point.color}'>{point.y:.2f}</b><br>" }*/ };
         var tervezett = { name: "Tervezett", color: "rgba(50,100,200,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: "{series.name}: <b style='color:{point.color}'>{point.y:.2f}</b><br>" }*/ };
+        var selejt = { yAxis: 1, marker: { enabled: true, borderWidth: 0 }, lineWidth: 0, name: "Selejt", color: "rgba(50,100,200,.5)", data: [], type: 'line', color: 'rgb(255,200,0)', tooltip: { useHTML: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y} DB</span> / {point.lap} ({point.percent:.2f} %)</span><br/>' } };
         var ttla = 0;
         var ttlm = 0;
         var ttls = 0;
         var ttlt = 0;
+        var ttlselejt = 0;
+        var ttljolap = 0;
         var xA = [];
         for (var i = 0; i < ser.length; i++) {
           xA.push(ser[i].sm);
@@ -196,16 +216,20 @@ define([], function () {
           ttlm += ser[i].muszaki;
           ttls += ser[i].szervezesi;
           ttlt += ser[i].tervezesi;
+          ttlselejt += ser[i].selejt;
+          ttljolap += ser[i].jolap;
           avail.data.push({ sm: ser[i].sm, y: parseFloat((ser[i].alltime - (ser[i].muszaki + ser[i].szervezesi + ser[i].tervezesi)) / ser[i].alltime) * 100, min: ser[i].alltime - (ser[i].muszaki + ser[i].szervezesi + ser[i].tervezesi) });
           muszaki.data.push({ sm: ser[i].sm, y: parseFloat(ser[i].muszaki / ser[i].alltime) * 100, min: ser[i].muszaki });
           szervezesi.data.push({ sm: ser[i].sm, y: parseFloat(ser[i].szervezesi / ser[i].alltime) * 100, min: ser[i].szervezesi });
           tervezett.data.push({ sm: ser[i].sm, y: parseFloat(ser[i].tervezesi / ser[i].alltime) * 100, min: ser[i].tervezesi });
+          selejt.data.push({ sm: ser[i].sm, y: parseFloat(ser[i].selejt), lap: ser[i].jolap, percent: parseFloat((ser[i].selejt / ser[i].jolap) * 100) });
         }
         xA.sort();
         avail.data = $filter('orderBy')(avail.data, 'sm');
         muszaki.data = $filter('orderBy')(muszaki.data, 'sm');
         szervezesi.data = $filter('orderBy')(szervezesi.data, 'sm');
         tervezett.data = $filter('orderBy')(tervezett.data, 'sm');
+        selejt.data = $filter('orderBy')(selejt.data, 'sm');
 
         // muszaki
         var topmuszd = $filter('unique')($filter('filter')(vm.filedatas, { Ev_Group: "Muszaki technikai okok" }), "Event_SubGroup");
@@ -282,16 +306,16 @@ define([], function () {
         var tmuszaki = { name: "Műszaki", color: "rgb(255,0,0)", data: [{ y: parseFloat(ttlm / ttla) * 100, min: ttlm }] };
         var tszervezesi = { name: "Szervezési", color: "rgb(150,150,150)", data: [{ y: parseFloat(ttls / ttla) * 100, min: ttls }] };
         var ttervezett = { name: "Tervezett", color: "rgb(50,100,200)", data: [{ y: parseFloat(ttlt / ttla) * 100, min: ttlt }] };
-
+        var ttselejt = {yAxis: 1,  name: "Selejt", color: 'rgb(250,200,0)', data: [{y:ttlselejt, percent: parseFloat(ttlselejt / ttljolap) * 100}], marker: { enabled: true, borderWidth: 0 }, lineWidth: 0, type: 'line', tooltip: { useHTML: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y} DB</span> / {point.lap} ({point.percent:.2f} %)</span><br/>' } };
         vm.smavailabilitychartconfig = {
           chart: { type: 'column', spacingBottom: 30 },
           plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0 } },
           tooltip: { shared: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.2f} %</span> ({point.min:.0f} perc)</span><br/>' },
           title: { text: "SM elérhetőségi adatok" },
           xAxis: { type: "category", categories: xA, title: { text: "SheetMakerek" } },
-          yAxis: { max: 100 },
+          yAxis: [{ max: 100, title: {text: 'Elérhetőségi adatok %'} }, {opposite: true, title: {text: 'Selejt lapok'}}],
           series: [
-            muszaki, szervezesi, tervezett, avail
+            muszaki, szervezesi, tervezett, avail, selejt
           ]
         };
         vm.ttlsmavailabilitychartconfig = {
@@ -301,9 +325,9 @@ define([], function () {
           tooltip: { shared: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.2f} %</span> ({point.min:.0f} perc)</span><br/>' },
           title: { text: "SM összesített elérhetőségi adatok" },
           xAxis: { type: "category", categories: ["" + vm.startdate + " - " + vm.enddate], title: { text: "" } },
-          yAxis: { max: 100 },
+          yAxis: [{ max: 100, title: {text: 'Elérhetőségi adatok %'} }, {opposite: true, title: {text: 'Selejt lapok'}}],
           series: [
-            tmuszaki, tszervezesi, ttervezett, tavail
+            tmuszaki, tszervezesi, ttervezett, tavail, ttselejt
           ]
         };
 
@@ -312,7 +336,6 @@ define([], function () {
           vm.days[x].musz = parseFloat($filter('sumField')($filter('filter')(vm.filedatas, { d: vm.days[x].date, Ev_Group: "Muszaki technikai okok" }), "Event_time")) / 60;
           vm.days[x].szer = parseFloat($filter('sumField')($filter('filter')(vm.filedatas, { d: vm.days[x].date, Ev_Group: "Szervezesi veszteseg" }), "Event_time")) / 60;
           vm.days[x].terv = parseFloat($filter('sumField')($filter('filter')(vm.filedatas, { d: vm.days[x].date, Ev_Group: "Tervezett veszteseg" }), "Event_time")) / 60;
-          console.log($filter('filter')(vm.filedatas, { d: vm.days[x].date, Ev_Group: "Muszaki technikai okok" }));
         }
 
         vm.days = $filter('orderBy')(vm.days, 'date');
