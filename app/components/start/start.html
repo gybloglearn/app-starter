@@ -51,7 +51,7 @@
                 <a href="#zw1500targets" data-toggle="tab">1500</a>
               </li>
             </ul>
-            <div class="tab-content"  style="border: 1px solid #dddddd;border-top: 0;padding: 10px;">
+            <div class="tab-content" style="border: 1px solid #dddddd;border-top: 0;padding: 10px;">
               <div class="tab-pane active" id="zw500targets">
                 <div class="input-group">
                   <span class="input-group-addon">500 SM selejt %:</span>
@@ -112,10 +112,14 @@
       </header>
       <div class="module-body">
         <h1 class="voice voice-brand">SAP</h1>
-        <table class="table table-condensed table-hover"  style="border: 1px solid #bcbcbc; background-color:white;">
+        <table class="table table-condensed table-hover" style="border: 1px solid #bcbcbc; background-color:white;">
           <thead>
             <tr>
-              <th colspan="10">SAP adatok <sup style="color: #888">Frissítve: {{vm.sapdatacrdate}}</sup> <a class="btn btn-info pull-right" ui-sref="sap"><i class="icon-bar-chart"></i> Részletek</a></th>
+              <th colspan="10">SAP adatok
+                <sup style="color: #888">Frissítve: {{vm.sapdatacrdate}}</sup>
+                <a class="btn btn-info pull-right" ui-sref="sap">
+                  <i class="icon-bar-chart"></i> Részletek</a>
+              </th>
             </tr>
             <tr>
               <th width="10%" rowspan="2" style="border-right: 1px solid #bcbcbc">Nap</th>
@@ -139,21 +143,27 @@
             <tr ng-repeat="i in vm.sapdata track by $index">
               <td style="border-right: 1px solid #bcbcbc">{{i.day}}</td>
               <td>{{i.zw500p}}</td>
-              <td><b  ng-class="{'text-ge-green':i.zw500a > i.zw500p, 'text-ge-red': i.zw500a < i.zw500p}">{{i.zw500a}}</b></td>
+              <td>
+                <b ng-class="{'text-ge-green':i.zw500a > i.zw500p, 'text-ge-red': i.zw500a < i.zw500p}">{{i.zw500a}}</b>
+              </td>
               <td style="border-right: 1px solid #bcbcbc">
                 {{i.zw500kdiff}}
                 <i ng-show="$index>0 && !vm.trendize($index, 'zw500kdiff')" class="icon-ok-sign text-ge-green"></i>
                 <i ng-show="$index>0 && vm.trendize($index, 'zw500kdiff')" class="icon-warning-sign text-ge-red"></i>
               </td>
               <td>{{i.zw1000p}}</td>
-              <td><b ng-class="{'text-ge-green':i.zw1000a > i.zw1000p, 'text-ge-red': i.zw1000a < i.zw1000p}">{{i.zw1000a}}</b></td>
+              <td>
+                <b ng-class="{'text-ge-green':i.zw1000a > i.zw1000p, 'text-ge-red': i.zw1000a < i.zw1000p}">{{i.zw1000a}}</b>
+              </td>
               <td style="border-right: 1px solid #bcbcbc">
                 {{i.zw1000kdiff}}
                 <i ng-show="$index>0 && !vm.trendizess($index, 'zw1000kdiff')" class="icon-ok-sign text-ge-green"></i>
                 <i ng-show="$index>0 && vm.trendizess($index, 'zw1000kdiff')" class="icon-warning-sign text-ge-red"></i>
               </td>
               <td>{{i.zw1500p}}</td>
-              <td><b ng-class="{'text-ge-green':i.zw1500a > i.zw1500p, 'text-ge-red': i.zw1500a < i.zw1500p}">{{i.zw1500a}}</b></td>
+              <td>
+                <b ng-class="{'text-ge-green':i.zw1500a > i.zw1500p, 'text-ge-red': i.zw1500a < i.zw1500p}">{{i.zw1500a}}</b>
+              </td>
               <td>
                 {{i.zw1500kdiff}}
                 <i ng-show="$index>0 && !vm.trendizess($index, 'zw1500kdiff')" class="icon-ok-sign text-ge-green"></i>
@@ -166,13 +176,13 @@
         <table class="table table-condensed table-hover" style="border: 1px solid #bcbcbc; background-color:white;">
           <thead>
             <tr>
-                <!--<th ng-click="vm.s5=!vm.s5" style="cursor:pointer;border-right:1px solid #bcbcbc;">
+              <!--<th ng-click="vm.s5=!vm.s5" style="cursor:pointer;border-right:1px solid #bcbcbc;">
                     <button class="btn btn-info form-control" ng-show="vm.s5"><i class="icon-ico_eye_close_sm"></i> Elrejt</button>
                     <button class="btn btn-info form-control" ng-show="!vm.s5"><i class="icon-ico_preview_sm"></i> Mutat</button>
                   </th>-->
-                  <th colspan="9">
-                    ZW500 MES
-                  </th>
+              <th colspan="9">
+                ZW500 MES
+              </th>
             </tr>
             <tr>
               <th width="20%">
@@ -202,6 +212,17 @@
               <th width="10%">
                 <span>Minősítés</span>
               </th>
+            </tr>
+            <tr>
+              <th>Összesítve:</th>
+              <th>{{(vm.data|filter:{machine: 'Sheetmaker', category: 'GOOD' }|sumField:'sumaeq')}}</th>
+              <th>{{(vm.data|filter:{machine: 'Potting', category: 'IN' }|sumField:'sumaeq')}}</th>
+              <th>{{(vm.data|filter:{machine: 'Potting', category: 'P3' }|sumField:'sumaeq')}}</th>
+              <th>{{(vm.data|filter:{machine: 'Potting', category: 'OUT' }|sumField:'sumaeq')}}</th>
+              <th>{{(vm.data|filter:{machine: 'MTF', category: 'CH-OUT', type:'!ZB500S' }|sumField:'sumaeq')}}</th>
+              <th>{{(vm.data|filter:{machine: 'MTF', category: 'BP-OUT', type:'!ZB500S' }|sumField:'sumaeq')}}</th>
+              <th class="text-center">{{(vm.data|filter:{machine: 'MTF', category: 'BOK-BOKES', type:'!ZB500S' }|sumField:'amount')/(vm.data|filter:{machine: 'MTF', category: 'BP-OUT', type:'!ZB500S' }|sumField:'sumaeq') | number:2}}</th>
+              <th>{{(vm.data|filter:{machine: 'MTF', category: 'MIN-AMOUNT', place: '!ZB500S_MIN' }|sumField:'sumaeq')}}</th>
             </tr>
           </thead>
           <tbody>
@@ -254,6 +275,17 @@
               <th width="10%">Bökés / BP Ki</th>
               <th width="10%">Minősítés</th>
             </tr>
+            <tr ng-show="vm.sh">
+              <th>Összesítve:</th>
+              <th>{{(vm.zbdata|filter:{machine: 'Sheetmaker', category: 'GOOD' }|sumField:'sumaeq')}}</th>
+              <th>{{(vm.zbdata|filter:{machine: 'Potting', machine: '!Static Potting S1', category: 'IN' }|sumField:'sumaeq')}}</th>
+              <th>{{(vm.zbdata|filter:{machine: 'Potting', machine: '!Static Potting S1', category: 'P3' }|sumField:'sumaeq')}}</th>
+              <th>{{(vm.zbdata|filter:{machine: 'Static Potting S1', category: 'OUT' }|sumField:'sumaeq')}}</th>
+              <th>{{(vm.data|filter:{machine: 'MTF', category: 'CH-OUT', type:'ZB500S' }|sumField:'sumaeq')}}</th>
+              <th>{{(vm.data|filter:{machine: 'MTF', category: 'BP-OUT', type:'ZB500S' }|sumField:'sumaeq')}}</th>
+              <th class="text-center">{{(vm.data|filter:{machine: 'MTF', category: 'BOK-BOKES', type:'ZB500S' }|sumField:'amount')/(vm.data|filter:{machine: 'MTF', category: 'BP-OUT', type:'ZB500S' }|sumField:'sumaeq') | number:2}}</th>
+              <th>{{(vm.data|filter:{machine: 'MTF', category: 'MIN-AMOUNT', place: 'ZB500S_MIN' }|sumField:'sumaeq')}}</th>
+            </tr>
           </thead>
           <tbody ng-show="vm.sh">
             <tr ng-repeat="i in vm.displaydata track by $index">
@@ -288,11 +320,18 @@
               <th colspan="4" class="text-center">ZW1500 MES</th>
             </tr>
             <tr>
-              <th style="border-right: 1px solid #bcbcbc">Nap</th>
-              <th colspan="2">AEQ</th>
-              <th colspan="2" style="border-right: 1px solid #bcbcbc">Selejt</th>
-              <th colspan="2">AEQ</th>
-              <th colspan="2">Selejt</th>
+              <th class="text-center" style="border-right: 1px solid #bcbcbc">Nap</th>
+              <th class="text-center" colspan="2">AEQ</th>
+              <th class="text-center" colspan="2" style="border-right: 1px solid #bcbcbc">Selejt</th>
+              <th class="text-center" colspan="2">AEQ</th>
+              <th class="text-center" colspan="2">Selejt</th>
+            </tr>
+            <tr>
+              <th class="text-center" style="border-right: 1px solid #bcbcbc">Összesítve</th>
+              <th class="text-center" colspan="2">{{vm.zw1000 | filter: {'MCSGrade': '!Scrap'} | sumField: 'aeq' | number: 1}}</th>
+              <th class="text-center" colspan="2" style="border-right: 1px solid #bcbcbc">{{vm.zw1000 | filter: {'MCSGrade': 'Scrap'} | sumField: 'aeq' | number: 1}}</th>
+              <th class="text-center" colspan="2">{{vm.zw1500 | filter: {'MCSGrade': '!Scrap'} | sumField: 'aeq' | number: 1}}</th>
+              <th class="text-center" colspan="2">{{vm.zw1500 | filter: {'MCSGrade': 'Scrap'} | sumField: 'aeq' | number: 1}}</th>
             </tr>
           </thead>
           <tbody>
