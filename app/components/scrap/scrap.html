@@ -60,19 +60,25 @@
               <div class="col-sm-3">
                 <div class="form-group">
                   <span class="control-label" style="color:#FFFFFF">Cikk megnevezés</span>
-                  <select ng-model="search.CikkMegnevezes" class="form-control ng-pristine ng-untouched ng-valid">
-                      <option value="">Mind</option> 
-                      <option ng-repeat="cikk in vm.cikkfilter" value="{{cikk.CikkMegnevezes}}">{{cikk.CikkMegnevezes}}</option> 
+                  <select ng-model="vm.search.CikkMegnevezes" class="form-control ng-pristine ng-untouched ng-valid">
+                      <option value="">Mind</option>
+                      <option ng-repeat="cikk in vm.cikkfilter" value="{{cikk.CikkMegnevezes}}">{{cikk.CikkMegnevezes}}</option>
                 </select>
                 </div>
               </div>
               <div class="col-sm-3">
                 <div class="form-group">
                   <span class="control-label" style="color:#FFFFFF">Scrap név</span>
-                  <select ng-model="search.scrapName" class="form-control ng-pristine ng-untouched ng-valid">
-                      <option value="">Mind</option> 
-                      <option ng-repeat="scrap in vm.scrapfilter" value="{{scrap.scrapName}}">{{scrap.scrapName}}</option> 
+                  <select ng-model="vm.search.scrapName" class="form-control ng-pristine ng-untouched ng-valid">
+                      <option value="">Mind</option>
+                      <option ng-repeat="scrap in vm.scrapfilter" value="{{scrap.scrapName}}">{{scrap.scrapName}}</option>
                 </select>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <span class="control-label" style="color:#FFFFFF">Szűrés alkalmazása</span>
+                  <button class="btn btn-danger" ng-click="vm.crdata((vm.data|filter:vm.search));">Grafikon frissítése!</button>
                 </div>
               </div>
             </div>
@@ -95,7 +101,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="item in vm.data | orderBy:vm.order:vm.asc | filter: search track by $index" class="ng-scope">
+            <tr ng-repeat="item in vm.data | orderBy:vm.order:vm.asc | filter: vm.search track by $index" class="ng-scope">
               <td>{{item.Cikkszam}}</td>
               <td>{{item.CikkMegnevezes}}</td>
               <td>{{item.Mennyiseg}}</td>

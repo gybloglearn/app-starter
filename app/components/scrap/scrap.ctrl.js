@@ -11,6 +11,7 @@ define([], function () {
     vm.cikkfilter = [];
     vm.scrapdata = [];
     vm.load = load;
+    vm.crdata = crdata;
     vm.loading = false;
 
     function load() {
@@ -22,7 +23,8 @@ define([], function () {
 
       scrapService.get(vm.startdate, vm.enddate, vm.actlevel).then(function (response) {
         vm.data = response.data;
-        vm.scrapfilter = $filter('unique')(vm.data, 'scrapName');
+        vm.crdata(vm.data);
+        /*vm.scrapfilter = $filter('unique')(vm.data, 'scrapName');
         vm.cikkfilter = $filter('unique')(vm.data, 'CikkMegnevezes');
 
         for (var i = 0; i < vm.scrapfilter.length; i++) {
@@ -60,9 +62,59 @@ define([], function () {
           }
         }
         setChartpie(sc, chartdrill);
-        vm.loading = false;
+        vm.loading = false;*/
       });
     }
+
+    function crdata(data){
+
+      vm.scrapfilter = $filter('unique')(data, 'scrapName');
+      vm.cikkfilter = $filter('unique')(data, 'CikkMegnevezes');
+
+      var sc = [];
+      var chartdrill = [];
+      vm.scrapdata = [];
+      for (var i = 0; i < vm.scrapfilter.length; i++) {
+        var obj = {};
+        obj = {
+          code: vm.scrapfilter[i].scrapName,
+          amount: 0
+        };
+        vm.scrapdata.push(obj);
+      }
+      for (var i = 0; i < vm.scrapdata.length; i++) {
+        for (var j = 0; j < data.length; j++) {
+          if (vm.scrapdata[i].code == data[j].scrapName) {
+            vm.scrapdata[i].amount += data[j].Mennyiseg * 1;
+          }
+        }
+      }
+      for (var i = 0; i < vm.scrapdata.length; i++) {
+        sc.push({ name: vm.scrapdata[i].code, y: vm.scrapdata[i].amount, drilldown: vm.scrapdata[i].code });
+        chartdrill.push({name: vm.scrapdata[i].code, id: vm.scrapdata[i].code, data: [] });
+      }
+      for(var i=0;i<chartdrill.length;i++){
+        for(var j=0;j<vm.cikkfilter.length;j++){
+          var t=[];
+          var szam=0;
+          for(var k=0;k<data.length;k++){
+            if(vm.data[k].CikkMegnevezes==vm.cikkfilter[j].CikkMegnevezes && data[k].scrapName==chartdrill[i].name){
+              szam+=data[k].Mennyiseg*1;
+            }
+          }
+          t=[vm.cikkfilter[j].CikkMegnevezes,szam];
+          chartdrill[i].data.push(t);
+        }
+      }
+      if(vm.cikkfilter.length > 1){
+        setChartpie(sc, chartdrill);
+      } else {
+        setChartpie(sc, false);
+      }
+      vm.loading = false;
+    }
+
+
 
     function setChartpie(dt, dd) {
       vm.chartconfig_pie = {
@@ -86,11 +138,12 @@ define([], function () {
             name:"adatok",
             data: dt
           }
-        ],
-        drilldown: {
-          series: dd
-        }
+        ]
       };
+
+      if(dd){
+        vm.chartconfig_pie.drilldown = {series: dd};
+      }
     }
 
     activate();
