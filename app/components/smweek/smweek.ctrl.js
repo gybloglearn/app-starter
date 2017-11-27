@@ -209,6 +209,7 @@ define([], function () {
         var ttlt = 0;
         var ttlselejt = 0;
         var ttljolap = 0;
+        var ttlosszlap = 0;
         var xA = [];
         for (var i = 0; i < ser.length; i++) {
           xA.push(ser[i].sm);
@@ -218,12 +219,12 @@ define([], function () {
           ttlt += ser[i].tervezesi;
           ttlselejt += ser[i].selejt;
           ttljolap += ser[i].jolap;
-          ttlosszlap += ser[i].ossz;
+          ttlosszlap += ser[i].osszlap;
           avail.data.push({ sm: ser[i].sm, y: parseFloat((ser[i].alltime - (ser[i].muszaki + ser[i].szervezesi + ser[i].tervezesi)) / ser[i].alltime) * 100, min: ser[i].alltime - (ser[i].muszaki + ser[i].szervezesi + ser[i].tervezesi) });
           muszaki.data.push({ sm: ser[i].sm, y: parseFloat(ser[i].muszaki / ser[i].alltime) * 100, min: ser[i].muszaki });
           szervezesi.data.push({ sm: ser[i].sm, y: parseFloat(ser[i].szervezesi / ser[i].alltime) * 100, min: ser[i].szervezesi });
           tervezett.data.push({ sm: ser[i].sm, y: parseFloat(ser[i].tervezesi / ser[i].alltime) * 100, min: ser[i].tervezesi });
-          selejt.data.push({ sm: ser[i].sm, y: 0, slap: ser[i].selejt, lap: ser[i].ossz, percent: parseFloat((ser[i].selejt / ser[i].ossz) * 100) });
+          selejt.data.push({ sm: ser[i].sm, y: 0, slap: ser[i].selejt, lap: ser[i].osszlap, percent: parseFloat((ser[i].selejt / ser[i].osszlap) * 100) });
         }
         xA.sort();
         avail.data = $filter('orderBy')(avail.data, 'sm');
