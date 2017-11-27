@@ -90,8 +90,8 @@ define([], function () {
           }
         },
         yAxis: [
-          { },
-          { opposite: true }
+          { title: {text: 'AEQ / DAY'}},
+          { opposite: true, title: {text: 'QTD difference to PLAN'} }
         ],
         series: [
           { name: name + ' aktuális', data: a, type: 'area', color: 'rgb(100,150,200)', lineWidth: 3 },
