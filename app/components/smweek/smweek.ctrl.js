@@ -218,11 +218,12 @@ define([], function () {
           ttlt += ser[i].tervezesi;
           ttlselejt += ser[i].selejt;
           ttljolap += ser[i].jolap;
+          ttlosszlap += ser[i].ossz;
           avail.data.push({ sm: ser[i].sm, y: parseFloat((ser[i].alltime - (ser[i].muszaki + ser[i].szervezesi + ser[i].tervezesi)) / ser[i].alltime) * 100, min: ser[i].alltime - (ser[i].muszaki + ser[i].szervezesi + ser[i].tervezesi) });
           muszaki.data.push({ sm: ser[i].sm, y: parseFloat(ser[i].muszaki / ser[i].alltime) * 100, min: ser[i].muszaki });
           szervezesi.data.push({ sm: ser[i].sm, y: parseFloat(ser[i].szervezesi / ser[i].alltime) * 100, min: ser[i].szervezesi });
           tervezett.data.push({ sm: ser[i].sm, y: parseFloat(ser[i].tervezesi / ser[i].alltime) * 100, min: ser[i].tervezesi });
-          selejt.data.push({ sm: ser[i].sm, y: 0, slap: ser[i].selejt, lap: ser[i].jolap, percent: parseFloat((ser[i].selejt / ser[i].jolap) * 100) });
+          selejt.data.push({ sm: ser[i].sm, y: 0, slap: ser[i].selejt, lap: ser[i].ossz, percent: parseFloat((ser[i].selejt / ser[i].ossz) * 100) });
         }
         xA.sort();
         avail.data = $filter('orderBy')(avail.data, 'sm');
@@ -306,7 +307,7 @@ define([], function () {
         var tmuszaki = { name: "Műszaki", color: "rgb(255,0,0)", data: [{ y: parseFloat(ttlm / ttla) * 100, min: ttlm }] };
         var tszervezesi = { name: "Szervezési", color: "rgb(150,150,150)", data: [{ y: parseFloat(ttls / ttla) * 100, min: ttls }] };
         var ttervezett = { name: "Tervezett", color: "rgb(50,100,200)", data: [{ y: parseFloat(ttlt / ttla) * 100, min: ttlt }] };
-        var ttselejt = { name: "Selejt", color: 'rgb(250,200,0)', dataLabels: {enabled: true, format: '<span style="font-weight: bold">Össz Selejt: {point.slap} lap</span>'}, data: [{y: 0, slap:ttlselejt, lap: ttljolap, percent: parseFloat(ttlselejt / ttljolap) * 100}], marker: { enabled: false, borderWidth: 0 }, lineWidth:0, type: 'line', tooltip: { useHTML: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.slap} DB</span> / {point.lap} ({point.percent:.2f} %)</span><br/>' } };
+        var ttselejt = { name: "Selejt", color: 'rgb(250,200,0)', dataLabels: {enabled: true, format: '<span style="font-weight: bold">Össz Selejt: {point.slap} lap</span>'}, data: [{y: 0, slap:ttlselejt, lap: ttlosszlap, percent: parseFloat(ttlselejt / ttlosszlap) * 100}], marker: { enabled: false, borderWidth: 0 }, lineWidth:0, type: 'line', tooltip: { useHTML: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.slap} DB</span> / {point.lap} ({point.percent:.2f} %)</span><br/>' } };
         vm.smavailabilitychartconfig = {
           chart: { type: 'column', spacingBottom: 30},
           plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0, dataLabels: {enabled: true, allowOverlap: false, zIndex:1, format: "<span class='back' style='color:rgba(0,0,0,1)'>{point.y:.2f} %</span>", useHTML: true} } },
