@@ -273,6 +273,7 @@ define([], function () {
     vm.aeqs = [
       { name: "Ds12 FLOW", amount: 0.6, sheets: 12 },
       { name: "DS12FLOW", amount: 0.6, sheets: 12 },
+      { name: "DS-D12 FLOW", amount: 0.6, sheets: 12},
       { name: "ZW220 CP5", amount: 0.44, sheets: 28 },
       { name: "ZW230 FLOW", amount: 0.46, sheets: 28 },
       { name: "ZW230 CP5", amount: 0.46, sheets: 28 },
