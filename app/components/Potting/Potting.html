@@ -14,7 +14,7 @@
 					<span class="input-group-addon">Dátum:</span>
 					<input type="text" class="datepicker form-control" ng-model="vm.kezdo" ng-hide="!vm.tobbnapos">
 					<span class="input-group-addon" ng-hide="!vm.tobbnapos">-tól</span>
-					<input type="text" class="datepicker form-control" ng-model="vm.datum">
+					<input type="text" class="datepicker form-control" ng-model="vm.datum" setdate="0d">
 					<span class="input-group-addon" ng-hide="!vm.tobbnapos">-ig</span>
 					<div class="input-group-btn">
 						<a href="" class="btn btn-primary" ng-click="vm.load();vm.datszam()" ng-disabled="vm.dis || ((vm.datum<=vm.kezdo)&& vm.tobbnapos)">Betöltés</a>

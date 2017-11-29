@@ -22,7 +22,7 @@ define([], function () {
         }
       });
       $(function(){
-        element.datepicker('setDate','0d', attrs['setdate']);
+        element.datepicker('setDate', attrs['setdate']);
       });
     }
   }
