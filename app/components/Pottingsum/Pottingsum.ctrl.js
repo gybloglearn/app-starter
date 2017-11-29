@@ -181,7 +181,6 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      loadinfo();
       load();
     }
   }
