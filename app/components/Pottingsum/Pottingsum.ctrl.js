@@ -131,40 +131,39 @@ define([], function () {
       }
     }
 
-    /*function loadinfo() {
+    function loadinfo() {
       vm.pottinginfo = [];
 
       SumserviceService.getAll().then(function (resp) {
         vm.pottinginfo = resp.data;
         console.log(vm.pottinginfo);
       });
-    }*/
+    }
 
     function createinfo(str) {
 
       vm.createinfodata = {};
       vm.actplace = "";
-      vm.descriptioninfo="";
+      vm.descriptioninfo = "";
       vm.startinfo = new Date().getFullYear() + "-" + str.substring(0, 2) + "-" + str.substring(2, 7) + ":" + "00";
       vm.endinfo = new Date().getFullYear() + "-" + str.substring(0, 2) + "-" + str.substring(2, 7) + ":" + "00";
 
-
-      //loadinfo(); //ezt azért hagytam benne mert csak így jelennek meg az input mezők
+      loadinfo();
       vm.mutat = true;
     }
 
-    function saveinfo(){
+    function saveinfo() {
 
       vm.createinfodata.id = new Date().getTime();
       vm.createinfodata.start = vm.startinfo;
       vm.createinfodata.end = vm.endinfo;
-      vm.createinfodata.time = vm.timeinfo = (new Date(vm.endinfo).getTime() - new Date(vm.startinfo).getTime())/60000;
+      vm.createinfodata.time = vm.timeinfo = (new Date(vm.endinfo).getTime() - new Date(vm.startinfo).getTime()) / 60000;
       vm.createinfodata.pottingid = vm.mch;
       vm.createinfodata.place = vm.actplace;
       vm.createinfodata.description = vm.descriptioninfo;
       vm.createinfodata.opid = $rootScope.user.username;
       vm.createinfodata.opname = $rootScope.user.displayname
-      
+
       SumserviceService.post(vm.createinfodata).then(function (resp) {
         vm.showmessage = true;
         vm.createinfodata = {};
@@ -174,14 +173,13 @@ define([], function () {
         }, 5000);
       });
       //loadinfo();
-      vm.mutat=false;
+      vm.mutat = false;
     }
 
     activate();
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      loadinfo();
       load();
     }
   }
