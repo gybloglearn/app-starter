@@ -1,0 +1,85 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">Állásidők</h1>
+      <div class="col-sm-6" style="margin-top:20px">
+        <div class="input-group">
+          <span class="input-group-addon">Dátum</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-30d" end="{{vm.today}}">
+          <span class="input-group-addon">-tól</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="0d" end="{{vm.today}}">
+          <span class="input-group-addon">-ig</span>
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.selectinfo(vm.pottinginfo,vm.startdate,vm.enddate)" ng-disabled="vm.enddate<=vm.startdate">Betöltés</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="tray filter-tray top">
+        <div class="tray-inner">
+          <div class="filter-rule-group">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Potting</span>
+                <select ng-model="search.pottingid" class="form-control ng-pristine ng-untouched ng-valid">
+                  <option value="">Mind</option>
+                  <option value="Potting4">Potting4</option>
+                  <option value="Potting3">Potting3</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Állomás</span>
+                <select ng-model="search.place" class="form-control ng-pristine ng-untouched ng-valid">
+                  <option value="">Mind</option>
+                  <option ng-repeat="pl in vm.place" value="{{pl}}">{{pl}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Kezdő időpont</span>
+                    <input type="text" ng-model="search.start" class="form-control">
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Megjegyzés</span>
+                    <input type="text" ng-model="search.description" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>Potting</th>
+            <th>Kezdő időpont</th>
+            <th>Vége időpont</th>
+            <th>Időtartam (perc)</th>
+            <th>Állomás</th>
+            <th>Megjegyzés</th>
+            <th>Felvétel időpontja</th>
+            <th>Felvevő</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.selectpottinginfo | filter: search track by $index" class="ng-scope">
+            <td>{{item.pottingid}}</td>
+            <td>{{item.start}}</td>
+            <td>{{item.end}}</td>
+            <td>{{item.time}}</td>
+            <td>{{item.place}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.id |date:'yyyy-MM-dd HH:mm'}}</td>
+            <td>{{item.opname}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>

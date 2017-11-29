@@ -41,7 +41,7 @@ class info{
         $mapper->start=$data->start; //kezdő időpont
         $mapper->end=$data->end; //vége időpont
         $mapper->time=$data->time; //tartam
-        $mapper->pottingid=$data->pottingid; //tartam
+        $mapper->pottingid=$data->pottingid; //potting azonosító
         $mapper->place=$data->place; //állomás
         $mapper->description=$data->description; //megjegyzés
         $mapper->opid=$data->opid; //operator azonosító
