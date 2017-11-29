@@ -131,14 +131,14 @@ define([], function () {
       }
     }
 
-    function loadinfo() {
+    /*function loadinfo() {
       vm.pottinginfo = [];
 
       SumserviceService.getAll().then(function (resp) {
         vm.pottinginfo = resp.data;
         console.log(vm.pottinginfo);
       });
-    }
+    }*/
 
     function createinfo(str) {
 
@@ -149,7 +149,7 @@ define([], function () {
       vm.endinfo = new Date().getFullYear() + "-" + str.substring(0, 2) + "-" + str.substring(2, 7) + ":" + "00";
 
 
-      loadinfo(); //ezt azért hagytam benne mert csak így jelennek meg az input mezők
+      //loadinfo(); //ezt azért hagytam benne mert csak így jelennek meg az input mezők
       vm.mutat = true;
     }
 
@@ -173,7 +173,7 @@ define([], function () {
           vm.showtitle = '';
         }, 5000);
       });
-      loadinfo();
+      //loadinfo();
       vm.mutat=false;
     }
 
