@@ -1,8 +1,9 @@
 define([], function () {
   'use strict';
-  function Controller(SumserviceService, $cookies, $state, $rootScope, $filter) {
+  function Controller(SumserviceService, $cookies, $state, $rootScope, $filter, $timeout) {
     var vm = this;
     vm.data = [];
+    vm.pottinginfo = [];
     vm.mch = "Potting4";
     vm.pottings = ["Potting3", "Potting4"];
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
@@ -11,7 +12,9 @@ define([], function () {
     vm.enddate = $filter('date')(new Date().getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.hely = ["Potting be", "Gel Prep Also F", "Uret Prep Also F", "Esztetika Also F", "Forgatas", "Uret Prep Felso F", "Esztetika Felso F", "Potting ki"];
     vm.load = load;
+    vm.saveinfo = saveinfo;
     vm.beallit = beallit;
+    vm.mutat = false;
 
     function beallit() {
       vm.enddate = $filter('date')(new Date(vm.datum).getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
@@ -21,8 +24,6 @@ define([], function () {
     function load() {
       vm.dis = true;
       createdatenumber();
-
-      console.log($filter('date')(vm.kezdo, "yyyy-MM-dd hh:mm:ss") + " - " + $filter('date')(vm.vege, "yyyy-MM-dd hh:mm:ss"));
 
       SumserviceService.get(vm.startdate, vm.enddate, vm.mch).then(function (response) {
         vm.data = response.data;
@@ -65,7 +66,13 @@ define([], function () {
         chart: { type: 'column' },
         plotOptions: {
           column: {
-            borderWidth: 0
+            borderWidth: 0,
+            events: {
+              click: function (ev) {
+                console.log(ev.point.options.cat + " - " + ev.point.series.name);
+                createinfo(ev.point.options.cat);
+              }
+            }
           }
         },
         tooltip: { shared: true },
@@ -103,7 +110,7 @@ define([], function () {
 
     function createdatenumber() {
       vm.kezdo = new Date(vm.datum + " 05:50:50").getTime();
-      vm.vege = vm.kezdo + 24*60*60*1000;
+      vm.vege = vm.kezdo + 24 * 60 * 60 * 1000;
 
       vm.cats = [];
       vm.chartData = [
@@ -124,13 +131,60 @@ define([], function () {
       }
     }
 
+    function loadinfo() {
+      vm.pottinginfo = [];
+
+      SumserviceService.getAll().then(function (resp) {
+        vm.pottinginfo = resp.data;
+        console.log(vm.pottinginfo);
+      });
+    }
+
+    function createinfo(str) {
+
+      vm.createinfodata = {};
+      vm.actplace = "";
+      vm.descriptioninfo="";
+      vm.startinfo = new Date().getFullYear() + "-" + str.substring(0, 2) + "-" + str.substring(2, 7) + ":" + "00";
+      vm.endinfo = new Date().getFullYear() + "-" + str.substring(0, 2) + "-" + str.substring(2, 7) + ":" + "00";
+
+
+      loadinfo(); //ezt azért hagytam benne mert csak így jelennek meg az input mezők
+      vm.mutat = true;
+    }
+
+    function saveinfo(){
+
+      vm.createinfodata.id = new Date().getTime();
+      vm.createinfodata.start = vm.startinfo;
+      vm.createinfodata.end = vm.endinfo;
+      vm.createinfodata.time = vm.timeinfo = (new Date(vm.endinfo).getTime() - new Date(vm.startinfo).getTime())/60000;
+      vm.createinfodata.pottingid = vm.mch;
+      vm.createinfodata.place = vm.actplace;
+      vm.createinfodata.description = vm.descriptioninfo;
+      vm.createinfodata.opid = $rootScope.user.username;
+      vm.createinfodata.opname = $rootScope.user.displayname
+      
+      SumserviceService.post(vm.createinfodata).then(function (resp) {
+        vm.showmessage = true;
+        vm.createinfodata = {};
+        $timeout(function () {
+          vm.showmessage = false;
+          vm.showtitle = '';
+        }, 5000);
+      });
+      loadinfo();
+      vm.mutat=false;
+    }
+
     activate();
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
+      loadinfo();
       load();
     }
   }
-  Controller.$inject = ['SumserviceService', '$cookies', '$state', '$rootScope', '$filter'];
+  Controller.$inject = ['SumserviceService', '$cookies', '$state', '$rootScope', '$filter', '$timeout'];
   return Controller;
 });
