@@ -13,6 +13,25 @@
   font-weight: bold;
   text-align: center;
 }
+.highcharts-tooltip rect{
+  background-color:white;
+  opacity:1;
+  z-index:9999!important;
+}
+.highcharts-series {
+  z-index: -2!important;
+}
+.highcharts-grid {
+  z-index: -3!important;
+}
+.highcharts-data-labels{
+  z-index: -1!important;
+}
+table thead tr th,
+table tbody tr td {
+  white-space: nowrap;
+
+}
 .high {
   line-height: 40px;
   border-bottom: 1px solid #e7e7e7;
@@ -30,6 +49,22 @@
   font-size: 18px;
   background-color: #f8f8f8;
   border-bottom: 1px solid #d8d8d8;
+}
+
+.myselector *{
+  height: auto;
+}
+.myselector select.form-control {
+  height: 52px;
+  padding: 0;
+  overflow: hidden;
+}
+.myselector select.form-control option {
+  display: block;
+  float: left;
+  padding: 5px;
+  width: 25%;
+  text-align: center;
 }
 
 @media (max-width: 979px) {
