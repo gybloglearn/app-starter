@@ -19,7 +19,9 @@ define([
   './filters/sumField',
   './services/plan.service',
   './smweek/smweek.ctrl',
-  './services/weekly.service'
+  './services/weekly.service',
+  './sscrap/sscrap.ctrl',
+  './services/sscrap.service'
 	/* files */
 ], function (
   configFunction,
@@ -42,7 +44,9 @@ define([
   sumField,
   planService,
   smweekController,
-  weeklyService
+  weeklyService,
+  sscrapController,
+  sscrapService
 	/* names */) {
 
     // Link all components to the module !!!
@@ -70,5 +74,7 @@ define([
 		app.service('planService', planService);
 		app.controller('smweekController', smweekController);
 		app.service('weeklyService', weeklyService);
+		app.controller('sscrapController', sscrapController);
+		app.service('sscrapService', sscrapService);
 		/* controllers */
   });
