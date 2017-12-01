@@ -1,5 +1,5 @@
 <?php
-    $dir = scandir('http://3.228.180.13/file_reports/files/pp/');
+$dir = scandir('/var/www/html/file_reports/files/pp/');
     $res = [];
     $f = "";
     foreach($dir as $v){
@@ -7,17 +7,17 @@
             $f ="";
             if(isset($_GET["day"])){
                 if(strrpos($v, $_GET["day"])>0){
-                    $f = file_get_contents('http://3.228.180.13/file_reports/files/pp/'.$v);
+                    $f = file_get_contents('/var/www/html/file_reports/files/pp/'.$v);
                 }
             } else {
                 if(isset($_GET["from"])){
                     $day = intval(substr($v, 3,4));
                     $fr = intval($_GET["from"]);
                     if($day >= $fr){
-                        $f = file_get_contents('http://3.228.180.13/file_reports/files/pp/'.$v);
+                        $f = file_get_contents('/var/www/html/file_reports/files/pp/'.$v);
                     }
                 } else {
-                    $f = file_get_contents('http://3.228.180.13/file_reports/files/pp/'.$v);
+                    $f = file_get_contents('/var/www/html/file_reports/files/pp/'.$v);
                 }
             }
             if(strlen($f)>0){

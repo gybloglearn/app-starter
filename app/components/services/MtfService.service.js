@@ -14,7 +14,8 @@ define([], function () {
     function gettoday(linktoday) {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15/getReports/files/mtf_'+ linktoday+'.json'
+        //url: 'http://3.228.180.15/getReports/files/mtf_'+ linktoday+'.json'
+				url: 'http://3.228.180.13/file_reports/files/mtf/mtf_' + linktoday + '.json'
       };
       return $http(req);
     }
@@ -22,7 +23,8 @@ define([], function () {
     function getoldday(linkoldday) {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15/getReports/files/mtf_'+ linkoldday +'05.json'
+        //url: 'http://3.228.180.15/getReports/files/mtf_'+ linkoldday +'05.json'
+				url: 'http://3.228.180.13/file_reports/files/mtf/mtf_' + linkoldday + '05.json'
       };
       return $http(req);
     }
