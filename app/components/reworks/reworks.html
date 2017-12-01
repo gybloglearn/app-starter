@@ -1,0 +1,72 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">BP Rework</h1>
+      <div class="col-sm-6" style="margin-top:20px">
+        <div class="input-group">
+          <span class="input-group-addon">Betöltésre kerülő időszak:</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="0d" end="{{vm.edate}}">
+          <span class="input-group-addon">-tól</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="0d" end="{{vm.edate}}">
+          <span class="input-group-addon">-ig</span>
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.getdata()" ng-disabled="vm.enddate<vm.startdate">Betöltés</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="row" ng-repeat="shs in (vm.data | unique:'shiftstart')">
+        <hr>
+        <div class="col-sm-12">{{shs.shiftstart}} - {{shs.shift}}</div>
+        <div class="col-sm-6 text-center">
+          <h2>BPzett</h2>
+          <h1>{{ vm.data | filter: {shiftstart: shs.shiftstart, state:'BP'} | sumField:'aeq'}}</h1>
+        </div>
+        <div class="col-sm-6 text-center">
+          <h2>Rework</h2>
+          <h1>{{ vm.data | filter: {shiftstart: shs.shiftstart, state:'Rework'} | sumField:'aeq'}}</h1>
+        </div>
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Modul id</th>
+              <th>Statusz</th>
+              <th>Kád</th>
+              <th>BP időpont</th>
+              <th>Utolsó BP időpont</th>
+              <th>Előző folyamat megnevezése</th>
+              <th>Előző folyamat időpont</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.data | filter: {shiftstart: shs.shiftstart, state:'Rework'} track by $index">
+              <td>{{item.jobid}}</td>
+              <td>{{item.state}}</td>
+              <td>{{item.MachineName}}</td>
+              <td>{{item.BPstart}}</td>
+              <td>{{item.LastBPstart}}</td>
+              <td>{{item.LastOthername}}</td>
+              <td>{{item.LastOtherStart}}</td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">Összesen</div>
+        <div class="col-sm-6 text-center">
+          <h2>BPzett</h2>
+          <h1>{{ vm.data | filter: {state:'BP'} | sumField:'aeq'}}</h1>
+        </div>
+        <div class="col-sm-6 text-center">
+          <h2>Rework</h2>
+          <h1>{{ vm.data | filter: {state:'Rework'} | sumField:'aeq'}}</h1>
+        </div>
+      </div>
+    </div>
+    <div class="module-footer">
+
+    </div>
+  </section>
+</div>

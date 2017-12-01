@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('reworks', {
+		url: '/reworks',
+		templateUrl: './app/components/reworks/reworks.html',
+		controller: 'reworksController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('cl4', {
 		url: '/cl4',
 		templateUrl: './app/components/cl4/cl4.html',

@@ -32,6 +32,8 @@ define([
   './services/map.service',
   './cl4/cl4.ctrl',
   './services/cl4.service'
+	, './reworks/reworks.ctrl'
+	, './services/reworks.service'
 	/* files */
 ], function(
   configFunction,
@@ -67,6 +69,8 @@ define([
   mapService,
   cl4Controller,
   cl4Service
+	, reworksController
+	, reworksService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -105,5 +109,7 @@ define([
 	app.service('mapService', mapService);
 	app.controller('cl4Controller', cl4Controller);
 	app.service('cl4Service', cl4Service);
+		app.controller('reworksController', reworksController);
+		app.service('reworksService', reworksService);
 		/* controllers */
 });
