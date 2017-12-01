@@ -32,6 +32,34 @@ table tbody tr td {
   white-space: nowrap;
 
 }
+.pivot .hover h3{
+  font-weight: bold;
+  font-size: 1.5em;
+  padding: 5px;
+}
+.pivot .hover h4 {
+  font-weight: bold;
+  font-size: 1.5em;
+  padding: 10px;
+}
+.pivot h5{
+  font-weight: bold;
+}
+.pivot .row div[class*="col-"], .pivot .row div[class*="col-"] h5 {
+  display: table-cell;
+  line-height: 40px;
+  height: 40px;
+}
+.pivot .hover{
+  cursor: pointer;
+
+}
+.pivot .hover:hover{
+  background-color: #ddd;
+}
+.pivot .row > div {
+  margin-bottom: 0;
+}
 .high {
   line-height: 40px;
   border-bottom: 1px solid #e7e7e7;
