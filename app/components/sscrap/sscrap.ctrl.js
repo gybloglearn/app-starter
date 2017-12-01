@@ -2,8 +2,8 @@ define([], function () {
   'use strict';
   function Controller(sscrapService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
-    vm.startdate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
-    vm.enddate = $filter('date')(new Date(), 'yyyy-MM-dd');
+    vm.startdate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
+    vm.enddate = $filter('date')(new Date().getTime()+24*60*60*1000, 'yyyy-MM-dd');
     vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     vm.sm = [];
     vm.createdate = createdate;
@@ -86,7 +86,8 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      vm.edate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+
+      vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
       createsheetmakers(vm.startdate, vm.enddate);
     }
   }
