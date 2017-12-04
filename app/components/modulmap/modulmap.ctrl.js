@@ -37,6 +37,39 @@ define([], function () {
     vm.tabl = tabl;
     vm.drawchart = drawchart;
     vm.listreszletes = listreszletes;
+    vm.download = download;
+    vm.downloadenable = false;
+
+
+    function obsKeysToString(o, k, sep) {
+      return k.map(function(key) {
+        if(key == "KatName1"){
+          o[key]=o[key].replace(/[őóö]/ig,"o");
+          o[key]=o[key].replace(/[úűü]/ig,"o");
+          o[key]=o[key].replace(/á/ig,"a");
+          o[key]=o[key].replace(/é/ig,"e");
+          o[key]=o[key].replace(/í/ig,"i");
+        }
+        return o[key]?o[key]:"-";
+      }).filter(function(v) {
+        return v;
+      }).join(sep);
+    }
+
+    function download() {
+      var content = "";
+      content += "KatName1|Oszlop|Sor|bt_datetime|bt_kat_db1|modul_id1|tank\r\n";
+      vm.data = $filter('orderBy')(vm.data, ['tank']);
+      for(var i = 0; i < vm.data.length; i++){
+        content += obsKeysToString(vm.data[i], ['KatName1', 'Oszlop', 'Sor','bt_datetime', 'bt_kat_db1', 'modul_id1', 'tank'], '|');
+        content += "\r\n";
+      }
+      var hiddenElement = document.createElement('a');
+      hiddenElement.href = 'data:attachment/csv;charset=utf8,' + encodeURI(content);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = 'bökés_data_' + $filter('date')(new Date().getTime(), 'yyyyMMddHHmmss') + '.csv';
+      hiddenElement.click();
+    }
 
     function tabl(index) {
       vm.tablazat = $filter('filter')(vm.soroszlopbokes, { azon: index })[0].moduls;
@@ -119,8 +152,15 @@ define([], function () {
       var a = 0;
       var b = 0;
 
+      var counter = 0;
       for (var i = 0; i < tanks.length; i++) {
         mapService.get(vm.startdatum, vm.enddatum, tanks[i]).then(function (response) {
+          counter++;
+          console.log(counter + " --> " + tanks.length);
+          if(counter == tanks.length){
+            vm.downloadenable = true;
+          }
+
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].modul_id1)
             response.data[j].modtype = getModulname(vm.partnumbers, response.data[j].modul_id1)
@@ -325,7 +365,7 @@ define([], function () {
           };
           // -- PARETO END
 
-          console.log(vm.data);
+          //console.log(vm.data);
           //console.log(vm.soroszlopbokes);
           //console.log(vm.osszesmodulbokes);
           //console.log(vm.typedb);

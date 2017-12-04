@@ -2,6 +2,7 @@
 	<section class="module">
 		<div class="module-header">
 			<h1 class="text-center">Bökés térkép - {{vm.acttipus}}</h1>
+			<button class="btn btn-success" ng-click="vm.download()" ng-disabled="!vm.downloadenable"><i class="icon-download"></i> Letöltés</button>
 			<h2 class="text-center" style="margin-top:10px">{{vm.startdatumszam}}-{{vm.enddatumszam}}</h2>
 			<div class="col-sm-6" style="margin-top:10px">
 				<div class="input-group">
@@ -19,8 +20,8 @@
 				<div class="input-group">
 					<span class="input-group-addon">Típus:</span>
 					<select ng-model="vm.acttipus" class="form-control" ng-change="vm.tablazatazon='';vm.putmodul=[];vm.modulnevazon=''">
-                    <option ng-repeat="item in vm.tipusok" value="{{item}}">{{item}}</option>
-                </select>
+						<option ng-repeat="item in vm.tipusok" value="{{item}}">{{item}}</option>
+					</select>
 				</div>
 			</div>
 
@@ -28,9 +29,9 @@
 				<div class="input-group">
 					<span class="input-group-addon">Típus részletes:</span>
 					<select ng-model="vm.actreszlettipus" class="form-control" ng-change="vm.tablazatazon='';vm.putmodul=[];vm.modulnevazon=''">
-                    <option value="Mind">Mind</option>
-                    <option ng-repeat="item in vm.typedb" value="{{item.typename}}">{{item.typename}}</option>
-                </select>
+						<option value="Mind">Mind</option>
+						<option ng-repeat="item in vm.typedb" value="{{item.typename}}">{{item.typename}}</option>
+					</select>
 				</div>
 			</div>
 
@@ -108,7 +109,9 @@
 							</div>
 						</div>
 						<div ng-show="vm.eset=='Modul' && vm.acttipus=='Mind' && vm.actreszlettipus=='Mind'">
-							<h3 style="margin-left:75px" ng-show="vm.modulnevazon"><a class="btn btn-large btn-info" target="_blank" href="../Modulhistory/#/history/{{vm.modulnevazon}}">{{vm.modulnevazon}}</a></h3>
+							<h3 style="margin-left:75px" ng-show="vm.modulnevazon">
+								<a class="btn btn-large btn-info" target="_blank" href="../Modulhistory/#/history/{{vm.modulnevazon}}">{{vm.modulnevazon}}</a>
+							</h3>
 							<div class="row" ng-repeat="sor in vm.sorok track by $index">
 								<div ng-if="sor == '1' || sor == '8'">
 									<div ng-repeat="oszlop in vm.oszlop track by $index" class="blue" title="{{oszlop+sor}}">{{ (vm.putmodul|filter:{'azon':oszlop + sor})| sumField:'db' | number:0 }}</div>
@@ -367,7 +370,9 @@
 							<td>{{item.modul}}</td>
 							<td>{{item.name}}</td>
 							<td>{{item.bokes}}</td>
-							<td ng-click="vm.putmodul=item.bokespozbokes;vm.modulnevazon=item.modul"><i class="icon-info-sign"></i></td>
+							<td ng-click="vm.putmodul=item.bokespozbokes;vm.modulnevazon=item.modul">
+								<i class="icon-info-sign"></i>
+							</td>
 							<!--<td><div class="text-center"><a class="btn btn-primary" ng-click="vm.actcode=item.modul" href="../Modulhistory/#/history">History</a></div></td>-->
 						</tr>
 					</tbody>
@@ -633,40 +638,40 @@
 							<div class="form-group">
 								<span class="control-label" style="color:#FFFFFF">Hiba</span>
 								<select ng-model="search.modulbokeshiba" class="form-control ng-pristine ng-untouched ng-valid">
-                        			<option value="">Mind</option>
-                        			<option ng-repeat="item in vm.tablazat|unique:'modulbokeshiba'" value="{{item.modulbokeshiba}}">{{item.modulbokeshiba}}</option>
-                    			</select>
+									<option value="">Mind</option>
+									<option ng-repeat="item in vm.tablazat|unique:'modulbokeshiba'" value="{{item.modulbokeshiba}}">{{item.modulbokeshiba}}</option>
+								</select>
 							</div>
 						</div>
 						<div class="col-sm-2">
 							<div class="form-group">
 								<span class="control-label" style="color:#FFFFFF">Kád</span>
 								<select ng-model="search.modultank" class="form-control ng-pristine ng-untouched ng-valid">
-                        			<option value="">Mind</option>
-                        			<option ng-repeat="item in vm.kadak" value="{{item}}">{{item}}</option>
-                    			</select>
+									<option value="">Mind</option>
+									<option ng-repeat="item in vm.kadak" value="{{item}}">{{item}}</option>
+								</select>
 							</div>
 						</div>
 						<div class="col-sm-2">
 							<div class="form-group">
 								<span class="control-label" style="color:#FFFFFF">Típus</span>
 								<select ng-model="search.modultype" class="form-control ng-pristine ng-untouched ng-valid">
-                        			<option value>Mind</option>
-                        			<option value="FLOW">FLOW</option>
-                        			<option value="CP5">CP5</option>
-                    			</select>
+									<option value>Mind</option>
+									<option value="FLOW">FLOW</option>
+									<option value="CP5">CP5</option>
+								</select>
 							</div>
 						</div>
 						<div class="col-sm-2">
 							<div class="form-group">
 								<span class="control-label" style="color:#FFFFFF">Szak</span>
 								<select ng-model="search.modulszak" class="form-control ng-pristine ng-untouched ng-valid">
-                        			<option value>Mind</option>
-                        			<option value="A">A</option>
-                        			<option value="B">B</option>
-                        			<option value="C">C</option>
-						            <option value="D">D</option>
-                    			</select>
+									<option value>Mind</option>
+									<option value="A">A</option>
+									<option value="B">B</option>
+									<option value="C">C</option>
+									<option value="D">D</option>
+								</select>
 							</div>
 						</div>
 
@@ -686,7 +691,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="sor in vm.tablazat | orderBy:vm.order:vm.asc | filter: search track by $index" class="ng-scope">
+					<tr ng-repeat="sor in vm.tablazat | orderBy:vm.order:vm.asc | filter: search track by $index">
 						<td>{{sor.moduldatum}}</td>
 						<td>{{sor.modulazon}}</td>
 						<td>{{sor.modulbokeshiba}}</td>
