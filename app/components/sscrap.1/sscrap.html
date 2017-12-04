@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="col-sm-2 col-sm-offset-5 text-center">
-          <a href="" class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.enddate<vm.startdate">Betöltés</a>
+          <a href="" class="btn btn-primary" ng-click="vm.createdate(vm.enddate)" ng-disabled="vm.enddate<vm.startdate">Betöltés</a>
         </div>
       </div>
     </div>
@@ -43,16 +43,16 @@
         <div class="col-sm-1">Jó AEQ</div>
         <div class="col-sm-1">Jó Modul</div>
         <div class="col-sm-1">Átadott lap</div>
-        <div class="col-sm-1">Selejt lap</div>
+        <div class="col-sm-1">Rossz</div>
       </div>
       <div class="pivot" ng-repeat="date in vm.sm | unique: 'date' | orderBy:'date' track by $index">
         <div class="row hover" ng-click="showshifts=!showshifts">
           <div class="col-sm-6">
             <h3>{{date.date}}</h3>
           </div>
-          <div class="col-sm-1">{{vm.sm | filter:{date: date.date} | sumField: 'ttlamount' | number:0}}</div>
-          <div class="col-sm-1">{{vm.sm | filter:{date: date.date} | sumField: 'amount' | number:0}}</div>
-          <div class="col-sm-1">{{vm.sm | filter:{date: date.date} | sumField: 'sumaeq' | number:2}}</div>
+          <div class="col-sm-1">{{vm.sm | filter:{date: date.date} | sumField: 'total' | number:0}}</div>
+          <div class="col-sm-1">{{vm.sm | filter:{date: date.date} | sumField: 'good' | number:0}}</div>
+          <div class="col-sm-1">{{vm.sm | filter:{date: date.date} | sumField: 'aeq' | number:2}}</div>
           <div class="col-sm-1">{{vm.sm | filter:{date: date.date} | sumField: 'modul' | number:0}}</div>
           <div class="col-sm-1 text-ge-light-grey">{{vm.sm | filter:{date: date.date} | sumField: 'lsh' | number:0}}</div>
           <div class="col-sm-1">{{vm.sm | filter:{date: date.date} | sumField: 'bad' | number:0}}</div>
@@ -62,9 +62,9 @@
             <div class="col-sm-offset-2 col-sm-4">
               <h4>{{sh==1?'DE':'DU'}} - {{sh | shift:date.date}}</h4>
             </div>
-            <div class="col-sm-1">{{vm.sm | filter:{date: date.date, shiftnum: sh} | sumField: 'ttlamount' | number:0}}</div>
-            <div class="col-sm-1">{{vm.sm | filter:{date: date.date, shiftnum: sh} | sumField: 'amount' | number:0}}</div>
-            <div class="col-sm-1">{{vm.sm | filter:{date: date.date, shiftnum: sh} | sumField: 'sumaeq' | number:2}}</div>
+            <div class="col-sm-1">{{vm.sm | filter:{date: date.date, shiftnum: sh} | sumField: 'total' | number:0}}</div>
+            <div class="col-sm-1">{{vm.sm | filter:{date: date.date, shiftnum: sh} | sumField: 'good' | number:0}}</div>
+            <div class="col-sm-1">{{vm.sm | filter:{date: date.date, shiftnum: sh} | sumField: 'aeq' | number:2}}</div>
             <div class="col-sm-1">{{vm.sm | filter:{date: date.date, shiftnum: sh} | sumField: 'modul' | number:0}}</div>
             <div class="col-sm-1 text-ge-light-grey">{{vm.sm | filter:{date: date.date, shiftnum: sh} | sumField: 'lsh' | number:0}}</div>
             <div class="col-sm-1">{{vm.sm | filter:{date: date.date, shiftnum: sh} | sumField: 'bad' | number:0}}</div>
@@ -75,9 +75,9 @@
                 <h5>{{item.id}}</h5>
               </div>
               <div class="col-sm-2"><span ng-if="(vm.sm | filter: {date:date.date, shiftnum:sh, id:item.id}).length == 1">{{item.type}}</span></div>
-              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'ttlamount' | number:0}}</div>
-              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'amount' | number:0}}</div>
-              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'sumaeq' | number:2}}</div>
+              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'total' | number:0}}</div>
+              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'good' | number:0}}</div>
+              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'aeq' | number:2}}</div>
               <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'modul' | number:0}}</div>
               <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'lsh' | number:0}}</div>
               <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'bad' | number:0}}</div>
@@ -85,12 +85,12 @@
             <div ng-if="(vm.sm | filter: {date:date.date, shiftnum:sh, id:item.id}).length > 1" class="row" ng-repeat="it in vm.sm | filter: {date: date.date, shiftnum:sh, id: item.id} | orderBy: 'type'" ng-show="showtypes">
               <div class="col-sm-4"></div>
               <div class="col-sm-2">{{it.type}}</div>
-              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh, type: it.type} | sumField: 'ttlamount' | number:0}}</div>
-              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh, type: it.type} | sumField: 'amount' | number:0}}</div>
-              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh, type: it.type} | sumField: 'sumaeq' | number:2}}</div>
-              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh, type: it.type} | sumField: 'modul' | number:0}}</div>
-              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh, type: it.type} | sumField: 'lsh' | number:0}}</div>
-              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh, type: it.type} | sumField: 'bad' | number:0}}</div>
+              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'total' | number:0}}</div>
+              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'good' | number:0}}</div>
+              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'aeq' | number:2}}</div>
+              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'modul' | number:0}}</div>
+              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'lsh' | number:0}}</div>
+              <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'bad' | number:0}}</div>
             </div>
           </div>
         </div>
