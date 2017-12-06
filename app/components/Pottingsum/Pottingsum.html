@@ -46,6 +46,7 @@
             <input type="text" class="form-control" ng-model="vm.endinfo">
             <span class="input-group-addon">Állomás</span>
             <select class="form-control" ng-model="vm.actplace">
+              <option value="{{vm.mch}}">{{vm.mch}}</option>
               <option ng-repeat="pl in vm.hely" value="{{pl}}">{{pl}}</option>
             </select>
           </div>
