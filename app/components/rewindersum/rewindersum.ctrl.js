@@ -2,7 +2,7 @@ define([], function () {
   'use strict';
   function Controller(rewindersumService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
-    
+
     vm.startdate=$filter('date')(new Date().getTime()-7*24*3600*1000, 'yyyy-MM-dd');
     vm.enddate=$filter('date')(new Date().getTime()-24*3600*1000, 'yyyy-MM-dd');
     vm.startdatenum=$filter('date')(new Date().getTime()-7*24*3600*1000, 'yyyy-MM-dd');
@@ -23,13 +23,17 @@ define([], function () {
       var datediff=(new Date(vm.enddate).getTime()-new Date(vm.startdate).getTime())/(24*3600*1000)+1;
       for(var i=datediff;i>0;i--){
         var actnum=$filter('date')(new Date(vm.enddate).getTime()-(i-1)*24*3600*1000, 'yyyyMMdd');
-        
+        var counter = datediff;
         rewindersumService.get(actnum).then(function (response) {
+          counter--;
           for(var j=0;j<response.data.length;j++){
             response.data[j].shift=$filter('shift')(response.data[j].ShiftNum,response.data[j].date);
             response.data[j].ProducedLength=response.data[j].ProducedLength*1;
             response.data[j].P_Count=response.data[j].P_Count*1;
             vm.data.push(response.data[j])
+          }
+          if(counter == 0) {
+            console.log(vm.data);
           }
           createchartdata(vm.data,datediff);
           vm.loading=false;
@@ -38,7 +42,7 @@ define([], function () {
     }
 
     function createchartdata(arr,num){
-      
+
       vm.chartdata=[];
       for(var i=num;i>0;i--){
         var obj = {};

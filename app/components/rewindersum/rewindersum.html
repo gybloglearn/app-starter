@@ -25,6 +25,35 @@
         <mychart id="chart" config="vm.chartconfig_col"></mychart>
       </div>
     </div>
-    <div class="module-footer"></div>
+    <div class="module-footer">
+      <div class="col-sm-8 col-sm-offset-2">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th colspan="6">Elkészül dobok száma szakonként</th>
+          </tr>
+          <tr>
+            <th>Nap</th>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+            <th>D</th>
+            <th>Napi Össz</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="da in (vm.data | unique:'date') track by $index">
+            <td>{{da.date}}</td>
+            <td ng-repeat="sh in ['A','B','C','D'] track by $index">
+              {{ vm.data | filter: {'date': da.date, shift: sh} | sumField: 'P_Count'| number:0}}
+            </td>
+            <td>
+              {{ vm.data | filter: {'date': da.date} | sumField: 'P_Count'| number:0}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
   </section>
 </div>
