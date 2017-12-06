@@ -10,8 +10,8 @@
 							<div class="form-group">
 								<span class="control-label" style="color:#FFFFFF">Cikkszám</span>
 								<select class="form-control" ng-model="vm.part">
-							      <option ng-repeat="item in vm.partnumbers" value="{{item.id}}">{{item.id}} - {{item.name}}</option>
-						</select>
+									<option ng-repeat="item in vm.partnumbers" value="{{item.id}}">{{item.id}} - {{item.name}}</option>
+								</select>
 							</div>
 						</div>
 
@@ -29,6 +29,9 @@
 					</div>
 				</div>
 				<h2 class="text-center" style="color:#FFFFFF"> Lekérdezett adagszám: {{vm.code}}</h2>
+				<h3 ng-show="vm.code">
+					<a class="btn btn-large btn-info" target="_blank" href="../Modulhistory/#/Moduldata/{{vm.code}}">Moduldata adatok</a>
+				</h3>
 			</div>
 		</div>
 		<div class="module-body">

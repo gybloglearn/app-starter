@@ -1,0 +1,123 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">Moduldata</h1>
+    </div>
+    <div class="module-body">
+      <div class="tray filter-tray top">
+        <div class="tray-inner">
+          <div class="filter-rule-group">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Cikkszám</span>
+                <select class="form-control" ng-model="vm.part">
+                  <option ng-repeat="item in vm.egyedi" value="{{item.id}}">{{item.id}} - {{item.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Szériaszám</span>
+                <input class="form-control" type="text" ng-model="vm.valid" ng-change="vm.check(vm.valid)" maxlength="10">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <button class="btn btn-info" style="margin-top:20px" ng-click="vm.create_code(vm.valid)" ng-disabled="vm.in!='Helyes adat' || !vm.part || vm.dis">Lekérdezés</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h2 class="text-center" style="color:#FFFFFF"> Lekérdezett adagszám: {{vm.code}}</h2>
+        <div class="tray-inner">
+          <div class="filter-rule-group">
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Machinename</span>
+                <select ng-model="search.machinename" class="form-control">
+                  <option value=>Mind</option>
+                  <option ng-repeat="item in vm.machine" value="{{item.machinename}}">{{item.machinename}}</option>
+                </select>
+              </div>
+            </div>
+
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Start_Shift</span>
+                <select ng-model="search.Start_Shift" class="form-control">
+                  <option value>Mind</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">End_Shift</span>
+                <select ng-model="search.End_shift" class="form-control">
+                  <option value>Mind</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Phasename</span>
+                <select ng-model="search.phasename" class="form-control ng-pristine ng-untouched ng-valid">
+                  <option value>Mind</option>
+                  <option ng-repeat="item in vm.phase" value="{{item.phasename}}">{{item.phasename}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-footer">
+      <div class="progress progress-warning progress-striped active" ng-hide="!vm.loading">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Betöltés...</p>
+        </div>
+      </div>
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>machinename</th>
+            <th>StartDate</th>
+            <th>Start_Shift</th>
+            <th>Code</th>
+            <th>phasename</th>
+            <th>propertyname</th>
+            <th>EndDate</th>
+            <th>End_shift</th>
+            <th>LotID</th>
+            <th>PropertyValue</th>
+          </tr>
+        </thead>
+        <tbody style="background-color:#ffffff">
+          <tr ng-repeat="item in vm.data | filter: search track by $index" class="ng-scope">
+            <td>{{item.machinename}}</td>
+            <td>{{item.StartDate}}</td>
+            <td>{{item.Start_Shift}}</td>
+            <td>{{item.Code}}</td>
+            <td>{{item.phasename}}</td>
+            <td>{{item.propertyname}}</td>
+            <td>{{item.EndDate}}</td>
+            <td>{{item.End_shift}}</td>
+            <td>{{item.LotID}}</td>
+            <td>{{item.PropertyValue}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

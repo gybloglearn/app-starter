@@ -8,7 +8,9 @@ define([
   './services/history.service',
   './history/history.ctrl',
   './filters/unique',
-  './services/event.service'
+  './services/event.service',
+  './Moduldata/Moduldata.ctrl',
+  './services/moduldata.service'
 	/* files */
 ], function(
   configFunction,
@@ -20,7 +22,9 @@ define([
   historyService,
   historyController,
   unique,
-  eventService
+  eventService,
+  ModuldataController,
+  moduldataService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -36,5 +40,7 @@ define([
 	app.controller('historyController', historyController);
   app.filter('unique',unique);
 	app.service('eventService', eventService);
+	app.controller('ModuldataController', ModuldataController);
+	app.service('moduldataService', moduldataService);
 		/* controllers */
 });
