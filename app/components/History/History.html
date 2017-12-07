@@ -1,0 +1,52 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">ZW1000 Modulgyártási lapok</h1>
+      <div class="tray filter-tray top" style="margin-top:10px">
+        <div class="tray-inner">
+          <div class="filter-rule-group">
+
+            <div class="col-sm-4">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Cikkszám</span>
+                <select class="form-control" ng-model="vm.part">
+                  <option ng-repeat="item in vm.moduls" value="{{item.Values}}">{{item.Values}} - {{item.Label}}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Szériaszám</span>
+                <input class="form-control" type="text" ng-model="vm.valid" ng-change="vm.check(vm.valid)" maxlength="10">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <button class="btn btn-info" style="margin-top:20px" ng-click="vm.create_code(vm.valid)" ng-disabled="!vm.beviheto || !vm.part || vm.loading">Lekérdezés</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h2 class="text-center" style="color:#FFFFFF"> Lekérdezett adagszám: {{vm.code}}</h2>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="progress progress-warning progress-striped active" ng-hide="!vm.loading">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Betöltés...</p>
+        </div>
+      </div>
+      <button class="btn btn-primary" ng-show="vm.code" ng-click="vm.tablesave()">Mentés PDF-formátumba</button>
+      <div class="col-sm-8 col-sm-offset-2" id="exportTable">
+        <table class="table">
+          <tr ng-repeat="d in vm.d">
+            <th class="text-right">{{d.name}}:</th>
+            <td>{{d.value}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>
