@@ -27,10 +27,29 @@ define([], function () {
             response.data[j].lsh = (response.data[j].amount - response.data[j].modul * response.data[j].sheets);
             if (response.data[j].category == 'GOOD') {
               response.data[j].ttlamount = response.data[j - 1].amount;
+              response.data[j].diff = response.data[j].ttlamount - response.data[j].amount;
               vm.sm.push(response.data[j]);
             }
           }
           if (counter == vm.sheetmakers.length) {
+            vm.sm = $filter('orderBy')(vm.sm, ['date']);
+            for (var x = 0; x < vm.sm.length; x++) {
+              var prev = {};
+              console.log('actual:');
+              console.log(vm.sm[x]);
+              var d = $filter('date')(new Date(vm.sm[x].date).getTime() - 24 * 60 * 60 * 1000, 'yyyy-MM-dd');
+              console.log(d);
+
+              if (new Date(vm.startdate).getTime() <= new Date(d).getTime()) {
+                if (vm.sm[x].shiftnum == 1) {
+                  prev = $filter('filter')(vm.sm, { date: d, shiftnum: 3, id: vm.sm[x].id, type: vm.sm[x].type })[0];
+                } else {
+                  prev = $filter('filter')(vm.sm, { date: vm.sm[x].date, shiftnum: 1, id: vm.sm[x].id, type: vm.sm[x].type })[0];
+                }
+              }
+              console.log('previous:');
+              console.log(prev);
+            }
             scrapload();
           }
         });
@@ -42,12 +61,19 @@ define([], function () {
         for (var i = 0; i < vm.sm.length; i++) {
           vm.sm[i].bad = 0;
           for (var j = 0; j < response.data.length; j++) {
-            if (vm.sm[i].date == response.data[j].day && vm.sm[i].shift == response.data[j].shift && vm.sm[i].id.includes(response.data[j].sm)) {
+            if (response.data[j].chem == "DS- D12 FLOW") {
+              response.data[j].chem = "CS-D12 FLOW";
+            }
+            if (response.data[j].chem == "DS- D13 CP5") {
+              response.data[j].chem = "CS-D13 CP5";
+            }
+
+            if (vm.sm[i].date == response.data[j].day && vm.sm[i].shift == response.data[j].shift && vm.sm[i].id.includes(response.data[j].sm) && (vm.sm[i].type == response.data[j].chem || vm.sm[i].type == "DX" && response.data[j].chem == "D12 FLOW") ) {
               vm.sm[i].bad += response.data[j].pc;
             }
           }
         }
-        console.log(vm.sm);
+        vm.loading = false;
       });
     }
 
@@ -56,6 +82,7 @@ define([], function () {
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
+      vm.loading = true;
       load();
     }
 
@@ -63,6 +90,7 @@ define([], function () {
       { name: "Ds12 FLOW", amount: 0.6, sheets: 12 },
       { name: "DS12FLOW", amount: 0.6, sheets: 12 },
       { name: "DS-D12 FLOW", amount: 0.6, sheets: 12 },
+      { name: "DS- D12 FLOW", amount: 0.6, sheets: 12 },
       { name: "CS-D12 FLOW", amount: 0.6, sheets: 12 },
       { name: "ZW220 CP5", amount: 0.44, sheets: 28 },
       { name: "ZW230 FLOW", amount: 0.46, sheets: 28 },
@@ -80,14 +108,15 @@ define([], function () {
       { name: "A27 FLOW", amount: 1, sheets: 27 },
       { name: "B32 CP5", amount: 1.3, sheets: 32 },
       { name: "B32 FLOW", amount: 1.3, sheets: 32 },
-      { name: "DS- D13 CP5", amount: 0.7, sheets: 13 },
       { name: "ZW500Ds13 old yarn CP5", amount: 0.7, sheets: 13 },
       { name: "ZW500Ds13 new yarn CP5", amount: 0.7, sheets: 13 },
       { name: "ZW500Ds12 old yarn FLOW", amount: 0.6, sheets: 12 },
       { name: "ZW500Ds12 new yarn FLOW", amount: 0.6, sheets: 12 },
       { name: " D13 CP5", amount: 0.88, sheets: 13 },
       { name: "DS13CP5", amount: 0.7, sheets: 13 },
+      { name: "DS- D13 CP5", amount: 0.7, sheets: 13 },
       { name: "DS-D13 CP5", amount: 0.7, sheets: 13 },
+      { name: "CS-D13 CP5", amount: 0.7, sheets: 13 },
       { name: "DS-D13 CP55", amount: 0.7, sheets: 13 },
       { name: "ZB500S", amount: 0.6, sheets: 16 },
       { name: "ZB500", amount: 0.6, sheets: 16 },
