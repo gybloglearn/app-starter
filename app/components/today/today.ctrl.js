@@ -30,19 +30,19 @@ define([], function () {
         case 'sm':
           //var number = $filter('sumField')($filter('filter')(vm.data, {machine: 'SheetMaker', shift: shiftnum}), 'sumaeq');
           target = (vm.rates.min / div) / (1 - vm.rates.modscrap / 100) / (1 - vm.rates.smscrap / 100) / (1440/div) * vm.passedmins[shiftnum];
-          console.log(number + " - to - " + target);
+          //console.log(number + " - to - " + target);
           break;
         case 'potting':
           target = (vm.rates.min / div) / (1 - vm.rates.modscrap / 100) / (1440/div) * vm.passedmins[shiftnum];
-          console.log(number + " - to - " + target);
+          //console.log(number + " - to - " + target);
           break;
         case 'bp':
           target = (vm.rates.bp / div) / (1440/div) * vm.passedmins[shiftnum];
-          console.log(number + " - to - " + target);
+          //console.log(number + " - to - " + target);
           break;
         case 'min':
           target = (vm.rates.min / div) / (1440/div) * vm.passedmins[shiftnum];
-          console.log(number + " - to - " + target);
+          //console.log(number + " - to - " + target);
           break;
       }
       if(number > 0) {
