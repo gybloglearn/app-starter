@@ -240,7 +240,7 @@ define([], function () {
       else if (nowtime >= 1430 && nowtime < 1440) {
         vm.actplan = Math.round((szam / 360) * (nowtime - 1430));
       }
-      else if (nowtime < 350) {
+      else{
         vm.actplan = Math.round((szam / 360) * (10 + nowtime));
       }
       return vm.actplan;
