@@ -3,18 +3,21 @@
     <div class="module-header">
       <h1 class="text-center">{{vm.actdry}}</h1>
       <ul class="nav nav-tabs" style="margin-top:10px">
-				<li ng-repeat="item in vm.drylist track by $index">
-					<a data-toggle="tab" href="" ng-click="vm.actdry=item;vm.load()" ng-hide="vm.dis">{{item}}</a>
-				</li>
-			</ul>
+        <li ng-repeat="item in vm.drylist track by $index">
+          <a data-toggle="tab" href="" ng-click="vm.actdry=item;vm.load()" ng-hide="vm.dis">{{item}}</a>
+        </li>
+        <li>
+          <a data-toggle="tab" href="" ng-click="vm.archive=true;vm.loadarchive();" ng-hide="vm.dis">Arhívum</a>
+        </li>
+      </ul>
     </div>
     <div class="module-body">
       <div class="progress progress-warning progress-striped active" ng-hide="!vm.dis">
-				<div class="progress-bar" style="width: 100%">
-					<p class="text-center">Betöltés...</p>
-				</div>
-			</div>
-      <table class="table table-condensed">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Betöltés...</p>
+        </div>
+      </div>
+      <table class="table table-condensed" ng-show="!vm.archive">
         <thead>
           <tr>
             <th>Szárító</th>
@@ -42,6 +45,47 @@
           </tr>
         </tbody>
       </table>
+    </div>
+    <div ng-show="vm.archive">
+      <div class="col-sm-6 col-sm-offset-3">
+        <div class="input-group">
+          <span class="input-group-addon">Elérhető adatok</span>
+          <select name="" id="" class="form-control" ng-model="vm.link">
+            <option value="{{item.link}}" ng-repeat="item in vm.loads">{{item.name}}</option>
+          </select>
+          <div class="input-group-btn">
+            <button class="btn btn-info" ng-click="vm.loadarchivefile()">Betöltés</button>
+          </div>
+        </div>
+      </div>
+      <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Szárító</th>
+              <th>Dátum</th>
+              <th>Szak</th>
+              <th>Keret</th>
+              <th>Modul A</th>
+              <th>Modul B</th>
+              <th>Aktuális ciklus</th>
+              <th>Cél</th>
+              <th>Idő a célig</th>
+            </tr>
+          </thead>
+          <tbody id="exportTable">
+            <tr ng-repeat="item in vm.dryarchivedata track by $index">
+              <td>{{item.machinename}}</td>
+              <td>{{item.startdate}}</td>
+              <td>{{item.startshift}}</td>
+              <td>{{item.fixture}}</td>
+              <td>{{item.modul_a}}</td>
+              <td>{{item.modul_b}}</td>
+              <td>{{item.Current_Cycle}}</td>
+              <td>{{item.Target}}</td>
+              <td>{{item.Time_to_Go}}</td>
+            </tr>
+          </tbody>
+        </table>
     </div>
     <div class="module-footer"></div>
   </section>
