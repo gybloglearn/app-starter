@@ -14,7 +14,7 @@ define([], function () {
       var y = year?year+'/':'';
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.15/getReports/files/' + y + 'mtf_'+day+'05.json'
+        url: 'http://3.228.180.13/file_reports/files/mtf/' + y + 'mtf_'+day+'05.json'
       };
       return $http(req);
     }

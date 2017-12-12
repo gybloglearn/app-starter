@@ -61,6 +61,8 @@ define([], function () {
       content += "KatName1|Oszlop|Sor|bt_datetime|bt_kat_db1|modul_id1|tank\r\n";
       vm.data = $filter('orderBy')(vm.data, ['tank']);
       for(var i = 0; i < vm.data.length; i++){
+        vm.data[i].KatName1 = vm.data[i].KatName1.replace(/(?:\r\n|\r|\n)/g,' ').replace(/(?:")/g, '');
+        console.log(vm.data[i].KatName1);
         content += obsKeysToString(vm.data[i], ['KatName1', 'Oszlop', 'Sor','bt_datetime', 'bt_kat_db1', 'modul_id1', 'tank'], '|');
         content += "\r\n";
       }
