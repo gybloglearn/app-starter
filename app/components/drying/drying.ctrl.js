@@ -20,12 +20,12 @@ define([], function () {
     }
 
     function loadarchive(){
-      var sttime = new Date('2017-12-12 11:50:00').getTime();
+      var sttime = new Date('2017-12-12 05:50:00').getTime();
       var enddate = new Date().getTime();
       var loadstodo = Math.floor((enddate - sttime) / (6*60*60*1000));
       vm.loads = [];
       for(var i = 0; i<loadstodo ; i++){
-        vm.loads.push({name: $filter('date')(new Date(sttime + i*6*60*60*1000).getTime(), 'yyyy-MM-dd HH:mm'), link: $filter('date')(new Date(sttime + i*6*60*60*1000).getTime(), 'yyyyMMddHH')});
+        vm.loads.push({name: $filter('date')(new Date(sttime + (i+1)*6*60*60*1000).getTime(), 'yyyy-MM-dd HH:mm'), link: $filter('date')(new Date(sttime + (i+1)*6*60*60*1000).getTime(), 'yyyyMMddHH')});
       }
     }
 

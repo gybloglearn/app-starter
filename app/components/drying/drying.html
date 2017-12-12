@@ -4,7 +4,7 @@
       <h1 class="text-center">{{vm.actdry}}</h1>
       <ul class="nav nav-tabs" style="margin-top:10px">
         <li ng-repeat="item in vm.drylist track by $index">
-          <a data-toggle="tab" href="" ng-click="vm.actdry=item;vm.load()" ng-hide="vm.dis">{{item}}</a>
+          <a data-toggle="tab" href="" ng-click="vm.actdry=item;vm.archive=false;vm.load()" ng-hide="vm.dis">{{item}}</a>
         </li>
         <li>
           <a data-toggle="tab" href="" ng-click="vm.archive=true;vm.loadarchive();" ng-hide="vm.dis">Arhívum</a>
