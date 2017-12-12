@@ -20,7 +20,7 @@ define([], function () {
     }
 
     function loadarchive(){
-      var sttime = new Date('2017-12-06 17:50:00').getTime();
+      var sttime = new Date('2017-12-12 11:50:00').getTime();
       var enddate = new Date().getTime();
       var loadstodo = Math.floor((enddate - sttime) / (6*60*60*1000));
       vm.loads = [];
