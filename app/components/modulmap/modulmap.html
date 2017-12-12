@@ -40,7 +40,8 @@
 			<div class="col-sm-12" style="margin-top:10px">
 				<ul class="nav nav-tabs" style="margin-top:10px">
 					<li ng-repeat="item in vm.esetek track by $index">
-						<a data-toggle="tab" href="" ng-click="vm.eset=item;vm.putmodul=[];vm.modulnevazon=''" ng-hide="vm.mtfload">{{item}}</a>
+						<a ng-if="item != 'Modul'" data-toggle="tab" href="" ng-click="vm.eset=item;vm.putmodul=[];vm.modulnevazon=''" ng-hide="vm.mtfload">{{item}}</a>
+						<a ng-if="item == 'Modul'" data-toggle="tab" href="" ng-click="vm.eset=item;vm.putmodul=[];vm.modulnevazon=''" ng-hide="vm.mtfload" style="text-transform: uppercase; font-weight:bold;background-color: #46ad00; color:white">{{item}}OK</a>
 					</li>
 				</ul>
 			</div>
@@ -110,7 +111,7 @@
 						</div>
 						<div ng-show="vm.eset=='Modul' && vm.acttipus=='Mind' && vm.actreszlettipus=='Mind'">
 							<h3 style="margin-left:75px" ng-show="vm.modulnevazon">
-								<a class="btn btn-large btn-info" target="_blank" href="../Modulhistory/#/history/{{vm.modulnevazon}}">{{vm.modulnevazon}}</a>
+								<a class="btn btn-large btn-info" target="_blank" href="../modulhistory/#/history/{{vm.modulnevazon}}">{{vm.modulnevazon}}</a>
 							</h3>
 							<div class="row" ng-repeat="sor in vm.sorok track by $index">
 								<div ng-if="sor == '1' || sor == '8'">
@@ -355,6 +356,11 @@
 						{{t.typename}} : {{t.db}} db - {{t.db*t.aeq | number:0}} AEQ
 					</li>
 				</ul>
+				<div class="input-group" ng-show="vm.eset=='Modul'">
+					<span class="input-group-addon">Bökés határ:</span>
+					<input type="text" ng-model="vm.bokeshatar" class="form-control">
+					<span class="input-group-addon">felett összesen: {{ (vm.osszesmodulbokes | filter:vm.greater('bokes', vm.bokeshatar)).length}} modul van</span>
+				</div>
 				<table class="table table-striped table-condensed" ng-show="vm.acttipus=='Mind' && vm.eset=='Modul'" style="margin-top:20px">
 					<thead>
 						<tr>
@@ -366,7 +372,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="item in vm.osszesmodulbokes| orderBy:'-bokes'|limitTo:15 track by $index">
+						<tr ng-repeat="item in vm.osszesmodulbokes | filter:vm.greater('bokes', vm.bokeshatar) | orderBy:'-bokes' track by $index">
 							<td>{{item.modul}}</td>
 							<td>{{item.name}}</td>
 							<td>{{item.bokes}}</td>

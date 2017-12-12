@@ -41,6 +41,13 @@ define([], function () {
     vm.downloadenable = false;
 
 
+    vm.greater = function(field, value){
+      return function(item){
+        return item[field] > value;
+      }
+    }
+
+
     function obsKeysToString(o, k, sep) {
       return k.map(function(key) {
         if(key == "KatName1"){
@@ -158,7 +165,6 @@ define([], function () {
       for (var i = 0; i < tanks.length; i++) {
         mapService.get(vm.startdatum, vm.enddatum, tanks[i]).then(function (response) {
           counter++;
-          console.log(counter + " --> " + tanks.length);
           if(counter == tanks.length){
             vm.downloadenable = true;
           }
@@ -367,7 +373,14 @@ define([], function () {
           };
           // -- PARETO END
 
-          //console.log(vm.data);
+          // -- get 1st and 2nd row
+
+          vm.firstrows=[];
+          if(counter == tanks.length){
+            vm.firstrows.push({id:1, data:$filter('filter')(vm.data, {Sor: "1"})});
+            vm.firstrows.push({id:2, data:$filter('filter')(vm.data, {Sor: "2"})});
+            console.log(vm.firstrows);
+          }
           //console.log(vm.soroszlopbokes);
           //console.log(vm.osszesmodulbokes);
           //console.log(vm.typedb);
@@ -383,6 +396,7 @@ define([], function () {
       loadPartnumbers();
       load();
       vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
+      vm.bokeshatar = 50;
     }
 
     function drawchart(index) {
