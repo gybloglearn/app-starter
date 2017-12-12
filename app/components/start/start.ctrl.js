@@ -209,11 +209,11 @@ define([], function () {
             vm.drynumdata = response.data[i];
           }
         }
-        if (vm.drynumdata.frame <= 15) {
+        if (vm.drynumdata.frame <= 19) {
           vm.usenumber = vm.drynumdata.frame;
         }
         else {
-          vm.usenumber = 15;
+          vm.usenumber = 19;
         }
         vm.savedate = vm.drynumdata.save;
         vm.todate=$filter('date')(new Date(vm.savedate).getTime()+(6*3600*1000), 'yyyy-MM-dd HH:mm');
