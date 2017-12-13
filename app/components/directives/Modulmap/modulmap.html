@@ -1,0 +1,39 @@
+<!--direktíva-->
+<div class="modulmap" style="padding: 10px 10px 0px 10px;">
+	<div class="row">
+		<div class="col-sm-3" style="margin-top:10px">
+			<div class="input-group">
+				<span class="input-group-addon">Típus:</span>
+				<select ng-model="acttipus" class="form-control" ng-change="mutatchart = false">
+					<option value="">Mind</option>
+					<option value="FLOW">FLOW</option>
+					<option value="CP5">CP5</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="margin-top:10px">
+		<div class="col-sm-6">
+			<div class="modMap">
+				<div class="row" ng-repeat="sor in ['1','2','3','4','5','6','7','8'] track by $index">
+					<div ng-if="sor == '1' || sor == '8'">
+						<div ng-repeat="oszlop in ['A','B','C','D','E'] track by $index" ng-click="drawchart(oszlop, sor)" class="blue" title="{{oszlop+sor}}">{{ (data|filter:{'Sor':sor, 'Oszlop': oszlop})|filter:{'tipus':acttipus} | sumField:'bt_kat_db1' | number:0 }}</div>
+					</div>
+					<div ng-if="sor=='2' || sor=='6'">
+						<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" ng-click="drawchart(oszlop, sor)" class="yellow" title="{{oszlop+sor}}">{{ (data|filter:{'Sor':sor, 'Oszlop': oszlop})|filter:{'tipus':acttipus}|sumField:'bt_kat_db1' | number:0 }} </div>
+					</div>
+					<div ng-if="sor=='3' || sor=='5'">
+						<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" ng-click="drawchart(oszlop, sor)" class="black" title="{{oszlop+sor}}">{{ (data|filter:{'Sor':sor, 'Oszlop': oszlop})|filter:{'tipus':acttipus}|sumField:'bt_kat_db1' | number:0 }} </div>
+					</div>
+					<div ng-if="sor=='4'">
+						<div ng-repeat="oszlop in ['A','B','C','D'] track by $index" ng-click="drawchart(oszlop, sor)" class="red" title="{{oszlop+sor}}">{{ (data|filter:{'Sor':sor, 'Oszlop': oszlop})|filter:{'tipus':acttipus}|sumField:'bt_kat_db1' | number:0 }} </div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-6" ng-show="mutatchart==true">
+			<mychart id="chart" config="chartconfig"></mychart>
+		</div>
+	</div>
+</div>
