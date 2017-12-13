@@ -115,13 +115,13 @@ define([], function () {
       vm.cats = [];
       vm.chartData = [
         { name: 'Potting Be', color: 'rgb(250,150,100)', data: [] },
-        { name: 'Gel_PREP', color: 'rgb(100,200,50)', data: [] },
-        { name: 'Uret PREP A', color: 'rgb(30,130,180)', data: [] },
-        { name: 'Esztetika A', color: 'rgb(200,50,50)', data: [] },
-        { name: 'Fordit', color: 'rgb(150,220,100)', data: [] },
-        { name: 'Uret PREP F', color: 'rgb(50,150,200)', data: [] },
-        { name: 'Esztetika F', color: 'rgb(250,100,100)', data: [] },
-        { name: 'Potting Ki', color: 'rgb(250,200,150)', data: [] }
+        { visible: false, name: 'Gel_PREP', color: 'rgb(100,200,50)', data: [] },
+        { visible: false, name: 'Uret PREP A', color: 'rgb(30,130,180)', data: [] },
+        { visible: false, name: 'Esztetika A', color: 'rgb(200,50,50)', data: [] },
+        { visible: false, name: 'Fordit', color: 'rgb(150,220,100)', data: [] },
+        { visible: false, name: 'Uret PREP F', color: 'rgb(50,150,200)', data: [] },
+        { visible: false, name: 'Esztetika F', color: 'rgb(250,100,100)', data: [] },
+        { visible: false, name: 'Potting Ki', color: 'rgb(250,200,150)', data: [] }
       ];
       for (var k = 1; k < 25; k++) {
         vm.cats.push($filter('date')(vm.kezdo + k * 60 * 60 * 1000, "MMdd HH"));
