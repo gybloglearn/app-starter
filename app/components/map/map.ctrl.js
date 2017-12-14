@@ -62,25 +62,24 @@ define([], function () {
           }
 
           if (counter == vm.tanks.length) {
-            var stdate = $filter('date')(new Date(vm.startdatum).getTime() - (3 * 24 * 3600 * 1000), 'yyyy-MM-dd');
-            var enddate = $filter('date')(new Date(vm.enddatum).getTime() - (3 * 24 * 3600 * 1000), 'yyyy-MM-dd');
+            var stdate = $filter('date')(new Date(vm.startdatum).getTime() - (4 * 24 * 3600 * 1000), 'yyyy-MM-dd');
+            var enddate = $filter('date')(new Date(vm.enddatum).getTime() - (1 * 24 * 3600 * 1000), 'yyyy-MM-dd');
             
-            for (var a = 0; a < vm.pottings.length; a++) {
-              mapService.getpotting(stdate, enddate, vm.pottings[a]).then(function (rp) {
-            
+            angular.forEach(vm.pottings, function (v, k) {
+              mapService.getpotting(stdate, enddate, v).then(function (rp) {
                 for (var b = 0; b < rp.data.length; b++) {
                   for (var c = 0; c < vm.data.length; c++) {
                     if (vm.data[c].modul_id1 == rp.data[b].JobID) {
                       vm.data[c].sheetmaker = rp.data[b].sm_machinename;
                       vm.data[c].potting = rp.data[b].PT_IN_M;
                       vm.data[c].kenesid = rp.data[b].kenesid;
+                      vm.data[c].smop = rp.data[b].sm_op1;
                     }
                   }
                 }
                 updateModuls(vm.data);
-                console.log(vm.data);
               });
-            }
+            }); 
             vm.mtfload = false;
           }
         });
@@ -125,6 +124,7 @@ define([], function () {
     }
 
     function updateModuls(arr){
+      //console.log(arr);
       vm.moduls=[];
       var t=[];
       t=$filter('unique')(arr,'modul_id1');
@@ -133,9 +133,10 @@ define([], function () {
         obj={
           modul:t[i].modul_id1,
           name:t[i].modtype,
-          //sheetmaker:t[i].sheetmaker,
-          //potting:t[i].potting,
-          //kenesid:t[i].kenesid,
+          sheetmaker:t[i].sheetmaker,
+          smop:t[i].smop,
+          potting:t[i].potting,
+          kenesid:t[i].kenesid,
           tipus:t[i].tipus,
           tank:t[i].tank,
           shift:t[i].shift,          

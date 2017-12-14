@@ -36,6 +36,9 @@
           <tr>
             <th>ID</th>
             <th>Név</th>
+            <th>SheetMaker</th>
+            <th>SM operátor</th>
+            <th>Potting</th>
             <th>Bökés</th>
             <th>Kád</th>
             <th>Modul részletek</th>
@@ -45,6 +48,9 @@
           <tr ng-repeat="item in vm.moduls| filter:vm.greater('bokes', vm.bokeshatar) | orderBy:'-bokes' track by $index">
             <td>{{item.modul}}</td>
             <td>{{item.name}}</td>
+            <td>{{item.sheetmaker}}</td>
+            <td>{{item.smop}}</td>
+            <td>{{item.potting}}</td>
             <td>{{item.bokes}}</td>
             <td>{{item.tank}}</td>
             <td>
