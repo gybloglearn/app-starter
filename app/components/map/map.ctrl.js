@@ -3,12 +3,27 @@ define([], function () {
   function Controller(mapService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
     vm.data = [];
+    vm.moduls=[];
     vm.startdatum = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.startdatumszam = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddatum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.tanks = ["Bubble point tank1", "Bubble point tank2", "Bubble point tank3", "Bubble point tank4", "Bubble point tank5", "Bubble point tank6", "Bubble point tank7", "Bubble point tank12", "Bubble point tank13", "Bubble point tank14", "Bubble point tank15", "Bubble point tank21", "Bubble point tank22", "Bubble point tank23", "Bubble point tank25", "Bubble point tank26"];
     vm.pottings = ["Potting3", "Potting4"];
+    vm.beilleszt = beilleszt;
+    vm.load = load;
+    vm.mtfload = false;
+
+    function beilleszt() {
+      vm.startdatumszam = $filter('date')(new Date(vm.startdatum).getTime(), 'yyyy-MM-dd');
+      vm.enddatumszam = $filter('date')(new Date(vm.enddatum).getTime(), 'yyyy-MM-dd');
+    }
+
+    vm.greater = function(field, value){
+      return function(item){
+        return item[field] > value;
+      }
+    }
 
     function loadPartnumbers() {
       vm.partnumbers = [];
@@ -19,6 +34,7 @@ define([], function () {
     }
 
     function load() {
+      vm.mtfload = true;
       vm.data = [];
       var counter = 0;
 
@@ -40,14 +56,18 @@ define([], function () {
             } else {
               response.data[j].bt_kat_db1 = parseFloat(response.data[j].bt_kat_db1);
             }
-            vm.data.push(response.data[j]);
+            if (response.data[j].modtype != "") {
+              vm.data.push(response.data[j]);
+            }
           }
 
           if (counter == vm.tanks.length) {
             var stdate = $filter('date')(new Date(vm.startdatum).getTime() - (3 * 24 * 3600 * 1000), 'yyyy-MM-dd');
             var enddate = $filter('date')(new Date(vm.enddatum).getTime() - (3 * 24 * 3600 * 1000), 'yyyy-MM-dd');
+            
             for (var a = 0; a < vm.pottings.length; a++) {
               mapService.getpotting(stdate, enddate, vm.pottings[a]).then(function (rp) {
+            
                 for (var b = 0; b < rp.data.length; b++) {
                   for (var c = 0; c < vm.data.length; c++) {
                     if (vm.data[c].modul_id1 == rp.data[b].JobID) {
@@ -57,9 +77,11 @@ define([], function () {
                     }
                   }
                 }
+                updateModuls(vm.data);
+                console.log(vm.data);
               });
             }
-            //console.log(vm.data);
+            vm.mtfload = false;
           }
         });
       }
@@ -102,11 +124,41 @@ define([], function () {
       return name;
     }
 
+    function updateModuls(arr){
+      vm.moduls=[];
+      var t=[];
+      t=$filter('unique')(arr,'modul_id1');
+      for(var i=0;i<t.length;i++){
+        var obj={};
+        obj={
+          modul:t[i].modul_id1,
+          name:t[i].modtype,
+          //sheetmaker:t[i].sheetmaker,
+          //potting:t[i].potting,
+          //kenesid:t[i].kenesid,
+          tipus:t[i].tipus,
+          tank:t[i].tank,
+          shift:t[i].shift,          
+          bokes:0
+        };
+        vm.moduls.push(obj)
+      }
+      for(var i=0;i<vm.moduls.length;i++){
+        for(var j=0;j<arr.length;j++){
+          if(vm.moduls[i].modul==arr[j].modul_id1){
+            vm.moduls[i].bokes+=arr[j].bt_kat_db1;
+          }
+        }
+      }
+      console.log(vm.moduls);
+    }
+
     activate();
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       loadPartnumbers();
+      vm.bokeshatar = 50;
     }
   }
   Controller.$inject = ['mapService', '$cookies', '$state', '$rootScope', '$filter'];

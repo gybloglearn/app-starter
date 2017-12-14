@@ -88,8 +88,9 @@
 		</div>
 
 		<div class="col-sm-6">
-			<h3>Összes bökés: {{ (data)|filter:{'tipus':acttipus}|filter:{'modtype':actreszlettipus} | sumField:'bt_kat_db1' | number:0
-				}} db</h3>
+			<h3>Összes Hiba: {{((data)|filter:{'tipus':acttipus}|filter:{'modtype':actreszlettipus} | sumField:'bt_kat_db1') | number:0}} db</h3>
+			<h3>Összes bökés: {{((data)|filter:{'tipus':acttipus}|filter:{'modtype':actreszlettipus} | sumField:'bt_kat_db1') - (((data)|filter:{'Sor':9})|filter:{'tipus':acttipus}|filter:{'modtype':actreszlettipus} | sumField:'bt_kat_db1') | number:0}} db</h3>
+			<h3>Eltávolított szálak: {{(((data)|filter:{'Sor':9})|filter:{'tipus':acttipus}|filter:{'modtype':actreszlettipus} | sumField:'bt_kat_db1') | number:0}} db</h3>
 			<div ng-show="mutatchart==true">
 				<mychart id="chart" config="chartconfig"></mychart>
 			</div>
