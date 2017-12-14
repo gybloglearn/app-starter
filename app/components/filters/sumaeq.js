@@ -8,7 +8,7 @@ define([], function () {
             angular.forEach(data, function (v, k) {
                 sum = sum + v.aeq;
             });
-            sum = sum.toFixed(2);
+            //sum = sum.toFixed(2);
             return sum;
         };
     };

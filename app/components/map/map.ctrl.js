@@ -34,6 +34,7 @@ define([], function () {
             response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].modul_id1)
             response.data[j].modtype = getModulname(vm.partnumbers, response.data[j].modul_id1)
             response.data[j].tipus = $filter('addtype')(response.data[j].modtype);
+            response.data[j].shift = addShift(response.data[j].bt_datetime);
             if (response.data[j].bt_kat_db1 == "") {
               response.data[j].bt_kat_db1 = 0;
             } else {
@@ -43,8 +44,8 @@ define([], function () {
           }
 
           if (counter == vm.tanks.length) {
-            var stdate = $filter('date')(new Date(vm.startdatum, ).getTime() - (3 * 24 * 3600 * 1000), 'yyyy-MM-dd');
-            var enddate = $filter('date')(new Date(vm.enddatum, ).getTime() - (3 * 24 * 3600 * 1000), 'yyyy-MM-dd');
+            var stdate = $filter('date')(new Date(vm.startdatum).getTime() - (3 * 24 * 3600 * 1000), 'yyyy-MM-dd');
+            var enddate = $filter('date')(new Date(vm.enddatum).getTime() - (3 * 24 * 3600 * 1000), 'yyyy-MM-dd');
             for (var a = 0; a < vm.pottings.length; a++) {
               mapService.getpotting(stdate, enddate, vm.pottings[a]).then(function (rp) {
                 for (var b = 0; b < rp.data.length; b++) {
@@ -58,10 +59,25 @@ define([], function () {
                 }
               });
             }
-            console.log(vm.data);
+            //console.log(vm.data);
           }
         });
       }
+    }
+
+    function addShift(it) {
+      var num = new Date(it).getHours() * 60 + new Date(it).getMinutes();
+      var shiftnum = 0;
+
+      if (num >= 350 && num < 1070) {
+        shiftnum = 1;
+      }
+      else {
+        shiftnum = 3;
+      }
+      var shift = $filter('shift')(shiftnum, $filter('date')(new Date(it).getTime(), 'yyyy-MM-dd'));
+
+      return shift;
     }
 
     function getAEQ(tomb, azon) {

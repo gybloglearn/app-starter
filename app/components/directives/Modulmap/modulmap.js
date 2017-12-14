@@ -12,21 +12,25 @@ define([], function () {
         };
         function ctrl($scope, $filter) {
             $scope.drawchart = drawchart;
+            $scope.count = count;
             $scope.acttipus = "";
+            $scope.actreszlettipus = "";
             $scope.mutatchart = false;
+            $scope.actallapot = "bokes"
+
             function drawchart(osz, sor) {
                 $scope.mutatchart = true;
                 var dt = [];
                 dt = $filter('filter')($scope.data, { Sor: sor, Oszlop: osz });
                 dt = $filter('filter')(dt, { tipus: $scope.acttipus });
-                console.log(dt);
+                dt = $filter('filter')(dt, { modtype: $scope.actreszlettipus });
                 $scope.chartconfig = {
                     chart: {
                         type: 'column',
                         height: 440,
                         width: 500
                     },
-                    title: { text: osz + sor + ' Pozíció' + ' ' + $scope.acttipus },
+                    title: { text: osz + sor + ' Pozíció' + ' ' + $scope.acttipus + ' ' + $scope.actreszlettipus },
                     series: [
                         {
                             name: 'Hibák',
@@ -78,6 +82,12 @@ define([], function () {
                     res[v] = [k[v].nev, k[v].y];
                 }
                 return res;
+            }
+
+            function count() {
+                var t = [];
+                t = $filter('filter')($scope.data, { tipus: $scope.acttipus });
+                $scope.allaeq = $filter('sumaeq')(t);
             }
         }
         return directive;
