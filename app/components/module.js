@@ -4,16 +4,20 @@ define([
   './start/start.ctrl',
   './login/login.ctrl',
   './services/login.service',
-  './services/data.service'
-  /* files */
+  './services/data.service',
+  './History/History.ctrl',
+  './services/history.service'
+	/* files */
 ], function(
   configFunction,
   runFunction,
   startController,
   loginController,
   loginService,
-  dataService
-/* names */) {
+  dataService,
+  HistoryController,
+  historyService
+	/* names */) {
 
   // Link all components to the module !!!
 
@@ -24,5 +28,7 @@ define([
   app.service('Login', loginService);
   app.controller('StartController', startController);
   app.controller('LoginController', loginController);
-  /* controllers */
+  app.controller('HistoryController', HistoryController);
+	app.service('historyService', historyService);
+		/* controllers */
 });

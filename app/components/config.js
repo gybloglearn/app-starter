@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('History', {
+		url: '/History',
+		templateUrl: './app/components/History/History.html',
+		controller: 'HistoryController',
+		controllerAs: 'vm'
+	});
 
   }
   ConfigFunction.$inject = ['$urlRouterProvider', '$stateProvider'];
