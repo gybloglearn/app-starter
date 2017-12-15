@@ -37,7 +37,8 @@
           <p class="text-center">Betöltés...</p>
         </div>
       </div>
-      <button class="btn btn-primary" ng-show="vm.code" ng-click="vm.tablesave()">Mentés PDF-formátumba</button>
+      <div><button class="btn btn-primary" ng-show="vm.code" ng-click="vm.tablesave()">Mentés PDF-formátumba</button></div>
+      
       <div class="col-sm-8 col-sm-offset-2" id="exportTable">
         <table class="table">
           <tr ng-repeat="d in vm.d">
