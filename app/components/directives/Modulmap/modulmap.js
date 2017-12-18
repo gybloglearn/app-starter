@@ -17,6 +17,10 @@ define([], function () {
             $scope.actreszlettipus = "";
             $scope.mutatchart = false;
             $scope.actallapot = "bokes"
+            $scope.oszlopok = ['A', 'B', 'C', 'D', 'E'];
+            $scope.sorok = ['1', '2', '3', '4', '5', '6', '7', '8'];
+            $scope.sheetmakers = ['SheetMaker1', 'SheetMaker2', 'SheetMaker4', 'SheetMaker5', 'SheetMaker6', 'SheetMaker7', 'SheetMaker8','SheetMaker9'];
+            $scope.bokeshatar=35;
 
             function drawchart(osz, sor) {
                 $scope.mutatchart = true;
@@ -89,6 +93,12 @@ define([], function () {
                 t = $filter('filter')($scope.data, { tipus: $scope.acttipus });
                 $scope.allaeq = $filter('sumaeq')(t);
             }
+
+            $scope.greater = function (field, value) {
+                return function (item) {
+                  return item[field] > value;
+                }
+              }
         }
         return directive;
         function link(scope, element, attrs) {

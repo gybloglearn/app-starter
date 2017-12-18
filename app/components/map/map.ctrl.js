@@ -4,9 +4,6 @@ define([], function () {
     var vm = this;
     vm.data = [];
     vm.moduls = [];
-    vm.oszlopok = ['A', 'B', 'C', 'D', 'E'];
-    vm.sorok = ['1', '2', '3', '4', '5', '6', '7', '8'];
-    vm.sheetmakers = ['SheetMaker1', 'SheetMaker2', 'SheetMaker4', 'SheetMaker5', 'SheetMaker6', 'SheetMaker7', 'SheetMaker8','SheetMaker9'];
     vm.startdatum = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.startdatumszam = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddatum = $filter('date')(new Date(), 'yyyy-MM-dd');
@@ -16,17 +13,10 @@ define([], function () {
     vm.beilleszt = beilleszt;
     vm.load = load;
     vm.mtfload = false;
-    vm.tableload = false;
 
     function beilleszt() {
       vm.startdatumszam = $filter('date')(new Date(vm.startdatum).getTime(), 'yyyy-MM-dd');
       vm.enddatumszam = $filter('date')(new Date(vm.enddatum).getTime(), 'yyyy-MM-dd');
-    }
-
-    vm.greater = function (field, value) {
-      return function (item) {
-        return item[field] > value;
-      }
     }
 
     function loadPartnumbers() {
@@ -39,7 +29,6 @@ define([], function () {
 
     function load() {
       vm.mtfload = true;
-      vm.tableload = true;
       vm.data = [];
       var counter = 0;
 
@@ -84,10 +73,9 @@ define([], function () {
                     }
                   }
                 }
-                vm.tableload = false;
+                vm.mtfload = false;
               });
             });
-            vm.mtfload = false;
           }
         });
       }
@@ -135,7 +123,7 @@ define([], function () {
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       loadPartnumbers();
-      vm.bokeshatar = 35;
+      vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
     }
   }
   Controller.$inject = ['mapService', '$cookies', '$state', '$rootScope', '$filter'];
