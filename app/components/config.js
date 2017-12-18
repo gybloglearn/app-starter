@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('map', {
+		url: '/map',
+		templateUrl: './app/components/map/map.html',
+		controller: 'mapController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('reworks', {
 		url: '/reworks',
 		templateUrl: './app/components/reworks/reworks.html',

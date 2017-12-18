@@ -4,7 +4,8 @@ define([], function () {
   function Service($http) {
     var service = {
       get: get,
-      getpartnumber: getpartnumber
+      getpartnumber: getpartnumber,
+      getpotting: getpotting
     };
 
     return service;
@@ -23,6 +24,14 @@ define([], function () {
       var req = {
         method: 'GET',
         url: 'app/components/PHP/MTF_BT.php?startdate=' + start + '&enddate=' + end + '&machineid=' + tank
+      };
+      return $http(req);
+    }
+
+    function getpotting(start, end, mch) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/PottingSSO.php?startdate=' + start + '&enddate=' + end + '&machinename=' + mch
       };
       return $http(req);
     }

@@ -9,6 +9,7 @@ define([
   './services/MtfService.service',
   './directives/datepicker',
   './directives/mychart',
+  './directives/Modulmap/modulmap',
   './filters/sumdb',
   './filters/sumaeq',
   './filters/change',
@@ -31,9 +32,10 @@ define([
   './modulmap/modulmap.ctrl',
   './services/map.service',
   './cl4/cl4.ctrl',
-  './services/cl4.service'
-	, './reworks/reworks.ctrl'
-	, './services/reworks.service'
+  './services/cl4.service',
+  './reworks/reworks.ctrl',
+  './services/reworks.service',
+  './map/map.ctrl'
 	/* files */
 ], function(
   configFunction,
@@ -46,6 +48,7 @@ define([
   MtfService,
   datepicker,
   mychart,
+  modulmapdir,
   sumdb,
   sumaeq,
   change,
@@ -68,9 +71,10 @@ define([
   modulmapController,
   mapService,
   cl4Controller,
-  cl4Service
-	, reworksController
-	, reworksService
+  cl4Service,
+  reworksController,
+  reworksService,
+  mapController
 	/* names */) {
 
   // Link all components to the module !!!
@@ -86,6 +90,7 @@ define([
 	app.service('MtfService', MtfService);
   app.directive('datepicker',datepicker);
   app.directive('mychart',mychart);
+  app.directive('modulmapDir', modulmapdir);
   app.filter('sumdb',sumdb);
   app.filter('sumaeq',sumaeq);
   app.filter('change',change);
@@ -104,12 +109,13 @@ define([
 	app.controller('planController', planController);
 	app.service('planService', planService);
 	app.controller('newtestController', newtestController);
-	app.controller('attemptController', attemptController);
-	app.controller('modulmapController', modulmapController);
+  app.controller('attemptController', attemptController);
+  app.controller('modulmapController', modulmapController);
+  app.controller('mapController', mapController);
 	app.service('mapService', mapService);
 	app.controller('cl4Controller', cl4Controller);
 	app.service('cl4Service', cl4Service);
-		app.controller('reworksController', reworksController);
-		app.service('reworksService', reworksService);
+	app.controller('reworksController', reworksController);
+	app.service('reworksService', reworksService);
 		/* controllers */
 });
