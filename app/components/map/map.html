@@ -28,39 +28,107 @@
         <div class="input-group">
           <span class="input-group-addon">Bökés határ:</span>
           <input type="text" ng-model="vm.bokeshatar" class="form-control">
-          <span class="input-group-addon">felett összesen: {{ (vm.moduls | filter:vm.greater('bokes', vm.bokeshatar)).length}} modul van</span>
+          <span class="input-group-addon">felett összesen: {{ (vm.data | filter:vm.greater('bt_kat_db1', vm.bokeshatar)).length}} hely van</span>
         </div>
       </div>
-      <table class="table table-striped table-condensed" style="margin-top:20px">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Név</th>
-            <th>SheetMaker</th>
-            <th>SM operátor</th>
-            <th>Potting</th>
-            <th>Bökés</th>
-            <th>Kád</th>
-            <th>Modul részletek</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="item in vm.moduls| filter:vm.greater('bokes', vm.bokeshatar) | orderBy:'-bokes' track by $index">
-            <td>{{item.modul}}</td>
-            <td>{{item.name}}</td>
-            <td>{{item.sheetmaker}}</td>
-            <td>{{item.smop}}</td>
-            <td>{{item.potting}}</td>
-            <td>{{item.bokes}}</td>
-            <td>{{item.tank}}</td>
-            <td>
+      <div class="col-sm-12" style="margin-top:20px">
+        <div class="row">
+          <div class="progress progress-warning progress-striped active" ng-hide="!vm.tableload">
+            <div class="progress-bar" style="width: 100%">
+              <p class="text-center">Táblázat frissítése...</p>
+            </div>
+          </div>
+        </div>
+        <div class="tray filter-tray top">
+          <div class="tray-inner">
+            <div class="filter-rule-group">
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <span class="control-label" style="color:#FFFFFF">SheetMaker</span>
+                    <select ng-model="search.sheetmaker" class="form-control ng-pristine ng-untouched ng-valid">
+                      <option value="">Mind</option>
+                      <option ng-repeat="sm in vm.data|unique:'sheetmaker'" value="{{sm.sheetmaker}}">{{sm.sheetmaker}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <span class="control-label" style="color:#FFFFFF">Ford. op.</span>
+                    <select ng-model="search.rot" class="form-control ng-pristine ng-untouched ng-valid">
+                      <option value="">Mind</option>
+                      <option ng-repeat="ford in vm.data|unique:'rot'" value="{{ford.rot}}">{{ford.rot}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <span class="control-label" style="color:#FFFFFF">Sor</span>
+                    <select ng-model="search.Sor" class="form-control ng-pristine ng-untouched ng-valid">
+                      <option value="">Mind</option>
+                      <option ng-repeat="sor in vm.sorok" value="{{sor}}">{{sor}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <span class="control-label" style="color:#FFFFFF">Oszlop</span>
+                    <select ng-model="search.Oszlop" class="form-control ng-pristine ng-untouched ng-valid">
+                      <option value="">Mind</option>
+                      <option ng-repeat="osz in vm.oszlopok" value="{{osz}}">{{osz}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <span class="input-group-addon">Bökés összesen: {{ vm.data| filter:vm.greater('bt_kat_db1', vm.bokeshatar) | filter: search | sumField:'bt_kat_db1'
+                  }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <table class="table table-hover table-condensed table-bordered">
+          <thead>
+            <tr>
+              <th class="text-center">ID</th>
+              <th class="text-center">Név</th>
+              <th class="text-center">SheetMaker</th>
+              <th class="text-center">SM operátor</th>
+              <th class="text-center">Potting</th>
+              <th class="text-center">Ford. op.</th>
+              <th class="text-center">Ford. dátum</th>
+              <th class="text-center">Kád</th>
+              <th class="text-center">Bökés</th>
+              <th class="text-center">Sor</th>
+              <th class="text-center">Oszlop</th>
+              <th class="text-center">Hiba megnevezése</th>
+              <!--th>Modul részletek</th-->
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.data| filter:vm.greater('bt_kat_db1', vm.bokeshatar) | orderBy:'-bt_kat_db1' | filter: search track by $index">
+              <td align="center">{{item.modul_id1}}</td>
+              <td align="center">{{item.modtype}}</td>
+              <td align="center">{{item.sheetmaker}}</td>
+              <td align="center">{{item.smop}}</td>
+              <td align="center">{{item.potting}}</td>
+              <td align="center">{{item.rot}}</td>
+              <td align="center">{{item.rotdate}}</td>
+              <td align="center">{{item.tank}}</td>
+              <td align="center">{{item.bt_kat_db1}}</td>
+              <td align="center">{{item.Sor}}</td>
+              <td align="center">{{item.Oszlop}}</td>
+              <td align="center">{{item.KatName1}}</td>
+              <!--td>
               <div class="text-center">
                 <a class="btn btn-primary" ng-click="vm.actcode=item.modul" target="_blank" href="../Modulhistory/#/history/{{item.modul}}">History</a>
               </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </td-->
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 </div>

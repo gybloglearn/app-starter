@@ -3,7 +3,9 @@ define([], function () {
   function Controller(mapService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
     vm.data = [];
-    vm.moduls=[];
+    vm.moduls = [];
+    vm.oszlopok = ['A', 'B', 'C', 'D', 'E'];
+    vm.sorok = ['1', '2', '3', '4', '5', '6', '7', '8'];
     vm.startdatum = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.startdatumszam = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddatum = $filter('date')(new Date(), 'yyyy-MM-dd');
@@ -13,14 +15,15 @@ define([], function () {
     vm.beilleszt = beilleszt;
     vm.load = load;
     vm.mtfload = false;
+    vm.tableload = false;
 
     function beilleszt() {
       vm.startdatumszam = $filter('date')(new Date(vm.startdatum).getTime(), 'yyyy-MM-dd');
       vm.enddatumszam = $filter('date')(new Date(vm.enddatum).getTime(), 'yyyy-MM-dd');
     }
 
-    vm.greater = function(field, value){
-      return function(item){
+    vm.greater = function (field, value) {
+      return function (item) {
         return item[field] > value;
       }
     }
@@ -35,6 +38,7 @@ define([], function () {
 
     function load() {
       vm.mtfload = true;
+      vm.tableload = true;
       vm.data = [];
       var counter = 0;
 
@@ -64,7 +68,7 @@ define([], function () {
           if (counter == vm.tanks.length) {
             var stdate = $filter('date')(new Date(vm.startdatum).getTime() - (4 * 24 * 3600 * 1000), 'yyyy-MM-dd');
             var enddate = $filter('date')(new Date(vm.enddatum).getTime() - (1 * 24 * 3600 * 1000), 'yyyy-MM-dd');
-            
+
             angular.forEach(vm.pottings, function (v, k) {
               mapService.getpotting(stdate, enddate, v).then(function (rp) {
                 for (var b = 0; b < rp.data.length; b++) {
@@ -74,12 +78,15 @@ define([], function () {
                       vm.data[c].potting = rp.data[b].PT_IN_M;
                       vm.data[c].kenesid = rp.data[b].kenesid;
                       vm.data[c].smop = rp.data[b].sm_op1;
+                      vm.data[c].rot = rp.data[b].PT_ROT_OP;
+                      vm.data[c].rotdate = rp.data[b].PT_ROT_DT;
                     }
                   }
                 }
-                updateModuls(vm.data);
+                vm.tableload = false;
+                console.log(vm.data);
               });
-            }); 
+            });
             vm.mtfload = false;
           }
         });
@@ -123,7 +130,7 @@ define([], function () {
       return name;
     }
 
-    function updateModuls(arr){
+    /*function updateModuls(arr){
       //console.log(arr);
       vm.moduls=[];
       var t=[];
@@ -152,14 +159,14 @@ define([], function () {
         }
       }
       console.log(vm.moduls);
-    }
+    }*/
 
     activate();
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       loadPartnumbers();
-      vm.bokeshatar = 50;
+      vm.bokeshatar = 35;
     }
   }
   Controller.$inject = ['mapService', '$cookies', '$state', '$rootScope', '$filter'];
