@@ -70,6 +70,10 @@ define([], function () {
                       vm.data[c].smop = rp.data[b].sm_op1;
                       vm.data[c].rot = rp.data[b].PT_ROT_OP;
                       vm.data[c].rotdate = rp.data[b].PT_ROT_DT;
+											vm.data[c].rotshift = rp.data[b].PT_ROT_S;
+											vm.data[c].gelprep = rp.data[b].PT_GEL_Prep_OP;
+											vm.data[c].geldate = rp.data[b].PT_GEL_PREP_DT;
+											vm.data[c].gelshift = rp.data[b].PT_GEL_PREP_S;
                     }
                   }
                 }
