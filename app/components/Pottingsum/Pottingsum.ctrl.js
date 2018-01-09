@@ -4,6 +4,7 @@ define([], function () {
     var vm = this;
     vm.data = [];
     vm.pottinginfo = [];
+    vm.dryarchivedata = [];
     vm.mch = "Potting4";
     vm.pottings = ["Potting3", "Potting4"];
     vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
@@ -55,10 +56,61 @@ define([], function () {
 
         }
 
-        chartize();
+        loadarchivefile();
+        //chartize();
 
         vm.dis = false;
+
       });
+    }
+
+    function loadarchivefile() {
+      vm.dryarchivedata = [];
+      var cycles = []
+
+      var today = $filter('date')(new Date(), 'yyyy-MM-dd');
+      var num1 = $filter('date')(new Date(vm.datum).getTime(), 'yyyyMMdd' + '05');
+      var num2 = $filter('date')(new Date(vm.datum).getTime(), 'yyyyMMdd' + '11');
+      var num3 = $filter('date')(new Date(vm.datum).getTime(), 'yyyyMMdd' + '17');
+      var num4 = $filter('date')(new Date(vm.datum).getTime(), 'yyyyMMdd' + '23');
+
+      if (new Date(vm.datum).getTime() < new Date(today).getTime()) {
+        cycles.push(num1);
+        cycles.push(num2);
+        cycles.push(num3);
+        cycles.push(num4);
+      }
+      else if (new Date(vm.datum).getTime() == new Date(today).getTime() && (new Date().getHours() >= 5 && new Date().getHours() < 12)) {
+        cycles.push(num1);
+      }
+      else if (new Date(vm.datum).getTime() == new Date(today).getTime() && (new Date().getHours() >= 12 && new Date().getHours() < 18)) {
+        cycles.push(num1);
+        cycles.push(num2);
+      }
+      else if (new Date(vm.datum).getTime() == new Date(today).getTime() && new Date().getHours() >= 18) {
+        cycles.push(num1);
+        cycles.push(num2);
+        cycles.push(num3);
+      }
+      console.log(cycles);
+      var k = 0;
+      for (var i = 0; i < cycles.length; i++) {
+        SumserviceService.getArchive(cycles[i]).then(function (rsp) {
+          k = k + 1;
+          for (var j = 0; j < rsp.data.length; j++) {
+            if (vm.mch == "Potting4" && rsp.data[j].machinename == "Drying3" && rsp.data[j].Time_to_Go < 6) {
+              rsp.data[j].category = k;
+              vm.dryarchivedata.push(rsp.data[j]);
+            }
+            else if (vm.mch == "Potting3" && rsp.data[j].machinename == "Drying2" && rsp.data[j].Time_to_Go < 6) {
+              rsp.data[j].category = k;
+              vm.dryarchivedata.push(rsp.data[j]);
+            }
+          }
+          console.log(vm.dryarchivedata)
+          updateline(vm.dryarchivedata);
+        });
+      }
     }
 
     function chartize() {
@@ -121,14 +173,88 @@ define([], function () {
         { visible: false, name: 'Fordit', color: 'rgb(150,220,100)', data: [] },
         { visible: false, name: 'Uret PREP F', color: 'rgb(50,150,200)', data: [] },
         { visible: false, name: 'Esztetika F', color: 'rgb(250,100,100)', data: [] },
-        { visible: false, name: 'Potting Ki', color: 'rgb(250,200,150)', data: [] }
+        { visible: false, name: 'Potting Ki', color: 'rgb(250,200,150)', data: [] },
+        { name: 'Cél', color:'rgb(255,0,0)', type: 'line', data: [] }
       ];
       for (var k = 1; k < 25; k++) {
         vm.cats.push($filter('date')(vm.kezdo + k * 60 * 60 * 1000, "MMdd HH"));
-        for (var i = 0; i < vm.chartData.length; i++) {
+        for (var i = 0; i < vm.chartData.length-1; i++) {
           vm.chartData[i].data.push({ cat: $filter('date')(vm.kezdo + k * 60 * 60 * 1000, "MMdd HH"), y: 0, sh: 0 });
         }
       }
+    }
+
+    function updateline(arr) {
+      vm.linenumbers = [];
+
+      var number1=0;
+      var number2=0;
+      var number3=0;
+      var number4=0;
+
+      for (var i = 0; i < 24; i++) {
+        vm.linenumbers[i] = 0;
+      }
+
+      for(var i=0;i<arr.length;i++){
+        if(arr[i].category==1){
+          number1++;
+        }
+        if(arr[i].category==2){
+          number2++;
+        }
+        if(arr[i].category==3){
+          number3++;
+        }
+        if(arr[i].category==4){
+          number4++;
+        }
+      }
+      if(vm.mch=="Potting4"){
+        if(number1>24){
+          number1=24
+        }
+        if(number2>24){
+          number2=24
+        }
+        if(number3>24){
+          number3=24
+        }
+        if(number4>24){
+          number4=24
+        }
+      }
+      if(vm.mch=="Potting3"){
+        if(number1>18){
+          number1=18
+        }
+        if(number2>18){
+          number2=18
+        }
+        if(number3>18){
+          number3=18
+        }
+        if(number4>18){
+          number4=18
+        }
+      }
+      for(var i=0;i<24;i++){
+        if(i>=0 && i<6){
+          vm.linenumbers[i]=Math.round(number1/6)*2;
+        }
+        else if(i>=6 && i<12){
+          vm.linenumbers[i]=Math.round(number2/6)*2;
+        }
+        else if(i>=12 && i<18){
+          vm.linenumbers[i]=Math.round(number3/6)*2;
+        }
+        else{
+          vm.linenumbers[i]=Math.round(number4/6)*2;
+        }
+      }
+      console.log(vm.linenumbers);
+      vm.chartData[vm.chartData.length-1].data = vm.linenumbers;
+      chartize();
     }
 
     function loadinfo() {
