@@ -4,10 +4,11 @@ define([], function () {
   function Service($http) {
     var service = {
       get: get,
-      getAll:getAll,
-      post:post,
-      put:put,
-      erase:erase
+      getArchive: getArchive,
+      getAll: getAll,
+      post: post,
+      put: put,
+      erase: erase
     };
 
     return service;
@@ -18,6 +19,13 @@ define([], function () {
       var req = {
         method: 'GET',
         url: 'app/components/php/PottingSSO.php?startdate=' + start + '&enddate=' + end + '&machinename=' + mch
+      };
+      return $http(req);
+    }
+    function getArchive(dayhr) {
+      var req = {
+        method: 'GET',
+        url: 'http://3.228.180.13/file_reports/files/drying/Dryingnumbers_' + dayhr + '.json'
       };
       return $http(req);
     }
