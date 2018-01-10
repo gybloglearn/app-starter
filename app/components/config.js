@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('Moduls', {
+		url: '/Moduls',
+		templateUrl: './app/components/Moduls/Moduls.html',
+		controller: 'ModulsController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('map', {
 		url: '/map',
 		templateUrl: './app/components/map/map.html',
