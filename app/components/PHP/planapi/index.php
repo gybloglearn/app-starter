@@ -39,11 +39,11 @@ class Plan{
         $mapper=new \DB\Jig\Mapper($db,'plans.json');
         $mapper->id=$data->id; //azonosító
         $mapper->sm=$data->sm; //SM 
-        $mapper->date=$data->date; //dátum
-        $mapper->type=$data->type; //termék típus
-        $mapper->amountshift1=$data->amountshift1; // tervezett darab szám reggeles szak
-        $mapper->amountshift3=$data->amountshift3; // tervezett darab szám éjszakás szak
-        $mapper->sheetnumber=$data->sheetnumber; //sheet szám típusból adódik
+        //$mapper->date=$data->date; //dátum
+        //$mapper->type=$data->type; //termék típus
+        //$mapper->db=$data->db; // tervezett darab szám reggeles szak
+        //$mapper->amountshift3=$data->amountshift3; // tervezett darab szám éjszakás szak
+        $mapper->amount=$data->amount; //sheet szám típusból adódik
         $mapper->save();
         echo "OK";
         @unlink($data);
@@ -54,9 +54,9 @@ class Plan{
     {
         $data=json_decode($app['BODY']);
         $db=new \DB\Jig('plans/',\DB\Jig::FORMAT_JSON);
+        $mapper=new \DB\Jig\Mapper($db,'plans.json');
         $plan=$mapper->load(Array('@id=?',$params['id']));
-        $plan->amountshift1=$data->amountshift1;
-        $plan->amountshift3=$data->amountshift3;
+        $plan->amount=$data->amount;
         $plan->save();
         echo "OK";
         @unlink($data);
