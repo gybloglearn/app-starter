@@ -1,0 +1,71 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">X3 Összesítő {{vm.startdatumszam}}-{{vm.enddatumszam}}</h1>
+      <div class="col-sm-6" style="margin-top:10px">
+        <div class="input-group">
+          <span class="input-group-addon">Dátum</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-6d" end="{{vm.edate}}">
+          <span class="input-group-addon">-tól</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="0d" end="{{vm.edate}}">
+          <span class="input-group-addon">-ig</span>
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.update_selectday();vm.beilleszt()" ng-disabled="vm.startdate>=vm.enddate;vm.loading">Betöltés</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="progress progress-info progress-striped active" ng-hide="!vm.loading">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Frissítés...</p>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="input-group">
+          <span class="input-group-addon">Eset</span>
+          <select ng-model="vm.actstate" class="form-control" ng-change="vm.setChart(vm.selectday,vm.actstate)">
+            <option ng-repeat="item in vm.selectday[0].daycases" value="{{item.state}}">{{item.state}}</option>
+          </select>
+        </div>
+        <mychart id="weekchart" config="vm.chartconfig"></mychart>
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Nap</th>
+              <th>A</th>
+              <th>B</th>
+              <th>C</th>
+              <th>D</th>
+              <th>Napi Össz</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="it in vm.selectday track by $index">
+              <td>{{it.day}}</td>
+              <td>{{ ((vm.selectday | filter:{'dayshift':'A', 'day': it.day})[0].daycases | filter:{'state':vm.actstate})[0].db
+                + ((vm.selectday | filter:{'nightshift':'A', 'day': it.day})[0].nightcases | filter:{'state':vm.actstate})[0].db
+                }}
+              </td>
+              <td>{{ ((vm.selectday | filter:{'dayshift':'B', 'day': it.day})[0].daycases | filter:{'state':vm.actstate})[0].db
+                + ((vm.selectday | filter:{'nightshift':'B', 'day': it.day})[0].nightcases | filter:{'state':vm.actstate})[0].db
+                }}
+              </td>
+              <td>{{ ((vm.selectday | filter:{'dayshift':'C', 'day': it.day})[0].daycases | filter:{'state':vm.actstate})[0].db
+                + ((vm.selectday | filter:{'nightshift':'C', 'day': it.day})[0].nightcases | filter:{'state':vm.actstate})[0].db
+                }}
+              </td>
+              <td>{{ ((vm.selectday | filter:{'dayshift':'D', 'day': it.day})[0].daycases | filter:{'state':vm.actstate})[0].db
+                + ((vm.selectday | filter:{'nightshift':'D', 'day': it.day})[0].nightcases | filter:{'state':vm.actstate})[0].db
+                }}
+              </td>
+              <td>{{ ((vm.selectday | filter:{'day': it.day})[0].daycases | filter:{'state':vm.actstate})[0].db + ((vm.selectday
+                | filter:{'day': it.day})[0].nightcases | filter:{'state':vm.actstate})[0].db}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>

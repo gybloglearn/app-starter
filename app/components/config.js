@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('x3week', {
+		url: '/x3week',
+		templateUrl: './app/components/x3week/x3week.html',
+		controller: 'x3weekController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('Moduls', {
 		url: '/Moduls',
 		templateUrl: './app/components/Moduls/Moduls.html',

@@ -37,6 +37,7 @@ define([
   './services/reworks.service',
   './map/map.ctrl',
   './Moduls/Moduls.ctrl'
+	, './x3week/x3week.ctrl'
 	/* files */
 ], function(
   configFunction,
@@ -77,6 +78,7 @@ define([
   reworksService,
   mapController,
   ModulsController
+	, x3weekController
 	/* names */) {
 
   // Link all components to the module !!!
@@ -120,5 +122,6 @@ define([
 	app.controller('reworksController', reworksController);
 	app.service('reworksService', reworksService);
 	app.controller('ModulsController', ModulsController);
+		app.controller('x3weekController', x3weekController);
 		/* controllers */
 });

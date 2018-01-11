@@ -6,7 +6,7 @@ define([], function () {
     vm.alldata = [];
     vm.selectday = [];
     vm.charlist = [];
-    vm.chartstate = "A keretet elvitték (nyugtázás a fénykapunál)"
+    vm.chartstate = "A keretet elvitték (nyugtázás a fénykapunál)";
     vm.startdate = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.edate = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.datumszam = vm.startdate;
