@@ -3,16 +3,16 @@ define([], function () {
   function Controller(cl4Service, $cookies, $state, $rootScope, $filter) {
     var vm = this;
     vm.data = [];
-    vm.alldata=[];
+    vm.alldata = [];
     vm.selectday = [];
     vm.charlist = [];
     vm.chartstate = "A keretet elvitték (nyugtázás a fénykapunál)"
     vm.startdate = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.edate = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.datumszam = vm.startdate;
-    vm.beilleszt=beilleszt;
+    vm.beilleszt = beilleszt;
     vm.load = load;
-    vm.loadall=loadall;
+    vm.loadall = loadall;
     vm.selectchart = selectchart;
 
     function update_selectday() {
@@ -24,50 +24,37 @@ define([], function () {
         else {
           vm.selectday[i].hour = i - 18;
         }
-        vm.selectday[i].cases = [];
+        vm.selectday[i].cases = [
+          {state: "Klórozó robot a keretet berakta a klórozó kádba", db: 0},
+          {state: "A keret belépett az X3 cellába a V43 megállítóhoz", db: 0},
+          {state: " A mosószárak felmentek", db: 0},
+          {state: "A gél kimosó robot kihúzta a dugót", db: 0},
+          {state: " A gél kimosó robot felvette a keretet", db: 0},
+          {state: "Az 1-es kádba rakott modulon az áramlás felépült", db: 0},
+          {state: "A klórozó robot a keretet berakta az 1-es öblítő kádba", db: 0},
+          {state: "A keret elvihető (jelzés)", db: 0},
+          {state: "Adapter felszerelve", db: 0},
+          {state: "Adapter leszerelve", db: 0},
+          {state: "A 2-es kádba helyezett modulon az áramlás felépült", db: 0},
+          {state: " Keret az átrakó asztalon", db: 0},
+          {state: "A klórozó robot a keretet berakta a 2-es öblítő kádba", db: 0},
+          {state: "Keret kirakva a kihordó asztalra", db: 0},
+          {state: "A keretet elvitték (nyugtázás a fénykapunál)", db: 0},
+          {state: "A klórozó kádba helyezett modulon az áramlás felépült", db: 0},
+          {state: "Potting3-ban keret kiadási engedély", db: 0}
+        ];
       }
     }
 
-    /*function select_3case(arr){
-      vm.chartdata=[];
-      vm.chartdata[0]={};
-      vm.chartdata[0].name="A klórozó robot a keretet berakta az 1-es öblítő kádba";
-      vm.chartdata[0].frames=[];
-      vm.chartdata[1]={};
-      vm.chartdata[1].name="Klórozó robot a keretet berakta a klórozó kádba";
-      vm.chartdata[1].frames=[];
-      vm.chartdata[2]={};
-      vm.chartdata[2].name="A klórozó robot a keretet berakta a 2-es öblítő kádba";
-      vm.chartdata[2].frames=[];
-
-      for(var i=0;i<vm.chartdata.length;i++){
-        for(var j=0;j<arr.length;j++){
-          if(vm.chartdata[i].name==arr[j].Status_name1){
-            var obj={};
-            obj={
-              frame:arr[j].Keret_id,
-              time:arr[j].PLC_Timestamp,
-              modul1:arr[j].Modul_ID1,              
-              modul2:arr[j].Modul_ID2              
-            }
-            vm.chartdata[i].frames.push(obj);
-          }
-        }
-      }
-
-      console.log(vm.chartdata);
-    }
-*/
     function beilleszt() {
       var szam = new Date(vm.startdate);
       vm.datumszam = $filter('date')(szam, 'yyyy-MM-dd');
     }
 
     function load() {
-      vm.mtfld=true;
+      vm.mtfld = true;
       update_selectday();
       vm.data = [];
-      var talalt = false;
 
 
       cl4Service.get(vm.startdate).then(function (response) {
@@ -82,34 +69,14 @@ define([], function () {
               for (var j = 0; j < vm.selectday[acthour + 17].cases.length; j++) {
                 if (vm.selectday[acthour + 17].cases[j].state == actstate) {
                   vm.selectday[acthour + 17].cases[j].db++;
-                  talalt = true;
                 }
-              }
-              if (talalt == true) {
-                talalt = false;
-              }
-              else {
-                var obj = {}
-                obj.state = actstate;
-                obj.db = 1;
-                vm.selectday[acthour + 17].cases.push(obj);
               }
             }
             else {
               for (var j = 0; j < vm.selectday[acthour - 6].cases.length; j++) {
                 if (vm.selectday[acthour - 6].cases[j].state == actstate) {
                   vm.selectday[acthour - 6].cases[j].db++;
-                  talalt = true;
                 }
-              }
-              if (talalt == true) {
-                talalt = false;
-              }
-              else {
-                var obj = {}
-                obj.state = actstate;
-                obj.db = 1;
-                vm.selectday[acthour - 6].cases.push(obj);
               }
             }
           }
@@ -118,50 +85,29 @@ define([], function () {
               for (var j = 0; j < vm.selectday[acthour + 18].cases.length; j++) {
                 if (vm.selectday[acthour + 18].cases[j].state == actstate) {
                   vm.selectday[acthour + 18].cases[j].db++;
-                  talalt = true;
                 }
               }
-              if (talalt == true) {
-                talalt = false;
-              }
-              else {
-                var obj = {}
-                obj.state = actstate;
-                obj.db = 1;
-                vm.selectday[acthour + 18].cases.push(obj);
-              }
+             
             }
             else {
               for (var j = 0; j < vm.selectday[acthour - 5].cases.length; j++) {
                 if (vm.selectday[acthour - 5].cases[j].state == actstate) {
                   vm.selectday[acthour - 5].cases[j].db++;
-                  talalt = true;
                 }
-              }
-              if (talalt == true) {
-                talalt = false;
-              }
-              else {
-                var obj = {}
-                obj.state = actstate;
-                obj.db = 1;
-                vm.selectday[acthour - 5].cases.push(obj);
               }
             }
           }
         }
         selectchart(vm.selectday);
-        vm.mtfld=false;
-        //console.log(vm.data);
-        //select_3case(vm.data);
+        vm.mtfld = false;
       });
     }
 
-    function loadall(){
-      vm.alldata=[];
+    function loadall() {
+      vm.alldata = [];
 
       cl4Service.getall(vm.startdate).then(function (response) {
-        vm.alldata=response.data;
+        vm.alldata = response.data;
       });
     }
 
@@ -170,7 +116,7 @@ define([], function () {
       for (var i = 0; i < 24; i++) {
         for (var j = 0; j < tomb[i].cases.length; j++) {
           if (tomb[i].cases[j].state == vm.chartstate) {
-            resault.push(tomb[i].cases[j].db);
+              resault.push(tomb[i].cases[j].db);
           }
         }
       }
