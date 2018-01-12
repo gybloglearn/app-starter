@@ -6,40 +6,30 @@ define([], function () {
     vm.show = show;
     vm.save = save;
     vm.load = load;
-    vm.updateplan=updateplan;
+    vm.updateplan = updateplan;
     vm.remove = remove;
-    vm.reloadwebpage=reloadwebpage;
+    vm.reloadwebpage = reloadwebpage;
     vm.mutat = false;
     vm.showmessage = false;
-    vm.sheetmakers = ["SheetMaker1", "SheetMaker2", "SheetMaker4", "SheetMaker5", "SheetMaker6", "SheetMaker7", "SheetMaker8", "SheetMaker9"];
-    vm.act = "SheetMaker4";
+    vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     vm.today = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.moduls = [];
     vm.planlist = [];
 
     function show() {
-      vm.datumok = [];
-      vm.mezoszam = ((new Date(vm.dateto).getTime() - new Date(vm.datefrom).getTime()) / (1000 * 3600 * 24)) + 1;
       vm.mutat = true;
       vm.data = [];
-      for (var i = 0; i < vm.mezoszam; i++) {
-        vm.datumok[i] = new Date(vm.datefrom).getTime() + (i * 24 * 3600 * 1000);
-        vm.datumok[i] = $filter('date')(vm.datumok[i], 'yyyy-MM-dd');
+      for (var i = 0; i < vm.sheetmakers.length; i++) {
         vm.data.push({
-          "id":vm.id=new Date().getTime()+i,
-          "date": vm.datumok[i],
-          "sm": vm.act,
-          "type": vm.acttype,
-          "sheetnumber": $filter('filter')(vm.moduls, { 'name': vm.acttype })[0].sheets,
-          "amountshift1": vm.darab,
-          "amountshift3": vm.darab,
+          "id": vm.id = new Date().getTime() + i,
+          "sm": vm.sheetmakers[i],
+          "amount": vm.darab,
         });
       }
     }
 
     function save() {
       for (var i = 0; i < vm.data.length; i++) {
-
         planService.post(vm.data[i]).then(function (response) {
           vm.showmessage = true;
           vm.data = {};
@@ -52,15 +42,8 @@ define([], function () {
 
     function load() {
       planService.getAll().then(function (response) {
-        var res = [];
-        angular.forEach(response.data, function(v){
-          var d = new Date(v.date).getTime();
-          var now = new Date().getTime()-24*3600*1000;
-          if(d >= now){
-            res.push(v);
-          }
-        });
-        vm.planlist = res;
+        vm.planlist = response.data;
+        console.log(vm.planlist);
       });
     }
 
@@ -71,32 +54,24 @@ define([], function () {
       if ($rootScope.user.username != "212434909" && $rootScope.user.username != "502678184" && $rootScope.user.username != "113010451" && $rootScope.user.username != "212422533") {
         $state.go('Forbidden');
       }
-      vm.datefrom = new Date().getTime();
-      vm.sdate = new Date().getTime();
-      vm.dateto = $filter('date')(vm.datefrom + 7 * 24 * 3600 * 1000, 'yyyy-MM-dd');
-      vm.datefrom = $filter('date')(vm.datefrom, 'yyyy-MM-dd');
-      planService.getpartnumber().then(function (response) {
-      vm.moduls = response.data;
-      });
       load();
     }
 
-     function updateplan() {
-       planService.put(vm.edit).then(function (resp) {
+    function updateplan() {
+      planService.put(vm.edit).then(function (resp) {
         vm.edit = '';
       });
     }
 
     function remove(id, index) {
-            planService.erase(id).then(function (resp) {
-                vm.planlist.splice(index, 1);
-            });
+      planService.erase(id).then(function (resp) {
+        vm.planlist.splice(index, 1);
+      });
 
-        }
+    }
 
-    function reloadwebpage()
-    {
-       $state.go('plan', {reload: true});
+    function reloadwebpage() {
+      $state.go('plan', { reload: true });
     }
   }
   Controller.$inject = ['planService', '$timeout', '$filter', '$cookies', '$state', '$rootScope'];

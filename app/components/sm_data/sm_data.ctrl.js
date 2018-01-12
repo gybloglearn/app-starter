@@ -24,15 +24,12 @@ define([], function () {
     vm.load = load;
     vm.datszam = beallit;
     feltolt_zero(vm.darab);
-    var allando = [];
+    vm.smnumbers=[];
+    vm.allando = [];
 
     var j = 0;
     var k = 0;
     var l = 0;
-
-    for (var i = 0; i < 24; i++) {
-      allando[i] = 31;
-    }
 
     function beallit() {
       vm.szam = new Date(vm.datum);
@@ -40,6 +37,7 @@ define([], function () {
     }
 
     function load() {
+
       j = 0;
       k = 0;
       l = 0;
@@ -53,6 +51,7 @@ define([], function () {
       vm.dis = true;
       feltolt_zero(vm.darab);
       vm.sm_datas = [];
+      updtestand(vm.sm);
       smdataService.get(vm.datum, vm.sm).then(function (response) {
         vm.sm_datas = response.data;
         vm.egyedi = $filter('unique')(vm.sm_datas, 'Event_SubGroup');
@@ -83,7 +82,10 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      load();
+      smdataService.getAll().then(function (response) {
+        vm.smnumbers = response.data;
+        load();
+      });
       vm.edate = new Date().getTime();
     }
 
@@ -120,7 +122,7 @@ define([], function () {
             type: "line",
             name: 'Órai cél',
             color: "#ff8800",
-            data: allando
+            data: vm.allando
           },
           {
             name: 'Termelt lap',
@@ -498,9 +500,7 @@ define([], function () {
           }
         }
       }
-      console.log(vm.osszegzo_szervezesi);
       vm.osszegzo_szervezesi = $filter('orderBy')(vm.osszegzo_szervezesi, 'time', true);
-      console.log(vm.osszegzo_szervezesi);
 
       for (var i = 0; i < tomb.length; i++) {
         if (tomb[i].Event_type == "Downtime" && tomb[i].Ev_Group == "Tervezett veszteseg") {
@@ -547,6 +547,18 @@ define([], function () {
             c++;
           }
         }
+      }
+    }
+
+    function updtestand(sheetm){
+      var num=0;
+      for(var i=0;i<vm.smnumbers.length;i++){
+        if(sheetm==vm.smnumbers[i].sm){
+          num=vm.smnumbers[i].amount
+        }
+      }
+      for (var i = 0; i < 24; i++) {
+        vm.allando[i] = num*1;
       }
     }
 

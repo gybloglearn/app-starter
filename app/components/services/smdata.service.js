@@ -3,7 +3,8 @@ define([], function () {
 
   function Service($http) {
     var service = {
-      get: get
+      get: get,
+      getAll:getAll
     };
 
     return service;
@@ -14,6 +15,13 @@ define([], function () {
       var req = {
         method: 'GET',
         url: 'app/components/PHP/smprod.php?startdate='+ date + '&mch='+ sm
+      };
+      return $http(req);
+    }
+    function getAll() {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/planapi/allplans'
       };
       return $http(req);
     }
