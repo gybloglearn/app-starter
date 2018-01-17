@@ -1,0 +1,40 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <div class="col-sm-12" style="margin-top:20px">
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span class="input-group-addon">Dátum</span>
+            <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-1d" end="{{vm.edate}}">
+            <span class="input-group-addon">-tól</span>
+            <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="-1d" end="{{vm.edate}}">
+            <span class="input-group-addon">-ig</span>
+          </div>
+        </div>
+        <div class="col-sm-2 col-sm-offset-5 text-center">
+          <a href="" class="btn btn-primary" ng-click="vm.createdates()" ng-disabled="vm.enddate<vm.startdate">Betöltés</a>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div>
+        <my-chart id="chart_week" config="vm.weekchartconfig"></my-chart>
+      </div>
+      <div>
+        <button class="btn btn-default pull-right" ng-class="{'btn-info':vm.show}" ng-click="vm.show=!vm.show">Szakos lebontás</button>
+      </div>
+      <div class="col-sm-12" ng-show="vm.show">
+        <div class="input-group">
+          <span class="input-group-addon">Hét</span>
+          <select ng-model="vm.actweek" class="form-control" ng-change="vm.redrawchart()">
+            <option ng-repeat="item in vm.weeks" value="{{item.week}}">{{item.week}}</option>
+          </select>
+        </div>
+        <div>
+          <my-chart id="chart_shift" config="vm.shiftchartconfig"></my-chart>
+        </div>
+      </div>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>
