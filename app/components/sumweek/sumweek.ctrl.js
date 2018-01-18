@@ -34,13 +34,13 @@ define([], function () {
           for (var j = 0; j < response.data.length; j++) {
             var d = new Date(response.data[j].timestamp).getDay();
             var dm = new Date(response.data[j].timestamp).getHours() * 60 + new Date(response.data[j].timestamp).getMinutes();
-            if(d==1&& dm<550){
-              response.data[j].week= (response.data[j].week*1)-1;
-              if(response.data[j].week<10){
-                response.data[j].week="0"+response.data[j].week;
+            if (d == 1 && dm < 550) {
+              response.data[j].week = (response.data[j].week * 1) - 1;
+              if (response.data[j].week < 10) {
+                response.data[j].week = "0" + response.data[j].week;
               }
-              else{
-                response.data[j].week=response.data[j].week.toString();
+              else {
+                response.data[j].week = response.data[j].week.toString();
               }
               //console.log(response.data[j]);
             }
@@ -126,6 +126,9 @@ define([], function () {
             stack: 'Veszt'
           }
         ],
+        drilldown: {
+          series: createdrilldown(ar1, vm.shifts, sz)
+        },
         xAxis: {
           type: 'category',
         },
@@ -181,8 +184,9 @@ define([], function () {
             counter++;
           }
         }
-        dd.push({ name: t2[i], y: (($filter('sumField')($filter('filter')(t1, { week: h, Shift_Name: t2[i], Ev_Group: "Tervezett veszteseg" }), 'Event_time') * 1) / (counter * 6 * 12 * 3600) * 100) })
+        dd.push({ name: t2[i], y: (($filter('sumField')($filter('filter')(t1, { week: h, Shift_Name: t2[i], Ev_Group: "Tervezett veszteseg" }), 'Event_time') * 1) / (counter * 6 * 12 * 3600) * 100), drilldown: "Tervezett veszteseg" + t2[i] })
       }
+      console.log(dd);
       return dd;
     }
     function createshiftszervezett(t1, t2, h) {
@@ -194,8 +198,9 @@ define([], function () {
             counter++;
           }
         }
-        dd.push({ name: t2[i], y: (($filter('sumField')($filter('filter')(t1, { week: h, Shift_Name: t2[i], Ev_Group: "Szervezesi veszteseg" }), 'Event_time') * 1) / (counter * 6 * 12 * 3600) * 100) })
+        dd.push({ name: t2[i], y: (($filter('sumField')($filter('filter')(t1, { week: h, Shift_Name: t2[i], Ev_Group: "Szervezesi veszteseg" }), 'Event_time') * 1) / (counter * 6 * 12 * 3600) * 100), drilldown: "Szervezesi veszteseg" + t2[i] })
       }
+      console.log(dd);
       return dd;
     }
 
