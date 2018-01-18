@@ -358,7 +358,7 @@ define([], function () {
           elerperc.push({ cat: vm.days[j].date, y: ((vm.days[j].ttlido - vm.days[j].terv - vm.days[j].szer - vm.days[j].musz) / vm.days[j].ttlido) * 100, min: vm.days[j].ttlido - vm.days[j].musz - vm.days[j].szer - vm.days[j].terv });
           jo.push({ cat: vm.days[j].date, y: vm.days[j].joaeq });
           rossz.push({ cat: vm.days[j].date, y: vm.days[j].lapselejt, p: vm.days[j].lapselejt / vm.days[j].ttllap * 100 });
-          cel.push({ cat: vm.days[j].date, y: 215 });
+          cel.push({ cat: vm.days[j].date, y: 230 });
         }
 
 
