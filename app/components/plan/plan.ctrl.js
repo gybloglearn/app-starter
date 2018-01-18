@@ -29,12 +29,12 @@ define([], function () {
     }
 
     function save() {
-      for (var i = 0; i < vm.data.length; i++) {
-        planService.post(vm.data[i]).then(function (response) {
+      //for (var i = 0; i < vm.data.length; i++) {
+        planService.post(vm.data).then(function (response) {
           vm.showmessage = true;
           vm.data = {};
         });
-      }
+      //}
       $timeout(function () {
         vm.showmessage = false;
       }, 5000);

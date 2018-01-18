@@ -16,7 +16,7 @@ class Plan{
             }
         }
         //echo json_encode($resault);
-        
+
         // ez pedig annyit kellene visszaadjon, amennyi van
         $res = [];
         foreach($plans as $k=>$plan){
@@ -36,15 +36,19 @@ class Plan{
         $data=json_decode($app['BODY']);
         echo json_encode($data);
         $db=new \DB\Jig('plans/',\DB\Jig::FORMAT_JSON);
-        $mapper=new \DB\Jig\Mapper($db,'plans.json');
-        $mapper->id=$data->id; //azonosító
-        $mapper->sm=$data->sm; //SM 
-        //$mapper->date=$data->date; //dátum
-        //$mapper->type=$data->type; //termék típus
-        //$mapper->db=$data->db; // tervezett darab szám reggeles szak
-        //$mapper->amountshift3=$data->amountshift3; // tervezett darab szám éjszakás szak
-        $mapper->amount=$data->amount; //sheet szám típusból adódik
-        $mapper->save();
+        foreach($data as $k=>$d){
+            $mapper=new \DB\Jig\Mapper($db,'plans.json');
+            $mapper->id=$d->id; //azonosító
+            $mapper->sm=$d->sm; //SM
+            //$mapper->date=$data->date; //dátum
+            //$mapper->type=$data->type; //termék típus
+            //$mapper->db=$data->db; // tervezett darab szám reggeles szak
+            //$mapper->amountshift3=$data->amountshift3; // tervezett darab szám éjszakás szak
+            $mapper->amount=$d->amount; //sheet szám típusból adódik
+            $mapper->save();
+            @unlink($mapper);
+        }
+
         echo "OK";
         @unlink($data);
         @unlink($mapper);
