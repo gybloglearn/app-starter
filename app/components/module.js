@@ -17,11 +17,14 @@ define([
   './filters/shift',
   './filters/sumdb',
   './filters/sumField',
+  './filters/week',
   './services/plan.service',
   './smweek/smweek.ctrl',
   './services/weekly.service',
   './sscrap/sscrap.ctrl',
-  './services/sscrap.service'
+  './services/sscrap.service',
+  './sumweek/sumweek.ctrl',
+  './services/sumweek.service'
 	/* files */
 ], function (
   configFunction,
@@ -42,11 +45,14 @@ define([
   shift,
   sumdb,
   sumField,
+  week,
   planService,
   smweekController,
   weeklyService,
   sscrapController,
-  sscrapService
+  sscrapService,
+  sumweekController,
+  sumweekService
 	/* names */) {
 
     // Link all components to the module !!!
@@ -71,10 +77,13 @@ define([
     app.filter('shift',shift);
     app.filter('sumdb',sumdb);
     app.filter('sumField',sumField);
+    app.filter('week',week);
 		app.service('planService', planService);
 		app.controller('smweekController', smweekController);
 		app.service('weeklyService', weeklyService);
 		app.controller('sscrapController', sscrapController);
 		app.service('sscrapService', sscrapService);
+		app.controller('sumweekController', sumweekController);
+		app.service('sumweekService', sumweekService);
 		/* controllers */
   });

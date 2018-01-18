@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('sumweek', {
+		url: '/sumweek',
+		templateUrl: './app/components/sumweek/sumweek.html',
+		controller: 'sumweekController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('sscrap', {
 		url: '/sscrap',
 		templateUrl: './app/components/sscrap/sscrap.html',
