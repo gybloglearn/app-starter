@@ -22,14 +22,23 @@ define([], function () {
 
       for (var i = 0; i <= differencedate; i++) {
         vm.days[i] = $filter('date')(new Date(vm.enddate).getTime() - ((differencedate - i) * 24 * 3600 * 1000), 'yyyyMMdd');
-        vm.hetdb[i] = $filter('week')($filter('date')(new Date(vm.enddate).getTime() - ((differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd'));
+        var actday = $filter('date')(new Date(vm.enddate).getTime() - ((differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
+        if (new Date(actday).getDay() == 1) {
+          vm.hetdb[i] = $filter('week')($filter('date')(new Date(vm.enddate).getTime() - ((differencedate - i + 1) * 24 * 3600 * 1000), 'yyyy-MM-dd'));
+        }
+        else {
+          vm.hetdb[i] = $filter('week')($filter('date')(new Date(vm.enddate).getTime() - ((differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd'));
+        }
       }
       load();
     }
 
     function load() {
       vm.data = [];
+      var counter = 0;
+      var finish = vm.days.length;
       for (var i = 0; i < vm.days.length; i++) {
+        counter++;
         sumweekService.get(vm.days[i]).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
             var d = new Date(response.data[j].timestamp).getDay();
@@ -46,7 +55,9 @@ define([], function () {
             }
             vm.data.push(response.data[j]);
           }
-          createweeks(vm.data);
+          if (counter == finish) {
+            createweeks(vm.data);
+          }
         });
       }
     }
@@ -158,6 +169,7 @@ define([], function () {
         }
         sum.push({ name: dt1[j].week, y: (($filter('sumField')($filter('filter')(ar, { week: dt1[j].week, Ev_Group: "Tervezett veszteseg" }), 'Event_time') * 1) / (counter * 6 * 24 * 3600) * 100) });
       }
+      //console.log(sum);
       return sum;
     }
     function putszervezett(ar) {
@@ -172,6 +184,7 @@ define([], function () {
         }
         sum.push({ name: dt1[j].week, y: (($filter('sumField')($filter('filter')(ar, { week: dt1[j].week, Ev_Group: "Szervezesi veszteseg" }), 'Event_time') * 1) / (counter * 6 * 24 * 3600) * 100) });
       }
+      //console.log(sum);
       return sum;
     }
 
@@ -186,7 +199,7 @@ define([], function () {
         }
         dd.push({ name: t2[i], y: (($filter('sumField')($filter('filter')(t1, { week: h, Shift_Name: t2[i], Ev_Group: "Tervezett veszteseg" }), 'Event_time') * 1) / (counter * 6 * 12 * 3600) * 100), drilldown: "Tervezett veszteseg" + t2[i] })
       }
-      console.log(dd);
+      //console.log(dd);
       return dd;
     }
     function createshiftszervezett(t1, t2, h) {
@@ -200,8 +213,60 @@ define([], function () {
         }
         dd.push({ name: t2[i], y: (($filter('sumField')($filter('filter')(t1, { week: h, Shift_Name: t2[i], Ev_Group: "Szervezesi veszteseg" }), 'Event_time') * 1) / (counter * 6 * 12 * 3600) * 100), drilldown: "Szervezesi veszteseg" + t2[i] })
       }
-      console.log(dd);
+      //console.log(dd);
       return dd;
+    }
+
+    function createdrilldown(t1, t2, h) {
+      var dd = [];
+      var tervn = [];
+
+      for (var i = 0; i < t2.length; i++) {
+        var objterv = {};
+        var objszerv = {};
+        var tervn = [];
+        var szervn = [];
+        var tervnames = [];
+        var szervnames = [];
+        var tervdata = [];
+        var szervdata = [];
+        tervn = $filter('unique')($filter('filter')(t1, { week: h, Shift_Name: t2[i], Ev_Group: "Tervezett veszteseg" }), 'Event_SubGroup');
+        szervn = $filter('unique')($filter('filter')(t1, { week: h, Shift_Name: t2[i], Ev_Group: "Szervezesi veszteseg" }), 'Event_SubGroup');
+        for (var j = 0; j < tervn.length; j++) {
+          tervnames.push(tervn[j].Event_SubGroup);
+          tervdata[j] = [tervn[j].Event_SubGroup,0];
+          for (var l = 0; l < t1.length; l++) {
+            if (t1[l].week == h && t1[l].Event_SubGroup == tervn[j].Event_SubGroup) {
+              tervdata[j][1] += t1[l].Event_time;
+            }
+          }
+        }
+        for (var k = 0; k < szervn.length; k++) {
+          szervnames.push(szervn[k].Event_SubGroup);
+          szervdata[k] = [szervn[k].Event_SubGroup,0];
+          for (var m = 0; m < t1.length; m++) {
+            if (t1[m].week == h && t1[m].Event_SubGroup == szervn[k].Event_SubGroup) {
+              szervdata[k][1] += t1[m].Event_time;
+            }
+          }
+        }
+
+        objterv = {
+          //name: tervnames,
+          id: "Tervezett veszteseg" + t2[i],
+          name: "Tervezett veszteseg" + t2[i],
+          data: tervdata
+        };
+        objszerv = {
+          //name: szervnames,
+          id: "Szervezesi veszteseg" + t2[i],
+          name: "Szervezesi veszteseg" + t2[i],
+          data: szervdata
+        };
+        dd.push(objterv);
+        dd.push(objszerv);
+      }
+      console.log(dd);
     }
 
     activate();
