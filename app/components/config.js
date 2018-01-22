@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('clevent', {
+		url: '/clevent',
+		templateUrl: './app/components/clevent/clevent.html',
+		controller: 'cleventController',
+		controllerAs: 'vm'
+	});
 
   }
   ConfigFunction.$inject = ['$urlRouterProvider', '$stateProvider'];

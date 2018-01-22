@@ -1,0 +1,34 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">Klórozók összesítő {{vm.startdatumszam}} 5:50-{{vm.enddatumszam}} 5:50</h1>
+      <div class="row" style="margin-top:10px">
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span class="input-group-addon">Dátum</span>
+            <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-6d" end="{{vm.edate}}">
+            <span class="input-group-addon">-tól</span>
+            <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="0d" end="{{vm.edate}}">
+            <span class="input-group-addon">-ig</span>
+            <div class="input-group-btn">
+              <a href="" class="btn btn-primary" ng-click="vm.beilleszt()" ng-disabled="vm.startdate>=vm.enddate">Betöltés</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span class="input-group-addon">Klórozó</span>
+            <select ng-model="vm.actclor" class="form-control" ng-change="vm.setChart(vm.data,vm.actclor)">
+              <option value="">Mind</option>
+              <option ng-repeat="item in vm.selectclor" value="{{item.MachineName}}">{{item.MachineName}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <my-chart id="col_chart" config="vm.chartconfig"></my-chart>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>

@@ -4,16 +4,34 @@ define([
   './start/start.ctrl',
   './login/login.ctrl',
   './services/login.service',
-  './services/data.service'
-  /* files */
+  './services/data.service',
+  './directives/datepicker',
+  './directives/mychart',
+  './filters/unique',
+  './filters/shift',
+  './filters/sumdb',
+  './filters/sumField',
+  './filters/week',
+  './clevent/clevent.ctrl',
+  './services/clevent.service'
+	/* files */
 ], function(
   configFunction,
   runFunction,
   startController,
   loginController,
   loginService,
-  dataService
-/* names */) {
+  dataService,
+  datepicker,
+  mychart,
+  unique,
+  shift,
+  sumdb,
+  sumField,
+  week,
+  cleventController,
+  cleventService
+	/* names */) {
 
   // Link all components to the module !!!
 
@@ -24,5 +42,14 @@ define([
   app.service('Login', loginService);
   app.controller('StartController', startController);
   app.controller('LoginController', loginController);
-  /* controllers */
+  app.directive('datepicker',datepicker);
+  app.directive('myChart',mychart);
+  app.filter('unique',unique);
+  app.filter('shift',shift);
+  app.filter('sumdb',sumdb);
+  app.filter('sumField',sumField);
+  app.filter('week',week);
+  app.controller('cleventController', cleventController);
+	app.service('cleventService', cleventService);
+		/* controllers */
 });
