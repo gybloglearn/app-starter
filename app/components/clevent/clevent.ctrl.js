@@ -14,6 +14,7 @@ define([], function () {
     vm.actesh = "";
     vm.beilleszt = beilleszt;
     vm.setChart = setChart;
+    vm.tload=false;
 
     function beilleszt() {
       vm.startdatumszam = $filter('date')(new Date(vm.startdate).getTime(), 'yyyy-MM-dd');
@@ -22,6 +23,7 @@ define([], function () {
     }
 
     function load() {
+      vm.tload=true;
       vm.data = [];
       vm.actclor = "";
       vm.actssh = "";
@@ -65,8 +67,8 @@ define([], function () {
             vm.data[i].End_shift = $filter('shift')(endshiftnum, vm.data[i].CL_End);
           }
         }
-        console.log(vm.data);
         setChart(vm.data, vm.actclor,vm.actssh,vm.actesh);
+        vm.tload=false;
       });
     }
 
