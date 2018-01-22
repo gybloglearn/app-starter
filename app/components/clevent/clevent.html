@@ -18,9 +18,19 @@
         <div class="col-sm-6">
           <div class="input-group">
             <span class="input-group-addon">Klórozó</span>
-            <select ng-model="vm.actclor" class="form-control" ng-change="vm.setChart(vm.data,vm.actclor)">
+            <select ng-model="vm.actclor" class="form-control" ng-change="vm.setChart(vm.data,vm.actclor,vm.actssh,vm.actesh)">
               <option value="">Mind</option>
               <option ng-repeat="item in vm.selectclor" value="{{item.MachineName}}">{{item.MachineName}}</option>
+            </select>
+            <span class="input-group-addon">Kezdő szak</span>
+            <select ng-model="vm.actssh" class="form-control" ng-change="vm.setChart(vm.data,vm.actclor,vm.actssh,vm.actesh)">
+              <option value="">Mind</option>
+              <option ng-repeat="item in vm.shifts" value="{{item}}">{{item}}</option>
+            </select>
+            <span class="input-group-addon">Vége szak</span>
+            <select ng-model="vm.actesh" class="form-control" ng-change="vm.setChart(vm.data,vm.actclor,vm.actssh,vm.actesh)">
+              <option value="">Mind</option>
+              <option ng-repeat="item in vm.shifts" value="{{item}}">{{item}}</option>
             </select>
           </div>
         </div>
@@ -29,6 +39,31 @@
     <div class="module-body">
       <my-chart id="col_chart" config="vm.chartconfig"></my-chart>
     </div>
-    <div class="module-footer"></div>
+    <div class="module-footer">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>Modul</th>
+            <th>Kezdő dátum</th>
+            <th>Kezdő szak</th>
+            <th>Klórozó</th>
+            <th>Vége dátum</th>
+            <th>Vége szak</th>
+            <th>Típus</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat="dt in vm.data | orderBy:'CL_Start' |filter:{'MachineName':vm.actclor}|filter:{'Start_shift':vm.actssh}|filter:{'End_shift':vm.actesh} track by $index">
+          <tr>
+            <td>{{dt.JobID}}</td>
+            <td>{{dt.CL_Start}}</td>
+            <td>{{dt.Start_shift}}</td>
+            <td>{{dt.MachineName}}</td>
+            <td>{{dt.CL_End}}</td>
+            <td>{{dt.End_shift}}</td>
+            <td>{{dt.chem}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 </div>

@@ -6,9 +6,12 @@ define([], function () {
     vm.startdatumszam = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddate = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
+    vm.shifts = ["A", "B", "C", "D"];
     vm.data = [];
     vm.selectclor = [];
     vm.actclor = "";
+    vm.actssh = "";
+    vm.actesh = "";
     vm.beilleszt = beilleszt;
     vm.setChart = setChart;
 
@@ -21,31 +24,53 @@ define([], function () {
     function load() {
       vm.data = [];
       vm.actclor = "";
+      vm.actssh = "";
+      vm.actesh = "";
       cleventService.get(vm.startdate, vm.enddate).then(function (response) {
         vm.data = response.data;
         for (var i = 0; i < vm.data.length; i++) {
           var numstart = new Date(vm.data[i].CL_Start).getHours() * 60 + new Date(vm.data[i].CL_Start).getMinutes();
           var numend = new Date(vm.data[i].CL_End).getHours() * 60 + new Date(vm.data[i].CL_End).getMinutes();
+          var startshiftnum = 0;
+          var endshiftnum = 0;
+
+          if (350 <= numstart && numstart < 1070) {
+            startshiftnum = 1
+          }
+          else {
+            startshiftnum = 3;
+          }
 
           if (numstart < 350) {
             vm.data[i].CL_Start = $filter('date')(new Date(vm.data[i].CL_Start).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+            vm.data[i].Start_shift = $filter('shift')(startshiftnum, vm.data[i].CL_Start);
           }
           else {
             vm.data[i].CL_Start = $filter('date')(new Date(vm.data[i].CL_Start).getTime(), 'yyyy-MM-dd');
+            vm.data[i].Start_shift = $filter('shift')(startshiftnum, vm.data[i].CL_Start);
           }
 
+          if (350 <= numend && numend < 1070) {
+            endshiftnum = 1
+          }
+          else {
+            endshiftnum = 3;
+          }
           if (numend < 350) {
             vm.data[i].CL_End = $filter('date')(new Date(vm.data[i].CL_End).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+            vm.data[i].End_shift = $filter('shift')(endshiftnum, vm.data[i].CL_End);
           }
           else if (vm.data[i].CL_End != "") {
             vm.data[i].CL_End = $filter('date')(new Date(vm.data[i].CL_End).getTime(), 'yyyy-MM-dd');
+            vm.data[i].End_shift = $filter('shift')(endshiftnum, vm.data[i].CL_End);
           }
         }
-        setChart(vm.data, vm.actclor);
+        console.log(vm.data);
+        setChart(vm.data, vm.actclor,vm.actssh,vm.actesh);
       });
     }
 
-    function setChart(arr, cl) {
+    function setChart(arr, cl,assh,aesh) {
       vm.selectclor = [];
       vm.selectclor = $filter('unique')(arr, 'MachineName');
 
@@ -53,18 +78,18 @@ define([], function () {
         chart: {
           type: 'column',
         },
-        title: { text: "Összesítő " + vm.actclor },
+        title: { text: "Összesítő " + vm.actclor},
         series: [
           {
             name: 'Klórozó be',
             color: "#009999",
-            data: setIn(arr, cl),
+            data: setIn(arr, cl,assh),
 
           },
           {
             name: 'Klórozó ki',
             color: "#3366ff",
-            data: setOut(arr, cl),
+            data: setOut(arr, cl,aesh),
 
           }],
         xAxis: {
@@ -78,10 +103,11 @@ define([], function () {
       }
     }
 
-    function setIn(t, c) {
+    function setIn(t, c,ssh) {
       var selectdata = [];
       var days = $filter('unique')(t, 'CL_Start');
       days = $filter('orderBy')(days, 'CL_Start');
+      t = $filter('filter')(t, { Start_shift: ssh });
 
       if (c == "") {
         for (var i = 0; i < days.length; i++) {
@@ -108,15 +134,15 @@ define([], function () {
       return selectdata;
     }
 
-    function setOut(t, c) {
+    function setOut(t, c,esh) {
       var selectdata = [];
       var days = $filter('unique')(t, 'CL_End');
       days = $filter('orderBy')(days, 'CL_End');
       days.shift();
-      console.log(days);
+      t = $filter('filter')(t, { Start_shift: esh });
 
       if (c == "") {
-        for (var i = 0; i < days.length-1; i++) {
+        for (var i = 0; i < days.length - 1; i++) {
           var db = 0;
           for (var j = 0; j < t.length; j++) {
             if (days[i].CL_End == t[j].CL_End) {
@@ -127,7 +153,7 @@ define([], function () {
         }
       }
       else {
-        for (var i = 0; i < days.length-1; i++) {
+        for (var i = 0; i < days.length - 1; i++) {
           var db = 0;
           for (var j = 0; j < t.length; j++) {
             if (days[i].CL_End == t[j].CL_End && t[j].MachineName == c) {
