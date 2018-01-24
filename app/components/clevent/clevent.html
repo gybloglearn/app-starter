@@ -3,7 +3,7 @@
     <div class="module-header">
       <h1 class="text-center">Klórozók összesítő {{vm.startdatumszam}} 5:50-{{vm.enddatumszam}} 5:50</h1>
       <div class="row" style="margin-top:10px">
-        <div class="col-sm-6">
+        <div class="col-sm-5">
           <div class="input-group">
             <span class="input-group-addon">Dátum</span>
             <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-6d" end="{{vm.edate}}">
@@ -15,20 +15,25 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-7">
           <div class="input-group">
+            <span class="input-group-addon">Egységek</span>
+            <select ng-model="vm.actunit" class="form-control" ng-change="vm.setChart(vm.data,vm.actunit,vm.actclor,vm.actssh,vm.actesh)">
+              <option value="">Mind</option>
+              <option ng-repeat="item in vm.units" value="{{item}}">{{item}}</option>
+            </select>
             <span class="input-group-addon">Klórozó</span>
-            <select ng-model="vm.actclor" class="form-control" ng-change="vm.setChart(vm.data,vm.actclor,vm.actssh,vm.actesh)">
+            <select ng-model="vm.actclor" class="form-control" ng-change="vm.setChart(vm.data,vm.actunit,vm.actclor,vm.actssh,vm.actesh)">
               <option value="">Mind</option>
               <option ng-repeat="item in vm.selectclor" value="{{item.MachineName}}">{{item.MachineName}}</option>
             </select>
             <span class="input-group-addon">Kezdő szak</span>
-            <select ng-model="vm.actssh" class="form-control" ng-change="vm.setChart(vm.data,vm.actclor,vm.actssh,vm.actesh)">
+            <select ng-model="vm.actssh" class="form-control" ng-change="vm.setChart(vm.data,vm.actunit,vm.actclor,vm.actssh,vm.actesh)">
               <option value="">Mind</option>
               <option ng-repeat="item in vm.shifts" value="{{item}}">{{item}}</option>
             </select>
             <span class="input-group-addon">Vége szak</span>
-            <select ng-model="vm.actesh" class="form-control" ng-change="vm.setChart(vm.data,vm.actclor,vm.actssh,vm.actesh)">
+            <select ng-model="vm.actesh" class="form-control" ng-change="vm.setChart(vm.data,vm.actunit,vm.actclor,vm.actssh,vm.actesh)">
               <option value="">Mind</option>
               <option ng-repeat="item in vm.shifts" value="{{item}}">{{item}}</option>
             </select>

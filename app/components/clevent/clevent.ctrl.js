@@ -7,14 +7,16 @@ define([], function () {
     vm.enddate = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.shifts = ["A", "B", "C", "D"];
+    vm.units = ["Első egység", "Második egység", "Harmadik egység"];
     vm.data = [];
     vm.selectclor = [];
     vm.actclor = "";
     vm.actssh = "";
     vm.actesh = "";
+    vm.actunit = "";
     vm.beilleszt = beilleszt;
     vm.setChart = setChart;
-    vm.tload=false;
+    vm.tload = false;
 
     function beilleszt() {
       vm.startdatumszam = $filter('date')(new Date(vm.startdate).getTime(), 'yyyy-MM-dd');
@@ -23,7 +25,7 @@ define([], function () {
     }
 
     function load() {
-      vm.tload=true;
+      vm.tload = true;
       vm.data = [];
       vm.actclor = "";
       vm.actssh = "";
@@ -67,12 +69,12 @@ define([], function () {
             vm.data[i].End_shift = $filter('shift')(endshiftnum, vm.data[i].CL_End);
           }
         }
-        setChart(vm.data, vm.actclor,vm.actssh,vm.actesh);
-        vm.tload=false;
+        setChart(vm.data, vm.actunit, vm.actclor, vm.actssh, vm.actesh);
+        vm.tload = false;
       });
     }
 
-    function setChart(arr, cl,assh,aesh) {
+    function setChart(arr, un, cl, assh, aesh) {
       vm.selectclor = [];
       vm.selectclor = $filter('unique')(arr, 'MachineName');
 
@@ -80,18 +82,18 @@ define([], function () {
         chart: {
           type: 'column',
         },
-        title: { text: "Összesítő " + vm.actclor},
+        title: { text: "Összesítő " + vm.actclor },
         series: [
           {
             name: 'Klórozó be',
             color: "#009999",
-            data: setIn(arr, cl,assh),
+            data: setIn(arr, un, cl, assh),
 
           },
           {
             name: 'Klórozó ki',
             color: "#3366ff",
-            data: setOut(arr, cl,aesh),
+            data: setOut(arr, un, cl, aesh),
 
           }],
         xAxis: {
@@ -105,10 +107,31 @@ define([], function () {
       }
     }
 
-    function setIn(t, c,ssh) {
+    function setIn(t, u, c, ssh) {
       var selectdata = [];
+      var interarray = [];
       var days = $filter('unique')(t, 'CL_Start');
       days = $filter('orderBy')(days, 'CL_Start');
+      if (u == "Első egység") {
+        interarray = $filter('filter')(t, { MachineName: 'Chlorination 4' });
+        t = interarray;
+      }
+      else if (u == "Második egység") {
+        for (var i = 0; i < t.length; i++) {
+          if (t[i].MachineName == "Chlorination Tank5" || t[i].MachineName == "Chlorination Tank6" || t[i].MachineName == "Chlorination Tank7" || t[i].MachineName == "Chlorination Tank8") {
+            interarray.push(t[i]);
+          }
+        }
+        t = interarray;
+      }
+      else if (u == "Harmadik egység") {
+        for (var i = 0; i < t.length; i++) {
+          if (t[i].MachineName == "Chlorination Tank11" || t[i].MachineName == "Chlorination Tank12" || t[i].MachineName == "Chlorination Tank13" || t[i].MachineName == "Chlorination Tank14") {
+            interarray.push(t[i]);
+          }
+        }
+        t = interarray;
+      }
       t = $filter('filter')(t, { Start_shift: ssh });
 
       if (c == "") {
@@ -136,11 +159,32 @@ define([], function () {
       return selectdata;
     }
 
-    function setOut(t, c,esh) {
+    function setOut(t, u, c, esh) {
       var selectdata = [];
+      var interarray = [];
       var days = $filter('unique')(t, 'CL_End');
       days = $filter('orderBy')(days, 'CL_End');
       days.shift();
+      if (u == "Első egység") {
+        interarray = $filter('filter')(t, { MachineName: 'Chlorination 4' });
+        t = interarray;
+      }
+      else if (u == "Második egység") {
+        for (var i = 0; i < t.length; i++) {
+          if (t[i].MachineName == "Chlorination Tank5" || t[i].MachineName == "Chlorination Tank6" || t[i].MachineName == "Chlorination Tank7" || t[i].MachineName == "Chlorination Tank8") {
+            interarray.push(t[i]);
+          }
+        }
+        t = interarray;
+      }
+      else if (u == "Harmadik egység") {
+        for (var i = 0; i < t.length; i++) {
+          if (t[i].MachineName == "Chlorination Tank11" || t[i].MachineName == "Chlorination Tank12" || t[i].MachineName == "Chlorination Tank13" || t[i].MachineName == "Chlorination Tank14") {
+            interarray.push(t[i]);
+          }
+        }
+        t = interarray;
+      }
       t = $filter('filter')(t, { Start_shift: esh });
 
       if (c == "") {
