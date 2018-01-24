@@ -1,5 +1,5 @@
 require([
-  './app-starter/app/components/module'
+  './ZW1500_uf/app/components/module'
 ], function(){
   'use strict';
   angular.bootstrap(document, ['app']);
