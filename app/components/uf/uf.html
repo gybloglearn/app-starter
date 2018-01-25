@@ -37,7 +37,7 @@
       <table class="table responsive">
         <thead>
           <tr>
-            <th colspan="10" class="text-center">ZeeWeed 1500 (AEQ)</th>
+            <th colspan="11" class="text-center">ZeeWeed 1500 (AEQ)</th>
           </tr>
           <tr>
             <th class="text-center">Dátum</th>
@@ -49,17 +49,19 @@
             <th class="text-center">Centrifuga end</th>
             <th class="text-center">BP start</th>
             <th class="text-center">BP end</th>
+            <th class="text-center">Grade</th>
           </tr>
           <tr ng-repeat="date in vm.days track by $index">
             <th class="text-center">{{date}}</th>
-            <td class="text-center">{{(vm.data|filter:{'SPL_Start':date})| sumField:'AEQ'| number:2 }}</td>
-            <td class="text-center">{{(vm.data|filter:{'SPL_End':date})| sumField:'AEQ'| number:2 }}</td>
+            <td class="text-center">{{(vm.bundledata|filter:{'SPL_start':date})| sumField:'AEQ'| number:2 }}</td>
+            <td class="text-center">{{(vm.bundledata|filter:{'SPL_end':date})| sumField:'AEQ'| number:2 }}</td>
             <td class="text-center">{{(vm.data|filter:{'Static_Potting_Start':date})| sumField:'AEQ'| number:2 }}</td>
             <td class="text-center">{{(vm.data|filter:{'Static_Potting_Flip':date})| sumField:'AEQ'| number:2 }}</td>
             <td class="text-center">{{(vm.data|filter:{'Centrifuga_Start':date})| sumField:'AEQ'| number:2 }}</td>
             <td class="text-center">{{(vm.data|filter:{'Centrifuga_End':date})| sumField:'AEQ'| number:2 }}</td>
             <td class="text-center">{{(vm.data|filter:{'BP_start':date})| sumField:'AEQ'| number:2 }}</td>
             <td class="text-center">{{(vm.data|filter:{'BP_end':date})| sumField:'AEQ'| number:2 }}</td>
+            <td class="text-center">{{(vm.data|filter:{'Gradedate':date})| sumField:'AEQ'| number:2 }}</td>
           </tr>
         </thead>
       </table>

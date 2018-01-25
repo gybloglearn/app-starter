@@ -6,6 +6,7 @@ define([], function () {
     vm.enddate = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.days = [];
     vm.data = [];
+    vm.bundledata = [];
     vm.load = false;
     vm.createdates = createdates;
 
@@ -22,7 +23,8 @@ define([], function () {
     function loadetf() {
       vm.load = true;
       vm.data = [];
-      ufService.getetf(vm.startdate, vm.enddate).then(function (response) {
+      vm.endate=$filter('date')(new Date(vm.enddate).getTime()+(2*24*3600*1000),'yyyy-MM-dd');
+      ufService.getetf(vm.startdate, vm.endate).then(function (response) {
         vm.data = response.data;
         for (var i = 0; i < vm.data.length; i++) {
 
@@ -62,24 +64,24 @@ define([], function () {
     }
 
     function loadbundle() {
-      vm.start = $filter('date')(new Date(vm.startdate).getTime() - (3 * 24 * 3600 * 1000), 'yyyy-MM-dd');
-      ufService.getbundle(vm.start, vm.enddate).then(function (rsp) {
-        for (var i = 0; i < vm.data.length; i++) {
+      vm.bundledata=[];
+      ufService.getbundle(vm.startdate, vm.endate).then(function (rsp) {
           for (var j = 0; j < rsp.data.length; j++) {
-            if (rsp.data[j].bundle == vm.data[i].Bundle1) {
-              vm.data[i].SPL = rsp.data[j].SPL_line;
-              vm.data[i].SPL_Start_Shiftnum = $filter('shiftnumber')(rsp.data[j].SPL_start);
-              vm.data[i].SPL_Start = $filter('date')($filter('changeDate')(rsp.data[j].SPL_start), 'yyyy-MM-dd');
-              vm.data[i].SPL_Start_Shift = $filter('shift')(vm.data[i].SPL_Start_Shiftnum, vm.data[i].SPL_Start);
+            if (rsp.data[j].bundle.includes("3132313")) {
+              rsp.data[j].SPL_Start_Shiftnum = $filter('shiftnumber')(rsp.data[j].SPL_start);
+              rsp.data[j].SPL_start = $filter('date')($filter('changeDate')(rsp.data[j].SPL_start), 'yyyy-MM-dd');
+              rsp.data[j].SPL_Start_Shift = $filter('shift')(rsp.data[j].SPL_Start_Shiftnum, rsp.data[j].SPL_start);
 
-              vm.data[i].SPL_End_Shiftnum = $filter('shiftnumber')(rsp.data[j].SPL_end);
-              vm.data[i].SPL_End = $filter('date')($filter('changeDate')(rsp.data[j].SPL_end), 'yyyy-MM-dd');
-              vm.data[i].SPL_Start_Shift = $filter('shift')(vm.data[i].SPL_End_Shiftnum, vm.data[i].SPL_End);
+              rsp.data[j].SPL_End_Shiftnum = $filter('shiftnumber')(rsp.data[j].SPL_end);
+              rsp.data[j].SPL_end = $filter('date')($filter('changeDate')(rsp.data[j].SPL_end), 'yyyy-MM-dd');
+              rsp.data[j].SPL_Start_Shift = $filter('shift')(rsp.data[j].SPL_End_Shiftnum, rsp.data[j].SPL_end);
+
+              rsp.data[j].Amount = 1;
+              rsp.data[j].AEQ = 1.2;
+              vm.bundledata.push(rsp.data[j]);
             }
-          }
         }
         vm.load = false;
-        console.log(vm.data);
       });
     }
 
