@@ -65,6 +65,8 @@ define([], function () {
 
     function loadbundle() {
       vm.bundledata=[];
+      vm.xAxisData = [];
+      vm.bundleChartData = [];vm.pstart = []; vm.centri = []; vm.bp = []; vm.grade = [];
       ufService.getbundle(vm.startdate, vm.endate).then(function (rsp) {
           for (var j = 0; j < rsp.data.length; j++) {
             if (rsp.data[j].bundle.includes("3132313")) {
@@ -81,6 +83,30 @@ define([], function () {
               vm.bundledata.push(rsp.data[j]);
             }
         }
+        var k = $filter('unique')(vm.bundledata, 'SPL_end');
+        console.log(k);
+        for(var ki=0;ki<k.length;ki++){
+          vm.xAxisData.push(k[ki].SPL_end);
+          vm.bundleChartData.push({name:k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.bundledata, {SPL_end: k[ki].SPL_end}), 'AEQ'))});
+          vm.pstart.push({name:k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, {Static_Potting_Start: k[ki].SPL_end}), 'AEQ'))});
+          vm.centri.push({name:k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, {Centrifuga_End: k[ki].SPL_end}), 'AEQ'))});
+          vm.bp.push({name:k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, {BP_end: k[ki].SPL_end}), 'AEQ'))});
+          vm.grade.push({name:k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, {Gradedate: k[ki].SPL_end}), 'AEQ'))});
+        }
+        console.log(vm.xAxisData);
+        vm.chartconfig = {
+          chart: {type: 'column'},
+          title: {text: 'ZW1500 Termékvonal'},
+          subTitle: {text: 'MES adatok megjelenítése'},
+          xAxis: { type: 'category', categories: vm.xAxisData},
+          series: [
+            {name: 'SPL end', data: vm.bundleChartData},
+            {name: 'Potting Start', data: vm.pstart},
+            {name: 'Centrifuga End', data: vm.centri},
+            {name: 'BP End', data: vm.bp},
+            {name: 'Grade', data: vm.grade}
+          ]
+        };
         vm.load = false;
       });
     }
@@ -89,6 +115,9 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
+      vm.chartconfig = {
+        chart: {}
+      };
       vm.edate = $filter('date')(new Date(), 'yyyy-MM-dd');
       createdates();
     }
