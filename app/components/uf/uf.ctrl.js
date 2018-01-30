@@ -66,7 +66,7 @@ define([], function () {
     function loadbundle() {
       vm.bundledata=[];
       vm.xAxisData = [];
-      vm.bundleChartData = [];vm.pstart = []; vm.centri = []; vm.bp = []; vm.grade = [];
+      vm.bundleChartData = [];vm.pstart = []; vm.centri = []; vm.bp = []; vm.grade = [];vm.target = [];
       ufService.getbundle(vm.startdate, vm.endate).then(function (rsp) {
           for (var j = 0; j < rsp.data.length; j++) {
             if (rsp.data[j].bundle.includes("3132313")) {
@@ -92,6 +92,7 @@ define([], function () {
           vm.centri.push({name:k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, {Centrifuga_End: k[ki].SPL_end}), 'AEQ'))});
           vm.bp.push({name:k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, {BP_end: k[ki].SPL_end}), 'AEQ'))});
           vm.grade.push({name:k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, {Gradedate: k[ki].SPL_end}), 'AEQ'))});
+          vm.target.push({name:k[ki].SPL_end, y: 60});
         }
         console.log(vm.xAxisData);
         vm.chartconfig = {
@@ -104,7 +105,8 @@ define([], function () {
             {name: 'Potting Start', data: vm.pstart},
             {name: 'Centrifuga End', data: vm.centri},
             {name: 'BP End', data: vm.bp},
-            {name: 'Grade', data: vm.grade}
+            {name: 'Grade', data: vm.grade},
+            {name: 'Cél', type: 'line', color: 'Green', data:vm.target }
           ]
         };
         vm.load = false;
