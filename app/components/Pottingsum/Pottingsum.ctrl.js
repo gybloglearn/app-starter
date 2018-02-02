@@ -92,8 +92,9 @@ define([], function () {
         cycles.push(num2);
         cycles.push(num3);
       }
-      console.log(cycles);
+      //console.log(cycles);
       var k = 0;
+      var pnsinpott2 = ["3098725", "3111055", "3098723", "3111054", "3111060", "3111077", "3048648", "3111076", "3035119", "3035181", "3111072", "3111070", "3035180", "3035182", "3111071", "3111073"]
       for (var i = 0; i < cycles.length; i++) {
         SumserviceService.getArchive(cycles[i]).then(function (rsp) {
           k = k + 1;
@@ -102,12 +103,12 @@ define([], function () {
               rsp.data[j].category = k;
               vm.dryarchivedata.push(rsp.data[j]);
             }
-            else if (vm.mch == "Potting3" && rsp.data[j].machinename == "Drying2" && rsp.data[j].Time_to_Go < 6) {
+            else if (vm.mch == "Potting3" && rsp.data[j].machinename == "Drying2" && pnsinpott2.indexOf(rsp.data[j].modul_a.substr(2,7)) == -1 && rsp.data[j].Time_to_Go < 6) {
               rsp.data[j].category = k;
               vm.dryarchivedata.push(rsp.data[j]);
             }
           }
-          console.log(vm.dryarchivedata)
+          //console.log(vm.dryarchivedata)
           updateline(vm.dryarchivedata);
         });
       }
@@ -121,7 +122,7 @@ define([], function () {
             borderWidth: 0,
             events: {
               click: function (ev) {
-                console.log(ev.point.options.cat + " - " + ev.point.series.name);
+                //console.log(ev.point.options.cat + " - " + ev.point.series.name);
                 createinfo(ev.point.options.cat);
               }
             }
@@ -252,7 +253,7 @@ define([], function () {
           vm.linenumbers[i]=Math.round(number4/6)*2;
         }
       }
-      console.log(vm.linenumbers);
+      //console.log(vm.linenumbers);
       vm.chartData[vm.chartData.length-1].data = vm.linenumbers;
       chartize();
     }
@@ -262,7 +263,7 @@ define([], function () {
 
       SumserviceService.getAll().then(function (resp) {
         vm.pottinginfo = resp.data;
-        console.log(vm.pottinginfo);
+        //console.log(vm.pottinginfo);
       });
     }
 
