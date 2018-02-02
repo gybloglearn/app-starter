@@ -279,7 +279,7 @@ define([], function () {
     }
 
     function saveinfo() {
-
+			vm.isUploading = true;
       vm.createinfodata.id = new Date().getTime();
       vm.createinfodata.start = vm.startinfo;
       vm.createinfodata.end = vm.endinfo;
@@ -291,6 +291,7 @@ define([], function () {
       vm.createinfodata.opname = $rootScope.user.displayname
 
       SumserviceService.post(vm.createinfodata).then(function (resp) {
+				vm.isUploading = false;
         vm.showmessage = true;
         vm.createinfodata = {};
         $timeout(function () {
@@ -305,8 +306,32 @@ define([], function () {
     activate();
 
     function activate() {
-      (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
+      if(!$cookies.getObject('user')) {
+			  $state.go('login'); 
+			} else {
+				$rootScope.user = $cookies.getObject('user');
+			  if( $rootScope.user.username=='212557160' || 
+				 $rootScope.user.username=='212434909' || 
+				 $rootScope.user.username=='502678184' || 
+				 $rootScope.user.username=='212319674' || 
+				 $rootScope.user.username=='113005432' || 
+				 $rootScope.user.username=='113010453' || 
+				 $rootScope.user.username=='113009480' || 
+				 $rootScope.user.username=='212674695' || 
+				 $rootScope.user.username=='212404564' || 
+				 $rootScope.user.username=='113011028' || 
+				 $rootScope.user.username=='113008226' || 
+				 $rootScope.user.username=='113008995' || 
+				 $rootScope.user.username=='212437547' || 
+				 $rootScope.user.username=='113005514' || 
+				 $rootScope.user.username=='212546986' || 
+				 $rootScope.user.username=='212546835') {
+		 			vm.mutat = true;
+		 		} else {
+					 vm.mutat = false;
+			  }
       load();
+		}
     }
   }
   Controller.$inject = ['SumserviceService', '$cookies', '$state', '$rootScope', '$filter', '$timeout'];

@@ -1,12 +1,12 @@
 <?php
 //error_reporting(E_ALL & ~E_NOTICE);
 ini_set('default_socket_timeout', 600);
-set_include_path("bin/");
+set_include_path("/var/www/html/ssrs/bin/");
 require_once("SSRSReport.php");
-$conf = parse_ini_file('config.ini');
+$conf = parse_ini_file('/var/www/html/ssrs/config.ini');
 define("UID", $conf["UID"]);
 define("PASWD", $conf["PASWD"]);
-define("SERVICE_URL", $conf["UF_SURL"]);
+define("SERVICE_URL", $conf["UFURL"]);
 define("REPORT", "/MCS/Drying_List");
 function remove_utf8_bom($text)
 {
@@ -89,7 +89,7 @@ catch (SSRSReportException $serviceException)
 }
     $toWrite = json_encode($toWrite);
   echo $toWrite;
-    $myfile=fopen("Dryingfiles/Drynumbers_".date("YmdH" ).".json","w+");
+    $myfile=fopen("/var/www/html/file_reports/files/drying/Dryingnumbers_".date("YmdH" ).".json","w+");
     fwrite($myfile,$toWrite);
     fclose($myfile);
 ?>

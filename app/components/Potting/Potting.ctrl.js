@@ -193,6 +193,7 @@ define([], function () {
       { name: "C11FLOW", amount: 0.5 },
       { name: "C11 FLOW", amount: 0.5 },
       { name: "D11 CP5", amount: 0.68 },
+			{ name: "D11 CP55", amount: 0.68},
       { name: "D13 CP5", amount: 0.88 },
       { name: "D13 CP", amount: 0.88 },
       { name: "D12 FLOW", amount: 0.74 },
