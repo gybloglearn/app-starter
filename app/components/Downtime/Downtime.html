@@ -41,13 +41,13 @@
             <div class="col-sm-3">
               <div class="form-group">
                 <span class="control-label" style="color:#FFFFFF">Kezdő időpont</span>
-                    <input type="text" ng-model="search.start" class="form-control">
+                <input type="text" ng-model="search.start" class="form-control">
               </div>
             </div>
             <div class="col-sm-3">
               <div class="form-group">
                 <span class="control-label" style="color:#FFFFFF">Megjegyzés</span>
-                    <input type="text" ng-model="search.description" class="form-control">
+                <input type="text" ng-model="search.description" class="form-control">
               </div>
             </div>
           </div>
@@ -64,6 +64,7 @@
             <th>Megjegyzés</th>
             <th>Felvétel időpontja</th>
             <th>Felvevő</th>
+            <th>Szerkesztés/Törlés</th>
           </tr>
         </thead>
         <tbody>
@@ -76,10 +77,49 @@
             <td>{{item.description}}</td>
             <td>{{item.id |date:'yyyy-MM-dd HH:mm'}}</td>
             <td>{{item.opname}}</td>
+            <td>
+              <div class="btn-group btn-group-sm" ng-show="user.username==item.opid">
+                <button class="btn btn-primary" ng-click="vm.edit = item">
+                  <i class="icon-edit"></i>
+                </button>
+                <button class="btn btn-danger" ng-click="vm.remove(item.id,$index)">
+                  <i class="icon-trash"></i>
+                </button>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="module-footer"></div>
+    <div class="module-footer">
+      <section class="module" ng-show="vm.edit" style="margin-top:20px">
+        <div class="module-header">Megjegyzés módosítása</div>
+        <div class="module-body">
+          <div class="row" style="margin-top:10px">
+    
+            <div class="col-sm-4">
+              <div class="input-group">
+                <span class="input-group-addon">Állomás</span>
+                <select class="form-control" ng-model="vm.edit.place">
+                  <option ng-repeat="pl in vm.place" value="{{pl}}">{{pl}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="input-group">
+                <span class="input-group-addon">Leírás:</span>
+                <textarea class="form-control" rows="4" ng-model="vm.edit.description"></textarea>
+              </div>
+            </div>
+          </div>
+    
+          <div class="btn-group">
+            <button class="btn btn-default" ng-click="vm.edit = '';">Mégse</button>
+            <button class="btn btn-danger" ng-click="vm.updatedowntime(vm.edit)">Mentés</button>
+          </div>
+    
+        </div>
+      </section>
+    </div>
   </section>
 </div>

@@ -56,9 +56,11 @@ class info{
     {
         $data=json_decode($app['BODY']);
         $db=new \DB\Jig('infos/',\DB\Jig::FORMAT_JSON);
+        $mapper=new \DB\Jig\Mapper($db,'infos.json');
         $info=$mapper->load(Array('@id=?',$params['id']));
         $info->start=$data->start;
         $info->end=$data->end;
+        $info->place=$data->place; //állomás
         $info->description=$data->description;
         $info->save();
         echo "OK";
