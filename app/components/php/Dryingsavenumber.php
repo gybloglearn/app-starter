@@ -22,8 +22,10 @@ function remove_utf8_bom($text)
 // set Parameters from get
 
 // define drying
-//$mch = Array("Drying"=>"Drying", "Drying2"=>"Drying2", "Drying3"=>"Drying3");
+
 $mch = Array("Drying2","Drying3");
+
+
 //$machine = $_GET["mch"];
 function fill($from, $to, $A){
   $res = array();
@@ -35,6 +37,8 @@ function fill($from, $to, $A){
   return $res;
 }
 function convert($r) {
+  $pott2 = Array("3098725", "3111055", "3098723", "3111054", "3111060", "3111077", "3048648", "3111076", "3035119", "3035181", "3111072", "3111070", "3035180", "3035182", "3111071", "3111073");
+  $pott2length=sizeof($pott2);
   $number2=0;
   $number3=0;
   $obj=array();
@@ -53,7 +57,16 @@ function convert($r) {
         }
       }
       if($row["Time_to_Go"] <= 6 && $row["machinename"]=="Drying2"){
-        $number2++;
+        $plus=true;
+        for($a=0;$a<$pott2length;$a++){
+          if(substr($row["modul_a"],2,7)==$pott2[$a])
+          {
+            $plus=false;
+          }
+        }
+        if($plus==true){
+          $number2++;
+        }
         $dry2="Drying2";
         $obj["save"]=date("Y-m-d H:i");
         $obj["drying"]=$dry2;
@@ -133,7 +146,9 @@ catch (SSRSReportException $serviceException)
 }
     $toWrite = json_encode($toWrite);
 
-    $myfile=fopen("/var/www/html/Potting4Dashboard/app/components/php/Dryingnum/Drynumbers.json","w+");
+    //$myfile=fopen("/var/www/html/Potting4Dashboard/app/components/php/Dryingnum/Drynumbers.json","w+");
+    $myfile=fopen("Dryingnum/Drynumbers.json","w+");
+
     fwrite($myfile,$toWrite);
     fclose($myfile);
 ?>
