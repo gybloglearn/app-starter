@@ -8,6 +8,8 @@ define([], function () {
     vm.pottinginfo = [];
     vm.selectpottinginfo = [];
     vm.selectinfo=selectinfo;
+    vm.updatedowntime=updatedowntime;
+    vm.remove=remove;
 
     function load() {
       vm.pottinginfo = [];
@@ -31,6 +33,18 @@ define([], function () {
         }
       }
       console.log(vm.selectpottinginfo);
+    }
+
+    function updatedowntime(){
+      SumserviceService.put(vm.edit).then(function (resp) {
+        vm.edit = '';
+      });
+    }
+
+    function remove(id, index){
+      SumserviceService.erase(id).then(function (resp) {
+        vm.pottinginfo.splice(index, 1);
+      });
     }
 
     activate();
