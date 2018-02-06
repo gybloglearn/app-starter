@@ -209,11 +209,11 @@ define([], function () {
             vm.drynumdata = response.data[i];
           }
         }
-        if (vm.drynumdata.frame <= 21) {
+        if (vm.drynumdata.frame <= 23) {
           vm.usenumber = vm.drynumdata.frame;
         }
         else{
-          vm.usenumber=21;
+          vm.usenumber=23;
         }
         vm.savedate = vm.drynumdata.save;
         vm.todate=$filter('date')(new Date(vm.savedate).getTime()+(6*3600*1000), 'yyyy-MM-dd HH:mm');
@@ -263,7 +263,7 @@ define([], function () {
     activate();
 
     function activate() {
-      (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
+      //(!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       choose();
       //loaddrying();
       loaddrynum();

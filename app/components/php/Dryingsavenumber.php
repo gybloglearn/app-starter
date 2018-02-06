@@ -2,10 +2,10 @@
 //error_reporting(E_ALL & ~E_NOTICE);
 ini_set('default_socket_timeout', 600);
 //set_include_path("../../../../SSRSReport/bin/");
-set_include_path("../../../../ssrs/bin/");
+set_include_path("/var/www/html/ssrs/bin/");
 require_once("SSRSReport.php");
 
-$conf = parse_ini_file('../../../../ssrs/config.ini');
+$conf = parse_ini_file('/var/www/html/ssrs/config.ini');
 define("UID", $conf["UID"]);
 define("PASWD", $conf["PASWD"]);
 define("SERVICE_URL", $conf["UFURL"]);
@@ -133,7 +133,7 @@ catch (SSRSReportException $serviceException)
 }
     $toWrite = json_encode($toWrite);
 
-    $myfile=fopen("Dryingnum/Drynumbers.json","w+");
+    $myfile=fopen("/var/www/html/Potting4Dashboard/app/components/php/Dryingnum/Drynumbers.json","w+");
     fwrite($myfile,$toWrite);
     fclose($myfile);
 ?>

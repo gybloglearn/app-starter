@@ -30,7 +30,7 @@ define([], function () {
     function getdrynum() {
       var req = {
         method: 'GET',
-        url: 'app/components/php/Dryingnum/Drynumbers.json'
+        url: '../Potting4Dashboard/app/components/php/Dryingnum/Drynumbers.json'
       };
       return $http(req);
     }
