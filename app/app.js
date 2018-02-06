@@ -1,5 +1,5 @@
 require([
-  './SM4SM5Dashboard/app/components/module'
+  './sm45d/app/components/module'
 ], function(){
   'use strict';
   angular.bootstrap(document, ['app']);

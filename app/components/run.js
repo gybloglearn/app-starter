@@ -1,7 +1,7 @@
 define([], function(){
   'use strict';
   function Run($cookies, $location){
-    var redir = '';
+/*    var redir = '';
     var actR = $cookies.get('redir');
     var user = $cookies.getObject('user');
     if(actR){
@@ -13,7 +13,7 @@ define([], function(){
 	redir = url;
 	$cookies.put('redir', redir);
       }
-    }
+    }*/
   }
   Run.$inject = ['$cookies', '$location'];
   return Run;
