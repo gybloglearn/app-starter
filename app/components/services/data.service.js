@@ -16,7 +16,7 @@ define([], function () {
     function get(startd, num) {
       var req = {
         method: 'GET',
-        url: 'app/components/php/PottingDashboard.php?startdate=' + startd + '&machinename=Potting4&phasename=' + num
+        url: 'app/components/php/PottingDashboard.php?startdate=' + startd + '&machinename=Potting3&phasename=' + num
       };
       return $http(req);
     }
@@ -30,14 +30,14 @@ define([], function () {
     function getdrynum() {
       var req = {
         method: 'GET',
-        url: 'app/components/php/Dryingnum/Drynumbers.json'
+        url: '../Potting4Dashboard/app/components/php/Dryingnum/Drynumbers.json'
       };
       return $http(req);
     }
     function getdrying() {
       var req = {
         method: 'GET',
-        url: 'app/components/php/Drying.php?mch=Drying3'
+        url: 'app/components/php/Drying.php?mch=Drying2'
       };
       return $http(req);
     }

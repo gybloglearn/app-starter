@@ -22,12 +22,16 @@
 		.x-ng-cloak {
 			display: none !important;
 		}
+		body {
+			width: 100%;
+				background: white;
+		}
 	</style>
 </head>
 
 <body ng-cloak>
 
-	<nav class="navbar navbar-static-top navbar-default" role="navigation">
+<!--	<nav class="navbar navbar-static-top navbar-default" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
 				<a href="" class="navbar-brand">
@@ -39,21 +43,20 @@
 		<div class="primary-navbar">
 			<div class="container" ng-show="user.displayname">
 				<ul class="nav navbar-nav">
-					<!--<li><a ui-sref="start">Start</a></li>-->
-					<!-- links -->
-
-				</ul>
+					<li><a ui-sref="start">Start</a></li>-->
+					
+<!--				</ul>
 				<ul class="nav navbar-nav pull-right">
 					<li><a ui-sref="start"><i class="icon-home"></i></a></li>
 					<li><a ui-sref="logout"><i class="icon-lock"></i> {{user.displayname}}</a></li>
 				</ul>
 			</div>
 		</div>
-	</nav>
+		</nav>-->
 
 	<div style="margin: 20px auto;" ui-view></div>
 
-	<div class="footer" ng-show="user.displayname">
+	<!--<div class="footer" ng-show="user.displayname">
 		<div class="primary">
 			<div class="container">
 				<div class="brand">
@@ -67,7 +70,7 @@
 				</div>
 
 			</div>
-		</div>
+		</div>-->
 
 		<script src="../components/requirejs/require.js"></script>
 		<script src="app/require.config.js"></script>
