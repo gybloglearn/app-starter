@@ -6,12 +6,11 @@ define([], function () {
     vm.end = $filter('date')(new Date().getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
     vm.frissites_ideje = $filter('date')(new Date().getTime() + 10 * 60 * 1000, 'yyyy-MM-dd HH:mm');
-    vm.sheetmakers = ["SheetMaker6", "SheetMaker7","SheetMaker8"];
+    vm.sheetmakers = ["SheetMaker6", "SheetMaker7", "SheetMaker8"];
     vm.smcards = [];
 
     function load() {
       vm.smcards = [];
-
 
       dataService.getplan().then(function (resp) {
         vm.allplan = resp.data;
@@ -21,13 +20,12 @@ define([], function () {
           var osszaeq = 0;
           var jo = 0;
           var joaeq = 0;
-          
+
 
           dataService.getsm(vm.datum, vm.end, v).then(function (response) {
-            plancreator(vm.allplan,v);
+
             ossz = $filter('sumdb')($filter('filter')(response.data, { 'category': 'TOTAL', 'shiftnum': vm.actshiftnum }));
             jo = $filter('sumdb')($filter('filter')(response.data, { 'category': 'GOOD', 'shiftnum': vm.actshiftnum }));
-
             var obj = {};
             obj = {
               sm: v[0] + v[5] + v[10],
@@ -35,17 +33,18 @@ define([], function () {
               jolap: jo,
 
             };
+            plancreator(vm.allplan, obj.sm);
 
             obj.terv = vm.tervezett_darab;
-            obj.szaklap=vm.szaklap;
+            obj.szaklap = vm.szaklap;
 
 
             dataService.getsoesm(vm.datum, v).then(function (respo) {
-              var tomb=[];
-              for(var i=0;i<respo.data.length;i++){
-                respo.data[i].shiftnum=respo.data[i].Shift_ID[respo.data[i].Shift_ID.length-1]
+              var tomb = [];
+              for (var i = 0; i < respo.data.length; i++) {
+                respo.data[i].shiftnum = respo.data[i].Shift_ID[respo.data[i].Shift_ID.length - 1]
               }
-              tomb=$filter('filter')(respo.data,{'shiftnum':vm.actshiftnum});
+              tomb = $filter('filter')(respo.data, { 'shiftnum': vm.actshiftnum });
               var szam = $filter('sumField')($filter('filter')(tomb, { 'Event_type': "Downtime" }), 'Event_time');
               var szerv = $filter('sumField')($filter('filter')(tomb, { 'Ev_Group': "Szervezesi veszteseg" }), 'Event_time');
               var tervez = $filter('sumField')($filter('filter')(tomb, { 'Ev_Group': "Tervezett veszteseg" }), 'Event_time');
@@ -120,32 +119,32 @@ define([], function () {
       var frissites = $filter('date')(new Date().getTime(), 'yyyy-MM-dd HH:mm');
       var actday = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
       vm.tervezett_darab = 0;
-      vm.szaklap=0;
+      vm.szaklap = 0;
 
       if (tomb == "") {
         vm.tervezett_darab = 0;
-        vm.szaklap=0;
+        vm.szaklap = 0;
       }
       else {
         var szam = 0;
         for (var i = 0; i < tomb.length; i++) {
-          if (tomb[i].sm == asm && actday == tomb[i].date) {
+          if (tomb[i].sm == asm) {
             if (vm.actshiftnum == 1) {
               vm.tervezett = 0;
-              vm.szaklap=0;
+              vm.szaklap = 0;
               var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
-              vm.tervezett += (parseInt(tomb[i].amountshift1) * parseInt(tomb[i].sheetnumber));
-              vm.szaklap+=vm.tervezett;
+              vm.tervezett += (parseInt(tomb[i].amount)) * 12;
+              vm.szaklap += vm.tervezett;
               szorzo = szorzo - (350);
               szam = (vm.tervezett / 720) * szorzo;
               vm.tervezett_darab += Math.round(szam);
             }
             else if (vm.actshiftnum == 3) {
               vm.tervezett = 0;
-              vm.szaklap=0;
+              vm.szaklap = 0;
               var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
-              vm.tervezett += (parseInt(tomb[i].amountshift3) * parseInt(tomb[i].sheetnumber));
-              vm.szaklap+=vm.tervezett;
+              vm.tervezett += (parseInt(tomb[i].amount)) * 12;
+              vm.szaklap += vm.tervezett;
               if (szorzo >= 1070) {
                 szorzo = szorzo - (1070);
                 szam = (vm.tervezett / 720) * szorzo;
@@ -180,7 +179,7 @@ define([], function () {
       vm.frissites_ideje = $filter('date')(new Date().getTime() + 10 * 60 * 1000, 'yyyy-MM-dd HH:mm');
     }
 
-    
+
     var refreshload = setInterval(load, 10 * 60 * 1000);
     var refreshdate = setInterval(date_refresh, 10 * 60 * 1000);
 
