@@ -12,7 +12,6 @@ define([], function () {
     function load() {
       vm.smcards = [];
 
-
       dataService.getplan().then(function (resp) {
         vm.allplan = resp.data;
 
@@ -24,10 +23,9 @@ define([], function () {
           
 
           dataService.getsm(vm.datum, vm.end, v).then(function (response) {
-            plancreator(vm.allplan,v);
+            
             ossz = $filter('sumdb')($filter('filter')(response.data, { 'category': 'TOTAL', 'shiftnum': vm.actshiftnum }));
             jo = $filter('sumdb')($filter('filter')(response.data, { 'category': 'GOOD', 'shiftnum': vm.actshiftnum }));
-
             var obj = {};
             obj = {
               sm: v[0] + v[5] + v[10],
@@ -35,6 +33,8 @@ define([], function () {
               jolap: jo,
 
             };
+
+            plancreator(vm.allplan,obj.sm);
 
             obj.terv = vm.tervezett_darab;
             obj.szaklap=vm.szaklap;
@@ -129,12 +129,12 @@ define([], function () {
       else {
         var szam = 0;
         for (var i = 0; i < tomb.length; i++) {
-          if (tomb[i].sm == asm && actday == tomb[i].date) {
+          if (tomb[i].sm == asm) {
             if (vm.actshiftnum == 1) {
               vm.tervezett = 0;
               vm.szaklap=0;
               var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
-              vm.tervezett += (parseInt(tomb[i].amountshift1) * parseInt(tomb[i].sheetnumber));
+              vm.tervezett += (parseInt(tomb[i].amount))*12;
               vm.szaklap+=vm.tervezett;
               szorzo = szorzo - (350);
               szam = (vm.tervezett / 720) * szorzo;
@@ -144,7 +144,7 @@ define([], function () {
               vm.tervezett = 0;
               vm.szaklap=0;
               var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
-              vm.tervezett += (parseInt(tomb[i].amountshift3) * parseInt(tomb[i].sheetnumber));
+              vm.tervezett += (parseInt(tomb[i].amount))*12;
               vm.szaklap+=vm.tervezett;
               if (szorzo >= 1070) {
                 szorzo = szorzo - (1070);
