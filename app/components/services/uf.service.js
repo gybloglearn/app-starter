@@ -3,7 +3,8 @@ define([], function () {
 
   function Service($http) {
     var service = {
-      getbundle: getbundle,
+      //getbundle: getbundle,
+      getbundlefile:getbundlefile,
       getetf: getetf
     };
 
@@ -11,10 +12,17 @@ define([], function () {
 
     ///////////
 
-    function getbundle(start, end) {
+    /*function getbundle(start, end) {
       var req = {
         method: 'GET',
         url: 'app/components/PHP/Bundle_history_uf.php?startdate=' + start + '&enddate=' + end
+      };
+      return $http(req);
+    }*/
+    function getbundlefile(date) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/Bundle/bundle' + date + '.json'
       };
       return $http(req);
     }

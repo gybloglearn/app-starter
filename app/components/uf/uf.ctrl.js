@@ -2,8 +2,8 @@ define([], function () {
   'use strict';
   function Controller(ufService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
-    vm.startdate = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
-    vm.enddate = $filter('date')(new Date(), 'yyyy-MM-dd');
+    vm.startdate = $filter('date')(new Date().getTime() - (7 * 24 * 3600 * 1000), 'yyyy-MM-dd');
+    vm.enddate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.days = [];
     vm.data = [];
     vm.bundledata = [];
@@ -12,10 +12,12 @@ define([], function () {
 
     function createdates() {
       vm.days = [];
+      vm.loaddays = [];
       var differencedate = 0;
       differencedate = (new Date(vm.enddate).getTime() - new Date(vm.startdate).getTime()) / (24 * 3600 * 1000);
       for (var i = 0; i <= differencedate; i++) {
         vm.days[i] = $filter('date')(new Date(vm.enddate).getTime() - ((differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd');
+        vm.loaddays[i] = $filter('date')(new Date(vm.enddate).getTime() - ((differencedate - i) * 24 * 3600 * 1000), 'yyyyMMdd');
       }
       loadetf();
     }
@@ -23,7 +25,7 @@ define([], function () {
     function loadetf() {
       vm.load = true;
       vm.data = [];
-      vm.endate=$filter('date')(new Date(vm.enddate).getTime()+(2*24*3600*1000),'yyyy-MM-dd');
+      vm.endate = $filter('date')(new Date(vm.enddate).getTime() + (2*24 * 3600 * 1000), 'yyyy-MM-dd');
       ufService.getetf(vm.startdate, vm.endate).then(function (response) {
         vm.data = response.data;
         for (var i = 0; i < vm.data.length; i++) {
@@ -64,10 +66,13 @@ define([], function () {
     }
 
     function loadbundle() {
-      vm.bundledata=[];
+      vm.bundledata = [];
       vm.xAxisData = [];
-      vm.bundleChartData = [];vm.pstart = []; vm.centri = []; vm.bp = []; vm.grade = [];vm.target = [];
-      ufService.getbundle(vm.startdate, vm.endate).then(function (rsp) {
+      vm.bundleChartData = []; vm.pstart = []; vm.centri = []; vm.bp = []; vm.grade = []; vm.target = [];
+      var counter=0;
+      for (var i = 0; i < vm.loaddays.length; i++) {
+        ufService.getbundlefile(vm.loaddays[i]).then(function (rsp) {
+          counter++;
           for (var j = 0; j < rsp.data.length; j++) {
             if (rsp.data[j].bundle.includes("3132313")) {
               rsp.data[j].SPL_Start_Shiftnum = $filter('shiftnumber')(rsp.data[j].SPL_start);
@@ -82,35 +87,38 @@ define([], function () {
               rsp.data[j].AEQ = 1.2;
               vm.bundledata.push(rsp.data[j]);
             }
+          }
+          if(counter==vm.loaddays.length){
+          var k = $filter('unique')(vm.bundledata, 'SPL_end');
+          console.log(k);
+          for (var ki = 0; ki < k.length-1; ki++) {
+            vm.xAxisData.push(k[ki].SPL_end);
+            vm.bundleChartData.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.bundledata, { SPL_end: k[ki].SPL_end }), 'AEQ')) });
+            vm.pstart.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { Static_Potting_Start: k[ki].SPL_end }), 'AEQ')) });
+            vm.centri.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { Centrifuga_End: k[ki].SPL_end }), 'AEQ')) });
+            vm.bp.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { BP_end: k[ki].SPL_end }), 'AEQ')) });
+            vm.grade.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { Gradedate: k[ki].SPL_end }), 'AEQ')) });
+            vm.target.push({ name: k[ki].SPL_end, y: 60 });
+          }
         }
-        var k = $filter('unique')(vm.bundledata, 'SPL_end');
-        console.log(k);
-        for(var ki=0;ki<k.length;ki++){
-          vm.xAxisData.push(k[ki].SPL_end);
-          vm.bundleChartData.push({name:k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.bundledata, {SPL_end: k[ki].SPL_end}), 'AEQ'))});
-          vm.pstart.push({name:k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, {Static_Potting_Start: k[ki].SPL_end}), 'AEQ'))});
-          vm.centri.push({name:k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, {Centrifuga_End: k[ki].SPL_end}), 'AEQ'))});
-          vm.bp.push({name:k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, {BP_end: k[ki].SPL_end}), 'AEQ'))});
-          vm.grade.push({name:k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, {Gradedate: k[ki].SPL_end}), 'AEQ'))});
-          vm.target.push({name:k[ki].SPL_end, y: 60});
-        }
-        console.log(vm.xAxisData);
-        vm.chartconfig = {
-          chart: {type: 'column'},
-          title: {text: 'ZW1500 Termékvonal'},
-          subTitle: {text: 'MES adatok megjelenítése'},
-          xAxis: { type: 'category', categories: vm.xAxisData},
-          series: [
-            {name: 'SPL end', data: vm.bundleChartData},
-            {name: 'Potting Start', data: vm.pstart},
-            {name: 'Centrifuga End', data: vm.centri},
-            {name: 'BP End', data: vm.bp},
-            {name: 'Grade', data: vm.grade},
-            {name: 'Cél', type: 'line', color: 'Green', data:vm.target }
-          ]
-        };
-        vm.load = false;
-      });
+          console.log(vm.xAxisData);
+          vm.chartconfig = {
+            chart: { type: 'column' },
+            title: { text: 'ZW1500 Termékvonal' },
+            subTitle: { text: 'MES adatok megjelenítése' },
+            xAxis: { type: 'category', categories: vm.xAxisData },
+            series: [
+              { name: 'SPL end', data: vm.bundleChartData },
+              { name: 'Potting Start', data: vm.pstart },
+              { name: 'Centrifuga End', data: vm.centri },
+              { name: 'BP End', data: vm.bp },
+              { name: 'Grade', data: vm.grade },
+              { name: 'Cél', type: 'line', color: 'Green', data: vm.target }
+            ]
+          };
+          vm.load = false;
+        });
+      }
     }
 
     activate();
@@ -120,7 +128,7 @@ define([], function () {
       vm.chartconfig = {
         chart: {}
       };
-      vm.edate = $filter('date')(new Date(), 'yyyy-MM-dd');
+      vm.edate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
       createdates();
     }
   }
