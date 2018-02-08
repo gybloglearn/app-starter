@@ -119,7 +119,8 @@
           <div class="col-xs-2">Lapgyártók</div>
           <div class="col-xs-2">Tokozó Ki</div>
           <div class="col-xs-2">Kádak Ki</div>
-          <div class="col-xs-2">Bökés / AEQ</div>
+          <div class="col-xs-1">Rework</div>
+          <div class="col-xs-1">Bökés / AEQ</div>
           <div class="col-xs-2">Minősítve</div>
         </div>
         <style>
@@ -137,32 +138,38 @@
           </div>
           <div class="col-xs-2">
             <h3>
-              <i class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'Sheetmaker', category: 'GOOD'}) | sumField:'sumaeq'),'sm', shn);}}"></i>
-              <strong>{{(vm.data | filter:{shiftnum: shn, machine: 'Sheetmaker', category: 'GOOD'}) | sumField:'sumaeq'}}</strong>
+              <i class="{{vm.iconize(((vm.data | filter:{ShiftNum: shn, machine: 'Sheetmaker'}) | sumField:'sumaeq'),'sm', shn);}}"></i>
+              <strong>{{(vm.data | filter:{ShiftNum : shn, machine: 'Sheetmaker'}) | sumField:'sumaeq'}}</strong>
             </h3>
           </div>
           <div class="col-xs-2">
             <h3>
-              <i class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'Potting', category: 'OUT'}) | sumField:'sumaeq'),'potting', shn);}}"></i>
-              <strong>{{(vm.data | filter:{shiftnum: shn, machine: 'Potting', category: 'OUT'}) | sumField:'sumaeq'}}</strong>
+              <i class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'sumaeq'),'potting', shn);}}"></i>
+              <strong>{{(vm.data | filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'sumaeq'}}</strong>
             </h3>
           </div>
           <div class="col-xs-2">
             <h3>
-              <i class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'MTF', category: 'BP-OUT', type: '!ZB500S'}) | sumField:'sumaeq'),'bp', shn);}}"></i>
-              <strong>{{(vm.data | filter:{shiftnum: shn, machine: 'MTF', category: 'BP-OUT', type: '!ZB500S'}) | sumField:'sumaeq'}}</strong>
+              <i class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'Rework', state: 'BP', type: '!ZB500S'}) | sumField:'aeq'),'bp', shn);}}"></i>
+              <strong>{{(vm.data | filter:{shiftnum: shn, machine: 'Rework', state: 'BP', type: '!ZB500S'}) | sumField:'aeq'}}</strong>
+            </h3>
+          </div>
+          <div class="col-xs-1">
+            <h3>
+              <i class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'Rework', state: 'Rework', type: '!ZB500S'}) | sumField:'aeq'),'bp', shn);}}"></i>
+              <strong>{{(vm.data | filter:{shiftnum: shn, machine: 'Rework', state: 'Rework', type: '!ZB500S'}) | sumField:'aeq'}}</strong>
+            </h3>
+          </div>
+          <div class="col-xs-1">
+            <h3>
+              <strong>{{ ((vm.data | filter:{shiftnum: shn, machine: 'MTF', type: '!ZB500S'}) | sumField:'BOKES')/((vm.data
+                | filter:{shiftnum: shn, machine: 'MTF', type: '!ZB500S'}) | sumField:'sumaeq') | number:1}}</strong>
             </h3>
           </div>
           <div class="col-xs-2">
             <h3>
-              <strong>{{ ((vm.data | filter:{shiftnum: shn, machine: 'MTF', category: 'BOK-BOKES', type: '!ZB500S'}) | sumField:'amount')/((vm.data
-                | filter:{shiftnum: shn, machine: 'MTF', category: 'BP-OUT', type: '!ZB500S'}) | sumField:'sumaeq') | number:1}}</strong>
-            </h3>
-          </div>
-          <div class="col-xs-2">
-            <h3>
-              <i class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'MTF', category: 'MIN-AMOUNT', type: '!ZB500S_MIN'}) | sumField:'sumaeq'),'min', shn);}}"></i>
-              <strong>{{(vm.data | filter:{shiftnum: shn, machine: 'MTF', category: 'MIN-AMOUNT', type: '!ZB500S_MIN'}) | sumField:'sumaeq'}}</strong>
+              <i class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'MTF', type: '!ZB500S_MIN'}) | sumField:'gradeaeq'),'min', shn);}}"></i>
+              <strong>{{(vm.data | filter:{shiftnum: shn, machine: 'MTF', type: '!ZB500S_MIN'}) | sumField:'gradeaeq'}}</strong>
             </h3>
           </div>
         </div>
@@ -174,32 +181,38 @@
           </div>
           <div class="col-xs-2">
             <h3>
-              <i class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'Sheetmaker', category: 'GOOD'}) | sumField:'sumaeq'),'sm', 0);}}"></i>
-              <strong>{{(vm.data | filter:{machine: 'Sheetmaker', category: 'GOOD'}) | sumField:'sumaeq'}}</strong>
+              <i class="{{vm.iconize(((vm.data | filter:{ShiftNum: shn, machine: 'Sheetmaker'}) | sumField:'sumaeq'),'sm', 0);}}"></i>
+              <strong>{{(vm.data | filter:{machine: 'Sheetmaker'}) | sumField:'sumaeq'}}</strong>
             </h3>
           </div>
           <div class="col-xs-2">
             <h3>
-              <i class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'Potting', category: 'OUT'}) | sumField:'sumaeq'),'potting', 0);}}"></i>
-              <strong>{{(vm.data | filter:{machine: 'Potting', category: 'OUT'}) | sumField:'sumaeq'}}</strong>
+              <i class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'sumaeq'),'potting', 0);}}"></i>
+              <strong>{{(vm.data | filter:{machine: 'Potting'}) | sumField:'sumaeq'}}</strong>
             </h3>
           </div>
           <div class="col-xs-2">
             <h3>
-              <i class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'MTF', category: 'BP-OUT', type: '!ZB500S'}) | sumField:'sumaeq'),'bp', 0);}}"></i>
-              <strong>{{(vm.data | filter:{machine: 'MTF', category: 'BP-OUT', type: '!ZB500S'}) | sumField:'sumaeq'}}</strong>
+              <i class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'Rework', state: 'BP', type: '!ZB500S'}) | sumField:'aeq'),'bp', 0);}}"></i>
+              <strong>{{(vm.data | filter:{machine: 'Rework', state: 'BP', type: '!ZB500S'}) | sumField:'aeq'}}</strong>
+            </h3>
+          </div>
+          <div class="col-xs-1">
+            <h3>
+              <i class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'Rework', state: 'Rework', type: '!ZB500S'}) | sumField:'aeq'),'bp', 0);}}"></i>
+              <strong>{{(vm.data | filter:{machine: 'Rework', state: 'Rework', type: '!ZB500S'}) | sumField:'aeq'}}</strong>
+            </h3>
+          </div>
+          <div class="col-xs-1">
+            <h3>
+              <strong>{{ ((vm.data | filter:{machine: 'MTF', type: '!ZB500S'}) | sumField:'BOKES')/((vm.data
+                | filter:{machine: 'MTF', type: '!ZB500S'}) | sumField:'sumaeq') | number:1}}</strong>
             </h3>
           </div>
           <div class="col-xs-2">
             <h3>
-              <strong>{{ ((vm.data | filter:{machine: 'MTF', category: 'BOK-BOKES', type: '!ZB500S'}) | sumField:'amount')/((vm.data
-                | filter:{machine: 'MTF', category: 'BP-OUT', type: '!ZB500S'}) | sumField:'sumaeq') | number:1}}</strong>
-            </h3>
-          </div>
-          <div class="col-xs-2">
-            <h3>
-              <i class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'MTF', category: 'MIN-AMOUNT', type: '!ZB500S_MIN'}) | sumField:'sumaeq'),'min', 0);}}"></i>
-              <strong>{{(vm.data | filter:{machine: 'MTF', category: 'MIN-AMOUNT', type: '!ZB500S_MIN'}) | sumField:'sumaeq'}}</strong>
+              <i class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'MTF', type: '!ZB500S_MIN'}) | sumField:'gradeaeq'),'min', 0);}}"></i>
+              <strong>{{(vm.data | filter:{machine: 'MTF', type: '!ZB500S_MIN'}) | sumField:'gradeaeq'}}</strong>
             </h3>
           </div>
         </div>

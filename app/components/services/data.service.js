@@ -12,7 +12,11 @@ define([], function () {
       gettodaymtf: gettodaymtf,
       getgradebyd1000: getgradebyd1000,
       getgradebyd1500: getgradebyd1500,
-      getsapdata: getsapdata
+      getsapdata: getsapdata,
+      getsmtable: getsmtable,
+      getpottingtable: getpottingtable,
+      getmtftable: getmtftable,
+      getrework: getrework
     };
 
     return service;
@@ -70,14 +74,14 @@ define([], function () {
       };
       return $http(req);
     }*/
-    function getmtf(date){
+    function getmtf(date) {
       var req = {
         method: 'GET',
         url: 'http://3.228.180.13/uf/app/components/PHP/MTF/mtf' + date + '.json'
       };
       return $http(req);
     }
-    function gettodaymtf(date){
+    function gettodaymtf(date) {
       var req = {
         method: 'GET',
         url: 'app/components/PHP/ZW500_MTF_report.php?startdate=' + date
@@ -95,6 +99,34 @@ define([], function () {
       var req = {
         method: 'GET',
         url: 'app/components/PHP/ZW1500_GradebyDay.php?startdate=' + start + '&enddate=' + end
+      };
+      return $http(req);
+    }
+    function getsmtable(start, end) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/sm_table.php?startdate=' + start + '&enddate=' + end
+      };
+      return $http(req);
+    }
+    function getpottingtable(start, end) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/potting_table.php?startdate=' + start + '&enddate=' + end
+      };
+      return $http(req);
+    }
+    function getmtftable(start, end) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/mtf_table.php?startdate=' + start + '&enddate=' + end
+      };
+      return $http(req);
+    }
+    function getrework(start, end) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/BP_Rework.php?startdate=' + start + '&enddate=' + end
       };
       return $http(req);
     }

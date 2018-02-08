@@ -25,28 +25,28 @@ define([], function () {
 
     function iconize(number, field, shiftnum) {
       var target = 0;
-      var div = shiftnum>0?2:1;
+      var div = shiftnum > 0 ? 2 : 1;
       switch (field) {
         case 'sm':
           //var number = $filter('sumField')($filter('filter')(vm.data, {machine: 'SheetMaker', shift: shiftnum}), 'sumaeq');
-          target = (vm.rates.min / div) / (1 - vm.rates.modscrap / 100) / (1 - vm.rates.smscrap / 100) / (1440/div) * vm.passedmins[shiftnum];
+          target = (vm.rates.min / div) / (1 - vm.rates.modscrap / 100) / (1 - vm.rates.smscrap / 100) / (1440 / div) * vm.passedmins[shiftnum];
           //console.log(number + " - to - " + target);
           break;
         case 'potting':
-          target = (vm.rates.min / div) / (1 - vm.rates.modscrap / 100) / (1440/div) * vm.passedmins[shiftnum];
+          target = (vm.rates.min / div) / (1 - vm.rates.modscrap / 100) / (1440 / div) * vm.passedmins[shiftnum];
           //console.log(number + " - to - " + target);
           break;
         case 'bp':
-          target = (vm.rates.bp / div) / (1440/div) * vm.passedmins[shiftnum];
+          target = (vm.rates.bp / div) / (1440 / div) * vm.passedmins[shiftnum];
           //console.log(number + " - to - " + target);
           break;
         case 'min':
-          target = (vm.rates.min / div) / (1440/div) * vm.passedmins[shiftnum];
+          target = (vm.rates.min / div) / (1440 / div) * vm.passedmins[shiftnum];
           //console.log(number + " - to - " + target);
           break;
       }
-      if(number > 0) {
-        return number < target ? 'text-ge-red icon-warning-sign':'text-ge-green icon-ok-sign';
+      if (number > 0) {
+        return number < target ? 'text-ge-red icon-warning-sign' : 'text-ge-green icon-ok-sign';
       }
 
     }
@@ -58,6 +58,10 @@ define([], function () {
       vm.zw1000 = [];
       vm.zw1500 = [];
       vm.daystocover = [];
+      vm.reworkobj=[
+        {shiftnum:1,shift:$filter('shift')(1, vm.startdate)},
+        {shiftnum:3,shift:$filter('shift')(3, vm.startdate)}
+      ];
       vm.szamlalo = 0;
       //var ds = (new Date(vm.enddate).getTime() + (24 * 1000 * 60 * 60) - new Date(vm.startdate).getTime()) / (1000 * 24 * 60 * 60);
       var dt = "";
@@ -69,40 +73,42 @@ define([], function () {
       vm.enddate = $filter('date')(new Date(vm.startdate) + 24 * 60 * 60 * 1000, 'yyyy-MM-dd');
 
       //ZW500
-      for (var k = 0; k < vm.zwsm.length; k++) {
-        dataService.getsm(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd'), vm.zwsm[k]).then(function (response) {
-          for (var r = 0; r < response.data.length; r++) {
-            response.data[r].aeq = aeqser(response.data[r].type, true);
-            response.data[r].days = $filter('date')(new Date(response.data[r].days).getTime(), "yyyy-MM-dd");
-            response.data[r].sumaeq = response.data[r].aeq * response.data[r].amount;
+      dataService.getsmtable(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
+        for (var r = 0; r < response.data.length; r++) {
+          if (response.data[r].MachineName != "SheetMaker1" && response.data[r].MachineName != "SheetMaker2") {
+            response.data[r].machine = "Sheetmaker";
+            response.data[r].aeq = aeqserloadpartnumbers(response.data[r].type, true);
+            response.data[r].days = $filter('date')(new Date(response.data[r].Day).getTime(), "yyyy-MM-dd");
+            response.data[r].sumaeq = response.data[r].aeq * (response.data[r].Totalsheets - response.data[r].ScrapSheets);
             vm.data.push(response.data[r]);
           }
-          populate();
-        });
-      }
-      for (var k = 0; k < vm.zwpo.length; k++) {
-        dataService.getpotting(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd'), vm.zwpo[k]).then(function (response) {
-          for (var r = 0; r < response.data.length; r++) {
-            response.data[r].aeq = aeqser(response.data[r].type, false);
-            response.data[r].days = $filter('date')(new Date(response.data[r].days).getTime(), "yyyy-MM-dd");
-            response.data[r].sumaeq = response.data[r].aeq * response.data[r].amount;
+        }
+        //populate();
+      });
+      dataService.getpottingtable(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
+        for (var r = 0; r < response.data.length; r++) {
+          if (response.data[r].MachineName != "Potting1-1" && response.data[r].MachineName != "Potting1-2") {
+            response.data[r].machine = "Potting";
+            response.data[r].aeq = aeqserloadpartnumbers(response.data[r].type, false);
+            response.data[r].days = $filter('date')(new Date(response.data[r].Day).getTime(), "yyyy-MM-dd");
+            response.data[r].sumaeq = response.data[r].aeq * response.data[r].Out;
             vm.data.push(response.data[r]);
           }
-          populate();
-        });
-      }
+        }
+        //populate();
+      });
       //ZB
-      for (var k = 0; k < vm.zbsm.length; k++) {
-        dataService.getsm(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd'), vm.zbsm[k]).then(function (response) {
-          for (var r = 0; r < response.data.length; r++) {
+      dataService.getsmtable(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
+        for (var r = 0; r < response.data.length; r++) {
+          if (response.data[r].MachineName == "SheetMaker1" || response.data[r].MachineName == "SheetMaker2") {
             response.data[r].aeq = aeqser(response.data[r].type, true);
             response.data[r].days = $filter('date')(new Date(response.data[r].days).getTime(), "yyyy-MM-dd");
             response.data[r].sumaeq = response.data[r].aeq * response.data[r].amount;
             vm.zbdata.push(response.data[r]);
           }
-          populate();
-        });
-      }
+        }
+        //populate();
+      });
       for (var k = 0; k < vm.zbpo.length; k++) {
         dataService.getpotting(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd'), vm.zbpo[k]).then(function (response) {
           for (var r = 0; r < response.data.length; r++) {
@@ -111,11 +117,11 @@ define([], function () {
             response.data[r].sumaeq = response.data[r].aeq * response.data[r].amount;
             vm.zbdata.push(response.data[r]);
           }
-          populate();
+          //populate();
         });
       }
 
-      for (var k = 0; k < vm.daystocover.length; k++) {
+      /*for (var k = 0; k < vm.daystocover.length; k++) {
         if (new Date(vm.daystocover[k]).getTime() < new Date($filter('date')(new Date().getTime(), 'yyyy-MM-dd')).getTime()) {
           dataService.getmtf(vm.daystocover[k].replace(/-/g, '')).then(function (response) {
             //console.log(response.data);
@@ -161,7 +167,33 @@ define([], function () {
             populate();
           });
         }
-      }
+      }*/
+
+      dataService.getmtftable(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
+        for (var r = 0; r < response.data.length; r++) {
+          response.data[r].machine = "MTF";
+          response.data[r].aeq = aeqserloadpartnumbers(response.data[r].type, false);
+          response.data[r].days = $filter('date')(new Date(response.data[r].Day).getTime(), "yyyy-MM-dd");
+          response.data[r].BOKES = response.data[r].BOKES * 1;
+          response.data[r].sumaeq = response.data[r].aeq * response.data[r].BPOUT;
+          response.data[r].gradeaeq = response.data[r].aeq * response.data[r].GRADED;
+          vm.data.push(response.data[r]);
+        }
+      });
+
+      dataService.getrework(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
+        for (var r = 0; r < response.data.length; r++) {
+          response.data[r].machine = "Rework";
+          response.data[r].aeq = aeqserloadpartnumbers(response.data[r].BaaNCode, false);
+          for(var ob=0;ob<vm.reworkobj.length;ob++){
+            if(response.data[r].shift==vm.reworkobj[ob].shift){
+              response.data[r].shiftnum=vm.reworkobj[ob].shiftnum;
+            }
+          }
+          vm.data.push(response.data[r]);
+        }
+        vm.load = false;
+      });
 
       dataService.getgradebyd1000(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
         for (var r = 0; r < response.data.length; r++) {
@@ -225,7 +257,7 @@ define([], function () {
 
     function populate() {
       vm.szamlalo++;
-      if (vm.szamlalo >= 13 + vm.daystocover.length) {
+      if (vm.szamlalo >= 4 + vm.daystocover.length) {
         vm.load = false;
       }
       vm.displaydata = [];
@@ -268,6 +300,22 @@ define([], function () {
       return aeq;
     }
 
+    function aeqserloadpartnumbers(type, forsheet) {
+      var aeq = 0;
+      for (var x = 0; x < vm.partnumbers.length; x++) {
+        if (vm.partnumbers[x].id === type) {
+          if (forsheet) {
+            aeq = vm.partnumbers[x].aeq / vm.partnumbers[x].sheets;
+          } else {
+            aeq = vm.partnumbers[x].aeq * 1;
+          }
+        } else {
+        }
+
+      }
+      return aeq;
+    }
+
     activate();
 
     function activate() {
@@ -279,12 +327,11 @@ define([], function () {
         vm.startdate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
         vm.enddate = $filter('date')(new Date(vm.startdate).getTime(), 'yyyy-MM-dd');
 
-        //loadPartnumbers();
+        loadPartnumbers();
         vm.sh = false;
         vm.s5 = false;
         vm.s3 = false;
         start();
-
       }
     }
 
@@ -298,7 +345,7 @@ define([], function () {
     vm.aeqs = [
       { name: "Ds12 FLOW", amount: 0.6, sheets: 12 },
       { name: "DS12FLOW", amount: 0.6, sheets: 12 },
-      { name: "DS-D12 FLOW", amount: 0.6, sheets: 12},
+      { name: "DS-D12 FLOW", amount: 0.6, sheets: 12 },
       { name: "ZW220 CP5", amount: 0.44, sheets: 28 },
       { name: "ZW230 FLOW", amount: 0.46, sheets: 28 },
       { name: "ZW230 CP5", amount: 0.46, sheets: 28 },
@@ -307,7 +354,7 @@ define([], function () {
       { name: "C11FLOW", amount: 0.5, sheets: 11 },
       { name: "C11 FLOW", amount: 0.5, sheets: 11 },
       { name: "D11 CP5", amount: 0.68, sheets: 11 },
-			{ name: "D11 CP55", amount: 0.68, sheets: 11},
+      { name: "D11 CP55", amount: 0.68, sheets: 11 },
       { name: "D13 CP5", amount: 0.88, sheets: 13 },
       { name: "D12 FLOW", amount: 0.74, sheets: 12 },
       { name: "DX", amount: 0.74, sheets: 12 },
