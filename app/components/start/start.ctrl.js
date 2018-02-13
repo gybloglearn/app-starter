@@ -59,7 +59,7 @@ define([], function () {
                 obj.chartconfig = {
                   chart: {
                     type: 'column',
-                    width: 400,
+                    
                     height: 300
                   },
                   plotOptions: {
