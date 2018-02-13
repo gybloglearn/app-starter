@@ -133,7 +133,7 @@ define([], function () {
               vm.tervezett = 0;
               vm.szaklap = 0;
               var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
-              vm.tervezett += (parseInt(tomb[i].amount)) * 12;
+              vm.tervezett += (tomb[i].amount) * 12;
               vm.szaklap += vm.tervezett;
               szorzo = szorzo - (350);
               szam = (vm.tervezett / 720) * szorzo;
@@ -143,7 +143,7 @@ define([], function () {
               vm.tervezett = 0;
               vm.szaklap = 0;
               var szorzo = new Date(frissites).getHours() * 60 + new Date(frissites).getMinutes();
-              vm.tervezett += (parseInt(tomb[i].amount)) * 12;
+              vm.tervezett += (tomb[i].amount) * 12;
               vm.szaklap += vm.tervezett;
               if (szorzo >= 1070) {
                 szorzo = szorzo - (1070);
