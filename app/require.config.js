@@ -88,6 +88,7 @@ require.config({
         'angular-locale_hu-hu': 'components/angular.js/angular-locale_hu-hu',
         'angular-ui-router': 'components/angular.js/angular-ui-router.min',
         'app': 'clorination/app/app',
+        'ch': 'clorination/app/components/ch'
     },
     'shim': {
         'app': {
@@ -107,7 +108,10 @@ require.config({
         'typeahead': {
   				deps: ['jquery'],
   				exports: 'Typeahead'
-  			},
+        },
+        'ch': {
+          deps: ['charts']
+        },
   			'bloodhound': {
   				deps: ['jquery'],
   				exports: 'Bloodhound'

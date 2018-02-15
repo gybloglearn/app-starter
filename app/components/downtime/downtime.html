@@ -1,0 +1,25 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">Klórozó állásidők</h1>
+      <div class="col-sm-5" style="margin-top:10px">
+        <div class="input-group">
+          <span class="input-group-addon">Dátum</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-1d" end="{{vm.edate}}">
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.dtl()">Betöltés</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+        <div class="progress progress-info progress-striped active" ng-hide="!vm.clload">
+            <div class="progress-bar" style="width: 100%">
+              <p class="text-center">Betöltés</p>
+            </div>
+          </div>
+      <my-chart id="col_chart" config="vm.chartconfig"></my-chart>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>

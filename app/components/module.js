@@ -14,6 +14,7 @@ define([
   './filters/week',
   './clevent/clevent.ctrl',
   './services/clevent.service'
+	, './downtime/downtime.ctrl'
 	/* files */
 ], function(
   configFunction,
@@ -31,6 +32,7 @@ define([
   week,
   cleventController,
   cleventService
+	, downtimeController
 	/* names */) {
 
   // Link all components to the module !!!
@@ -51,5 +53,6 @@ define([
   app.filter('week',week);
   app.controller('cleventController', cleventController);
 	app.service('cleventService', cleventService);
+		app.controller('downtimeController', downtimeController);
 		/* controllers */
 });

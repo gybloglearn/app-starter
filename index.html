@@ -45,9 +45,14 @@
         <ul class="nav navbar-nav">
           <!--<li><a ui-sref="start">Start</a></li>-->
           <!-- links -->
+
           <li>
             <a ui-sref="clevent">
               <i class="icon-file"></i>Esetek</a>
+          </li>
+          <li>
+            <a ui-sref="downtime">
+              <i class="icon-file"></i> Állásidők</a>
           </li>
 
         </ul>
@@ -90,7 +95,7 @@
       require.config({
         baseUrl: '../'
       });
-      require(['ge-bootstrap', 'jquery', 'datepicker', 'app','charts'], function ($) {
+      require(['ge-bootstrap', 'jquery', 'datepicker', 'ch', 'app', 'charts'], function ($) {
         $(function () {
           $('.datapicker').datepicker();
         });
