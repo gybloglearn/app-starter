@@ -207,9 +207,7 @@ define([], function () {
       { sso: "212546986", shift: "C" },
       { sso: "113011028", shift: "D" },
       { sso: "113008226", shift: "D" },
-      { sso: "113008995", shift: "D" },
-      { sso: "502678184", shift: "A" },
-      { sso: "502678187", shift: "D" },
+      { sso: "113008995", shift: "D" }
     ];
   }
   Controller.$inject = ['SumserviceService', '$cookies', '$state', '$rootScope', '$filter'];
