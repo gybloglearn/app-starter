@@ -5,6 +5,7 @@ define([], function () {
     vm.enddate = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.startdate = $filter('date')(new Date(vm.datum).getTime() - (30 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.place = ["Potting be", "Gel Prep Also F", "Uret Prep Also F", "Esztetika Also F", "Forgatas", "Uret Prep Felso F", "Esztetika Felso F", "Potting ki"];
+    vm.categories=["Száradási időre várás szárítóban","Száradási időre várás forgatáson","Száradási időre várás esztétikán","Uretánkötési probléma forgatásnál","Egyéb"];
     vm.pottinginfo = [];
     vm.selectpottinginfo = [];
     vm.selectinfo=selectinfo;
