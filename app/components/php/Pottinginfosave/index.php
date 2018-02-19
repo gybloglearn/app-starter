@@ -43,6 +43,7 @@ class info{
         $mapper->time=$data->time; //tartam
         $mapper->pottingid=$data->pottingid; //potting azonosító
         $mapper->place=$data->place; //állomás
+        $mapper->category=$data->category; //kategória
         $mapper->description=$data->description; //megjegyzés
         $mapper->opid=$data->opid; //operator azonosító
         $mapper->opname=$data->opname; //operator név
@@ -61,7 +62,8 @@ class info{
         $info->start=$data->start;
         $info->end=$data->end;
         $info->place=$data->place; //állomás
-        $info->description=$data->description;
+        $info->category=$data->category; //kategória
+        $info->description=$data->description; //megjegyzés
         $info->save();
         echo "OK";
         @unlink($data);

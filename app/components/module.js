@@ -25,6 +25,7 @@ define([
   './services/dry.service'
 
 	, './Downtime/Downtime.ctrl'
+	, './Downtimesum/Downtimesum.ctrl'
 	/* files */
 ], function(
   configFunction,
@@ -52,6 +53,7 @@ define([
   dryingController,
   dryService
 	, DowntimeController
+	, DowntimesumController
 	/* names */) {
 
   // Link all components to the module !!!
@@ -82,5 +84,6 @@ define([
   app.controller('dryingController', dryingController);
 	app.service('dryService', dryService);
 		app.controller('DowntimeController', DowntimeController);
+		app.controller('DowntimesumController', DowntimesumController);
 		/* controllers */
 });

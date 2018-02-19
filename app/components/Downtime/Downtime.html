@@ -39,15 +39,18 @@
               </div>
             </div>
             <div class="col-sm-3">
+                <div class="form-group">
+                  <span class="control-label" style="color:#FFFFFF">Állás</span>
+                  <select ng-model="search.category" class="form-control ng-pristine ng-untouched ng-valid">
+                    <option value="">Mind</option>
+                    <option ng-repeat="cat in vm.categories" value="{{cat}}">{{cat}}</option>
+                  </select>
+                </div>
+              </div>
+            <div class="col-sm-3">
               <div class="form-group">
                 <span class="control-label" style="color:#FFFFFF">Kezdő időpont</span>
                 <input type="text" ng-model="search.start" class="form-control">
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <div class="form-group">
-                <span class="control-label" style="color:#FFFFFF">Megjegyzés</span>
-                <input type="text" ng-model="search.description" class="form-control">
               </div>
             </div>
           </div>
@@ -61,6 +64,7 @@
             <th>Vége időpont</th>
             <th>Időtartam (perc)</th>
             <th>Állomás</th>
+            <th>Kategória</th>
             <th>Megjegyzés</th>
             <th>Felvétel időpontja</th>
             <th>Felvevő</th>
@@ -74,6 +78,7 @@
             <td>{{item.end}}</td>
             <td>{{item.time}}</td>
             <td>{{item.place}}</td>
+            <td>{{item.category}}</td>
             <td>{{item.description}}</td>
             <td>{{item.id |date:'yyyy-MM-dd HH:mm'}}</td>
             <td>{{item.opname}}</td>
@@ -107,7 +112,15 @@
             </div>
             <div class="col-sm-4">
               <div class="input-group">
-                <span class="input-group-addon">Leírás:</span>
+                <span class="input-group-addon">Kategória</span>
+                <select class="form-control" ng-model="vm.edit.category">
+                  <option ng-repeat="ct in vm.categories" value="{{ct}}">{{ct}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4" ng-show="vm.edit.category=='Egyéb'">
+              <div class="input-group">
+                <span class="input-group-addon">Megjegyzés:</span>
                 <textarea class="form-control" rows="4" ng-model="vm.edit.description"></textarea>
               </div>
             </div>

@@ -49,8 +49,12 @@
               <option value="{{vm.mch}}">{{vm.mch}}</option>
               <option ng-repeat="pl in vm.hely" value="{{pl}}">{{pl}}</option>
             </select>
+            <span class="input-group-addon">Kategória</span>
+            <select class="form-control" ng-model="vm.cat">
+              <option ng-repeat="ct in vm.categories" value="{{ct}}">{{ct}}</option>
+            </select>
           </div>
-          <div class="input-group" style="margin-top:20px">
+          <div class="input-group" style="margin-top:20px" ng-show="vm.cat=='Egyéb'">
             <span class="input-group-addon">Megjegyzés</span>
             <textarea class="form-control" rows="4" ng-model="vm.descriptioninfo"></textarea>
           </div>
@@ -59,12 +63,17 @@
             <p>Adatokat akkor lehet rögzíteni ha a következő kritériumoknak felelnek meg az input mezők:<br>
               -vége dátumnak nagyobbnak kell lenni mint a kezdő dátumnak (mindkettő szerkeszthető kézzel,de a formátumnak meg kell egyeznie az alábbival:yyyy-MM-dd HH:mm)<br>
               -állomást kell választani ahol a hiba történt<br>
-              -megjegyzés mező nem lehet üres<br>
+              -kategória mezőt kell választani ami a kieső idő okát jelenti,amennyiben nincs a listában úgy az egyéb mező választásával a megjegyzés mezőbe lehet beírni az okot<br>
             </p>
           </div>
           <div class="col-sm-4" style="margin-top:10px">
-            <button class="btn btn-success" ng-click="vm.saveinfo()" ng-disabled="vm.actplace=='' || vm.descriptioninfo=='' || vm.startinfo==vm.endinfo || vm.isUploading">Feltölt</button>
-            <button class="btn btn-primary" ng-click="vm.createinfodata={};vm.mutat=false;">Mégse</button>
+
+
+
+
+            <button class="btn btn-success" ng-click="vm.saveinfo()" ng-disabled="vm.actplace=='' || vm.cat=='' || vm.startinfo>=vm.endinfo">Feltölt</button>
+            <button class="btn btn-primary" ng-click="vm.createinfodata={};vm.mutat=false">Mégse</button>
+
           </div>
         </div>
       </div>
@@ -168,7 +177,6 @@
         <h3 class="modal-title">Modal Heading</h3>
       </div>
       <div class="modal-body">
-
       </div>
     </div>
   </div>

@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('Downtimesum', {
+		url: '/Downtimesum',
+		templateUrl: './app/components/Downtimesum/Downtimesum.html',
+		controller: 'DowntimesumController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('Downtime', {
 		url: '/Downtime',
 		templateUrl: './app/components/Downtime/Downtime.html',

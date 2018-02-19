@@ -12,6 +12,7 @@ define([], function () {
     vm.startdate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddate = $filter('date')(new Date().getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.hely = ["Potting be", "Gel Prep Also F", "Uret Prep Also F", "Esztetika Also F", "Forgatas", "Uret Prep Felso F", "Esztetika Felso F", "Potting ki"];
+    vm.categories=["Száradási időre várás szárítóban","Száradási időre várás forgatáson","Száradási időre várás esztétikán","Uretánkötési probléma forgatásnál","Egyéb"];
     vm.load = load;
     vm.saveinfo = saveinfo;
     vm.beallit = beallit;
@@ -271,6 +272,7 @@ define([], function () {
 
       vm.createinfodata = {};
       vm.actplace = "";
+      vm.cat="";
       vm.descriptioninfo = "";
       vm.startinfo = new Date().getFullYear() + "-" + str.substring(0, 2) + "-" + str.substring(2, 7) + ":" + "00";
       vm.endinfo = new Date().getFullYear() + "-" + str.substring(0, 2) + "-" + str.substring(2, 7) + ":" + "00";
@@ -287,6 +289,7 @@ define([], function () {
       vm.createinfodata.time = vm.timeinfo = (new Date(vm.endinfo).getTime() - new Date(vm.startinfo).getTime()) / 60000;
       vm.createinfodata.pottingid = vm.mch;
       vm.createinfodata.place = vm.actplace;
+      vm.createinfodata.category=vm.cat;
       vm.createinfodata.description = vm.descriptioninfo;
       vm.createinfodata.opid = $rootScope.user.username;
       vm.createinfodata.opname = $rootScope.user.displayname
