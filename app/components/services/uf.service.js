@@ -29,7 +29,7 @@ define([], function () {
     function getetf(sdate, edate) {
       var req = {
         method: 'GET',
-        url: 'app/components/PHP/ZW1500_Modul_History_ETF_uf.php?startdate=' + sdate + '&enddate=' + edate + '&phaseid=Grade Date'
+        url: 'app/components/PHP/ZW1500_ETF_Moduls.php?startdate=' + sdate + '&enddate=' + edate
       };
       return $http(req);
     }

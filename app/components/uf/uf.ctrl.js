@@ -28,39 +28,22 @@ define([], function () {
       vm.endate = $filter('date')(new Date(vm.enddate).getTime() + (2*24 * 3600 * 1000), 'yyyy-MM-dd');
       ufService.getetf(vm.startdate, vm.endate).then(function (response) {
         vm.data = response.data;
+
         for (var i = 0; i < vm.data.length; i++) {
-
-          vm.data[i].Potting_Start_Shiftnum = $filter('shiftnumber')(vm.data[i].Static_Potting_Start);
-          vm.data[i].Static_Potting_Start = $filter('date')($filter('changeDate')(vm.data[i].Static_Potting_Start), 'yyyy-MM-dd');
-          vm.data[i].Potting_Start_Shift = $filter('shift')(vm.data[i].Potting_Start_Shiftnum, vm.data[i].Static_Potting_Start);
-
-          vm.data[i].Potting_Flip_Shiftnum = $filter('shiftnumber')(vm.data[i].Static_Potting_Flip);
-          vm.data[i].Static_Potting_Flip = $filter('date')($filter('changeDate')(vm.data[i].Static_Potting_Flip), 'yyyy-MM-dd');
-          vm.data[i].Potting_Flip_Shift = $filter('shift')(vm.data[i].Potting_Flip_Shiftnum, vm.data[i].Static_Potting_Flip);
-
-          vm.data[i].Centrifuga_Start_Shiftnum = $filter('shiftnumber')(vm.data[i].Centrifuga_Start);
-          vm.data[i].Centrifuga_Start = $filter('date')($filter('changeDate')(vm.data[i].Centrifuga_Start), 'yyyy-MM-dd');
-          vm.data[i].Centrifuga_Start_Shift = $filter('shift')(vm.data[i].Centrifuga_Start_Shiftnum, vm.data[i].Centrifuga_Start);
-
-          vm.data[i].Centrifuga_End_Shiftnum = $filter('shiftnumber')(vm.data[i].Centrifuga_End);
-          vm.data[i].Centrifuga_End = $filter('date')($filter('changeDate')(vm.data[i].Centrifuga_End), 'yyyy-MM-dd');
-          vm.data[i].Centrifuga_End_Shift = $filter('shift')(vm.data[i].Centrifuga_End_Shiftnum, vm.data[i].Centrifuga_End);
-
-          vm.data[i].BP_Start_Shiftnum = $filter('shiftnumber')(vm.data[i].BP_start);
-          vm.data[i].BP_start = $filter('date')($filter('changeDate')(vm.data[i].BP_start), 'yyyy-MM-dd');
-          vm.data[i].BP_Start_Shift = $filter('shift')(vm.data[i].BP_Start_Shiftnum, vm.data[i].BP_start);
-
-          vm.data[i].BP_End_Shiftnum = $filter('shiftnumber')(vm.data[i].BP_end);
-          vm.data[i].BP_end = $filter('date')($filter('changeDate')(vm.data[i].BP_end), 'yyyy-MM-dd');
-          vm.data[i].BP_End_Shift = $filter('shift')(vm.data[i].BP_End_Shiftnum, vm.data[i].BP_end);
-
-          vm.data[i].Grade_Shiftnum = $filter('shiftnumber')(vm.data[i].Gradedate);
-          vm.data[i].Gradedate = $filter('date')($filter('changeDate')(vm.data[i].Gradedate), 'yyyy-MM-dd');
-          vm.data[i].Grade_Shift = $filter('shiftnumber')(vm.data[i].Grade_Shiftnum, vm.data[i].Gradedate);
-
+          var number = 0;
+          if (vm.data[i].startdate != "") {
+            number = new Date(vm.data[i].startdate).getHours() * 60 + new Date(vm.data[i].startdate).getMinutes();
+            if (number < 350) {
+              vm.data[i].day = $filter('date')(new Date(vm.data[i].startdate).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+            }
+            else {
+              vm.data[i].day = $filter('date')(new Date(vm.data[i].startdate).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+            }
+          }
           vm.data[i].Amount = 1;
           vm.data[i].AEQ = 1.2;
         }
+        //console.log(vm.data);
         loadbundle();
       });
     }
@@ -69,7 +52,7 @@ define([], function () {
       vm.bundledata = [];
       vm.xAxisData = [];
       vm.bundleChartData = []; vm.pstart = []; vm.centri = []; vm.bp = []; vm.grade = []; vm.target = [];
-      var counter=0;
+      var counter = 0;
       for (var i = 0; i < vm.loaddays.length; i++) {
         ufService.getbundlefile(vm.loaddays[i]).then(function (rsp) {
           counter++;
@@ -88,20 +71,20 @@ define([], function () {
               vm.bundledata.push(rsp.data[j]);
             }
           }
-          if(counter==vm.loaddays.length){
-          var k = $filter('unique')(vm.bundledata, 'SPL_end');
-          console.log(k);
-          for (var ki = 0; ki < k.length-1; ki++) {
-            vm.xAxisData.push(k[ki].SPL_end);
-            vm.bundleChartData.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.bundledata, { SPL_end: k[ki].SPL_end }), 'AEQ')) });
-            vm.pstart.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { Static_Potting_Start: k[ki].SPL_end }), 'AEQ')) });
-            vm.centri.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { Centrifuga_End: k[ki].SPL_end }), 'AEQ')) });
-            vm.bp.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { BP_end: k[ki].SPL_end }), 'AEQ')) });
-            vm.grade.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { Gradedate: k[ki].SPL_end }), 'AEQ')) });
-            vm.target.push({ name: k[ki].SPL_end, y: 60 });
+          if (counter == vm.loaddays.length) {
+            var k = $filter('unique')(vm.bundledata, 'SPL_end');
+            //console.log(k);
+            for (var ki = 0; ki < k.length - 1; ki++) {
+              vm.xAxisData.push(k[ki].SPL_end);
+              vm.bundleChartData.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.bundledata, { SPL_end: k[ki].SPL_end }), 'AEQ')) });
+              vm.pstart.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Static potting init 1500', day: k[ki].SPL_end }), 'AEQ')) });
+              vm.centri.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Centrifuge end', day: k[ki].SPL_end }), 'AEQ')) });
+              vm.bp.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'BP end', day: k[ki].SPL_end }), 'AEQ')) });
+              vm.grade.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Grade', day: k[ki].SPL_end }), 'AEQ')) });
+              vm.target.push({ name: k[ki].SPL_end, y: 60 });
+            }
           }
-        }
-          console.log(vm.xAxisData);
+          //console.log(vm.xAxisData);
           vm.chartconfig = {
             chart: { type: 'column' },
             title: { text: 'ZW1500 Termékvonal' },
