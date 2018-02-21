@@ -1,7 +1,9 @@
 <div class="container-fluid">
   <section class="module">
     <div class="module-header">
-			<h1 class="text-center" style="margin-top:10px;font-size: 6em;"><b>Potting 3</b></h1>
+      <h1 class="text-center" style="margin-top:10px;font-size: 6em;">
+        <b>Potting 3</b>
+      </h1>
       <h2 class="text-center" style="margin:50px 0px 50px 0px;font-size: 2.5em">{{vm.todate}}-ig elkészítendő keretszám: {{vm.usenumber}} db</h2>
     </div>
     <div class="module-body">
@@ -13,9 +15,13 @@
       <div class="row">
         <div class="col-sm-3" ng-repeat="item in vm.places | orderBy:'sor'">
           <div style="border: 1px solid #ddd; border-radius:3px;overflow:hidden;">
-            <place-dir data="item"></place-dir><hr style="margin: 0 auto">
+            <place-dir data="item"></place-dir>
+            <hr style="margin: 0 auto">
           </div>
         </div>
+      </div>
+      <div class="row" style="margin-top:5px">
+        <my-chart id="chart" config="vm.chartconfig"></my-chart>
       </div>
     </div>
   </section>
