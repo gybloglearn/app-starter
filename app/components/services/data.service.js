@@ -25,7 +25,7 @@ define([], function () {
     function getchart(start, end) {
       var req = {
         method: 'GET',
-        url: 'app/components/php/PottingSSO.php?startdate=' + start + '&enddate=' + end + '&machinename=Potting3'
+        url: 'app/components/php/PottingSSO.php?startdate=' + start + '&enddate=' + end + '&machinename=Potting4'
       };
       return $http(req);
     }
