@@ -4,6 +4,8 @@ define([], function () {
   function Service($http) {
     var service = {
       get: get,
+      getchart:getchart,
+      getArchive: getArchive,
       getsm: getsm,
       getdrynum:getdrynum,
       getdrying: getdrying
@@ -17,6 +19,20 @@ define([], function () {
       var req = {
         method: 'GET',
         url: 'app/components/php/PottingDashboard.php?startdate=' + startd + '&machinename=Potting4&phasename=' + num
+      };
+      return $http(req);
+    }
+    function getchart(start, end) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/php/PottingSSO.php?startdate=' + start + '&enddate=' + end + '&machinename=Potting3'
+      };
+      return $http(req);
+    }
+    function getArchive(dayhr) {
+      var req = {
+        method: 'GET',
+        url: 'http://3.228.180.13/file_reports/files/drying/Dryingnumbers_' + dayhr + '.json'
       };
       return $http(req);
     }
