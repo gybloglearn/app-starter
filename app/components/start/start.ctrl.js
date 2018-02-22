@@ -186,12 +186,12 @@ define([], function () {
         smscrap: 0.8,
         modscrap: 0.5,
         bp: 230,
-        min: 220,
+        min: 226,
         zbsmscrap: 5,
         zbmodscrap: 3,
         zbbp: 0,
         zbmin: 0,
-        zw1000min: 56,
+        zw1000min: 69,
         zw1500min: 60
       }
 
