@@ -67,6 +67,12 @@
                 <td><h3><strong>{{ ((vm.data | filter:{machine: 'MTF', type: '!ZB500S'}) | sumField:'BOKES')/((vm.data | filter:{machine: 'MTF', type: '!ZB500S'}) | sumField:'sumaeq') | number:1}}</strong></h3></td>
                 <td><h3 class="{{vm.iconize(((vm.data | filter:{machine: 'MTF', type: '!ZB500S_MIN'}) | sumField:'gradeaeq'),'min',0);}}"><strong>{{(vm.data | filter:{machine: 'MTF', type: '!ZB500S_MIN'}) | sumField:'gradeaeq'|number:2}}</strong></h3></td>
               </tr>
+              <tr>
+                <td><i class="icon-ico_link_lg"></i>&nbsp; Linkek:</td>
+                <td><a class="btn btn-primary" href="../sm" target="_blank">SM</a></td>
+                <td colspan="2"><a class="btn btn-primary" href="../potting" target="_blank">POTTING</a></td>
+                <td colspan="5"><a class="btn btn-primary" href="../mtf" target="_blank">MTF</a></td>
+              </tr>
             </tbody>
           </table>
         </div>
