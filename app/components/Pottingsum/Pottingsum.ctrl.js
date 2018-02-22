@@ -334,6 +334,7 @@ define([], function () {
 		 		} else {
 					 vm.mutat = false;
 			  }
+				vm.mutat = false;
       load();
 		}
     }
