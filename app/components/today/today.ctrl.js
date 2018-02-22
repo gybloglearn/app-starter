@@ -15,6 +15,7 @@ define([], function () {
     vm.zbpo = ["Potting1-1", "Potting1-2"];
 
     vm.start = start;
+    vm.filterSMs = filterSMs;
 
     function loadPartnumbers() {
       vm.partnumbers = [];
@@ -46,9 +47,20 @@ define([], function () {
           break;
       }
       if (number > 0) {
-        return number < target ? 'text-ge-red icon-warning-sign' : 'text-ge-green icon-ok-sign';
+        return number < target ? 'red' : 'green';
       }
 
+    }
+
+    function filterSMs(sms){
+      var result = [];
+      var dt = $filter('filter')(vm.data, vm.search);
+      for (var i = 0; i < dt.length; i++){
+        if(sms.indexOf(dt[i].MachineName) > -1){
+          result.push(dt[i]);
+        }
+      }
+      return result;
     }
 
     function start() {
@@ -77,9 +89,13 @@ define([], function () {
         for (var r = 0; r < response.data.length; r++) {
           if (response.data[r].MachineName != "SheetMaker1" && response.data[r].MachineName != "SheetMaker2") {
             response.data[r].machine = "Sheetmaker";
+            response.data[r].partnumber = response.data[r].type;
+            response.data[r].shiftnum = response.data[r].ShiftNum;
             response.data[r].aeq = aeqserloadpartnumbers(response.data[r].type, true);
             response.data[r].days = $filter('date')(new Date(response.data[r].Day).getTime(), "yyyy-MM-dd");
-            response.data[r].sumaeq = response.data[r].aeq * (response.data[r].Totalsheets - response.data[r].ScrapSheets);
+            response.data[r].Totalsheets = parseInt(response.data[r].Totalsheets);
+            response.data[r].ScrapSheets = response.data[r].ScrapSheets ? parseInt(response.data[r].ScrapSheets) : 0;
+            response.data[r].sumgoodaeq = response.data[r].aeq * (response.data[r].Totalsheets - response.data[r].ScrapSheets);
             vm.data.push(response.data[r]);
           }
         }
@@ -89,9 +105,14 @@ define([], function () {
         for (var r = 0; r < response.data.length; r++) {
           if (response.data[r].MachineName != "Potting1-1" && response.data[r].MachineName != "Potting1-2") {
             response.data[r].machine = "Potting";
+            response.data[r].partnumber = response.data[r].type;
             response.data[r].aeq = aeqserloadpartnumbers(response.data[r].type, false);
             response.data[r].days = $filter('date')(new Date(response.data[r].Day).getTime(), "yyyy-MM-dd");
-            response.data[r].sumaeq = response.data[r].aeq * response.data[r].Out;
+            response.data[r].In = parseInt(response.data[r].In);
+            response.data[r].P3 = parseInt(response.data[r].P3);
+            response.data[r].Out = parseInt(response.data[r].Out);
+            response.data[r].suminaeq = response.data[r].aeq * response.data[r].In;
+            response.data[r].sumoutaeq = response.data[r].aeq * response.data[r].Out;
             vm.data.push(response.data[r]);
           }
         }
@@ -121,60 +142,17 @@ define([], function () {
         });
       }
 
-      /*for (var k = 0; k < vm.daystocover.length; k++) {
-        if (new Date(vm.daystocover[k]).getTime() < new Date($filter('date')(new Date().getTime(), 'yyyy-MM-dd')).getTime()) {
-          dataService.getmtf(vm.daystocover[k].replace(/-/g, '')).then(function (response) {
-            //console.log(response.data);
-            for (var r = 0; r < response.data.length; r++) {
-              if (response.data[r].category != 'BOK-BOKES') {
-                if (response.data[r].category === 'MIN-AMOUNT') {
-                  if (response.data[r].type === 'A') {
-                    response.data[r].aeq = aeqser(response.data[r].place.replace('_MIN', ''), false);
-                  } else {
-                    response.data[r].aeq = aeqser(response.data[r].place + '-' + response.data[r].type, false);
-                  }
-                } else {
-                  response.data[r].aeq = aeqser(response.data[r].type, false);
-                }
-                response.data[r].sumaeq = response.data[r].aeq * response.data[r].amount;
-              }
-              response.data[r].days = $filter('date')(new Date(response.data[r].days).getTime(), "yyyy-MM-dd");
-              response.data[r].machine = "MTF";
-              vm.data.push(response.data[r]);
-            }
-            populate();
-          });
-        } else {
-          dataService.gettodaymtf(vm.daystocover[k]).then(function (response) {
-            //console.log(response.data);
-            for (var r = 0; r < response.data.length; r++) {
-              if (response.data[r].category != 'BOK-BOKES') {
-                if (response.data[r].category === 'MIN-AMOUNT') {
-                  if (response.data[r].type === 'A') {
-                    response.data[r].aeq = aeqser(response.data[r].place.replace('_MIN', ''), false);
-                  } else {
-                    response.data[r].aeq = aeqser(response.data[r].place + '-' + response.data[r].type, false);
-                  }
-                } else {
-                  response.data[r].aeq = aeqser(response.data[r].type, false);
-                }
-                response.data[r].sumaeq = response.data[r].aeq * response.data[r].amount;
-              }
-              response.data[r].days = $filter('date')(new Date(response.data[r].days).getTime(), "yyyy-MM-dd");
-              response.data[r].machine = "MTF";
-              vm.data.push(response.data[r]);
-            }
-            populate();
-          });
-        }
-      }*/
-
       dataService.getmtftable(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
         for (var r = 0; r < response.data.length; r++) {
           response.data[r].machine = "MTF";
+          response.data[r].partnumber = response.data[r].type;
           response.data[r].aeq = aeqserloadpartnumbers(response.data[r].type, false);
           response.data[r].days = $filter('date')(new Date(response.data[r].Day).getTime(), "yyyy-MM-dd");
           response.data[r].BOKES = response.data[r].BOKES * 1;
+          response.data[r].CHOUT = response.data[r].CHOUT!=""?parseInt(response.data[r].CHOUT):0;
+          response.data[r].BPOUT = response.data[r].BPOUT!=""?parseInt(response.data[r].BPOUT):0;
+          response.data[r].GRADED = response.data[r].GRADED!=""?parseInt(response.data[r].GRADED):0;
+          response.data[r].choutaeq = response.data[r].aeq * response.data[r].CHOUT;
           response.data[r].sumaeq = response.data[r].aeq * response.data[r].BPOUT;
           response.data[r].gradeaeq = response.data[r].aeq * response.data[r].GRADED;
           vm.data.push(response.data[r]);
@@ -184,6 +162,7 @@ define([], function () {
       dataService.getrework(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
         for (var r = 0; r < response.data.length; r++) {
           response.data[r].machine = "Rework";
+          response.data[r].partnumber = response.data[r].BaaNCode;
           response.data[r].aeq = aeqserloadpartnumbers(response.data[r].BaaNCode, false);
           for(var ob=0;ob<vm.reworkobj.length;ob++){
             if(response.data[r].shift==vm.reworkobj[ob].shift){
@@ -195,39 +174,12 @@ define([], function () {
         vm.load = false;
       });
 
-      dataService.getgradebyd1000(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
-        for (var r = 0; r < response.data.length; r++) {
-          response.data[r].cnt = parseInt(response.data[r].cnt);
-          if (response.data[r].descr.includes('450')) {
-            response.data[r].aeq = response.data[r].cnt * 0.9;
-          } else if (response.data[r].descr.includes('550')) {
-            response.data[r].aeq = response.data[r].cnt * 1.1;
-          } if (response.data[r].descr.includes('700')) {
-            response.data[r].aeq = response.data[r].cnt * 1.4;
-          } else {
-            response.data[r].aeq = response.data[r].cnt * 1;
-          }
-          vm.zw1000.push(response.data[r]);
-        }
-
-      });
-      dataService.getgradebyd1500(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
-        for (var r = 0; r < response.data.length; r++) {
-          response.data[r].cnt = parseInt(response.data[r].cnt);
-          if (response.data[r].descr.includes('short')) {
-            response.data[r].aeq = response.data[r].cnt * 0.6;
-          } else {
-            response.data[r].aeq = response.data[r].cnt * 1.2;
-          }
-          vm.zw1500.push(response.data[r]);
-        }
-      });
 
       vm.rates = {
         smscrap: 0.8,
         modscrap: 0.5,
         bp: 230,
-        min: 220,
+        min: 226,
         zbsmscrap: 5,
         zbmodscrap: 3,
         zbbp: 0,
@@ -326,7 +278,7 @@ define([], function () {
         vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
         vm.startdate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
         vm.enddate = $filter('date')(new Date(vm.startdate).getTime(), 'yyyy-MM-dd');
-
+        vm.search = {};
         loadPartnumbers();
         vm.sh = false;
         vm.s5 = false;

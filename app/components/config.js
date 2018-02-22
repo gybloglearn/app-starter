@@ -3,13 +3,13 @@ define([], function () {
   function ConfigFunction($urlRouterProvider, $stateProvider) {
     $urlRouterProvider.otherwise('/');
 
-    // add cachepreventer
-		var da = new Date().getTime().toString().substr(-5);
-		//Add state to all routes
 		
+    var d = new Date().getTime().toString().substr(-5);
+    //Add state to all routes
+
     $stateProvider.state('start', {
       url: '/',
-      templateUrl: './app/components/start/start.html' + '?' + da,
+      templateUrl: './app/components/start/start.html' + '?' + d,
       controller: 'StartController',
       controllerAs: 'vm'
     });
@@ -31,20 +31,20 @@ define([], function () {
     /* Add states */
 	$stateProvider.state('today', {
 		url: '/today',
-		templateUrl: './app/components/today/today.html' + '?' + da,
+		templateUrl: './app/components/today/today.html' + '?' + d,
 		controller: 'todayController',
 		controllerAs: 'vm'
 	});
 	$stateProvider.state('sap', {
 		url: '/sap',
-		templateUrl: './app/components/sap/sap.html' + '?' + da,
+		templateUrl: './app/components/sap/sap.html' + '?' + d,
 		controller: 'sapController',
 		controllerAs: 'vm'
 	});
     $stateProvider.state('dayreport', {
       url: '/dayreport',
       params: { datum: null, place: null },
-      templateUrl: './app/components/dayreport/dayreport.html' + '?' + da,
+      templateUrl: './app/components/dayreport/dayreport.html' + '?' + d,
       controller: 'dayreportController',
       controllerAs: 'vm'
     });
