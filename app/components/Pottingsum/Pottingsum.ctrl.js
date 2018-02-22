@@ -242,16 +242,20 @@ define([], function () {
       }
       for(var i=0;i<24;i++){
         if(i>=0 && i<6){
-          vm.linenumbers[i]=Math.round(number1/6)*2;
+          //vm.linenumbers[i]=Math.round(number1/6)*2;
+          vm.linenumbers[i]=parseFloat(number1/6*2);
         }
         else if(i>=6 && i<12){
-          vm.linenumbers[i]=Math.round(number2/6)*2;
+          //vm.linenumbers[i]=Math.round(number2/6)*2;
+          vm.linenumbers[i]=parseFloat(number2/6*2);
         }
         else if(i>=12 && i<18){
-          vm.linenumbers[i]=Math.round(number3/6)*2;
+          //vm.linenumbers[i]=Math.round(number3/6)*2;
+          vm.linenumbers[i]=parseFloat(number3/6*2);
         }
         else{
-          vm.linenumbers[i]=Math.round(number4/6)*2;
+          //vm.linenumbers[i]=Math.round(number4/6)*2;
+          vm.linenumbers[i]=parseFloat(number4/6*2);
         }
       }
       //console.log(vm.linenumbers);
