@@ -108,9 +108,9 @@ define([], function () {
             response.data[r].partnumber = response.data[r].type;
             response.data[r].aeq = aeqserloadpartnumbers(response.data[r].type, false);
             response.data[r].days = $filter('date')(new Date(response.data[r].Day).getTime(), "yyyy-MM-dd");
-            response.data[r].In = parseInt(response.data[r].In);
-            response.data[r].P3 = parseInt(response.data[r].P3);
-            response.data[r].Out = parseInt(response.data[r].Out);
+            response.data[r].In = response.data[r].In!=""?parseInt(response.data[r].In):0;
+            response.data[r].P3 = response.data[r].P3!=""?parseInt(response.data[r].P3):0;
+            response.data[r].Out = response.data[r].Out!=""?parseInt(response.data[r].Out):0;
             response.data[r].suminaeq = response.data[r].aeq * response.data[r].In;
             response.data[r].sumoutaeq = response.data[r].aeq * response.data[r].Out;
             vm.data.push(response.data[r]);
