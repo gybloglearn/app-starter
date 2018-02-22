@@ -149,3 +149,33 @@ ul, ol {
   line-height: 28px;
   height: 40px;
 }
+.mytable thead tr th {
+  text-align: center;
+  font-size: 1.5em;
+  padding: 10px;
+}
+.mytable tbody tr td h3 {
+  font-size: 36px!important;
+  text-align: center;
+  margin: -3px;
+  padding: 20px;
+}
+.red {
+  background-color: #de2533;
+  color: white;
+}
+.green {
+  background-color: #46ad00;
+  color: white;
+}
+.detailsTable {
+  text-align: center;
+}
+.detailsTable tr td {
+  font-size: 1.2em;
+  line-height: 1.4em;
+}
+.detailsTable tr td sup {
+  display: block;
+  margin-top: 20px;
+}

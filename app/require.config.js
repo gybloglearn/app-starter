@@ -91,7 +91,7 @@ require.config({
     },
     'shim': {
         'app': {
-          deps: ['angular', 'angular-cookies', 'angular-ui-router'],
+          deps: ['angular', 'angular-cookies', 'angular-ui-router', 'angular-locale_hu-hu'],
           exports: 'app'
         },
         'angular': {

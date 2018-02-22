@@ -40,7 +40,9 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <h2 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#{{data.sm}}">Szakos lebontás <i class="icon-chevron-down"></i></h2>
+            <h2 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#{{data.sm}}">Szakos lebontás
+                <i class="icon-chevron-down"></i>
+            </h2>
         </div>
     </div>
     <div class="collapse" id="{{data.sm}}">
@@ -89,17 +91,17 @@
     </div>
     <div class="oee">
         <div class="progress progress-info">
-            <div class="progress-bar" style="width:{{data.joaeq/data.kap*100}}%">Teljesítmény</div>
+            <div class="progress-bar" ng-style="width:{{data.joaeq/data.kap*100}}%">Teljesítmény</div>
         </div>
         <div class="progress progress-warning">
-            <div class="progress-bar" style="width:{{data.jolap/data.osszlap*100}}%">Minőség</div>
+            <div class="progress-bar" ng-style="width:{{data.jolap/data.osszlap*100}}%">Minőség</div>
         </div>
         <div class="progress progress-success">
-            <div class="progress-bar" style="width:{{(data.alltime-data.downtime)/data.alltime*100}}%">Elérhetőség</div>
+            <div class="progress-bar" ng-style="width:{{(data.alltime-data.downtime)/data.alltime*100}}%">Elérhetőség</div>
         </div>
         <hr class="myrule">
         <div class="progress progress-danger">
-            <div class="progress-bar" style="width:{{(data.joaeq/data.kap)*(data.jolap/data.osszlap)*((data.alltime-data.downtime)/data.alltime)*100}}%">OEE</div>
+            <div class="progress-bar" ng-style="width:{{(data.joaeq/data.kap)*(data.jolap/data.osszlap)*((data.alltime-data.downtime)/data.alltime)*100}}%">OEE</div>
         </div>
         <h2 class="text-center">OEE {{(data.joaeq/data.kap)*(data.jolap/data.osszlap)*((data.alltime-data.downtime)/data.alltime)*100 | number:2}}
             %

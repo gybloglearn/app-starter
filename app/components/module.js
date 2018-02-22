@@ -15,6 +15,7 @@ define([
   './filters/sumField',
   './filters/sumdb',
   './filters/shift',
+  './filters/unique',
   './dayreport/dayreport.ctrl'
   , './sap/sap.ctrl'
 	, './today/today.ctrl'
@@ -36,6 +37,7 @@ define([
   sumField,
   sumdb,
   shift,
+  unique,
   dayreportController
 	, sapController
 	, todayController
@@ -60,6 +62,7 @@ define([
     app.filter('sumField', sumField);
     app.filter('sumdb', sumdb);
     app.filter('shift', shift);
+    app.filter('unique', unique);
     app.controller('dayreportController', dayreportController);
     app.controller('sapController', sapController);
 		app.controller('todayController', todayController);
