@@ -119,7 +119,7 @@ define([], function () {
         //populate();
       });
       //ZB
-      dataService.getsmtable(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
+      /*dataService.getsmtable(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
         for (var r = 0; r < response.data.length; r++) {
           if (response.data[r].MachineName == "SheetMaker1" || response.data[r].MachineName == "SheetMaker2") {
             response.data[r].aeq = aeqser(response.data[r].type, true);
@@ -140,36 +140,40 @@ define([], function () {
           }
           //populate();
         });
-      }
+      }*/
 
       dataService.getmtftable(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
         for (var r = 0; r < response.data.length; r++) {
-          response.data[r].machine = "MTF";
-          response.data[r].partnumber = response.data[r].type;
-          response.data[r].aeq = aeqserloadpartnumbers(response.data[r].type, false);
-          response.data[r].days = $filter('date')(new Date(response.data[r].Day).getTime(), "yyyy-MM-dd");
-          response.data[r].BOKES = response.data[r].BOKES * 1;
-          response.data[r].CHOUT = response.data[r].CHOUT!=""?parseInt(response.data[r].CHOUT):0;
-          response.data[r].BPOUT = response.data[r].BPOUT!=""?parseInt(response.data[r].BPOUT):0;
-          response.data[r].GRADED = response.data[r].GRADED!=""?parseInt(response.data[r].GRADED):0;
-          response.data[r].choutaeq = response.data[r].aeq * response.data[r].CHOUT;
-          response.data[r].sumaeq = response.data[r].aeq * response.data[r].BPOUT;
-          response.data[r].gradeaeq = response.data[r].aeq * response.data[r].GRADED;
-          vm.data.push(response.data[r]);
+          if(response.data[r].PartGroup_Name != "UBB FLOW") {
+            response.data[r].machine = "MTF";
+            response.data[r].partnumber = response.data[r].type;
+            response.data[r].aeq = aeqserloadpartnumbers(response.data[r].type, false);
+            response.data[r].days = $filter('date')(new Date(response.data[r].Day).getTime(), "yyyy-MM-dd");
+            response.data[r].BOKES = response.data[r].BOKES * 1;
+            response.data[r].CHOUT = response.data[r].CHOUT!=""?parseInt(response.data[r].CHOUT):0;
+            response.data[r].BPOUT = response.data[r].BPOUT!=""?parseInt(response.data[r].BPOUT):0;
+            response.data[r].GRADED = response.data[r].GRADED!=""?parseInt(response.data[r].GRADED):0;
+            response.data[r].choutaeq = response.data[r].aeq * response.data[r].CHOUT;
+            response.data[r].sumaeq = response.data[r].aeq * response.data[r].BPOUT;
+            response.data[r].gradeaeq = response.data[r].aeq * response.data[r].GRADED;
+            vm.data.push(response.data[r]);
+          }
         }
       });
 
       dataService.getrework(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
         for (var r = 0; r < response.data.length; r++) {
-          response.data[r].machine = "Rework";
-          response.data[r].partnumber = response.data[r].BaaNCode;
-          response.data[r].aeq = aeqserloadpartnumbers(response.data[r].BaaNCode, false);
-          for(var ob=0;ob<vm.reworkobj.length;ob++){
-            if(response.data[r].shift==vm.reworkobj[ob].shift){
-              response.data[r].shiftnum=vm.reworkobj[ob].shiftnum;
+          if(response.data[r].BaaNCode != "3149069") {
+            response.data[r].machine = "Rework";
+            response.data[r].partnumber = response.data[r].BaaNCode;
+            response.data[r].aeq = aeqserloadpartnumbers(response.data[r].BaaNCode, false);
+            for(var ob=0;ob<vm.reworkobj.length;ob++){
+              if(response.data[r].shift==vm.reworkobj[ob].shift){
+                response.data[r].shiftnum=vm.reworkobj[ob].shiftnum;
+              }
             }
+            vm.data.push(response.data[r]);
           }
-          vm.data.push(response.data[r]);
         }
         vm.load = false;
       });
