@@ -25,7 +25,7 @@ define([], function () {
     function loadetf() {
       vm.load = true;
       vm.data = [];
-      vm.endate = $filter('date')(new Date(vm.enddate).getTime() + (2*24 * 3600 * 1000), 'yyyy-MM-dd');
+      vm.endate = $filter('date')(new Date(vm.enddate).getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
       ufService.getetf(vm.startdate, vm.endate).then(function (response) {
         vm.data = response.data;
 
@@ -37,7 +37,7 @@ define([], function () {
               vm.data[i].day = $filter('date')(new Date(vm.data[i].startdate).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
             }
             else {
-              vm.data[i].day = $filter('date')(new Date(vm.data[i].startdate).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+              vm.data[i].day = $filter('date')(new Date(vm.data[i].startdate), 'yyyy-MM-dd');
             }
           }
           vm.data[i].Amount = 1;
