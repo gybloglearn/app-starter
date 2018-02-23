@@ -112,6 +112,7 @@ define([], function () {
             response.data[r].P3 = response.data[r].P3!=""?parseInt(response.data[r].P3):0;
             response.data[r].Out = response.data[r].Out!=""?parseInt(response.data[r].Out):0;
             response.data[r].suminaeq = response.data[r].aeq * response.data[r].In;
+            response.data[r].sump3aeq = response.data[r].aeq * response.data[r].P3;
             response.data[r].sumoutaeq = response.data[r].aeq * response.data[r].Out;
             vm.data.push(response.data[r]);
           }
