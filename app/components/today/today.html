@@ -187,8 +187,8 @@
               <!--Potting-->
               <td ng-if="sm=='SheetMaker6'" rowspan="4" style="vertical-align: middle">Potting4</td>
               <td ng-if="sm=='SheetMaker6'"  rowspan="4" style="vertical-align: middle">{{(vm.data | filter:vm.search | filter:{MachineName: 'Potting4'}) | sumField:'In' | number:0}}<br><sup>modul</sup><br><strong>{{(vm.data | filter:vm.search | filter:{MachineName: 'Potting4'}) | sumField:'suminaeq'|number:2}}</strong><br><sup>AEq</sup></td>
-              <td ng-if="sm=='SheetMaker6'"  rowspan="4" style="vertical-align: middle">{{(vm.data | filter:vm.search | filter:{MachineName: 'Potting4'}) | sumField:'P3' | number:0}}<br><sup>modul</sup></td>
-              <td ng-if="sm=='SheetMaker6'"  rowspan="4" style="vertical-align: middle">{{(vm.data | filter:vm.search | filter:{MachineName: 'Potting4'}) | sumField:'Out' | number:0}}<br><sup>modul</sup><br>{{(vm.data | filter:vm.search | filter:{MachineName: 'Potting4'}) | sumField:'sumoutaeq'|number:2}}<br><sup>AEq</sup></td>
+              <td ng-if="sm=='SheetMaker6'"  rowspan="4" style="vertical-align: middle">{{(vm.data | filter:vm.search | filter:{MachineName: 'Potting4'}) | sumField:'P3' | number:0}}<br><sup>modul</sup><br><strong>{{(vm.data | filter:vm.search | filter:{MachineName: 'Potting4'}) | sumField:'sump3aeq'|number:2}}</strong><br><sup>AEq</sup></td>
+              <td ng-if="sm=='SheetMaker6'"  rowspan="4" style="vertical-align: middle">{{(vm.data | filter:vm.search | filter:{MachineName: 'Potting4'}) | sumField:'Out' | number:0}}<br><sup>modul</sup><br><strong>{{(vm.data | filter:vm.search | filter:{MachineName: 'Potting4'}) | sumField:'sumoutaeq'|number:2}}</strong><br><sup>AEq</sup></td>
 
               <!-- Klórozó -->
               <td ng-if="sm=='SheetMaker6'" rowspan="8" style="vertical-align:middle">{{vm.data | filter:vm.search | filter:{machine:'MTF'} | sumField: 'CHOUT' | number:0}}<br><sup>modul</sup><br><strong>{{vm.data | filter:vm.search | filter:{machine:'MTF'} | sumField: 'choutaeq' | number:2}}</strong><br><sup>AEq</sup></td>
@@ -211,7 +211,7 @@
 
             </tr>
             <tr style="background-color:dimgray;color:white;">
-              <td>Összesen</td>
+              <td>Részösszeg</td>
               <td><strong>{{ vm.filterSMs(['SheetMaker6', 'SheetMaker7', 'SheetMaker8']) | sumField:'Totalsheets' | number:0 }}</strong></td>
               <td><strong>{{ (vm.filterSMs(['SheetMaker6', 'SheetMaker7', 'SheetMaker8']) | sumField:'Totalsheets') - (vm.filterSMs(['SheetMaker6', 'SheetMaker7', 'SheetMaker8']) | sumField:'ScrapSheets') |number:0 }}</strong></td>
               <td><strong>{{ vm.filterSMs(['SheetMaker6', 'SheetMaker7', 'SheetMaker8'] ) | sumField:'sumgoodaeq'|number:2 }}</strong></td>
@@ -224,14 +224,25 @@
               <!--Potting-->
               <td ng-if="sm=='SheetMaker4'" rowspan="4" style="vertical-align: middle;">Potting3<br>Potting2</td>
               <td ng-if="sm=='SheetMaker4'"  rowspan="4" style="vertical-align: middle">{{vm.filterSMs(['Potting2', 'Potting3']) | sumField:'In' | number:0}}<br><sup>modul</sup><br><strong>{{vm.filterSMs(['Potting2', 'Potting3']) | sumField:'suminaeq' | number:2}}</strong><br><sup>AEq</sup></td>
-              <td ng-if="sm=='SheetMaker4'"  rowspan="4" style="vertical-align: middle">{{vm.filterSMs(['Potting2', 'Potting3']) | sumField:'P3' | number:0}}<br><sup>modul</sup></td>
-              <td ng-if="sm=='SheetMaker4'"  rowspan="4" style="vertical-align: middle">{{vm.filterSMs(['Potting2', 'Potting3']) | sumField:'Out' | number:0}}<br><sup>modul</sup><br>{{vm.filterSMs(['Potting2', 'Potting3']) | sumField:'sumoutaeq' | number:2}}<br><sup>AEq</sup></td>
+              <td ng-if="sm=='SheetMaker4'"  rowspan="4" style="vertical-align: middle">{{vm.filterSMs(['Potting2', 'Potting3']) | sumField:'P3' | number:0}}<br><sup>modul</sup><br><strong>{{vm.filterSMs(['Potting2', 'Potting3']) | sumField:'sump3aeq' | number:2}}</strong><br><sup>AEq</sup></td>
+              <td ng-if="sm=='SheetMaker4'"  rowspan="4" style="vertical-align: middle">{{vm.filterSMs(['Potting2', 'Potting3']) | sumField:'Out' | number:0}}<br><sup>modul</sup><br><strong>{{vm.filterSMs(['Potting2', 'Potting3']) | sumField:'sumoutaeq' | number:2}}</strong><br><sup>AEq</sup></td>
             </tr>
             <tr style="background-color:dimgray;color:white;">
-              <td>Összesen</td>
+              <td>Részösszeg</td>
               <td><strong>{{ vm.filterSMs(['SheetMaker4', 'SheetMaker5', 'SheetMaker9']) | sumField:'Totalsheets' | number:0 }}</strong></td>
               <td><strong>{{ (vm.filterSMs(['SheetMaker4', 'SheetMaker5', 'SheetMaker9']) | sumField:'Totalsheets') - (vm.filterSMs(['SheetMaker4', 'SheetMaker5', 'SheetMaker9']) | sumField:'ScrapSheets') }}</strong></td>
               <td><strong>{{ vm.filterSMs(['SheetMaker4', 'SheetMaker5', 'SheetMaker9'] ) | sumField:'sumgoodaeq' | number:2}}</strong></td>
+            </tr>
+            <tr>
+              <th>Összesen</th>
+              <th>{{ vm.data | filter:vm.search | filter:{machine:'SheetMaker'} | sumField:'Totalsheets' | number:0}}</th>
+              <th>{{ (vm.data | filter:vm.search | filter:{machine:'SheetMaker'} | sumField:'Totalsheets') - (vm.data | filter:vm.search | filter:{machine:'SheetMaker'} | sumField:'ScrapSheets') | number:0}}</th>
+              <th>{{ vm.data | filter:vm.search | filter:{machine:'SheetMaker'} | sumField:'sumgoodaeq' | number:2}}</th>
+              <th></th>
+              <th><strong>{{vm.data | filter:vm.search | filter:{machine:'Potting'}| sumField:'suminaeq' | number:2}}</strong> AEq</th>
+              <th><strong>{{vm.data | filter:vm.search | filter:{machine:'Potting'} | sumField:'sump3aeq' | number:2}}</strong> AEq</th>
+              <th><strong>{{vm.data | filter:vm.search | filter:{machine:'Potting'} | sumField:'sumoutaeq' | number:2}}</strong> AEq</th>
+              <th colspan="4"></th>
             </tr>
         </table>
         </div>
