@@ -24,9 +24,9 @@
         if($r[0][$x] == 'NAP'){
           $row[$r[0][$x]] = date('Y-m-d', ($y - 25569)*86400);
         } else if($x == 23){
-          $row["TotalDiff"] = intval($y);
+          $row["TotalDiff"] = floatval($y);
         } else {
-          $row[$r[0][$x]] = intval($y);
+          $row[$r[0][$x]] = floatval($y);
         }
       }
       array_push($re, $row);
