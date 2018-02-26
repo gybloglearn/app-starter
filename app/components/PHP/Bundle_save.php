@@ -2,10 +2,10 @@
 //error_reporting(E_ALL & ~E_NOTICE);
 ini_set('default_socket_timeout', 600);
 //set_include_path("../../../../SSRSReport/bin/");
-set_include_path("../../../../ssrs/bin/");
+set_include_path("/var/www/html/ssrs/bin/");
 require_once("SSRSReport.php");
 
-$conf = parse_ini_file('../../../../ssrs/config.ini');
+$conf = parse_ini_file('/var/www/html/ssrs/config.ini');
 define("UID", $conf["UID"]);
 define("PASWD", $conf["PASWD"]);
 define("SERVICE_URL", $conf["UFURL"]);
@@ -18,11 +18,16 @@ function remove_utf8_bom($text)
     $text = preg_replace("/^$bom/", '', $text);
     return $text;
 }
+if ( isset( $argv ) ) {
+    parse_str(
+        join( "&", array_slice( $argv, 1 )
+    ), $_GET );
+}
 // set Parameters from get
 if(isset($_GET["startdate"])){
   $startdate = date("m/d/Y H:i:s", strtotime($_GET["startdate"] . " 05:50:00"));
 } else {
-  $startdate = date("m/d/Y H:i:s", strtotime($argv[1] . " 05:50:00"));
+  $startdate = date("m/d/Y H:i:s", strtotime(date("Y-m-d") . " 05:50:00"));
 }
 
 if(isset($_GET["enddate"])){
@@ -119,7 +124,8 @@ try
   }
       $toWrite = json_encode($toWrite);
   
-      $myfile=fopen("Bundle/bundle".date("Ymd", strtotime($startdate)).".json","w+");
+      $myfile=fopen("/var/www/html/ZW1500_uf/app/components/PHP/Bundle/bundle".date("Ymd", strtotime($startdate)).".json","w+");
       fwrite($myfile,$toWrite);
       fclose($myfile);
+      chmod("/var/www/html/ZW1500_uf/app/components/PHP/Bundle/bundle".date("Ymd", strtotime($startdate)).".json",0666);
   ?>

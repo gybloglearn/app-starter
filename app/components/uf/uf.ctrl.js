@@ -3,7 +3,7 @@ define([], function () {
   function Controller(ufService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
     vm.startdate = $filter('date')(new Date().getTime() - (7 * 24 * 3600 * 1000), 'yyyy-MM-dd');
-    vm.enddate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+    vm.enddate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
     vm.days = [];
     vm.data = [];
     vm.bundledata = [];
