@@ -13,7 +13,6 @@
     $rdata = explode(',', $rdata);
     array_push($result["data"], $rdata);
   }
-
   fclose($f);
 
   $re = array();
@@ -24,6 +23,8 @@
       foreach($res as $x=>$y){
         if($r[0][$x] == 'NAP'){
           $row[$r[0][$x]] = date('Y-m-d', ($y - 25569)*86400);
+        } else if($x == 23){
+          $row["TotalDiff"] = intval($y);
         } else {
           $row[$r[0][$x]] = intval($y);
         }
