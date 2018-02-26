@@ -288,8 +288,17 @@ define([], function () {
         vm.sh = false;
         vm.s5 = false;
         vm.s3 = false;
-        start();
+        //start();
+        refresh();
+        setInterval(refresh, 5*60*1000);
       }
+    }
+
+    function refresh(){
+      var d = new Date().getTime();
+      vm.refdate = $filter('date')(d, 'MM.dd. hh:mm');
+      vm.newrefdate = $filter('date')(d + 5*60*1000, 'hh:mm');
+      start();
     }
 
     vm.cpxaeqs = [
