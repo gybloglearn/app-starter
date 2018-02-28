@@ -3,7 +3,7 @@ define([], function () {
   function Controller(ufService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
     vm.startdate = $filter('date')(new Date().getTime() - (7 * 24 * 3600 * 1000), 'yyyy-MM-dd');
-    vm.enddate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
+    vm.enddate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.days = [];
     vm.data = [];
     vm.bundledata = [];
@@ -74,7 +74,7 @@ define([], function () {
           if (counter == vm.loaddays.length) {
             var k = $filter('unique')(vm.bundledata, 'SPL_end');
             //console.log(k);
-            for (var ki = 0; ki < k.length - 1; ki++) {
+            for (var ki = 0; ki < k.length; ki++) {
               vm.xAxisData.push(k[ki].SPL_end);
               vm.bundleChartData.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.bundledata, { SPL_end: k[ki].SPL_end }), 'AEQ')) });
               vm.pstart.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Static potting init 1500', day: k[ki].SPL_end }), 'AEQ')) });

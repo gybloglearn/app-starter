@@ -27,7 +27,7 @@ if ( isset( $argv ) ) {
 if(isset($_GET["startdate"])){
   $startdate = date("m/d/Y H:i:s", strtotime($_GET["startdate"] . " 05:50:00"));
 } else {
-  $startdate = date("m/d/Y H:i:s", strtotime(date("Y-m-d") . " 05:50:00"));
+  $startdate = date("m/d/Y H:i:s", strtotime(date("Y-m-d") . " 05:50:00") - 24*60*60);
 }
 
 if(isset($_GET["enddate"])){
