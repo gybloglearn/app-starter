@@ -8,6 +8,8 @@ define([], function () {
     vm.startdate = $filter('date')(firstDay, 'yyyy-MM-dd');
     vm.enddate = $filter('date')(lastDay, 'yyyy-MM-dd');
     var napok = ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"]
+    var munkanapok = ["2018-03-10", "2018-04-21", "2018-10-13", "2018-11-10", "2018-12-01", "2018-12-15"];
+    var pihenonapok = ["2018-03-15", "2018-03-16", "2018-03-30", "2018-04-02", "2018-04-30", "2018-05-01", "2018-05-21", "2018-08-20", "2018-10-22", "2018-10-23", "2018-11-01", "2018-11-02", "2018-12-24", "2018-12-31"];
     vm.data = [];
     vm.diff = datediff;
     //vm.tablesave = tablesave;
@@ -100,9 +102,63 @@ define([], function () {
           vm.data[i].fmb = "Pihenő";
           vm.data[i].fmc = "Pihenő";
         }
+        for (var j = 0; j < pihenonapok.length; j++) {
+          if (vm.dates[i] == pihenonapok[j]) {
+            vm.data[i].fma = "Pihenő";
+            vm.data[i].fmb = "Pihenő";
+            vm.data[i].fmc = "Pihenő";
+            vm.data[i].client = '';
+            vm.data[i].doctor = '';
+          }
+        }
+        for (var k = 0; k < munkanapok.length; k++) {
+          if (vm.dates[i] == munkanapok[k]) {
+            if (i > 0) {
+              vm.data[i].fma = vm.data[i - 1].fma;
+              vm.data[i].fmb = vm.data[i - 1].fmb;
+              vm.data[i].fmc = vm.data[i - 1].fmc;
+            }
+            else{
+              var dt=$filter('date')(new Date(vm.dates[0]).getTime()-24*3600*1000,'yyyy-MM-dd');
+              var fdesh=$filter('shiftfm')(1, dt);
+              var fdush=$filter('shiftfm')(2, dt);
+              var fejsh=$filter('shiftfm')(3, dt);
+              
+              if (fdesh == "A") {
+                vm.data[i].fma = "Délelőtt";
+              }
+              else if (fdesh == "B") {
+                vm.data[i].fmb = "Délelőtt";
+              }
+              else if (fdesh == "C") {
+                vm.data[i].fmc = "Délelőtt";
+              }
+      
+              if (fdush == "A") {
+                vm.data[i].fma = "Délután";
+              }
+              else if (fdush == "B") {
+                vm.data[i].fmb = "Délután";
+              }
+              else if (fdush == "C") {
+                vm.data[i].fmc = "Délután";
+              }
+      
+              if (fejsh == "A") {
+                vm.data[i].fma = "Éjszaka";
+              }
+              else if (fejsh == "B") {
+                vm.data[i].fmb = "Éjszaka";
+              }
+              else if (fejsh == "C") {
+                vm.data[i].fmc = "Éjszaka";
+              }
+            }
+          }
+        }
 
       }
-      //console.log(vm.data);
+      console.log(vm.data);
       //console.log(vm.dates);
     }
 
@@ -127,7 +183,7 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-			datediff();
+      datediff();
     }
   }
   Controller.$inject = ['$cookies', '$state', '$rootScope', '$filter'];
