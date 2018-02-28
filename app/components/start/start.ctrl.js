@@ -72,48 +72,8 @@ define([], function () {
       });
     }
 
-    /*function loadbokes() {
-      vm.bokesdata = [];
-      var counter = 0;
-      var num = new Date().getHours() * 60 + new Date().getMinutes();
-      if (num < 350) {
-        var startdate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
-        var enddate = $filter('date')(new Date(), 'yyyy-MM-dd');
-      }
-      else {
-        var startdate = $filter('date')(new Date(), 'yyyy-MM-dd');
-        var enddate = $filter('date')(new Date().getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
-      }
-      for (var i = 0; i < vm.tanks.length; i++) {
-        dataService.get(startdate, enddate, vm.tanks[i]).then(function (response) {
-          counter++;
-          for (var j = 0; j < response.data.length; j++) {
-            var substr = response.data[j].modul_id1.substring(2, 9);
-            var datenum = new Date(response.data[j].bt_datetime).getHours() * 60 + new Date(response.data[j].bt_datetime).getMinutes();
-            for (var k = 0; k < vm.partnumbers.length; k++) {
-              if (substr == vm.partnumbers[k].id) {
-                response.data[j].aeq = vm.partnumbers[k].aeq * 1;
-                response.data[j].type = vm.partnumbers[k].name;
-                response.data[j].code = substr;
-                response.data[j].bt_kat_db1 = parseFloat(response.data[j].bt_kat_db1);
-                if (datenum >= 350 && datenum < 1070) {
-                  response.data[j].shiftnum = 1;
-                }
-                else {
-                  response.data[j].shiftnum = 3;
-                }
-                vm.bokesdata.push(response.data[j]);
-              }
-            }
-          }
-          if (counter == vm.tanks.length - 1) {
-            
-          }
-        });
-      }
-    }*/
-
     function loadbokes(){
+      vm.bokesdata = [];
       var num = new Date().getHours() * 60 + new Date().getMinutes();
       if (num < 350) {
         var startdate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
