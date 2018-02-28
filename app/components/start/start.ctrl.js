@@ -157,54 +157,6 @@ define([], function () {
           }
         }
 
-        /*if (zwejszak == "A") {
-          vm.data[i].zwa = "Éjszaka";
-        }
-        else if (zwejszak == "B") {
-          vm.data[i].zwb = "Éjszaka";
-        }
-        else if (zwejszak == "C") {
-          vm.data[i].zwc = "Éjszaka";
-        }
-        else if (zwejszak == "D") {
-          vm.data[i].zwd = "Éjszaka";
-        }
-
-        if (fmdeszak == "A") {
-          vm.data[i].fma = "Délelőtt";
-        }
-        else if (fmdeszak == "B") {
-          vm.data[i].fmb = "Délelőtt";
-        }
-        else if (fmdeszak == "C") {
-          vm.data[i].fmc = "Délelőtt";
-        }
-
-        if (fmduszak == "A") {
-          vm.data[i].fma = "Délután";
-        }
-        else if (fmduszak == "B") {
-          vm.data[i].fmb = "Délután";
-        }
-        else if (fmduszak == "C") {
-          vm.data[i].fmc = "Délután";
-        }
-
-        if (fmejszak == "A") {
-          vm.data[i].fma = "Éjszaka";
-        }
-        else if (fmejszak == "B") {
-          vm.data[i].fmb = "Éjszaka";
-        }
-        else if (fmejszak == "C") {
-          vm.data[i].fmc = "Éjszaka";
-        }
-        if (fmdeszak == "Pihenő") {
-          vm.data[i].fma = "Pihenő";
-          vm.data[i].fmb = "Pihenő";
-          vm.data[i].fmc = "Pihenő";
-        }*/
-
       }
       console.log(vm.data);
       //console.log(vm.dates);
