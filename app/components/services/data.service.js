@@ -3,17 +3,34 @@ define([], function () {
 
   function Service($http) {
     var service = {
-      get: get
+      getpartnumber: getpartnumber,
+      get: get,
+      getrework: getrework
     };
 
     return service;
 
     ///////////
 
-    function get() {
+    function getpartnumber() {
       var req = {
         method: 'GET',
-        url: '//url//'
+        url: 'http://3.228.180.13/modulapi/mods'
+        //url: '../modulapi/mods'
+      };
+      return $http(req);
+    }
+    function get(start, end) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/mtf_table.php?startdate=' + start + '&enddate=' + end
+      };
+      return $http(req);
+    }
+    function getrework(startdate, enddate) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/BP_Rework.php?startdate=' + startdate + '&enddate=' + enddate
       };
       return $http(req);
     }

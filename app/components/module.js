@@ -4,7 +4,9 @@ define([
   './start/start.ctrl',
   './login/login.ctrl',
   './services/login.service',
-  './services/data.service'
+  './services/data.service',
+  './filters/unique',
+  './filters/sumField'
   /* files */
 ], function(
   configFunction,
@@ -12,7 +14,9 @@ define([
   startController,
   loginController,
   loginService,
-  dataService
+  dataService,
+  unique,
+  sumField
 /* names */) {
 
   // Link all components to the module !!!
@@ -24,5 +28,7 @@ define([
   app.service('Login', loginService);
   app.controller('StartController', startController);
   app.controller('LoginController', loginController);
+  app.filter('unique',unique);
+  app.filter('sumField',sumField);
   /* controllers */
 });

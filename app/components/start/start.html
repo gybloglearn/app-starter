@@ -1,7 +1,162 @@
-<div class="container">
+<div class="container-fluid">
+  <style>
+		.green {
+			color: #00aa00;
+		}
+
+		.red {
+			color: #ff0000;
+		}
+	</style>
   <section class="module">
-    <div class="module-header">Start</div>
-    <div class="module-body"></div>
+    <div class="module-header">
+      <h1 class="text-center" style="margin-top:10px;font-size: 12em;">
+        <b>MTF</b>
+      </h1>
+    </div>
+    <div class="module-body">
+      <div class="progress progress-info progress-striped active" ng-hide="!vm.mtfloading">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Frissítés...</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <h1 class="text-center" style="font-size:5em">BP</h1>
+          <br>
+          <h1 class="text-center {{(vm.data|filter:{'state':'BP','shiftnum':vm.actshiftnum}|sumField:'aeq')>=vm.actplan?'green':'red'}}" style="font-size:12em;margin-top:50px">{{vm.data|filter:{'state':'BP','shiftnum':vm.actshiftnum}|sumField:'cnt'|number:0}}
+            <small style="font-size:40px">db</small>
+          </h1>
+          <h2 class="text-center {{(vm.data|filter:{'state':'BP','shiftnum':vm.actshiftnum}|sumField:'aeq')>=vm.actplan?'green':'red'}}" style="font-size:5em;margin-top:30px">
+            {{vm.data|filter:{'state':'BP','shiftnum':vm.actshiftnum}|sumField:'aeq'|number:2}}
+            <small>AEQ</small>
+          </h2>
+        </div>
+        <div class="col-sm-3">
+          <h1 class="text-center" style="font-size:5em">Rework</h1>
+          <br>
+          <h1 class="text-center" style="font-size:12em;margin-top:50px">{{vm.data|filter:{'state':'Rework','shiftnum':vm.actshiftnum}|sumField:'cnt'|number:0 }}
+            <small style="font-size:40px">db</small>
+          </h1>
+          <h2 class="text-center" style="font-size:5em;margin-top:30px">
+            {{vm.data|filter:{'state':'Rework','shiftnum':vm.actshiftnum}|sumField:'aeq'|number:2}}
+            <small>AEQ</small>
+          </h2>
+        </div>
+        <div class="col-sm-3" style="border-left: 1px solid #aaa">
+          <h1 class="text-center" style="font-size:5em">Bökés</h1>
+          <br>
+          <h1 class="text-center" style="font-size:12em;margin-top:50px">{{vm.bokesdata|filter:{'shiftnum':vm.actshiftnum}|sumField:'BOKES'|number:0 }}
+            <small style="font-size:40px">db</small>
+          </h1>
+        </div>
+        <div class="col-sm-3">
+          <h1 class="text-center" style="font-size:5em">Bökés/AEQ</h1>
+          <br>
+          <h1 class="text-center {{(vm.bokesdata|filter:{'shiftnum':vm.actshiftnum}|sumField:'BOKES')/(vm.bokesdata|filter:{'shiftnum':vm.actshiftnum}|sumField:'aeq')>=23?'red':'green'}}" style="font-size: 12em;margin-top: 50px">{{(vm.bokesdata|filter:{'shiftnum':vm.actshiftnum}|sumField:'BOKES')/(vm.bokesdata|filter:{'shiftnum':vm.actshiftnum}|sumField:'aeq')|number:2
+            }}
+          </h1>
+        </div>
+      </div>
+      <div class="row" style="margin-top:50px">
+        <div class="col-sm-3">
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>
+                  <h1 style="font-size:2em;color:#ffffff">Típus</h1>
+                </th>
+                <th>
+                  <h1 style="font-size:2em;color:#ffffff">Darab</h1>
+                </th>
+                <th>
+                  <h1 style="font-size:2em;color:#ffffff">AEQ</h1>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in vm.uniquedata track by $index">
+                <td>
+                  <h1 style="font-size:2em">{{item.Type}}</h1>
+                </td>
+                <td>
+                  <h1 style="font-size:2em">{{vm.data|filter:{'Type':item.Type,'state':'BP','shiftnum':vm.actshiftnum}|sumField:'cnt'|number:0}}</h1>
+                </td>
+                <td>
+                  <h1 style="font-size:2em">{{vm.data|filter:{'Type':item.Type,'state':'BP','shiftnum':vm.actshiftnum}|sumField:'aeq'|number:2}}</h1>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-3">
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>
+                  <h1 style="font-size:2em;color:#ffffff">Típus</h1>
+                </th>
+                <th>
+                  <h1 style="font-size:2em;color:#ffffff">Darab</h1>
+                </th>
+                <th>
+                  <h1 style="font-size:2em;color:#ffffff">AEQ</h1>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in vm.uniquedata track by $index">
+                <td>
+                  <h1 style="font-size:2em">{{item.Type}}</h1>
+                </td>
+                <td>
+                  <h1 style="font-size:2em">{{vm.data|filter:{'Type':item.Type,'state':'Rework','shiftnum':vm.actshiftnum}|sumField:'cnt'|number:0}}</h1>
+                </td>
+                <td>
+                  <h1 style="font-size:2em">{{vm.data|filter:{'Type':item.Type,'state':'Rework','shiftnum':vm.actshiftnum}|sumField:'aeq'|number:2}}</h1>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-6" style="border-left: 1px solid #aaa">
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>
+                  <h1 style="font-size:2em;color:#ffffff">Típus</h1>
+                </th>
+                <th>
+                  <h1 style="font-size:2em;color:#ffffff">Bökés</h1>
+                </th>
+                <th>
+                  <h1 style="font-size:2em;color:#ffffff">AEQ</h1>
+                </th>
+                <th>
+                  <h1 style="font-size:2em;color:#ffffff">Bökés/AEQ</h1>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in vm.uniquedata track by $index">
+                <td>
+                  <h1 style="font-size:2em">{{item.Type}}</h1>
+                </td>
+                <td>
+                  <h1 style="font-size:2em">{{vm.bokesdata|filter:{'type':item.BaaNCode,'shiftnum':vm.actshiftnum}|sumField:'BOKES'|number:0}}</h1>
+                </td>
+                <td>
+                  <h1 style="font-size:2em">{{vm.bokesdata|filter:{'type':item.BaaNCode,'shiftnum':vm.actshiftnum}|sumField:'aeq'|number:2}}</h1>
+                </td>
+                <td>
+                  <h1 style="font-size:2em">{{(vm.bokesdata|filter:{'type':item.BaaNCode,'shiftnum':vm.actshiftnum}|sumField:'BOKES')/(vm.bokesdata|filter:{'type':item.BaaNCode,'shiftnum':vm.actshiftnum}|sumField:'aeq')|number:2}}</h1>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
     <div class="module-footer"></div>
   </section>
 </div>
