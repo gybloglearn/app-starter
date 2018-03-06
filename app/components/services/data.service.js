@@ -15,8 +15,8 @@ define([], function () {
     function getpartnumber() {
       var req = {
         method: 'GET',
-        url: 'http://3.228.180.13/modulapi/mods'
-        //url: '../modulapi/mods'
+        //url: 'http://3.228.180.13/modulapi/mods'
+        url: '../modulapi/mods'
       };
       return $http(req);
     }
