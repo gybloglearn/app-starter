@@ -9,7 +9,7 @@ define([], function () {
     vm.uniquedata = [];
     vm.actshiftnum = 0;
     vm.actplan = 0;
-    vm.totalaeq=113;
+    vm.totalaeq = 113;
     vm.mtfloading = false;
 
     function loadpartnumber() {
@@ -25,15 +25,15 @@ define([], function () {
       var num = new Date().getHours() * 60 + new Date().getMinutes();
       if (num >= 350 && num < 1070) {
         vm.actshiftnum = 1;
-        vm.actplan=(vm.totalaeq/720)*(num-350);
+        vm.actplan = (vm.totalaeq / 720) * (num - 350);
       }
       else {
         vm.actshiftnum = 3;
-        if(num>=1070){
-          vm.actplan=(vm.totalaeq/720)*(num-1070);
+        if (num >= 1070) {
+          vm.actplan = (vm.totalaeq / 720) * (num - 1070);
         }
-        else{
-          vm.actplan=(vm.totalaeq/720)*(num+370);
+        else {
+          vm.actplan = (vm.totalaeq / 720) * (num + 370);
         }
       }
       console.log(vm.actplan);
@@ -72,7 +72,7 @@ define([], function () {
       });
     }
 
-    function loadbokes(){
+    function loadbokes() {
       vm.bokesdata = [];
       var num = new Date().getHours() * 60 + new Date().getMinutes();
       if (num < 350) {
@@ -83,17 +83,19 @@ define([], function () {
         var startdate = $filter('date')(new Date(), 'yyyy-MM-dd');
         var enddate = $filter('date')(new Date().getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
       }
-      dataService.get(startdate,enddate).then(function (response) {
-        for(var i=0;i<response.data.length;i++){
-          response.data[i].shiftnum=response.data[i].shiftnum*1;
-          response.data[i].BOKES=response.data[i].BOKES*1;
-          response.data[i].BPOUT=response.data[i].BPOUT*1;
-          for(var j=0;j<vm.partnumbers.length;j++){
-            if(response.data[i].type==vm.partnumbers[j].id){
-              response.data[i].aeq=response.data[i].BPOUT*vm.partnumbers[j].aeq;
+      dataService.get(startdate, enddate).then(function (response) {
+        for (var i = 0; i < response.data.length; i++) {
+          response.data[i].shiftnum = response.data[i].shiftnum * 1;
+          response.data[i].BOKES = response.data[i].BOKES * 1;
+          response.data[i].BPOUT = response.data[i].BPOUT * 1;
+          for (var j = 0; j < vm.partnumbers.length; j++) {
+            if (response.data[i].type == vm.partnumbers[j].id) {
+              response.data[i].aeq = response.data[i].BPOUT * vm.partnumbers[j].aeq;
             }
           }
-          vm.bokesdata.push(response.data[i]);
+          if (response.data[i].type[0] == "3" && response.data[i].PartGroup_Name!="") {
+            vm.bokesdata.push(response.data[i]);
+          }
         }
         console.log(vm.bokesdata);
         vm.mtfloading = false;
