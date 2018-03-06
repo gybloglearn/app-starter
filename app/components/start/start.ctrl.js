@@ -14,6 +14,7 @@ define([], function () {
 
     function loadpartnumber() {
       vm.mtfloading = true;
+      vm.nextrefresh=$filter('date')(new Date().getTime()+(15*60*1000),'yyyy-MM-dd HH:mm');
       dataService.getpartnumber().then(function (response) {
         vm.partnumbers = response.data;
         loadrework();
