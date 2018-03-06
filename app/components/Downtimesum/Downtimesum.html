@@ -2,20 +2,20 @@
   <section class="module">
     <div class="module-header">
       <h1 class="text-center">Állásidők összesítése</h1>
-      <div class="col-sm-8" style="margin-top:20px">
+      <div class="col-sm-6" style="margin-top:20px">
         <div class="input-group">
-          <span class="input-group-addon">Szak</span>
+          <!--span class="input-group-addon">Szak</span>
           <select class="form-control" ng-model="vm.actshift" ng-change="vm.selectinfo(vm.actshift,vm.data,vm.startdate,vm.enddate)">
             <option value="">Mind</option>
             <option ng-repeat="sh in vm.shifts" value="{{sh}}">{{sh}}</option>
-          </select>
+          </select-->
           <span class="input-group-addon">Dátum</span>
           <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="{{vm.startdate}}">
           <span class="input-group-addon">-tól</span>
           <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="{{vm.enddate}}">
           <span class="input-group-addon">-ig</span>
           <div class="input-group-btn">
-            <a href="" class="btn btn-primary" ng-click="vm.selectinfo(vm.actshift,vm.data,vm.startdate,vm.enddate)" ng-disabled="vm.enddate<=vm.startdate">Betöltés</a>
+            <a href="" class="btn btn-primary" ng-click="vm.selectinfo(vm.actshift,vm.actpotting,vm.data,vm.startdate,vm.enddate)" ng-disabled="vm.enddate<=vm.startdate">Betöltés</a>
           </div>
         </div>
       </div>
@@ -27,17 +27,26 @@
       <div class="tray filter-tray top">
         <div class="tray-inner">
           <div class="filter-rule-group">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
               <div class="form-group">
                 <span class="control-label" style="color:#FFFFFF">Potting</span>
-                <select ng-model="search.pottingid" class="form-control ng-pristine ng-untouched ng-valid">
+                <select class="form-control" ng-model="vm.actpotting" ng-change="vm.selectinfo(vm.actshift,vm.actpotting,vm.data,vm.startdate,vm.enddate)">
                   <option value="">Mind</option>
                   <option value="Potting4">Potting4</option>
                   <option value="Potting3">Potting3</option>
                 </select>
               </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <span class="control-label" style="color:#FFFFFF">Szak</span>
+                <select class="form-control" ng-model="vm.actshift" ng-change="vm.selectinfo(vm.actshift,vm.actpotting,vm.data,vm.startdate,vm.enddate)">
+                  <option value="">Mind</option>
+                  <option ng-repeat="sh in vm.shifts" value="{{sh}}">{{sh}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-3">
               <div class="form-group">
                 <span class="control-label" style="color:#FFFFFF">Állomás</span>
                 <select ng-model="search.place" class="form-control ng-pristine ng-untouched ng-valid">
@@ -46,7 +55,7 @@
                 </select>
               </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
               <div class="form-group">
                 <span class="control-label" style="color:#FFFFFF">Állás</span>
                 <select ng-model="search.category" class="form-control ng-pristine ng-untouched ng-valid">

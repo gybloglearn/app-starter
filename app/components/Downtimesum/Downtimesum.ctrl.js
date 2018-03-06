@@ -7,9 +7,10 @@ define([], function () {
     vm.enddate = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.startdate = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.place = ["Potting be", "Gel Prep Also F", "Uret Prep Also F", "Esztetika Also F", "Forgatas", "Uret Prep Felso F", "Esztetika Felso F", "Potting ki"];
-    vm.categories=["Száradási időre várás szárítóban","Száradási időre várás forgatáson","Száradási időre várás esztétikán","Uretánkötési probléma forgatásnál","Egyéb"];
+    vm.categories = ["Száradási időre várás szárítóban", "Száradási időre várás forgatáson", "Száradási időre várás esztétikán", "Uretánkötési probléma forgatásnál", "Egyéb"];
     vm.shifts = ["A", "B", "C", "D"];
     vm.actshift = "";
+    vm.actpotting = "";
     vm.selectinfo = selectinfo;
 
     function load() {
@@ -30,11 +31,11 @@ define([], function () {
             }
           }
         }
-        selectinfo(vm.actshift, vm.data, vm.startdate, vm.enddate);
+        selectinfo(vm.actshift, vm.actpotting, vm.data, vm.startdate, vm.enddate);
       });
     }
 
-    function selectinfo(ash, arr, stdate, enddate) {
+    function selectinfo(ash, pot, arr, stdate, enddate) {
       vm.selectdata = [];
       vm.dates = [];
       var differencedate = (new Date(enddate).getTime() - new Date(stdate).getTime()) / (24 * 3600 * 1000);
@@ -46,19 +47,40 @@ define([], function () {
       var stnum = new Date(stdate).getTime();
       var endnum = new Date(enddate).getTime() + (24 * 3600 * 1000);
 
-      if (ash == "") {
-        for (var i = 0; i < arr.length; i++) {
-          var actnum = new Date(arr[i].day).getTime();
-          if (actnum >= stnum && actnum < endnum) {
-            vm.selectdata.push(arr[i]);
+      if (pot == "") {
+        if (ash == "") {
+          for (var i = 0; i < arr.length; i++) {
+            var actnum = new Date(arr[i].day).getTime();
+            if (actnum >= stnum && actnum < endnum) {
+              vm.selectdata.push(arr[i]);
+            }
+          }
+        }
+        else {
+          for (var i = 0; i < arr.length; i++) {
+            var actnum = new Date(arr[i].day).getTime();
+            if (actnum >= stnum && actnum < endnum && arr[i].shift == ash) {
+              vm.selectdata.push(arr[i]);
+            }
           }
         }
       }
       else {
-        for (var i = 0; i < arr.length; i++) {
-          var actnum = new Date(arr[i].day).getTime();
-          if (actnum >= stnum && actnum < endnum && arr[i].shift == ash) {
-            vm.selectdata.push(arr[i]);
+        var tom = [];
+        for (var x = 0; x < arr.length; x++) {
+          if (arr[x].pottingid == pot) {
+            tom.push(arr[x]);
+          }
+        }
+        if (ash == "") {
+          vm.selectdata = tom;
+        }
+        else {
+          for (var y = 0; y < tom.length; y++) {
+            var anum = new Date(tom[y].day).getTime();
+            if (anum > stnum && anum < endnum && tom[y].shift == ash) {
+              vm.selectdata.push(tom[y]);
+            }
           }
         }
       }
@@ -75,7 +97,7 @@ define([], function () {
             stacking: 'normal'
           }
         },
-        title: { text: "Kieső idő" },
+        title: { text: "Kieső idő - " + vm.actpotting + " - " + vm.actshift },
         series: [
           {
             name: 'Száradási időre várás szárítóban',
