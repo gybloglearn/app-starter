@@ -169,6 +169,7 @@
           <table class="table detailsTable">
             <tr>
               <th>SheetMaker</th>
+              <th>Terv lap</th>
               <th>Össz lap</th>
               <th>Jó lap</th>
               <th>Jó Aeq</th>
@@ -182,8 +183,9 @@
             </tr>
             <tr ng-repeat="sm in ['SheetMaker6', 'SheetMaker7', 'SheetMaker8'] track by $index">
               <td>{{sm}}</td>
+              <td><span style="color: rgb(77,86,123)">{{ vm.targetSheets(sm) }}</span></td>
               <td>{{ vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'Totalsheets' | number:0 }}</td>
-              <td>{{ (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'Totalsheets') - (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'ScrapSheets') | number:0}}</td>
+              <td><span class="{{vm.smcolor(sm, (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'Totalsheets') - (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'ScrapSheets') )}}">{{ (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'Totalsheets') - (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'ScrapSheets') | number:0}}</span></td>
               <td>{{ (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'sumgoodaeq') | number:2}}</td>
               <!--Potting-->
               <td ng-if="sm=='SheetMaker6'" rowspan="4" style="vertical-align: middle">Potting4</td>
@@ -213,14 +215,16 @@
             </tr>
             <tr style="background-color:dimgray;color:white;">
               <td>Részösszeg</td>
+              <td><span>{{ vm.targetSheets(['SheetMaker6', 'SheetMaker7', 'SheetMaker8']) }}</span></td>
               <td><strong>{{ vm.filterSMs(['SheetMaker6', 'SheetMaker7', 'SheetMaker8']) | sumField:'Totalsheets' | number:0 }}</strong></td>
               <td><strong>{{ (vm.filterSMs(['SheetMaker6', 'SheetMaker7', 'SheetMaker8']) | sumField:'Totalsheets') - (vm.filterSMs(['SheetMaker6', 'SheetMaker7', 'SheetMaker8']) | sumField:'ScrapSheets') |number:0 }}</strong></td>
               <td><strong>{{ vm.filterSMs(['SheetMaker6', 'SheetMaker7', 'SheetMaker8'] ) | sumField:'sumgoodaeq'|number:2 }}</strong></td>
             </tr>
             <tr ng-repeat="sm in ['SheetMaker4', 'SheetMaker5', 'SheetMaker9'] track by $index">
               <td>{{sm}}</td>
+              <td><span style="color: rgb(77,86,123)">{{ vm.targetSheets(sm) }}</span></td>
               <td>{{ vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'Totalsheets' | number:0 }}</td>
-              <td>{{ (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'Totalsheets') - (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'ScrapSheets') |number:0}}</td>
+              <td><span class="{{vm.smcolor(sm, (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'Totalsheets') - (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'ScrapSheets') )}}">{{ (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'Totalsheets') - (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'ScrapSheets') | number:0}}</span></td>
               <td>{{ (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'sumgoodaeq') | number:2 }}</td>
               <!--Potting-->
               <td ng-if="sm=='SheetMaker4'" rowspan="4" style="vertical-align: middle;">Potting3<br>Potting2</td>
@@ -230,12 +234,14 @@
             </tr>
             <tr style="background-color:dimgray;color:white;">
               <td>Részösszeg</td>
+              <td><span>{{ vm.targetSheets(['SheetMaker4', 'SheetMaker5', 'SheetMaker9']) }}</span></td>
               <td><strong>{{ vm.filterSMs(['SheetMaker4', 'SheetMaker5', 'SheetMaker9']) | sumField:'Totalsheets' | number:0 }}</strong></td>
               <td><strong>{{ (vm.filterSMs(['SheetMaker4', 'SheetMaker5', 'SheetMaker9']) | sumField:'Totalsheets') - (vm.filterSMs(['SheetMaker4', 'SheetMaker5', 'SheetMaker9']) | sumField:'ScrapSheets') }}</strong></td>
               <td><strong>{{ vm.filterSMs(['SheetMaker4', 'SheetMaker5', 'SheetMaker9'] ) | sumField:'sumgoodaeq' | number:2}}</strong></td>
             </tr>
             <tr>
               <th>Összesen</th>
+              <th><span>{{ vm.targetSheets(['SheetMaker6', 'SheetMaker7', 'SheetMaker8', 'SheetMaker4', 'SheetMaker5', 'SheetMaker9']) }}</span></th>
               <th>{{ vm.data | filter:vm.search | filter:{machine:'SheetMaker'} | sumField:'Totalsheets' | number:0}}</th>
               <th>{{ (vm.data | filter:vm.search | filter:{machine:'SheetMaker'} | sumField:'Totalsheets') - (vm.data | filter:vm.search | filter:{machine:'SheetMaker'} | sumField:'ScrapSheets') | number:0}}</th>
               <th>{{ vm.data | filter:vm.search | filter:{machine:'SheetMaker'} | sumField:'sumgoodaeq' | number:2}}</th>

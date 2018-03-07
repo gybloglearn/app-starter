@@ -24,6 +24,18 @@ define([], function () {
       });
     }
 
+    function loadSMPlans() {
+      vm.smplans = [];
+      dataService.getsmplan().then(function (response) {
+        vm.smplans = response.data;
+        for (var i = 0; i < vm.smplans.length; i++) {
+          vm.smplans[i].machine = vm.smplans[i].sm.replace('SM', 'SheetMaker');
+        }
+        vm.targetSheets = targetSheets;
+        vm.smcolor = smcolor;
+      });
+    }
+
     function iconize(number, field, shiftnum) {
       var target = 0;
       var div = shiftnum > 0 ? 2 : 1;
@@ -50,6 +62,28 @@ define([], function () {
         return number < target ? 'red' : 'green';
       }
 
+    }
+    function targetSheets(sm){
+      var target = 0;
+      if(sm.constructor === Array){
+        for(var s=0;s<sm.length;s++){
+          var numb = $filter('filter')(vm.smplans, { machine: sm[s] })[0];
+          target += parseFloat(numb.amount) / 60 * vm.passedmins[0];
+        }
+      } else {
+        var numb = $filter('filter')(vm.smplans, { machine: sm })[0];
+        target = parseFloat(numb.amount) / 60 * vm.passedmins[0];
+      }
+      return $filter('number')(target, 0);
+    }
+
+    function smcolor(sm, val) {
+      var target = 0;
+      var numb = $filter('filter')(vm.smplans, { machine: sm })[0];
+      target = parseFloat(numb.amount) / 60 * vm.passedmins[0];
+      if (val > 0) {
+        return val < target ? 'red' : 'green';
+      }
     }
 
     function filterSMs(sms){
@@ -285,6 +319,7 @@ define([], function () {
         vm.enddate = $filter('date')(new Date(vm.startdate).getTime(), 'yyyy-MM-dd');
         vm.search = {};
         loadPartnumbers();
+        loadSMPlans();
         vm.sh = false;
         vm.s5 = false;
         vm.s3 = false;

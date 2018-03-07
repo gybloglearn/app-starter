@@ -179,3 +179,11 @@ ul, ol {
   display: block;
   margin-top: 20px;
 }
+.detailsTable tr td span.green{
+  background: none;
+  color: #46ad00;
+}
+.detailsTable tr td span.red{
+  background: none;
+  color: #de2533;
+}

@@ -16,13 +16,21 @@ define([], function () {
       getsmtable: getsmtable,
       getpottingtable: getpottingtable,
       getmtftable: getmtftable,
-      getrework: getrework
+      getrework: getrework,
+      getsmplan: getsmplan
     };
 
     return service;
 
     ///////////
 
+    function getsmplan(){
+      var req = {
+        method: 'GET',
+        url: '//3.228.180.13/sm/app/components/PHP/planapi/allplans'
+      };
+      return $http(req);
+    }
     function getsapdata() {
       var req = {
         method: 'GET',
