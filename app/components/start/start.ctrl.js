@@ -2,8 +2,6 @@ define([], function () {
   'use strict';
   function Controller(dataService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
-    vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.end = $filter('date')(new Date().getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.datumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm');
     vm.frissites_ideje = $filter('date')(new Date().getTime() + 10 * 60 * 1000, 'yyyy-MM-dd HH:mm');
     vm.sheetmakers = ["SheetMaker4", "SheetMaker5"];
@@ -11,6 +9,17 @@ define([], function () {
 
     function load() {
       vm.smcards = [];
+
+      var changedaynum=new Date().getHours() * 60 + new Date().getMinutes();
+      if(changedaynum<350){
+        vm.datum = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+        vm.end = $filter('date')(new Date(vm.datum).getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
+      }
+      else{
+        vm.datum = $filter('date')(new Date(), 'yyyy-MM-dd');
+        vm.end = $filter('date')(new Date(vm.datum).getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
+      }
+      
 
       dataService.getplan().then(function (resp) {
         vm.allplan = resp.data;
@@ -23,7 +32,6 @@ define([], function () {
           
 
           dataService.getsm(vm.datum, vm.end, v).then(function (response) {
-            
             ossz = $filter('sumdb')($filter('filter')(response.data, { 'category': 'TOTAL', 'shiftnum': vm.actshiftnum }));
             jo = $filter('sumdb')($filter('filter')(response.data, { 'category': 'GOOD', 'shiftnum': vm.actshiftnum }));
             var obj = {};
@@ -104,13 +112,12 @@ define([], function () {
     }
 
     function choose() {
-      var hour = new Date().getHours();
-      var minute = new Date().getMinutes();
+      var ppg=new Date().getHours() * 60 + new Date().getMinutes();
 
-      if ((hour == 5 && minute >= 50) || (hour < 17) || (hour == 17 && minute < 50)) {
+      if (ppg>=350 && ppg<1070) {
         vm.actshiftnum = 1;
       }
-      else if ((hour == 17 && minute >= 50) || (hour > 17) || (hour < 5) || (hour == 5 && minute < 50)) {
+      else  {
         vm.actshiftnum = 3;
       }
     }
@@ -118,7 +125,6 @@ define([], function () {
     function plancreator(tomb, asm) {
       choose();
       var frissites = $filter('date')(new Date().getTime(), 'yyyy-MM-dd HH:mm');
-      var actday = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
       vm.tervezett_darab = 0;
       vm.szaklap=0;
 
