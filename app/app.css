@@ -187,3 +187,9 @@ ul, ol {
   background: none;
   color: #de2533;
 }
+.targetTag {
+  display: block;
+  float: left;
+  font-size: 0.5em;
+  margin-left: -10px;
+}

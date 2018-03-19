@@ -16,6 +16,7 @@ define([], function () {
 
     vm.start = start;
     vm.filterSMs = filterSMs;
+    vm.targetize = targetize;
 
     function loadPartnumbers() {
       vm.partnumbers = [];
@@ -63,6 +64,32 @@ define([], function () {
       }
 
     }
+    
+    function targetize(field, shiftnum){
+      var target = 0;
+      var div = shiftnum > 0 ? 2 : 1;
+      switch (field) {
+        case 'sm':
+          //var number = $filter('sumField')($filter('filter')(vm.data, {machine: 'SheetMaker', shift: shiftnum}), 'sumaeq');
+          target = (vm.rates.min / div) / (1 - vm.rates.modscrap / 100) / (1 - vm.rates.smscrap / 100) / (1440 / div) * vm.passedmins[shiftnum];
+          //console.log(number + " - to - " + target);
+          break;
+        case 'potting':
+          target = (vm.rates.min / div) / (1 - vm.rates.modscrap / 100) / (1440 / div) * vm.passedmins[shiftnum];
+          //console.log(number + " - to - " + target);
+          break;
+        case 'bp':
+          target = (vm.rates.min / div) / (1 - vm.rates.modscrap / 100) / (1440 / div) * vm.passedmins[shiftnum];
+          //console.log(number + " - to - " + target);
+          break;
+        case 'min':
+          target = (vm.rates.min / div) / (1440 / div) * vm.passedmins[shiftnum];
+          //console.log(number + " - to - " + target);
+          break;
+      }
+     return target;
+    }
+
     function targetSheets(sm){
       var target = 0;
       if(sm.constructor === Array){
