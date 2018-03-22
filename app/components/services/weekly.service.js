@@ -19,9 +19,10 @@ define([], function () {
       return $http(req);
     }
     function getsmfile(date) {
+			var d = new Date().getTime().toString().substr(-5);
       var req = {
         method: 'GET',
-        url: 'app/components/PHP/sm/sm' + date + '.json'
+        url: 'app/components/PHP/sm/sm' + date + '.json' + '?' + d
       };
       return $http(req);
     }

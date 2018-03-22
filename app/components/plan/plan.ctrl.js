@@ -51,7 +51,7 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      if ($rootScope.user.username != "212434909" && $rootScope.user.username != "502678184" && $rootScope.user.username != "113010451" && $rootScope.user.username != "212422533") {
+      if ($rootScope.user.username != "212434909" && $rootScope.user.username != "502678184" && $rootScope.user.username != "113010451" && $rootScope.user.username != "212422533" && $rootScope.user.username != "212557160") {
         $state.go('Forbidden');
       }
       load();

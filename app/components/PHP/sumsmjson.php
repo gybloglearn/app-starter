@@ -128,5 +128,6 @@ for($i=0;$i<8;$i++){
 
     $myfile=fopen("/var/www/html/sm/app/components/PHP/sm/sm".date("Ymd", strtotime($startdate)).".json","w+");
     fwrite($myfile,$toWrite);
-    fclose($myfile);
+		fclose($myfile);
+		chmod("/var/www/html/sm/app/components/PHP/sm/sm".date("Ymd", strtotime($startdate)).".json", 0666);
 ?>

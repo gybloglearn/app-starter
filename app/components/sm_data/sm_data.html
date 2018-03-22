@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
 	<section class="module">
 		<div class="module-header">
 			<h1 class="text-center" ng-hide="vm.tobbnapos">{{vm.sm}}-Report-{{vm.datumszam}}</h1>
@@ -125,11 +125,12 @@
 						<th rowspan=2 ng-click="vm.order='Event_type';vm.asc=!vm.asc;">Eset típus</th>
 						<th rowspan=2 ng-click="vm.order='timestamp';vm.asc=!vm.asc;">Időbélyeg</th>
 						<th ng-click="vm.order='Event_time';vm.asc=!vm.asc;">Eset Idő<br>
-							Össz: <b>{{ (vm.sm_datas | filter: search | sumField: 'Event_time')/60 | number:0 }}</b> (perc)
+							Össz: <br> <b>{{ (vm.sm_datas | filter: search | sumField: 'Event_time')/60 | number:0 }}</b> (perc)
 						</th>
 						<th>Szak</th>
 						<th rowspan=2 ng-click="vm.order='Ev_Group';vm.asc=!vm.asc;">Eset csoport</th>
 						<th rowspan=2 ng-click="vm.order='Event_SubGroup';vm.asc=!vm.asc;">Eset alcsoport</th>
+						<th rowspan=2 ng-click="vm.order='event_subgroup1';vm.asc=!vm.asc;">Eset alcsoport2</th>
 						<th>Maximo szám</th>
 						<th>Komment</th>
 					</tr>
@@ -142,6 +143,7 @@
 						<td>{{item.Shift_Name}}</td>
 						<td>{{item.Ev_Group}}</td>
 						<td>{{item.Event_SubGroup}}</td>
+						<td>{{item.event_subgroup1}}</td>
 						<td>{{item.Maximo_num}}</td>
 						<td>{{item.Comment}}</td>
 					</tr>

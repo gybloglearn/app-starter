@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
   <section class="module">
     <div class="module-header">
       <div class="col-sm-12" style="margin-top:20px">
@@ -30,7 +30,7 @@
           <a href="" class="btn btn-primary" ng-click="vm.createdates()" ng-disabled="vm.enddate<vm.startdate">Betöltés</a>
 				</div>
 				<div class="col-sm-2> col-sm-offset-3 text-right" ng-show="(user.username=='113010451' || user.username=='212434909' || user.username=='212422533')">
-					<a href="app/components/PHP/sumsmjson.php?startdate={{vm.startdate}}" class="btn btn-info" ng-disabled="vm.startdate!=vm.enddate">Frissítés</a>
+					<a href="app/components/PHP/sumsmjson.php?startdate={{vm.startdate}}" class="btn btn-info" ng-disabled="vm.startdate!=vm.enddate" target="_blank">Frissítés</a>
         </div>
       </div>
     </div>
@@ -66,6 +66,7 @@
               <th>Machine</th>
               <th>Ev_Group</th>
               <th>Event_SubGroup</th>
+              <th>Event_SubGroup1</th>
               <th>Maximo szám</th>
               <th>Event_time (sec)</th>
               <th>Event_time (min)</th>
@@ -102,7 +103,8 @@
                     <option ng-repeat="val in (vm.filedatas | filter: vm.search | unique:'Event_SubGroup')" value="{{val.Event_SubGroup}}">{{val.Event_SubGroup}}</option>
                   </select>
                 </div>
-              </th>
+							</th>
+							<th></th>
               <th>
                 <div class="form-group">
                   <select name="" id="" class="form-control" ng-model="vm.search.Maximo_num">
@@ -132,6 +134,7 @@
               <td>{{i.Machine}}</td>
               <td>{{i.Ev_Group}}</td>
               <td>{{i.Event_SubGroup}}</td>
+              <td>{{i.event_subgroup1}}</td>
               <td>{{i.Maximo_num}}</td>
               <td>{{i.Event_time}}</td>
               <td>{{i.Event_time/60 | number: 0}}</td>
