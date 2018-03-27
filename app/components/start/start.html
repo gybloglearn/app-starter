@@ -115,28 +115,32 @@
         <table class="table table-condensed table-hover" style="border: 1px solid #bcbcbc; background-color:white;">
           <thead>
             <tr>
-              <th colspan="10">SAP adatok
+              <th colspan="13">SAP adatok
                 <sup style="color: #888">Frissítve: {{vm.sapdatacrdate}}</sup>
                 <a class="btn btn-info pull-right" ui-sref="sap">
                   <i class="icon-bar-chart"></i> Részletek</a>
               </th>
             </tr>
             <tr>
-              <th width="10%" rowspan="2" style="border-right: 1px solid #bcbcbc">Nap</th>
-              <th width="30%" colspan="3" class="text-center" style="border-right: 1px solid #bcbcbc">ZW500</th>
-              <th width="30%" colspan="3" class="text-center" style="border-right: 1px solid #bcbcbc">ZW1000</th>
-              <th width="30%" colspan="3" class="text-center">ZW1500</th>
+              <th rowspan="2" style="border-right: 1px solid #bcbcbc;width:5%!important">Nap</th>
+              <th colspan="3" class="text-center" style="border-right: 1px solid #bcbcbc">ZW500</th>
+              <th colspan="3" class="text-center" style="border-right: 1px solid #bcbcbc">ZeeBlok</th>
+              <th colspan="3" class="text-center" style="border-right: 1px solid #bcbcbc">ZW1000</th>
+              <th colspan="3" class="text-center">ZW1500</th>
             </tr>
             <tr>
-              <th width="10%">Plan</th>
-              <th width="10%">Actual</th>
-              <th width="10%" style="border-right: 1px solid #bcbcbc">Cumm Diff</th>
-              <th width="10%">Plan</th>
-              <th width="10%">Actual</th>
-              <th width="10%" style="border-right: 1px solid #bcbcbc">Cumm Diff</th>
-              <th width="10%">Plan</th>
-              <th width="10%">Actual</th>
-              <th width="10%">Cumm Diff</th>
+              <th width="7.5%">Plan</th>
+              <th width="7.5%">Actual</th>
+              <th width="7.5%" style="border-right: 1px solid #bcbcbc">Cumm Diff</th>
+              <th width="7.5%">Plan</th>
+              <th width="7.5%">Actual</th>
+              <th width="7.5%" style="border-right: 1px solid #bcbcbc">Cumm Diff</th>
+              <th width="7.5%">Plan</th>
+              <th width="7.5%">Actual</th>
+              <th width="7.5%" style="border-right: 1px solid #bcbcbc">Cumm Diff</th>
+              <th width="7.5%">Plan</th>
+              <th width="7.5%">Actual</th>
+              <th width="7.5%">Cumm Diff</th>
             </tr>
           </thead>
           <tbody>
@@ -150,6 +154,15 @@
                 {{i.zw500kdiff | number:2}}
                 <i ng-show="$index>0 && !vm.trendize($index, 'zw500kdiff')" class="icon-ok-sign text-ge-green"></i>
                 <i ng-show="$index>0 && vm.trendize($index, 'zw500kdiff')" class="icon-warning-sign text-ge-red"></i>
+              </td>
+              <td>{{i.zbp | number:0}}</td>
+              <td>
+                <b ng-class="{'text-ge-green':i.zba >= i.zbp, 'text-ge-red': i.zba < i.zbp}">{{i.zba | number:2}}</b>
+              </td>
+              <td style="border-right: 1px solid #bcbcbc">
+                {{i.zbkdiff | number:2}}
+                <i ng-show="$index>0 && !vm.trendize($index, 'zbkdiff')" class="icon-ok-sign text-ge-green"></i>
+                <i ng-show="$index>0 && vm.trendize($index, 'zbkdiff')" class="icon-warning-sign text-ge-red"></i>
               </td>
               <td>{{i.zw1000p | number:0}}</td>
               <td>
