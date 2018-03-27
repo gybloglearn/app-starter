@@ -66,17 +66,17 @@ define([], function () {
           if (new Date(dat[i].NAP).getTime() >= new Date(vm.startdate).getTime() && new Date(dat[i].NAP).getTime() <= new Date(vm.enddate).getTime()) {
             vm.sapdata.push({
               day: dat[i].NAP,
-              zw500kdiff: dat[i].ZW0500kummDIFF,
-              zw500p: dat[i].ZW0500Plan,
-              zw500a: dat[i].ZW0500Actual,
-              zw1000p: dat[i].ZW1000Plan,
-              zw1000a: dat[i].ZW1000Actual,
-              zw1000kdiff: dat[i].ZW1000kummDIFF,
-              zw1500p: dat[i].ZW1500Plan,
-              zw1500a: dat[i].ZW1500Actual,
-              zw1500kdiff: dat[i].ZW1500kummDIFF,
-              zbkdiff: dat[i].ZBkummDiff,
-              zlkdiff: dat[i].ZLkummDiff
+              zw500kdiff: parseFloat(dat[i].ZW0500kummDIFF),
+              zw500p: parseFloat(dat[i].ZW0500Plan),
+              zw500a: parseFloat(dat[i].ZW0500Actual),
+              zw1000p: parseFloat(dat[i].ZW1000Plan),
+              zw1000a: parseFloat(dat[i].ZW1000Actual),
+              zw1000kdiff: parseFloat(dat[i].ZW1000kummDIFF),
+              zw1500p: parseFloat(dat[i].ZW1500Plan),
+              zw1500a: parseFloat(dat[i].ZW1500Actual),
+              zw1500kdiff: parseFloat(dat[i].ZW1500kummDIFF),
+              zbkdiff: parseFloat(dat[i].ZBkummDiff),
+              zlkdiff: parseFloat(dat[i].ZLkummDiff)
             });
           }
         }

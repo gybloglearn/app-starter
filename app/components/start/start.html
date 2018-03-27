@@ -142,30 +142,30 @@
           <tbody>
             <tr ng-repeat="i in vm.sapdata track by $index">
               <td style="border-right: 1px solid #bcbcbc">{{i.day}}</td>
-              <td>{{i.zw500p}}</td>
+              <td>{{i.zw500p | number:0}}</td>
               <td>
-                <b ng-class="{'text-ge-green':i.zw500a >= i.zw500p, 'text-ge-red': i.zw500a < i.zw500p}">{{i.zw500a}}</b>
+                <b ng-class="{'text-ge-green':i.zw500a >= i.zw500p, 'text-ge-red': i.zw500a < i.zw500p}">{{i.zw500a | number:2}}</b>
               </td>
               <td style="border-right: 1px solid #bcbcbc">
-                {{i.zw500kdiff}}
+                {{i.zw500kdiff | number:2}}
                 <i ng-show="$index>0 && !vm.trendize($index, 'zw500kdiff')" class="icon-ok-sign text-ge-green"></i>
                 <i ng-show="$index>0 && vm.trendize($index, 'zw500kdiff')" class="icon-warning-sign text-ge-red"></i>
               </td>
-              <td>{{i.zw1000p}}</td>
+              <td>{{i.zw1000p | number:0}}</td>
               <td>
-                <b ng-class="{'text-ge-green':i.zw1000a >= i.zw1000p, 'text-ge-red': i.zw1000a < i.zw1000p}">{{i.zw1000a}}</b>
+                <b ng-class="{'text-ge-green':i.zw1000a >= i.zw1000p, 'text-ge-red': i.zw1000a < i.zw1000p}">{{i.zw1000a | number:2}}</b>
               </td>
               <td style="border-right: 1px solid #bcbcbc">
-                {{i.zw1000kdiff}}
+                {{i.zw1000kdiff | number:2}}
                 <i ng-show="$index>0 && !vm.trendizess($index, 'zw1000kdiff')" class="icon-ok-sign text-ge-green"></i>
                 <i ng-show="$index>0 && vm.trendizess($index, 'zw1000kdiff')" class="icon-warning-sign text-ge-red"></i>
               </td>
-              <td>{{i.zw1500p}}</td>
+              <td>{{i.zw1500p | number:0}}</td>
               <td>
-                <b ng-class="{'text-ge-green':i.zw1500a >= i.zw1500p, 'text-ge-red': i.zw1500a < i.zw1500p}">{{i.zw1500a}}</b>
+                <b ng-class="{'text-ge-green':i.zw1500a >= i.zw1500p, 'text-ge-red': i.zw1500a < i.zw1500p}">{{i.zw1500a | number:2}}</b>
               </td>
               <td>
-                {{i.zw1500kdiff}}
+                {{i.zw1500kdiff | number:2}}
                 <i ng-show="$index>0 && !vm.trendizess($index, 'zw1500kdiff')" class="icon-ok-sign text-ge-green"></i>
                 <i ng-show="$index>0 && vm.trendizess($index, 'zw1500kdiff')" class="icon-warning-sign text-ge-red"></i>
               </td>
