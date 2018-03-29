@@ -1,0 +1,28 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">OEE {{vm.actyear}}</h1>
+    </div>
+    <div class="module-body">
+      <div class="row">
+        <div class="col-sm-4">
+          <h1>Availability: {{(((vm.data| sumField:'runtime')-(vm.data| sumField:'downtime'))/(vm.data| sumField:'runtime'))*100
+            |number:2}} %</h1>
+        </div>
+        <div class="col-sm-4">
+          <h1>Quality: {{(((vm.data| sumField:'slmeter')-(vm.data| sumField:'scrapmeter'))/(vm.data| sumField:'slmeter'))*100
+            |number:2}} %
+          </h1>
+        </div>
+        <div class="col-sm-4">
+          <h1>Performance: {{((vm.data|sumField:'slaeq')/((7*2*200*vm.weeklwngth)-(vm.data| sumField:'downtime')/60/60/24*200))*100|number:2}} %</h1>
+        </div>
+      </div>
+    </div>
+    <div class="module-footer">
+      <div class="row" style="margin:10px">
+        <mychart id="chart" config="vm.chartconfig"></mychart>
+      </div>
+    </div>
+  </section>
+</div>

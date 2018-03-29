@@ -11,10 +11,13 @@ define([
   './directives/mychart',
   './filters/unique',
   './filters/sumField',
+  './filters/week',
   './downtime/downtime.ctrl',
   './services/downtime.service',
   './scrap/scrap.ctrl',
-  './services/scrap.service'
+  './services/scrap.service',
+  './oee/oee.ctrl',
+  './services/oee.service'
 	/* files */
 ], function (
   configFunction,
@@ -29,10 +32,13 @@ define([
   mychart,
   unique,
   sumField,
+  week,
   downtimeController,
   downtimeService,
   scrapController,
-  scrapService
+  scrapService,
+  oeeController,
+  oeeService
 	/* names */) {
 
     // Link all components to the module !!!
@@ -50,9 +56,12 @@ define([
     app.directive('mychart', mychart);
     app.filter('unique',unique);
     app.filter('sumField',sumField);
+    app.filter('week',week);
     app.controller('downtimeController', downtimeController);
 		app.service('downtimeService', downtimeService);
 		app.controller('scrapController', scrapController);
 		app.service('scrapService', scrapService);
+		app.controller('oeeController', oeeController);
+		app.service('oeeService', oeeService);
 		/* controllers */
   });
