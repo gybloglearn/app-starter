@@ -15,7 +15,7 @@
           </h1>
         </div>
         <div class="col-sm-4">
-          <h1>Performance: {{((vm.data|sumField:'slaeq')/((7*2*200*vm.weeklwngth)-(vm.data| sumField:'downtime')/60/60/24*200))*100|number:2}} %</h1>
+          <h1>Performance: {{((vm.data|sumField:'slaeq')/((7*240*vm.weeklwngth) - (vm.data|sumField:'downtime')/60/60/24*240))*100|number:2}} %</h1>
         </div>
       </div>
     </div>

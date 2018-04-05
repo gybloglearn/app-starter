@@ -51,8 +51,10 @@ define([], function () {
           var substr = parseInt(response.data[j].item1.substring(5, 7));
           for (var k = 0; k < vm.data.length; k++) {
             if (substr == vm.data[k].week) {
+             if (response.data[j].machine == "SpinLine #136" || response.data[j].machine == "SpinLine #236") {
               vm.data[k].slmeter += response.data[j].val;
               vm.data[k].slaeq += response.data[j].textbox2;
+             }
             }
           }
         }
@@ -71,7 +73,7 @@ define([], function () {
             for (var n = 0; n < vm.data.length; n++) {
               if (vm.data[n].week == dt) {
                 vm.data[n].downtime += resp.data[m].Duration_s_ * 1;
-                vm.data[n].runtime -= resp.data[m].Duration_s_ * 1;
+                //vm.data[n].runtime -= resp.data[m].Duration_s_ * 1;
               }
             }
           }
@@ -110,10 +112,10 @@ define([], function () {
             vm.chartData[b].data.push({ cat: vm.data[a].week.toString() + ".hét", y: (((vm.data[a].slmeter) - (vm.data[a].scrapmeter)) / (vm.data[a].slmeter)) * 100 });
           }
           else if (b == 2) {
-            vm.chartData[b].data.push({ cat: vm.data[a].week.toString() + ".hét", y: (vm.data[a].slaeq / ((7 * 2 * 200)-vm.data[a].downtime/60/60/24*200)) * 100 });
+            vm.chartData[b].data.push({ cat: vm.data[a].week.toString() + ".hét", y: (vm.data[a].slaeq / ((7 * 240)-vm.data[a].downtime/60/60/24*240)) * 100 });
           }
           else if (b == 3) {
-            vm.chartData[b].data.push({ cat: vm.data[a].week.toString() + ".hét", y: (((vm.data[a].runtime) - (vm.data[a].downtime)) / (vm.data[a].runtime)) * (((vm.data[a].slmeter) - (vm.data[a].scrapmeter)) / (vm.data[a].slmeter)) * (vm.data[a].slaeq / ((7 * 2 * 200)-vm.data[a].downtime/60/60/24*200)) * 100 });
+            vm.chartData[b].data.push({ cat: vm.data[a].week.toString() + ".hét", y: (((vm.data[a].runtime) - (vm.data[a].downtime)) / (vm.data[a].runtime)) * (((vm.data[a].slmeter) - (vm.data[a].scrapmeter)) / (vm.data[a].slmeter)) * (vm.data[a].slaeq / ((7 * 240) - vm.data[a].downtime/60/60/24*240)) * 100 });
           }
         }
       }
