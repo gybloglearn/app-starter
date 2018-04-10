@@ -1,7 +1,21 @@
-<div class="container">
+<div class="container-fluid">
   <section class="module">
-    <div class="module-header">Start</div>
-    <div class="module-body"></div>
-    <div class="module-footer"></div>
-  </section>
+    <div class="module-header">
+      <h1 class="text-center" style="margin-top:10px;font-size: 6em;">
+        <b>Spin Line</b>
+      </h1>
+    </div>
+    <div class="module-body">
+      <div class="row" style="margin:10px">
+        <div class="col-sm-6">
+          <my-chart id="amountchart" config="vm.amount_chartconfig"></my-chart>
+        </div>
+        <div class="col-sm-6">
+          <my-chart id="downtimechart" config="vm.downtimeconfig"></my-chart>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="module-footer"></div>
+</section>
 </div>
