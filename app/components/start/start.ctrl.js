@@ -145,7 +145,7 @@ define([], function () {
     activate();
 
     function activate() {
-      (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
+      //(!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       loadall();
     }
   }
