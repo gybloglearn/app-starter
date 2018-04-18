@@ -6,12 +6,101 @@
       </h1>
     </div>
     <div class="module-body">
+        <div class="progress progress-danger progress-striped active" ng-hide="!vm.loading">
+            <div class="progress-bar" style="width: 100%">
+              <p class="text-center">Frissítés...</p>
+            </div>
+          </div>
       <div class="row" style="margin:10px">
         <div class="col-sm-6">
           <my-chart id="amountchart" config="vm.amount_chartconfig"></my-chart>
         </div>
         <div class="col-sm-6">
           <my-chart id="downtimechart" config="vm.downtimeconfig"></my-chart>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <table class="table responsive">
+            <thead>
+              <tr>
+                <th>Gép</th>
+                <th>{{vm.chartData[0].data[0].cat}}</th>
+                <th>{{vm.chartData[0].data[1].cat}}</th>
+                <th>{{vm.chartData[0].data[2].cat}}</th>
+                <th>{{vm.chartData[0].data[3].cat}}</th>
+                <th>{{vm.chartData[0].data[4].cat}}</th>
+                <th>{{vm.chartData[0].data[5].cat}}</th>
+                <th>{{vm.chartData[0].data[6].cat}}</th>
+                <th>{{vm.chartData[0].data[7].cat}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center" style="font-size:1.2em">{{vm.chartData[0].name}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.chartData[0].data[0].y}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.chartData[0].data[1].y}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.chartData[0].data[2].y}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.chartData[0].data[3].y}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.chartData[0].data[4].y}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.chartData[0].data[5].y}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.chartData[0].data[6].y}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.chartData[0].data[7].y}}</td>
+              </tr>
+              <tr>
+                <td class="text-center" style="font-size:1.2em">{{vm.chartData[1].name}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.chartData[1].data[0].y}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.chartData[1].data[1].y}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.chartData[1].data[2].y}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.chartData[1].data[3].y}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.chartData[1].data[4].y}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.chartData[1].data[5].y}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.chartData[1].data[6].y}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.chartData[1].data[7].y}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-6">
+          <table class="table responsive">
+            <thead>
+              <tr>
+                <th>Gép</th>
+                <th>{{vm.categ[0]}}</th>
+                <th>{{vm.categ[1]}}</th>
+                <th>{{vm.categ[2]}}</th>
+                <th>{{vm.categ[3]}}</th>
+                <th>{{vm.categ[4]}}</th>
+                <th>{{vm.categ[5]}}</th>
+                <th>{{vm.categ[6]}}</th>
+                <th>{{vm.categ[7]}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center" style="font-size:1.2em">{{vm.alldata[0].name}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.alldata[0].data[0].y|number:1}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.alldata[0].data[1].y|number:1}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.alldata[0].data[2].y|number:1}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.alldata[0].data[3].y|number:1}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.alldata[0].data[4].y|number:1}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.alldata[0].data[5].y|number:1}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.alldata[0].data[6].y|number:1}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.alldata[0].data[7].y|number:1}}</td>
+              </tr>
+              <tr>
+                <td class="text-center" style="font-size:1.2em">{{vm.alldata[1].name}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.alldata[1].data[0].y|number:1}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.alldata[1].data[1].y|number:1}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.alldata[1].data[2].y|number:1}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.alldata[1].data[3].y|number:1}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.alldata[1].data[4].y|number:1}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.alldata[1].data[5].y|number:1}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.alldata[1].data[6].y|number:1}}</td>
+                <td class="text-center" style="font-size:2.2em">{{vm.alldata[1].data[7].y|number:1}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
