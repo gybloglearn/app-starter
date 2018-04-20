@@ -96,7 +96,7 @@ define([], function () {
       var hiddenElement = document.createElement('a');
       hiddenElement.href = 'data:attachment/csv;charset=iso-8859-1,' + encodeURI(content);
       hiddenElement.target = '_blank';
-      hiddenElement.download = 'data_' + $filter('date')(new Date(), "yyyyMMddhhmm") + '.csv';
+      hiddenElement.download = 'data_' + $filter('date')(new Date(), "yyyyMMddHHmm") + '.csv';
       hiddenElement.click();
     }
     function addShift(it) {
