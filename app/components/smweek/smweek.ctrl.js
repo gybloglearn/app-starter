@@ -73,16 +73,31 @@ define([], function () {
       vm.filedatas = [];
 
       for (var i = 0; i < vm.dates.length; i++) {
-        weeklyService.getsmfile(vm.dates[i]).then(function (response) {
-          for (var j = 0; j < response.data.length; j++) {
-            //response.data[j].d = $filter('date')(new Date(response.data[j].timestamp), "yyyyMMdd");
-            response.data[j].d = response.data[j].Shift_ID.substr(0, 8);
-            if (vm.sheetmakers.indexOf(response.data[j].Machine) > -1) {
-              vm.filedatas.push(response.data[j]);
-              updatedowntime(response.data[j]);
-            }
-          }
-        });
+				var td = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
+				var tdd = $filter('date')(new Date().getTime(), 'yyyyMMdd');
+				if(vm.dates[i] == tdd){
+					weeklyService.getsmtoday(td).then(function(response){
+						for(var j = 0; j < response.data.length; j++){
+							response.data[j].d = response.data[j].Shift_ID.substr(0,8);
+							if(vm.sheetmakers.indexOf(response.data[j].Machine) > -1) {
+								vm.filedatas.push(response.data[j]);
+								updatedowntime(response.data[j]);
+							}
+						}
+						lodsm();
+					});
+				} else {
+        	weeklyService.getsmfile(vm.dates[i]).then(function (response) {
+          	for (var j = 0; j < response.data.length; j++) {
+            	//response.data[j].d = $filter('date')(new Date(response.data[j].timestamp), "yyyyMMdd");
+	            response.data[j].d = response.data[j].Shift_ID.substr(0, 8);
+  	          if (vm.sheetmakers.indexOf(response.data[j].Machine) > -1) {
+    	          vm.filedatas.push(response.data[j]);
+      	        updatedowntime(response.data[j]);
+        	    }
+          	}
+	        });
+				}
       }
       lodsm();
     }
@@ -135,8 +150,13 @@ define([], function () {
           }
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
+						var ido = 1440;
+						if(vm.startdate == $filter('date')(new Date().getTime(), 'yyyy-MM-dd')){
+						  ido = (new Date().getTime() - new Date(vm.startdate + " 05:50:00").getTime()) / (1000 * 60);
+						}
             for (var k = 0; k < vm.days.length; k++) {
-              vm.days[k].ttlido = vm.sheetmakers.length * 1440;
+              //vm.days[k].ttlido = vm.sheetmakers.length * 1440;
+							vm.days[k].ttlido = vm.sheetmakers.length * ido;
               if ($filter('date')(new Date(response.data[j].days), "yyyyMMdd") == vm.days[k].date && response.data[j].category == "GOOD") {
                 vm.days[k].joaeq += response.data[j].aeq;
                 vm.days[k].jolap += response.data[j].amount;
@@ -157,8 +177,12 @@ define([], function () {
       var smskap = 0;
       var smstime = 0;
       for (var i = 0; i < vm.sheetmakers.length; i++) {
-        smskap += (vm.dates.length * 1440 * 60 / 91 / 12 * 0.74) * ((vm.dates.length * 1440 - ((smarr[i].musz + smarr[i].szerv + smarr[i].terv) / 60)) / (vm.dates.length * 1440));
-        smstime += vm.dates.length * 1440;
+				var ido = 1440;
+				if(vm.startdate == $filter('date')(new Date().getTime(), 'yyyy-MM-dd')){
+				  ido = (new Date().getTime() - new Date(vm.startdate + " 05:50:00").getTime()) / (1000 * 60);
+				}
+        smskap += (vm.dates.length * ido * 60 / 91 / 12 * 0.74) * ((vm.dates.length * ido - ((smarr[i].musz + smarr[i].szerv + smarr[i].terv) / 60)) / (vm.dates.length * ido));
+        smstime += vm.dates.length * ido;
         vm.smcards.push({
           sm: smarr[i].id,
           osszlap: smarr[i].ossz,
@@ -167,12 +191,12 @@ define([], function () {
           joaeq: smarr[i].jaeq,
           selejt: smarr[i].selejt,
           saeq: smarr[i].saeq,
-          alltime: vm.dates.length * 1440,
+          alltime: vm.dates.length * ido,
           downtime: (smarr[i].musz + smarr[i].szerv + smarr[i].terv) / 60,
           muszaki: smarr[i].musz / 60,
           szervezesi: smarr[i].szerv / 60,
           tervezesi: smarr[i].terv / 60,
-          kap: (vm.dates.length * 1440 * 60 / 91 / 12 * 0.74) * ((vm.dates.length * 1440 - ((smarr[i].musz + smarr[i].szerv + smarr[i].terv) / 60)) / (vm.dates.length * 1440))
+          kap: (vm.dates.length * ido * 60 / 91 / 12 * 0.74) * ((vm.dates.length * ido - ((smarr[i].musz + smarr[i].szerv + smarr[i].terv) / 60)) / (vm.dates.length * ido))
         });
         setCh(vm.smcards);
       }
@@ -424,7 +448,7 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      vm.edate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+      vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
       loadPartnumbers();
     }
   }

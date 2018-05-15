@@ -5,9 +5,9 @@
         <div class="col-sm-6">
           <div class="input-group">
             <span class="input-group-addon">Dátum</span>
-            <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-1d" end="{{vm.edate}}">
+            <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="" end="{{vm.edate}}">
             <span class="input-group-addon">-tól</span>
-            <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="-1d" end="{{vm.edate}}">
+            <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="" end="{{vm.edate}}">
             <span class="input-group-addon">-ig</span>
           </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="col-sm-2 col-sm-offset-5 text-center">
           <a href="" class="btn btn-primary" ng-click="vm.createdates()" ng-disabled="vm.enddate<vm.startdate">Betöltés</a>
 				</div>
-				<div class="col-sm-2> col-sm-offset-3 text-right" ng-show="(user.username=='113010451' || user.username=='212434909' || user.username=='212422533')">
+				<div class="col-sm-2> col-sm-offset-3 text-right" ng-show="(user.username=='113010451' || user.username=='212434909' || user.username=='212422533' || user.username=='212557160')">
 					<a href="app/components/PHP/sumsmjson.php?startdate={{vm.startdate}}" class="btn btn-info" ng-disabled="vm.startdate!=vm.enddate" target="_blank">Frissítés</a>
         </div>
       </div>

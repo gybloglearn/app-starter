@@ -5,7 +5,8 @@ define([], function () {
     var service = {
       getpartnumber: getpartnumber,
       getsmfile: getsmfile,
-      getsm: getsm
+      getsm: getsm,
+				getsmtoday: getsmtoday
     };
 
     return service;
@@ -26,6 +27,13 @@ define([], function () {
       };
       return $http(req);
     }
+		function getsmtoday(date) {
+			var req = {
+				method: 'GET',
+				url: 'app/components/PHP/sumsmjsontoday.php?startdate=' + date
+			};
+			return $http(req);
+		}
     function getsm(start, end, mch) {
       var req = {
         method: 'GET',
