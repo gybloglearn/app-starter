@@ -9,6 +9,7 @@ define([], function () {
     vm.startdatumszam = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd HH:mm:ss');
     vm.enddatum = $filter('date')(new Date().getTime() + (24*3600*1000), 'yyyy-MM-dd');
     vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    vm.mtfload = false;
 
     activate();
 
@@ -21,6 +22,7 @@ define([], function () {
     }
 
     function load() {
+      vm.mtfload = true;
       vm.data = [];
       var counter = 0;
 
@@ -89,6 +91,7 @@ define([], function () {
                   }
                 }
                 select(vm.data);
+                vm.mtfload = false;
               });
             });
           }

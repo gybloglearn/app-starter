@@ -5,6 +5,11 @@
         <sup>{{vm.startdatumszam}}<br>{{vm.enddatumszam}}</sup></h1>
     </div>
     <div class="module-body">
+        <div class="progress progress-info progress-striped active" ng-hide="!vm.mtfload">
+            <div class="progress-bar" style="width: 100%">
+              <p class="text-center">Betöltés</p>
+            </div>
+          </div>
       <style>
         .green {
           color: #006600;
