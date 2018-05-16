@@ -102,6 +102,7 @@ define([], function () {
             }
           }
         }
+        console.log(datas);
         vm.chartconf = {
           chart: { type: 'xrange', height: 440 },
           xAxis: {
