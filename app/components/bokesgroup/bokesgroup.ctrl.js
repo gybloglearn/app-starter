@@ -6,9 +6,9 @@ define([], function () {
     vm.pottings = ["Potting3", "Potting4"];
     vm.sheetmakers = ['SheetMaker1', 'SheetMaker2', 'SheetMaker4', 'SheetMaker5', 'SheetMaker6', 'SheetMaker7', 'SheetMaker8', 'SheetMaker9'];
     vm.startdatum = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
-    vm.startdatumszam = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
-    vm.enddatum = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd');
+    vm.startdatumszam = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd HH:mm:ss');
+    vm.enddatum = $filter('date')(new Date().getTime() + (24*3600*1000), 'yyyy-MM-dd');
+    vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
     activate();
 
@@ -172,36 +172,36 @@ define([], function () {
         vm.moddate.push(mod[i]);
 
         if(mod[i].kenesid.includes("-1")){
-          vm.kenesum[0].data.push({am:mod[i].amount});
+          vm.kenesum[0].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
         }
         else if(mod[i].kenesid.includes("-2")){
-          vm.kenesum[1].data.push({am:mod[i].amount});
+          vm.kenesum[1].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
         }
 
         if (mod[i].sheetmaker == "SheetMaker4") {
-          vm.sumsm[0].data.push({am:mod[i].amount});
+          vm.sumsm[0].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
         }
         else if (mod[i].sheetmaker == "SheetMaker5") {
-          vm.sumsm[1].data.push({am:mod[i].amount});
+          vm.sumsm[1].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
         }
         else if (mod[i].sheetmaker == "SheetMaker6") {
-          vm.sumsm[2].data.push({am:mod[i].amount});
+          vm.sumsm[2].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
         }
         else if (mod[i].sheetmaker == "SheetMaker7") {
-          vm.sumsm[3].data.push({am:mod[i].amount});
+          vm.sumsm[3].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
         }
         else if (mod[i].sheetmaker == "SheetMaker8") {
-          vm.sumsm[4].data.push({am:mod[i].amount});
+          vm.sumsm[4].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
         }
         else if (mod[i].sheetmaker == "SheetMaker9") {
-          vm.sumsm[5].data.push({am:mod[i].amount});
+          vm.sumsm[5].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
         }
 
         if (mod[i].potting == "Potting3") {
-          vm.sumpotting[0].data.push({am:mod[i].amount});
+          vm.sumpotting[0].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
         }
         else if (mod[i].potting == "Potting4") {
-          vm.sumpotting[1].data.push({am:mod[i].amount});
+          vm.sumpotting[1].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
         }
       }
       /*vm.sumsm = [

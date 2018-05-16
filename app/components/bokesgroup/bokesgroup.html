@@ -1,7 +1,8 @@
-<div class="container-fluid">
+<div class="container">
   <section class="module">
     <div class="module-header">
-      <h1 class="text-center">Bökés csoportosítás {{vm.startdatumszam}}-{{vm.enddatumszam}}</h1>
+      <h1 class="text-center">Bökés csoportosítás<br>
+        <sup>{{vm.startdatumszam}}<br>{{vm.enddatumszam}}</sup></h1>
     </div>
     <div class="module-body">
       <style>
@@ -14,7 +15,7 @@
         }
       </style>
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <table class="table table-condensed table-bordered">
             <thead>
               <th class="text-center">1-Sor</th>
@@ -23,20 +24,20 @@
             <tbody>
               <tr>
                 <td>
-                  <ul ng-repeat="ro in vm.kenesum[0].data| orderBy:'-am'| limitTo : 50 track by $index">
-                    <li style="list-style-type:none;text-align: center;color:{{ro.am<=35?'green':'red'}}">{{ro.am}}</li>
+                  <ul ng-repeat="ro in vm.kenesum[0].data| orderBy:'-dt'| limitTo : 50 track by $index">
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
                   </ul>
                 </td>
                 <td>
-                  <ul ng-repeat="ro in vm.kenesum[1].data| orderBy:'-am'| limitTo : 50  track by $index">
-                    <li style="list-style-type:none;text-align: center;color:{{ro.am<=35?'green':'red'}}">{{ro.am}}</li>
+                  <ul ng-repeat="ro in vm.kenesum[1].data| orderBy:'-dt'| limitTo : 50  track by $index">
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
                   </ul>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <table class="table table-condensed table-bordered">
             <thead>
               <th class="text-center">SM4</th>
@@ -49,28 +50,28 @@
             <tbody>
               <tr>
                 <td>
-                  <ul ng-repeat="ro in vm.sumsm[0].data| orderBy:'-am'| limitTo : 50  track by $index">
-                    <li style="list-style-type:none;text-align: center;color:{{ro.am<=35?'green':'red'}}">{{ro.am}}</li>
+                  <ul ng-repeat="ro in vm.sumsm[0].data| orderBy:'-dt'| limitTo : 50  track by $index">
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
                   </ul>
                 </td>
                 <td>
-                  <ul ng-repeat="ro in vm.sumsm[1].data| orderBy:'-am'| limitTo : 50  track by $index">
-                    <li style="list-style-type:none;text-align: center;color:{{ro.am<=35?'green':'red'}}">{{ro.am}}</li>
+                  <ul ng-repeat="ro in vm.sumsm[1].data| orderBy:'-dt'| limitTo : 50  track by $index">
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
                   </ul>
                 </td>
                 <td>
-                  <ul ng-repeat="ro in vm.sumsm[2].data| orderBy:'-am'| limitTo : 50  track by $index">
-                    <li style="list-style-type:none;text-align: center;color:{{ro.am<=35?'green':'red'}}">{{ro.am}}</li>
+                  <ul ng-repeat="ro in vm.sumsm[2].data| orderBy:'-dt'| limitTo : 50  track by $index">
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
                   </ul>
                 </td>
                 <td>
-                  <ul ng-repeat="ro in vm.sumsm[3].data| orderBy:'-am'| limitTo : 50  track by $index">
-                    <li style="list-style-type:none;text-align: center;color:{{ro.am<=35?'green':'red'}}">{{ro.am}}</li>
+                  <ul ng-repeat="ro in vm.sumsm[3].data| orderBy:'-dt'| limitTo : 50  track by $index">
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
                   </ul>
                 </td>
                 <td>
-                  <ul ng-repeat="ro in vm.sumsm[4].data| orderBy:'-am'| limitTo : 50  track by $index">
-                    <li style="list-style-type:none;text-align: center;color:{{ro.am<=35?'green':'red'}}">{{ro.am}}</li>
+                  <ul ng-repeat="ro in vm.sumsm[4].data| orderBy:'-dt'| limitTo : 50  track by $index">
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
                   </ul>
                 </td>
                 <!--td>
@@ -82,7 +83,7 @@
             </tbody>
           </table>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <table class="table table-condensed table-bordered">
             <thead>
               <th class="text-center">Potting 3</th>
@@ -91,13 +92,13 @@
             <tbody>
               <tr>
                 <td>
-                  <ul ng-repeat="ro in vm.sumpotting[0].data| orderBy:'-am'| limitTo : 50  track by $index">
-                    <li style="list-style-type:none;text-align: center;color:{{ro.am<=35?'green':'red'}}">{{ro.am}}</li>
+                  <ul ng-repeat="ro in vm.sumpotting[0].data| orderBy:'-dt'| limitTo : 50  track by $index">
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
                   </ul>
                 </td>
                 <td>
-                  <ul ng-repeat="ro in vm.sumpotting[1].data| orderBy:'-am'| limitTo : 50  track by $index">
-                    <li style="list-style-type:none;text-align: center;color:{{ro.am<=35?'green':'red'}}">{{ro.am}}</li>
+                  <ul ng-repeat="ro in vm.sumpotting[1].data| orderBy:'-dt'| limitTo : 50  track by $index">
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
                   </ul>
                 </td>
               </tr>
