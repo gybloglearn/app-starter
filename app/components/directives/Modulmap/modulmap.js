@@ -18,7 +18,7 @@ define([], function () {
             $scope.mutatchart = false;
             $scope.actallapot = "bokes"
             $scope.oszlopok = ['A', 'B', 'C', 'D', 'E'];
-            $scope.sorok = ['1', '2', '3', '4', '5', '6', '7', '8'];
+            $scope.sorok = ['1', '2', '3', '4', '5', '6', '8', '9'];
             $scope.sheetmakers = ['SheetMaker1', 'SheetMaker2', 'SheetMaker4', 'SheetMaker5', 'SheetMaker6', 'SheetMaker7', 'SheetMaker8','SheetMaker9'];
             $scope.bokeshatar=35;
 

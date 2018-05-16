@@ -85,6 +85,20 @@ define([], function () {
       }
     }
 
+    vm.downloaddata = getData;
+    function getData(){
+      var content = "";
+      content += "modul,type,o,s,tank,kenes,sm,smop,potting,gelprep_op,gelprep_dt,ford_op,ford_dt\r\n";
+      for(var i = 0; i < vm.data.length; i++){
+        content += vm.data[i].modul_id1+","+vm.data[i].modtype+","+vm.data[i].Oszlop+","+vm.data[i].Sor+","+vm.data[i].tank+","+vm.data[i].sheetmaker+","+vm.data[i].smop+","+vm.data[i].potting+","+vm.data[i].gelprep+","+vm.data[i].geldate+","+vm.data[i].rot+","+vm.data[i].rotdate+"\r\n";
+      }
+      //console.log(content);
+      var hiddenElement = document.createElement('a');
+      hiddenElement.href = 'data:attachment/csv;charset=iso-8859-1,' + encodeURI(content);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = 'data_' + $filter('date')(new Date(), "yyyyMMddhhmm") + '.csv';
+      hiddenElement.click();
+    }
     function addShift(it) {
       var num = new Date(it).getHours() * 60 + new Date(it).getMinutes();
       var shiftnum = 0;

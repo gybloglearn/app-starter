@@ -128,6 +128,7 @@
 					<thead>
 						<tr>
 							<th>Operátor</th>
+							<th>Modulok</th>
 							<th>Összes eltávolított szál</th>
 							<th>Összes bökés</th>
 							<th>Munkaidő(perc)</th>
@@ -137,8 +138,13 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="item in vm.opdata | filter: vm.search track by $index" class="ng-scope">
+						<tr ng-repeat="item in vm.opdata | filter: vm.search | orderBy:'worktime':true track by $index" class="ng-scope">
 							<td>{{item.operator}}</td>
+							<td><a class="btn btn-default btn-block" data-toggle="collapse" data-target="#moduls{{item.operator}}">{{item.moduls.length}}</i></a>
+								<div class="collapse" id="moduls{{item.operator}}">
+									<div ng-repeat="mo in item.moduls track by $index">{{mo[0]}} modulon: <b>{{mo[1]}}</b> bökés</div>
+								</div>
+							</td>
 							<td>{{item.remove}}</td>
 							<td>{{item.repair}}</td>
 							<td>{{item.worktime}}</td>
