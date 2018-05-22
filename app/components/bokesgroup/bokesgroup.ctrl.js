@@ -7,9 +7,10 @@ define([], function () {
     vm.sheetmakers = ['SheetMaker1', 'SheetMaker2', 'SheetMaker4', 'SheetMaker5', 'SheetMaker6', 'SheetMaker7', 'SheetMaker8', 'SheetMaker9'];
     vm.startdatum = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.startdatumszam = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd HH:mm:ss');
-    vm.enddatum = $filter('date')(new Date().getTime() + (24*3600*1000), 'yyyy-MM-dd');
+    vm.enddatum = $filter('date')(new Date().getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
     vm.mtfload = false;
+    vm.load = load;
 
     activate();
 
@@ -151,22 +152,23 @@ define([], function () {
       var mod = [];
       vm.moddate = [];
       vm.kenesum = [
-        { name: "Sor-1", amount: 0, data: [] },
-        { name: "Sor-2", amount: 0, data: [] },
+        { name: "Sor-1", amount: 0, db: 0, data: [] },
+        { name: "Sor-2", amount: 0, db: 0, data: [] },
       ]
       vm.sumsm = [
-        { name: "SheetMaker4", amount: 0, data: [] },
-        { name: "SheetMaker5", amount: 0, data: [] },
-        { name: "SheetMaker6", amount: 0, data: [] },
-        { name: "SheetMaker7", amount: 0, data: [] },
-        { name: "SheetMaker8", amount: 0, data: [] },
-        { name: "SheetMaker9", amount: 0, data: [] }
+        { name: "SheetMaker4", amount: 0, db: 0, data: [] },
+        { name: "SheetMaker5", amount: 0, db: 0, data: [] },
+        { name: "SheetMaker6", amount: 0, db: 0, data: [] },
+        { name: "SheetMaker7", amount: 0, db: 0, data: [] },
+        { name: "SheetMaker8", amount: 0, db: 0, data: [] },
+        { name: "SheetMaker9", amount: 0, db: 0, data: [] }
       ];
       vm.sumpotting = [
-        { name: "Potting3", amount: 0, data: [] },
-        { name: "Potting4", amount: 0, data: [] },
+        { name: "Potting3", amount: 0, db: 0, data: [] },
+        { name: "Potting4", amount: 0, db: 0, data: [] },
       ];
       mod = $filter('unique')(t, "modul_id1");
+      console.log(mod);
       for (var i = 0; i < mod.length; i++) {
         var modname = mod[i].modul_id1;
         var interdata = [];
@@ -174,51 +176,61 @@ define([], function () {
         mod[i].amount = parseInt($filter('sumField')(interdata, "bt_kat_db1"));
         vm.moddate.push(mod[i]);
 
-        if(mod[i].kenesid.includes("-1")){
-          vm.kenesum[0].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
+        if (mod[i].kenesid.includes("-1")) {
+          vm.kenesum[0].data.push({ modul: mod[i].modul_id1, am: mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime() });
+          vm.kenesum[0].amount += mod[i].amount;
+          vm.kenesum[0].db++;
         }
-        else if(mod[i].kenesid.includes("-2")){
-          vm.kenesum[1].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
+        else if (mod[i].kenesid.includes("-2")) {
+          vm.kenesum[1].data.push({ modul: mod[i].modul_id1, am: mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime() });
+          vm.kenesum[1].amount += mod[i].amount;
+          vm.kenesum[1].db++;
         }
 
         if (mod[i].sheetmaker == "SheetMaker4") {
-          vm.sumsm[0].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
+          vm.sumsm[0].data.push({ modul: mod[i].modul_id1, am: mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime() });
+          vm.sumsm[0].amount += mod[i].amount;
+          vm.sumsm[0].db++;
         }
         else if (mod[i].sheetmaker == "SheetMaker5") {
-          vm.sumsm[1].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
+          vm.sumsm[1].data.push({ modul: mod[i].modul_id1, am: mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime() });
+          vm.sumsm[1].amount += mod[i].amount;
+          vm.sumsm[1].db++;
         }
         else if (mod[i].sheetmaker == "SheetMaker6") {
-          vm.sumsm[2].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
+          vm.sumsm[2].data.push({ modul: mod[i].modul_id1, am: mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime() });
+          vm.sumsm[2].amount += mod[i].amount;
+          vm.sumsm[2].db++;
         }
         else if (mod[i].sheetmaker == "SheetMaker7") {
-          vm.sumsm[3].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
+          vm.sumsm[3].data.push({ modul: mod[i].modul_id1, am: mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime() });
+          vm.sumsm[3].amount += mod[i].amount;
+          vm.sumsm[3].db++;
         }
         else if (mod[i].sheetmaker == "SheetMaker8") {
-          vm.sumsm[4].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
+          vm.sumsm[4].data.push({ modul: mod[i].modul_id1, am: mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime() });
+          vm.sumsm[4].amount += mod[i].amount;
+          vm.sumsm[4].db++;
         }
         else if (mod[i].sheetmaker == "SheetMaker9") {
-          vm.sumsm[5].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
+          vm.sumsm[5].data.push({ modul: mod[i].modul_id1, am: mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime() });
+          vm.sumsm[5].amount += mod[i].amount;
+          vm.sumsm[5].db++;
         }
 
         if (mod[i].potting == "Potting3") {
-          vm.sumpotting[0].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
+          vm.sumpotting[0].data.push({ modul: mod[i].modul_id1, am: mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime() });
+          vm.sumpotting[0].amount += mod[i].amount;
+          vm.sumpotting[0].db++;
         }
         else if (mod[i].potting == "Potting4") {
-          vm.sumpotting[1].data.push({am:mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime()});
+          vm.sumpotting[1].data.push({ modul: mod[i].modul_id1, am: mod[i].amount, dt: new Date(mod[i].bt_datetime).getTime() });
+          vm.sumpotting[1].amount += mod[i].amount;
+          vm.sumpotting[1].db++;
         }
       }
-      /*vm.sumsm = [
-        { name: "SheetMaker4", amount: parseInt($filter('sumField')($filter('filter')(vm.moddate, { sheetmaker: 'SheetMaker4' }), "amount")) },
-        { name: "SheetMaker5", amount: parseInt($filter('sumField')($filter('filter')(vm.moddate, { sheetmaker: 'SheetMaker5' }), "amount")) },
-        { name: "SheetMaker6", amount: parseInt($filter('sumField')($filter('filter')(vm.moddate, { sheetmaker: 'SheetMaker6' }), "amount")) },
-        { name: "SheetMaker7", amount: parseInt($filter('sumField')($filter('filter')(vm.moddate, { sheetmaker: 'SheetMaker7' }), "amount")) },
-        { name: "SheetMaker8", amount: parseInt($filter('sumField')($filter('filter')(vm.moddate, { sheetmaker: 'SheetMaker8' }), "amount")) },
-        { name: "SheetMaker9", amount: parseInt($filter('sumField')($filter('filter')(vm.moddate, { sheetmaker: 'SheetMaker9' }), "amount")) }
-      ];
-      vm.sumpotting = [
-        { name: "Potting3", amount: parseInt($filter('sumField')($filter('filter')(vm.moddate, { potting: 'Potting3' }), "amount")) },
-        { name: "Potting4", amount: parseInt($filter('sumField')($filter('filter')(vm.moddate, { potting: 'Potting4' }), "amount")) },
-      ];*/
+      //console.log(vm.sumsm);
+      console.log(vm.kenesum);
     }
 
     function activate() {

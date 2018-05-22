@@ -1,15 +1,26 @@
 <div class="container">
   <section class="module">
     <div class="module-header">
-      <h1 class="text-center">Bökés csoportosítás<br>
-        <sup>{{vm.startdatumszam}}<br>{{vm.enddatumszam}}</sup></h1>
-    </div>
-    <div class="module-body">
-        <div class="progress progress-info progress-striped active" ng-hide="!vm.mtfload">
-            <div class="progress-bar" style="width: 100%">
-              <p class="text-center">Betöltés</p>
-            </div>
+      <h1 class="text-center">Bökés csoportosítás
+        <br>
+        <sup>{{vm.startdatumszam}}
+          <br>{{vm.enddatumszam}}</sup>
+      </h1>
+      <div class="col-sm-6" style="margin-top:10px">
+        <div class="input-group">
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.mtfload">Frissítés</a>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-body">
+      <div class="progress progress-info progress-striped active" ng-hide="!vm.mtfload">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Betöltés</p>
+        </div>
+      </div>
       <style>
         .green {
           color: #006600;
@@ -23,19 +34,29 @@
         <div class="col-sm-3">
           <table class="table table-condensed table-bordered">
             <thead>
-              <th class="text-center">1-Sor</th>
-              <th class="text-center">2-Sor</th>
+              <tr>
+                <th class="text-center">1-Sor</th>
+                <th class="text-center">2-Sor</th>
+              </tr>
+              <tr>
+                <th class="text-center">{{vm.kenesum[0].amount/vm.kenesum[0].db|number:2}}</th>
+                <th class="text-center">{{vm.kenesum[1].amount/vm.kenesum[1].db|number:2}}</th>
+              </tr>
             </thead>
             <tbody>
               <tr>
                 <td>
                   <ul ng-repeat="ro in vm.kenesum[0].data| orderBy:'-dt'| limitTo : 50 track by $index">
-                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=30?'':'red'}}">
+                      <a style="color:{{ro.am<=30?'':'white'}}" target="_blank" href="../modulhistory/#/history/{{ro.modul}}">{{ro.am}}</a>
+                    </li>
                   </ul>
                 </td>
                 <td>
                   <ul ng-repeat="ro in vm.kenesum[1].data| orderBy:'-dt'| limitTo : 50  track by $index">
-                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=30?'':'red'}}">
+                      <a style="color:{{ro.am<=30?'':'white'}}" target="_blank" href="../modulhistory/#/history/{{ro.modul}}">{{ro.am}}</a>
+                    </li>
                   </ul>
                 </td>
               </tr>
@@ -45,38 +66,56 @@
         <div class="col-sm-6">
           <table class="table table-condensed table-bordered">
             <thead>
-              <th class="text-center">SM4</th>
-              <th class="text-center">SM5</th>
-              <th class="text-center">SM6</th>
-              <th class="text-center">SM7</th>
-              <th class="text-center">SM8</th>
-              <!--th class="text-center">SM9</th-->
+              <tr>
+                <th class="text-center">SM4</th>
+                <th class="text-center">SM5</th>
+                <th class="text-center">SM6</th>
+                <th class="text-center">SM7</th>
+                <th class="text-center">SM8</th>
+              </tr>
+              <tr>
+                <th class="text-center">{{vm.sumsm[0].amount/vm.sumsm[0].db|number:2}}</th>
+                <th class="text-center">{{vm.sumsm[1].amount/vm.sumsm[1].db|number:2}}</th>
+                <th class="text-center">{{vm.sumsm[2].amount/vm.sumsm[2].db|number:2}}</th>
+                <th class="text-center">{{vm.sumsm[3].amount/vm.sumsm[3].db|number:2}}</th>
+                <th class="text-center">{{vm.sumsm[4].amount/vm.sumsm[4].db|number:2}}</th>
+              </tr>
             </thead>
             <tbody>
               <tr>
                 <td>
                   <ul ng-repeat="ro in vm.sumsm[0].data| orderBy:'-dt'| limitTo : 50  track by $index">
-                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=30?'':'red'}}">
+                      <a style="color:{{ro.am<=30?'':'white'}}" target="_blank" href="../modulhistory/#/history/{{ro.modul}}">{{ro.am}}</a>
+                    </li>
                   </ul>
                 </td>
                 <td>
                   <ul ng-repeat="ro in vm.sumsm[1].data| orderBy:'-dt'| limitTo : 50  track by $index">
-                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=30?'':'red'}}">
+                      <a style="color:{{ro.am<=30?'':'white'}}" target="_blank" href="../modulhistory/#/history/{{ro.modul}}">{{ro.am}}</a>
+                    </li>
                   </ul>
                 </td>
                 <td>
                   <ul ng-repeat="ro in vm.sumsm[2].data| orderBy:'-dt'| limitTo : 50  track by $index">
-                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=30?'':'red'}}">
+                      <a style="color:{{ro.am<=30?'':'white'}}" target="_blank" href="../modulhistory/#/history/{{ro.modul}}">{{ro.am}}</a>
+                    </li>
                   </ul>
                 </td>
                 <td>
                   <ul ng-repeat="ro in vm.sumsm[3].data| orderBy:'-dt'| limitTo : 50  track by $index">
-                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=30?'':'red'}}">
+                      <a style="color:{{ro.am<=30?'':'white'}}" target="_blank" href="../modulhistory/#/history/{{ro.modul}}">{{ro.am}}</a>
+                    </li>
                   </ul>
                 </td>
                 <td>
                   <ul ng-repeat="ro in vm.sumsm[4].data| orderBy:'-dt'| limitTo : 50  track by $index">
-                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=30?'':'red'}}">
+                      <a style="color:{{ro.am<=30?'':'white'}}" target="_blank" href="../modulhistory/#/history/{{ro.modul}}">{{ro.am}}</a>
+                    </li>
                   </ul>
                 </td>
                 <!--td>
@@ -91,19 +130,29 @@
         <div class="col-sm-3">
           <table class="table table-condensed table-bordered">
             <thead>
-              <th class="text-center">Potting 3</th>
-              <th class="text-center">Potting 4</th>
+              <tr>
+                <th class="text-center">Potting 3</th>
+                <th class="text-center">Potting 4</th>
+              </tr>
+              <tr>
+                <th class="text-center">{{vm.sumpotting[0].amount/vm.sumpotting[0].db|number:2}}</th>
+                <th class="text-center">{{vm.sumpotting[1].amount/vm.sumpotting[1].db|number:2}}</th>
+              </tr>
             </thead>
             <tbody>
               <tr>
                 <td>
                   <ul ng-repeat="ro in vm.sumpotting[0].data| orderBy:'-dt'| limitTo : 50  track by $index">
-                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=30?'':'red'}}">
+                      <a style="color:{{ro.am<=30?'':'white'}}" target="_blank" href="../modulhistory/#/history/{{ro.modul}}">{{ro.am}}</a>
+                    </li>
                   </ul>
                 </td>
                 <td>
                   <ul ng-repeat="ro in vm.sumpotting[1].data| orderBy:'-dt'| limitTo : 50  track by $index">
-                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=35?'':'red'}};color:{{ro.am<=35?'':'white'}};">{{ro.am}}</li>
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.am<=30?'':'red'}}">
+                      <a style="color:{{ro.am<=30?'':'white'}}" target="_blank" href="../modulhistory/#/history/{{ro.modul}}">{{ro.am}}</a>
+                    </li>
                   </ul>
                 </td>
               </tr>
