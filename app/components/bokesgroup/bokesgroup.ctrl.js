@@ -10,7 +10,7 @@ define([], function () {
     vm.enddatum = $filter('date')(new Date().getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
     vm.mtfload = false;
-    vm.load = load;
+    vm.beallit = beallit;
 
     activate();
 
@@ -19,6 +19,14 @@ define([], function () {
       bokesgroupService.getpartnumber().then(function (response) {
         vm.partnumbers = response.data;
       });
+      load();
+    }
+
+    function beallit() {
+      vm.startdatum = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+      vm.startdatumszam = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd HH:mm:ss');
+      vm.enddatum = $filter('date')(new Date().getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
+      vm.enddatumszam = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
       load();
     }
 
@@ -51,6 +59,12 @@ define([], function () {
               response.data[j].gelprep = "";
               response.data[j].geldate = "";
               response.data[j].gelshift = "";
+              response.data[j].uretprepa = "";
+              response.data[j].uretdatea = "";
+              response.data[j].uretshifta = "";
+              response.data[j].uretprepf = "";
+              response.data[j].uretdatef = "";
+              response.data[j].uretshiftf = "";
             } else {
               response.data[j].bt_kat_db1 = parseFloat(response.data[j].bt_kat_db1);
               response.data[j].sheetmaker = "";
@@ -63,6 +77,12 @@ define([], function () {
               response.data[j].gelprep = "";
               response.data[j].geldate = "";
               response.data[j].gelshift = "";
+              response.data[j].uretprepa = "";
+              response.data[j].uretdatea = "";
+              response.data[j].uretshifta = "";
+              response.data[j].uretprepf = "";
+              response.data[j].uretdatef = "";
+              response.data[j].uretshiftf = "";
             }
             if (response.data[j].modtype != "") {
               vm.data.push(response.data[j]);
@@ -88,6 +108,12 @@ define([], function () {
                       vm.data[c].gelprep = rp.data[b].PT_GEL_Prep_OP;
                       vm.data[c].geldate = rp.data[b].PT_GEL_PREP_DT;
                       vm.data[c].gelshift = rp.data[b].PT_GEL_PREP_S;
+                      vm.data[c].uretprepa = rp.data[b].PT_URET_PREP_A_OP;
+                      vm.data[c].uretdatea = rp.data[b].PT_URET_PREP_A_DT;
+                      vm.data[c].uretshifta = rp.data[b].PT_URET_PREP_A_S;
+                      vm.data[c].uretprepf = rp.data[b].PT_URET_PREP_F_OP;
+                      vm.data[c].uretdatef = rp.data[b].PT_URET_PREP_F_DT;
+                      vm.data[c].uretshiftf = rp.data[b].PT_URET_PREP_F_S;
                     }
                   }
                 }
@@ -150,7 +176,20 @@ define([], function () {
 
     function summodulbokes(t) {
       var mod = [];
+      var intersmop = [];
+      var interpottgel = [];
+      var interpottureta = [];
+      var interpottrot = [];
+      var interpotturetf = [];
+
+      vm.smoperators = [];
+      vm.pottinggeloperators = [];
+      vm.pottinguretaoperators = [];
+      vm.pottingrotoperators = [];
+      vm.pottinguretfoperators = [];
       vm.moddate = [];
+
+
       vm.kenesum = [
         { name: "Sor-1", amount: 0, db: 0, data: [] },
         { name: "Sor-2", amount: 0, db: 0, data: [] },
@@ -167,8 +206,14 @@ define([], function () {
         { name: "Potting3", amount: 0, db: 0, data: [] },
         { name: "Potting4", amount: 0, db: 0, data: [] },
       ];
+
       mod = $filter('unique')(t, "modul_id1");
-      console.log(mod);
+      intersmop = $filter('unique')(t, "smop");
+      interpottgel = $filter('unique')(t, "gelprep");
+      interpottureta = $filter('unique')(t, "uretprepa");
+      interpottrot = $filter('unique')(t, "rot");
+      interpotturetf = $filter('unique')(t, "uretprepf");
+
       for (var i = 0; i < mod.length; i++) {
         var modname = mod[i].modul_id1;
         var interdata = [];
@@ -229,8 +274,118 @@ define([], function () {
           vm.sumpotting[1].db++;
         }
       }
-      //console.log(vm.sumsm);
-      console.log(vm.kenesum);
+
+      for (var i = 0; i < intersmop.length; i++) {
+        var obj = {
+          operator: intersmop[i].smop,
+          sm: intersmop[i].sheetmaker,
+          data: []
+        }
+        for (var j = 0; j < mod.length; j++) {
+          if (intersmop[i].smop == mod[j].smop) {
+            var dtobj = {
+              modul: mod[i].modul_id1,
+              amount: mod[j].amount
+            };
+            obj.data.push(dtobj);
+          }
+        }
+        vm.smoperators.push(obj);
+      }
+
+      vm.smoperators4 = $filter('filter')(vm.smoperators, { sm: "SheetMaker4" });
+      vm.smoperators5 = $filter('filter')(vm.smoperators, { sm: "SheetMaker5" });
+      vm.smoperators6 = $filter('filter')(vm.smoperators, { sm: "SheetMaker6" });
+      vm.smoperators7 = $filter('filter')(vm.smoperators, { sm: "SheetMaker7" });
+      vm.smoperators8 = $filter('filter')(vm.smoperators, { sm: "SheetMaker8" });
+      /*gélberakás*/
+      for (var i = 0; i < interpottgel.length; i++) {
+        var obj = {
+          operator: interpottgel[i].gelprep,
+          potting: interpottgel[i].potting,
+          data: []
+        }
+        for (var j = 0; j < mod.length; j++) {
+          if (interpottgel[i].gelprep == mod[j].gelprep) {
+            var dtobj = {
+              modul: mod[i].modul_id1,
+              amount: mod[j].amount
+            };
+            obj.data.push(dtobj);
+          }
+        }
+        vm.pottinggeloperators.push(obj);
+      }
+
+      vm.potting3geloperators = $filter('filter')(vm.pottinggeloperators, { potting: "Potting3" });
+      vm.potting4geloperators = $filter('filter')(vm.pottinggeloperators, { potting: "Potting4" });
+      /*potting uretán alsó*/
+      for (var i = 0; i < interpottureta.length; i++) {
+        var obj = {
+          operator: interpottureta[i].uretprepa,
+          potting: interpottureta[i].potting,
+          data: []
+        }
+        for (var j = 0; j < mod.length; j++) {
+          if (interpottureta[i].uretprepa == mod[j].uretprepa) {
+            var dtobj = {
+              modul: mod[i].modul_id1,
+              amount: mod[j].amount
+            };
+            obj.data.push(dtobj);
+          }
+        }
+        vm.pottinguretaoperators.push(obj);
+      }
+      vm.potting3uretaoperators = $filter('filter')(vm.pottinguretaoperators, { potting: "Potting3" });
+      vm.potting4uretaoperators = $filter('filter')(vm.pottinguretaoperators, { potting: "Potting4" });
+      /*Potting fordítás*/
+      for (var i = 0; i < interpottrot.length; i++) {
+        var obj = {
+          operator: interpottrot[i].rot,
+          potting: interpottrot[i].potting,
+          data: []
+        }
+        for (var j = 0; j < mod.length; j++) {
+          if (interpottrot[i].rot == mod[j].rot) {
+            var dtobj = {
+              modul: mod[i].modul_id1,
+              amount: mod[j].amount
+            };
+            obj.data.push(dtobj);
+          }
+        }
+        vm.pottingrotoperators.push(obj);
+      }
+      vm.potting3rotoperators = $filter('filter')(vm.pottingrotoperators, { potting: "Potting3" });
+      vm.potting4rotoperators = $filter('filter')(vm.pottingrotoperators, { potting: "Potting4" });
+      /*potting uretán felső*/
+      for (var i = 0; i < interpotturetf.length; i++) {
+        var obj = {
+          operator: interpotturetf[i].uretprepf,
+          potting: interpotturetf[i].potting,
+          data: []
+        }
+        for (var j = 0; j < mod.length; j++) {
+          if (interpotturetf[i].uretprepf == mod[j].uretprepf) {
+            var dtobj = {
+              modul: mod[i].modul_id1,
+              amount: mod[j].amount
+            };
+            obj.data.push(dtobj);
+          }
+        }
+        vm.pottinguretfoperators.push(obj);
+      }
+      vm.potting3uretfoperators = $filter('filter')(vm.pottinguretfoperators, { potting: "Potting3" });
+      vm.potting4uretfoperators = $filter('filter')(vm.pottinguretfoperators, { potting: "Potting4" });
+      /*console.log(vm.potting3uretfoperators);
+      console.log(vm.smoperators4);
+      console.log(vm.smoperators5);
+      console.log(vm.smoperators6);
+      console.log(vm.smoperators7);
+      console.log(vm.smoperators8);*/
+      //console.log(vm.sumpotting);
     }
 
     function activate() {
