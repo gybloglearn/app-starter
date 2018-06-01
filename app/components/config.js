@@ -45,6 +45,12 @@ define([], function () {
 		controller: 'smweekController',
 		controllerAs: 'vm'
 	});
+	$stateProvider.state('smshift', {
+		url: '/smshift',
+		templateUrl: './app/components/smshift/smshift.html',
+		controller: 'smshiftController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('Forbidden', {
 		url: '/Forbidden',
 		templateUrl: './app/components/Forbidden/Forbidden.html',
