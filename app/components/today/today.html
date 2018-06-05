@@ -30,9 +30,13 @@
           </div>
         </div>
         <!-- data -->
-        <div class="col-sm-10">
+        <!-- 500 -->
+        <div class="col-sm-10" ng-show="vm.actmod=='500'">
           <table class="table mytable table-condensed">
             <thead>
+              <tr>
+                <th colspan="9">{{vm.actmod}}</th>
+              </tr>
               <tr>
                 <th>Szak</th>
                 <th>SheetMaker</th>
@@ -48,25 +52,76 @@
             <tbody>
               <tr ng-repeat="shn in [1,3] track by $index">
                 <td><h3><strong>{{shn | shift:vm.startdate}}</strong> - {{shn==1?'DE':'ÉJ'}}</h3></td>
-                <td><h3 class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'Sheetmaker'}) | sumField:'sumgoodaeq'),'sm', shn)}}"><sup class="targetTag">{{vm.targetize('sm', shn) | number:2 }}</sup><strong>{{(vm.data | filter:{shiftnum : shn, machine: 'Sheetmaker'}) | sumField:'sumgoodaeq'|number:2}}</strong></h3></td>
-                <td><h3 class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'suminaeq'),'potting', shn)}}"><sup class="targetTag">{{vm.targetize('potting', shn) | number:2 }}</sup><strong>{{(vm.data | filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'suminaeq'|number:2}}</strong></h3></td>
-                <td><h3 class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'sumoutaeq'),'potting', shn)}}"><sup class="targetTag">{{vm.targetize('potting', shn) | number:2 }}</sup><strong>{{(vm.data | filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'sumoutaeq'|number:2}}</strong></h3></td>
-                <td><h3 class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'MTF'}) | sumField:'choutaeq'),'min', shn)}}"><sup class="targetTag">{{vm.targetize('bp', shn) | number:2 }}</sup><strong>{{(vm.data | filter:{shiftnum : shn, machine: 'MTF'}) | sumField:'choutaeq'|number:2}}</strong></h3></td>
-                <td><h3 class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'Rework', state: 'BP', type: '!ZB500S'}) | sumField:'aeq'),'bp', shn);}}"><sup class="targetTag">{{vm.targetize('bp', shn) | number:2 }}</sup><strong>{{(vm.data | filter:{shiftnum: shn, machine: 'Rework', state: 'BP', type: '!ZB500S'}) | sumField:'aeq'|number:2}}</strong></h3></td>
-                <td><h3><strong>{{(vm.data | filter:{shiftnum: shn, machine: 'Rework', state: 'Rework', type: '!ZB500S'}) | sumField:'aeq'}}</strong></h3></td>
-                <td><h3><strong>{{ ((vm.data | filter:{shiftnum: shn, machine: 'MTF', type: '!ZB500S'}) | sumField:'BOKES')/((vm.data | filter:{shiftnum: shn, machine: 'MTF', type: '!ZB500S'}) | sumField:'sumaeq') | number:1}}</strong></h3></td>
-                <td><h3 class="{{vm.iconize(((vm.data | filter:{shiftnum: shn, machine: 'MTF', type: '!ZB500S_MIN'}) | sumField:'gradeaeq'),'min', shn);}}"><sup class="targetTag">{{vm.targetize('min', shn) | number:2 }}</sup><strong>{{(vm.data | filter:{shiftnum: shn, machine: 'MTF', type: '!ZB500S_MIN'}) | sumField:'gradeaeq'|number:2}}</strong></h3></td>
+                <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{shiftnum: shn, machine: 'Sheetmaker'}) | sumField:'sumgoodaeq'),'sm', shn)}}"><sup class="targetTag">{{vm.targetize('sm', shn) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{shiftnum : shn, machine: 'Sheetmaker'}) | sumField:'sumgoodaeq'|number:2}}</strong></h3></td>
+                <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'suminaeq'),'potting', shn)}}"><sup class="targetTag">{{vm.targetize('potting', shn) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'suminaeq'|number:2}}</strong></h3></td>
+                <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'sumoutaeq'),'potting', shn)}}"><sup class="targetTag">{{vm.targetize('potting', shn) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'sumoutaeq'|number:2}}</strong></h3></td>
+                <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{shiftnum: shn, machine: 'MTF'}) | sumField:'choutaeq'),'min', shn)}}"><sup class="targetTag">{{vm.targetize('bp', shn) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{shiftnum : shn, machine: 'MTF'}) | sumField:'choutaeq'|number:2}}</strong></h3></td>
+                <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{shiftnum: shn, machine: 'Rework', state: 'BP', type: '!ZB500S'}) | sumField:'aeq'),'bp', shn);}}"><sup class="targetTag">{{vm.targetize('bp', shn) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{shiftnum: shn, machine: 'Rework', state: 'BP', type: '!ZB500S'}) | sumField:'aeq'|number:2}}</strong></h3></td>
+                <td><h3><strong>{{(vm.selectdata | filter:{shiftnum: shn, machine: 'Rework', state: 'Rework', type: '!ZB500S'}) | sumField:'aeq'}}</strong></h3></td>
+                <td><h3><strong>{{ ((vm.selectdata | filter:{shiftnum: shn, machine: 'MTF', type: '!ZB500S'}) | sumField:'BOKES')/((vm.selectdata | filter:{shiftnum: shn, machine: 'MTF', type: '!ZB500S'}) | sumField:'sumaeq') | number:1}}</strong></h3></td>
+                <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{shiftnum: shn, machine: 'MTF', type: '!ZB500S_MIN'}) | sumField:'gradeaeq'),'min', shn);}}"><sup class="targetTag">{{vm.targetize('min', shn) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{shiftnum: shn, machine: 'MTF', type: '!ZB500S_MIN'}) | sumField:'gradeaeq'|number:2}}</strong></h3></td>
               </tr>
               <tr>
                 <td><h3><strong>Össz:</strong></h3></td>
-                <td><h3 class="{{vm.iconize(((vm.data | filter:{machine: 'Sheetmaker'}) | sumField:'sumgoodaeq'),'sm',0)}}"><sup class="targetTag">{{vm.targetize('sm', 0) | number:2 }}</sup><strong>{{(vm.data | filter:{ machine: 'Sheetmaker'}) | sumField:'sumgoodaeq'|number:2}}</strong></h3></td>
-                <td><h3 class="{{vm.iconize(((vm.data | filter:{machine: 'Potting'}) | sumField:'suminaeq'),'potting',0)}}"><sup class="targetTag">{{vm.targetize('potting', 0) | number:2 }}</sup><strong>{{(vm.data | filter:{ machine: 'Potting'}) | sumField:'suminaeq'|number:2}}</strong></h3></td>
-                <td><h3 class="{{vm.iconize(((vm.data | filter:{machine: 'Potting'}) | sumField:'sumoutaeq'),'potting',0)}}"><sup class="targetTag">{{vm.targetize('potting', 0) | number:2 }}</sup><strong>{{(vm.data | filter:{ machine: 'Potting'}) | sumField:'sumoutaeq'|number:2}}</strong></h3></td>
-                <td><h3 class="{{vm.iconize(((vm.data | filter:{machine: 'MTF'}) | sumField:'choutaeq'),'min',0)}}"><sup class="targetTag">{{vm.targetize('bp', 0) | number:2 }}</sup><strong>{{(vm.data | filter:{ machine: 'MTF'}) | sumField:'choutaeq'|number:2}}</strong></h3></td>
-                <td><h3 class="{{vm.iconize(((vm.data | filter:{machine: 'Rework', state: 'BP', type: '!ZB500S'}) | sumField:'aeq'),'bp',0);}}"><sup class="targetTag">{{vm.targetize('bp', 0) | number:2 }}</sup><strong>{{(vm.data | filter:{ machine: 'Rework', state: 'BP', type: '!ZB500S'}) | sumField:'aeq'|number:2}}</strong></h3></td>
-                <td><h3><strong>{{(vm.data | filter:{machine: 'Rework', state: 'Rework', type: '!ZB500S'}) | sumField:'aeq'}}</strong></h3></td>
-                <td><h3><strong>{{ ((vm.data | filter:{machine: 'MTF', type: '!ZB500S'}) | sumField:'BOKES')/((vm.data | filter:{machine: 'MTF', type: '!ZB500S'}) | sumField:'sumaeq') | number:1}}</strong></h3></td>
-                <td><h3 class="{{vm.iconize(((vm.data | filter:{machine: 'MTF', type: '!ZB500S_MIN'}) | sumField:'gradeaeq'),'min',0);}}"><sup class="targetTag">{{vm.targetize('min', 0) | number:2 }}</sup><strong>{{(vm.data | filter:{machine: 'MTF', type: '!ZB500S_MIN'}) | sumField:'gradeaeq'|number:2}}</strong></h3></td>
+                <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{machine: 'Sheetmaker'}) | sumField:'sumgoodaeq'),'sm',0)}}"><sup class="targetTag">{{vm.targetize('sm', 0) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{ machine: 'Sheetmaker'}) | sumField:'sumgoodaeq'|number:2}}</strong></h3></td>
+                <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{machine: 'Potting'}) | sumField:'suminaeq'),'potting',0)}}"><sup class="targetTag">{{vm.targetize('potting', 0) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{ machine: 'Potting'}) | sumField:'suminaeq'|number:2}}</strong></h3></td>
+                <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{machine: 'Potting'}) | sumField:'sumoutaeq'),'potting',0)}}"><sup class="targetTag">{{vm.targetize('potting', 0) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{ machine: 'Potting'}) | sumField:'sumoutaeq'|number:2}}</strong></h3></td>
+                <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{machine: 'MTF'}) | sumField:'choutaeq'),'min',0)}}"><sup class="targetTag">{{vm.targetize('bp', 0) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{ machine: 'MTF'}) | sumField:'choutaeq'|number:2}}</strong></h3></td>
+                <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{machine: 'Rework', state: 'BP', type: '!ZB500S'}) | sumField:'aeq'),'bp',0);}}"><sup class="targetTag">{{vm.targetize('bp', 0) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{ machine: 'Rework', state: 'BP', type: '!ZB500S'}) | sumField:'aeq'|number:2}}</strong></h3></td>
+                <td><h3><strong>{{(vm.selectdata | filter:{machine: 'Rework', state: 'Rework', type: '!ZB500S'}) | sumField:'aeq'}}</strong></h3></td>
+                <td><h3><strong>{{ ((vm.selectdata | filter:{machine: 'MTF', type: '!ZB500S'}) | sumField:'BOKES')/((vm.selectdata | filter:{machine: 'MTF', type: '!ZB500S'}) | sumField:'sumaeq') | number:1}}</strong></h3></td>
+                <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{machine: 'MTF', type: '!ZB500S_MIN'}) | sumField:'gradeaeq'),'min',0);}}"><sup class="targetTag">{{vm.targetize('min', 0) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{machine: 'MTF', type: '!ZB500S_MIN'}) | sumField:'gradeaeq'|number:2}}</strong></h3></td>
+              </tr>
+              <tr>
+                <td><i class="icon-ico_link_lg"></i>&nbsp; Linkek:</td>
+                <td><a class="btn btn-primary" href="../sm" target="_blank">SM</a></td>
+                <td colspan="2"><a class="btn btn-primary" href="../potting" target="_blank">POTTING</a></td>
+                <td colspan="5"><a class="btn btn-primary" href="../mtf" target="_blank">MTF</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- ZB -->
+        <div class="col-sm-10" ng-show="vm.actmod=='ZB'">
+          <table class="table mytable table-condensed">
+            <thead>
+              <tr>
+                <th colspan="9">{{vm.actmod}}</th>
+              </tr>
+              <tr>
+                <th>Szak</th>
+                <th>SheetMaker</th>
+                <th>Potting Be</th>
+                <th>Potting Ki</th>
+                <th>Klór Ki</th>
+                <th>BP Ki</th>
+                <th>BP Rework</th>
+                <th>Bökés / AEQ</th>
+                <th>Minősítve</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="shn in [1,3] track by $index">
+                <td><h3><strong>{{shn | shift:vm.startdate}}</strong> - {{shn==1?'DE':'ÉJ'}}</h3></td>
+                <td><h3><strong>{{(vm.zbdata | filter:{shiftnum : shn, machine: 'Sheetmaker'}) | sumField:'sumgoodaeq'|number:2}}</strong></h3></td>
+                <td><h3><strong>{{(vm.zbdata| filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'suminaeq'|number:2}}</strong></h3></td>
+                <td><h3><strong>{{(vm.zbdata| filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'sumoutaeq'|number:2}}</strong></h3></td>
+                <td><h3><strong>{{(vm.zbdata | filter:{shiftnum : shn, machine: 'MTF'}) | sumField:'choutaeq'|number:2}}</strong></h3></td>
+                <td><h3><strong>{{(vm.zbdata| filter:{shiftnum: shn, machine: 'Rework', state: 'BP'}) | sumField:'aeq'|number:2}}</strong></h3></td>
+                <td><h3><strong>{{(vm.zbdata | filter:{shiftnum: shn, machine: 'Rework', state: 'Rework'}) | sumField:'aeq'}}</strong></h3></td>
+                <td><h3><strong>{{ ((vm.zbdata | filter:{shiftnum: shn, machine: 'MTF'}) | sumField:'BOKES')/((vm.zbdata | filter:{shiftnum: shn, machine: 'MTF'}) | sumField:'sumaeq') | number:1}}</strong></h3></td>
+                <td><h3><strong>{{(vm.zbdata| filter:{shiftnum: shn, machine: 'MTF'}) | sumField:'gradeaeq'|number:2}}</strong></h3></td>
+              </tr>
+              <tr>
+                <td><h3><strong>Össz:</strong></h3></td>
+                <td><h3><strong>{{(vm.zbdata | filter:{ machine: 'Sheetmaker'}) | sumField:'sumgoodaeq'|number:2}}</strong></h3></td>
+                <td><h3><strong>{{(vm.zbdata| filter:{ machine: 'Potting'}) | sumField:'suminaeq'|number:2}}</strong></h3></td>
+                <td><h3><strong>{{(vm.zbdata | filter:{ machine: 'Potting'}) | sumField:'sumoutaeq'|number:2}}</strong></h3></td>
+                <td><h3><strong>{{(vm.zbdata | filter:{ machine: 'MTF'}) | sumField:'choutaeq'|number:2}}</strong></h3></td>
+                <td><h3><strong>{{(vm.zbdata | filter:{ machine: 'Rework', state: 'BP'}) | sumField:'aeq'|number:2}}</strong></h3></td>
+                <td><h3><strong>{{(vm.zbdata | filter:{machine: 'Rework', state: 'Rework'}) | sumField:'aeq'}}</strong></h3></td>
+                <td><h3><strong>{{ ((vm.zbdata | filter:{machine: 'MTF'}) | sumField:'BOKES')/((vm.zbdata | filter:{machine: 'MTF'}) | sumField:'sumaeq') | number:1}}</strong></h3></td>
+                <td><h3><strong>{{(vm.zbdata| filter:{machine: 'MTF'}) | sumField:'gradeaeq'|number:2}}</strong></h3></td>
               </tr>
               <tr>
                 <td><i class="icon-ico_link_lg"></i>&nbsp; Linkek:</td>
@@ -89,12 +144,12 @@
           <div class="tabbable">
             <ul class="nav nav-tabs">
               <li class="active">
-                <a href="#zw500targets" data-toggle="tab">500</a>
-              </li>
-              <!--<li>
-                <a href="#zbtargets" data-toggle="tab">ZB</a>
+                <a href="#zw500targets" data-toggle="tab" ng-click="vm.actmod='500'">500</a>
               </li>
               <li>
+                <a href="#zbtargets" data-toggle="tab" ng-click="vm.actmod='ZB'">ZB</a>
+              </li>
+              <!--li>
                 <a href="#zw1000targets" data-toggle="tab">1000</a>
               </li>
               <li>
@@ -239,9 +294,32 @@
               <td><strong>{{ (vm.filterSMs(['SheetMaker4', 'SheetMaker5', 'SheetMaker9']) | sumField:'Totalsheets') - (vm.filterSMs(['SheetMaker4', 'SheetMaker5', 'SheetMaker9']) | sumField:'ScrapSheets') }}</strong></td>
               <td><strong>{{ vm.filterSMs(['SheetMaker4', 'SheetMaker5', 'SheetMaker9'] ) | sumField:'sumgoodaeq' | number:2}}</strong></td>
             </tr>
+            <!--ZB-->
+            <tr ng-repeat="sm in ['SheetMaker1', 'SheetMaker2'] track by $index">
+              <td>{{sm}}</td>
+              <td><span style="color: rgb(77,86,123)">{{ vm.targetSheets(sm) }}</span></td>
+              <td>{{ vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'Totalsheets' | number:0 }}</td>
+              <td><span class="{{vm.smcolor(sm, (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'Totalsheets') - (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'ScrapSheets') )}}">{{ (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'Totalsheets') - (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'ScrapSheets') | number:0}}</span></td>
+              <td>{{ (vm.data | filter:vm.search | filter:{MachineName:sm} | sumField:'sumgoodaeq') | number:2 }}</td>
+              <!--Potting-->
+              <td ng-if="sm=='SheetMaker1'" rowspan="4" style="vertical-align: middle;">Static Potting S1</td>
+              <td ng-if="sm=='SheetMaker1'"  rowspan="4" style="vertical-align: middle">{{vm.filterSMs(['Static Potting S1']) | sumField:'In' | number:0}}<br><sup>modul</sup><br><strong>{{vm.filterSMs(['Static Potting S1']) | sumField:'suminaeq' | number:2}}</strong><br><sup>AEq</sup></td>
+              <td ng-if="sm=='SheetMaker1'"  rowspan="4" style="vertical-align: middle">{{vm.filterSMs(['Static Potting S1']) | sumField:'P3' | number:0}}<br><sup>modul</sup><br><strong>{{vm.filterSMs(['Static Potting S1']) | sumField:'sump3aeq' | number:2}}</strong><br><sup>AEq</sup></td>
+              <td ng-if="sm=='SheetMaker1'"  rowspan="4" style="vertical-align: middle">{{vm.filterSMs(['Static Potting S1']) | sumField:'Out' | number:0}}<br><sup>modul</sup><br><strong>{{vm.filterSMs(['Static Potting S1']) | sumField:'sumoutaeq' | number:2}}</strong><br><sup>AEq</sup></td>
+            </tr>
+            <tr></tr>
+            <tr style="background-color:dimgray;color:white;">
+              <td>Részösszeg</td>
+              <td><span>{{ vm.targetSheets(['SheetMaker1', 'SheetMaker2']) }}</span></td>
+              <td><strong>{{ vm.filterSMs(['SheetMaker1', 'SheetMaker2']) | sumField:'Totalsheets' | number:0 }}</strong></td>
+              <td><strong>{{ (vm.filterSMs(['SheetMaker1', 'SheetMaker2']) | sumField:'Totalsheets') - (vm.filterSMs(['SheetMaker1', 'SheetMaker2']) | sumField:'ScrapSheets') }}</strong></td>
+              <td><strong>{{ vm.filterSMs(['SheetMaker1', 'SheetMaker2'] ) | sumField:'sumgoodaeq' | number:2}}</strong></td>
+            </tr>
+
+
             <tr>
               <th>Összesen</th>
-              <th><span>{{ vm.targetSheets(['SheetMaker6', 'SheetMaker7', 'SheetMaker8', 'SheetMaker4', 'SheetMaker5', 'SheetMaker9']) }}</span></th>
+              <th><span>{{ vm.targetSheets(['SheetMaker6', 'SheetMaker7', 'SheetMaker8', 'SheetMaker4', 'SheetMaker5', 'SheetMaker9', 'SheetMaker1', 'SheetMaker2']) }}</span></th>
               <th>{{ vm.data | filter:vm.search | filter:{machine:'SheetMaker'} | sumField:'Totalsheets' | number:0}}</th>
               <th>{{ (vm.data | filter:vm.search | filter:{machine:'SheetMaker'} | sumField:'Totalsheets') - (vm.data | filter:vm.search | filter:{machine:'SheetMaker'} | sumField:'ScrapSheets') | number:0}}</th>
               <th>{{ vm.data | filter:vm.search | filter:{machine:'SheetMaker'} | sumField:'sumgoodaeq' | number:2}}</th>
