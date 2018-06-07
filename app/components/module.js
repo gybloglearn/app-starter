@@ -25,6 +25,8 @@ define([
   './services/sscrap.service',
   './sumweek/sumweek.ctrl',
   './services/sumweek.service'
+	, './efficiency/efficiency.ctrl'
+	, './services/efficiency.service'
 	/* files */
 ], function (
   configFunction,
@@ -53,6 +55,8 @@ define([
   sscrapService,
   sumweekController,
   sumweekService
+	, efficiencyController
+	, efficiencyService
 	/* names */) {
 
     // Link all components to the module !!!
@@ -85,5 +89,7 @@ define([
 		app.service('sscrapService', sscrapService);
 		app.controller('sumweekController', sumweekController);
 		app.service('sumweekService', sumweekService);
+		app.controller('efficiencyController', efficiencyController);
+		app.service('efficiencyService', efficiencyService);
 		/* controllers */
   });

@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('efficiency', {
+		url: '/efficiency',
+		templateUrl: './app/components/efficiency/efficiency.html',
+		controller: 'efficiencyController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('sumweek', {
 		url: '/sumweek',
 		templateUrl: './app/components/sumweek/sumweek.html',

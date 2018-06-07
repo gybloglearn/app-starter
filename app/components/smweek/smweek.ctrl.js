@@ -10,7 +10,6 @@ define([], function () {
     vm.startdate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
-    //vm.sheetmakers = ["SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     vm.createdates = createdates;
     vm.loaddata = false;
 
