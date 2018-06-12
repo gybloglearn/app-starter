@@ -20,6 +20,7 @@ define([
   './filters/week',
   './services/plan.service',
   './smweek/smweek.ctrl',
+  './smshift/smshift.ctrl',
   './services/weekly.service',
   './sscrap/sscrap.ctrl',
   './services/sscrap.service',
@@ -50,6 +51,7 @@ define([
   week,
   planService,
   smweekController,
+  smshiftController,
   weeklyService,
   sscrapController,
   sscrapService,
@@ -84,6 +86,7 @@ define([
     app.filter('week',week);
 		app.service('planService', planService);
 		app.controller('smweekController', smweekController);
+		app.controller('smshiftController', smshiftController);
 		app.service('weeklyService', weeklyService);
 		app.controller('sscrapController', sscrapController);
 		app.service('sscrapService', sscrapService);

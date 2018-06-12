@@ -1,9 +1,73 @@
 <div class="container">
   <section class="module">
     <div class="module-header">
-      <h1 class="text-center">SheetMaker kivetítő</h1>
+      <h1 class="text-center">Hatékonysági mutatók</h1>
+      <div class="col-sm-5" style="margin-top:20px">
+        <div class="input-group">
+          <span class="input-group-addon">Dátum:</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.date" end="{{vm.edate}}">
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.create_found()" ng-disabled="vm.loading">Betöltés</a>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="module-body">
+      <div class="progress progress-success progress-striped active" ng-hide="!vm.loading">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Betöltés...</p>
+        </div>
+      </div>
+      <div class="row">
+        <h2>Nappal-{{vm.data[0].dayshift}}</h2>
+        <table class="table table-condensed table-striped">
+          <thead>
+            <tr>
+              <th>Gép</th>
+              <th>Ciklusidő</th>
+              <th>Gyártható lap(+15 sec)</th>
+              <th>Gyártott lap(tényleges)</th>
+              <th>Gyártható lap(max)</th>
+              <th>Hatékonyság</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.data track by $index" ng-if="item.daycyclemin!=0">
+              <td>{{item.sm}}</td>
+              <td>{{item.daycyclemin}}</td>
+              <td>{{item.dayruntime/item.daycyclemax | number:0}}</td>
+              <td>{{item.daysheet}}</td>
+              <td>{{item.dayruntime/item.daycyclemin | number:0}}</td>
+              <td>{{100-((((item.dayruntime/item.daycyclemin)-item.daysheet)/((item.dayruntime/item.daycyclemin)-(item.dayruntime/item.daycyclemax)))*100)|number:2}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <h2>Éjszaka-{{vm.data[0].nightshift}}</h2>
+        <table class="table table-condensed table-striped">
+          <thead>
+            <tr>
+              <th>Gép</th>
+              <th>Ciklusidő</th>
+              <th>Gyártható lap(+15 sec)</th>
+              <th>Gyártott lap(tényleges)</th>
+              <th>Gyártható lap(max)</th>
+              <th>Hatékonyság</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.data track by $index" ng-if="item.nightcyclemin!=0">
+              <td>{{item.sm}}</td>
+              <td>{{item.nightcyclemin}}</td>
+              <td>{{item.nightruntime/item.nightcyclemax | number:0}}</td>
+              <td>{{item.nightsheet}}</td>
+              <td>{{item.nightruntime/item.nightcyclemin | number:0}}</td>
+              <td>{{100-((((item.nightruntime/item.nightcyclemin)-item.nightsheet)/((item.nightruntime/item.daycyclemin)-(item.nightruntime/item.nightcyclemax)))*100)|number:2}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div class="module-footer"></div>
   </section>
