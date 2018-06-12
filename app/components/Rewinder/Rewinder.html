@@ -43,25 +43,25 @@
           <tr ng-repeat="item in vm.selectdata">
             <td class="text-center">{{item.nev}}</td>
             <td class="text-center"><a style="cursor: pointer" ng-click="vm.actmch=item.nev;vm.actshift='1';vm.loaddetails();">{{item.meternappal}}</a></td>
-            <td class="text-center">{{item.meternappal/9300|number:0}}</td>
+            <td class="text-center">{{item.meternappal/9300|number:2}}</td>
             <td class="text-center">{{item.cnappal}}</td>
             <td class="text-center"><a style="cursor: pointer" ng-click="vm.actmch=item.nev;vm.actshift='3';vm.loaddetails()">{{item.meterejszaka}}</a></td>
-            <td class="text-center">{{item.meterejszaka/9300|number:0}}</td>
+            <td class="text-center">{{item.meterejszaka/9300|number:2}}</td>
             <td class="text-center">{{item.cejszaka}}</td>
             <td class="text-center">{{item.meternapi}}</td>
-            <td class="text-center">{{item.meternapi/9300|number:0}}</td>
+            <td class="text-center">{{item.meternapi/9300|number:2}}</td>
             <td class="text-center">{{item.cnapi}}</td>
           </tr>
           <tr>
             <td class="text-center">Összesen</td>
             <td class="text-center">{{vm.selectdata| sumField:'meternappal'|number:0}}</td>
-            <td class="text-center">{{(vm.selectdata| sumField:'meternappal')/9300|number:0}}</td>
+            <td class="text-center">{{(vm.selectdata| sumField:'meternappal')/9300|number:2}}</td>
             <td class="text-center">{{vm.selectdata| sumField:'cnappal'|number:0}}</td>
             <td class="text-center">{{vm.selectdata| sumField:'meterejszaka'|number:0}}</td>
-            <td class="text-center">{{(vm.selectdata| sumField:'meterejszaka')/9300|number:0}}</td>
+            <td class="text-center">{{(vm.selectdata| sumField:'meterejszaka')/9300|number:2}}</td>
             <td class="text-center">{{vm.selectdata| sumField:'cejszaka'|number:0}}</td>
             <td class="text-center">{{vm.selectdata| sumField:'meternapi'|number:0}}</td>
-            <td class="text-center">{{(vm.selectdata| sumField:'meternapi')/9300|number:0}}</td>
+            <td class="text-center">{{(vm.selectdata| sumField:'meternapi')/9300|number:2}}</td>
             <td class="text-center">{{vm.selectdata| sumField:'cnapi'|number:0}}</td>
           </tr>
         </tbody>
