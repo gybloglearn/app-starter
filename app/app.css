@@ -160,11 +160,11 @@ ul, ol {
   margin: -3px;
   padding: 20px;
 }
-.red {
+.red, .table thead th.red {
   background-color: #de2533;
   color: white;
 }
-.green {
+.green, .table thead th.green {
   background-color: #46ad00;
   color: white;
 }

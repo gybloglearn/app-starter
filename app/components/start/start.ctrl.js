@@ -59,8 +59,28 @@ define([], function () {
 
       //SAP
       vm.sapdata = [];
+      vm.totalsapdata = [];
       dataService.getsapdata().then(function (response) {
         var dat = response.data.data;
+        vm.totalsapdata = response.data.data;
+        for(var k = 0; k < vm.totalsapdata.length; k++){
+          var q = 1;
+          switch ($filter('date')(new Date(vm.totalsapdata[k].NAP), "MM")){
+            case "01": q = 1;break;
+            case "02": q = 1;break;
+            case "03": q = 1;break;
+            case "04": q = 2;break;
+            case "05": q = 2;break;
+            case "06": q = 2;break;
+            case "07": q = 3;break;
+            case "08": q = 3;break;
+            case "09": q = 3;break;
+            case "10": q = 4;break;
+            case "11": q = 4;break;
+            case "12": q = 4;break;
+          }
+          vm.totalsapdata[k].q = q;
+        }
         vm.sapdatacrdate = response.data.crdate;
         for (var i = 0; i < dat.length; i++) {
           if (new Date(dat[i].NAP).getTime() >= new Date(vm.startdate).getTime() && new Date(dat[i].NAP).getTime() <= new Date(vm.enddate).getTime()) {
@@ -261,6 +281,7 @@ define([], function () {
         vm.s5 = false;
         vm.s3 = false;
         start();
+        vm.qs = false;
 
       }
     }
