@@ -184,6 +184,46 @@
               </td>
             </tr>
           </tbody>
+          <thead>
+              <tr>
+                <th style="border-right: 1px solid #bcbcbc;padding: 0;vertical-align:middle;text-align: center;">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary" style="margin-bottom: 0" ng-click="vm.qs=!vm.qs">
+                          <input type="checkbox" name="checkbox-group">YTD
+                        </label>
+                    </div>
+                </th>
+                <th>{{vm.totalsapdata | sumField:'ZW0500Plan' | number:0 }}</th>
+                <th>{{vm.totalsapdata | sumField:'ZW0500Actual' | number:0 }}</th>
+                <th class="{{((vm.totalsapdata|sumField:'ZW0500Diff')<0?'red':'green')}}">{{vm.totalsapdata | sumField:'ZW0500Diff' | number:1 }}</th>
+                <th>{{vm.totalsapdata | sumField:'ZBPlan' | number:0 }}</th>
+                <th>{{vm.totalsapdata | sumField:'ZBActual' | number:0 }}</th>
+                <th class="{{((vm.totalsapdata|sumField:'ZBDiff')<0?'red':'green')}}">{{vm.totalsapdata | sumField:'ZBDiff' | number:1 }}</th>
+                <th>{{vm.totalsapdata | sumField:'ZW1000Plan' | number:0 }}</th>
+                <th>{{vm.totalsapdata | sumField:'ZW1000Actual' | number:0 }}</th>
+                <th class="{{((vm.totalsapdata|sumField:'ZW1000Diff')<0?'red':'green')}}">{{vm.totalsapdata | sumField:'ZW1000Diff' | number:1 }}</th>
+                <th>{{vm.totalsapdata | sumField:'ZW1500Plan' | number:0 }}</th>
+                <th>{{vm.totalsapdata | sumField:'ZW1500Actual' | number:0 }}</th>
+                <th class="{{((vm.totalsapdata|sumField:'ZW1500Diff')<0?'red':'green')}}">{{vm.totalsapdata | sumField:'ZW1500Diff' | number:1 }}</th>
+              </tr>
+            </thead>
+            <tbody ng-show="vm.qs">
+              <tr ng-repeat="qa in [1,2,3,4] track by $index">
+                  <td style="border-right: 1px solid #bcbcbc">Q{{qa}}:</td>
+                  <td>{{vm.totalsapdata | filter:{q:qa} | sumField:'ZW0500Plan' | number:0 }}</td>
+                  <td>{{vm.totalsapdata | filter:{q:qa} | sumField:'ZW0500Actual' | number:0 }}</td>
+                  <td class="{{((vm.totalsapdata | filter:{q:qa} |sumField:'ZW0500Diff')<0?'red':'green')}}">{{vm.totalsapdata | filter:{q:qa}  | sumField:'ZW0500Diff' | number:1 }}</td>
+                  <td>{{vm.totalsapdata | filter:{q:qa} | sumField:'ZBPlan' | number:0 }}</td>
+                  <td>{{vm.totalsapdata | filter:{q:qa} | sumField:'ZBActual' | number:0 }}</td>
+                  <td class="{{((vm.totalsapdata | filter:{q:qa} |sumField:'ZBDiff')<0?'red':'green')}}">{{vm.totalsapdata | filter:{q:qa}  | sumField:'ZBDiff' | number:1 }}</td>
+                  <td>{{vm.totalsapdata | filter:{q:qa} | sumField:'ZW1000Plan' | number:0 }}</td>
+                  <td>{{vm.totalsapdata | filter:{q:qa} | sumField:'ZW1000Actual' | number:0 }}</td>
+                  <td class="{{((vm.totalsapdata | filter:{q:qa} |sumField:'ZW1000Diff')<0?'red':'green')}}">{{vm.totalsapdata | filter:{q:qa}  | sumField:'ZW1000Diff' | number:1 }}</td>
+                  <td>{{vm.totalsapdata | filter:{q:qa} | sumField:'ZW1500Plan' | number:0 }}</td>
+                  <td>{{vm.totalsapdata | filter:{q:qa} | sumField:'ZW1500Actual' | number:0 }}</td>
+                  <td class="{{((vm.totalsapdata | filter:{q:qa} |sumField:'ZW1500Diff')<0?'red':'green')}}">{{vm.totalsapdata | filter:{q:qa}  | sumField:'ZW1500Diff' | number:1 }}</td>
+                </tr>
+          </tbody>
         </table>
         <h1 class="voice voice-brand">MES</h1>
         <table class="table table-condensed table-hover" style="border: 1px solid #bcbcbc; background-color:white;">
