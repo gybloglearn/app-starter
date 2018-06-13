@@ -194,7 +194,7 @@ define([], function () {
         zbbp: 0,
         zbmin: 0,
         zw1000min: 69,
-        zw1500min: 60
+        zw1500min: 80
       }
 
       //console.log(vm.displaydata);
@@ -257,7 +257,7 @@ define([], function () {
         vm.enddate = $filter('date')(new Date().getTime() - 24 * 1000 * 60 * 60, 'yyyy-MM-dd');
 
         //loadPartnumbers();
-        vm.sh = false;
+        vm.sh = true;
         vm.s5 = false;
         vm.s3 = false;
         start();
