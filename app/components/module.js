@@ -28,6 +28,7 @@ define([
   './services/sumweek.service'
 	, './efficiency/efficiency.ctrl'
 	, './services/efficiency.service'
+	, './misstime/misstime.ctrl'
 	/* files */
 ], function (
   configFunction,
@@ -59,6 +60,7 @@ define([
   sumweekService
 	, efficiencyController
 	, efficiencyService
+	, misstimeController
 	/* names */) {
 
     // Link all components to the module !!!
@@ -94,5 +96,6 @@ define([
 		app.service('sumweekService', sumweekService);
 		app.controller('efficiencyController', efficiencyController);
 		app.service('efficiencyService', efficiencyService);
+		app.controller('misstimeController', misstimeController);
 		/* controllers */
   });

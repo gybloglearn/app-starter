@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('misstime', {
+		url: '/misstime',
+		templateUrl: './app/components/misstime/misstime.html',
+		controller: 'misstimeController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('efficiency', {
 		url: '/efficiency',
 		templateUrl: './app/components/efficiency/efficiency.html',

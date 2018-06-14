@@ -1,0 +1,53 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">{{vm.sm}} Kieső idő {{vm.datum}}
+        <br> {{vm.misst}} sec.
+      </h1>
+      <div class="col-sm-6" style="margin-top:20px">
+        <select ng-model="vm.sm" ng-change="vm.load()">
+          <option ng-repeat="s in vm.sheetmakers" value="{{s}}">{{s}}</option>
+        </select>
+        <div class="input-group">
+          <span class="input-group-addon">Dátum:</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.datum" end="{{vm.edate}}">
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.smloading">Betöltés</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="progress progress-success progress-striped active" ng-hide="!vm.smloading">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Frissítés...</p>
+        </div>
+      </div>
+      <div class="row">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Eset</th>
+              <th ng-click="vm.order='start';vm.asc=!vm.asc;">Eset start</th>
+              <th>Következő eset start</th>
+              <th>Esetek között eltelt idő (sec.)</th>
+              <th>Könyvelt idő az esetre (sec.)</th>
+              <th ng-click="vm.order='timediff';vm.asc=!vm.asc;">Esetek között eltelt idő és a könyvelt idő különbséges (sec.)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.missdata| orderBy:vm.order:vm.asc track by $index">
+              <td>{{item.type}}</td>
+              <td>{{item.start|date:'yyyy-MM-dd-HH:mm:ss'}}</td>
+              <td>{{item.nextstart|date:'yyyy-MM-dd-HH:mm:ss'}}</td>
+              <td>{{item.difference}}</td>
+              <td>{{item.time}}</td>
+              <td>{{item.timediff}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>
