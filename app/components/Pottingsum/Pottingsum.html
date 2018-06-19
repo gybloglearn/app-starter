@@ -27,6 +27,15 @@
       </div>
     </div>
     <div class="module-body">
+      <style>
+        .green {
+          color: #006600;
+        }
+
+        .red {
+          color: #990000;
+        }
+      </style>
       <div class="progress progress-warning progress-striped active" ng-hide="!vm.dis">
         <div class="progress-bar" style="width: 100%">
           <p class="text-center">Betöltés...</p>
@@ -60,10 +69,13 @@
           </div>
           <div>
             <h3>Feltöltési segédlet</h3>
-            <p>Adatokat akkor lehet rögzíteni ha a következő kritériumoknak felelnek meg az input mezők:<br>
-              -vége dátumnak nagyobbnak kell lenni mint a kezdő dátumnak (mindkettő szerkeszthető kézzel,de a formátumnak meg kell egyeznie az alábbival:yyyy-MM-dd HH:mm)<br>
-              -állomást kell választani ahol a hiba történt<br>
-              -kategória mezőt kell választani ami a kieső idő okát jelenti,amennyiben nincs a listában úgy az egyéb mező választásával a megjegyzés mezőbe lehet beírni az okot<br>
+            <p>Adatokat akkor lehet rögzíteni ha a következő kritériumoknak felelnek meg az input mezők:
+              <br> -vége dátumnak nagyobbnak kell lenni mint a kezdő dátumnak (mindkettő szerkeszthető kézzel,de a formátumnak
+              meg kell egyeznie az alábbival:yyyy-MM-dd HH:mm:mm)
+              <br> -állomást kell választani ahol a hiba történt
+              <br> -kategória mezőt kell választani ami a kieső idő okát jelenti,amennyiben nincs a listában úgy az egyéb mező
+              választásával a megjegyzés mezőbe lehet beírni az okot
+              <br>
             </p>
           </div>
           <div class="col-sm-4" style="margin-top:10px">
@@ -126,32 +138,34 @@
           </thead>
           <tbody>
             <tr ng-repeat="item in vm.data track by $index">
-              <td><a href="../modulhistory/#/history/{{item.JobID }}" target="_blank">{{item.JobID}}</a></td>
+              <td>
+                <a href="../modulhistory/#/history/{{item.JobID }}" target="_blank">{{item.JobID}}</a>
+              </td>
               <td>{{item.Fixture}}</td>
 
-              <td ng-if="vm.vege > item.PT_Start_DT && vm.kezdo <= item.PT_Start_DT">{{item.PT_Start_DT | date:"MMdd HH"}}</td>
-              <td ng-if="vm.kezdo > item.PT_Start_DT || !item.PT_Start_DT" style="color:lightgrey;">{{item.PT_Start_DT | date:"MMdd HH"}}</td>
+              <td ng-if="vm.vege > item.PT_Start_DT && vm.kezdo <= item.PT_Start_DT">{{item.PT_Start_DT | date:"MMdd HH:mm"}}</td>
+              <td ng-if="vm.kezdo > item.PT_Start_DT || !item.PT_Start_DT" style="color:lightgrey;">{{item.PT_Start_DT | date:"MMdd HH:mm"}}</td>
 
-              <td ng-if="vm.vege > item.PT_GEL_PREP_DT && vm.kezdo <= item.PT_GEL_PREP_DT">{{item.PT_GEL_PREP_DT | date:"MMdd HH"}}</td>
-              <td ng-if="vm.kezdo > item.PT_GEL_PREP_DT || !item.PT_GEL_PREP_DT" style="color:lightgrey;">{{item.PT_GEL_PREP_DT | date:"MMdd HH"}}</td>
+              <td ng-if="vm.vege > item.PT_GEL_PREP_DT && vm.kezdo <= item.PT_GEL_PREP_DT">{{item.PT_GEL_PREP_DT | date:"MMdd HH:mm"}}</td>
+              <td ng-if="vm.kezdo > item.PT_GEL_PREP_DT || !item.PT_GEL_PREP_DT" style="color:lightgrey;">{{item.PT_GEL_PREP_DT | date:"MMdd HH:mm"}}</td>
 
-              <td ng-if="vm.vege > item.PT_URET_PREP_A_DT && vm.kezdo <= item.PT_URET_PREP_A_DT">{{item.PT_URET_PREP_A_DT | date:"MMdd HH"}}</td>
-              <td ng-if="vm.kezdo > item.PT_URET_PREP_A_DT || !item.PT_URET_PREP_A_DT" style="color:lightgrey;">{{item.PT_URET_PREP_A_DT | date:"MMdd HH"}}</td>
+              <td ng-if="vm.vege > item.PT_URET_PREP_A_DT && vm.kezdo <= item.PT_URET_PREP_A_DT">{{item.PT_URET_PREP_A_DT | date:"MMdd HH:mm"}}</td>
+              <td ng-if="vm.kezdo > item.PT_URET_PREP_A_DT || !item.PT_URET_PREP_A_DT" style="color:lightgrey;">{{item.PT_URET_PREP_A_DT | date:"MMdd HH:mm"}}</td>
 
-              <td ng-if="vm.vege > item.PT_POST_URET_A_DT && vm.kezdo <= item.PT_POST_URET_A_DT">{{item.PT_POST_URET_A_DT | date:"MMdd HH"}}</td>
-              <td ng-if="vm.kezdo > item.PT_POST_URET_A_DT || !item.PT_POST_URET_A_DT" style="color:lightgrey;">{{item.PT_POST_URET_A_DT | date:"MMdd HH"}}</td>
+              <td ng-if="vm.vege > item.PT_POST_URET_A_DT && vm.kezdo <= item.PT_POST_URET_A_DT" style="color:#ffffff"><span style="background-color:{{item.difference_PT_URET_PREP_A_DT_PT_POST_URET_A_DT>=130?'green':'red'}};padding:3px;">{{item.PT_POST_URET_A_DT | date:"MMdd HH:mm"}}</span></td>
+              <td ng-if="vm.kezdo > item.PT_POST_URET_A_DT || !item.PT_POST_URET_A_DT" style="color:lightgrey;">{{item.PT_POST_URET_A_DT | date:"MMdd HH:mm"}}</td>
 
-              <td ng-if="vm.vege > item.PT_ROT_DT && vm.kezdo <= item.PT_ROT_DT">{{item.PT_ROT_DT | date:"MMdd HH"}}</td>
-              <td ng-if="vm.kezdo > item.PT_ROT_DT || !item.PT_ROT_DT" style="color:lightgrey;">{{item.PT_ROT_DT | date:"MMdd HH"}}</td>
+              <td ng-if="vm.vege > item.PT_ROT_DT && vm.kezdo <= item.PT_ROT_DT" style="color:#ffffff"><span style="background-color:{{item.difference_PT_POST_URET_A_DT_PT_ROT_DT>=150?'green':'red'}};padding:3px;">{{item.PT_ROT_DT | date:"MMdd HH:mm"}}</span></td>
+              <td ng-if="vm.kezdo > item.PT_ROT_DT || !item.PT_ROT_DT" style="color:lightgrey;">{{item.PT_ROT_DT | date:"MMdd HH:mm"}}</td>
 
-              <td ng-if="vm.vege > item.PT_URET_PREP_F_DT && vm.kezdo <= item.PT_URET_PREP_F_DT">{{item.PT_URET_PREP_F_DT | date:"MMdd HH"}}</td>
-              <td ng-if="vm.kezdo > item.PT_URET_PREP_F_DT || !item.PT_URET_PREP_F_DT" style="color:lightgrey;">{{item.PT_URET_PREP_F_DT | date:"MMdd HH"}}</td>
+              <td ng-if="vm.vege > item.PT_URET_PREP_F_DT && vm.kezdo <= item.PT_URET_PREP_F_DT">{{item.PT_URET_PREP_F_DT | date:"MMdd HH:mm"}}</td>
+              <td ng-if="vm.kezdo > item.PT_URET_PREP_F_DT || !item.PT_URET_PREP_F_DT" style="color:lightgrey;">{{item.PT_URET_PREP_F_DT | date:"MMdd HH:mm"}}</td>
 
-              <td ng-if="vm.vege > item.PT_POST_URET_F_DT && vm.kezdo <= item.PT_POST_URET_F_DT">{{item.PT_POST_URET_F_DT | date:"MMdd HH"}}</td>
-              <td ng-if="vm.kezdo > item.PT_POST_URET_F_DT || !item.PT_POST_URET_F_DT" style="color:lightgrey;">{{item.PT_POST_URET_F_DT | date:"MMdd HH"}}</td>
+              <td ng-if="vm.vege > item.PT_POST_URET_F_DT && vm.kezdo <= item.PT_POST_URET_F_DT" style="color:#ffffff"><span style="background-color:{{item.difference_PT_URET_PREP_F_DT_PT_POST_URET_F_DT>=130?'green':'red'}};padding:3px;">{{item.PT_POST_URET_F_DT | date:"MMdd HH:mm"}}</span></td>
+              <td ng-if="vm.kezdo > item.PT_POST_URET_F_DT || !item.PT_POST_URET_F_DT" style="color:lightgrey;">{{item.PT_POST_URET_F_DT | date:"MMdd HH:mm"}}</td>
 
-              <td ng-if="vm.vege > item.PT_OUT && vm.kezdo <= item.PT_OUT">{{item.PT_OUT | date:"MMdd HH"}}</td>
-              <td ng-if="vm.kezdo > item.PT_OUT || !item.PT_OUT" style="color:lightgrey;">{{item.PT_OUT | date:"MMdd HH"}}</td>
+              <td ng-if="vm.vege > item.PT_OUT && vm.kezdo <= item.PT_OUT" style="color:#ffffff"><span style="background-color:{{item.difference_PT_POST_URET_F_DT_PT_OUT>=400?'green':'red'}};padding:3px;">{{item.PT_OUT | date:"MMdd HH:mm"}}</span></td>
+              <td ng-if="vm.kezdo > item.PT_OUT || !item.PT_OUT" style="color:lightgrey;">{{item.PT_OUT | date:"MMdd HH:mm"}}</td>
             </tr>
           </tbody>
         </table>
