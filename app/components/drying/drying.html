@@ -51,7 +51,7 @@
         <div class="input-group">
           <span class="input-group-addon">Elérhető adatok</span>
           <select name="" id="" class="form-control" ng-model="vm.link">
-            <option value="{{item.link}}" ng-repeat="item in vm.loads">{{item.name}}</option>
+            <option value="{{item.link}}" ng-repeat="item in vm.loads | orderBy:item.name:true">{{item.name}}</option>
           </select>
           <div class="input-group-btn">
             <button class="btn btn-info" ng-click="vm.loadarchivefile()">Betöltés</button>

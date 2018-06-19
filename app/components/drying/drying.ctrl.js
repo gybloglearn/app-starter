@@ -24,8 +24,13 @@ define([], function () {
       var enddate = new Date().getTime();
       var loadstodo = Math.floor((enddate - sttime) / (6*60*60*1000));
       vm.loads = [];
+			
       for(var i = 0; i<loadstodo ; i++){
-        vm.loads.push({name: $filter('date')(new Date(sttime + (i+1)*6*60*60*1000).getTime(), 'yyyy-MM-dd HH:mm'), link: $filter('date')(new Date(sttime + (i+1)*6*60*60*1000).getTime(), 'yyyyMMddHH')});
+				if( new Date(sttime + (i+1)*6*60*60*1000).getTime() > new Date("2018-03-25 02:00:00")){
+	        vm.loads.push({name: $filter('date')(new Date(sttime + (i+1)*6*60*60*1000).getTime()-60*60*1000, 'yyyy-MM-dd HH:mm'), link: $filter('date')(new Date(sttime + (i+1)*6*60*60*1000).getTime()-60*60*1000, 'yyyyMMddHH')});
+				} else {
+	        vm.loads.push({name: $filter('date')(new Date(sttime + (i+1)*6*60*60*1000).getTime(), 'yyyy-MM-dd HH:mm'), link: $filter('date')(new Date(sttime + (i+1)*6*60*60*1000).getTime(), 'yyyyMMddHH')});
+				}
       }
     }
 

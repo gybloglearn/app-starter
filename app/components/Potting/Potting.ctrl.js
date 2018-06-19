@@ -190,6 +190,7 @@ define([], function () {
       { name: "ZW230 CP5", amount: 0.46 },
       { name: "C11CP5", amount: 0.5 },
       { name: "C11 CP5", amount: 0.5 },
+				{name: "C11 CP55", amount: 0.5 }, 
       { name: "C11FLOW", amount: 0.5 },
       { name: "C11 FLOW", amount: 0.5 },
       { name: "D11 CP5", amount: 0.68 },
