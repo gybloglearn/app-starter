@@ -1,0 +1,73 @@
+<div class="container-fluid">
+  <section class="module col-md-10 col-md-offset-1">
+    <section class="module col-sm-3 col-md-3">
+      <div class="module-body">
+        <h2 class="voice voice-brand">Összesítő</h2>
+        <hr>
+        <div>
+          <h2 class="voice voice-brand">
+            <i class="icon-filter"></i> Szűrő</h2>
+          <p>
+            Válassz az alábbi dátum mezőkből kijelezni kívánt időszakot:
+          </p>
+          <div class="input-group col-sm-12">
+            <span class="input-group-addon">Dátumtól:</span>
+            <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-7d" end="{{vm.edate}}">
+          </div>
+          <div class="input-group col-sm-12">
+            <span class="input-group-addon">Dátumtig:</span>
+            <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="-1d" end="{{vm.edate}}">
+          </div>
+          <div class="progress progress-info progress-striped active" ng-hide="!vm.load">
+            <div class="progress-bar" style="width: 100%">
+              <p class="text-center">Frissítés...</p>
+            </div>
+          </div>
+          <div class="button-group">
+            <button class="btn btn-info" ng-click="vm.createdates()" ng-disabled="vm.load">
+              <i class="icon icon-filter"></i> Szűrés</button>
+          </div>
+          <br>
+        </div>
+      </div>
+    </section>
+    <section class="module col-sm-9 col-md-9">
+      <header class="module-header"></header>
+      <h1 class="voice voice-brand">MES</h1>
+      <my-chart id="chart" config="vm.chartconfig"></my-chart>
+      <table class="table responsive">
+        <thead>
+          <tr>
+            <th colspan="10" class="text-center">ZeeWeed 1000 (AEQ)</th>
+          </tr>
+          <tr>
+            <th class="text-center">Dátum</th>
+            <!--th class="text-center">SL start</th>
+            <th class="text-center">SL end</th-->
+            <th class="text-center">Potting start</th>
+            <th class="text-center">Potting flip</th>
+            <th class="text-center">Potting end</th>
+            <th class="text-center">Centrifuga start</th>
+            <th class="text-center">Centrifuga end</th>
+            <th class="text-center">BP start</th>
+            <th class="text-center">BP end</th>
+            <th class="text-center">Grade</th>
+          </tr>
+          <tr ng-repeat="dt in vm.data track by $index">
+            <th class="text-center">{{dt.date}}</th>
+            <!--td class="text-center">{{dt.spstart|number:2}}</td>
+            <td class="text-center">{{dt.spend|number:2}}</td-->
+            <td class="text-center">{{dt.pottingin|number:2}}</td>
+            <td class="text-center">{{dt.pottingp3|number:2}}</td>
+            <td class="text-center">{{dt.pottingout|number:2}}</td>
+            <td class="text-center">{{dt.centristart|number:2}}</td>
+            <td class="text-center">{{dt.centriend|number:2}}</td>
+            <td class="text-center">{{dt.bpstart|number:2}}</td>
+            <td class="text-center">{{dt.bpend|number:2}}</td>
+            <td class="text-center">{{dt.grade|number:2}}</td>
+          </tr>
+        </thead>
+      </table>
+    </section>
+  </section>
+</div>
