@@ -38,12 +38,12 @@
       <table class="table responsive">
         <thead>
           <tr>
-            <th colspan="10" class="text-center">ZeeWeed 1000 (AEQ)</th>
+            <th colspan="12" class="text-center">ZeeWeed 1000 (AEQ)</th>
           </tr>
           <tr>
             <th class="text-center">Dátum</th>
-            <!--th class="text-center">SL start</th>
-            <th class="text-center">SL end</th-->
+            <th class="text-center">SL start</th>
+            <th class="text-center">SL end</th>
             <th class="text-center">Potting start</th>
             <th class="text-center">Potting flip</th>
             <th class="text-center">Potting end</th>
@@ -55,8 +55,8 @@
           </tr>
           <tr ng-repeat="dt in vm.data track by $index">
             <th class="text-center">{{dt.date}}</th>
-            <!--td class="text-center">{{dt.spstart|number:2}}</td>
-            <td class="text-center">{{dt.spend|number:2}}</td-->
+            <td class="text-center">{{dt.splstart|number:2}}</td>
+            <td class="text-center">{{dt.splend|number:2}}</td>
             <td class="text-center">{{dt.pottingin|number:2}}</td>
             <td class="text-center">{{dt.pottingp3|number:2}}</td>
             <td class="text-center">{{dt.pottingout|number:2}}</td>

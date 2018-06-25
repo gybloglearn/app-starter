@@ -26,8 +26,8 @@ define([], function () {
       for (var i = 0; i <= differencedate; i++) {
         var obj = {
           date: $filter('date')(new Date(vm.enddate).getTime() - ((differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd'),
-          spstart: 0,
-          spend: 0,
+          splstart: 0,
+          splend: 0,
           pottingin: 0,
           pottingp3: 0,
           pottingout: 0,
@@ -40,6 +40,43 @@ define([], function () {
         vm.data.push(obj);
         vm.loaddays[i] = $filter('date')(new Date(vm.enddate).getTime() - ((differencedate - i) * 24 * 3600 * 1000), 'yyyyMMdd');
         vm.days.push($filter('date')(new Date(vm.enddate).getTime() - ((differencedate - i) * 24 * 3600 * 1000), 'yyyy-MM-dd'));
+      }
+      loadbundle();
+    }
+
+    function loadbundle() {
+      vm.bundledata = [];
+
+      for (var i = 0; i < vm.loaddays.length; i++) {
+        vm.counter++;
+        ufService.getbundle(vm.loaddays[i]).then(function (response) {
+          for (var j = 0; j < response.data.length; j++) {
+            var stnum = new Date(response.data[j].SPL_start).getHours() * 60 + new Date(response.data[j].SPL_start).getMinutes();
+            var endnum = new Date(response.data[j].SPL_end).getHours() * 60 + new Date(response.data[j].SPL_end).getMinutes();
+
+            if (stnum < 350) {
+              response.data[j].SPL_start_day = $filter('date')(new Date(response.data[j].SPL_start).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+            }
+            else {
+              response.data[j].SPL_start_day = $filter('date')(new Date(response.data[j].SPL_start).getTime(), 'yyyy-MM-dd');
+            }
+            if (endnum < 350) {
+              response.data[j].SPL_end_day = $filter('date')(new Date(response.data[j].SPL_end).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+            }
+            else {
+              response.data[j].SPL_end_day = $filter('date')(new Date(response.data[j].SPL_end).getTime(), 'yyyy-MM-dd');
+            }
+
+            for (var k = 0; k < vm.partnumbers.length; k++) {
+              if (response.data[j].bundle.includes(vm.partnumbers[k].bundle)) {
+                response.data[j].aeq = vm.partnumbers[k].aeq / 2;
+              }
+            }
+            if (response.data[j].aeq) {
+              vm.bundledata.push(response.data[j]);
+            }
+          }
+        });
       }
       loadpotting();
     }
@@ -143,12 +180,28 @@ define([], function () {
             }
           }
         }
-        createchart();
+        createbundledata();
       });
     }
 
+    function createbundledata(){
+      console.log(vm.bundledata);
+      for(var i=0;i<vm.data.length;i++){
+        for(var j=0;j<vm.bundledata.length;j++){
+          if(vm.data[i].date==vm.bundledata[j].SPL_start_day){
+            vm.data[i].splstart+=vm.bundledata[j].aeq;
+          }
+          if(vm.data[i].date==vm.bundledata[j].SPL_end_day){
+            vm.data[i].splend+=vm.bundledata[j].aeq;
+          }
+        }
+      }
+      createchart();
+    }
+
     function createchart() {
-      
+
+      var spldata = [];
       var pottingdata = [];
       var centrifugadata = [];
       var bpdata = [];
@@ -156,7 +209,7 @@ define([], function () {
       var target = [];
 
       for (var b = 0; b < vm.data.length; b++) {
-
+        spldata.push(vm.data[b].splend);
         pottingdata.push(vm.data[b].pottingout);
         centrifugadata.push(vm.data[b].centriend);
         bpdata.push(vm.data[b].bpend);
@@ -169,7 +222,7 @@ define([], function () {
         subTitle: { text: 'MES adatok megjelenítése' },
         xAxis: { type: 'category', categories: vm.days },
         series: [
-          //{ name: 'SPL end', data: spldata },
+          { name: 'SPL end', data: spldata },
           { name: 'Potting end', data: pottingdata },
           { name: 'Centrifuga end', data: centrifugadata },
           { name: 'BP end', data: bpdata },
@@ -178,10 +231,7 @@ define([], function () {
         ]
       };
       vm.load = false;
-      
-
     }
-
 
     activate();
 
