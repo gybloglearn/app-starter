@@ -115,7 +115,7 @@ define([], function () {
               { name: 'Centrifuga End', data: vm.centri, stack: 'centrifuge' },
               { name: 'BP End', data: vm.bp, stack: 'bp' },
               { name: 'Scrap', data: vm.scrapgrade, stack: 'grade' },
-              { name: 'Good', data: vm.goodgrade, stack: 'grade' },
+              { name: 'Grade', data: vm.goodgrade, stack: 'grade' },
               { name: 'Cél', type: 'line', color: 'Green', data: vm.target }
             ]
           };
