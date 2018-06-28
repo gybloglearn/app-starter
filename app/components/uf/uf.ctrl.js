@@ -25,6 +25,7 @@ define([], function () {
     function loadetf() {
       vm.load = true;
       vm.data = [];
+      var gradedata = [];
       vm.endate = $filter('date')(new Date(vm.enddate).getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
       ufService.getetf(vm.startdate, vm.endate).then(function (response) {
         vm.data = response.data;
@@ -43,15 +44,27 @@ define([], function () {
           vm.data[i].Amount = 1;
           vm.data[i].AEQ = 1.2;
         }
+        ufService.getmodulhistory(vm.startdate, vm.endate).then(function (response) {
+          gradedata = response.data;
+          for (var i = 0; i < vm.data.length; i++) {
+            for (var j = 0; j < gradedata.length; j++) {
+              if (vm.data[i].PhaseName == "Grade" && vm.data[i].jobid == gradedata[j].jobid) {
+                vm.data[i].grade = gradedata[j].Grade;
+              }
+            }
+          }
+          console.log(vm.data);
+          loadbundle()
+        });
         //console.log(vm.data);
-        loadbundle();
+        //loadbundle();
       });
     }
 
     function loadbundle() {
       vm.bundledata = [];
       vm.xAxisData = [];
-      vm.bundleChartData = []; vm.pstart = []; vm.centri = []; vm.bp = []; vm.grade = []; vm.target = [];
+      vm.bundleChartData = []; vm.pstart = []; vm.centri = []; vm.bp = []; vm.goodgrade = []; vm.scrapgrade = []; vm.target = [];
       var counter = 0;
       for (var i = 0; i < vm.loaddays.length; i++) {
         ufService.getbundlefile(vm.loaddays[i]).then(function (rsp) {
@@ -80,7 +93,8 @@ define([], function () {
               vm.pstart.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Static potting init 1500', day: k[ki].SPL_end }), 'AEQ')) });
               vm.centri.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Centrifuge end', day: k[ki].SPL_end }), 'AEQ')) });
               vm.bp.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'BP end', day: k[ki].SPL_end }), 'AEQ')) });
-              vm.grade.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Grade', day: k[ki].SPL_end }), 'AEQ')) });
+              vm.scrapgrade.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Grade', grade: 'Scrap', day: k[ki].SPL_end }), 'AEQ')) });
+              vm.goodgrade.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Grade', grade: '!Scrap', day: k[ki].SPL_end }), 'AEQ')) });
               vm.target.push({ name: k[ki].SPL_end, y: 60 });
             }
           }
@@ -89,13 +103,19 @@ define([], function () {
             chart: { type: 'column' },
             title: { text: 'ZW1500 Termékvonal' },
             subTitle: { text: 'MES adatok megjelenítése' },
+            plotOptions: {
+              column: {
+                stacking: 'normal'
+              }
+            },
             xAxis: { type: 'category', categories: vm.xAxisData },
             series: [
-              { name: 'SPL end', data: vm.bundleChartData },
-              { name: 'Potting Start', data: vm.pstart },
-              { name: 'Centrifuga End', data: vm.centri },
-              { name: 'BP End', data: vm.bp },
-              { name: 'Grade', data: vm.grade },
+              { name: 'SPL end', data: vm.bundleChartData, stack: 'spl' },
+              { name: 'Potting Start', data: vm.pstart, stack: 'potting' },
+              { name: 'Centrifuga End', data: vm.centri, stack: 'centrifuge' },
+              { name: 'BP End', data: vm.bp, stack: 'bp' },
+              { name: 'Scrap', data: vm.scrapgrade, stack: 'grade' },
+              { name: 'Good', data: vm.goodgrade, stack: 'grade' },
               { name: 'Cél', type: 'line', color: 'Green', data: vm.target }
             ]
           };

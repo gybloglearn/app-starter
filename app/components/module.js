@@ -14,7 +14,8 @@ define([
   './filters/shiftnumber',
   './filters/changeDate',
   './uf/uf.ctrl',
-  './services/uf.service'
+  './services/uf.service',
+  
 	/* files */
 ], function(
   configFunction,
