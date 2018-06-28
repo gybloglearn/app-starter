@@ -93,6 +93,7 @@ define([], function () {
               response.data[j].aeq = vm.partnumbers[i].aeq;
             }
           }
+
           var pottingford = new Date(response.data[j].Potting_Flip).getHours() * 60 + new Date(response.data[j].Potting_Flip).getMinutes();
           var takeoutnum = new Date(response.data[j].Brick_Takeout).getHours() * 60 + new Date(response.data[j].Brick_Takeout).getMinutes();
           var centrifugestartnum = new Date(response.data[j].Centrifuga_Start).getHours() * 60 + new Date(response.data[j].Centrifuga_Start).getMinutes();
@@ -131,29 +132,30 @@ define([], function () {
           else {
             response.data[j].Grade_Day = $filter('date')(new Date(response.data[j].Gradedate).getTime(), 'yyyy-MM-dd');
           }
+          console.log(response.data[j]);
 
-          for (var k = 0; k < vm.data.length; k++) {
-            if (vm.data[k].date == response.data[j].Brick_Potting_Init__Day) {
-              vm.data[k].pottingin += response.data[j].aeq;
-            }
-            if (vm.data[k].date == response.data[j].Potting_Flip_Day) {
-              vm.data[k].pottingp3 += response.data[j].aeq;
-            }
-            if (vm.data[k].date == response.data[j].Brick_Takeout_Day) {
-              vm.data[k].pottingout += response.data[j].aeq;
-            }
+            for (var k = 0; k < vm.data.length; k++) {
+              if (vm.data[k].date == response.data[j].Brick_Potting_Init__Day) {
+                vm.data[k].pottingin += response.data[j].aeq;
+              }
+              if (vm.data[k].date == response.data[j].Potting_Flip_Day) {
+                vm.data[k].pottingp3 += response.data[j].aeq;
+              }
+              if (vm.data[k].date == response.data[j].Brick_Takeout_Day) {
+                vm.data[k].pottingout += response.data[j].aeq;
+              }
 
-            if (vm.data[k].date == response.data[j].Centrifuga_Start_Day) {
-              vm.data[k].centristart += response.data[j].aeq;
-            }
-            if (vm.data[k].date == response.data[j].Centrifuga_Stop_Day) {
-              vm.data[k].centriend += response.data[j].aeq;
-            }
+              if (vm.data[k].date == response.data[j].Centrifuga_Start_Day) {
+                vm.data[k].centristart += response.data[j].aeq;
+              }
+              if (vm.data[k].date == response.data[j].Centrifuga_Stop_Day) {
+                vm.data[k].centriend += response.data[j].aeq;
+              }
 
-            if (vm.data[k].date == response.data[j].Grade_Day) {
-              vm.data[k].grade += response.data[j].aeq;
+              if (vm.data[k].date == response.data[j].Grade_Day) {
+                vm.data[k].grade += response.data[j].aeq;
+              }
             }
-          }
         }
         loadetf();
       });
@@ -184,15 +186,14 @@ define([], function () {
       });
     }
 
-    function createbundledata(){
-      console.log(vm.bundledata);
-      for(var i=0;i<vm.data.length;i++){
-        for(var j=0;j<vm.bundledata.length;j++){
-          if(vm.data[i].date==vm.bundledata[j].SPL_start_day){
-            vm.data[i].splstart+=vm.bundledata[j].aeq;
+    function createbundledata() {
+      for (var i = 0; i < vm.data.length; i++) {
+        for (var j = 0; j < vm.bundledata.length; j++) {
+          if (vm.data[i].date == vm.bundledata[j].SPL_start_day) {
+            vm.data[i].splstart += vm.bundledata[j].aeq;
           }
-          if(vm.data[i].date==vm.bundledata[j].SPL_end_day){
-            vm.data[i].splend+=vm.bundledata[j].aeq;
+          if (vm.data[i].date == vm.bundledata[j].SPL_end_day) {
+            vm.data[i].splend += vm.bundledata[j].aeq;
           }
         }
       }
@@ -200,7 +201,7 @@ define([], function () {
     }
 
     function createchart() {
-
+      console.log(vm.data);
       var spldata = [];
       var pottingdata = [];
       var centrifugadata = [];
@@ -214,7 +215,7 @@ define([], function () {
         centrifugadata.push(vm.data[b].centriend);
         bpdata.push(vm.data[b].bpend);
         gradedata.push(vm.data[b].grade);
-        target.push(60);
+        target.push(69);
       }
       vm.chartconfig = {
         chart: { type: 'column' },
