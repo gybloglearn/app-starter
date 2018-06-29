@@ -3,8 +3,8 @@ define([], function () {
 
   function Service($http) {
     var service = {
-      //getbundle: getbundle,
-      getbundlefile:getbundlefile,
+      getmodulhistory: getmodulhistory,
+      getbundlefile: getbundlefile,
       getetf: getetf
     };
 
@@ -12,17 +12,10 @@ define([], function () {
 
     ///////////
 
-    /*function getbundle(start, end) {
-      var req = {
-        method: 'GET',
-        url: 'app/components/PHP/Bundle_history_uf.php?startdate=' + start + '&enddate=' + end
-      };
-      return $http(req);
-    }*/
     function getbundlefile(date) {
       var req = {
         method: 'GET',
-        url: 'app/components/PHP/Bundle/bundle' + date + '.json'
+        url: 'http://3.228.180.13/ZW1500_uf/app/components/PHP/Bundle/bundle' + date + '.json'
       };
       return $http(req);
     }
@@ -30,6 +23,13 @@ define([], function () {
       var req = {
         method: 'GET',
         url: 'app/components/PHP/ZW1500_ETF_Moduls.php?startdate=' + sdate + '&enddate=' + edate
+      };
+      return $http(req);
+    }
+    function getmodulhistory(sdate, edate) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/ZW1500_Modul_History_ETF_uf.php?startdate=' + sdate + '&enddate=' + edate + '&phaseid=Grade Date'
       };
       return $http(req);
     }
