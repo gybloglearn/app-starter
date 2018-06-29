@@ -81,7 +81,14 @@ define([], function () {
               vm.centri.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Centrifuge end', day: k[ki].SPL_end }), 'AEQ')) });
               vm.bp.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'BP end', day: k[ki].SPL_end }), 'AEQ')) });
               vm.grade.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Grade', day: k[ki].SPL_end }), 'AEQ')) });
-              vm.target.push({ name: k[ki].SPL_end, y: 60 });
+							var targ = 0;
+							switch($filter('date')(k[ki].SPL_end, "MM")){
+								case '04': targ = 60; break;
+								case '05': targ = 70; break;
+								case '06': targ = 80; break;
+								default: targ = 60; break;
+							}
+							vm.target.push({ name: k[ki].SPL_end, y: targ });
             }
           }
           //console.log(vm.xAxisData);
