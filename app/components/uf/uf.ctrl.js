@@ -99,7 +99,7 @@ define([], function () {
           var takeoutnum = new Date(response.data[j].Brick_Takeout).getHours() * 60 + new Date(response.data[j].Brick_Takeout).getMinutes();
           var centrifugestartnum = new Date(response.data[j].Centrifuga_Start).getHours() * 60 + new Date(response.data[j].Centrifuga_Start).getMinutes();
           var centrifugestopnum = new Date(response.data[j].Centrifuga_Stop).getHours() * 60 + new Date(response.data[j].Centrifuga_Stop).getMinutes();
-          var gradenum = new Date(response.data[j].Gradedate).getHours() * 60 + new Date(response.data[j].Gradedate).getMinutes();
+          //var gradenum = new Date(response.data[j].Gradedate).getHours() * 60 + new Date(response.data[j].Gradedate).getMinutes();
 
           if (pottingford < 350) {
             response.data[j].Potting_Flip_Day = $filter('date')(new Date(response.data[j].Potting_Flip).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
@@ -127,12 +127,12 @@ define([], function () {
             response.data[j].Centrifuga_Stop_Day = $filter('date')(new Date(response.data[j].Centrifuga_Stop).getTime(), 'yyyy-MM-dd');
           }
 
-          if (gradenum < 350) {
+          /*if (gradenum < 350) {
             response.data[j].Grade_Day = $filter('date')(new Date(response.data[j].Gradedate).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
           }
           else {
             response.data[j].Grade_Day = $filter('date')(new Date(response.data[j].Gradedate).getTime(), 'yyyy-MM-dd');
-          }
+          }*/
 
           for (var k = 0; k < vm.data.length; k++) {
             if (vm.data[k].date == response.data[j].Brick_Potting_Init__Day) {
@@ -152,13 +152,13 @@ define([], function () {
               vm.data[k].centriend += response.data[j].aeq;
             }
 
-            if (vm.data[k].date == response.data[j].Grade_Day && response.data[j].Grade != "Scrap") {
+            /*if (vm.data[k].date == response.data[j].Grade_Day && response.data[j].Grade != "Scrap") {
               vm.data[k].grade += response.data[j].aeq;
             }
 
             if (vm.data[k].date == response.data[j].Grade_Day && response.data[j].Grade == "Scrap") {
               vm.data[k].scrap += response.data[j].aeq;
-            }
+            }*/
           }
         }
         loadetf();
@@ -176,13 +176,25 @@ define([], function () {
               response.data[j].aeq = vm.partnumbers[i].aeq;
             }
           }
-
+          var gradenum = new Date(response.data[j].Gradedate).getHours() * 60 + new Date(response.data[j].Gradedate).getMinutes();
+           if (gradenum < 350) {
+            response.data[j].Grade_Day = $filter('date')(new Date(response.data[j].Gradedate).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+          }
+          else {
+            response.data[j].Grade_Day = $filter('date')(new Date(response.data[j].Gradedate).getTime(), 'yyyy-MM-dd');
+          }
           for (var k = 0; k < vm.data.length; k++) {
             if (vm.data[k].date == response.data[j].BP_start_shiftday) {
               vm.data[k].bpstart += response.data[j].aeq;
             }
             if (vm.data[k].date == response.data[j].BP_end_shiftday) {
               vm.data[k].bpend += response.data[j].aeq;
+            }
+            if(vm.data[k].date==response.data[j].Grade_Day && response.data[j].Grade!="Scrap"&& response.data[j].Grade!=""){
+              vm.data[k].grade += response.data[j].aeq;
+            }
+            if(vm.data[k].date==response.data[j].Grade_Day && response.data[j].Grade=="Scrap"){
+              vm.data[k].scrap += response.data[j].aeq;
             }
           }
         }
