@@ -93,9 +93,18 @@ define([], function () {
               vm.pstart.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Static potting init 1500', day: k[ki].SPL_end }), 'AEQ')) });
               vm.centri.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Centrifuge end', day: k[ki].SPL_end }), 'AEQ')) });
               vm.bp.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'BP end', day: k[ki].SPL_end }), 'AEQ')) });
+//              vm.grade.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Grade', day: k[ki].SPL_end }), 'AEQ')) });
+							var targ = 0;
+							switch($filter('date')(k[ki].SPL_end, "MM")){
+								case '04': targ = 60; break;
+								case '05': targ = 70; break;
+								case '06': targ = 80; break;
+								case '07': targ = 80; break;
+								default: targ = 60; break;
+							}
+							vm.target.push({ name: k[ki].SPL_end, y: targ });
               vm.scrapgrade.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Grade', grade: 'Scrap', day: k[ki].SPL_end }), 'AEQ')) });
               vm.goodgrade.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Grade', grade: '!Scrap', day: k[ki].SPL_end }), 'AEQ')) });
-              vm.target.push({ name: k[ki].SPL_end, y: 60 });
             }
           }
           //console.log(vm.xAxisData);
@@ -110,12 +119,12 @@ define([], function () {
             },
             xAxis: { type: 'category', categories: vm.xAxisData },
             series: [
-              { name: 'SPL end', data: vm.bundleChartData, stack: 'spl' },
-              { name: 'Potting Start', data: vm.pstart, stack: 'potting' },
-              { name: 'Centrifuga End', data: vm.centri, stack: 'centrifuge' },
-              { name: 'BP End', data: vm.bp, stack: 'bp' },
-              { name: 'Scrap', data: vm.scrapgrade, stack: 'grade' },
-              { name: 'Grade', data: vm.goodgrade, stack: 'grade' },
+              { name: 'SPL end', data: vm.bundleChartData, stack: 'spl', color: 'rgb(54,147,248)' },
+              { name: 'Potting Start', data: vm.pstart, stack: 'potting' , color: 'rgb(255,152,33)'},
+							{ name: 'Centrifuga End', data: vm.centri, stack: 'centrifuge', color: 'rgb(156,151,255)'},
+              { name: 'BP End', data: vm.bp, stack: 'bp' , color: 'rgb(0,92,185)'},
+              { name: 'Scrap', data: vm.scrapgrade, stack: 'grade' , color: 'rgb(222,37,51)'},
+              { name: 'Grade', data: vm.goodgrade, stack: 'grade' , color: 'rgb(70,173,0)'},
               { name: 'Cél', type: 'line', color: 'Green', data: vm.target }
             ]
           };
