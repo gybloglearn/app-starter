@@ -35,7 +35,8 @@ define([], function () {
           centriend: 0,
           bpstart: 0,
           bpend: 0,
-          grade: 0
+          grade: 0,
+          scrap: 0
         }
         vm.data.push(obj);
         vm.loaddays[i] = $filter('date')(new Date(vm.enddate).getTime() - ((differencedate - i) * 24 * 3600 * 1000), 'yyyyMMdd');
@@ -132,30 +133,33 @@ define([], function () {
           else {
             response.data[j].Grade_Day = $filter('date')(new Date(response.data[j].Gradedate).getTime(), 'yyyy-MM-dd');
           }
-          console.log(response.data[j]);
 
-            for (var k = 0; k < vm.data.length; k++) {
-              if (vm.data[k].date == response.data[j].Brick_Potting_Init__Day) {
-                vm.data[k].pottingin += response.data[j].aeq;
-              }
-              if (vm.data[k].date == response.data[j].Potting_Flip_Day) {
-                vm.data[k].pottingp3 += response.data[j].aeq;
-              }
-              if (vm.data[k].date == response.data[j].Brick_Takeout_Day) {
-                vm.data[k].pottingout += response.data[j].aeq;
-              }
-
-              if (vm.data[k].date == response.data[j].Centrifuga_Start_Day) {
-                vm.data[k].centristart += response.data[j].aeq;
-              }
-              if (vm.data[k].date == response.data[j].Centrifuga_Stop_Day) {
-                vm.data[k].centriend += response.data[j].aeq;
-              }
-
-              if (vm.data[k].date == response.data[j].Grade_Day) {
-                vm.data[k].grade += response.data[j].aeq;
-              }
+          for (var k = 0; k < vm.data.length; k++) {
+            if (vm.data[k].date == response.data[j].Brick_Potting_Init__Day) {
+              vm.data[k].pottingin += response.data[j].aeq;
             }
+            if (vm.data[k].date == response.data[j].Potting_Flip_Day) {
+              vm.data[k].pottingp3 += response.data[j].aeq;
+            }
+            if (vm.data[k].date == response.data[j].Brick_Takeout_Day) {
+              vm.data[k].pottingout += response.data[j].aeq;
+            }
+
+            if (vm.data[k].date == response.data[j].Centrifuga_Start_Day) {
+              vm.data[k].centristart += response.data[j].aeq;
+            }
+            if (vm.data[k].date == response.data[j].Centrifuga_Stop_Day) {
+              vm.data[k].centriend += response.data[j].aeq;
+            }
+
+            if (vm.data[k].date == response.data[j].Grade_Day && response.data[j].Grade != "Scrap") {
+              vm.data[k].grade += response.data[j].aeq;
+            }
+
+            if (vm.data[k].date == response.data[j].Grade_Day && response.data[j].Grade == "Scrap") {
+              vm.data[k].scrap += response.data[j].aeq;
+            }
+          }
         }
         loadetf();
       });
@@ -207,6 +211,7 @@ define([], function () {
       var centrifugadata = [];
       var bpdata = [];
       var gradedata = [];
+      var scrapdata = [];
       var target = [];
 
       for (var b = 0; b < vm.data.length; b++) {
@@ -215,19 +220,35 @@ define([], function () {
         centrifugadata.push(vm.data[b].centriend);
         bpdata.push(vm.data[b].bpend);
         gradedata.push(vm.data[b].grade);
-        target.push(69);
+        scrapdata.push(vm.data[b].scrap);
+        var targ = 0;
+        switch ($filter('date')(new Date(vm.data[b].date), "MM")) {
+          case '06': targ = 69; break;
+          case '07': targ = 80; break;
+          default: targ = 69; break;
+        }
+        target.push(targ);
       }
       vm.chartconfig = {
         chart: { type: 'column' },
         title: { text: 'ZW1000 Termékvonal' },
         subTitle: { text: 'MES adatok megjelenítése' },
+        tooltip: {
+          valueDecimals: 2
+        },
+        plotOptions: {
+          column: {
+            stacking: 'normal'
+          }
+        },
         xAxis: { type: 'category', categories: vm.days },
         series: [
-          { name: 'SPL end', data: spldata },
-          { name: 'Potting end', data: pottingdata },
-          { name: 'Centrifuga end', data: centrifugadata },
-          { name: 'BP end', data: bpdata },
-          { name: 'Grade', data: gradedata },
+          { name: 'SPL end', data: spldata, stack: 'spl', color: 'rgb(54,147,248)' },
+          { name: 'Potting end', data: pottingdata, stack: 'potting', color: 'rgb(255,152,33)' },
+          { name: 'Centrifuga end', data: centrifugadata, stack: 'centrifuge', color: 'rgb(156,151,255)' },
+          { name: 'BP end', data: bpdata, stack: 'bp', color: 'rgb(0,92,185)' },
+          { name: 'Scrap', data: scrapdata, stack: 'grade', color: 'rgb(222,37,51)' },
+          { name: 'Grade', data: gradedata, stack: 'grade', color: 'rgb(70,173,0)' },
           { name: 'Cél', type: 'line', color: 'Green', data: target }
         ]
       };

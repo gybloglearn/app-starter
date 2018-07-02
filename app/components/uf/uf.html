@@ -52,6 +52,7 @@
             <th class="text-center">BP start</th>
             <th class="text-center">BP end</th>
             <th class="text-center">Grade</th>
+            <th class="text-center">Scrap</th>
           </tr>
           <tr ng-repeat="dt in vm.data track by $index">
             <th class="text-center">{{dt.date}}</th>
@@ -65,6 +66,7 @@
             <td class="text-center">{{dt.bpstart|number:2}}</td>
             <td class="text-center">{{dt.bpend|number:2}}</td>
             <td class="text-center">{{dt.grade|number:2}}</td>
+            <td class="text-center">{{dt.scrap|number:2}}</td>
           </tr>
         </thead>
       </table>
