@@ -99,6 +99,7 @@ define([], function () {
 								case '04': targ = 60; break;
 								case '05': targ = 70; break;
 								case '06': targ = 80; break;
+								case '07': targ = 80; break;
 								default: targ = 60; break;
 							}
 							vm.target.push({ name: k[ki].SPL_end, y: targ });
