@@ -23,12 +23,19 @@ define([], function () {
         vm.partnumbers = response.data;
       });
     }
+    function load1000Partnumbers() {
+      vm.partnumbers1000 = [];
+      dataService.get1000partnumber().then(function (response) {
+        vm.partnumbers1000 = response.data;
+        console.log(vm.partnumbers1000);
+      });
+    }
 
     function trendize(index, field) {
       var act = $filter('filter')(vm.sapdata, { day: vm.displaydata[index].day })[0];
       var prev = $filter('filter')(vm.sapdata, { day: vm.displaydata[index - 1].day })[0];
       if (act && prev) {
-          return act[field] > prev[field] ? false : true;
+        return act[field] > prev[field] ? false : true;
       }
     }
 
@@ -36,7 +43,7 @@ define([], function () {
       var act = $filter('filter')(vm.sapdata, { day: vm.daystocover[index] })[0];
       var prev = $filter('filter')(vm.sapdata, { day: vm.daystocover[index - 1] })[0];
       if (act && prev) {
-          return act[field] > prev[field] ? false : true;
+        return act[field] > prev[field] ? false : true;
       }
     }
 
@@ -176,19 +183,28 @@ define([], function () {
         });
       }
 
-      dataService.getgradebyd1000(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
+      dataService.getetf1000($filter('date')(new Date(vm.startdate).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd'), $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
         for (var r = 0; r < response.data.length; r++) {
           response.data[r].cnt = parseInt(response.data[r].cnt);
-          if (response.data[r].descr.includes('450')) {
-            response.data[r].aeq = response.data[r].cnt * 0.9;
-          } else if (response.data[r].descr.includes('550')) {
-            response.data[r].aeq = response.data[r].cnt * 1.1;
-          } if (response.data[r].descr.includes('700')) {
-            response.data[r].aeq = response.data[r].cnt * 1.4;
-          } else {
-            response.data[r].aeq = response.data[r].cnt * 1;
+          var gradenum = new Date(response.data[r].Gradedate).getHours() * 60 + new Date(response.data[r].Gradedate).getMinutes();
+
+          if (gradenum < 350) {
+            response.data[r].gradeday = $filter('date')(new Date(response.data[r].Gradedate).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
           }
-          vm.zw1000.push(response.data[r]);
+          else {
+            response.data[r].gradeday = $filter('date')(new Date(response.data[r].Gradedate).getTime(), 'yyyy-MM-dd');
+          }
+          for (var xx = 0; xx < vm.partnumbers1000.length; xx++) {
+            if (response.data[r].jobid.includes(vm.partnumbers1000[xx].modul)) {
+              response.data[r].aeq = vm.partnumbers1000[xx].aeq;
+            }
+          }
+          if(response.data[r].Grade==""){
+            response.data[r]="A+";
+          }
+          if (response.data[r].gradeday >= vm.startdate && response.data[r].gradeday <= vm.enddate) {
+            vm.zw1000.push(response.data[r]);
+          }
         }
 
       });
@@ -213,7 +229,7 @@ define([], function () {
         zbmodscrap: 3,
         zbbp: 0,
         zbmin: 0,
-        zw1000min: 69,
+        zw1000min: 80,
         zw1500min: 80
       }
 
@@ -280,6 +296,7 @@ define([], function () {
         vm.sh = true;
         vm.s5 = false;
         vm.s3 = false;
+        load1000Partnumbers();
         start();
         vm.qs = false;
 
@@ -296,7 +313,7 @@ define([], function () {
     vm.aeqs = [
       { name: "Ds12 FLOW", amount: 0.6, sheets: 12 },
       { name: "DS12FLOW", amount: 0.6, sheets: 12 },
-      { name: "DS-D12 FLOW", amount: 0.6, sheets: 12},
+      { name: "DS-D12 FLOW", amount: 0.6, sheets: 12 },
       { name: "ZW220 CP5", amount: 0.44, sheets: 28 },
       { name: "ZW230 FLOW", amount: 0.46, sheets: 28 },
       { name: "ZW230 CP5", amount: 0.46, sheets: 28 },
@@ -306,7 +323,7 @@ define([], function () {
       { name: "C11FLOW", amount: 0.5, sheets: 11 },
       { name: "C11 FLOW", amount: 0.5, sheets: 11 },
       { name: "D11 CP5", amount: 0.68, sheets: 11 },
-			{ name: "D11 CP55", amount: 0.68, sheets: 11},
+      { name: "D11 CP55", amount: 0.68, sheets: 11 },
       { name: "D13 CP5", amount: 0.88, sheets: 13 },
       { name: "D12 FLOW", amount: 0.74, sheets: 12 },
       { name: "DX", amount: 0.74, sheets: 12 },

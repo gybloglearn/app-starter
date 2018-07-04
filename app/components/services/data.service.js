@@ -4,13 +4,14 @@ define([], function () {
   function Service($http) {
     var service = {
       getpartnumber: getpartnumber,
+      get1000partnumber:get1000partnumber,
       getsl: getsl,
       getsm: getsm,
       getsoesm: getsoesm,
       getpotting: getpotting,
       getmtf: getmtf,
       gettodaymtf: gettodaymtf,
-      getgradebyd1000: getgradebyd1000,
+      getetf1000:getetf1000,
       getgradebyd1500: getgradebyd1500,
       getsapdata: getsapdata,
       getsmtable: getsmtable,
@@ -42,6 +43,13 @@ define([], function () {
       var req = {
         method: 'GET',
         url: 'http://3.228.180.13/modulapi/mods'
+      };
+      return $http(req);
+    }
+    function get1000partnumber() {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/ZW1000_moduls.json'
       };
       return $http(req);
     }
@@ -96,10 +104,10 @@ define([], function () {
       };
       return $http(req);
     }
-    function getgradebyd1000(start, end) {
+    function getetf1000(start, end) {
       var req = {
         method: 'GET',
-        url: 'app/components/PHP/ZW1000_GradebyDay.php?startdate=' + start + '&enddate=' + end
+        url: 'app/components/PHP/ZW1000_ETF_Moduls.php?startdate=' + start + '&enddate=' + end + '&filter=&phaseid=Grade Date'
       };
       return $http(req);
     }

@@ -381,8 +381,8 @@
             </tr>
             <tr>
               <th class="text-center" style="border-right: 1px solid #bcbcbc">Összesítve</th>
-              <th class="text-center" colspan="2">{{vm.zw1000 | filter: {'MCSGrade': '!Scrap'} | sumField: 'aeq' | number: 1}}</th>
-              <th class="text-center" colspan="2" style="border-right: 1px solid #bcbcbc">{{vm.zw1000 | filter: {'MCSGrade': 'Scrap'} | sumField: 'aeq' | number: 1}}</th>
+              <th class="text-center" colspan="2">{{vm.zw1000 | filter: {'Grade': '!Scrap'} | sumField: 'aeq' | number: 1}}</th>
+              <th class="text-center" colspan="2" style="border-right: 1px solid #bcbcbc">{{vm.zw1000 | filter: {'Grade': 'Scrap'} | sumField: 'aeq' | number: 1}}</th>
               <th class="text-center" colspan="2">{{vm.zw1500 | filter: {'MCSGrade': '!Scrap'} | sumField: 'aeq' | number: 1}}</th>
               <th class="text-center" colspan="2">{{vm.zw1500 | filter: {'MCSGrade': 'Scrap'} | sumField: 'aeq' | number: 1}}</th>
             </tr>
@@ -391,11 +391,11 @@
             <tr ng-repeat="i in vm.daystocover track by $index">
               <td style="border-right: 1px solid #bcbcbc">{{i}}</td>
               <td colspan="2">
-                {{ vm.zw1000 | filter: {'gradeday': i, 'MCSGrade': '!Scrap'} | sumField: 'aeq' | number: 1}}
-                <i ng-show="vm.rates.zw1000min <= (vm.zw1000 | filter: {'gradeday': i, 'MCSGrade': '!Scrap'} | sumField: 'aeq')" class="icon-ico_ok_circle_sm text-ge-green"></i>
-                <i ng-show="vm.rates.zw1000min > (vm.zw1000 | filter: {'gradeday': i, 'MCSGrade': '!Scrap'} | sumField: 'aeq')" class="icon-ico_remove_circle_sm text-ge-red"></i>
+                {{ vm.zw1000 | filter: {'gradeday': i, 'Grade': '!Scrap'} | sumField: 'aeq' | number: 1}}
+                <i ng-show="vm.rates.zw1000min <= (vm.zw1000 | filter: {'gradeday': i, 'Grade': '!Scrap'} | sumField: 'aeq')" class="icon-ico_ok_circle_sm text-ge-green"></i>
+                <i ng-show="vm.rates.zw1000min > (vm.zw1000 | filter: {'gradeday': i, 'Grade': '!Scrap'} | sumField: 'aeq')" class="icon-ico_remove_circle_sm text-ge-red"></i>
               </td>
-              <td colspan="2" style="border-right: 1px solid #bcbcbc">{{ vm.zw1000 | filter: {'gradeday': i, 'MCSGrade': 'Scrap'} | sumField: 'aeq' | number: 1}}</td>
+              <td colspan="2" style="border-right: 1px solid #bcbcbc">{{ vm.zw1000 | filter: {'gradeday': i, 'Grade': 'Scrap'} | sumField: 'aeq' | number: 1}}</td>
               <td colspan="2">
                 {{ vm.zw1500 | filter: {'gradeday': i, 'MCSGrade': '!Scrap'} | sumField: 'aeq' | number: 1}}
                 <i ng-show="vm.rates.zw1500min <= (vm.zw1500 | filter: {'gradeday': i, 'MCSGrade': '!Scrap'} | sumField: 'aeq')" class="icon-ico_ok_circle_sm text-ge-green"></i>
