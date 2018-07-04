@@ -35,6 +35,7 @@ define([], function () {
           centriend: 0,
           bpstart: 0,
           bpend: 0,
+          fluxus: 0,
           grade: 0,
           scrap: 0
         }
@@ -177,7 +178,8 @@ define([], function () {
             }
           }
           var gradenum = new Date(response.data[j].Gradedate).getHours() * 60 + new Date(response.data[j].Gradedate).getMinutes();
-           if (gradenum < 350) {
+
+          if (gradenum < 350) {
             response.data[j].Grade_Day = $filter('date')(new Date(response.data[j].Gradedate).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
           }
           else {
@@ -190,10 +192,13 @@ define([], function () {
             if (vm.data[k].date == response.data[j].BP_end_shiftday) {
               vm.data[k].bpend += response.data[j].aeq;
             }
-            if(vm.data[k].date==response.data[j].Grade_Day && response.data[j].Grade!="Scrap"&& response.data[j].Grade!=""){
+            if (vm.data[k].date == response.data[j].Perm_test_shiftday) {
+              vm.data[k].fluxus += response.data[j].aeq;
+            }
+            if (vm.data[k].date == response.data[j].Grade_Day && response.data[j].Grade != "Scrap" && response.data[j].Grade != "") {
               vm.data[k].grade += response.data[j].aeq;
             }
-            if(vm.data[k].date==response.data[j].Grade_Day && response.data[j].Grade=="Scrap"){
+            if (vm.data[k].date == response.data[j].Grade_Day && response.data[j].Grade == "Scrap") {
               vm.data[k].scrap += response.data[j].aeq;
             }
           }
@@ -222,6 +227,7 @@ define([], function () {
       var pottingdata = [];
       var centrifugadata = [];
       var bpdata = [];
+      var fluxusdata = [];
       var gradedata = [];
       var scrapdata = [];
       var target = [];
@@ -231,6 +237,7 @@ define([], function () {
         pottingdata.push(vm.data[b].pottingout);
         centrifugadata.push(vm.data[b].centriend);
         bpdata.push(vm.data[b].bpend);
+        fluxusdata.push(vm.data[b].fluxus);
         gradedata.push(vm.data[b].grade);
         scrapdata.push(vm.data[b].scrap);
         var targ = 0;
@@ -259,6 +266,7 @@ define([], function () {
           { name: 'Potting end', data: pottingdata, stack: 'potting', color: 'rgb(255,152,33)' },
           { name: 'Centrifuga end', data: centrifugadata, stack: 'centrifuge', color: 'rgb(156,151,255)' },
           { name: 'BP end', data: bpdata, stack: 'bp', color: 'rgb(0,92,185)' },
+          { name: 'Fluxus', data: fluxusdata, stack: 'fluxus', color: 'rgb(153, 102, 255)' },
           { name: 'Scrap', data: scrapdata, stack: 'grade', color: 'rgb(222,37,51)' },
           { name: 'Grade', data: gradedata, stack: 'grade', color: 'rgb(70,173,0)' },
           { name: 'Cél', type: 'line', color: 'Green', data: target }
