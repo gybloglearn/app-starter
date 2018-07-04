@@ -222,7 +222,6 @@ define([], function () {
     }
 
     function createchart() {
-      console.log(vm.data);
       var spldata = [];
       var pottingdata = [];
       var centrifugadata = [];

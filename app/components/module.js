@@ -8,7 +8,9 @@ define([
   './directives/datepicker',
   './directives/mychart',
   './uf/uf.ctrl',
-  './services/uf.service'
+  './services/uf.service',
+  './fluxus/fluxus.ctrl',
+  './services/fluxus.service'
 	/* files */
 ], function(
   configFunction,
@@ -20,7 +22,9 @@ define([
   datepicker,
   mychart,
   ufController,
-  ufService
+  ufService,
+  fluxusController,
+  fluxusService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -36,5 +40,7 @@ define([
   app.directive('myChart',mychart);
   app.controller('ufController', ufController);
   app.service('ufService', ufService);
+	app.controller('fluxusController', fluxusController);
+	app.service('fluxusService', fluxusService);
 		/* controllers */
 });
