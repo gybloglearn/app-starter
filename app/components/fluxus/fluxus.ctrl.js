@@ -5,8 +5,8 @@ define([], function () {
     vm.date = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.datenum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.edate = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.beallit=beallit;
-    vm.loading=false;
+    vm.beallit = beallit;
+    vm.loading = false;
 
     function loadpartnumbers() {
       vm.partnumbers = [];
@@ -15,8 +15,8 @@ define([], function () {
       });
     }
 
-    function beallit(){
-      vm.datenum=$filter('date')(new Date(vm.date).getTime(),'yyyy-MM-dd')
+    function beallit() {
+      vm.datenum = $filter('date')(new Date(vm.date).getTime(), 'yyyy-MM-dd')
       createhours();
     }
 
@@ -33,9 +33,10 @@ define([], function () {
 
     function loadfluxus() {
 
-      vm.loading=true;
+      vm.loading = true;
 
       vm.data = [];
+      vm.impdata = [];
       var sdate = $filter('date')(new Date(vm.date).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
       var edate = $filter('date')(new Date(vm.date).getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
 
@@ -51,6 +52,8 @@ define([], function () {
           response.data[j].Perm_gep = response.data[j].Perm_gép;
 
           var minutes = new Date(response.data[j].Perm_test).getMinutes();
+          var impminutes = new Date(response.data[j].Impregnation_end).getMinutes();
+
           if (minutes >= 50) {
             response.data[j].fluxus_hour = new Date(response.data[j].Perm_test).getHours() + 1;
           }
@@ -60,33 +63,60 @@ define([], function () {
           if (response.data[j].Perm_test_shiftday == vm.date) {
             vm.data.push(response.data[j]);
           }
+
+          if (impminutes >= 50) {
+            response.data[j].impregnation_hour = new Date(response.data[j].Impregnation_end).getHours() + 1;
+          }
+          else {
+            response.data[j].impregnation_hour = new Date(response.data[j].Impregnation_end).getHours()
+          }
+          if (response.data[j].Impregnation_end_shiftday == vm.date) {
+            vm.impdata.push(response.data[j]);
+          }
         }
         create_chart()
-        vm.loading=false;
+        vm.loading = false;
       });
     }
 
     function create_chart() {
-      vm.chartdata = [{ name: 'AEQ', color: 'rgb(0,0,255)', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }];
+      vm.chartdata =
+        [
+          { name: 'Fluxus', color: 'rgb(0,0,255)', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+          { name: 'Impregnálás', color: 'rgb(102, 0, 102)', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+          { name: 'Cél', color: 'rgb(255,0,0)', type: 'line', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }
+        ];
 
       for (var i = 0; i < vm.data.length; i++) {
         for (var j = 0; j < vm.cats.length; j++) {
           if (vm.data[i].fluxus_hour == parseInt(vm.cats[j])) {
             vm.chartdata[0].data[j] += vm.data[i].aeq;
           }
+
+        }
+      }
+      for (var i = 0; i < vm.impdata.length; i++) {
+        for (var j = 0; j < vm.cats.length; j++) {
+          if (vm.impdata[i].impregnation_hour == parseInt(vm.cats[j])) {
+            vm.chartdata[1].data[j] += vm.impdata[i].aeq;
+          }
+
+        }
+        for (var k = 0; k < 24; k++) {
+          vm.chartdata[2].data[k] = 4.4;
         }
       }
       vm.chartconfig = {
         chart: {
           type: 'column',
-          width: 900,
           height: 360
         },
-        title: { text: "Fluxus adatok órai lebontása" },
+        title: { text: "Fluxus és impregnálás adatok órai lebontása" },
         tooltip: {
           valueDecimals: 2
         },
         xAxis: { type: 'category', categories: vm.cats },
+        yAxis: { title:{text:'AEQ'}},
         series: vm.chartdata
       };
     }
