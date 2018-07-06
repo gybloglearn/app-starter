@@ -83,14 +83,16 @@ define([], function () {
       vm.chartdata =
         [
           { name: 'Fluxus', color: 'rgb(0,0,255)', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+          { name: 'Fluxus kumulált', color: 'rgb(0,0,255)', type: 'line', yAxis: 1, data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
           { name: 'Impregnálás', color: 'rgb(102, 0, 102)', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
-          { name: 'Cél', color: 'rgb(255,0,0)', type: 'line', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }
+          { name: 'Impregnálás kumulált', color: 'rgb(102,0,102)', type: 'line', yAxis: 1, data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+          { name: 'Cél', color: 'rgb(255,0,0)', type: 'line', yAxis: 1, data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }
         ];
-
       for (var i = 0; i < vm.data.length; i++) {
         for (var j = 0; j < vm.cats.length; j++) {
           if (vm.data[i].fluxus_hour == parseInt(vm.cats[j])) {
-            vm.chartdata[0].data[j] += vm.data[i].aeq;
+            vm.chartdata[0].data[j]++;
+            //vm.chartdata[0].data[j] += vm.data[i].aeq;
           }
 
         }
@@ -98,12 +100,21 @@ define([], function () {
       for (var i = 0; i < vm.impdata.length; i++) {
         for (var j = 0; j < vm.cats.length; j++) {
           if (vm.impdata[i].impregnation_hour == parseInt(vm.cats[j])) {
-            vm.chartdata[1].data[j] += vm.impdata[i].aeq;
+            vm.chartdata[2].data[j]++;
+            //vm.chartdata[1].data[j] += vm.impdata[i].aeq;
           }
 
         }
         for (var k = 0; k < 24; k++) {
-          vm.chartdata[2].data[k] = 4.4;
+          if(k > 0){
+            vm.chartdata[1].data[k] = vm.chartdata[1].data[k-1] + vm.chartdata[0].data[k];
+            vm.chartdata[3].data[k] = vm.chartdata[3].data[k-1] + vm.chartdata[2].data[k];
+            vm.chartdata[4].data[k] = vm.chartdata[4].data[k-1] + 3.7;
+          } else {
+            vm.chartdata[1].data[k] = vm.chartdata[0].data[k];
+            vm.chartdata[3].data[k] = vm.chartdata[2].data[k];
+            vm.chartdata[4].data[k] = 3.7;
+          }
         }
       }
       vm.chartconfig = {
@@ -113,10 +124,10 @@ define([], function () {
         },
         title: { text: "Fluxus és impregnálás adatok órai lebontása" },
         tooltip: {
-          valueDecimals: 2
+          valueDecimals: 0
         },
         xAxis: { type: 'category', categories: vm.cats },
-        yAxis: { title:{text:'AEQ'}},
+        yAxis: [{ title:{text:'Darab'}}, {title: {text: 'Kumulált Darab'}, opposite: true}],
         series: vm.chartdata
       };
     }
