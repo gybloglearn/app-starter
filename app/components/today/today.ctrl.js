@@ -48,7 +48,7 @@ define([], function () {
           //console.log(number + " - to - " + target);
           break;
         case 'bp':
-          target = (vm.rates.bp / div) / (1440 / div) * vm.passedmins[shiftnum];
+          target = (vm.rates.min / div) / (1 - vm.rates.modscrap / 100) / (1440 / div) * vm.passedmins[shiftnum];
           //console.log(number + " - to - " + target);
           break;
         case 'min':
@@ -186,7 +186,7 @@ define([], function () {
         }
         //populate();
       });
-      
+
       dataService.getmtftable(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
         for (var r = 0; r < response.data.length; r++) {
 
