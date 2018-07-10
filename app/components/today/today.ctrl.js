@@ -237,14 +237,14 @@ define([], function () {
       vm.rates = {
         smscrap: 0.8,
         modscrap: 0.5,
-        bp: 230,
-        min: 226,
+        bp: 240,
+        min: 235,
         zbsmscrap: 5,
         zbmodscrap: 3,
         zbbp: 0,
         zbmin: 0,
-        zw1000min: 56,
-        zw1500min: 60
+        zw1000min: 80,
+        zw1500min: 80
       }
 
       vm.passedmins = [];
