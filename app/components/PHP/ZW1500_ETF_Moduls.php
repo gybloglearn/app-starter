@@ -72,9 +72,9 @@ try
       if($k > 0){
         $row = array();
         foreach($res as $x=>$y){
-            $row[$r[0][$x]] = $y;
-        }
-          array_push($re, $row);
+          $row[$r[0][$x]] = $y;
+         }
+        array_push($re, $row);
       }
     }
     return $re;

@@ -51,6 +51,7 @@
             <th class="text-center">BP start</th>
             <th class="text-center">BP end</th>
             <th class="text-center">Grade</th>
+            <th class="text-center">Scrap</th>
           </tr>
           <tr ng-repeat="date in vm.days track by $index">
             <th class="text-center">{{date}}</th>
@@ -62,7 +63,8 @@
             <td class="text-center">{{(vm.data|filter:{'PhaseName':'Centrifuge end','day':date})| sumField:'AEQ'| number:2 }}</td>
             <td class="text-center">{{(vm.data|filter:{'PhaseName':'BP start','day':date})| sumField:'AEQ'| number:2 }}</td>
             <td class="text-center">{{(vm.data|filter:{'PhaseName':'BP end','day':date})| sumField:'AEQ'| number:2 }}</td>
-            <td class="text-center">{{(vm.data|filter:{'PhaseName':'Grade','day':date})| sumField:'AEQ'| number:2 }}</td>
+            <td class="text-center">{{(vm.data|filter:{'PhaseName':'Grade',grade: '!Scrap','day':date})| sumField:'AEQ'| number:2 }}</td>
+            <td class="text-center">{{(vm.data|filter:{'PhaseName':'Grade',grade: 'Scrap','day':date})| sumField:'AEQ'| number:2 }}</td>
           </tr>
         </thead>
       </table>

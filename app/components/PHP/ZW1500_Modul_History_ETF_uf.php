@@ -2,15 +2,15 @@
 //error_reporting(E_ALL & ~E_NOTICE);
 ini_set('default_socket_timeout', 600);
 //set_include_path("../../../../SSRSReport/bin/");
-set_include_path("/var/www/html/ssrs/bin/");
+set_include_path("../../../../ssrs/bin/");
 require_once("SSRSReport.php");
 
-$conf = parse_ini_file('/var/www/html/ssrs/config.ini');
+$conf = parse_ini_file('../../../../ssrs/config.ini');
 define("UID", $conf["UID"]);
 define("PASWD", $conf["PASWD"]);
 define("SERVICE_URL", $conf["UFURL"]);
 
-define("REPORT", "/MCS_ZW1K/Bundle History");
+define("REPORT", "/MCS_ZW1K/ZW1500 Modul History ETF");
 
 function remove_utf8_bom($text)
 {
@@ -18,33 +18,19 @@ function remove_utf8_bom($text)
     $text = preg_replace("/^$bom/", '', $text);
     return $text;
 }
-if ( isset( $argv ) ) {
-    parse_str(
-        join( "&", array_slice( $argv, 1 )
-    ), $_GET );
-}
 // set Parameters from get
-if(isset($_GET["startdate"])){
-  $startdate = date("m/d/Y H:i:s", strtotime($_GET["startdate"] . " 05:50:00"));
-} else {
-  $startdate = date("m/d/Y H:i:s", strtotime(date("Y-m-d") . " 05:50:00") - 24*60*60);
-}
-
+$startdate = date("m/d/Y H:i:s", strtotime($_GET["startdate"] . " 05:50:00"));
 if(isset($_GET["enddate"])){
   $enddate = date("m/d/Y H:i:s", strtotime($_GET["enddate"] . " 05:50:00"));
 } else {
-  if(isset($argv[2])){
-    $enddate = date("m/d/Y H:i:s", strtotime($argv[2]." 05:50:00") + 60*60*24);
-  } else {
-    $enddate = date("m/d/Y H:i:s", strtotime($startdate) + 60*60*24);
-  }
+  $enddate = date("m/d/Y H:i:s", strtotime($_GET["startdate"]." 05:50:00") + 60*60*24);
 }
-echo $startdate."\n";
-echo $enddate;
+// define phase
+$phaseid = Array("Drying End"=>70, "Static Potting start"=>72, "Dynamic Potting Start"=>10, "Chlorinating (Rinse1) Start"=>44, "BP start"=>24, "Grade Date"=>0);
+$phase = $phaseid[$_GET["phaseid"]];
 //get report data
 try
 {
-  $toWrite = Array();
     $ssrs_report = new SSRSReport(new Credentials(UID, PASWD), SERVICE_URL);
     $ssrs_report->LoadReport2(REPORT,NULL);
     $params = array();
@@ -54,6 +40,15 @@ try
     $params[1] = new ParameterValue();
     $params[1]->Name = "enddate";
     $params[1]->Value = $enddate;
+    $params[2]= new ParameterValue();
+    $params[2]->Name ="filter";
+    $params[2]->Value = "";
+    $params[3]= new ParameterValue();
+    $params[3]->Name ="type";
+    $params[3]->Value = "";
+    $params[4]= new ParameterValue();
+    $params[4]->Name ="phaseid";
+    $params[4]->Value = $phase;
     
     $executionInfo = $ssrs_report->SetExecutionParameters2($params, "en-us");
     $csvFormat = new RenderAsCSV();
@@ -87,19 +82,46 @@ try
         if($k > 0){
           $row = array();
           foreach($res as $x=>$y){
-            if($r[0][$x] == "bundle"){
+            /*if($r[0][$x] == "jobid"){
               $row[$r[0][$x]] = $y;
             }
-            else if($r[0][$x] == "SPL_line"){
+            else if($r[0][$x] == "Bundle1"){
               $row[$r[0][$x]] = $y;
             }
-            else if($r[0][$x] == "SPL_start"){
+            else if($r[0][$x] == "Static_Potting_Start"){
               $row[$r[0][$x]] = $y;
             }
-            else if($r[0][$x] == "SPL_end"){
+            else if($r[0][$x] == "Static_Potting_Flip"){
               $row[$r[0][$x]] = $y;
             }
-            //$row[$r[0][$x]] = $y;
+            else if($r[0][$x] == "Static Potting End"){
+              $row[$r[0][$x]] = $y;
+            }
+            else if($r[0][$x] == "Centrifuga_Start"){
+              $row[$r[0][$x]] = $y;
+            }
+            else if($r[0][$x] == "Centrifuga_End"){
+              $row[$r[0][$x]] = $y;
+            }
+            else if($r[0][$x] == "Chlorination_start__Rinse1Start"){
+              $row[$r[0][$x]] = $y;
+            }
+            else if($r[0][$x] == "Chlorination_end__Rinse2End"){
+              $row[$r[0][$x]] = $y;
+            }
+            else if($r[0][$x] == "BP_start"){
+              $row[$r[0][$x]] = $y;
+            }
+            else if($r[0][$x] == "BP_end"){
+              $row[$r[0][$x]] = $y;
+            }
+            else if($r[0][$x] == "Gradedate"){
+              $row[$r[0][$x]] = $y;
+            }
+            else if($r[0][$x] == "Grade"){
+              $row[$r[0][$x]] = $y;
+            }*/
+            $row[$r[0][$x]] = $y;
            
           }
             array_push($re, $row);
@@ -109,11 +131,8 @@ try
     }
   
     $result = explode("|",remove_utf8_bom($result));
-    $results = fill(3,count($result)-3,$result);
-
-    $myJson= json_encode(convert($results));
-    $toWrite = array_merge($toWrite, convert($results));
-  
+    $results = fill(0,count($result)-2,$result);
+    echo json_encode(convert($results));
     } catch (SSRSReportException $sr){
       echo $sr->GetErrorMessage();
     }
@@ -122,10 +141,4 @@ try
   {
       echo $serviceException->GetErrorMessage();
   }
-      $toWrite = json_encode($toWrite);
-  
-      $myfile=fopen("/var/www/html/ZW1500_uf/app/components/PHP/Bundle/bundle".date("Ymd", strtotime($startdate)).".json","w+");
-      fwrite($myfile,$toWrite);
-      fclose($myfile);
-      chmod("/var/www/html/ZW1500_uf/app/components/PHP/Bundle/bundle".date("Ymd", strtotime($startdate)).".json",0666);
   ?>
