@@ -40,7 +40,7 @@ try
     $params[1]->Value = $enddate;
     $params[2]= new ParameterValue();
     $params[2]->Name ="type";
-    $params[2]->Value = "";  
+    $params[2]->Value = "";
     $executionInfo = $ssrs_report->SetExecutionParameters2($params, "en-us");
     $csvFormat = new RenderAsCSV();
     $csvFormat->FieldDelimiter = '×';

@@ -29,7 +29,6 @@ define([], function () {
       vm.endate = $filter('date')(new Date(vm.enddate).getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
       ufService.getetf(vm.startdate, vm.endate).then(function (response) {
         vm.data = response.data;
-
         for (var i = 0; i < vm.data.length; i++) {
           var number = 0;
           if (vm.data[i].startdate != "") {
@@ -140,8 +139,7 @@ define([], function () {
       vm.chartconfig = {
         chart: {}
       };
-      vm.edate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
-      createdates();
+      vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
     }
   }
   Controller.$inject = ['ufService', '$cookies', '$state', '$rootScope', '$filter'];
