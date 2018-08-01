@@ -40,7 +40,7 @@ try
     $params[1]->Value = $enddate;
     $params[2]= new ParameterValue();
     $params[2]->Name ="type";
-    $params[2]->Value = "";  
+    $params[2]->Value = "";
     $executionInfo = $ssrs_report->SetExecutionParameters2($params, "en-us");
     $csvFormat = new RenderAsCSV();
     $csvFormat->FieldDelimiter = '×';
@@ -72,22 +72,9 @@ try
       if($k > 0){
         $row = array();
         foreach($res as $x=>$y){
-          if($r[0][$x] == "timestamp"){
-            $row[$r[0][$x]] = strtotime($y)*1000;
-          } else if ($r[0][$x] == "Event_time"){
-            $row[$r[0][$x]] = intval($y);
-          } else {
             $row[$r[0][$x]] = $y;
-          }
         }
-        if(isset($_GET["downtimes"])){
-          if($row["Event_type"] == "Downtime"){
-            $row["shiftnum"] = intval(substr($row["Shift_ID"],-1));
-            array_push($re, $row);
-          }
-        } else {
           array_push($re, $row);
-        }
       }
     }
     return $re;

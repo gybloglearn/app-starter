@@ -25,10 +25,9 @@ define([], function () {
     function loadetf() {
       vm.load = true;
       vm.data = [];
-      vm.endate = $filter('date')(new Date(vm.enddate).getTime() + (2*24 * 3600 * 1000), 'yyyy-MM-dd');
+      vm.endate = $filter('date')(new Date(vm.enddate).getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
       ufService.getetf(vm.startdate, vm.endate).then(function (response) {
         vm.data = response.data;
-
         for (var i = 0; i < vm.data.length; i++) {
           var number = 0;
           if (vm.data[i].startdate != "") {
