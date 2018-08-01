@@ -139,8 +139,7 @@ define([], function () {
       vm.chartconfig = {
         chart: {}
       };
-      vm.edate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
-      createdates();
+      vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
     }
   }
   Controller.$inject = ['ufService', '$cookies', '$state', '$rootScope', '$filter'];

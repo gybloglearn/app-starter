@@ -1,7 +1,27 @@
 <div class="container">
   <section class="module">
-    <div class="module-header">Start</div>
-    <div class="module-body"></div>
+    <div class="module-header">
+      <h2 class="pull-left voice voice-brand">ZW1500 potting adatok {{vm.startdate}}</h2>
+      <i class="pull-right"><sup>Legutóbbi frissítés: {{vm.now}}</sup></i>
+      <br/>
+      <hr>
+    </div>
+    <div class="module-body">
+        <div class="input-group col-sm-12">
+            <span class="input-group-addon">Dátumtól:</span>
+            <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="0d" end="{{vm.edate}}">
+          </div>
+      <div class="progress progress-info progress-striped active" ng-hide="!vm.load">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Frissítés...</p>
+        </div>
+      </div>
+      <div class="button-group text-center">
+        <button class="btn btn-info" ng-click="vm.loadetf()" ng-disabled="vm.load">
+          <i class="icon icon-refresh"></i> Frissítés</button>
+      </div>
+      <my-chart id="chart" config="vm.chartconfig"></my-chart>
+    </div>
     <div class="module-footer"></div>
   </section>
 </div>
