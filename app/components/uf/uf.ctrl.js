@@ -243,7 +243,9 @@ define([], function () {
         switch ($filter('date')(new Date(vm.data[b].date), "MM")) {
           case '06': targ = 69; break;
           case '07': targ = 80; break;
-          default: targ = 69; break;
+          case '08': targ = 80; break;
+          default: targ = 80; break;
+          //default: targ = 69; break;
         }
         target.push(targ);
       }
