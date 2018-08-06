@@ -3,7 +3,7 @@ define([], function () {
   function Controller(ufService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
     vm.startdate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
-    vm.enddate = $filter('date')(new Date().getTime() + (24*60*60*1000), 'yyyy-MM-dd');
+    vm.enddate = $filter('date')(new Date().getTime() + (24 * 60 * 60 * 1000), 'yyyy-MM-dd');
     vm.now = $filter('date')(new Date().getTime(), 'yyyy-MM-dd HH:mm');
     vm.days = [];
     vm.data = [];
@@ -27,8 +27,8 @@ define([], function () {
             else {
               vm.data[i].day = $filter('date')(new Date(vm.data[i].startdate).getTime(), 'yyyy-MM-dd');
             }
-            if(new Date(vm.data[i].startdate).getMinutes() > 50) {
-              vm.data[i].hour = $filter('date')(new Date(vm.data[i].startdate).getTime()+3600*1000, "HH");
+            if (new Date(vm.data[i].startdate).getMinutes() > 50) {
+              vm.data[i].hour = $filter('date')(new Date(vm.data[i].startdate).getTime() + 3600 * 1000, "HH");
             } else {
               vm.data[i].hour = $filter('date')(new Date(vm.data[i].startdate).getTime(), "HH");
             }
@@ -46,30 +46,34 @@ define([], function () {
               }
             }
           }
-          //console.log(vm.data);
+          console.log(vm.data);
           vm.xAxisData = [];
           vm.centri = []; vm.centricum = [];
           vm.pstart = []; vm.pstartcum = [];
+          vm.chlor = []; vm.chlorcum = [];
           var targ = [];
           var hour = 0;
-          for (var i = 0; i < 24; i++){
-            if(i < 18){
-              hour = (i+6)<10?"0"+(i+6):""+(i+6);
+          for (var i = 0; i < 24; i++) {
+            if (i < 18) {
+              hour = (i + 6) < 10 ? "0" + (i + 6) : "" + (i + 6);
               vm.xAxisData.push(hour);
             } else {
-              hour = (i-18)<10?"0"+(i-18):""+(i-18);
+              hour = (i - 18) < 10 ? "0" + (i - 18) : "" + (i - 18);
               vm.xAxisData.push(hour);
             }
-            vm.centri.push({cat: hour, y: $filter('filter')(vm.data, {PhaseName: 'Centrifuge end', hour: hour}).length});
-            vm.pstart.push({cat: hour, y: $filter('filter')(vm.data, {PhaseName: 'Potting flip', hour: hour}).length});
-            if (i > 0){
-              vm.centricum.push({cat: hour, y: vm.centricum[i-1].y + $filter('filter')(vm.data, {PhaseName: 'Centrifuge end', hour: hour}).length});
-              vm.pstartcum.push({cat: hour, y: vm.pstartcum[i-1].y + $filter('filter')(vm.data, {PhaseName: 'Potting flip', hour: hour}).length});
-              targ.push({cat: hour, y: targ[i-1].y + 2.91});
+            vm.centri.push({ cat: hour, y: $filter('filter')(vm.data, { PhaseName: 'Centrifuge end', hour: hour }).length });
+            vm.pstart.push({ cat: hour, y: $filter('filter')(vm.data, { PhaseName: 'Potting flip', hour: hour }).length });
+            vm.chlor.push({ cat: hour, y: $filter('filter')(vm.data, { PhaseName: 'Chlorinating end', hour: hour }).length });
+            if (i > 0) {
+              vm.centricum.push({ cat: hour, y: vm.centricum[i - 1].y + $filter('filter')(vm.data, { PhaseName: 'Centrifuge end', hour: hour }).length });
+              vm.pstartcum.push({ cat: hour, y: vm.pstartcum[i - 1].y + $filter('filter')(vm.data, { PhaseName: 'Potting flip', hour: hour }).length });
+              vm.chlorcum.push({ cat: hour, y: vm.chlorcum[i - 1].y + $filter('filter')(vm.data, { PhaseName: 'Chlorinating end', hour: hour }).length });
+              targ.push({ cat: hour, y: targ[i - 1].y + 2.91 });
             } else {
-              vm.centricum.push({cat: hour, y: $filter('filter')(vm.data, {PhaseName: 'Centrifuge end', hour: hour}).length});
-              vm.pstartcum.push({cat: hour, y: $filter('filter')(vm.data, {PhaseName: 'Potting flip', hour: hour}).length});
-              targ.push({cat: hour, y: 2.91});
+              vm.centricum.push({ cat: hour, y: $filter('filter')(vm.data, { PhaseName: 'Centrifuge end', hour: hour }).length });
+              vm.pstartcum.push({ cat: hour, y: $filter('filter')(vm.data, { PhaseName: 'Potting flip', hour: hour }).length });
+              vm.chlorcum.push({ cat: hour, y: $filter('filter')(vm.data, { PhaseName: 'Chlorinating end', hour: hour }).length });
+              targ.push({ cat: hour, y: 2.91 });
             }
           }
 
@@ -89,16 +93,18 @@ define([], function () {
             },
             xAxis: { type: 'category', categories: vm.xAxisData },
             yAxis: [
-              {title: { text: 'Órai Darabszám'}, min: 0, max: 8, tickInterval: 1},
-              {title: { text: 'Napi Összesítő'}, opposite: true, min: 0, max: 80, tickInterval: 10}
+              { title: { text: 'Órai Darabszám' }, min: 0, max: 8, tickInterval: 1 },
+              { title: { text: 'Napi Összesítő' }, opposite: true, min: 0, max: 80, tickInterval: 10 }
             ],
             series: [
               //{ name: 'SPL end', data: vm.bundleChartData, stack: 'spl', color: 'rgb(54,147,248)' },
-              { name: 'Potting flip', data: vm.pstart, stack: 'potting' , color: 'rgb(255,152,33)'},
-              { name: 'Potting flip összesítő', data: vm.pstartcum, type: "line", yAxis: 1, color: 'rgb(255,152,33)'},
-              { name: 'Centrifuga End', data: vm.centri, stack: 'centrifuge', color: 'rgb(156,151,255)'},
-              { name: 'Centrifuga End összesítő', data: vm.centricum, type: "line", yAxis: 1, color: 'rgb(156,151,255)'},
-              { name: 'Cél', data: targ, type: "line", yAxis: 1, color: 'rgb(255,0,0)'}
+              { name: 'Potting flip', data: vm.pstart, stack: 'potting', color: 'rgb(255,152,33)' },
+              { name: 'Potting flip összesítő', data: vm.pstartcum, type: "line", yAxis: 1, color: 'rgb(255,152,33)' },
+              { name: 'Centrifuga End', data: vm.centri, stack: 'centrifuge', color: 'rgb(156,151,255)' },
+              { name: 'Centrifuga End összesítő', data: vm.centricum, type: "line", yAxis: 1, color: 'rgb(156,151,255)' },
+              { name: 'Klórozó ki', data: vm.chlor, stack: 'klor', color: 'rgb(102, 153, 0)' },
+              { name: 'Klórozó ki összesítő', data: vm.chlorcum, type: "line", yAxis: 1, color: 'rgb(102, 153, 0)' },
+              { name: 'Cél', data: targ, type: "line", yAxis: 1, color: 'rgb(255,0,0)' }
               //{ name: 'BP End', data: vm.bp, stack: 'bp' , color: 'rgb(0,92,185)'},
               //{ name: 'Scrap', data: vm.scrapgrade, stack: 'grade' , color: 'rgb(222,37,51)'},
               //{ name: 'Grade', data: vm.goodgrade, stack: 'grade' , color: 'rgb(70,173,0)'},
@@ -113,7 +119,7 @@ define([], function () {
     activate();
 
     function activate() {
-      (!$cookies.getObject('user')?$state.go('login'):$rootScope.user=$cookies.getObject('user'));
+      (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       vm.chartconfig = {
         chart: {}
       };
