@@ -20,66 +20,32 @@ define([], function () {
             vm.sldata.push(response.data[i]);
           }
         }
-        create_amount_chartdata(vm.sldata, arr)
+        create_amount_chartdata(vm.sldata)
       });
     }
 
-    function create_amount_chartdata(tb, arr) {
+    function create_amount_chartdata(tb) {
       vm.cats = [];
-      console.log(arr);
       vm.chartData = [
-        { name: 'SpinLine #136_állásidővel csökkentett', color: 'rgb(51, 102, 0)', data: [] },
         { name: 'SpinLine #136', color: 'rgb(51, 204, 51)', data: [] },
         { name: 'SpinLine #236', color: 'rgb(255, 153, 0)', data: [] },
-        { name: 'SpinLine #236_állásidővel csökkentett', color: 'rgb(204, 51, 0)', data: [] },
         { name: 'Terv', color: 'rgb(255,0,0)', type: 'line', data: [] }
       ];
-
       var sdn = new Date(vm.startdate).getTime();
       var edn = new Date(vm.enddate).getTime();
       while (sdn <= edn) {
-        if (sdn == edn) {
-          vm.cats.push($filter('date')(sdn, 'yyyy-MM-dd'));
-          vm.chartData[0].data.push({ cat: $filter('date')(sdn, 'yyyy-MM-dd'), y: 0 });
-          vm.chartData[1].data.push({ cat: $filter('date')(sdn, 'yyyy-MM-dd'), y: 0 });
-          vm.chartData[2].data.push({ cat: $filter('date')(sdn, 'yyyy-MM-dd'), y: 0 });
-          vm.chartData[3].data.push({ cat: $filter('date')(sdn, 'yyyy-MM-dd'), y: 0 });
-          vm.chartData[4].data.push({ cat: $filter('date')(sdn, 'yyyy-MM-dd'), y: 110 });
-        }
-        else {
-          vm.cats.push($filter('date')(sdn, 'yyyy-MM-dd'));
-          vm.chartData[0].data.push({ cat: $filter('date')(sdn, 'yyyy-MM-dd'), y: 120 });
-          vm.chartData[1].data.push({ cat: $filter('date')(sdn, 'yyyy-MM-dd'), y: 0 });
-          vm.chartData[2].data.push({ cat: $filter('date')(sdn, 'yyyy-MM-dd'), y: 0 });
-          vm.chartData[3].data.push({ cat: $filter('date')(sdn, 'yyyy-MM-dd'), y: 120 });
-          vm.chartData[4].data.push({ cat: $filter('date')(sdn, 'yyyy-MM-dd'), y: 110 });
-        }
+        vm.cats.push($filter('date')(sdn, 'yyyy-MM-dd'));
+        vm.chartData[2].data.push({ cat: $filter('date')(sdn, 'yyyy-MM-dd'), y: 110 });
         sdn += (24 * 3600 * 1000);
 
       }
-
       for (var i = 0; i < tb.length; i++) {
-        for (var j = 0; j < vm.chartData.length - 1; j++) {
-          for (var k = 0; k < vm.chartData[j].data.length; k++) {
-            if (j == 1 && tb[i].machine == "SpinLine #136" && tb[i].item1 == vm.chartData[j].data[k].cat) {
-              vm.chartData[j].data[k].y = tb[i].textbox2;
-            }
-            else if (j == 2 && tb[i].machine == "SpinLine #236" && tb[i].item1 == vm.chartData[j].data[k].cat) {
-              vm.chartData[j].data[k].y = tb[i].textbox2;
-            }
-          }
-        }
-      }
-
-      for (var i = 0; i < arr.length; i++) {
         for (var j = 0; j < vm.chartData.length; j++) {
-          for (var k = 0; k < vm.chartData[j].data.length; k++) {
-            if (j == 0 && arr[i].Machine == "SPL101" && arr[i].startdate == vm.chartData[j].data[k].cat) {
-              vm.chartData[j].data[k].y -= arr[i].Duration_s_ / 3600 * 5;
-            }
-            else if (j == 3 && arr[i].Machine == "SPL102" && arr[i].startdate == vm.chartData[j].data[k].cat) {
-              vm.chartData[j].data[k].y -= arr[i].Duration_s_ / 3600 * 5;
-            }
+          if (j == 0 && tb[i].machine == "SpinLine #136") {
+            vm.chartData[j].data.push({ cat: tb[i].item1, y: tb[i].textbox2 });
+          }
+          else if (j == 1 && tb[i].machine == "SpinLine #236") {
+            vm.chartData[j].data.push({ cat: tb[i].item1, y: tb[i].textbox2 });
           }
         }
       }
@@ -92,14 +58,37 @@ define([], function () {
           type: 'column',
           height: 350,
         },
-        tooltip: { shared: true },
-        xAxis: { type: 'category', categories: vm.cats },
-        yAxis: {
-          title: {
-            text: "AEQ"
+        legend: {
+          itemStyle: {
+            fontSize: '30px'
           }
         },
-        title: { text: 'Termelt mennyiség' },
+        tooltip: { shared: true },
+        xAxis: {
+          type: 'category', categories: vm.cats, labels: {
+            style: {
+              fontSize: '30px'
+            }
+          }
+        },
+        yAxis: {
+          title: {
+            text: "AEQ",
+            style: {
+              fontSize: '30px'
+            }
+          },
+          labels: {
+            style: {
+              fontSize: '30px'
+            }
+          }
+        },
+        title: {
+          text: 'Termelt mennyiség', style: {
+            fontSize: '30px'
+          }
+        },
         series: vm.chartData
       };
     }
@@ -185,15 +174,38 @@ define([], function () {
           type: 'column',
           height: 350,
         },
-        plotOptions: { column: { stacking: "normal", grouping: true } },
-        tooltip: { shared: true },
-        xAxis: { type: 'category', categories: vm.categ },
-        yAxis: {
-          title: {
-            text: "Idő (óra)"
+        legend: {
+          itemStyle: {
+            fontSize: '30px'
           }
         },
-        title: { text: 'Állásidő eloszlás' },
+        plotOptions: { column: { stacking: "normal", grouping: true } },
+        tooltip: { shared: true },
+        xAxis: {
+          type: 'category', categories: vm.categ, labels: {
+            style: {
+              fontSize: '30px'
+            }
+          }
+        },
+        yAxis: {
+          title: {
+            text: "Idő (óra)",
+            style: {
+              fontSize: '30px'
+            }
+          },
+          labels: {
+            style: {
+              fontSize: '30px'
+            }
+          }
+        },
+        title: {
+          text: 'Állásidő eloszlás', style: {
+            fontSize: '30px'
+          }
+        },
         series: vm.chData
       };
     }
