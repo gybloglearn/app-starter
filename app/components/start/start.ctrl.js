@@ -85,7 +85,7 @@ define([], function () {
           }
         },
         title: {
-          text: 'Termelt mennyiség', style: {
+          text: 'termelt mennyiség', style: {
             fontSize: '30px'
           }
         },
@@ -202,7 +202,7 @@ define([], function () {
           }
         },
         title: {
-          text: 'Állásidő eloszlás', style: {
+          text: 'állásidő eloszlás', style: {
             fontSize: '30px'
           }
         },
