@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('potting', {
+		url: '/potting',
+		templateUrl: './app/components/potting/potting.html',
+		controller: 'pottingController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('fluxus', {
 		url: '/fluxus',
 		templateUrl: './app/components/fluxus/fluxus.html',

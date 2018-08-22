@@ -10,7 +10,9 @@ define([
   './uf/uf.ctrl',
   './services/uf.service',
   './fluxus/fluxus.ctrl',
-  './services/fluxus.service'
+  './services/fluxus.service',
+  './potting/potting.ctrl',
+  './services/potting.service'
 	/* files */
 ], function(
   configFunction,
@@ -24,7 +26,9 @@ define([
   ufController,
   ufService,
   fluxusController,
-  fluxusService
+  fluxusService,
+  pottingController,
+  pottingService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -42,5 +46,7 @@ define([
   app.service('ufService', ufService);
 	app.controller('fluxusController', fluxusController);
 	app.service('fluxusService', fluxusService);
+	app.controller('pottingController', pottingController);
+	app.service('pottingService', pottingService);
 		/* controllers */
 });
