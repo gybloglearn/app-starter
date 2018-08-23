@@ -12,6 +12,7 @@ define([], function () {
     var pihenonapok = ["2018-03-15", "2018-03-16", "2018-03-30", "2018-04-02", "2018-04-30", "2018-05-01", "2018-05-21", "2018-08-20", "2018-10-22", "2018-10-23", "2018-11-01", "2018-11-02", "2018-12-24", "2018-12-31"];
     vm.data = [];
     vm.diff = datediff;
+    vm.exportToCSV = exportToCSV;
     //vm.tablesave = tablesave;
 
     function datediff() {
@@ -118,12 +119,12 @@ define([], function () {
               vm.data[i].fmb = vm.data[i - 1].fmb;
               vm.data[i].fmc = vm.data[i - 1].fmc;
             }
-            else{
-              var dt=$filter('date')(new Date(vm.dates[0]).getTime()-24*3600*1000,'yyyy-MM-dd');
-              var fdesh=$filter('shiftfm')(1, dt);
-              var fdush=$filter('shiftfm')(2, dt);
-              var fejsh=$filter('shiftfm')(3, dt);
-              
+            else {
+              var dt = $filter('date')(new Date(vm.dates[0]).getTime() - 24 * 3600 * 1000, 'yyyy-MM-dd');
+              var fdesh = $filter('shiftfm')(1, dt);
+              var fdush = $filter('shiftfm')(2, dt);
+              var fejsh = $filter('shiftfm')(3, dt);
+
               if (fdesh == "A") {
                 vm.data[i].fma = "Délelőtt";
               }
@@ -133,7 +134,7 @@ define([], function () {
               else if (fdesh == "C") {
                 vm.data[i].fmc = "Délelőtt";
               }
-      
+
               if (fdush == "A") {
                 vm.data[i].fma = "Délután";
               }
@@ -143,7 +144,7 @@ define([], function () {
               else if (fdush == "C") {
                 vm.data[i].fmc = "Délután";
               }
-      
+
               if (fejsh == "A") {
                 vm.data[i].fma = "Éjszaka";
               }
@@ -162,22 +163,22 @@ define([], function () {
       //console.log(vm.dates);
     }
 
-    /*function tablesave() {
-      var doc = new jsPDF('l', 'pt', 'a4', true);
-      var specialElementHandlers = {
-        'exportTable': function (element, renderer) {
-          return true;
-        }
-      };
+    function exportToCSV() {
+      console.log(vm.data);
+      var content = "";
+      //content += ";;;Szakos;;;\r\n";
+      content += ";;UF;;;;Idöpontok;;F&M;;\r\n";
+      content += "Dátum;Nap;A;B;C;D;Orvosi rendelés;Bérszámfejtés;A;B;C\r\n";
+      for (var a = 0; a < vm.data.length; a++) {
+        content += vm.data[a].date + ";" + vm.data[a].day.replace('ő','ö') + ";" + vm.data[a].zwa.replace('ő','ö') + ";" + vm.data[a].zwb.replace('ő','ö') + ";" + vm.data[a].zwc.replace('ő','ö') + ";" + vm.data[a].zwd.replace('ő','ö') + ";" + vm.data[a].doctor + ";" + vm.data[a].client + ";" + vm.data[a].fma.replace('ő','ö') + ";" + vm.data[a].fmb.replace('ő','ö') + ";" + vm.data[a].fmc.replace('ő','ö') + ";" + ";\r\n";
+      }
 
-      doc.fromHTML($('#exportTable').html(), 15, 15, {
-        'width': 200,
-        'elementHandlers': specialElementHandlers
-      });
-      doc.save(vm.startdate + '-' + vm.enddate + '.pdf');
-    }*/
-
-
+      var hiddenElement = document.createElement('a');
+      hiddenElement.href = 'data:attachment/text;charset=ISO8859-2,' +  escape(content);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = 'Műszakrend' + vm.startdate + '-' + vm.enddate + '.csv';
+      hiddenElement.click();
+    }
 
     activate();
 
