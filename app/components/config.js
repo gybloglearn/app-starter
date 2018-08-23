@@ -3,11 +3,12 @@ define([], function () {
   function ConfigFunction($urlRouterProvider, $stateProvider) {
     $urlRouterProvider.otherwise('/');
 
+		var d = new Date().getTime().toString().substr(-5);
     //Add state to all routes
 
     $stateProvider.state('start', {
       url: '/',
-      templateUrl: './app/components/start/start.html',
+      templateUrl: './app/components/start/start.html' + '?' + d,
       controller: 'StartController',
       controllerAs: 'vm'
     });
