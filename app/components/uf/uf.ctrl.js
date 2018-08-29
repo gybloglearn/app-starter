@@ -55,8 +55,6 @@ define([], function () {
           console.log(vm.data);
           loadbundle()
         });
-        //console.log(vm.data);
-        //loadbundle();
       });
     }
 
@@ -93,7 +91,7 @@ define([], function () {
               vm.centri.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Centrifuge end', day: k[ki].SPL_end }), 'AEQ')) });
               vm.bp.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'BP end', day: k[ki].SPL_end }), 'AEQ')) });
 //              vm.grade.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Grade', day: k[ki].SPL_end }), 'AEQ')) });
-							var targ = 0;
+              var targ = 0;
 							switch($filter('date')(k[ki].SPL_end, "MM")){
 								case '01': targ = 60; break;
 								case '02': targ = 60; break;

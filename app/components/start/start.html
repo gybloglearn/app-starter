@@ -22,6 +22,87 @@
       </div>
       <my-chart id="chart" config="vm.chartconfig"></my-chart>
     </div>
-    <div class="module-footer"></div>
+    <div class="module-footer">
+      <!--Potting-->
+      <div ng-show="vm.mutat && user.displayname && (user.username=='212557160' || user.username=='212434909'||user.username=='502678184' || user.username=='212319674' || user.username=='113005432' || user.username=='113010453' || user.username=='113009480' || user.username=='212674695' || user.username=='212404564' || user.username=='113011028' || user.username=='113008226' || user.username=='113008995' || user.username=='212437547' || user.username=='113005514' || user.username=='212546986')">
+        <div class="col-sm-12" style="margin-top:20px">
+          <div class="input-group">
+            <span class="input-group-addon">Kezdő dátum</span>
+            <input type="text" class="form-control" ng-model="vm.startinfo">
+            <span class="input-group-addon">Vége dátum</span>
+            <input type="text" class="form-control" ng-model="vm.endinfo">
+            <span class="input-group-addon">Potting</span>
+            <select class="form-control" ng-model="vm.mch">
+              <option ng-repeat="pl in vm.pottings" value="{{pl}}">{{pl}}</option>
+            </select>
+            <span class="input-group-addon">Kategória</span>
+            <select class="form-control" ng-model="vm.cat">
+              <option ng-repeat="ct in vm.categories | filter:{'id':vm.mch}" value="{{ct.cat}}">{{ct.cat}}</option>
+            </select>
+            <span class="input-group-addon">Alkategória</span>
+            <select class="form-control" ng-model="vm.scat">
+              <option ng-repeat="sct in vm.subcategories | filter:{'main':vm.cat}" value="{{sct.sub}}">{{sct.sub}}</option>
+            </select>
+          </div>
+          <div class="input-group" style="margin-top:20px">
+            <span class="input-group-addon">Megjegyzés</span>
+            <textarea class="form-control" rows="4" ng-model="vm.descriptioninfo"></textarea>
+          </div>
+          <div>
+            <h3>Feltöltési segédlet</h3>
+            <p>Adatokat akkor lehet rögzíteni ha a következő kritériumoknak felelnek meg az input mezők:
+              <br> -vége dátumnak nagyobbnak kell lenni mint a kezdő dátumnak (mindkettő szerkeszthető kézzel,de a formátumnak
+              meg kell egyeznie az alábbival:yyyy-MM-dd HH:mm:mm)
+              <br> -pottingot kell választani ahol a hiba történt(statik/dinamik)
+              <br> -kategória mezőt kell választani ami a kieső idő okát jelenti,amennyiben nincs a listában úgy az egyéb mező
+              választásával a megjegyzés mezőbe lehet beírni az okot
+              <br> -alkategória mező választható,de ennek a kitöltése nem kötelező,a megjegyzés mező használható kiegészítésre is
+            </p>
+          </div>
+          <div class="col-sm-4" style="margin-top:10px">
+            <button class="btn btn-success" ng-click="vm.saveinfo()" ng-disabled="vm.mch=='' || vm.cat=='' || vm.startinfo>=vm.endinfo">Feltölt</button>
+            <button class="btn btn-primary" ng-click="vm.createinfodata={};vm.mutat=false">Mégse</button>
+          </div>
+        </div>
+      </div>
+      <!--Klórozó-->
+      <div ng-show="vm.mutatklor && user.displayname && (user.username=='212557160' || user.username=='212434909'||user.username=='502678184' || user.username=='212319674' || user.username=='113005432' || user.username=='113010453' || user.username=='113009480' || user.username=='212674695' || user.username=='212404564' || user.username=='113011028' || user.username=='113008226' || user.username=='113008995' || user.username=='212437547' || user.username=='113005514' || user.username=='212546986')">
+        <div class="col-sm-12" style="margin-top:20px">
+          <div class="input-group">
+            <span class="input-group-addon">Kezdő dátum</span>
+            <input type="text" class="form-control" ng-model="vm.startclor">
+            <span class="input-group-addon">Vége dátum</span>
+            <input type="text" class="form-control" ng-model="vm.endclor">
+            <span class="input-group-addon">Kategória</span>
+            <select class="form-control" ng-model="vm.clorcat">
+              <option ng-repeat="cct in vm.chlorcategories" value="cct">{{cct}}</option>
+            </select>
+            <!--span class="input-group-addon">Alkategória</span>
+            <select class="form-control" ng-model="vm.scat">
+              <option ng-repeat="sct in vm.subcategories | filter:{'main':vm.cat}" value="{{sct.sub}}">{{sct.sub}}</option>
+            </select-->
+          </div>
+          <div class="input-group" style="margin-top:20px">
+            <span class="input-group-addon">Megjegyzés</span>
+            <textarea class="form-control" rows="4" ng-model="vm.descriptioninfo"></textarea>
+          </div>
+          <div>
+            <h3>Feltöltési segédlet</h3>
+            <p>Adatokat akkor lehet rögzíteni ha a következő kritériumoknak felelnek meg az input mezők:
+              <br> -vége dátumnak nagyobbnak kell lenni mint a kezdő dátumnak (mindkettő szerkeszthető kézzel,de a formátumnak
+              meg kell egyeznie az alábbival:yyyy-MM-dd HH:mm:mm)
+              <br> -pottingot kell választani ahol a hiba történt(statik/dinamik)
+              <br> -kategória mezőt kell választani ami a kieső idő okát jelenti,amennyiben nincs a listában úgy az egyéb mező
+              választásával a megjegyzés mezőbe lehet beírni az okot
+              <br> -alkategória mező választható,de ennek a kitöltése nem kötelező,a megjegyzés mező használható kiegészítésre is
+            </p>
+          </div>
+          <div class="col-sm-4" style="margin-top:10px">
+            <button class="btn btn-success" ng-click="vm.saveclorinationinfo()" ng-disabled="vm.clorcat=='' || vm.startclor>=vm.endclor">Feltölt</button>
+            <button class="btn btn-primary" ng-click="vm.createinfodata={};vm.mutatklor=false">Mégse</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 </div>
