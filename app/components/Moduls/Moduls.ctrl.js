@@ -146,6 +146,22 @@ define([], function () {
       }
     }
 
+    vm.downloaddata = downloaddata;
+    function downloaddata(){
+      var content = "";
+      content += "Modul ID|Név|SheetMaker|SM Operátor|Kenés ID|Potting|Gél Prep. op.|Gél Prep. dátum|Gél Prep. szak|Ford. op.|Ford. dátum|Ford. szak|Kád|Bökés|Bökés/AEQ|Hiba megnevezése\r\n";
+      for(var i = 0; i < vm.moddate.length; i++){
+        if(vm.moddate[i].amount>vm.bokeshatar)
+        content += vm.moddate[i].modul_id1+"|"+vm.moddate[i].modtype+"|"+vm.moddate[i].sheetmaker+"|"+vm.moddate[i].smop+"|"+vm.moddate[i].kenesid+"|"+vm.moddate[i].potting+"|"+vm.moddate[i].gelprep+"|"+vm.moddate[i].geldate+"|"+vm.moddate[i].gelshift+"|"+vm.moddate[i].rot+"|"+vm.moddate[i].rotdate+"|"+vm.moddate[i].rotshift+"|"+vm.moddate[i].tank+"|"+vm.moddate[i].amount+"|"+vm.moddate[i].amount/vm.moddate[i].aeq+"|"+vm.moddate[i].KatName1+"\r\n";
+      }
+      //console.log(content);
+      var hiddenElement = document.createElement('a');
+      hiddenElement.href = 'data:attachment/text;charset=ISO8859-2,' +  escape(content);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = 'data_' + $filter('date')(new Date(), "yyyyMMddhhmm") + '.csv';
+      hiddenElement.click();
+    }
+
     activate();
 
     function activate() {

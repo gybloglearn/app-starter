@@ -9,7 +9,7 @@
       <div class="col-sm-6" style="margin-top:10px">
         <div class="input-group">
           <div class="input-group-btn">
-            <a href="" class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.mtfload">Frissítés</a>
+            <a href="" class="btn btn-primary" ng-click="vm.beallit()" ng-disabled="vm.mtfload">Frissítés</a>
           </div>
         </div>
       </div>
@@ -162,5 +162,240 @@
       </div>
     </div>
     <div class="module-footer"></div>
-  </section>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+          <h1>SM4</h1>
+          <table class="table  table-bordered">
+            <thead>
+              <tr>
+                <th ng-repeat="it in vm.smoperators4">
+                  {{it.operator}}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td ng-repeat="i in vm.smoperators4">
+                  <ul ng-repeat="ro in i.data| limitTo : 50  track by $index">
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.amount<=30?'':'red'}}">
+                      {{ro.amount}}
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-3">
+          <h1>SM5</h1>
+          <table class="table  table-bordered">
+            <thead>
+              <tr>
+                <th ng-repeat="it in vm.smoperators5">
+                  {{it.operator}}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td ng-repeat="i in vm.smoperators5">
+                  <ul ng-repeat="ro in i.data| limitTo : 50  track by $index">
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.amount<=30?'':'red'}}">
+                      {{ro.amount}}
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-3">
+          <h1>SM6</h1>
+          <table class="table  table-bordered">
+            <thead>
+              <tr>
+                <th ng-repeat="it in vm.smoperators6">
+                  {{it.operator}}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td ng-repeat="i in vm.smoperators6">
+                  <ul ng-repeat="ro in i.data| limitTo : 50  track by $index">
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.amount<=30?'':'red'}}">
+                      {{ro.amount}}
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-3">
+          <h1>SM7</h1>
+          <table class="table  table-bordered">
+            <thead>
+              <tr>
+                <th ng-repeat="it in vm.smoperators7">
+                  {{it.operator}}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td ng-repeat="i in vm.smoperators7">
+                  <ul ng-repeat="ro in i.data| limitTo : 50  track by $index">
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.amount<=30?'':'red'}}">
+                      {{ro.amount}}
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <h1>SM8</h1>
+          <table class="table  table-bordered">
+            <thead>
+              <tr>
+                <th ng-repeat="it in vm.smoperators8">
+                  {{it.operator}}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td ng-repeat="i in vm.smoperators8">
+                  <ul ng-repeat="ro in i.data| limitTo : 50  track by $index">
+                    <li style="list-style-type:none;text-align: center;background-color:{{ro.amount<=30?'':'red'}}">
+                      {{ro.amount}}
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-6">
+          <h1>Potting3</h1>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th style="background-color: #0000ff" ng-repeat="it in vm.potting3geloperators">
+                {{it.operator}}
+              </th>
+              <th style="background-color: #993300" ng-repeat="it in vm.potting3uretaoperators">
+                {{it.operator}}
+              </th>
+              <th style="background-color: #008800" ng-repeat="it in vm.potting3rotoperators">
+                {{it.operator}}
+              </th>
+              <th style="background-color: #993300" ng-repeat="it in vm.potting3uretfoperators">
+                {{it.operator}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td ng-repeat="i in vm.potting3geloperators">
+                <ul ng-repeat="ro in i.data| limitTo : 50  track by $index">
+                  <li style="list-style-type:none;text-align: center;background-color:{{ro.amount<=30?'':'red'}}">
+                    {{ro.amount}}
+                  </li>
+                </ul>
+              </td>
+              <td ng-repeat="i in vm.potting3uretaoperators">
+                <ul ng-repeat="ro in i.data| limitTo : 50  track by $index">
+                  <li style="list-style-type:none;text-align: center;background-color:{{ro.amount<=30?'':'red'}}">
+                    {{ro.amount}}
+                  </li>
+                </ul>
+              </td>
+              <td ng-repeat="i in vm.potting3rotoperators">
+                <ul ng-repeat="ro in i.data| limitTo : 50  track by $index">
+                  <li style="list-style-type:none;text-align: center;background-color:{{ro.amount<=30?'':'red'}}">
+                    {{ro.amount}}
+                  </li>
+                </ul>
+              </td>
+              <td ng-repeat="i in vm.potting3uretfoperators">
+                <ul ng-repeat="ro in i.data| limitTo : 50  track by $index">
+                  <li style="list-style-type:none;text-align: center;background-color:{{ro.amount<=30?'':'red'}}">
+                    {{ro.amount}}
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-6">
+          <h1>Potting4</h1>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th style="background-color: #0000ff" ng-repeat="it in vm.potting4geloperators">
+                {{it.operator}}
+              </th>
+              <th style="background-color: #993300" ng-repeat="it in vm.potting4uretaoperators">
+                {{it.operator}}
+              </th>
+              <th style="background-color: #008800" ng-repeat="it in vm.potting4rotoperators">
+                {{it.operator}}
+              </th>
+              <th style="background-color: #993300" ng-repeat="it in vm.potting4uretfoperators">
+                {{it.operator}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td ng-repeat="i in vm.potting4geloperators">
+                <ul ng-repeat="ro in i.data| limitTo : 50  track by $index">
+                  <li style="list-style-type:none;text-align: center;background-color:{{ro.amount<=30?'':'red'}}">
+                    {{ro.amount}}
+                  </li>
+                </ul>
+              </td>
+              <td ng-repeat="i in vm.potting4uretaoperators">
+                <ul ng-repeat="ro in i.data| limitTo : 50  track by $index">
+                  <li style="list-style-type:none;text-align: center;background-color:{{ro.amount<=30?'':'red'}}">
+                    {{ro.amount}}
+                  </li>
+                </ul>
+              </td>
+              <td ng-repeat="i in vm.potting4rotoperators">
+                <ul ng-repeat="ro in i.data| limitTo : 50  track by $index">
+                  <li style="list-style-type:none;text-align: center;background-color:{{ro.amount<=30?'':'red'}}">
+                    {{ro.amount}}
+                  </li>
+                </ul>
+              </td>
+              <td ng-repeat="i in vm.potting4uretfoperators">
+                <ul ng-repeat="ro in i.data| limitTo : 50  track by $index">
+                  <li style="list-style-type:none;text-align: center;background-color:{{ro.amount<=30?'':'red'}}">
+                    {{ro.amount}}
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+</section>
+>>>>>>> 9d2fd472a6e06ab3843475e85bb07ad1c84291fd
 </div>
