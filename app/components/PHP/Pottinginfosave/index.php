@@ -2,6 +2,7 @@
 //potting mentés
 class info{
     function get(){
+        //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Potting','postgres','abcd');
         $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
         $res = $db->exec("SELECT * FROM info");
         $resault=[];
@@ -16,6 +17,7 @@ class info{
     {
         $data=json_decode($app['BODY']);
         echo json_encode($data);
+        //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Potting','postgres','abcd');
         $db = new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
         $mapper=new \DB\SQL\Mapper($db,'info');
         
@@ -38,6 +40,7 @@ class info{
     function put($app,$params)
     {
         $data=json_decode($app['BODY']);
+        //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Potting','postgres','abcd');
         $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
         $mapper=new \DB\SQL\Mapper($db,'info');
         $info=$mapper->load(Array('id=?',$params['id']));
@@ -55,6 +58,7 @@ class info{
     }
     function delete($app,$params)
     {
+        //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Potting','postgres','abcd');
         $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
         $mapper=new DB\SQL\Mapper($db,'info');
         $info=$mapper->find(Array('id=?',$params['id']));
@@ -68,6 +72,7 @@ class info{
 //klórozó mentés
 class clorinationinfo{
     function get(){
+        //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Potting','postgres','abcd');
         $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
         $res = $db->exec("SELECT * FROM clorinationinfo");
         $resault=[];
@@ -82,6 +87,7 @@ class clorinationinfo{
     {
         $data=json_decode($app['BODY']);
         echo json_encode($data);
+        //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Potting','postgres','abcd');
         $db = new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
         $mapper=new \DB\SQL\Mapper($db,'clorinationinfo');
         
@@ -103,6 +109,7 @@ class clorinationinfo{
     function put($app,$params)
     {
         $data=json_decode($app['BODY']);
+        //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Potting','postgres','abcd');
         $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
         $mapper=new \DB\SQL\Mapper($db,'clorinationinfo');
         $info=$mapper->load(Array('id=?',$params['id']));
@@ -120,6 +127,7 @@ class clorinationinfo{
     }
     function delete($app,$params)
     {
+        //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Potting','postgres','abcd');
         $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
         $mapper=new DB\SQL\Mapper($db,'clorinationinfo');
         $info=$mapper->find(Array('id=?',$params['id']));

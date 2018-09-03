@@ -24,7 +24,7 @@
     </div>
     <div class="module-footer">
       <!--Potting-->
-      <div ng-show="vm.mutat && user.displayname && (user.username=='212557160' || user.username=='212434909'||user.username=='502678184' || user.username=='212319674' || user.username=='113005432' || user.username=='113010453' || user.username=='113009480' || user.username=='212674695' || user.username=='212404564' || user.username=='113011028' || user.username=='113008226' || user.username=='113008995' || user.username=='212437547' || user.username=='113005514' || user.username=='212546986')">
+      <div ng-show="vm.mutat && user.displayname && (user.username=='212434909'||user.username=='502678184' || user.username=='212360352')">
         <div class="col-sm-12" style="margin-top:20px">
           <div class="input-group">
             <span class="input-group-addon">Kezdő dátum</span>
@@ -60,13 +60,13 @@
             </p>
           </div>
           <div class="col-sm-4" style="margin-top:10px">
-            <button class="btn btn-success" ng-click="vm.saveinfo()" ng-disabled="vm.mch=='' || vm.cat=='' || vm.startinfo>=vm.endinfo">Feltölt</button>
+            <button class="btn btn-success" ng-click="vm.saveinfo();vm.goodsave()" ng-disabled="vm.mch=='' || vm.cat=='' || vm.startinfo>=vm.endinfo">Feltölt</button>
             <button class="btn btn-primary" ng-click="vm.createinfodata={};vm.mutat=false">Mégse</button>
           </div>
         </div>
       </div>
       <!--Klórozó-->
-      <div ng-show="vm.mutatklor && user.displayname && (user.username=='212557160' || user.username=='212434909'||user.username=='502678184' || user.username=='212319674' || user.username=='113005432' || user.username=='113010453' || user.username=='113009480' || user.username=='212674695' || user.username=='212404564' || user.username=='113011028' || user.username=='113008226' || user.username=='113008995' || user.username=='212437547' || user.username=='113005514' || user.username=='212546986')">
+      <div ng-show="vm.mutatklor && user.displayname && (user.username=='212434909'||user.username=='502678184' || user.username=='212360352')">
         <div class="col-sm-12" style="margin-top:20px">
           <div class="input-group">
             <span class="input-group-addon">Kezdő dátum</span>
@@ -98,7 +98,7 @@
             </p>
           </div>
           <div class="col-sm-4" style="margin-top:10px">
-            <button class="btn btn-success" ng-click="vm.saveclorinationinfo()" ng-disabled="vm.clorcat=='' || vm.startclor>=vm.endclor">Feltölt</button>
+            <button class="btn btn-success" ng-click="vm.saveclorinationinfo();vm.goodsave()" ng-disabled="vm.clorcat=='' || vm.startclor>=vm.endclor">Feltölt</button>
             <button class="btn btn-primary" ng-click="vm.createinfodata={};vm.mutatklor=false">Mégse</button>
           </div>
         </div>

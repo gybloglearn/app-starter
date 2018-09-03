@@ -50,8 +50,6 @@ define([], function () {
       { main: "Robot", sub: "Nem teszi le az öntőfejet" },
       { main: "Robot", sub: "9-es ág öntési út állítás" },
       { main: "Robot", sub: "Lefagy" },
-      { main: "Robot", sub: "Lefagy" },
-      { main: "Robot", sub: "Lefagy" },
       { main: "Uretánhőmérséklet", sub: "magas" },
       { main: "Uretánhőmérséklet", sub: "alacsony" },
       { main: "Anyaghiány", sub: "Nedves bundle" },
@@ -62,6 +60,7 @@ define([], function () {
     vm.load = false;
     vm.loadetf = loadetf;
     vm.saveinfo = saveinfo;
+    vm.goodsave=goodsave;
     vm.saveclorinationinfo=saveclorinationinfo;
 
     function loadetf() {
@@ -195,8 +194,9 @@ define([], function () {
     function createinfo(categ, name) {
       if (name == "Potting flip") {
         vm.createinfodata = {};
-        vm.actplace = "";
+        vm.mch = "";
         vm.cat = "";
+        vm.scat="";
         vm.descriptioninfo = "";
         vm.startinfo = vm.startdate + " " + categ + ":" + "00";
         vm.endinfo = vm.startdate + " " + categ + ":" + "00";
@@ -234,10 +234,10 @@ define([], function () {
       ufService.postpotting(vm.createinfodata).then(function (resp) {
         vm.showmessage = true;
         vm.createinfodata = {};
-        $timeout(function () {
+       /* $timeout(function () {
           vm.showmessage = false;
           vm.showtitle = '';
-        }, 5000);
+        }, 5000);*/
       });
       //loadinfo();
       vm.mutat = false;
@@ -259,13 +259,17 @@ define([], function () {
       ufService.postclorination(vm.createinfodata).then(function (resp) {
         vm.showmessage = true;
         vm.createinfodata = {};
-        $timeout(function () {
+        /*$timeout(function () {
           vm.showmessage = false;
           vm.showtitle = '';
-        }, 5000);
+        }, 5000);*/
       });
       vm.mutatklor = false;
     }
+
+    function goodsave() {
+      alert("Mentés sikeres!");
+  }
 
 
     activate();
