@@ -2,7 +2,7 @@
 //potting mentés
 class info{
     function get(){
-        $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','albano','albano');
+        $db=new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Potting','postgres','abcd');
         $res = $db->exec("SELECT * FROM info");
         $resault=[];
         foreach($res as $k=>$v){
@@ -16,7 +16,7 @@ class info{
     {
         $data=json_decode($app['BODY']);
         echo json_encode($data);
-        $db = new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','albano','albano');
+        $db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Potting','postgres','abcd');
         $mapper=new \DB\SQL\Mapper($db,'info');
         
         $mapper->id=$data->id; //azonosító
@@ -38,7 +38,7 @@ class info{
     function put($app,$params)
     {
         $data=json_decode($app['BODY']);
-        $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','albano','albano');
+        $db=new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Potting','postgres','abcd');
         $mapper=new \DB\SQL\Mapper($db,'info');
         $info=$mapper->load(Array('id=?',$params['id']));
         $info->start=$data->start;
@@ -55,7 +55,7 @@ class info{
     }
     function delete($app,$params)
     {
-        $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','albano','albano');
+        $db=new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Potting','postgres','abcd');
         $mapper=new DB\SQL\Mapper($db,'info');
         $info=$mapper->find(Array('id=?',$params['id']));
         $info[0]->erase();
@@ -68,7 +68,7 @@ class info{
 //klórozó mentés
 class clorinationinfo{
     function get(){
-        $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','albano','albano');
+        $db=new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Potting','postgres','abcd');
         $res = $db->exec("SELECT * FROM clorinationinfo");
         $resault=[];
         foreach($res as $k=>$v){
@@ -82,7 +82,7 @@ class clorinationinfo{
     {
         $data=json_decode($app['BODY']);
         echo json_encode($data);
-        $db = new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','albano','albano');
+        $db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Potting','postgres','abcd');
         $mapper=new \DB\SQL\Mapper($db,'clorinationinfo');
         
         $mapper->id=$data->id; //azonosító
@@ -103,7 +103,7 @@ class clorinationinfo{
     function put($app,$params)
     {
         $data=json_decode($app['BODY']);
-        $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','albano','albano');
+        $db=new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Potting','postgres','abcd');
         $mapper=new \DB\SQL\Mapper($db,'clorinationinfo');
         $info=$mapper->load(Array('id=?',$params['id']));
         $info->start=$data->start;
@@ -120,7 +120,7 @@ class clorinationinfo{
     }
     function delete($app,$params)
     {
-        $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','albano','albano');
+        $db=new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Potting','postgres','abcd');
         $mapper=new DB\SQL\Mapper($db,'clorinationinfo');
         $info=$mapper->find(Array('id=?',$params['id']));
         $info[0]->erase();
