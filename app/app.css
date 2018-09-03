@@ -248,3 +248,7 @@
 						.bglgrs {
 							background-color: lightgreen;
 						}
+						ul {
+							margin: 0;
+							padding: 0;
+						}

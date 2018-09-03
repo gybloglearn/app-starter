@@ -86,19 +86,33 @@ define([], function () {
     }
 
     vm.downloaddata = getData;
-    function getData(){
+		function getData(){
+			var content = "";
+			content += "modul|type|oszlop|sor|tank|darab|sm|smop|potting|gelprep_op|gelprep_dt|ford_op|ford_dti|hiba_megnevezes\r\n";
+			for(var i = 0; i< vm.data.length;i++){
+				if(vm.data[i].sheetmaker) {
+        	content += vm.data[i].modul_id1+"|"+vm.data[i].modtype+"|"+vm.data[i].Oszlop+"|"+vm.data[i].Sor+"|"+vm.data[i].tank+"|"+parseInt(vm.data[i].bt_kat_db1)+"|"+vm.data[i].sheetmaker+"|"+vm.data[i].smop+"|"+vm.data[i].potting+"|"+vm.data[i].gelprep+"|"+vm.data[i].geldate+"|"+vm.data[i].rot+"|"+vm.data[i].rotdate+"|"+vm.data[i].KatName1+"\r\n";
+				}
+			}
+			var hiddenElement = document.createElement('a');
+			hiddenElement.href="data:attachment/csv;charset=utf-8," + escape(content);
+			hiddenElement.target="_blank";
+			hiddenElement.download="bp_data.csv";
+			hiddenElement.click();
+		}
+    /*function getData(){
       var content = "";
-      content += "modul,type,o,s,tank,kenes,sm,smop,potting,gelprep_op,gelprep_dt,ford_op,ford_dt\r\n";
+      content += "modul|type|oszlop|sor|tank|darab|sm|smop|potting|gelprep_op|gelprep_dt|ford_op|ford_dt| \r\n";
       for(var i = 0; i < vm.data.length; i++){
-        content += vm.data[i].modul_id1+","+vm.data[i].modtype+","+vm.data[i].Oszlop+","+vm.data[i].Sor+","+vm.data[i].tank+","+vm.data[i].sheetmaker+","+vm.data[i].smop+","+vm.data[i].potting+","+vm.data[i].gelprep+","+vm.data[i].geldate+","+vm.data[i].rot+","+vm.data[i].rotdate+"\r\n";
+        content += vm.data[i].modul_id1+"|"+vm.data[i].modtype+"|"+vm.data[i].Oszlop+"|"+vm.data[i].Sor+"|"+vm.data[i].tank+"|"+vm.data[i].bt_kat_db1+"|"+vm.data[i].sheetmaker+"|"+vm.data[i].smop+"|"+vm.data[i].potting+"|"+vm.data[i].gelprep+"|"+vm.data[i].geldate+"|"+vm.data[i].rot+"|"+vm.data[i].rotdate+"| \r\n";
       }
-      //console.log(content);
+console.log(content);
       var hiddenElement = document.createElement('a');
-      hiddenElement.href = 'data:attachment/csv;charset=iso-8859-1,' + encodeURI(content);
+      hiddenElement.href = 'data:attachment/txt;charset=iso-8859-1,' + encodeURI(content);
       hiddenElement.target = '_blank';
-      hiddenElement.download = 'data_' + $filter('date')(new Date(), "yyyyMMddHHmm") + '.csv';
+      hiddenElement.download = 'bp_bt_data.txt';
       hiddenElement.click();
-    }
+    }*/
     function addShift(it) {
       var num = new Date(it).getHours() * 60 + new Date(it).getMinutes();
       var shiftnum = 0;

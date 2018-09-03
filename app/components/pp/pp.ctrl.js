@@ -53,18 +53,19 @@ define([], function () {
         });
         vm.chartconf = {
           chart: { type: 'column', spacingBottom: 30 },
-          plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0 } },
+          plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0} },
           tooltip: { shared: true },
           title: { text: 'Parkoló pálya' },
           xAxis: { type: 'category', labels: { rotation: -90, useHTML: true, y: 15, formatter: function () { return '<span style="font-size:1em">' + this.value + '<span>' } } },
+						yAxis: {stackLabels: {enabled: true, style: {fontSize: "14px", fontWeigth: "bold"}}},
           series: [
             { name: "Szakos elvégzett", color: "#46ad00", data: szak },
             { name: "2napja elvégzett", color: "#ff9821", data: nap2 },
             { name: "2 napnál régebb", color: "#de2533", data: nap2s },
             { name: "1 hétnél régebb", color: "#333333", data: het1s }
           ],
-          drilldown: { series: drill, "cursor": "pointer", "color": "#003399", "fontWeight": "bold", "textDecoration": "none" }
-        }
+          drilldown: { series: drill, "cursor": "pointer", "color": "#003399", "fontWeight": "bold", "textDecoration": "none"}
+					}
       });
     }
 

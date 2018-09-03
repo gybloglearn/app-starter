@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('bokesgroup', {
+		url: '/bokesgroup',
+		templateUrl: './app/components/bokesgroup/bokesgroup.html',
+		controller: 'bokesgroupController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('x3week', {
 		url: '/x3week',
 		templateUrl: './app/components/x3week/x3week.html',

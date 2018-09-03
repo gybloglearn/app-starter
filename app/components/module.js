@@ -38,6 +38,8 @@ define([
   './map/map.ctrl',
   './Moduls/Moduls.ctrl'
 	, './x3week/x3week.ctrl'
+	, './bokesgroup/bokesgroup.ctrl'
+	, './services/bokesgroup.service'
 	/* files */
 ], function(
   configFunction,
@@ -79,6 +81,8 @@ define([
   mapController,
   ModulsController
 	, x3weekController
+	, bokesgroupController
+	, bokesgroupService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -123,5 +127,7 @@ define([
 	app.service('reworksService', reworksService);
 	app.controller('ModulsController', ModulsController);
 		app.controller('x3weekController', x3weekController);
+		app.controller('bokesgroupController', bokesgroupController);
+		app.service('bokesgroupService', bokesgroupService);
 		/* controllers */
 });

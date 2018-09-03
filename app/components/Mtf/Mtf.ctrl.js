@@ -298,7 +298,7 @@ define([], function () {
     function targetaeq() {
       var target = [];
       for (var i = 0; i < 7; i++) {
-        target.push(225);
+        target.push(235*1.005);
       }
       return target;
     }
