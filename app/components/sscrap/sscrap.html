@@ -74,7 +74,7 @@
               <div class="col-sm-offset-3 col-sm-1">
                 <h5>{{item.id}}</h5>
               </div>
-              <div class="col-sm-2"><span ng-if="(vm.sm | filter: {date:date.date, shiftnum:sh, id:item.id}).length == 1">{{item.type}}</span></div>
+              <div class="col-sm-2"><span ng-if="(vm.sm | filter: {date:date.date, shiftnum:sh, id:item.id}).length == 1">{{item.PartGroup_Name}}</span></div>
               <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'Totalsheets' | number:0}}</div>
               <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'Goodsheets' | number:0}}</div>
               <div class="col-sm-1">{{vm.sm | filter:{id: item.id, date: date.date, shiftnum: sh} | sumField: 'sumaeq' | number:2}}</div>
