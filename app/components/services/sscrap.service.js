@@ -11,14 +11,7 @@ define([], function () {
     return service;
 
     ///////////
-
-    /*function getsheet(start, end, mch) {
-      var req = {
-        method: 'GET',
-        url: 'app/components/PHP/ZW500_SM.php?startdate=' + start + '&enddate=' + end + '&report_id=' + mch
-      };
-      return $http(req);
-    }*/
+    
     function getpartnumber() {
       var req = {
         method: 'GET',

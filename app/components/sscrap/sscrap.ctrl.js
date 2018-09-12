@@ -33,20 +33,19 @@ define([], function () {
           for (var k = 0; k < vm.aeqs.length; k++) {
             if (response.data[j].type == vm.aeqs[k].id) {
               response.data[j].aeq = parseFloat(vm.aeqs[k].aeq);
-              response.data[j].sheets = parseInt(vm.aeqs[k].sheets);
             }
           }
-          response.data[j].sumaeq = response.data[j].Totalsheets / response.data[j].sheets * response.data[j].aeq;
-          response.data[j].goodaeq = (response.data[j].Totalsheets - response.data[j].ScrapSheets) / response.data[j].sheets * response.data[j].aeq;
-          response.data[j].modul = Math.floor(response.data[j].Totalsheets / response.data[j].sheets);
-          response.data[j].lsh = (response.data[j].Totalsheets - response.data[j].modul * response.data[j].sheets);
+          response.data[j].sumaeq = response.data[j].Totalsheets / response.data[j].SheetNum * response.data[j].aeq;
+          response.data[j].goodaeq = (response.data[j].Totalsheets - response.data[j].ScrapSheets) / response.data[j].SheetNum * response.data[j].aeq;
+          response.data[j].modul = Math.floor(response.data[j].Totalsheets / response.data[j].SheetNum);
+          response.data[j].lsh = (response.data[j].Totalsheets - response.data[j].modul * response.data[j].SheetNum);
           vm.sm.push(response.data[j]);
         }
-        console.log(response.data);
+        scrapload();
       });
     }
 
-    /*function scrapload() {
+    function scrapload() {
       sscrapService.getscrap(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
         for (var i = 0; i < vm.sm.length; i++) {
           vm.sm[i].bad = 0;
@@ -58,14 +57,15 @@ define([], function () {
               response.data[j].chem = "CS-D13 CP5";
             }
 
-            if (vm.sm[i].date == response.data[j].day && vm.sm[i].shift == response.data[j].shift && vm.sm[i].id.includes(response.data[j].sm) && (vm.sm[i].type == response.data[j].chem || vm.sm[i].type == "DX" && response.data[j].chem == "D12 FLOW")) {
+            if (vm.sm[i].Day == response.data[j].day && vm.sm[i].shift == response.data[j].shift && vm.sm[i].MachineName.includes(response.data[j].sm) && (vm.sm[i].PartGroup_Name == response.data[j].chem || vm.sm[i].PartGroup_Name == "DX" && response.data[j].chem == "D12 FLOW")) {
               vm.sm[i].bad += response.data[j].pc;
             }
           }
+          //console.log(vm.sm[i]);
         }
         vm.loading = false;
       });
-    }*/
+    }
 
     activate();
 
