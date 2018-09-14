@@ -420,7 +420,7 @@ define([], function () {
           xAxis: { type: 'category', categories: xDays },
           tooltip: { shared: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.2f} %</span> ({point.min:.0f} perc)</span><br/>' },
           yAxis: [
-            { max: 100, min: 50, title: { text: "Elérhetősgi adatok" } },
+            { max: 100, title: { text: "Elérhetősgi adatok" } },
             { opposite: true, title: { text: "AEQ és Lapselejt DB" } }
           ],
           legend: {layout: "vertical", floating: false},
