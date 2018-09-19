@@ -35,18 +35,20 @@ define([], function () {
         for (var i = 0; i < vm.dt.length; i++) {
           for (var j = 0; j < vm.chartdata.length; j++) {
             if (vm.dt[i].MachineName == vm.chartdata[j].name) {
-              if (vm.dt[i].CL_End != "") {
-                var xkezd = new Date(vm.dt[i].CL_Start).getTime();
-                var xvege = new Date(vm.dt[i].CL_End).getTime();
-              }
-              vm.chartdata[j].data.push({ y: vm.chartdata[j].val, x: xkezd, x2: xvege, JobID: vm.dt[i].JobID });
-              if (i > 0) {
-                if (vm.dt[i - 1].CL_End != "") {
-                  var xkieso = new Date(vm.dt[i - 1].CL_End).getTime();
+              if (vm.dt[i].CL_End != vm.dt[i].CL_Start) {
+                if (vm.dt[i].CL_End != "") {
+                  var xkezd = new Date(vm.dt[i].CL_Start).getTime();
+                  var xvege = new Date(vm.dt[i].CL_End).getTime();
                 }
-                vm.chartdata[vm.chartdata.length - 1].data.push({ y: vm.chartdata[j].val, x2: xkezd, x: xkieso });
+                vm.chartdata[j].data.push({ y: vm.chartdata[j].val, x: xkezd, x2: xvege, JobID: vm.dt[i].JobID });
+                if (i > 0) {
+                  if (vm.dt[i - 1].CL_End != "") {
+                    var xkieso = new Date(vm.dt[i - 1].CL_End).getTime();
+                  }
+                  vm.chartdata[vm.chartdata.length - 1].data.push({ y: vm.chartdata[j].val, x2: xkezd, x: xkieso });
+                }
+                setChart(vm.chartdata);
               }
-              setChart(vm.chartdata);
             }
           }
         }
@@ -61,7 +63,7 @@ define([], function () {
         },
         xAxis: {
           type: 'datetime',
-          tickInterval: 3600 * 1000,
+          //tickInterval: 3600 * 1000,
         },
         yAxis: { title: { text: 'CL' }, min: 0, max: 8, categories: ['CL4', 'CL5', 'CL6', 'CL7', 'CL8', 'CL11', 'CL12', 'CL13', 'CL14'] },
         legend: { floating: false, enabled: false, align: 'top' },

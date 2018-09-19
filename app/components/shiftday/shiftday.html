@@ -1,0 +1,187 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center" ng-hide="vm.tobbnapos">Szakos jelentés {{vm.date}}</h1>
+      <ul class="nav nav-tabs" style="margin-top:10px">
+        <li ng-repeat="item in vm.allgroup track by $index">
+          <a data-toggle="tab" href="" ng-click="vm.actgroup=item" ng-hide="vm.loading">{{item}}</a>
+        </li>
+      </ul>
+      <h1 class="text-center" style="margin-top:10px">{{vm.actgroup}}</h1>
+      <div class="col-sm-5" style="margin-top:10px">
+        <div class="input-group">
+          <span class="input-group-addon">Dátum:</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.date" ng-change="vm.beallit()" setdate="0d" end="{{vm.edate}}">
+          <!--div class="input-group-btn">
+						<a href="" class="btn btn-primary" ng-click="vm.beallit()" ng-disabled="vm.dis">Betöltés</a>
+					</div-->
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="progress progress-info progress-striped active" ng-hide="!vm.loading">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Betöltés</p>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <h1>Délelőtt-Szak: {{vm.szak_de}}</h1>
+      </div>
+      <div class="row" style="margin-top:30px">
+        <div class="col-sm-6">
+          <h1 class="text-center" style="font-size:6em">{{vm.data|filter:{'Group':vm.actgroup}|filter:{'Start_Day':vm.date}|filter:{'Start_Shift':'1'} |sumField:'amount'|number:0}}
+            <br>
+            <small style="font-size:20px">db</small>
+          </h1>
+          <h2 class="text-center">
+            {{vm.data|filter:{'Group':vm.actgroup}|filter:{'Start_Day':vm.date}|filter:{'Start_Shift':'1'} |sumField:'aeq'|number:2}}
+            <small>AEQ</small>
+          </h2>
+          <h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#clor_de_IN">KLÓROZÓ BE részletek
+            <i class="icon-chevron-right"></i>
+          </h3>
+          <div class="collapse" id="clor_de_IN">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th>Cikkszám</th>
+                  <th>Típus</th>
+                  <th>Darab</th>
+                  <th>AEQ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in (vm.data| unique:'cikk')" ng-show="(vm.data | filter:{'cikk':item.cikk,'Group':vm.actgroup,'Start_Day':vm.date,'Start_Shift':'1'}| sumField:
+                'amount')>0" class="ng-scope">
+                  <td>{{item.cikk}}</td>
+                  <td>{{item.chem}}</td>
+                  <td>{{ vm.data | filter:{'cikk':item.cikk,'Group':vm.actgroup,'Start_Day':vm.date,'Start_Shift':'1'}| sumField:
+                    'amount'| number:0}}</td>
+                  <td>{{ vm.data | filter:{'cikk':item.cikk,'Group':vm.actgroup,'Start_Day':vm.date,'Start_Shift':'1'}| sumField:
+                    'aeq'| number:2}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <h1 class="text-center" style="font-size:6em">{{vm.data|filter:{'Group':vm.actgroup}|filter:{'End_Day':vm.date}|filter:{'End_Shift':'1'} |sumField:'amount'|number:0}}
+            <br>
+            <small style="font-size:20px">db</small>
+          </h1>
+          <h2 class="text-center">
+            {{vm.data|filter:{'Group':vm.actgroup}|filter:{'End_Day':vm.date}|filter:{'End_Shift':'1'} |sumField:'aeq'|number:2}}
+            <small>AEQ</small>
+          </h2>
+          <h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#clor_de_OUT">KLÓROZÓ KI részletek
+            <i class="icon-chevron-right"></i>
+          </h3>
+          <div class="collapse" id="clor_de_OUT">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th>Cikkszám</th>
+                  <th>Típus</th>
+                  <th>Darab</th>
+                  <th>AEQ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in (vm.data| unique:'cikk')" ng-show="(vm.data | filter:{'cikk':item.cikk,'Group':vm.actgroup,'End_Day':vm.date,'End_Shift':'1'}| sumField:
+                'amount')>0" class="ng-scope">
+                  <td>{{item.cikk}}</td>
+                  <td>{{item.chem}}</td>
+                  <td>{{ vm.data | filter:{'cikk':item.cikk,'Group':vm.actgroup,'End_Day':vm.date,'End_Shift':'1'}| sumField:
+                    'amount'| number:0}}</td>
+                  <td>{{ vm.data | filter:{'cikk':item.cikk,'Group':vm.actgroup,'End_Day':vm.date,'End_Shift':'1'}| sumField:
+                    'aeq'| number:2}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <h1>Éjszaka-Szak: {{vm.szak_ej}}</h1>
+      </div>
+      <div class="row" style="margin-top:30px">
+        <div class="col-sm-6">
+          <h1 class="text-center" style="font-size:6em">{{vm.data|filter:{'Group':vm.actgroup}|filter:{'Start_Day':vm.date}|filter:{'Start_Shift':'3'} |sumField:'amount'|number:0}}
+            <br>
+            <small style="font-size:20px">db</small>
+          </h1>
+          <h2 class="text-center">
+            {{vm.data|filter:{'Group':vm.actgroup}|filter:{'Start_Day':vm.date}|filter:{'Start_Shift':'3'} |sumField:'aeq'|number:2}}
+            <small>AEQ</small>
+          </h2>
+          <h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#clor_ej_IN">KLÓROZÓ BE részletek
+            <i class="icon-chevron-right"></i>
+          </h3>
+          <div class="collapse" id="clor_ej_IN">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th>Cikkszám</th>
+                  <th>Típus</th>
+                  <th>Darab</th>
+                  <th>AEQ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in (vm.data| unique:'cikk')" ng-show="(vm.data | filter:{'cikk':item.cikk,'Group':vm.actgroup,'Start_Day':vm.date,'Start_Shift':'3'}| sumField:
+                'amount')>0" class="ng-scope">
+                  <td>{{item.cikk}}</td>
+                  <td>{{item.chem}}</td>
+                  <td>{{ vm.data | filter:{'cikk':item.cikk,'Group':vm.actgroup,'Start_Day':vm.date,'Start_Shift':'3'}| sumField:
+                    'amount'| number:0}}</td>
+                  <td>{{ vm.data | filter:{'cikk':item.cikk,'Group':vm.actgroup,'Start_Day':vm.date,'Start_Shift':'3'}| sumField:
+                    'aeq'| number:2}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <h1 class="text-center" style="font-size:6em">{{vm.data|filter:{'Group':vm.actgroup}|filter:{'End_Day':vm.date}|filter:{'End_Shift':'3'} |sumField:'amount'|number:0}}
+            <br>
+            <small style="font-size:20px">db</small>
+          </h1>
+          <h2 class="text-center">
+            {{vm.data|filter:{'Group':vm.actgroup}|filter:{'End_Day':vm.date}|filter:{'End_Shift':'3'} |sumField:'aeq'|number:2}}
+            <small>AEQ</small>
+          </h2>
+          <h3 class="text-center" style="cursor:pointer" data-toggle="collapse" data-target="#clor_ej_OUT">KLÓROZÓ KI részletek
+            <i class="icon-chevron-right"></i>
+          </h3>
+          <div class="collapse" id="clor_ej_OUT">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th>Cikkszám</th>
+                  <th>Típus</th>
+                  <th>Darab</th>
+                  <th>AEQ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in (vm.data| unique:'cikk')" ng-show="(vm.data | filter:{'cikk':item.cikk,'Group':vm.actgroup,'End_Day':vm.date,'End_Shift':'3'}| sumField:
+                'amount'| number:0)>0" class="ng-scope">
+                  <td>{{item.cikk}}</td>
+                  <td>{{item.chem}}</td>
+                  <td>{{ vm.data | filter:{'cikk':item.cikk,'Group':vm.actgroup,'End_Day':vm.date,'End_Shift':'3'}| sumField:
+                    'amount'| number:0}}</td>
+                  <td>{{ vm.data | filter:{'cikk':item.cikk,'Group':vm.actgroup,'End_Day':vm.date,'End_Shift':'3'}| sumField:
+                    'aeq'| number:2}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>

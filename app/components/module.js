@@ -13,8 +13,10 @@ define([
   './filters/sumField',
   './filters/week',
   './clevent/clevent.ctrl',
-  './services/clevent.service'
-	, './downtime/downtime.ctrl'
+  './services/clevent.service',
+  './downtime/downtime.ctrl',
+  './shiftday/shiftday.ctrl',
+  './services/shiftday.service'
 	/* files */
 ], function(
   configFunction,
@@ -31,8 +33,10 @@ define([
   sumField,
   week,
   cleventController,
-  cleventService
-	, downtimeController
+  cleventService,
+  downtimeController,
+  shiftdayController,
+  shiftdayService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -53,6 +57,8 @@ define([
   app.filter('week',week);
   app.controller('cleventController', cleventController);
 	app.service('cleventService', cleventService);
-		app.controller('downtimeController', downtimeController);
+	app.controller('downtimeController', downtimeController);
+	app.controller('shiftdayController', shiftdayController);
+	app.service('shiftdayService', shiftdayService);
 		/* controllers */
 });

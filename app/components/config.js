@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('shiftday', {
+		url: '/shiftday',
+		templateUrl: './app/components/shiftday/shiftday.html',
+		controller: 'shiftdayController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('downtime', {
 		url: '/downtime',
 		templateUrl: './app/components/downtime/downtime.html',
