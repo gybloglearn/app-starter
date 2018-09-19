@@ -33,7 +33,7 @@ define([], function () {
         var d = response.data;
         for (var i = 0; i < d.length; i++) {
           //ellenőrzés hogy a modul kijött-e
-          if (d[i].CL_End != "") {
+          //if (d[i].CL_End != "") {
             d[i].CL_End = $filter('date')(new Date(d[i].CL_End), 'yyyy-MM-dd HH:mm:ss');
             var startnum = new Date(d[i].CL_Start).getHours() * 60 + new Date(d[i].CL_Start).getMinutes();
             var endnum = new Date(d[i].CL_End).getHours() * 60 + new Date(d[i].CL_End).getMinutes();
@@ -84,7 +84,7 @@ define([], function () {
               d[i].Group = "X3"
             }
             vm.data.push(d[i]);
-          }
+          //}
         }
         vm.loading=false;
       });
