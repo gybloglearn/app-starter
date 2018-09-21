@@ -183,6 +183,14 @@
                     <option ng-repeat="pns in vm.data | unique:'partnumber' track by $index" value="{{pns.partnumber}}">{{pns.partnumber}} - {{pns.PartGroup_Name?pns.PartGroup_Name:pns.Type}}</option>
                   </select>
                 </div>
+                <strong>Szűrés Szakra</strong>
+                <div class="input-group col-sm-12">
+                  <span class="input-group-addon">Szak:</span>
+                  <select ng-model="vm.search.shiftnum" class="form-control">
+                    <option value="">Mind</option>
+                    <option ng-repeat="pns in [1,3]" value="{{pns}}">{{pns == 1?'DE':'ÉJ'}}</option>
+                  </select>
+                </div>
               </div>
               <div class="tab-pane" id="zbtargets">
                 <div class="input-group">
