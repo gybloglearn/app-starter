@@ -9,7 +9,7 @@ define([], function () {
     vm.daystocover = [];
     vm.displaydata = [];
     vm.iconize = iconize;
-    vm.actmod="500";
+    vm.actmod = "500";
 
     vm.start = start;
     vm.filterSMs = filterSMs;
@@ -157,7 +157,7 @@ define([], function () {
           if (response.data[r].MachineName != "SheetMaker1" && response.data[r].MachineName != "SheetMaker2") {
             vm.selectdata.push(response.data[r]);
           }
-          else{
+          else {
             vm.zbdata.push(response.data[r]);
           }
         }
@@ -180,11 +180,74 @@ define([], function () {
           if (response.data[r].MachineName != "Potting" && response.data[r].MachineName != "Static Potting S1") {
             vm.selectdata.push(response.data[r]);
           }
-          else{
+          else {
             vm.zbdata.push(response.data[r]);
           }
         }
         //populate();
+      });
+
+      dataService.getclorination($filter('date')(new Date(vm.startdate).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd'), $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
+        var d = response.data;
+        for (var i = 0; i < d.length; i++) {
+          d[i].CL_End = $filter('date')(new Date(d[i].CL_End), 'yyyy-MM-dd HH:mm:ss');
+          var startnum = new Date(d[i].CL_Start).getHours() * 60 + new Date(d[i].CL_Start).getMinutes();
+          var endnum = new Date(d[i].CL_End).getHours() * 60 + new Date(d[i].CL_End).getMinutes();
+          d[i].amount = 1;
+          d[i].machine="chlorination"
+
+          //nap hozzáadás
+          if (startnum < 350) {
+            d[i].Start_Day = $filter('date')(new Date(d[i].CL_Start).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+          }
+          else {
+            d[i].Start_Day = $filter('date')(new Date(d[i].CL_Start).getTime(), 'yyyy-MM-dd');
+          }
+          if (endnum < 350) {
+            d[i].End_Day = $filter('date')(new Date(d[i].CL_End).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+          }
+          else {
+            d[i].End_Day = $filter('date')(new Date(d[i].CL_End).getTime(), 'yyyy-MM-dd');
+          }
+
+          if (350 <= endnum && endnum < 1070) {
+            d[i].shiftnum = 1;
+          }
+          else {
+            d[i].shiftnum = 3;
+          }
+          //aeq hozzáadása
+          for (var j = 0; j < vm.partnumbers.length; j++) {
+            if (d[i].JobID.includes(vm.partnumbers[j].id)) {
+              d[i].aeq = vm.partnumbers[j].aeq * 1;
+              d[i].partnumber = vm.partnumbers[j].id;
+            }
+          }
+          //csoportba osztás X1,X2,X3
+          if (d[i].MachineName == "Chlorination Tank5" || d[i].MachineName == "Chlorination Tank6" || d[i].MachineName == "Chlorination Tank7" || d[i].MachineName == "Chlorination Tank8") {
+            d[i].Group = "X1"
+          }
+          else if (d[i].MachineName == "Chlorination Tank11" || d[i].MachineName == "Chlorination Tank12" || d[i].MachineName == "Chlorination Tank13" || d[i].MachineName == "Chlorination Tank14") {
+            d[i].Group = "X2"
+          }
+          else if (d[i].MachineName == "Chlorination 4") {
+            d[i].Group = "X3"
+          }
+          var vanemar = $filter('filter')(vm.data, {JobID: d[i].JobID});
+          if(vanemar.length > 0){
+            d[i].CLRework = 1;
+          } else {
+            d[i].CLRework = 0;
+          }
+          vm.data.push(d[i]);
+          
+          if (d[i].partnumber != "3149069") {
+            vm.selectdata.push(d[i]);
+          }
+          else {
+            vm.zbdata.push(d[i]);
+          }
+        }
       });
 
       dataService.getmtftable(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
@@ -205,7 +268,7 @@ define([], function () {
           if (response.data[r].PartGroup_Name != "UBB FLOW") {
             vm.selectdata.push(response.data[r]);
           }
-          else{
+          else {
             vm.zbdata.push(response.data[r]);
           }
         }
@@ -226,11 +289,17 @@ define([], function () {
           if (response.data[r].BaaNCode != "3149069") {
             vm.selectdata.push(response.data[r]);
           }
-          else{
+          else {
             vm.zbdata.push(response.data[r]);
           }
         }
         vm.load = false;
+        /*console.log(vm.selectdata); 
+        console.log($filter('sumField')($filter('filter')(vm.selectdata, {shiftnum: 1, End_Day: vm.startdate,machine:'chlorination'}), 'aeq'));
+        console.log($filter('sumField')($filter('filter')(vm.selectdata, {shiftnum: 3, End_Day: vm.startdate,machine:'chlorination'}), 'aeq'));
+        console.log($filter('sumField')($filter('filter')(vm.selectdata, {shiftnum: 1, Group:'X1', End_Day: vm.startdate,machine:'chlorination'}), 'aeq'));
+        console.log($filter('sumField')($filter('filter')(vm.selectdata, {shiftnum: 1, Group:'X2', End_Day: vm.startdate,machine:'chlorination'}), 'aeq'));
+        console.log($filter('sumField')($filter('filter')(vm.selectdata, {shiftnum: 1, Group:'X3', End_Day: vm.startdate,machine:'chlorination'}), 'aeq'));*/
       });
 
 
@@ -238,6 +307,7 @@ define([], function () {
         smscrap: 0.8,
         modscrap: 0.5,
         bp: 240,
+        chlorination: 240,
         min: 235,
         zbsmscrap: 5,
         zbmodscrap: 3,

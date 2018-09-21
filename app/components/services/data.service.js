@@ -4,18 +4,19 @@ define([], function () {
   function Service($http) {
     var service = {
       getpartnumber: getpartnumber,
-      get1000partnumber:get1000partnumber,
+      get1000partnumber: get1000partnumber,
       getsl: getsl,
       getsm: getsm,
       getsoesm: getsoesm,
       getpotting: getpotting,
       getmtf: getmtf,
       gettodaymtf: gettodaymtf,
-      getetf1000:getetf1000,
+      getetf1000: getetf1000,
       getgradebyd1500: getgradebyd1500,
       getsapdata: getsapdata,
       getsmtable: getsmtable,
       getpottingtable: getpottingtable,
+      getclorination: getclorination,
       getmtftable: getmtftable,
       getrework: getrework,
       getsmplan: getsmplan
@@ -25,7 +26,7 @@ define([], function () {
 
     ///////////
 
-    function getsmplan(){
+    function getsmplan() {
       var req = {
         method: 'GET',
         url: '//3.228.180.13/sm/app/components/PHP/planapi/allplans'
@@ -83,13 +84,13 @@ define([], function () {
       };
       return $http(req);
     }
-    /*function getmtf(date) {
+    function getclorination(start, end) {
       var req = {
         method: 'GET',
-        url: 'app/components/PHP/MTF/mtf' + date + '.json'
+        url: 'app/components/PHP/CL_Event_Log.php?startdate=' + start + '&enddate=' + end
       };
       return $http(req);
-    }*/
+    }
     function getmtf(date) {
       var req = {
         method: 'GET',

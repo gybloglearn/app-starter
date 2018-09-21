@@ -55,7 +55,7 @@
                 <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{shiftnum: shn, machine: 'Sheetmaker'}) | sumField:'sumgoodaeq'),'sm', shn)}}"><sup class="targetTag">{{vm.targetize('sm', shn) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{shiftnum : shn, machine: 'Sheetmaker'}) | sumField:'sumgoodaeq'|number:2}}</strong></h3></td>
                 <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'suminaeq'),'potting', shn)}}"><sup class="targetTag">{{vm.targetize('potting', shn) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'suminaeq'|number:2}}</strong></h3></td>
                 <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'sumoutaeq'),'potting', shn)}}"><sup class="targetTag">{{vm.targetize('potting', shn) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{shiftnum: shn, machine: 'Potting'}) | sumField:'sumoutaeq'|number:2}}</strong></h3></td>
-                <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{shiftnum: shn, machine: 'MTF'}) | sumField:'choutaeq'),'min', shn)}}"><sup class="targetTag">{{vm.targetize('bp', shn) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{shiftnum : shn, machine: 'MTF'}) | sumField:'choutaeq'|number:2}}</strong></h3></td>
+                <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{shiftnum: shn, End_Day: vm.startdate, machine: 'chlorination', CLRework: 0}) | sumField:'aeq'),'potting', shn)}}"><sup class="targetTag">{{vm.targetize('potting', shn) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{shiftnum : shn, End_Day:vm.startdate, machine: 'chlorination', CLRework: 0}) | sumField:'aeq' | number:2}}</strong></h3></td>
                 <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{shiftnum: shn, machine: 'Rework', state: 'BP', type: '!ZB500S'}) | sumField:'aeq'),'bp', shn);}}"><sup class="targetTag">{{vm.targetize('bp', shn) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{shiftnum: shn, machine: 'Rework', state: 'BP', type: '!ZB500S'}) | sumField:'aeq'|number:2}}</strong></h3></td>
                 <td><h3><strong>{{(vm.selectdata | filter:{shiftnum: shn, machine: 'Rework', state: 'Rework', type: '!ZB500S'}) | sumField:'aeq'}}</strong></h3></td>
                 <td><h3><strong>{{ ((vm.selectdata | filter:{shiftnum: shn, machine: 'MTF', type: '!ZB500S'}) | sumField:'BOKES')/((vm.selectdata | filter:{shiftnum: shn, machine: 'MTF', type: '!ZB500S'}) | sumField:'sumaeq') | number:1}}</strong></h3></td>
@@ -66,7 +66,8 @@
                 <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{machine: 'Sheetmaker'}) | sumField:'sumgoodaeq'),'sm',0)}}"><sup class="targetTag">{{vm.targetize('sm', 0) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{ machine: 'Sheetmaker'}) | sumField:'sumgoodaeq'|number:2}}</strong></h3></td>
                 <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{machine: 'Potting'}) | sumField:'suminaeq'),'potting',0)}}"><sup class="targetTag">{{vm.targetize('potting', 0) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{ machine: 'Potting'}) | sumField:'suminaeq'|number:2}}</strong></h3></td>
                 <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{machine: 'Potting'}) | sumField:'sumoutaeq'),'potting',0)}}"><sup class="targetTag">{{vm.targetize('potting', 0) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{ machine: 'Potting'}) | sumField:'sumoutaeq'|number:2}}</strong></h3></td>
-                <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{machine: 'MTF'}) | sumField:'choutaeq'),'min',0)}}"><sup class="targetTag">{{vm.targetize('bp', 0) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{ machine: 'MTF'}) | sumField:'choutaeq'|number:2}}</strong></h3></td>
+                <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{End_Day: vm.startdate, machine: 'chlorination', CLRework: 0}) | sumField:'aeq'),'potting', 0)}}"><sup class="targetTag">{{vm.targetize('potting', 0) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{End_Day:vm.startdate, machine: 'chlorination', CLRework: 0}) | sumField:'aeq' | number:2}}</strong></h3></td>
+                <!--<td><h3 class="{{vm.iconize(((vm.selectdata | filter:{machine: 'MTF'}) | sumField:'choutaeq'),'min',0)}}"><sup class="targetTag">{{vm.targetize('bp', 0) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{ machine: 'MTF'}) | sumField:'choutaeq'|number:2}}</strong></h3></td>-->
                 <td><h3 class="{{vm.iconize(((vm.selectdata | filter:{machine: 'Rework', state: 'BP', type: '!ZB500S'}) | sumField:'aeq'),'bp',0);}}"><sup class="targetTag">{{vm.targetize('bp', 0) | number:2 }}</sup><strong>{{(vm.selectdata | filter:{ machine: 'Rework', state: 'BP', type: '!ZB500S'}) | sumField:'aeq'|number:2}}</strong></h3></td>
                 <td><h3><strong>{{(vm.selectdata | filter:{machine: 'Rework', state: 'Rework', type: '!ZB500S'}) | sumField:'aeq'}}</strong></h3></td>
                 <td><h3><strong>{{ ((vm.selectdata | filter:{machine: 'MTF', type: '!ZB500S'}) | sumField:'BOKES')/((vm.selectdata | filter:{machine: 'MTF', type: '!ZB500S'}) | sumField:'sumaeq') | number:1}}</strong></h3></td>
@@ -241,7 +242,8 @@
               <th>BE</th>
               <th>Fordít</th>
               <th>KI</th>
-              <th>Klór ki</th>
+              <th>Klórozó</th>
+              <th>KI</th>
               <th>Kádak</th>
               <th>Minősített</th>
             </tr>
@@ -258,7 +260,13 @@
               <td ng-if="sm=='SheetMaker6'"  rowspan="4" style="vertical-align: middle">{{(vm.data | filter:vm.search | filter:{MachineName: 'Potting4'}) | sumField:'Out' | number:0}}<br><sup>modul</sup><br><strong>{{(vm.data | filter:vm.search | filter:{MachineName: 'Potting4'}) | sumField:'sumoutaeq'|number:2}}</strong><br><sup>AEq</sup></td>
 
               <!-- Klórozó -->
-              <td ng-if="sm=='SheetMaker6'" rowspan="8" style="vertical-align:middle">{{vm.data | filter:vm.search | filter:{machine:'MTF', type: '!3149069'} | sumField: 'CHOUT' | number:0}}<br><sup>modul</sup><br><strong>{{vm.data | filter:vm.search | filter:{machine:'MTF', type: '!3149069'} | sumField: 'choutaeq' | number:2}}</strong><br><sup>AEq</sup></td>
+              <td ng-if="sm=='SheetMaker6'" rowspan="4" style="vertical-align: middle">X3</td>
+              <td ng-if="sm=='SheetMaker6'" rowspan="4" style="vertical-align:middle">
+                {{vm.data | filter:vm.search | filter:{End_Day:vm.startdate,Group:'X3',CLRework:0} | sumField: 'amount' | number:0}}<br><sup>modul</sup><br><strong>{{vm.data | filter:vm.search | filter:{End_Day:vm.startdate,Group:'X3',CLRework:0} | sumField: 'aeq' | number:2}}</strong><br><sup>AEq</sup><hr>
+                <sup>Újraklórozva:</sup>
+                {{vm.data | filter:vm.search | filter:{End_Day:vm.startdate,Group:'X3',CLRework:1} | sumField: 'amount' | number:0}}<br><sup>modul</sup><br><strong>{{vm.data | filter:vm.search | filter:{End_Day:vm.startdate,Group:'X3',CLRework:1} | sumField: 'aeq' | number:2}}</strong><br><sup>AEq</sup>
+              </td>
+              <!--MTF-->
               <td ng-if="sm=='SheetMaker6'" rowspan="8" style="vertical-align:middle">
                 <strong style="display: block; border-bottom: 1px solid #ddd">Ki</strong>
                 <div class="row">
@@ -295,6 +303,12 @@
               <td ng-if="sm=='SheetMaker4'"  rowspan="4" style="vertical-align: middle">{{vm.filterSMs(['Potting2', 'Potting3']) | sumField:'In' | number:0}}<br><sup>modul</sup><br><strong>{{vm.filterSMs(['Potting2', 'Potting3']) | sumField:'suminaeq' | number:2}}</strong><br><sup>AEq</sup></td>
               <td ng-if="sm=='SheetMaker4'"  rowspan="4" style="vertical-align: middle">{{vm.filterSMs(['Potting2', 'Potting3']) | sumField:'P3' | number:0}}<br><sup>modul</sup><br><strong>{{vm.filterSMs(['Potting2', 'Potting3']) | sumField:'sump3aeq' | number:2}}</strong><br><sup>AEq</sup></td>
               <td ng-if="sm=='SheetMaker4'"  rowspan="4" style="vertical-align: middle">{{vm.filterSMs(['Potting2', 'Potting3']) | sumField:'Out' | number:0}}<br><sup>modul</sup><br><strong>{{vm.filterSMs(['Potting2', 'Potting3']) | sumField:'sumoutaeq' | number:2}}</strong><br><sup>AEq</sup></td>
+              <td ng-if="sm=='SheetMaker4'" rowspan="4" style="vertical-align: middle">X2</td>
+              <td ng-if="sm=='SheetMaker4'" rowspan="4" style="vertical-align:middle">
+                  {{vm.data | filter:vm.search | filter:{End_Day:vm.startdate,Group:'X2',CLRework:0} | sumField: 'amount' | number:0}}<br><sup>modul</sup><br><strong>{{vm.data | filter:vm.search | filter:{End_Day:vm.startdate,Group:'X2',CLRework:0} | sumField: 'aeq' | number:2}}</strong><br><sup>AEq</sup><hr>
+                  <sup>Újraklórozva:</sup>
+                  {{vm.data | filter:vm.search | filter:{End_Day:vm.startdate,Group:'X2',CLRework:1} | sumField: 'amount' | number:0}}<br><sup>modul</sup><br><strong>{{vm.data | filter:vm.search | filter:{End_Day:vm.startdate,Group:'X2',CLRework:1} | sumField: 'aeq' | number:2}}</strong><br><sup>AEq</sup>
+              </td>
             </tr>
             <tr style="background-color:dimgray;color:white;">
               <td>Részösszeg</td>
@@ -320,7 +334,12 @@
               <td ng-if="sm=='SheetMaker2'" rowspan="3" style="vertical-align: middle">{{vm.filterSMs(['Static Potting S1']) | sumField:'P3' | number:0}}<br><sup>modul</sup><br><strong>{{vm.filterSMs(['Static Potting S1']) | sumField:'sump3aeq' | number:2}}</strong><br><sup>AEq</sup></td>
               <td ng-if="sm=='SheetMaker2'" rowspan="3" style="vertical-align: middle">{{vm.filterSMs(['Static Potting S1']) | sumField:'Out' | number:0}}<br><sup>modul</sup><br><strong>{{vm.filterSMs(['Static Potting S1']) | sumField:'sumoutaeq' | number:2}}</strong><br><sup>AEq</sup></td>
 
-              <td ng-if="sm=='SheetMaker1'" rowspan="4" style="vertical-align:middle">{{vm.data | filter:vm.search | filter:{machine:'MTF', type: '3149069'} | sumField: 'CHOUT' | number:0}}<br><sup>modul</sup><br><strong>{{vm.data | filter:vm.search | filter:{machine:'MTF', type: '3149069'} | sumField: 'choutaeq' | number:2}}</strong><br><sup>AEq</sup></td>
+              <td ng-if="sm=='SheetMaker1'" rowspan="4" style="vertical-align: middle">X1</td>
+              <td ng-if="sm=='SheetMaker1'" rowspan="4" style="vertical-align:middle">
+                  {{vm.data | filter:vm.search | filter:{End_Day:vm.startdate,Group:'X1',CLRework:0} | sumField: 'amount' | number:0}}<br><sup>modul</sup><br><strong>{{vm.data | filter:vm.search | filter:{End_Day:vm.startdate,Group:'X1',CLRework:0} | sumField: 'aeq' | number:2}}</strong><br><sup>AEq</sup><hr>
+                  <sup>Újraklórozva:</sup>
+                  {{vm.data | filter:vm.search | filter:{End_Day:vm.startdate,Group:'X1',CLRework:1} | sumField: 'amount' | number:0}}<br><sup>modul</sup><br><strong>{{vm.data | filter:vm.search | filter:{End_Day:vm.startdate,Group:'X1',CLRework:1} | sumField: 'aeq' | number:2}}</strong><br><sup>AEq</sup>  
+              </td>
               <td ng-if="sm=='SheetMaker1'" rowspan="4" style="vertical-align:middle">
                 <strong style="display: block; border-bottom: 1px solid #ddd">Ki</strong>
                 <div class="row">
