@@ -320,9 +320,9 @@
             <tr ng-show="vm.sh">
               <th width="20%">Nap</th>
               <th width="10%">SM</th>
-              <th width="10%">Potting BE</th>
-              <th width="10%">Potting FO</th>
-              <th width="10%">Potting KI</th>
+							<th width="10%">Potting BE<br>1-1 / 1-2</th>
+							<th width="10%">Potting FO<br>1-1 / 1-2</th>
+							<th width="10%">Potting KI<br>1-1 / 1-2</th>
               <th width="10%">Klór KI</th>
               <th width="10%">BP KI</th>
               <th width="10%">Bökés / BP Ki</th>
@@ -331,9 +331,9 @@
             <tr ng-show="vm.sh">
               <th>Összesítve:</th>
               <th>{{(vm.zbdata|filter:{machine: 'Sheetmaker', category: 'GOOD' }|sumField:'sumaeq')}}</th>
-              <th>{{(vm.zbdata|filter:{machine: 'Potting', machine: '!Static Potting S1', category: 'IN' }|sumField:'sumaeq')}}</th>
-              <th>{{(vm.zbdata|filter:{machine: 'Potting', machine: '!Static Potting S1', category: 'P3' }|sumField:'sumaeq')}}</th>
-              <th>{{(vm.zbdata|filter:{machine: 'Static Potting S1', category: 'OUT' }|sumField:'sumaeq')}}</th>
+              <th>{{(vm.zbdata|filter:{machine: 'Potting', category: 'IN' }:true|sumField:'sumaeq')}} / {{(vm.zbdata|filter:{machine: 'Static Potting S1', category: 'IN' }:true|sumField:'sumaeq')}}</th>
+              <th>{{(vm.zbdata|filter:{machine: 'Potting', category: 'P3' }:true|sumField:'sumaeq')}} / {{(vm.zbdata|filter:{machine: 'Static Potting S1', category: 'P3' }:true|sumField:'sumaeq')}}</th>
+							<th>{{(vm.zbdata|filter:{machine: 'Potting', category: 'OUT' }:true|sumField:'sumaeq')}} / {{(vm.zbdata|filter:{machine: 'Static Potting S1', category: 'OUT' }:true|sumField:'sumaeq')}}</th>
               <th>{{(vm.data|filter:{machine: 'MTF', category: 'CH-OUT', type:'ZB500S' }|sumField:'sumaeq')}}</th>
               <th>{{(vm.data|filter:{machine: 'MTF', category: 'BP-OUT', type:'ZB500S' }|sumField:'sumaeq')}}</th>
               <th class="text-center">{{(vm.data|filter:{machine: 'MTF', category: 'BOK-BOKES', type:'ZB500S' }|sumField:'amount')/(vm.data|filter:{machine: 'MTF', category: 'BP-OUT', type:'ZB500S' }|sumField:'sumaeq') | number:2}}</th>
@@ -347,9 +347,9 @@
                 <i ng-show="(vm.rates.zbmin/(1-vm.rates.zbmodscrap/100))/(1-vm.rates.zbsmscrap/100) <= i.zbsm" class="icon-ico_ok_circle_sm text-ge-green"></i>
                 <i ng-show="(vm.rates.zbmin/(1-vm.rates.zbmodscrap/100))/(1-vm.rates.zbsmscrap/100) > i.zbsm" class="icon-ico_remove_circle_sm text-ge-red"></i>
               </td>
-              <td>{{i.zbpin | number:1}}</td>
-              <td>{{i.zbpp3 | number:1}}</td>
-              <td>{{i.zbpou | number:1}}</td>
+							<td>{{i.zbpin | number:1}} / {{i.zbmin | number:1}}</td>
+							<td>{{i.zbpp3 | number:1}} / {{i.zbmp3 | number:1}}</td>
+							<td>{{i.zbpou | number:1}} / {{i.zbmou | number:1}}</td>
               <td>{{i.zbch | number:1}}</td>
               <td>{{i.zbbp | number:1}}
                 <i ng-show="vm.rates.zbbp <= i.zbbp" class="icon-ico_ok_circle_sm text-ge-green"></i>

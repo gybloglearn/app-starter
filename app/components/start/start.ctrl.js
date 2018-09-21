@@ -223,8 +223,8 @@ define([], function () {
       vm.rates = {
         smscrap: 0.8,
         modscrap: 0.5,
-        bp: 230,
-        min: 226,
+        bp: 240,
+        min: 235,
         zbsmscrap: 5,
         zbmodscrap: 3,
         zbbp: 0,
@@ -254,9 +254,13 @@ define([], function () {
           bok: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'BOK-BOKES', type: '!ZB500S' }), 'amount') / $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'BP-OUT', type: '!ZB500S' }), 'sumaeq'),
           min: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'MIN-AMOUNT', place: '!ZB500S_MIN' }), 'sumaeq'),
           zbsm: $filter('sumField')($filter('filter')(vm.zbdata, { days: vm.daystocover[k], machine: 'Sheetmaker', category: 'GOOD' }), 'sumaeq'),
-          zbpin: $filter('sumField')($filter('filter')(vm.zbdata, { days: vm.daystocover[k], machine: 'Potting', machine: '!Static Potting S1', category: 'IN' }), 'sumaeq'),
-          zbpp3: $filter('sumField')($filter('filter')(vm.zbdata, { days: vm.daystocover[k], machine: 'Potting', machine: '!Static Potting S1', category: 'P3' }), 'sumaeq'),
-          zbpou: $filter('sumField')($filter('filter')(vm.zbdata, { days: vm.daystocover[k], machine: 'Static Potting S1', category: 'OUT' }), 'sumaeq'),
+          zbpin: $filter('sumField')($filter('filter')(vm.zbdata, { days: vm.daystocover[k], machine: 'Potting', category: 'IN' }, true), 'sumaeq'),
+          zbpp3: $filter('sumField')($filter('filter')(vm.zbdata, { days: vm.daystocover[k], machine: 'Potting', category: 'P3' }, true), 'sumaeq'),
+          zbpou: $filter('sumField')($filter('filter')(vm.zbdata, { days: vm.daystocover[k], machine: 'Potting', category: 'OUT' }, true), 'sumaeq'),
+          zbmin: $filter('sumField')($filter('filter')(vm.zbdata, { days: vm.daystocover[k], machine: 'Static Potting S1', category: 'IN' }, true), 'sumaeq'),
+          zbmp3: $filter('sumField')($filter('filter')(vm.zbdata, { days: vm.daystocover[k], machine: 'Static Potting S1', category: 'P3' }, true), 'sumaeq'),
+          zbmou: $filter('sumField')($filter('filter')(vm.zbdata, { days: vm.daystocover[k], machine: 'Static Potting S1', category: 'OUT' }, true), 'sumaeq'),
+
           zbch: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'CH-OUT', type: 'ZB500S' }), 'sumaeq'),
           zbbp: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'BP-OUT', type: 'ZB500S' }), 'sumaeq'),
           zbbok: $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'BOK-BOKES', type: 'ZB500S' }), 'amount') / $filter('sumField')($filter('filter')(vm.data, { days: vm.daystocover[k], machine: 'MTF', category: 'BP-OUT', type: 'ZB500S' }), 'sumaeq'),
@@ -293,7 +297,7 @@ define([], function () {
         vm.enddate = $filter('date')(new Date().getTime() - 24 * 1000 * 60 * 60, 'yyyy-MM-dd');
 
         //loadPartnumbers();
-        vm.sh = false;
+        vm.sh = true;
         vm.s5 = false;
         vm.s3 = false;
         load1000Partnumbers();
@@ -319,6 +323,7 @@ define([], function () {
       { name: "ZW230 CP5", amount: 0.46, sheets: 28 },
       { name: "C11CP5", amount: 0.5, sheets: 11 },
       { name: "C11 CP5", amount: 0.5, sheets: 11 },
+				{ name: "C11 CP55", amount: 0.5, sheets: 11},
       { name: "C11FLOW", amount: 0.5, sheets: 11 },
       { name: "C11 FLOW", amount: 0.5, sheets: 11 },
       { name: "D11 CP5", amount: 0.68, sheets: 11 },
