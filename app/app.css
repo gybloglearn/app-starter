@@ -193,3 +193,53 @@ ul, ol {
   font-size: 0.5em;
   margin-left: -10px;
 }
+
+div.bluemap {
+  height: 260px;
+  width:1000px;
+  line-height: 290px;
+  text-align: center;
+  border: 5px solid blue;
+}
+div.redmap {
+  height: 260px;
+  width:1000px;
+  line-height: 290px;
+  text-align: center;
+  border: 5px solid red;
+}
+div.greenmap {
+  height: 260px;
+  width:1000px;
+  line-height: 290px;
+  text-align: center;
+  border: 5px solid green;
+}
+div.yellowmap {
+  height: 780px;
+  width:800px;
+  line-height: 290px;
+  text-align: center;
+  margin-left: 1000px;
+  margin-top: -780px;
+  border: 5px solid yellow;
+}
+
+.title{
+  font-size: 20px;
+  height: 50px;
+  width: 50px;
+  line-height:50px;
+  background: #575757;
+  color: white;
+  margin-top:10px;
+  margin-left:5px;
+  text-align: center;
+  border-radius: 50px;
+  box-shadow: 0 3px 5px rgba(0,0,0,.2);
+}
+.text{
+  font-size:30px;
+  margin: 10px auto 0 auto;
+}
+  
