@@ -16,9 +16,10 @@ define([
   './filters/sumdb',
   './filters/shift',
   './filters/unique',
-  './dayreport/dayreport.ctrl'
-  , './sap/sap.ctrl'
-	, './today/today.ctrl'
+  './dayreport/dayreport.ctrl',
+  './sap/sap.ctrl',
+  './today/today.ctrl',
+  './daymap/daymap.ctrl'
 	/* files */
 ], function (
   configFunction,
@@ -38,9 +39,10 @@ define([
   sumdb,
   shift,
   unique,
-  dayreportController
-	, sapController
-	, todayController
+  dayreportController,
+  sapController,
+  todayController,
+  daymapController
 	/* names */) {
 
     // Link all components to the module !!!
@@ -66,5 +68,6 @@ define([
     app.controller('dayreportController', dayreportController);
     app.controller('sapController', sapController);
 		app.controller('todayController', todayController);
+		app.controller('daymapController', daymapController);
 		/* controllers */
   });

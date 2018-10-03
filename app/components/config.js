@@ -29,6 +29,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('daymap', {
+		url: '/daymap',
+		templateUrl: './app/components/daymap/daymap.html',
+		controller: 'daymapController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('today', {
 		url: '/today',
 		templateUrl: './app/components/today/today.html' + '?' + d,
