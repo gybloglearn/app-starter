@@ -227,8 +227,8 @@ define([], function () {
         min: 235,
         zbsmscrap: 5,
         zbmodscrap: 3,
-        zbbp: 0,
-        zbmin: 0,
+        zbbp: 14.8,
+        zbmin: 14.4,
         zw1000min: 80,
         zw1500min: 80
       }
