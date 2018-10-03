@@ -391,7 +391,6 @@ define([], function () {
         vm.sh = false;
         vm.s5 = false;
         vm.s3 = false;
-        //start();
         refresh();
         setInterval(refresh, 5 * 60 * 1000);
       }
