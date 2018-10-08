@@ -37,6 +37,8 @@ define([], function () {
 
       vm.data = [];
       vm.impdata = [];
+      vm.clordata=[];
+
       var sdate = $filter('date')(new Date(vm.date).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
       var edate = $filter('date')(new Date(vm.date).getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
 
@@ -53,6 +55,7 @@ define([], function () {
 
           var minutes = new Date(response.data[j].Perm_test).getMinutes();
           var impminutes = new Date(response.data[j].Impregnation_end).getMinutes();
+          var clorminutes = new Date(response.data[j].Klórozás_end).getMinutes();
 
           if (minutes >= 50) {
             response.data[j].fluxus_hour = new Date(response.data[j].Perm_test).getHours() + 1;
@@ -73,6 +76,16 @@ define([], function () {
           if (response.data[j].Impregnation_end_shiftday == vm.date) {
             vm.impdata.push(response.data[j]);
           }
+
+          if (clorminutes >= 50) {
+            response.data[j].clor_hour = new Date(response.data[j].Klórozás_end).getHours() + 1;
+          }
+          else {
+            response.data[j].clor_hour = new Date(response.data[j].Klórozás_end).getHours()
+          }
+          if (response.data[j].Klórozás_end_shiftday == vm.date) {
+            vm.clordata.push(response.data[j]);
+          }
         }
         create_chart()
         vm.loading = false;
@@ -82,16 +95,27 @@ define([], function () {
     function create_chart() {
       vm.chartdata =
         [
+          { name: 'Klórozó', color: 'rgb(50,102,155)', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+          { name: 'Klórozó kumulált', color: 'rgb(50,102,155)', type: 'line', yAxis: 1, data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
           { name: 'Fluxus', color: 'rgb(0,0,255)', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
           { name: 'Fluxus kumulált', color: 'rgb(0,0,255)', type: 'line', yAxis: 1, data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
           { name: 'Impregnálás', color: 'rgb(102, 0, 102)', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
           { name: 'Impregnálás kumulált', color: 'rgb(102,0,102)', type: 'line', yAxis: 1, data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
           { name: 'Cél', color: 'rgb(255,0,0)', type: 'line', yAxis: 1, data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }
         ];
+      for (var i = 0; i < vm.clordata.length; i++) {
+        for (var j = 0; j < vm.cats.length; j++) {
+          if (vm.data[i].clor_hour == parseInt(vm.cats[j])) {
+            vm.chartdata[0].data[j]++;
+            //vm.chartdata[0].data[j] += vm.data[i].aeq;
+          }
+
+        }
+      }
       for (var i = 0; i < vm.data.length; i++) {
         for (var j = 0; j < vm.cats.length; j++) {
           if (vm.data[i].fluxus_hour == parseInt(vm.cats[j])) {
-            vm.chartdata[0].data[j]++;
+            vm.chartdata[2].data[j]++;
             //vm.chartdata[0].data[j] += vm.data[i].aeq;
           }
 
@@ -100,7 +124,7 @@ define([], function () {
       for (var i = 0; i < vm.impdata.length; i++) {
         for (var j = 0; j < vm.cats.length; j++) {
           if (vm.impdata[i].impregnation_hour == parseInt(vm.cats[j])) {
-            vm.chartdata[2].data[j]++;
+            vm.chartdata[4].data[j]++;
             //vm.chartdata[1].data[j] += vm.impdata[i].aeq;
           }
 
@@ -109,11 +133,13 @@ define([], function () {
           if(k > 0){
             vm.chartdata[1].data[k] = vm.chartdata[1].data[k-1] + vm.chartdata[0].data[k];
             vm.chartdata[3].data[k] = vm.chartdata[3].data[k-1] + vm.chartdata[2].data[k];
-            vm.chartdata[4].data[k] = vm.chartdata[4].data[k-1] + 3.7;
+            vm.chartdata[5].data[k] = vm.chartdata[3].data[k-1] + vm.chartdata[4].data[k];
+            vm.chartdata[6].data[k] = vm.chartdata[6].data[k-1] + 3.7;
           } else {
             vm.chartdata[1].data[k] = vm.chartdata[0].data[k];
             vm.chartdata[3].data[k] = vm.chartdata[2].data[k];
-            vm.chartdata[4].data[k] = 3.7;
+            vm.chartdata[5].data[k] = vm.chartdata[4].data[k];
+            vm.chartdata[6].data[k] = 3.7;
           }
         }
       }

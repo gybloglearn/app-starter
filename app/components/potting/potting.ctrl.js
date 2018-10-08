@@ -1,12 +1,48 @@
 define([], function () {
   'use strict';
-  function Controller(pottingService,$cookies, $state, $rootScope,$filter) {
+  function Controller(pottingService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
     vm.date = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.datenum = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.edate = $filter('date')(new Date(), 'yyyy-MM-dd');
+    vm.pottings = ["Statik", "Dinamik"];
+    vm.categories = [
+      { id: "Statik", cat: "Csavarozó gép MH1" },
+      { id: "Statik", cat: "Robot" },
+      { id: "Statik", cat: "Uretánhőmérséklet" },
+      { id: "Statik", cat: "Anyaghiány" },
+      { id: "Statik", cat: "Létszámhiány" },
+      { id: "Statik", cat: "Mold hiány" },
+      { id: "Statik", cat: "Kerethiány" },
+      { id: "Statik", cat: "Egyéb" },
+      { id: "Dinamik", cat: "Frekvencia váltó hiba" },
+      { id: "Dinamik", cat: "Robot" },
+      { id: "Dinamik", cat: "Nem pörög a centrifuga" },
+      { id: "Dinamik", cat: "Kalap hiba" },
+      { id: "Dinamik", cat: "Burkolat hiba" },
+      { id: "Dinamik", cat: "Magas nyomás" },
+      { id: "Dinamik", cat: "Uretánhőmérséklet" },
+      { id: "Dinamik", cat: "Keverési arány hiba" },
+      { id: "Dinamik", cat: "Anyaghiány Statikról" },
+      { id: "Dinamik", cat: "Létszámhiány" },
+      { id: "Dinamik", cat: "PLC hiba" },
+      { id: "Dinamik", cat: "Egyéb" }
+    ];
+    vm.subcategories = [
+      { main: "Robot", sub: "Megönt, de nem emel" },
+      { main: "Robot", sub: "Nem önti meg" },
+      { main: "Robot", sub: "Lefagy" },
+      { main: "Robot", sub: "Rossz pozícióba önt" },
+      { main: "Uretánhőmérséklet", sub: "magas" },
+      { main: "Uretánhőmérséklet", sub: "alacsony" },
+      { main: "Anyaghiány", sub: "Nedves bundle" },
+      { main: "Anyaghiány", sub: "SPL anyaghiány" },
+      { main: "Anyaghiány", sub: "Egyéb" },
+    ];
     vm.beallit = beallit;
-    vm.loading=false;
+    vm.saveinfo = saveinfo;
+    vm.mutat = false;
+    vm.loading = false;
 
     function loadpartnumbers() {
       vm.partnumbers = [];
@@ -32,7 +68,7 @@ define([], function () {
       loadpotting();
     }
 
-    function loadpotting(){
+    function loadpotting() {
       vm.loading = true;
 
       vm.pottingdata = [];
@@ -49,8 +85,8 @@ define([], function () {
               response.data[j].modulname = vm.partnumbers[k].name;
             }
           }
-          var pottingendminutes = new Date(response.data[j].Brick_Takeout).getHours()*60+new Date(response.data[j].Brick_Takeout).getMinutes();
-          var centrifugaminutes = new Date(response.data[j].Centrifuga_Stop).getHours()*60+new Date(response.data[j].Centrifuga_Stop).getMinutes();
+          var pottingendminutes = new Date(response.data[j].Brick_Takeout).getHours() * 60 + new Date(response.data[j].Brick_Takeout).getMinutes();
+          var centrifugaminutes = new Date(response.data[j].Centrifuga_Stop).getHours() * 60 + new Date(response.data[j].Centrifuga_Stop).getMinutes();
 
           if (pottingendminutes < 350) {
             response.data[j].Brick_Takeout_Day = $filter('date')(new Date(response.data[j].Brick_Takeout_Day).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
@@ -100,9 +136,9 @@ define([], function () {
           { name: 'Centrifuga kumulált', color: 'rgb(102,0,102)', type: 'line', yAxis: 1, data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
           { name: 'Cél', color: 'rgb(255,0,0)', type: 'line', yAxis: 1, data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }
         ];
-      for (var i = 0; i <vm.pottingdata.length; i++) {
+      for (var i = 0; i < vm.pottingdata.length; i++) {
         for (var j = 0; j < vm.cats.length; j++) {
-          if (vm.pottingdata[i].Brick_Takeout_Hour  == parseInt(vm.cats[j])) {
+          if (vm.pottingdata[i].Brick_Takeout_Hour == parseInt(vm.cats[j])) {
             vm.chartdata[0].data[j]++;
             //vm.chartdata[0].data[j] += vm.data[i].aeq;
           }
@@ -118,10 +154,10 @@ define([], function () {
 
         }
         for (var k = 0; k < 24; k++) {
-          if(k > 0){
-            vm.chartdata[1].data[k] = vm.chartdata[1].data[k-1] + vm.chartdata[0].data[k];
-            vm.chartdata[3].data[k] = vm.chartdata[3].data[k-1] + vm.chartdata[2].data[k];
-            vm.chartdata[4].data[k] = vm.chartdata[4].data[k-1] + 3.7;
+          if (k > 0) {
+            vm.chartdata[1].data[k] = vm.chartdata[1].data[k - 1] + vm.chartdata[0].data[k];
+            vm.chartdata[3].data[k] = vm.chartdata[3].data[k - 1] + vm.chartdata[2].data[k];
+            vm.chartdata[4].data[k] = vm.chartdata[4].data[k - 1] + 3.7;
           } else {
             vm.chartdata[1].data[k] = vm.chartdata[0].data[k];
             vm.chartdata[3].data[k] = vm.chartdata[2].data[k];
@@ -134,24 +170,87 @@ define([], function () {
           type: 'column',
           height: 360
         },
+        plotOptions: {
+          column: {
+            borderWidth: 0,
+            events: {
+              click: function (ev) {
+                /*console.log(ev.point.category);
+                console.log(ev.point.options.cat + " - " + ev.point.series.name);*/
+                createinfo(ev.point.category, ev.point.series.name);
+              }
+            }
+          }
+        },
         title: { text: "Potting és centrifuga adatok órai lebontása" },
         tooltip: {
           valueDecimals: 0
         },
         xAxis: { type: 'category', categories: vm.cats },
-        yAxis: [{ title:{text:'Darab'}}, {title: {text: 'Kumulált Darab'}, opposite: true}],
+        yAxis: [{ title: { text: 'Darab' } }, { title: { text: 'Kumulált Darab' }, opposite: true }],
         series: vm.chartdata
       };
+    }
+
+    function loadinfo() {
+      vm.pottinginfo = [];
+
+      pottingService.get().then(function (resp) {
+        vm.pottinginfo = resp.data;
+        //console.log(vm.pottinginfo);
+      });
+    }
+
+    function createinfo(categ, name) {
+      if (name == "Potting") {
+        vm.createinfodata = {};
+        vm.actplace = "";
+        vm.cat = "";
+        vm.descriptioninfo = "";
+        vm.startinfo = vm.datenum + " " + categ + ":" + "00";
+        vm.endinfo = vm.datenum + " " + categ + ":" + "00";
+        /*vm.startinfo = new Date().getFullYear() + "-" + str.substring(0, 2) + "-" + str.substring(2, 7) + ":" + "00";
+        vm.endinfo = new Date().getFullYear() + "-" + str.substring(0, 2) + "-" + str.substring(2, 7) + ":" + "00";*/
+
+        loadinfo();
+        vm.mutat = true;
+      }
+    }
+
+    function saveinfo() {
+
+      vm.createinfodata.id = new Date().getTime();
+      vm.createinfodata.sso = $rootScope.user.username;
+      vm.createinfodata.operator_name = $rootScope.user.displayname
+      vm.createinfodata.start = vm.startinfo;
+      vm.createinfodata.end = vm.endinfo;
+      vm.createinfodata.time = vm.timeinfo = (new Date(vm.endinfo).getTime() - new Date(vm.startinfo).getTime()) / 60000;
+      vm.createinfodata.pottingid = vm.mch;
+      vm.createinfodata.category = vm.cat;
+      vm.createinfodata.subcategory = vm.scat;
+      vm.createinfodata.description = vm.descriptioninfo;
+      
+      console.log(vm.createinfodata);
+      pottingService.post(vm.createinfodata).then(function (resp) {
+        vm.showmessage = true;
+        vm.createinfodata = {};
+        $timeout(function () {
+          vm.showmessage = false;
+          vm.showtitle = '';
+        }, 5000);
+      });
+      //loadinfo();
+      vm.mutat = false;
     }
 
     activate();
 
     function activate() {
-      (!$cookies.getObject('user')?$state.go('login'):$rootScope.user=$cookies.getObject('user'));
+      (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       loadpartnumbers();
       createhours();
     }
   }
-  Controller.$inject = ['pottingService','$cookies', '$state', '$rootScope','$filter'];
+  Controller.$inject = ['pottingService', '$cookies', '$state', '$rootScope', '$filter'];
   return Controller;
 });

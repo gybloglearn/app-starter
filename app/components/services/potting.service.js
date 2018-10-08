@@ -4,7 +4,10 @@ define([], function () {
   function Service($http) {
     var service = {
       getpartnumber: getpartnumber,
-      getpotting: getpotting
+      getpotting: getpotting,
+      get: get,
+      post: post,
+      put: put
     };
 
     return service;
@@ -26,6 +29,36 @@ define([], function () {
       };
       return $http(req);
     }
+    function get() {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/Pottinginfosave/info/11254878'
+      };
+      return $http(req);
+    }
+    function post(data) {
+      var req = {
+        method: 'POST',
+        url: 'app/components/PHP/Pottinginfosave/info/' + data.id,
+        data: data
+      };
+      return $http(req);
+    }
+    function put(data) {
+      var req = {
+        method: 'PUT',
+        url: 'app/components/PHP/Pottinginfosave/info/' + data.id,
+        data: data
+      };
+      return $http(req);
+    }
+    /*function erase(id) {
+      var request = {
+        method: "DELETE",
+        url: "app/components/php/Pottinginfosave/info/" + id
+      };
+      return $http(request);
+    }*/
   }
   Service.$inject = ['$http'];
   return Service;
