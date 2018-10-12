@@ -15,7 +15,10 @@ define([
   './filters/changeDate',
   './uf/uf.ctrl',
   './services/uf.service',
-  
+  './services/downtimepotting.service',
+  './downtimepotting/downtimepotting.ctrl',
+  './services/downtimechlor.service',
+  './downtimechlor/downtimechlor.ctrl'
 	/* files */
 ], function(
   configFunction,
@@ -33,7 +36,11 @@ define([
   shiftnumber,
   changeDate,
   ufController,
-  ufService
+  ufService,
+  downtimepottingService,
+  downtimepottingController,
+  downtimechlorService,
+  downtimechlorController
 	/* names */) {
 
   // Link all components to the module !!!
@@ -55,5 +62,9 @@ define([
   app.filter('changeDate',changeDate);
   app.controller('ufController', ufController);
 	app.service('ufService', ufService);
-		/* controllers */
+	app.service('downtimepottingService', downtimepottingService);
+	app.controller('downtimepottingController', downtimepottingController);
+	app.service('downtimechlorService', downtimechlorService);
+	app.controller('downtimechlorController', downtimechlorController);
+	/* controllers */
 });
