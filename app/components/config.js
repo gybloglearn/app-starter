@@ -27,6 +27,18 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('downtimechlor', {
+		url: '/downtimechlor',
+		templateUrl: './app/components/downtimechlor/downtimechlor.html',
+		controller: 'downtimechlorController',
+		controllerAs: 'vm'
+	});
+	$stateProvider.state('downtimepotting', {
+		url: '/downtimepotting',
+		templateUrl: './app/components/downtimepotting/downtimepotting.html',
+		controller: 'downtimepottingController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('uf', {
 		url: '/uf',
 		templateUrl: './app/components/uf/uf.html',
