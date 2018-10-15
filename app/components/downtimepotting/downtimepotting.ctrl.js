@@ -122,9 +122,9 @@ define([], function () {
       }
       console.log(vm.statikrobot);
 
-      vm.chartconfig = {
+      vm.chartconfig_statik = {
         chart: { type: 'column' },
-        title: { text: 'Állásidők-potting' },
+        title: { text: 'Állásidők-statik' },
         plotOptions: {
           column: {
             stacking: 'normal',
@@ -134,21 +134,21 @@ define([], function () {
         yAxis: 
           { title: { text: 'Perc' } },
         series: [
-          { name: 'Statik-Robot', data: vm.statikrobot, stack: 'Statik' },
-          { name: 'Statik-Uretánhőmérséklet', data: vm.statikuretanhomerseklet, stack: 'Statik' },
-          { name: 'Statik-Anyaghiány', data: vm.statikanyaghiany, stack: 'Statik' },
-          { name: 'Statik-Mobil klíma vízelvezetés', data: vm.statikmobilklimavizelvezetes, stack: 'Statik' },
-          { name: 'Statik-Keverési arány hiba', data: vm.statikkeveresiaranyhiba, stack: 'Statik' },
-          { name: 'Statik-Komponens beszáradás', data: vm.statikkomponensbeszaradas, stack: 'Statik' },
-          { name: 'Statik-Munkahenger hiba', data: vm.statikmunkahengerhiba, stack: 'Statik' },
-          { name: 'Statik-Uretánkötési hiba', data: vm.statikuretankotesihiba, stack: 'Statik' },
-          { name: 'Statik-Klemp hiba', data: vm.statikklemphiba, stack: 'Statik' },
-          { name: 'Statik-Létszámhiány', data: vm.statikletszamhiany, stack: 'Statik' },
-          { name: 'Statik-Mold hiány', data: vm.statikmoldhiany, stack: 'Statik' },
-          { name: 'Statik-Alapanyaghiba', data: vm.statikalapanyaghiba, stack: 'Statik' },
-          { name: 'Statik-Egyéb', data: vm.statikegyeb, stack: 'Statik' },
+          { name: 'Robot', data: vm.statikrobot, stack: 'Statik' },
+          { name: 'Uretánhőmérséklet', data: vm.statikuretanhomerseklet, stack: 'Statik' },
+          { name: 'Anyaghiány', data: vm.statikanyaghiany, stack: 'Statik' },
+          { name: 'Mobil klíma vízelvezetés', data: vm.statikmobilklimavizelvezetes, stack: 'Statik' },
+          { name: 'Keverési arány hiba', data: vm.statikkeveresiaranyhiba, stack: 'Statik' },
+          { name: 'Komponens beszáradás', data: vm.statikkomponensbeszaradas, stack: 'Statik' },
+          { name: 'Munkahenger hiba', data: vm.statikmunkahengerhiba, stack: 'Statik' },
+          { name: 'Uretánkötési hiba', data: vm.statikuretankotesihiba, stack: 'Statik' },
+          { name: 'Klemp hiba', data: vm.statikklemphiba, stack: 'Statik' },
+          { name: 'Létszámhiány', data: vm.statikletszamhiany, stack: 'Statik' },
+          { name: 'Mold hiány', data: vm.statikmoldhiany, stack: 'Statik' },
+          { name: 'Alapanyaghiba', data: vm.statikalapanyaghiba, stack: 'Statik' },
+          { name: 'Egyéb', data: vm.statikegyeb, stack: 'Statik' },
 
-          { name: 'Dinamik-Burkolat nyitás és csukási hiba', data: vm.dinamikburkolatnyitasescsukasihiba, stack: 'Dinamik' },
+          /*{ name: 'Dinamik-Burkolat nyitás és csukási hiba', data: vm.dinamikburkolatnyitasescsukasihiba, stack: 'Dinamik' },
           { name: 'Dinamik-Frekiváltó nem pörget', data: vm.dinamikfrekivaltonemporget, stack: 'Dinamik' },
           { name: 'Dinamik-Frekiváltó vészkör hiba', data: vm.dinamikfrekivaltoveszkorhiba, stack: 'Dinamik' },
           { name: 'Dinamik-Stukt fejet nem veszi fel/ teszi le uretán', data: vm.dinamikstuktfejetnemveszifelteszileuretan, stack: 'Dinamik' },
@@ -165,7 +165,53 @@ define([], function () {
           { name: 'Dinamik-Létszámhiány', data: vm.dinamikletszamhiany, stack: 'Dinamik' },
           { name: 'Dinamik-Próbapörgetés', data: vm.dinamikprobaporgetes, stack: 'Dinamik' },
           { name: 'Dinamik-Rossz potícióba önt', data: vm.dinamikrosszpoziciobaont, stack: 'Dinamik' },
-          { name: 'Dinamik-Egyéb', data: vm.dinamikegyeb, stack: 'Dinamik' },
+          { name: 'Dinamik-Egyéb', data: vm.dinamikegyeb, stack: 'Dinamik' },*/
+        ],
+      };
+      vm.chartconfig_dinamik = {
+        chart: { type: 'column' },
+        title: { text: 'Állásidők-dinamik' },
+        plotOptions: {
+          column: {
+            stacking: 'normal',
+          }
+        },
+        xAxis: { type: 'category', categories: vm.cats },
+        yAxis: 
+          { title: { text: 'Perc' } },
+        series: [
+          /*{ name: 'Statik-Robot', data: vm.statikrobot, stack: 'Statik' },
+          { name: 'Statik-Uretánhőmérséklet', data: vm.statikuretanhomerseklet, stack: 'Statik' },
+          { name: 'Statik-Anyaghiány', data: vm.statikanyaghiany, stack: 'Statik' },
+          { name: 'Statik-Mobil klíma vízelvezetés', data: vm.statikmobilklimavizelvezetes, stack: 'Statik' },
+          { name: 'Statik-Keverési arány hiba', data: vm.statikkeveresiaranyhiba, stack: 'Statik' },
+          { name: 'Statik-Komponens beszáradás', data: vm.statikkomponensbeszaradas, stack: 'Statik' },
+          { name: 'Statik-Munkahenger hiba', data: vm.statikmunkahengerhiba, stack: 'Statik' },
+          { name: 'Statik-Uretánkötési hiba', data: vm.statikuretankotesihiba, stack: 'Statik' },
+          { name: 'Statik-Klemp hiba', data: vm.statikklemphiba, stack: 'Statik' },
+          { name: 'Statik-Létszámhiány', data: vm.statikletszamhiany, stack: 'Statik' },
+          { name: 'Statik-Mold hiány', data: vm.statikmoldhiany, stack: 'Statik' },
+          { name: 'Statik-Alapanyaghiba', data: vm.statikalapanyaghiba, stack: 'Statik' },
+          { name: 'Statik-Egyéb', data: vm.statikegyeb, stack: 'Statik' },*/
+
+          { name: 'Burkolat nyitás és csukási hiba', data: vm.dinamikburkolatnyitasescsukasihiba, stack: 'Dinamik' },
+          { name: 'Frekiváltó nem pörget', data: vm.dinamikfrekivaltonemporget, stack: 'Dinamik' },
+          { name: 'Frekiváltó vészkör hiba', data: vm.dinamikfrekivaltoveszkorhiba, stack: 'Dinamik' },
+          { name: 'Stukt fejet nem veszi fel/ teszi le uretán', data: vm.dinamikstuktfejetnemveszifelteszileuretan, stack: 'Dinamik' },
+          { name: 'Soft fejet nem veszi fel/ teszi le', data: vm.dinamiksoftfejetnemveszifelteszile, stack: 'Dinamik' },
+          { name: 'Uretán keverési arány hiba', data: vm.dinamikuretankeveresiaranyhiba, stack: 'Dinamik' },
+          { name: 'Uretán „B” frekiváltó hiba', data: vm.dinamikuretanbfrekivaltohiba, stack: 'Dinamik' },
+          { name: '55g után az öntés megáll', data: vm.dinamik55gutanazontesmegall, stack: 'Dinamik' },
+          { name: 'Uretánkifolyás', data: vm.dinamikuretankifolyas, stack: 'Dinamik' },
+          { name: 'Uretánhőmérséklet', data: vm.dinamikuretanhomerseklet, stack: 'Dinamik' },
+          { name: 'Hiba nélküli megállás', data: vm.dinamikhibanelkulimegallas, stack: 'Dinamik' },
+          { name: 'PLC szerint uretán beadagolva, valóságban nem', data: vm.dinamikplcszerinturetanbeadagolvavalosagbannem, stack: 'Dinamik' },
+          { name: 'Centri cső alapanyaghiba', data: vm.dinamikcentricsoalapanyaghiba, stack: 'Dinamik' },
+          { name: 'Anyaghiány Statikról', data: vm.dinamikanyaghianystatikrol, stack: 'Dinamik' },
+          { name: 'Létszámhiány', data: vm.dinamikletszamhiany, stack: 'Dinamik' },
+          { name: 'Próbapörgetés', data: vm.dinamikprobaporgetes, stack: 'Dinamik' },
+          { name: 'Rossz potícióba önt', data: vm.dinamikrosszpoziciobaont, stack: 'Dinamik' },
+          { name: 'Egyéb', data: vm.dinamikegyeb, stack: 'Dinamik' },
         ],
       };
     }
