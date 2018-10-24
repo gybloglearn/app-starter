@@ -1,0 +1,113 @@
+<div class="container-fluid">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">Idők összehasonlítása</h1>
+      <div class="col-sm-8" style="margin-top:20px">
+        <div class="input-group">
+          <span class="input-group-addon">SheetMaker</span>
+          <select class="form-control" ng-model="vm.actsm" ng-change="vm.createchart()">
+            <option value="">Mind</option>
+            <option ng-repeat="sm in vm.sheetmakers" value="{{sm}}">{{sm}}</option>
+          </select>
+          <span class="input-group-addon">Dátum</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="{{vm.startdate}}" end="{{vm.edate}}">
+          <span class="input-group-addon">-tól</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="{{vm.enddate}}" end="{{vm.edate}}">
+          <span class="input-group-addon">-ig</span>
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.create_dates()" ng-disabled="vm.enddate<=vm.startdate;vm.load">Betöltés</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="progress progress-success progress-striped active" ng-hide="!vm.load">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Frissítés...</p>
+        </div>
+      </div>
+      <my-chart id="chart" config="vm.chartconfig"></my-chart>
+    </div>
+    <div class="module-footer">
+      <table class="table table-condensed table-striped">
+        <thead>
+          <tr>
+            <th>Machine</th>
+            <th>Ev_Group</th>
+            <th>Event_SubGroup</th>
+            <th>Event_SubGroup1</th>
+            <th>Maximo szám</th>
+            <th>Event_time (sec)</th>
+            <th>Event_time (min)</th>
+            <th>Event_time (hr)</th>
+            <th>Count_time (sec)</th>
+            <th>Date</th>
+            <th>Shift</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <thead>
+          <tr>
+            <th colspan=1></th>
+            <th colspan=1>
+              <div class="form-group">
+                <select class="form-control" ng-model="vm.search.Ev_Group">
+                  <option value="">Mind</option>
+                  <option value="Muszaki technikai okok">Műszaki</option>
+                  <option value="Szervezesi veszteseg">Szervezési</option>
+                  <option value="Tervezett veszteseg">Tervezett</option>
+                </select>
+              </div>
+            </th>
+            <th>
+              <div class="form-group">
+                <select name="" id="" class="form-control" ng-model="vm.search.Event_SubGroup">
+                  <option value="">Mind</option>
+                  <option ng-repeat="val in (vm.data | filter: vm.search | unique:'Event_SubGroup')" value="{{val.Event_SubGroup}}">{{val.Event_SubGroup}}</option>
+                </select>
+              </div>
+            </th>
+            <th></th>
+            <th>
+              <div class="form-group">
+                <select name="" id="" class="form-control" ng-model="vm.search.Maximo_num">
+                  <option value="">Mind</option>
+                  <option ng-repeat="val in (vm.data | filter: vm.search | unique:'Maximo_num')" value="{{val.Maximo_num}}">{{val.Maximo_num}}</option>
+                </select>
+              </div>
+            </th>
+            <th style="vertical-align: middle">{{ vm.data | filter: vm.search | sumField:'Event_time' | number:0 }} sec</th>
+            <th style="vertical-align: middle">{{ (vm.data | filter: vm.search | sumField:'Event_time' ) / 60 | number: 0}} min</th>
+            <th style="vertical-align: middle">{{ (vm.data | filter: vm.search | sumField:'Event_time' ) / 60 / 60 | number: 2}} hr</th>
+            <th colspan=2></th>
+            <th>
+              <div class="form-group">
+                <select name="" id="" class="form-control" ng-model="vm.search.Shift_Name">
+                  <option value="">Mind</option>
+                  <option ng-repeat="val in (vm.data | filter: vm.search | unique:'Shift_Name')" value="{{val.Shift_Name}}">{{val.Shift_Name}}</option>
+                </select>
+              </div>
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="dt in vm.data | filter: vm.actsm | filter: vm.search| orderBy: 'Event_time': true | limitTo: 35">
+            <td>{{dt.Machine}}</td>
+            <td>{{dt.Ev_Group}}</td>
+            <td>{{dt.Event_SubGroup}}</td>
+            <td>{{dt.event_subgroup1}}</td>
+            <td>{{dt.Maximo_num}}</td>
+            <td>{{dt.Event_time}}</td>
+            <td>{{dt.Event_time/60 | number: 0}}</td>
+            <td>{{dt.Event_time/60/60 | number: 2}}</td>
+            <td>{{dt.count_time}}</td>
+            <td>{{dt.timestamp | date: 'yyyy-MM-dd hh:mm:ss'}}</td>
+            <td>{{dt.Shift_Name}}</td>
+            <td>{{dt.Comment}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
