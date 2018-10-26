@@ -1,0 +1,35 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">Idők összehasonlítása</h1>
+      <div class="col-sm-6" style="margin-top:20px">
+        <div class="input-group">
+          <span class="input-group-addon">Dátum</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="{{vm.startdate}}" end="{{vm.edate}}">
+          <span class="input-group-addon">-tól</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="{{vm.enddate}}" end="{{vm.edate}}">
+          <span class="input-group-addon">-ig</span>
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.load()" ng-disabled="vm.enddate<=vm.startdate;vm.loading">Betöltés</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+        <div class="progress progress-info progress-striped active" ng-hide="!vm.loading">
+            <div class="progress-bar" style="width: 100%">
+              <p class="text-center">Frissítés...</p>
+            </div>
+          </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <my-chart id="pdt_chart" config="vm.chartconfig_pdt"></my-chart>
+        </div>
+        <div class="col-sm-6">
+          <my-chart id="fluxus_chart" config="vm.chartconfig_fluxus"></my-chart>
+        </div>
+      </div>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>

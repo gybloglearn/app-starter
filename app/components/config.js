@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('pdt', {
+		url: '/pdt',
+		templateUrl: './app/components/pdt/pdt.html',
+		controller: 'pdtController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('potting', {
 		url: '/potting',
 		templateUrl: './app/components/potting/potting.html',

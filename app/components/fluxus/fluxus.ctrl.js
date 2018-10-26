@@ -105,11 +105,10 @@ define([], function () {
         ];
       for (var i = 0; i < vm.clordata.length; i++) {
         for (var j = 0; j < vm.cats.length; j++) {
-          if (vm.data[i].clor_hour == parseInt(vm.cats[j])) {
+          if (vm.clordata[i].clor_hour == parseInt(vm.cats[j])) {
             vm.chartdata[0].data[j]++;
             //vm.chartdata[0].data[j] += vm.data[i].aeq;
           }
-
         }
       }
       for (var i = 0; i < vm.data.length; i++) {
