@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
   <section class="module">
     <div class="module-header">
       <h1 class="text-center">Potting állásidők összesítése</h1>
@@ -10,10 +10,10 @@
             <option ng-repeat="pl in vm.pottings" value="{{pl}}">{{pl}}</option>
           </select>
           <span class="input-group-addon">Kategória</span>
-            <select class="form-control" ng-model="vm.cat" ng-change="vm.filterload()">
-              <option value="">Mind</option>
-              <option ng-repeat="ct in vm.categories | filter:{'id':vm.mch}" value="{{ct.cat}}">{{ct.cat}}</option>
-            </select>
+          <select class="form-control" ng-model="vm.cat" ng-change="vm.filterload()">
+            <option value="">Mind</option>
+            <option ng-repeat="ct in vm.categories | filter:{'id':vm.mch}" value="{{ct.cat}}">{{ct.cat}}</option>
+          </select>
           <span class="input-group-addon">Dátum</span>
           <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="{{vm.startdate}}" end="{{vm.edate}}">
           <span class="input-group-addon">-tól</span>
@@ -26,7 +26,16 @@
       </div>
     </div>
     <div class="module-body">
-        <my-chart id="chart" config="vm.chartconfig"></my-chart>
+      <div class="row">
+        <div class="col-sm-11">
+          <my-chart id="statik_chart" config="vm.chartconfig_statik"></my-chart>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-11">
+          <my-chart id="dinamik_chart" config="vm.chartconfig_dinamik"></my-chart>
+        </div>
+      </div>
     </div>
     <div class="module-footer">
       <table class="table table-condensed">

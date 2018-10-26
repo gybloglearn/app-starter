@@ -102,9 +102,9 @@ define([], function () {
 								case '07': targ = 80; break;
 								case '08': targ = 80; break;
 								case '09': targ = 80; break;
-								case '10': targ = 80; break;
-								case '11': targ = 74; break;
-								case '12': targ = 74; break;
+								case '10': targ = 80; if(new Date(k[ki].SPL_end).getMonth() == 9 && new Date(k[ki].SPL_end).getDate() >=22){targ = 67;}; break;
+								case '11': targ = 67; break;
+								case '12': targ = 67; break;
 							}
 							vm.target.push({ name: k[ki].SPL_end, y: targ });
               vm.scrapgrade.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Grade', grade: 'Scrap', day: k[ki].SPL_end }), 'AEQ')) });
