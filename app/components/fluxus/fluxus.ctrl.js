@@ -93,6 +93,7 @@ define([], function () {
     }
 
     function create_chart() {
+      console.log(vm.impdata);
       vm.chartdata =
         [
           { name: 'Klórozó', color: 'rgb(50,102,155)', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
@@ -107,7 +108,6 @@ define([], function () {
         for (var j = 0; j < vm.cats.length; j++) {
           if (vm.clordata[i].clor_hour == parseInt(vm.cats[j])) {
             vm.chartdata[0].data[j]++;
-            //vm.chartdata[0].data[j] += vm.data[i].aeq;
           }
         }
       }
@@ -115,7 +115,6 @@ define([], function () {
         for (var j = 0; j < vm.cats.length; j++) {
           if (vm.data[i].fluxus_hour == parseInt(vm.cats[j])) {
             vm.chartdata[2].data[j]++;
-            //vm.chartdata[0].data[j] += vm.data[i].aeq;
           }
 
         }
@@ -124,7 +123,6 @@ define([], function () {
         for (var j = 0; j < vm.cats.length; j++) {
           if (vm.impdata[i].impregnation_hour == parseInt(vm.cats[j])) {
             vm.chartdata[4].data[j]++;
-            //vm.chartdata[1].data[j] += vm.impdata[i].aeq;
           }
 
         }
@@ -132,7 +130,7 @@ define([], function () {
           if(k > 0){
             vm.chartdata[1].data[k] = vm.chartdata[1].data[k-1] + vm.chartdata[0].data[k];
             vm.chartdata[3].data[k] = vm.chartdata[3].data[k-1] + vm.chartdata[2].data[k];
-            vm.chartdata[5].data[k] = vm.chartdata[3].data[k-1] + vm.chartdata[4].data[k];
+            vm.chartdata[5].data[k] = vm.chartdata[5].data[k-1] + vm.chartdata[4].data[k];
             vm.chartdata[6].data[k] = vm.chartdata[6].data[k-1] + 3.7;
           } else {
             vm.chartdata[1].data[k] = vm.chartdata[0].data[k];
