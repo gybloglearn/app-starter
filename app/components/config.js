@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('mtfhours', {
+		url: '/mtfhours',
+		templateUrl: './app/components/mtfhours/mtfhours.html',
+		controller: 'mtfhoursController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('bokesgroup', {
 		url: '/bokesgroup',
 		templateUrl: './app/components/bokesgroup/bokesgroup.html',

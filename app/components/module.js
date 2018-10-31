@@ -40,6 +40,8 @@ define([
 	, './x3week/x3week.ctrl'
 	, './bokesgroup/bokesgroup.ctrl'
 	, './services/bokesgroup.service'
+	, './mtfhours/mtfhours.ctrl'
+	, './services/mtfhours.service'
 	/* files */
 ], function(
   configFunction,
@@ -83,6 +85,8 @@ define([
 	, x3weekController
 	, bokesgroupController
 	, bokesgroupService
+	, mtfhoursController
+	, mtfhoursService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -129,5 +133,7 @@ define([
 		app.controller('x3weekController', x3weekController);
 		app.controller('bokesgroupController', bokesgroupController);
 		app.service('bokesgroupService', bokesgroupService);
+		app.controller('mtfhoursController', mtfhoursController);
+		app.service('mtfhoursService', mtfhoursService);
 		/* controllers */
 });

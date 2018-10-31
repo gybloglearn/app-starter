@@ -1,0 +1,32 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">Bökés órai lebontása</h1>
+      <div class="col-sm-6" style="margin-top:10px">
+        <div class="input-group">
+          <span class="input-group-addon">Kád</span>
+          <select class="form-control" ng-model="vm.acttank" ng-change="vm.create_chart()">
+            <option value="">Mind</option>
+            <option ng-repeat="bt in vm.tanks" value="{{bt}}">{{bt}}</option>
+          </select>
+          <span class="input-group-addon">Modul</span>
+          <select class="form-control" ng-model="vm.acttype" ng-change="vm.create_chart()">
+            <option value="">Mind</option>
+            <option ng-repeat="tp in vm.data|unique:'modul'" value="{{tp.modul}}">{{tp.modul}}</option>
+          </select>
+          <span class="input-group-addon">Dátum</span>
+          <input class="form-control datepicker" setdate="0d" end="{{vm.edate}}" ng-model="vm.startdate" ng-change="vm.change_date()" />
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="progress progress-info progress-striped active" ng-hide="!vm.mtfload">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Frissítés...</p>
+        </div>
+      </div>
+      <mychart id="hchart" config="vm.chartconfig"></mychart>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>
