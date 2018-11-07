@@ -386,7 +386,6 @@ define([], function () {
       console.log(vm.smoperators7);
       console.log(vm.smoperators8);*/
       //console.log(vm.sumpotting);
->>>>>>> 9d2fd472a6e06ab3843475e85bb07ad1c84291fd
     }
 
     function activate() {
