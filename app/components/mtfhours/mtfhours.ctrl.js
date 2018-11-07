@@ -16,7 +16,6 @@ define([], function () {
       vm.partnumbers = [];
       mtfhoursService.getpartnumber().then(function (response) {
         vm.partnumbers = response.data;
-        console.log(vm.partnumbers);
       });
       load();
     }
@@ -58,7 +57,6 @@ define([], function () {
               vm.data.push(d[i]);
             }
           }
-          console.log(vm.data);
           create_chart();
           vm.mtfload = false;
         });
@@ -98,7 +96,7 @@ define([], function () {
 
       vm.chartconfig = {
         chart: { type: 'column' },
-        title: { text: 'Bökés eloszlása óránként ' + vm.acttype + ' ' + vm.acttank },
+        title: { text: 'Termelt mennyiség órai eloszlása ' + vm.acttype + ' ' + vm.acttank },
         xAxis: { type: 'category', categories: vm.cats },
         yAxis: { title: { text: 'db' } },
         series: [
