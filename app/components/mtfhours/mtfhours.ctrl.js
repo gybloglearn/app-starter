@@ -8,9 +8,9 @@ define([], function () {
     vm.tanks = ["Bubble point tank1", "Bubble point tank2", "Bubble point tank3", "Bubble point tank4", "Bubble point tank5", "Bubble point tank6", "Bubble point tank7", "Bubble point tank12", "Bubble point tank13", "Bubble point tank14", "Bubble point tank15", "Bubble point tank21", "Bubble point tank22", "Bubble point tank23", "Bubble point tank25", "Bubble point tank26"];
     vm.acttype = "";
     vm.acttank = "";
-    vm.change_date=change_date;
-    vm.create_chart=create_chart;
-    vm.mtfload=false;
+    vm.change_date = change_date;
+    vm.create_chart = create_chart;
+    vm.mtfload = false;
 
     function loadPartnumbers() {
       vm.partnumbers = [];
@@ -21,13 +21,13 @@ define([], function () {
       load();
     }
 
-    function change_date(){
-      vm.enddate=$filter('date')(new Date(vm.startdate).getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
+    function change_date() {
+      vm.enddate = $filter('date')(new Date(vm.startdate).getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
       load();
     }
 
     function load() {
-      vm.mtfload=true;
+      vm.mtfload = true;
       vm.data = [];
       angular.forEach(vm.tanks, function (v, k) {
         mtfhoursService.get(vm.startdate, vm.enddate, v).then(function (response) {
@@ -60,13 +60,16 @@ define([], function () {
           }
           console.log(vm.data);
           create_chart();
-          vm.mtfload=false;
+          vm.mtfload = false;
         });
       });
     }
 
     function create_chart() {
       vm.bokeshour = [];
+      vm.aeqhour = [];
+      vm.bokesaeqhour = [];
+      vm.kumbokesaeqhour = [];
       vm.cats = [];
       for (var i = 6; i < 24; i++) {
         vm.cats.push(i < 10 ? "0" + i : "" + i);
@@ -76,7 +79,21 @@ define([], function () {
       }
 
       for (var k = 0; k < vm.cats.length; k++) {
-        vm.bokeshour.push({ cat: vm.cats[k], y: ($filter('sumField')($filter('filter')(vm.data, { modul: vm.acttype, tank: vm.acttank, hour: vm.cats[k] }), 'sumbokes'))*1 });
+        var allbokes=0;
+        var allaeq=0;
+        vm.bokeshour.push({ cat: vm.cats[k], y: ($filter('sumField')($filter('filter')(vm.data, { modul: vm.acttype, tank: vm.acttank, hour: vm.cats[k] }), 'sumbokes')) * 1 });
+        vm.aeqhour.push({ cat: vm.cats[k], y: ($filter('sumField')($filter('filter')(vm.data, { modul: vm.acttype, tank: vm.acttank, hour: vm.cats[k] }), 'aeq')) * 1 });
+        vm.bokesaeqhour.push({ cat: vm.cats[k], y: ($filter('sumField')($filter('filter')(vm.data, { modul: vm.acttype, tank: vm.acttank, hour: vm.cats[k] }), 'sumbokes')) * 1 / ($filter('sumField')($filter('filter')(vm.data, { modul: vm.acttype, tank: vm.acttank, hour: vm.cats[k] }), 'aeq')) * 1 });
+        if (k > 0) {
+          for(var l=0;l<=k;l++){
+            allbokes+=vm.bokeshour[l].y;
+            allaeq+=vm.aeqhour[l].y;
+          }
+          vm.kumbokesaeqhour.push({ cat: vm.cats[k], y: allbokes/allaeq });
+        }
+        else {
+          vm.kumbokesaeqhour.push({ cat: vm.cats[k], y: ($filter('sumField')($filter('filter')(vm.data, { modul: vm.acttype, tank: vm.acttank, hour: vm.cats[k] }), 'sumbokes')) * 1 / ($filter('sumField')($filter('filter')(vm.data, { modul: vm.acttype, tank: vm.acttank, hour: vm.cats[k] }), 'aeq')) * 1 });
+        }
       }
 
       vm.chartconfig = {
@@ -85,7 +102,10 @@ define([], function () {
         xAxis: { type: 'category', categories: vm.cats },
         yAxis: { title: { text: 'db' } },
         series: [
-          { name: 'Bökés', color: 'rgb(0, 0, 255)', data: vm.bokeshour },
+          /*{ name: 'Bökés', color: 'rgb(0, 0, 255)', data: vm.bokeshour },
+          { name: 'AEQ', color: 'rgb(255, 153, 0)', data: vm.aeqhour },*/
+          { name: 'Bökés/AEQ', color: 'rgb(0, 200, 120)', data: vm.bokesaeqhour },
+          { name: 'Átlag', type: 'line', color: 'rgb(50, 100, 60)', data: vm.kumbokesaeqhour },
         ]
       }
     }
