@@ -244,6 +244,11 @@ define([], function () {
           case '06': targ = 69; break;
           case '07': targ = 80; break;
           case '08': targ = 80; break;
+          case '09': targ = 80; break;
+          case '10': targ = 90; break;
+          case '11': 
+							if(new Date(vm.data[b].date).getDate() >= 12 ){ targ = 75;}else {targ = 87;} break;
+          case '12': targ = 75; break;
           default: targ = 80; break;
           //default: targ = 69; break;
         }
