@@ -74,7 +74,7 @@ define([], function () {
                 response.data[j].aeq = vm.partnumbers[k].aeq / 2;
               }
             }
-            if (response.data[j].aeq) {
+            if (!response.data[j].bundle.includes("3132313")) {
               vm.bundledata.push(response.data[j]);
             }
           }
@@ -208,6 +208,7 @@ define([], function () {
     }
 
     function createbundledata() {
+      console.log(vm.bundledata);
       for (var i = 0; i < vm.data.length; i++) {
         for (var j = 0; j < vm.bundledata.length; j++) {
           if (vm.data[i].date == vm.bundledata[j].SPL_start_day) {

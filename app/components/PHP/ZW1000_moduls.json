@@ -72,6 +72,14 @@
         "aeq": 1.1
     },
     {
+        "name": "CPX",
+        "fiber": "3111381",
+        "bundle": "3111427",
+        "dinamik": "3111460",
+        "modul": "3164129",
+        "aeq": 1.1
+    },
+    {
         "name": "CPX 700 1,5 p.open NS",
         "fiber": "3111391",
         "bundle": "3111434",
@@ -88,11 +96,19 @@
         "aeq": 1.1
     },
     {
-        "name": "CPX 550 BLUE SHROUD",
+        "name": "Blue",
         "fiber": "3164129",
         "bundle": "3164129",
         "dinamik": "3164129",
         "modul": "3164129",
+        "aeq": 1.1
+    },
+    {
+        "name": "",
+        "fiber": "",
+        "bundle": "",
+        "dinamik": "",
+        "modul": "3111430",
         "aeq": 1.1
     }
 ]
