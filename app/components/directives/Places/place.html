@@ -39,14 +39,15 @@
                 <td ng-show="ok=='true'&& !tabledata[pln].dose">
                     <input class="form-control" type="text" ng-model="nowdose" ng-change="check(nowitem,nowdose,pln)" maxlength="10">
                 </td>
-                <td >{{tabledata[pln].quality}}</td>
+                <td>{{tabledata[pln].quality}}</td>
                 <td>{{tabledata[pln].indate}}</td>
                 <td>{{tabledata[pln].inshift}}</td>
                 <td>
                     <textarea class="form-control" rows="1" ng-model="tabledata[pln].description"></textarea>
                 </td>
                 <td ng-show="ok=='true'">
-                    <button class="btn btn-success" ng-disabled="tabledata[pln].inshift || !nowitem ||!tabledata[pln].quality|| !beviheto" ng-click="createinfo(pln,nowitem,nowdose,tabledata[pln].quality,tabledata[pln].description)">
+                    <button class="btn btn-success" ng-disabled="tabledata[pln].inshift || !nowitem ||!tabledata[pln].quality||tabledata[pln].quality=='A+'|| !beviheto"
+                        ng-click="createinfo(pln,nowitem,nowdose,tabledata[pln].quality,tabledata[pln].description)">
                         <i class="icon-edit" title="Felvétel"></i>
                     </button>
                 </td>

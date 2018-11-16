@@ -21,7 +21,9 @@ define([
   './services/downtimechlor.service',
   './downtimechlor/downtimechlor.ctrl',
   './putmoduls/putmoduls.ctrl',
-  './services/putmoduls.service'
+  './services/putmoduls.service',
+  './checkmoduls/checkmoduls.ctrl',
+  './services/checkmoduls.service'
 	/* files */
 ], function(
   configFunction,
@@ -46,7 +48,9 @@ define([
   downtimechlorService,
   downtimechlorController,
   putmodulsController,
-  putmodulsService
+  putmodulsService,
+  checkmodulsController,
+  checkmodulsService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -75,5 +79,7 @@ define([
 	app.controller('downtimechlorController', downtimechlorController);
 	app.controller('putmodulsController', putmodulsController);
 	app.service('putmodulsService', putmodulsService);
+	app.controller('checkmodulsController', checkmodulsController);
+	app.service('checkmodulsService', checkmodulsService);
 		/* controllers */
 });
