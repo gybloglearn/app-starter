@@ -268,10 +268,10 @@
             </tr>
             <tr>
               <th>Összesítve:</th>
-              <th>{{(vm.data|filter:{machine: 'Sheetmaker', category: 'GOOD' }|sumField:'sumaeq')}}</th>
-              <th>{{(vm.data|filter:{machine: 'Potting', category: 'IN' }|sumField:'sumaeq')}}</th>
-              <th>{{(vm.data|filter:{machine: 'Potting', category: 'P3' }|sumField:'sumaeq')}}</th>
-              <th>{{(vm.data|filter:{machine: 'Potting', category: 'OUT' }|sumField:'sumaeq')}}</th>
+              <th>{{(vm.data|filter:{machine: 'Sheetmaker'}|sumField:'sumgoodaeq')}}</th>
+              <th>{{(vm.data|filter:{machine: 'Potting'}|sumField:'suminaeq')}}</th>
+              <th>{{(vm.data|filter:{machine: 'Potting'}|sumField:'sump3aeq')}}</th>
+              <th>{{(vm.data|filter:{machine: 'Potting'}|sumField:'sumoutaeq')}}</th>
               <th>{{(vm.data|filter:{machine: 'MTF', category: 'CH-OUT', type:'!ZB500S' }|sumField:'sumaeq')}}</th>
               <th>{{(vm.data|filter:{machine: 'MTF', category: 'BP-OUT', type:'!ZB500S' }|sumField:'sumaeq')}}</th>
               <th class="text-center">{{(vm.data|filter:{machine: 'MTF', category: 'BOK-BOKES', type:'!ZB500S' }|sumField:'amount')/(vm.data|filter:{machine: 'MTF', category: 'BP-OUT', type:'!ZB500S' }|sumField:'sumaeq') | number:2}}</th>
