@@ -21,6 +21,7 @@ define([], function () {
       vm.partnumbers = [];
       weeklyService.getpartnumber().then(function (response) {
         vm.partnumbers = response.data;
+        console.log(vm.partnumbers);
       });
     }
 
@@ -72,31 +73,31 @@ define([], function () {
       vm.filedatas = [];
 
       for (var i = 0; i < vm.dates.length; i++) {
-				var td = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
-				var tdd = $filter('date')(new Date().getTime(), 'yyyyMMdd');
-				if(vm.dates[i] == tdd){
-					weeklyService.getsmtoday(td).then(function(response){
-						for(var j = 0; j < response.data.length; j++){
-							response.data[j].d = response.data[j].Shift_ID.substr(0,8);
-							if(vm.sheetmakers.indexOf(response.data[j].Machine) > -1) {
-								vm.filedatas.push(response.data[j]);
-								updatedowntime(response.data[j]);
-							}
-						}
-						lodsm();
-					});
-				} else {
-        	weeklyService.getsmfile(vm.dates[i]).then(function (response) {
-          	for (var j = 0; j < response.data.length; j++) {
-            	//response.data[j].d = $filter('date')(new Date(response.data[j].timestamp), "yyyyMMdd");
-	            response.data[j].d = response.data[j].Shift_ID.substr(0, 8);
-  	          if (vm.sheetmakers.indexOf(response.data[j].Machine) > -1) {
-    	          vm.filedatas.push(response.data[j]);
-      	        updatedowntime(response.data[j]);
-        	    }
-          	}
-	        });
-				}
+        var td = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
+        var tdd = $filter('date')(new Date().getTime(), 'yyyyMMdd');
+        if (vm.dates[i] == tdd) {
+          weeklyService.getsmtoday(td).then(function (response) {
+            for (var j = 0; j < response.data.length; j++) {
+              response.data[j].d = response.data[j].Shift_ID.substr(0, 8);
+              if (vm.sheetmakers.indexOf(response.data[j].Machine) > -1) {
+                vm.filedatas.push(response.data[j]);
+                updatedowntime(response.data[j]);
+              }
+            }
+            lodsm();
+          });
+        } else {
+          weeklyService.getsmfile(vm.dates[i]).then(function (response) {
+            for (var j = 0; j < response.data.length; j++) {
+              //response.data[j].d = $filter('date')(new Date(response.data[j].timestamp), "yyyyMMdd");
+              response.data[j].d = response.data[j].Shift_ID.substr(0, 8);
+              if (vm.sheetmakers.indexOf(response.data[j].Machine) > -1) {
+                vm.filedatas.push(response.data[j]);
+                updatedowntime(response.data[j]);
+              }
+            }
+          });
+        }
       }
       lodsm();
     }
@@ -120,7 +121,58 @@ define([], function () {
     }
 
     function lodsm() {
-      for (var i = 0; i < vm.sheetmakers.length; i++) {
+      weeklyService.getsheet(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, "yyyy-MM-dd")).then(function (response) {
+        var d = response.data;
+
+        for (var i = 0; i < vm.partnumbers.length; i++) {
+          for (var j = 0; j < d.length; j++) {
+            if (vm.partnumbers[i].id == d[j].type) {
+              d[j].Goodsheets = d[j].Totalsheets - d[j].ScrapSheets;
+              d[j].Goodaeq = ((d[j].Totalsheets - d[j].ScrapSheets) / vm.partnumbers[i].sheets) * vm.partnumbers[i].aeq;
+              d[j].Scrapaeq = (d[j].ScrapSheets / vm.partnumbers[i].sheets) * vm.partnumbers[i].aeq;
+              d[j].Totalaeq = (d[j].Totalsheets / vm.partnumbers[i].sheets) * vm.partnumbers[i].aeq;
+              d[j].shortname = d[j].MachineName[0] + d[j].MachineName[5] + d[j].MachineName[10];
+            }
+          }
+        }
+
+        for (var j = 0; j < d.length; j++) {
+          for (var k = 0; k < vm.sheetmakers.length; k++) {
+            if (d[j].shortname == vm.sm[k].id) {
+              vm.sm[k].jo += d[j].Goodsheets;
+              vm.sm[k].jaeq += d[j].Goodaeq;
+              vm.sm[k].selejt += d[j].ScrapSheets * 1;
+              vm.sm[k].saeq += d[j].Scrapaeq;
+              vm.sm[k].ossz += d[j].Totalsheets * 1;
+              vm.sm[k].oaeq += d[j].Totalaeq;
+              vm.sm[vm.sheetmakers.length + 1].jo += d[j].Goodsheets;
+              vm.sm[vm.sheetmakers.length + 1].jaeq += d[j].Goodaeq;
+              vm.sm[vm.sheetmakers.length + 1].selejt += d[j].ScrapSheets;
+              vm.sm[vm.sheetmakers.length + 1].saeq += d[j].Scrapaeq;
+              vm.sm[vm.sheetmakers.length + 1].ossz += d[j].Totalsheets;
+              vm.sm[vm.sheetmakers.length + 1].oaeq += d[j].Totalaeq;
+            }
+          }
+          var ido = 1440;
+          if (vm.startdate == $filter('date')(new Date().getTime(), 'yyyy-MM-dd')) {
+            ido = (new Date().getTime() - new Date(vm.startdate + " 05:50:00").getTime()) / (1000 * 60);
+          }
+          for (var l = 0; l < vm.days.length; l++) {
+            vm.days[l].ttlido = vm.sheetmakers.length * ido;
+            if ($filter('date')(new Date(d[j].Day), "yyyyMMdd") == vm.days[l].date) {
+              vm.days[l].joaeq += d[j].Goodaeq;
+              vm.days[l].jolap += d[j].Goodsheets;
+              vm.days[l].ttlaeq += d[j].Totalaeq;
+              vm.days[l].ttllap += d[j].Totalsheets * 1;
+            }
+          }
+        }
+        console.log(d);
+        console.log(vm.sm);
+        updatecard(vm.sm);
+      });
+
+      /*for (var i = 0; i < vm.sheetmakers.length; i++) {
         weeklyService.getsm(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, "yyyy-MM-dd"), vm.sheetmakers[i]).then(function (response) {
           for (var j = 0; j < response.data.length; j++) {
             response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
@@ -168,7 +220,7 @@ define([], function () {
           console.log(vm.sm);
           updatecard(vm.sm);
         });
-      }
+      }*/
     }
 
     function updatecard(smarr) {
@@ -176,10 +228,10 @@ define([], function () {
       var smskap = 0;
       var smstime = 0;
       for (var i = 0; i < vm.sheetmakers.length; i++) {
-				var ido = 1440;
-				if(vm.startdate == $filter('date')(new Date().getTime(), 'yyyy-MM-dd')){
-				  ido = (new Date().getTime() - new Date(vm.startdate + " 05:50:00").getTime()) / (1000 * 60);
-				}
+        var ido = 1440;
+        if (vm.startdate == $filter('date')(new Date().getTime(), 'yyyy-MM-dd')) {
+          ido = (new Date().getTime() - new Date(vm.startdate + " 05:50:00").getTime()) / (1000 * 60);
+        }
         smskap += (vm.dates.length * ido * 60 / 91 / 12 * 0.74) * ((vm.dates.length * ido - ((smarr[i].musz + smarr[i].szerv + smarr[i].terv) / 60)) / (vm.dates.length * ido));
         smstime += vm.dates.length * ido;
         vm.smcards.push({
@@ -225,7 +277,7 @@ define([], function () {
         var muszaki = { name: "Műszaki", color: "rgba(255,0,0,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: "{series.name}: <b style='color:{point.color}'>{point.y:.2f}</b><br>" }*/ };
         var szervezesi = { name: "Szervezési", color: "rgba(150,150,150,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: "{series.name}: <b style='color:{point.color}'>{point.y:.2f}</b><br>" }*/ };
         var tervezett = { name: "Tervezett", color: "rgba(50,100,200,.5)", data: [], /*tooltip: { useHTML:true, pointFormat: "{series.name}: <b style='color:{point.color}'>{point.y:.2f}</b><br>" }*/ };
-        var selejt = { marker: { enabled: false, borderWidth: 0 }, dataLabels: {enabled: true, useHTML: true, format: '<span class="back" style="color:rgba(0,0,0,1);font-weight:bold">Selejt:<br>{point.slap} lap</span>', allowOverlap: false},  lineWidth: 0, name: "Selejt", color: "rgba(50,100,200,.5)", data: [], type: 'line', color: 'rgb(255,200,0)', tooltip: { useHTML: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.slap} DB</span> / {point.lap} ({point.percent:.2f} %)</span><br/>' } };
+        var selejt = { marker: { enabled: false, borderWidth: 0 }, dataLabels: { enabled: true, useHTML: true, format: '<span class="back" style="color:rgba(0,0,0,1);font-weight:bold">Selejt:<br>{point.slap} lap</span>', allowOverlap: false }, lineWidth: 0, name: "Selejt", color: "rgba(50,100,200,.5)", data: [], type: 'line', color: 'rgb(255,200,0)', tooltip: { useHTML: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.slap} DB</span> / {point.lap} ({point.percent:.2f} %)</span><br/>' } };
         var ttla = 0;
         var ttlm = 0;
         var ttls = 0;
@@ -331,26 +383,26 @@ define([], function () {
         var tmuszaki = { name: "Műszaki", color: "rgb(255,0,0)", data: [{ y: parseFloat(ttlm / ttla) * 100, min: ttlm }] };
         var tszervezesi = { name: "Szervezési", color: "rgb(150,150,150)", data: [{ y: parseFloat(ttls / ttla) * 100, min: ttls }] };
         var ttervezett = { name: "Tervezett", color: "rgb(50,100,200)", data: [{ y: parseFloat(ttlt / ttla) * 100, min: ttlt }] };
-        var ttselejt = { name: "Selejt", color: 'rgb(250,200,0)', dataLabels: {enabled: true, format: '<span style="font-weight: bold">Össz Selejt: {point.slap} lap</span>'}, data: [{y: 0, slap:ttlselejt, lap: ttlosszlap, percent: parseFloat(ttlselejt / ttlosszlap) * 100}], marker: { enabled: false, borderWidth: 0 }, lineWidth:0, type: 'line', tooltip: { useHTML: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.slap} DB</span> / {point.lap} ({point.percent:.2f} %)</span><br/>' } };
+        var ttselejt = { name: "Selejt", color: 'rgb(250,200,0)', dataLabels: { enabled: true, format: '<span style="font-weight: bold">Össz Selejt: {point.slap} lap</span>' }, data: [{ y: 0, slap: ttlselejt, lap: ttlosszlap, percent: parseFloat(ttlselejt / ttlosszlap) * 100 }], marker: { enabled: false, borderWidth: 0 }, lineWidth: 0, type: 'line', tooltip: { useHTML: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.slap} DB</span> / {point.lap} ({point.percent:.2f} %)</span><br/>' } };
         vm.smavailabilitychartconfig = {
-          chart: { type: 'column', spacingBottom: 30},
-          plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0, dataLabels: {enabled: true, allowOverlap: false, zIndex:1, format: "<span class='back' style='color:rgba(0,0,0,1)'>{point.y:.2f} %</span>", useHTML: true} } },
-          tooltip: { shared: true,  backgroundColor:'rgba(255,255,255,1)', headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.2f} %</span> ({point.min:.0f} perc)</span><br/>' },
+          chart: { type: 'column', spacingBottom: 30 },
+          plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0, dataLabels: { enabled: true, allowOverlap: false, zIndex: 1, format: "<span class='back' style='color:rgba(0,0,0,1)'>{point.y:.2f} %</span>", useHTML: true } } },
+          tooltip: { shared: true, backgroundColor: 'rgba(255,255,255,1)', headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.2f} %</span> ({point.min:.0f} perc)</span><br/>' },
           title: { text: "SM elérhetőségi adatok" },
           xAxis: { type: "category", categories: xA, title: { text: "SheetMakerek" } },
-          yAxis: [{ max: 100, title: {text: 'Elérhetőségi adatok %'} }],
+          yAxis: [{ max: 100, title: { text: 'Elérhetőségi adatok %' } }],
           series: [
             muszaki, szervezesi, tervezett, avail, selejt
           ]
         };
         vm.ttlsmavailabilitychartconfig = {
-          chart: { type: 'column', spacingBottom: 30},
-          plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0 }, dataLabels: {enabled: true, format: '{point.y:.2f} %'} },
+          chart: { type: 'column', spacingBottom: 30 },
+          plotOptions: { column: { stacking: 'normal', pointPadding: 0, borderWidth: 0 }, dataLabels: { enabled: true, format: '{point.y:.2f} %' } },
           legend: { enabled: false },
           tooltip: { shared: true, headerFormat: '<span style="font-size: 10px"><b>{point.key}</b></span><br/>', pointFormat: '<span> {series.name}: <span style="color:{series.color};font-weight:bold">{point.y:.2f} %</span> ({point.min:.0f} perc)</span><br/>' },
           title: { text: "SM összesített elérhetőségi adatok" },
           xAxis: { type: "category", categories: ["" + vm.startdate + " - " + vm.enddate], title: { text: "" } },
-          yAxis: [{ max: 100, title: {text: 'Elérhetőségi adatok %'} }],
+          yAxis: [{ max: 100, title: { text: 'Elérhetőségi adatok %' } }],
           series: [
             tmuszaki, tszervezesi, ttervezett, tavail, ttselejt
           ]

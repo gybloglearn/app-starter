@@ -6,7 +6,8 @@ define([], function () {
       getpartnumber: getpartnumber,
       getsmfile: getsmfile,
       getsm: getsm,
-				getsmtoday: getsmtoday
+      getsmtoday: getsmtoday,
+      getsheet: getsheet
     };
 
     return service;
@@ -20,24 +21,31 @@ define([], function () {
       return $http(req);
     }
     function getsmfile(date) {
-			var d = new Date().getTime().toString().substr(-5);
+      var d = new Date().getTime().toString().substr(-5);
       var req = {
         method: 'GET',
         url: 'app/components/PHP/sm/sm' + date + '.json' + '?' + d
       };
       return $http(req);
     }
-		function getsmtoday(date) {
-			var req = {
-				method: 'GET',
-				url: 'app/components/PHP/sumsmjsontoday.php?startdate=' + date
-			};
-			return $http(req);
-		}
+    function getsmtoday(date) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/sumsmjsontoday.php?startdate=' + date
+      };
+      return $http(req);
+    }
     function getsm(start, end, mch) {
       var req = {
         method: 'GET',
         url: 'app/components/PHP/ZW500_SM.php?startdate=' + start + '&enddate=' + end + '&report_id=' + mch
+      };
+      return $http(req);
+    }
+    function getsheet(start, end) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/Smtable.php?startdate=' + start + '&enddate=' + end
       };
       return $http(req);
     }
