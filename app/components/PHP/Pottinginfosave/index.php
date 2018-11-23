@@ -141,8 +141,8 @@ class clorinationinfo{
 //modulok 
 class positions{
     function get(){
-        $db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Place','postgres','abcd');
-        //$db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
+        //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Place','postgres','abcd');
+        $db=new \DB\SQL('pgsql:host=localhost;dbname=zw1500place','postgres','abc912');
         $res = $db->exec("SELECT * FROM positions");
         $resault=[];
         foreach($res as $k=>$v){
@@ -156,8 +156,8 @@ class positions{
     {
         $data=json_decode($app['BODY']);
         echo json_encode($data);
-        $db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Place','postgres','abcd');
-        //$db = new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
+        //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Place','postgres','abcd');
+        $db = new \DB\SQL('pgsql:host=localhost;dbname=zw1500place','postgres','abc912');
         $mapper=new \DB\SQL\Mapper($db,'positions');
         
         $mapper->id=$data->id; //azonosító
@@ -184,8 +184,8 @@ class positions{
     function put($app,$params)
     {
         $data=json_decode($app['BODY']);
-        $db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Place','postgres','abcd');
-        //$db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
+        //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Place','postgres','abcd');
+        $db=new \DB\SQL('pgsql:host=localhost;dbname=zw1500place','postgres','abc912');
         $mapper=new \DB\SQL\Mapper($db,'positions');
         $info=$mapper->load(Array('id=?',$params['id']));
         $info->outsso=$data->outsso; //ki sso
@@ -202,8 +202,8 @@ class positions{
     }
     function delete($app,$params)
     {
-        $db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Place','postgres','abcd');
-        //$db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
+        //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1500Place','postgres','abcd');
+        $db=new \DB\SQL('pgsql:host=localhost;dbname=zw1500place','postgres','abc912');
         $mapper=new DB\SQL\Mapper($db,'positions');
         $info=$mapper->find(Array('id=?',$params['id']));
         $info[0]->erase();
