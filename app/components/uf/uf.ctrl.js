@@ -49,10 +49,11 @@ define([], function () {
             for (var j = 0; j < gradedata.length; j++) {
               if (vm.data[i].PhaseName == "Grade" && vm.data[i].jobid == gradedata[j].jobid) {
                 vm.data[i].grade = gradedata[j].Grade;
+                console.log(vm.data[i]);
               }
             }
           }
-          console.log(vm.data);
+          
           loadbundle()
         });
       });

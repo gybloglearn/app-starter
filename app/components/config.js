@@ -27,6 +27,18 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('checkmoduls', {
+		url: '/checkmoduls',
+		templateUrl: './app/components/checkmoduls/checkmoduls.html',
+		controller: 'checkmodulsController',
+		controllerAs: 'vm'
+	});
+	$stateProvider.state('putmoduls', {
+		url: '/putmoduls',
+		templateUrl: './app/components/putmoduls/putmoduls.html',
+		controller: 'putmodulsController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('downtimechlor', {
 		url: '/downtimechlor',
 		templateUrl: './app/components/downtimechlor/downtimechlor.html',

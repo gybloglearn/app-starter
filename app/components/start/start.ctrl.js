@@ -192,7 +192,7 @@ define([], function () {
     }
 
     function createinfo(categ, name) {
-      if (name == "Potting flip") {
+      if (name == "Potting flip" || name=="Centrifuga End") {
         vm.createinfodata = {};
         vm.mch = "";
         vm.cat = "";

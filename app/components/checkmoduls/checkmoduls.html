@@ -1,0 +1,71 @@
+<div class="container">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">Rögzített modulok nyomonkövetése</h1>
+      <div class="col-sm-10" style="margin-top:20px">
+        <div class="input-group">
+          <span class="input-group-addon">Év</span>
+          <select class="form-control" ng-model="search.inyear">
+            <option value="">Mind</option>
+            <option ng-repeat="yr in vm.years" value="{{yr}}">{{yr}}</option>
+          </select>
+          <span class="input-group-addon">Minősítés</span>
+          <select class="form-control" ng-model="search.quality">
+            <option value="">Mind</option>
+            <option ng-repeat="q in vm.qual" value="{{q}}">{{q}}</option>
+          </select>
+          <span class="input-group-addon">Modul</span>
+          <select class="form-control" ng-model="search.item">
+            <option value="">Mind</option>
+            <option ng-repeat="mo in vm.moduls" value="{{mo.Values}}">{{mo.Label}}-{{mo.Values}}</option>
+          </select>
+          <span class="input-group-addon">Adagszám</span>
+          <input class="form-control" type="text" ng-model="search.dose" maxlength="10">
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div>
+        <table class="table table-hover table-condensed table-bordered">
+          <thead>
+            <tr>
+              <th>Pozíció</th>
+              <th>Hely</th>
+              <th>Modul</th>
+              <th>Adagszám</th>
+              <th>Minősítés</th>
+              <th>SSO be</th>
+              <th>Név be</th>
+              <th>Szak be</th>
+              <th>Felvétel ideje</th>
+              <th>SSO ki</th>
+              <th>Név ki</th>
+              <th>Szak ki</th>
+              <th>Kiadás ideje</th>
+              <th>Megjegyzés</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="piece in vm.data | filter: search track by $index">
+              <td>{{piece.code}}</td>
+              <td>{{piece.place}}</td>
+              <td>{{piece.item}}</td>
+              <td>{{piece.dose}}</td>
+              <td>{{piece.quality}}</td>
+              <td>{{piece.insso}}</td>
+              <td>{{piece.inname}}</td>
+              <td>{{piece.inshift}}</td>
+              <td>{{piece.indate}}</td>
+              <td>{{piece.outsso}}</td>
+              <td>{{piece.outname}}</td>
+              <td>{{piece.outshift}}</td>
+              <td>{{piece.outdate}}</td>
+              <td>{{piece.description}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="module-footer"></div>
+  </section>
+</div>

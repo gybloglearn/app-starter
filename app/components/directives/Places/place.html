@@ -1,0 +1,63 @@
+<!--direktíva-->
+<div class="row">
+    <div class="col-sm-8" style="margin:10px">
+        <div class="input-group">
+            <div class="input-group-btn">
+                <a href="" class="btn btn-primary" ng-click="select();ok='true'">Lekérdezés</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="place" style="padding: 10px 10px 0px 10px;">
+    <table class="table table-hover table-condensed table-bordered">
+        <thead>
+            <tr>
+                <th colspan="9" class="text-center">{{nm+1}}. Pozíció</th>
+            </tr>
+            <tr>
+                <th>Hely</th>
+                <th>Cikkszám</th>
+                <th>Adagszám</th>
+                <th>Minősítés</th>
+                <th>Dátum</th>
+                <th>Szak</th>
+                <th>Megjegyzés</th>
+                <th ng-show="ok=='true'">Felvétel</th>
+                <th ng-show="ok=='true'">Kiadás</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="pln in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
+                <td>{{pln+1}}</td>
+                <td ng-hide="ok=='true'&&!tabledata[pln].item">{{tabledata[pln].item}}</td>
+                <td ng-show="ok=='true'&&!tabledata[pln].item">
+                    <select class="form-control" ng-model="nowitem">
+                        <option ng-repeat="cn in moduls" value="{{cn.Values}}">{{cn.Values}}-{{cn.Label}}</option>
+                    </select>
+                </td>
+                <td ng-hide="ok=='true'&&!tabledata[pln].dose">{{tabledata[pln].dose}}</td>
+                <td ng-show="ok=='true'&& !tabledata[pln].dose">
+                    <input class="form-control" type="text" ng-model="nowdose" ng-change="check(nowitem,nowdose,pln)" maxlength="10">
+                </td>
+                <td>{{tabledata[pln].quality}}</td>
+                <td>{{tabledata[pln].indate}}</td>
+                <td>{{tabledata[pln].inshift}}</td>
+                <td>
+                    <textarea class="form-control" rows="1" ng-model="tabledata[pln].description"></textarea>
+                </td>
+                <td ng-show="ok=='true'">
+                    <button class="btn btn-success" ng-disabled="tabledata[pln].inshift || !nowitem ||!tabledata[pln].quality||tabledata[pln].quality=='A+'|| !beviheto"
+                        ng-click="createinfo(pln,nowitem,nowdose,tabledata[pln].quality,tabledata[pln].description)">
+                        <i class="icon-edit" title="Felvétel"></i>
+                    </button>
+                </td>
+                <td ng-show="ok=='true'">
+                    <button class="btn btn-warning" ng-disabled="!tabledata[pln].inshift" ng-click="outinfo(tabledata[pln])">
+                        <i class="icon-play" title="Kiadás"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

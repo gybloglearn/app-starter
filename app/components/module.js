@@ -7,6 +7,7 @@ define([
   './services/data.service',
   './directives/datepicker',
   './directives/mychart',
+  './directives/Places/place',
   './filters/unique',
   './filters/sumdb',
   './filters/sumField',
@@ -18,7 +19,11 @@ define([
   './services/downtimepotting.service',
   './downtimepotting/downtimepotting.ctrl',
   './services/downtimechlor.service',
-  './downtimechlor/downtimechlor.ctrl'
+  './downtimechlor/downtimechlor.ctrl',
+  './putmoduls/putmoduls.ctrl',
+  './services/putmoduls.service',
+  './checkmoduls/checkmoduls.ctrl',
+  './services/checkmoduls.service'
 	/* files */
 ], function(
   configFunction,
@@ -29,6 +34,7 @@ define([
   dataService,
   datepicker,
   mychart,
+  placedir,
   unique,
   sumdb,
   sumField,
@@ -40,7 +46,11 @@ define([
   downtimepottingService,
   downtimepottingController,
   downtimechlorService,
-  downtimechlorController
+  downtimechlorController,
+  putmodulsController,
+  putmodulsService,
+  checkmodulsController,
+  checkmodulsService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -54,6 +64,7 @@ define([
   app.controller('LoginController', loginController);
   app.directive('datepicker',datepicker);
   app.directive('myChart',mychart);
+  app.directive('placeDir',placedir);
   app.filter('unique',unique);
   app.filter('sumdb',sumdb);
   app.filter('sumField',sumField);
@@ -66,5 +77,9 @@ define([
 	app.controller('downtimepottingController', downtimepottingController);
 	app.service('downtimechlorService', downtimechlorService);
 	app.controller('downtimechlorController', downtimechlorController);
-	/* controllers */
+	app.controller('putmodulsController', putmodulsController);
+	app.service('putmodulsService', putmodulsService);
+	app.controller('checkmodulsController', checkmodulsController);
+	app.service('checkmodulsService', checkmodulsService);
+		/* controllers */
 });
