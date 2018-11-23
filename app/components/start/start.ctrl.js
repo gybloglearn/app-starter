@@ -199,14 +199,11 @@ define([], function () {
               response.data[r].aeq = vm.partnumbers1000[xx].aeq;
             }
           }
-          if(response.data[r].Grade==""){
-            response.data[r]="A+";
-          }
-          if (response.data[r].gradeday >= vm.startdate && response.data[r].gradeday <= vm.enddate) {
+          if (response.data[r].gradeday >= vm.startdate && response.data[r].gradeday <= vm.enddate && response.data[r].Grade!="") {
             vm.zw1000.push(response.data[r]);
           }
         }
-
+        console.log(vm.zw1000);
       });
       dataService.getgradebyd1500(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, 'yyyy-MM-dd')).then(function (response) {
         for (var r = 0; r < response.data.length; r++) {
