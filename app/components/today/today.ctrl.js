@@ -82,7 +82,6 @@ define([], function () {
           break;
         case 'min':
           target = (vm.rates.min / div) / (1440 / div) * vm.passedmins[shiftnum];
-          //console.log(number + " - to - " + target);
           break;
       }
       return target;
