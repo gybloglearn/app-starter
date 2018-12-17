@@ -79,7 +79,7 @@ class clorinationinfo{
     function get(){
         //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1000Potting','postgres','abcd');
         $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
-        $res = $db->exec("SELECT * FROM clorination1000");
+        $res = $db->exec("SELECT * FROM chlorination1000");
         $resault=[];
         foreach($res as $k=>$v){
             array_push($resault,$v);
@@ -94,7 +94,7 @@ class clorinationinfo{
         echo json_encode($data);
         //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1000Potting','postgres','abcd');
         $db = new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
-        $mapper=new \DB\SQL\Mapper($db,'clorination1000');
+        $mapper=new \DB\SQL\Mapper($db,'chlorination1000');
         
         $mapper->id=$data->id; //azonosító
         $mapper->sso=$data->sso; //sso
@@ -115,7 +115,7 @@ class clorinationinfo{
         $data=json_decode($app['BODY']);
         //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1000Potting','postgres','abcd');
         $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
-        $mapper=new \DB\SQL\Mapper($db,'clorination1000');
+        $mapper=new \DB\SQL\Mapper($db,'chlorination1000');
         $info=$mapper->load(Array('id=?',$params['id']));
         $info->start=$data->start;
         $info->end=$data->end;
@@ -132,7 +132,7 @@ class clorinationinfo{
     {
         //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1000Potting','postgres','abcd');
         $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
-        $mapper=new DB\SQL\Mapper($db,'clorination1000');
+        $mapper=new DB\SQL\Mapper($db,'chlorination1000');
         $info=$mapper->find(Array('id=?',$params['id']));
         $info[0]->erase();
         echo "OK";
@@ -277,5 +277,8 @@ class impregnalinfo{
 }
 $app=require('../../../../../f3lib/base.php');
 $app->map('/info/@id','info');
+$app->map('/clorinationinfo/@id','clorinationinfo');
+$app->map('/fluxusinfo/@id','fluxusinfo');
+$app->map('/impregnalinfo/@id','impregnalinfo');
 $app->run();
 ?>

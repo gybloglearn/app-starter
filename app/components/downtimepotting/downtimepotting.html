@@ -1,0 +1,69 @@
+<div class="container-fluid">
+  <section class="module">
+    <div class="module-header">
+      <h1 class="text-center">Potting állásidők összesítése</h1>
+      <div class="col-sm-10" style="margin-top:20px">
+        <div class="input-group">
+          <span class="input-group-addon">Potting</span>
+          <select class="form-control" ng-model="vm.mch" ng-change="vm.filterload()">
+            <option value="">Mind</option>
+            <option ng-repeat="pl in vm.pottings" value="{{pl}}">{{pl}}</option>
+          </select>
+          <span class="input-group-addon">Kategória</span>
+          <select class="form-control" ng-model="vm.cat" ng-change="vm.filterload()">
+            <option value="">Mind</option>
+            <option ng-repeat="ct in vm.categories | filter:{'id':vm.mch}" value="{{ct.cat}}">{{ct.cat}}</option>
+          </select>
+          <span class="input-group-addon">Dátum</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="{{vm.startdate}}" end="{{vm.edate}}">
+          <span class="input-group-addon">-tól</span>
+          <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="{{vm.enddate}}" end="{{vm.edate}}">
+          <span class="input-group-addon">-ig</span>
+          <div class="input-group-btn">
+            <a href="" class="btn btn-primary" ng-click="vm.filterload()" ng-disabled="vm.enddate<=vm.startdate">Betöltés</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="row">
+        <div class="col-sm-11">
+          <my-chart id="statik_chart" config="vm.chartconfig_statik"></my-chart>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-11">
+          <my-chart id="dinamik_chart" config="vm.chartconfig_dinamik"></my-chart>
+        </div>
+      </div>
+    </div>
+    <div class="module-footer">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>Nap</th>
+            <th>Potting</th>
+            <th>Állás kezdete</th>
+            <th>Allás vége</th>
+            <th>Állásidő (perc)</th>
+            <th>Kategória</th>
+            <th>Alkategória</th>
+            <th>Megjegyzés</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in vm.guidata track by $index">
+            <td>{{item.day}}</td>
+            <td>{{item.pottingid}}</td>
+            <td>{{item.start_date}}</td>
+            <td>{{item.end_date}}</td>
+            <td>{{item.time}}</td>
+            <td>{{item.category}}</td>
+            <td>{{item.subcategory}}</td>
+            <td>{{item.description}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

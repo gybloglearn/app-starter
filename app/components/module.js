@@ -18,7 +18,15 @@ define([
   './potting/potting.ctrl',
   './services/potting.service',
   './pdt/pdt.ctrl',
-  './services/pdt.service'
+  './services/pdt.service',
+  './downtimepotting/downtimepotting.ctrl',
+  './services/downtimepotting.service',
+  './downtimechlor/downtimechlor.ctrl',
+  './services/downtimechlor.service',
+  './downtimefluxus/downtimefluxus.ctrl',
+  './services/downtimefluxus.service',
+  './downtimeimpregnal/downtimeimpregnal.ctrl',
+  './services/downtimeimpregnal.service'
 	/* files */
 ], function(
   configFunction,
@@ -40,7 +48,15 @@ define([
   pottingController,
   pottingService,
   pdtController,
-  pdtService
+  pdtService,
+  downtimepottingController,
+  downtimepottingService,
+  downtimechlorController,
+  downtimechlorService,
+  downtimefluxusController,
+  downtimefluxusService,
+  downtimeimpregnalController,
+  downtimeimpregnalService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -66,5 +82,13 @@ define([
 	app.service('pottingService', pottingService);
 	app.controller('pdtController', pdtController);
 	app.service('pdtService', pdtService);
+	app.controller('downtimepottingController', downtimepottingController);
+	app.service('downtimepottingService', downtimepottingService);
+	app.controller('downtimechlorController', downtimechlorController);
+	app.service('downtimechlorService', downtimechlorService);
+	app.controller('downtimefluxusController', downtimefluxusController);
+	app.service('downtimefluxusService', downtimefluxusService);
+	app.controller('downtimeimpregnalController', downtimeimpregnalController);
+	app.service('downtimeimpregnalService', downtimeimpregnalService);
 		/* controllers */
 });
