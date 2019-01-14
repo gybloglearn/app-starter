@@ -94,20 +94,6 @@ define([], function () {
 //              vm.grade.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Grade', day: k[ki].SPL_end }), 'AEQ')) });
               var targ = 0;
 							switch($filter('date')(k[ki].SPL_end, "MM")){
-<<<<<<< HEAD
-								case '01': targ = 60; break;
-								case '02': targ = 60; break;
-								case '03': targ = 60; break;
-								case '04': targ = 60; break;
-								case '05': targ = 70; break;
-								case '06': targ = 80; break;
-								case '07': targ = 80; break;
-								case '08': targ = 80; break;
-								case '09': targ = 80; break;
-								case '10': targ = 80; if(new Date(k[ki].SPL_end).getMonth() == 9 && new Date(k[ki].SPL_end).getDate() >=22){targ = 67;}; break;
-								case '11': targ = 67; break;
-								case '12': targ = 67; break;
-=======
 								case '01': targ = 67; break;
 								case '02': targ = 67; break;
 								case '03': targ = 67; break;
@@ -120,7 +106,6 @@ define([], function () {
 								case '10': targ = 52; break;
 								case '11': targ = 52; break;
 								case '12': targ = 52; break;
->>>>>>> 0c17eacf6f0d6177596aa5486ddf2c64fd4eee3e
 							}
 							vm.target.push({ name: k[ki].SPL_end, y: targ });
               vm.scrapgrade.push({ name: k[ki].SPL_end, y: parseFloat($filter('sumField')($filter('filter')(vm.data, { PhaseName: 'Grade', grade: 'Scrap', day: k[ki].SPL_end }), 'AEQ')) });
