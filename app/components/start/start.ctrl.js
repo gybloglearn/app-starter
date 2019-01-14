@@ -56,7 +56,7 @@ define([], function () {
       { main: "Anyaghiány", sub: "SPL anyaghiány" },
       { main: "Anyaghiány", sub: "Egyéb" },
     ];
-    vm.chlorcategories = ["Anyaghiány Pottingról","Létszámhiány","Kamlock csatlakozó hiba","Szivárgás","Szivattyú","PH beállítás","Érzékelő hiba","Segédeszköz hiány","Egyéb"]
+    vm.chlorcategories = ["Anyaghiány Pottingról","Létszámhiány","Kamlock csatlakozó hiba","Szivárgás","Szivattyú","PH beállítás","Érzékelő hiba","Segédeszköz hiány","Egyéb"];
     vm.load = false;
     vm.loadetf = loadetf;
     vm.saveinfo = saveinfo;
