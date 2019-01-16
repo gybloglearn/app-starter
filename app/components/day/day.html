@@ -2,7 +2,7 @@
   <section class="module col-sm-12">
     <section class="module col-sm-12 col-md-12">
       <div class="module-body">
-        <h1 class="voice voice-brand">Összesítő <b>{{vm.date}}</b></h1>
+        <h1 class="voice voice-brand">Összesítő <b>{{vm.datenum}}</b></h1>
         <hr>
         <div class="col-sm-3">
           <div>
@@ -44,6 +44,38 @@
               <tr>
                 <td><h3><strong>Össz:</strong></h3></td>
                 <td><h3 class="{{vm.iconize((vm.data  | sumField:'ProducedLength_aeq'|number:2),0)}}"><sup class="targetTag">{{vm.target(0) | number:2 }}</sup><strong>{{(vm.data | sumField:'ProducedLength_aeq')|number:2}}</strong></h3></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section class="module col-sm-12 col-md-12">
+      <div class="module-body">
+        <div class="col-sm-3">
+            <strong>Szűrés Szakra</strong>
+            <div class="input-group col-sm-12">
+              <span class="input-group-addon">Szak:</span>
+              <select ng-model="vm.actshiftnum" class="form-control">
+                <option value="">Mind</option>
+                <option ng-repeat="sh in vm.shifts" value="{{sh}}">{{sh == 1?'DE':'ÉJ'}}</option>
+              </select>
+            </div>
+        </div>
+        <div class="col-sm-6">
+          <table class="table detailsTable">
+            <thead>
+              <tr>
+                <th>Rewinder</th>
+                <th>Méter</th>
+                <th>AEQ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="rw in vm.rewinders track by $index">
+                <td>{{rw | name_change}}</td>
+                <td>{{(vm.data | filter:{ ShiftNum: vm.actshiftnum,MachineName:rw}) | sumField:'ProducedLength'}}</td>
+                <td>{{(vm.data | filter:{ ShiftNum: vm.actshiftnum,MachineName:rw}) | sumField:'ProducedLength_aeq'|number:2}}</td>
               </tr>
             </tbody>
           </table>

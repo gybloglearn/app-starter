@@ -13,6 +13,7 @@ define([
   './filters/sumdb',
   './filters/unique',
   './filters/shift',
+  './filters/name_change',
   './rewindersum/rewindersum.ctrl',
   './services/rewindersum.service',
   './day/day.ctrl',
@@ -35,6 +36,7 @@ define([
   sumdb,
   unique,
   shift,
+  name_change,
   rewindersumController,
   rewindersumService,
   dayController,
@@ -60,6 +62,7 @@ define([
   app.filter('sumdb', sumdb);
   app.filter('unique', unique);
   app.filter('shift', shift);
+  app.filter('name_change', name_change);
 	app.controller('rewindersumController', rewindersumController);
 	app.service('rewindersumService', rewindersumService);
 	app.controller('dayController', dayController);
