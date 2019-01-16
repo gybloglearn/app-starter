@@ -42,7 +42,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="da in (vm.data | unique:'date') track by $index">
+          <tr ng-repeat="da in (vm.data | unique:'date') | orderBy:'date' track by $index">
             <td>{{da.date}}</td>
             <td ng-repeat="sh in ['A','B','C','D'] track by $index">
               {{ vm.data | filter: {'date': da.date, shift: sh} | sumField: 'P_Count'| number:0}}

@@ -13,7 +13,7 @@ define([], function () {
     function get(date) {
       var req = {
         method: 'GET',
-        url: '..Braid/app/components/PHP/Rewinder/rewinder' + date + '.json'
+        url: 'app/components/PHP/Rewinder/rewinder' + date + '.json'
       };
       return $http(req);
     }

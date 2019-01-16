@@ -19,7 +19,7 @@ function remove_utf8_bom($text)
     return $text;
 }
 // set Parameters from get
-$day = date("m/d/Y H:i:s", strtotime($_GET["Day"] . " 05:50:00"));
+$day = date("m/d/Y H:i:s", strtotime($_GET["Day"]));
 
 // define machies
 $mch = Array("Rewinder1"=>13, "Rewinder2"=>14, "Rewinder3"=>15, "Rewinder4"=>16, "Rewinder5"=>17, "Rewinder6"=>18, "Rewinder7"=>1772, "Rewinder8"=>1773, "Rewinder9"=>1774,"Rewinder10"=>1775,"Rewinder11"=>1776,"Rewinder12"=>2695,"Rewinder13"=>2696,"Rewinder14"=>2697,"Rewinder15"=>2698,"Rewinder16"=>2699,"Rewinder17"=>4902);
