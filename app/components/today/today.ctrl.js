@@ -29,6 +29,7 @@ define([], function () {
         for (var i = 0; i < vm.smplans.length; i++) {
           vm.smplans[i].machine = vm.smplans[i].sm.replace('SM', 'SheetMaker');
         }
+        console.log(vm.smplans);
         vm.targetSheets = targetSheets;
         vm.smcolor = smcolor;
       });
@@ -81,24 +82,74 @@ define([], function () {
           break;
         case 'min':
           target = (vm.rates.min / div) / (1440 / div) * vm.passedmins[shiftnum];
-          //console.log(number + " - to - " + target);
           break;
       }
       return target;
     }
 
-    function targetSheets(sm) {
+    function targetSheets(sm, snum) {
       var target = 0;
-      if (sm.constructor === Array) {
-        for (var s = 0; s < sm.length; s++) {
-          var numb = $filter('filter')(vm.smplans, { machine: sm[s] })[0];
-          target += parseFloat(numb.amount) / 60 * vm.passedmins[0];
-        }
-      } else {
-        var numb = $filter('filter')(vm.smplans, { machine: sm })[0];
-        target = parseFloat(numb.amount) / 60 * vm.passedmins[0];
+      console.log(snum);
+      var num = new Date().getHours() * 60 + new Date().getMinutes();
+      if (num < 350) {
+        var actdate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
       }
-      return $filter('number')(target, 0);
+      else {
+        var actdate = $filter('date')(new Date(), 'yyyy-MM-dd');
+      }
+      console.log(actdate);
+      if (actdate == vm.startdate && snum != 3) {
+        if (sm.constructor === Array) {
+          for (var s = 0; s < sm.length; s++) {
+            var numb = $filter('filter')(vm.smplans, { machine: sm[s] })[0];
+            target += parseFloat(numb.amount) / 60 * vm.passedmins[0];
+          }
+        } else {
+          var numb = $filter('filter')(vm.smplans, { machine: sm })[0];
+          target = parseFloat(numb.amount) / 60 * vm.passedmins[0];
+        }
+        return $filter('number')(target, 0);
+      }
+      else if (actdate == vm.startdate && snum == 3 && 1070 > num){
+        
+        return $filter('number')(0, 0);
+      }
+      else if (actdate == vm.startdate && snum == 3 && 1070 <= num){
+        if (sm.constructor === Array) {
+          for (var s = 0; s < sm.length; s++) {
+            var numb = $filter('filter')(vm.smplans, { machine: sm[s] })[0];
+            target += parseFloat(numb.amount) / 60 * (vm.passedmins[0]-720);
+          }
+        } else {
+          var numb = $filter('filter')(vm.smplans, { machine: sm })[0];
+          target = parseFloat(numb.amount) / 60 * (vm.passedmins[0]-720);
+        }
+        return $filter('number')(target, 0);
+      }
+      else if (actdate > vm.startdate && (snum ==1 || snum==3)){
+        if (sm.constructor === Array) {
+          for (var s = 0; s < sm.length; s++) {
+            var numb = $filter('filter')(vm.smplans, { machine: sm[s] })[0];
+            target += parseFloat(numb.amount) / 60 * vm.passedmins[0];
+          }
+        } else {
+          var numb = $filter('filter')(vm.smplans, { machine: sm })[0];
+          target = parseFloat(numb.amount) / 60 * vm.passedmins[0];
+        }
+        return $filter('number')(target/2, 0);
+      }
+      else{
+        if (sm.constructor === Array) {
+          for (var s = 0; s < sm.length; s++) {
+            var numb = $filter('filter')(vm.smplans, { machine: sm[s] })[0];
+            target += parseFloat(numb.amount) / 60 * vm.passedmins[0];
+          }
+        } else {
+          var numb = $filter('filter')(vm.smplans, { machine: sm })[0];
+          target = parseFloat(numb.amount) / 60 * vm.passedmins[0];
+        }
+        return $filter('number')(target, 0);
+      }
     }
 
     function smcolor(sm, val) {
@@ -194,7 +245,7 @@ define([], function () {
           var startnum = new Date(d[i].CL_Start).getHours() * 60 + new Date(d[i].CL_Start).getMinutes();
           var endnum = new Date(d[i].CL_End).getHours() * 60 + new Date(d[i].CL_End).getMinutes();
           d[i].amount = 1;
-          d[i].machine="chlorination"
+          d[i].machine = "chlorination"
 
           //nap hozzáadás
           if (startnum < 350) {
@@ -233,14 +284,14 @@ define([], function () {
           else if (d[i].MachineName == "Chlorination 4") {
             d[i].Group = "X3"
           }
-          var vanemar = $filter('filter')(vm.data, {JobID: d[i].JobID});
-          if(vanemar.length > 0){
+          var vanemar = $filter('filter')(vm.data, { JobID: d[i].JobID });
+          if (vanemar.length > 0) {
             d[i].CLRework = 1;
           } else {
             d[i].CLRework = 0;
           }
           vm.data.push(d[i]);
-          
+
           if (d[i].partnumber != "3149069") {
             vm.selectdata.push(d[i]);
           }
