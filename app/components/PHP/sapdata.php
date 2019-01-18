@@ -25,7 +25,7 @@
           if($y){
             $row[$r[0][$x]] = date('Y-m-d', ($y - 25569)*86400);
           }
-        } else if($x == 23){
+        } else if($x == 27){
           $row["TotalDiff"] = floatval($y);
         } else {
           $row[$r[0][$x]] = floatval($y);

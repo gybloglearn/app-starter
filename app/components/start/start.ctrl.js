@@ -101,9 +101,9 @@ define([], function () {
               zw1500p: parseFloat(dat[i].ZW1500Plan),
               zw1500a: parseFloat(dat[i].ZW1500Actual),
               zw1500kdiff: parseFloat(dat[i].ZW1500kummDIFF),
-              zba: parseFloat(dat[i].ZBActual),
-              zbp: parseFloat(dat[i].ZBPlan),
-              zbkdiff: parseFloat(dat[i].ZBkummDiff),
+              zba: parseFloat(dat[i].ZW500SActual),
+              zbp: parseFloat(dat[i].ZW500SPlan),
+              zbkdiff: parseFloat(dat[i].ZW500SkummDiff),
               zlkdiff: parseFloat(dat[i].ZLkummDiff)
             });
           }
