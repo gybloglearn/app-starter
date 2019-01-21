@@ -11,22 +11,14 @@ define([], function () {
 
     ///////////
 
-    //localhost
-    /*function get(date) {
+   function get(date) {
       var req = {
         method: 'GET',
         url: 'app/components/PHP/Rewinder/rewinder' + date + '.json'
       };
       return $http(req);
-    }*/
-    //server
-    function get(date) {
-      var req = {
-        method: 'GET',
-        url: '..Braid/app/components/PHP/Rewinder/rewinder' + date + '.json'
-      };
-      return $http(req);
     }
+    
     function getplan() {
       var req = {
         method: 'GET',
