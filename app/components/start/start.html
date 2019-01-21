@@ -1,7 +1,77 @@
 <div class="container">
-  <section class="module">
-    <div class="module-header">Start</div>
-    <div class="module-body"></div>
-    <div class="module-footer"></div>
+  <section class="module col-md-10 col-md-offset-1">
+    <section class="module col-sm-3 col-md-3">
+      <div class="module-body">
+        <h2 class="voice voice-brand">Braid Összesítő</h2>
+        <hr>
+        <div>
+          <h2 class="voice voice-brand">
+            <i class="icon-filter"></i> Szűrő</h2>
+          <p>
+            Válassz az alábbi dátum mezőkből kijelezni kívánt időszakot:
+          </p>
+          <div class="input-group col-sm-12">
+            <span class="input-group-addon">Dátumtól:</span>
+            <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-7d" end="{{vm.edate}}">
+          </div>
+          <div class="input-group col-sm-12">
+            <span class="input-group-addon">Dátumtig:</span>
+            <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="-1d" end="{{vm.edate}}">
+          </div>
+          <div class="progress progress-info progress-striped active" ng-hide="!vm.load">
+            <div class="progress-bar" style="width: 100%">
+              <p class="text-center">Frissítés...</p>
+            </div>
+          </div>
+          <div class="button-group">
+            <button class="btn btn-info" ng-click="vm.start();" ng-disabled="vm.load">
+              <i class="icon icon-filter"></i> Szűrés</button>
+          </div>
+          <br>
+        </div>
+        <hr>
+        <h2 class="voice voice-brand">
+          <i class="icon-ico_target_lg"></i> Célok</h2>
+        <p>
+          Változtasd a számokat, a színjelölések módosítására:
+        </p>
+        <div class="tab-content">
+          <div class="input-group">
+            <span class="input-group-addon">Braid cél AEQ:</span>
+            <input type="text" class="form-control text-center" ng-model="vm.acttarget">
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="module col-sm-9 col-md-9">
+      <header class="module-header">
+        <h1 class="voice voice-brand">Braid Összesítő</h1>
+        <hr>
+      </header>
+      <div class="module-body">
+        <h1 class="voice voice-brand">MES</h1>
+        <table class="table table-condensed table-hover" style="border: 1px solid #bcbcbc; background-color:white;">
+          <thead>
+            <tr>
+              <th class="text-center">Nap</th>
+              <th class="text-center">Áthengerlő</th>
+            </tr>
+            <tr>
+              <th class="text-center">Összesítve:</th>
+              <th class="text-center">{{(vm.data | sumField:'ProducedLength_aeq'|number:2)}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.dates">
+              <td>{{item}}</td>
+              <td>{{(vm.data| filter:{ date: item} | sumField:'ProducedLength_aeq'|number:2)}}
+                <i ng-if="vm.acttarget <= (vm.data| filter:{ date: item} | sumField:'ProducedLength_aeq'|number:2)" class="icon-ico_ok_circle_sm text-ge-green"></i>
+                <i ng-if="vm.acttarget > (vm.data| filter:{ date: item} | sumField:'ProducedLength_aeq'|number:2)" class="icon-ico_remove_circle_sm text-ge-red"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
   </section>
 </div>
