@@ -13,8 +13,13 @@ define([
   './filters/sumdb',
   './filters/unique',
   './filters/shift',
+  './filters/name_change',
   './rewindersum/rewindersum.ctrl',
-  './services/rewindersum.service'
+  './services/rewindersum.service',
+  './day/day.ctrl',
+  './services/day.service',
+  './plan/plan.ctrl',
+  './services/plan.service'
 	/* files */
 ], function(
   configFunction,
@@ -31,8 +36,13 @@ define([
   sumdb,
   unique,
   shift,
+  name_change,
   rewindersumController,
-  rewindersumService
+  rewindersumService,
+  dayController,
+  dayService,
+  planController,
+  planService
 	/* names */) {
 
   // Link all components to the module !!!
@@ -52,7 +62,12 @@ define([
   app.filter('sumdb', sumdb);
   app.filter('unique', unique);
   app.filter('shift', shift);
+  app.filter('name_change', name_change);
 	app.controller('rewindersumController', rewindersumController);
 	app.service('rewindersumService', rewindersumService);
+	app.controller('dayController', dayController);
+	app.service('dayService', dayService);
+	app.controller('planController', planController);
+	app.service('planService', planService);
 		/* controllers */
 });

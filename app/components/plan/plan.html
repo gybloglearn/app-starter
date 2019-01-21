@@ -1,0 +1,88 @@
+<div class="container">
+  <section class="module" ng-show="user.displayname && (user.username == '212434909' || user.username == '502678184'||user.username=='212613864' || user.username=='113008037')">
+    <div class="module-header">
+      <h1 class="text-center">Tervek</h1>
+    </div>
+    <div class="module-body">
+      <div class="col-sm-12" style="margin-top:20px">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Kezdő dátum</th>
+              <th>Vége dátum</th>
+              <th>Méter</th>
+              <th>AEQ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="ng-scope">
+              <td><input ng-model="vm.startdate" type="text" class="form-control" value="{{vm.startdate}}"></td>
+              <td><input ng-model="vm.enddate" type="text" class="form-control" value="{{vm.enddate}}"></td>
+              <td><input ng-model="vm.amount" ng-change="vm.createaeq(vm.amount)" type="text" class="form-control"
+                  value="{{vm.amount}}"></td>
+              <td><input ng-model="vm.aeq" ng-change="vm.createamount(vm.aeq)" type="text" class="form-control" value="{{vm.aeq}}"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="col-sm-4">
+          <button class="btn btn-success" ng-click="vm.save()" ng-disabled="vm.aeq<=0 || vm.enddate<=vm.startdate">Feltölt</button>
+        </div>
+      </div>
+    </div>
+    <div class="module-footer">
+      <div class="col-sm-12" style="margin-top:20px">
+        <table class="table mytable table-condensed">
+          <thead>
+            <tr>
+              <th>Kezdő dátum</th>
+              <th>Vége Dátum</th>
+              <th>Méter</th>
+              <th>AEQ</th>
+              <th>Szerkesztés</th>
+              <th>Törlés</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.data | orderBy : '-enddate'">
+              <td>{{item.startdate}}</td>
+              <td>{{item.enddate}}</td>
+              <td>{{item.amount}}</td>
+              <td>{{item.aeq}}</td>
+              <td>
+                <button class="btn btn-primary" ng-click="vm.edit = item"><i class="icon-edit" title="Szerkesztés"></i></button>
+              </td>
+              <td>
+                <button class="btn btn-danger" ng-click="vm.remove(item.id,$index)"><i class="icon-trash" title="Törlés"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <section class="module" ng-show="vm.edit" style="margin-top:20px">
+		<div class="module-header">Terv módosítása</div>
+		<div class="module-body">
+			<div class="row" style="margin-top:10px">
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Kezdő dátum:</span>
+						<input type="text" class="form-control" ng-model="vm.edit.startdate">
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="input-group">
+						<span class="input-group-addon">Vége dátum:</span>
+						<input type="text" class="form-control" ng-model="vm.edit.enddate">
+					</div>
+				</div>
+			</div>
+
+			<div class="btn-group">
+				<button class="btn btn-default" ng-click="vm.edit = '';">Mégse</button>
+				<button class="btn btn-danger" ng-click="vm.update(vm.edit)">Mentés</button>
+			</div>
+
+		</div>
+	</section>
+</div>
