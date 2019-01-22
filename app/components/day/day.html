@@ -42,12 +42,12 @@
             <tbody>
               <tr ng-repeat="shn in [1,3] track by $index">
                 <td><h3><strong>{{shn | shift:vm.date}}</strong> - {{shn==1?'DE':'ÉJ'}}</h3></td>
-                <td ng-if="vm.meteraeq=='aeq'"><h3 class="{{vm.iconize(((vm.data | filter:{ ShiftNum: shn}) | sumField:'ProducedLength_aeq'|number:2),shn)}}"><sup class="targetTag">{{vm.target(shn) | number:2 }}</sup><strong>{{(vm.data | filter:{ ShiftNum: shn}) | sumField:'ProducedLength_aeq'|number:2}}</strong></h3></td>
+                <td ng-if="vm.meteraeq=='aeq'"><h3 class="{{vm.iconize(((vm.data | filter:{ ShiftNum: shn}) | sumField:'ProducedLength_aeq'),shn)}}"><sup class="targetTag">{{vm.target(shn) | number:2 }}</sup><strong>{{(vm.data | filter:{ ShiftNum: shn}) | sumField:'ProducedLength_aeq'|number:2}}</strong></h3></td>
                 <td ng-if="vm.meteraeq=='meter'"><h3 class="{{vm.iconize(((vm.data | filter:{ ShiftNum: shn}) | sumField:'ProducedLength'),shn)}}"><sup class="targetTag">{{vm.target(shn)|number:2}}</sup><strong>{{(vm.data | filter:{ ShiftNum: shn}) | sumField:'ProducedLength'}}</strong></h3></td>
               </tr>
               <tr>
                 <td><h3><strong>Össz:</strong></h3></td>
-                <td ng-if="vm.meteraeq=='aeq'"><h3 class="{{vm.iconize((vm.data  | sumField:'ProducedLength_aeq'|number:2),0)}}"><sup class="targetTag">{{vm.target(0) | number:2 }}</sup><strong>{{(vm.data | sumField:'ProducedLength_aeq')|number:2}}</strong></h3></td>
+                <td ng-if="vm.meteraeq=='aeq'"><h3 class="{{vm.iconize((vm.data  | sumField:'ProducedLength_aeq'),0)}}"><sup class="targetTag">{{vm.target(0) | number:2 }}</sup><strong>{{(vm.data | sumField:'ProducedLength_aeq')|number:2}}</strong></h3></td>
                 <td ng-if="vm.meteraeq=='meter'"><h3 class="{{vm.iconize((vm.data  | sumField:'ProducedLength'),0)}}"><sup class="targetTag">{{vm.target(0)|number:2}}</sup><strong>{{(vm.data | sumField:'ProducedLength')}}</strong></h3></td>
               </tr>
             </tbody>

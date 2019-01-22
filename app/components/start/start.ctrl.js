@@ -5,19 +5,21 @@ define([], function () {
     vm.edate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.startdate = $filter('date')(new Date().getTime() - 7 * 24 * 1000 * 60 * 60, 'yyyy-MM-dd');
     vm.enddate = $filter('date')(new Date().getTime() - 24 * 1000 * 60 * 60, 'yyyy-MM-dd');
+    vm.create_dates=create_dates;
 
     function create_dates(){
       vm.dates=[];
       vm.loaddates=[];
+      vm.size=0;
       var stnum=new Date(vm.startdate).getTime();
       var endnum=new Date(vm.enddate).getTime();
       while(stnum<=endnum){
         vm.dates.push($filter('date')(stnum,'yyyy-MM-dd'));
         vm.loaddates.push($filter('date')(stnum,'yyyyMMdd'));
         stnum+=(24*3600*1000);
+        vm.size++;
       }
-      console.log(vm.dates);
-      console.log(vm.loaddates);
+      console.log(vm.size);
       getplans();
     }
 

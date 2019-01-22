@@ -41,7 +41,7 @@ define([], function () {
           if (d[j].MachineName == "Rewinder1") {
             d[j].MachineName = "Rewinder01";
           }
-          d[j].ShiftNum = parseInt(d[j].ShiftNum);
+          d[j].ShiftNum = d[j].ShiftNum*1;
           d[j].ProducedLength = d[j].ProducedLength * 1;
           d[j].ProducedLength_aeq = d[j].ProducedLength / 8900;
         }
