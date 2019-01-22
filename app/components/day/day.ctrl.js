@@ -9,8 +9,10 @@ define([], function () {
     vm.getrewinder = getrewinder;
     vm.target = target;
     vm.iconize = iconize;
+    vm.rewindertarget = rewindertarget;
     vm.actshiftnum = "";
     vm.meteraeq = "aeq";
+    vm.rewindernum = 152000;
 
     function create_rewinders() {
       vm.rewinders = [];
@@ -41,14 +43,55 @@ define([], function () {
           if (d[j].MachineName == "Rewinder1") {
             d[j].MachineName = "Rewinder01";
           }
-          d[j].ShiftNum = d[j].ShiftNum*1;
+          d[j].ShiftNum = d[j].ShiftNum * 1;
           d[j].ProducedLength = d[j].ProducedLength * 1;
           d[j].ProducedLength_aeq = d[j].ProducedLength / 8900;
         }
         vm.data = d;
         vm.load = false;
         console.log(vm.data);
+        rewindertarget();
       });
+    }
+
+    function rewindertarget() {
+      vm.rwtarget = 0;
+
+      if (vm.edate == vm.date) {
+        var num = new Date().getHours() * 60 + new Date().getMinutes();
+        if (vm.actshiftnum == 1) {
+          if (num >= 350 && num <= 1070) {
+            vm.rwtarget = (vm.rewindernum / 1440) * (num - 350);
+          }
+        }
+        else if (vm.actshiftnum == 3) {
+          if (num > 1070) {
+            vm.rwtarget = (vm.rewindernum / 1440) * (num - 1070);
+          }
+          else if (num < 350) {
+            vm.rwtarget = (vm.rewindernum / 1440) * (num + 370);
+          }
+        }
+        else {
+          if (num >= 350 && num <= 1070) {
+            vm.rwtarget = (vm.rewindernum / 1440) * (num - 350);
+          }
+          else if (num > 1070) {
+            vm.rwtarget = (vm.rewindernum / 1440) * (num - 350);
+          }
+          else if (num < 350) {
+            vm.rwtarget = (vm.rewindernum / 1440) * (num + 1090);
+          }
+        }
+      }
+      else {
+        if (vm.actshiftnum == 1 || vm.actshiftnum == 3) {
+          vm.rwtarget = vm.rewindernum / 2;
+        }
+        else {
+          vm.rwtarget = vm.rewindernum;
+        }
+      }
     }
 
     function target(shiftnum) {

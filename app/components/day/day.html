@@ -13,8 +13,8 @@
             </p>
             <div class="input-group col-sm-12">
               <span class="input-group-addon">Dátumra:</span>
-              <input type="text" class="datepicker form-control" ng-model="vm.date" ng-change="vm.getrewinder()" setdate="0" end="{{vm.edate}}"
-                ng-disabled="vm.load">
+              <input type="text" class="datepicker form-control" ng-model="vm.date" ng-change="vm.getrewinder()"
+                setdate="0" end="{{vm.edate}}" ng-disabled="vm.load">
             </div>
             <div class="input-group col-sm-12">
               <span class="input-group-addon">Méter/AEQ:</span>
@@ -41,14 +41,32 @@
             </thead>
             <tbody>
               <tr ng-repeat="shn in [1,3] track by $index">
-                <td><h3><strong>{{shn | shift:vm.date}}</strong> - {{shn==1?'DE':'ÉJ'}}</h3></td>
-                <td ng-if="vm.meteraeq=='aeq'"><h3 class="{{vm.iconize(((vm.data | filter:{ ShiftNum: shn}) | sumField:'ProducedLength_aeq'),shn)}}"><sup class="targetTag">{{vm.target(shn) | number:2 }}</sup><strong>{{(vm.data | filter:{ ShiftNum: shn}) | sumField:'ProducedLength_aeq'|number:2}}</strong></h3></td>
-                <td ng-if="vm.meteraeq=='meter'"><h3 class="{{vm.iconize(((vm.data | filter:{ ShiftNum: shn}) | sumField:'ProducedLength'),shn)}}"><sup class="targetTag">{{vm.target(shn)|number:2}}</sup><strong>{{(vm.data | filter:{ ShiftNum: shn}) | sumField:'ProducedLength'}}</strong></h3></td>
+                <td>
+                  <h3><strong>{{shn | shift:vm.date}}</strong> - {{shn==1?'DE':'ÉJ'}}</h3>
+                </td>
+                <td ng-if="vm.meteraeq=='aeq'">
+                  <h3 class="{{vm.iconize(((vm.data | filter:{ ShiftNum: shn}) | sumField:'ProducedLength_aeq'),shn)}}"><sup
+                      class="targetTag">{{vm.target(shn) | number:2 }}</sup><strong>{{(vm.data | filter:{ ShiftNum:
+                      shn}) | sumField:'ProducedLength_aeq'|number:2}}</strong></h3>
+                </td>
+                <td ng-if="vm.meteraeq=='meter'">
+                  <h3 class="{{vm.iconize(((vm.data | filter:{ ShiftNum: shn}) | sumField:'ProducedLength'),shn)}}"><sup
+                      class="targetTag">{{vm.target(shn)|number:2}}</sup><strong>{{(vm.data | filter:{ ShiftNum: shn})
+                      | sumField:'ProducedLength'}}</strong></h3>
+                </td>
               </tr>
               <tr>
-                <td><h3><strong>Össz:</strong></h3></td>
-                <td ng-if="vm.meteraeq=='aeq'"><h3 class="{{vm.iconize((vm.data  | sumField:'ProducedLength_aeq'),0)}}"><sup class="targetTag">{{vm.target(0) | number:2 }}</sup><strong>{{(vm.data | sumField:'ProducedLength_aeq')|number:2}}</strong></h3></td>
-                <td ng-if="vm.meteraeq=='meter'"><h3 class="{{vm.iconize((vm.data  | sumField:'ProducedLength'),0)}}"><sup class="targetTag">{{vm.target(0)|number:2}}</sup><strong>{{(vm.data | sumField:'ProducedLength')}}</strong></h3></td>
+                <td>
+                  <h3><strong>Össz:</strong></h3>
+                </td>
+                <td ng-if="vm.meteraeq=='aeq'">
+                  <h3 class="{{vm.iconize((vm.data  | sumField:'ProducedLength_aeq'),0)}}"><sup class="targetTag">{{vm.target(0)
+                      | number:2 }}</sup><strong>{{(vm.data | sumField:'ProducedLength_aeq')|number:2}}</strong></h3>
+                </td>
+                <td ng-if="vm.meteraeq=='meter'">
+                  <h3 class="{{vm.iconize((vm.data  | sumField:'ProducedLength'),0)}}"><sup class="targetTag">{{vm.target(0)|number:2}}</sup><strong>{{(vm.data
+                      | sumField:'ProducedLength')}}</strong></h3>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -58,29 +76,37 @@
     <section class="module col-sm-12 col-md-12">
       <div class="module-body">
         <div class="col-sm-3">
-            <strong>Szűrés Szakra</strong>
-            <div class="input-group col-sm-12">
-              <span class="input-group-addon">Szak:</span>
-              <select ng-model="vm.actshiftnum" class="form-control">
-                <option value="">Mind</option>
-                <option ng-repeat="sh in vm.shifts" value="{{sh}}">{{sh == 1?'DE':'ÉJ'}}</option>
-              </select>
-            </div>
+          <strong>Szűrés Szakra</strong>
+          <div class="input-group col-sm-12">
+            <span class="input-group-addon">Szak:</span>
+            <select ng-model="vm.actshiftnum" ng-change="vm.rewindertarget()" class="form-control">
+              <option value="">Mind</option>
+              <option ng-repeat="sh in vm.shifts" value="{{sh}}">{{sh == 1?'DE':'ÉJ'}}</option>
+            </select>
+          </div>
         </div>
         <div class="col-sm-6">
           <table class="table detailsTable">
             <thead>
               <tr>
                 <th class="text-center">Rewinder</th>
-                <th class="text-center">Méter</th>
+                <th class="text-center">Méter(terv)</th>
+                <th class="text-center">Méter(tényleges)</th>
                 <th class="text-center">AEQ</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="rw in vm.rewinders track by $index">
                 <td>{{rw | name_change}}</td>
-                <td>{{(vm.data | filter:{ ShiftNum: vm.actshiftnum,MachineName:rw}) | sumField:'ProducedLength'}}</td>
-                <td>{{(vm.data | filter:{ ShiftNum: vm.actshiftnum,MachineName:rw}) | sumField:'ProducedLength_aeq'|number:2}}</td>
+                <td>{{vm.rwtarget|number:0}}</td>
+                <td>{{(vm.data | filter:{ ShiftNum: vm.actshiftnum,MachineName:rw}) | sumField:'ProducedLength'|number:0}}
+                  <i ng-show="vm.rwtarget <= ((vm.data | filter:{ ShiftNum: vm.actshiftnum,MachineName:rw}) | sumField:'ProducedLength')" class="icon-ico_ok_circle_sm text-ge-green"></i>
+                  <i ng-show="vm.rwtarget > ((vm.data | filter:{ ShiftNum: vm.actshiftnum,MachineName:rw}) | sumField:'ProducedLength')" class="icon-ico_remove_circle_sm text-ge-red"></i>
+                </td>
+                <td>{{(vm.data | filter:{ ShiftNum: vm.actshiftnum,MachineName:rw}) | sumField:'ProducedLength_aeq'|number:2}}
+                    <i ng-show="vm.rwtarget <= ((vm.data | filter:{ ShiftNum: vm.actshiftnum,MachineName:rw}) | sumField:'ProducedLength')" class="icon-ico_ok_circle_sm text-ge-green"></i>
+                    <i ng-show="vm.rwtarget > ((vm.data | filter:{ ShiftNum: vm.actshiftnum,MachineName:rw}) | sumField:'ProducedLength')" class="icon-ico_remove_circle_sm text-ge-red"></i>
+                </td>
               </tr>
             </tbody>
           </table>
