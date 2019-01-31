@@ -49,16 +49,16 @@ define([], function () {
         }
         vm.data = d;
         vm.load = false;
-        console.log(vm.data);
         rewindertarget();
       });
     }
 
     function rewindertarget() {
       vm.rwtarget = 0;
+      var num = new Date().getHours() * 60 + new Date().getMinutes();
+      var diff = (new Date(vm.edate).getTime() - (new Date(vm.date).getTime())) / 1000;
 
-      if (vm.edate == vm.date) {
-        var num = new Date().getHours() * 60 + new Date().getMinutes();
+      if ((vm.edate == vm.date) || (num < 350 && diff == 86400)) {
         if (vm.actshiftnum == 1) {
           if (num >= 350 && num <= 1070) {
             vm.rwtarget = (vm.rewindernum / 1440) * (num - 350);
@@ -98,6 +98,9 @@ define([], function () {
       var target = 0;
       var dayaeq = 0;
       var daymeter = 0;
+      var num = new Date().getHours() * 60 + new Date().getMinutes();
+      var diff = (new Date(vm.edate).getTime() - (new Date(vm.date).getTime())) / 1000;
+
       if (vm.meteraeq == "aeq") {
         for (var i = 0; i < vm.allplans.length; i++) {
           if (vm.allplans[i].startdate <= vm.date && vm.allplans[i].enddate >= vm.date) {
@@ -105,8 +108,7 @@ define([], function () {
           }
         }
 
-        if (vm.edate == vm.date) {
-          var num = new Date().getHours() * 60 + new Date().getMinutes();
+        if ((vm.edate == vm.date) || (num < 350 && diff == 86400)) {
           if (shiftnum == 1 && num >= 350 && num <= 1070) {
             target = (dayaeq / 1440) * (num - 350);
           }
@@ -142,8 +144,7 @@ define([], function () {
           }
         }
 
-        if (vm.edate == vm.date) {
-          var num = new Date().getHours() * 60 + new Date().getMinutes();
+        if ((vm.edate == vm.date) || (num < 350 && diff == 86400)) {
           if (shiftnum == 1 && num >= 350 && num <= 1070) {
             target = (daymeter / 1440) * (num - 350);
           }
@@ -179,6 +180,8 @@ define([], function () {
       var target = 0;
       var dayaeq = 0;
       var daymeter = 0;
+      var num = new Date().getHours() * 60 + new Date().getMinutes();
+      var diff = (new Date(vm.edate).getTime() - (new Date(vm.date).getTime())) / 1000;
 
       if (vm.meteraeq == "aeq") {
         for (var i = 0; i < vm.allplans.length; i++) {
@@ -187,8 +190,7 @@ define([], function () {
           }
         }
 
-        if (vm.edate == vm.date) {
-          var num = new Date().getHours() * 60 + new Date().getMinutes();
+        if ((vm.edate == vm.date) || (num < 350 && diff == 86400)) {
           if (shiftnum == 1 && num >= 350 && num <= 1070) {
             target = (dayaeq / 1440) * (num - 350);
           }
@@ -224,8 +226,7 @@ define([], function () {
           }
         }
 
-        if (vm.edate == vm.date) {
-          var num = new Date().getHours() * 60 + new Date().getMinutes();
+        if ((vm.edate == vm.date) || (num < 350 && diff == 86400)) {
           if (shiftnum == 1 && num >= 350 && num <= 1070) {
             target = (daymeter / 1440) * (num - 350);
           }
