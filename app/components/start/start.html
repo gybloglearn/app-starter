@@ -70,11 +70,11 @@
               </td>
             </tr>
             <tr>
-              <td>Átlag</td>
-              <td>{{(vm.data|sumField:'ProducedLength_aeq')/vm.size|number:2}}
+              <th class="text-center">Átlag</th>
+              <th class="text-center">{{(vm.data|sumField:'ProducedLength_aeq')/vm.size|number:2}}
                 <i ng-show="vm.acttarget <= ((vm.data|sumField:'ProducedLength_aeq')/vm.size)" class="icon-ico_ok_circle_sm text-ge-green"></i>
                 <i ng-show="vm.acttarget > ((vm.data|sumField:'ProducedLength_aeq')/vm.size)" class="icon-ico_remove_circle_sm text-ge-red"></i>
-              </td>
+              </th>
             </tr>
           </tbody>
         </table>

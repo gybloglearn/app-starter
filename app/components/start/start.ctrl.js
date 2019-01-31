@@ -19,7 +19,6 @@ define([], function () {
         stnum+=(24*3600*1000);
         vm.size++;
       }
-      console.log(vm.size);
       getplans();
     }
 
@@ -46,10 +45,8 @@ define([], function () {
             d[k].ProducedLength_aeq=d[k].ProducedLength/8900;
             vm.data.push(d[k]);
           }
-          console.log(vm.data);
         });
       }
-      console.log(vm.acttarget);
     }
 
     activate();
