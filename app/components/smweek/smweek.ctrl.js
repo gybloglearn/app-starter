@@ -171,56 +171,6 @@ define([], function () {
         console.log(vm.sm);
         updatecard(vm.sm);
       });
-
-      /*for (var i = 0; i < vm.sheetmakers.length; i++) {
-        weeklyService.getsm(vm.startdate, $filter('date')(new Date(vm.enddate).getTime() + 24 * 60 * 60 * 1000, "yyyy-MM-dd"), vm.sheetmakers[i]).then(function (response) {
-          for (var j = 0; j < response.data.length; j++) {
-            response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
-            for (var k = 0; k < vm.sheetmakers.length; k++) {
-              if (response.data[j].shortname == vm.sm[k].id && response.data[j].category == "GOOD") {
-                vm.sm[k].jo += response.data[j].amount;
-                vm.sm[k].jaeq += response.data[j].aeq;
-                vm.sm[k].selejt -= response.data[j].amount;
-                vm.sm[k].saeq -= response.data[j].aeq;
-                vm.sm[vm.sheetmakers.length + 1].jo += response.data[j].amount;
-                vm.sm[vm.sheetmakers.length + 1].jaeq += response.data[j].aeq;
-                vm.sm[vm.sheetmakers.length + 1].selejt -= response.data[j].amount;
-                vm.sm[vm.sheetmakers.length + 1].saeq -= response.data[j].aeq;
-              }
-              else if (response.data[j].shortname == vm.sm[k].id && response.data[j].category == "TOTAL") {
-                vm.sm[k].ossz += response.data[j].amount;
-                vm.sm[k].oaeq += response.data[j].aeq;
-                vm.sm[k].selejt += response.data[j].amount;
-                vm.sm[k].saeq += response.data[j].aeq;
-                vm.sm[vm.sheetmakers.length + 1].ossz += response.data[j].amount;
-                vm.sm[vm.sheetmakers.length + 1].oaeq += response.data[j].aeq;
-                vm.sm[vm.sheetmakers.length + 1].selejt += response.data[j].amount;
-                vm.sm[vm.sheetmakers.length + 1].saeq += response.data[j].aeq;
-              }
-            }
-          }
-          for (var j = 0; j < response.data.length; j++) {
-            response.data[j].aeq = getAEQ(vm.partnumbers, response.data[j].type, response.data[j].amount);
-						var ido = 1440;
-						if(vm.startdate == $filter('date')(new Date().getTime(), 'yyyy-MM-dd')){
-						  ido = (new Date().getTime() - new Date(vm.startdate + " 05:50:00").getTime()) / (1000 * 60);
-						}
-            for (var k = 0; k < vm.days.length; k++) {
-              //vm.days[k].ttlido = vm.sheetmakers.length * 1440;
-							vm.days[k].ttlido = vm.sheetmakers.length * ido;
-              if ($filter('date')(new Date(response.data[j].days), "yyyyMMdd") == vm.days[k].date && response.data[j].category == "GOOD") {
-                vm.days[k].joaeq += response.data[j].aeq;
-                vm.days[k].jolap += response.data[j].amount;
-              } else if ($filter('date')(new Date(response.data[j].days), "yyyyMMdd") == vm.days[k].date && response.data[j].category == "TOTAL") {
-                vm.days[k].ttlaeq += response.data[j].aeq;
-                vm.days[k].ttllap += response.data[j].amount;
-              }
-            }
-          }
-          console.log(vm.sm);
-          updatecard(vm.sm);
-        });
-      }*/
     }
 
     function updatecard(smarr) {

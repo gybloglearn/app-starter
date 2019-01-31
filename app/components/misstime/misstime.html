@@ -6,6 +6,7 @@
       </h1>
       <div class="col-sm-6" style="margin-top:20px">
         <select ng-model="vm.sm" ng-change="vm.load()">
+          <option value="">Mind</option>
           <option ng-repeat="s in vm.sheetmakers" value="{{s}}">{{s}}</option>
         </select>
         <div class="input-group">
@@ -23,7 +24,7 @@
           <p class="text-center">Frissítés...</p>
         </div>
       </div>
-      <div class="row">
+      <div class="row" ng-hide="vm.sm==''">
         <table class="table table-striped">
           <thead>
             <tr>

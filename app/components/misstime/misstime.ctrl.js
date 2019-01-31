@@ -15,10 +15,11 @@ define([], function () {
       vm.missdata = [];
       vm.misst = 0;
 
-      smdataService.get(vm.datum, vm.sm).then(function (response) {
-        vm.data = response.data;
+      if (vm.sm != "") {
+        smdataService.get(vm.datum, vm.sm).then(function (response) {
+          vm.data = response.data;
 
-        for (var i = 0; i < vm.data.length - 1; i++) {
+          for (var i = 0; i < vm.data.length - 1; i++) {
             var j = i + 1
             var diff = (vm.data[j].timestamp - vm.data[i].timestamp);
             vm.misst += diff / 1000 - vm.data[i].Event_time;
@@ -33,8 +34,34 @@ define([], function () {
             }
             vm.missdata.push(obj);
           }
-        vm.smloading = false;
-      });
+          vm.smloading = false;
+        });
+      }
+      else{
+        vm.smloading = true;
+        for(var i=0;i<vm.sheetmakers.length;i++){
+          smdataService.get(vm.datum, vm.sheetmakers[i]).then(function (response) {
+            vm.data = response.data;
+  
+            for (var j = 0; j < vm.data.length - 1; j++) {
+              var k = j + 1
+              var diff = (vm.data[k].timestamp - vm.data[j].timestamp);
+              vm.misst += diff / 1000 - vm.data[j].Event_time;
+  
+              var obj = {
+                type: vm.data[j].Event_type,
+                start: vm.data[j].timestamp,
+                nextstart: vm.data[k].timestamp,
+                time: vm.data[j].Event_time,
+                difference: diff / 1000,
+                timediff: diff / 1000 - vm.data[j].Event_time
+              }
+              vm.missdata.push(obj);
+            }
+            vm.smloading = false;
+          });
+        }
+      }
     }
 
     activate();
