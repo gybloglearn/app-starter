@@ -12,11 +12,11 @@
           </p>
           <div class="input-group col-sm-12">
             <span class="input-group-addon">Dátumtól:</span>
-            <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="-7d" end="{{vm.edate}}">
+            <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="{{vm.snum}}d" end="{{vm.edate}}">
           </div>
           <div class="input-group col-sm-12">
             <span class="input-group-addon">Dátumtig:</span>
-            <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="-1d" end="{{vm.edate}}">
+            <input type="text" class="datepicker form-control" ng-model="vm.enddate" setdate="{{vm.en}}d" end="{{vm.edate}}">
           </div>
           <div class="progress progress-info progress-striped active" ng-hide="!vm.load">
             <div class="progress-bar" style="width: 100%">
