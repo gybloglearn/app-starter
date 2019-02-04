@@ -131,10 +131,7 @@ define([], function () {
         }
 
         else {
-          if (shiftnum == 3 && num < 350) {
-            target = (dayaeq / 1440) * (num + 370);
-          }
-          else if (shiftnum == 1 || shiftnum == 3) {
+         if (shiftnum == 1 || shiftnum == 3) {
             target = dayaeq / 2;
           }
           else {
@@ -173,10 +170,7 @@ define([], function () {
           }
         }
         else {
-          if (shiftnum == 3 && num < 350) {
-            target = (daymeter / 1440) * (num + 370);
-          }
-          else if (shiftnum == 1 || shiftnum == 3) {
+          if (shiftnum == 1 || shiftnum == 3) {
             target = daymeter / 2;
           }
           else {
@@ -224,10 +218,7 @@ define([], function () {
           }
         }
         else {
-          if (shiftnum == 3 && num < 350) {
-            target = (dayaeq / 1440) * (num + 370);
-          }
-          else if (shiftnum == 1 || shiftnum == 3) {
+          if (shiftnum == 1 || shiftnum == 3) {
             target = dayaeq / 2;
           }
           else {
@@ -266,10 +257,7 @@ define([], function () {
           }
         }
         else {
-          if (shiftnum == 3 && num < 350) {
-            target = (daymeter / 1440) * (num + 370);
-          }
-          else if (shiftnum == 1 || shiftnum == 3) {
+         if (shiftnum == 1 || shiftnum == 3) {
             target = daymeter / 2;
           }
           else {
