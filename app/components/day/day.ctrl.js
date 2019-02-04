@@ -98,7 +98,6 @@ define([], function () {
       var dayaeq = 0;
       var daymeter = 0;
       var num = new Date().getHours() * 60 + new Date().getMinutes();
-      var diff = (new Date(vm.edate).getTime() - (new Date(vm.date).getTime())) / 1000;
 
       if (vm.meteraeq == "aeq") {
         for (var i = 0; i < vm.allplans.length; i++) {
@@ -193,7 +192,6 @@ define([], function () {
       var dayaeq = 0;
       var daymeter = 0;
       var num = new Date().getHours() * 60 + new Date().getMinutes();
-      var diff = (new Date(vm.edate).getTime() - (new Date(vm.date).getTime())) / 1000;
 
       if (vm.meteraeq == "aeq") {
         for (var i = 0; i < vm.allplans.length; i++) {
