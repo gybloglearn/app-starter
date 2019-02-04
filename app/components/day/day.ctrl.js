@@ -56,9 +56,8 @@ define([], function () {
     function rewindertarget() {
       vm.rwtarget = 0;
       var num = new Date().getHours() * 60 + new Date().getMinutes();
-      var diff = (new Date(vm.edate).getTime() - (new Date(vm.date).getTime())) / 1000;
 
-      if ((vm.edate == vm.date) || (num < 350 && diff == 86400)) {
+      if (vm.edate == vm.date) {
         if (vm.actshiftnum == 1) {
           if (num >= 350 && num <= 1070) {
             vm.rwtarget = (vm.rewindernum / 1440) * (num - 350);
@@ -108,9 +107,12 @@ define([], function () {
           }
         }
 
-        if ((vm.edate == vm.date) || (num < 350 && diff == 86400)) {
+        if (vm.edate == vm.date) {
           if (shiftnum == 1 && num >= 350 && num <= 1070) {
             target = (dayaeq / 1440) * (num - 350);
+          }
+          else if (shiftnum == 1 && num > 1070) {
+            target = dayaeq / 2;
           }
           else if (shiftnum == 3 && num > 1070) {
             target = (dayaeq / 1440) * (num - 1070);
@@ -128,8 +130,12 @@ define([], function () {
             target = (dayaeq / 1440) * (num + 1090);
           }
         }
+
         else {
-          if (shiftnum == 1 || shiftnum == 3) {
+          if (shiftnum == 3 && num < 350) {
+            target = (dayaeq / 1440) * (num + 370);
+          }
+          else if (shiftnum == 1 || shiftnum == 3) {
             target = dayaeq / 2;
           }
           else {
@@ -144,9 +150,12 @@ define([], function () {
           }
         }
 
-        if ((vm.edate == vm.date) || (num < 350 && diff == 86400)) {
+        if (vm.edate == vm.date) {
           if (shiftnum == 1 && num >= 350 && num <= 1070) {
             target = (daymeter / 1440) * (num - 350);
+          }
+          else if (shiftnum == 1 && num > 1070) {
+            target = daymeter / 2;
           }
           else if (shiftnum == 3 && num > 1070) {
             target = (daymeter / 1440) * (num - 1070);
@@ -165,7 +174,10 @@ define([], function () {
           }
         }
         else {
-          if (shiftnum == 1 || shiftnum == 3) {
+          if (shiftnum == 3 && num < 350) {
+            target = (daymeter / 1440) * (num + 370);
+          }
+          else if (shiftnum == 1 || shiftnum == 3) {
             target = daymeter / 2;
           }
           else {
@@ -190,9 +202,12 @@ define([], function () {
           }
         }
 
-        if ((vm.edate == vm.date) || (num < 350 && diff == 86400)) {
+        if (vm.edate == vm.date) {
           if (shiftnum == 1 && num >= 350 && num <= 1070) {
             target = (dayaeq / 1440) * (num - 350);
+          }
+          else if (shiftnum == 1 && num > 1070) {
+            target = dayaeq / 2;
           }
           else if (shiftnum == 3 && num > 1070) {
             target = (dayaeq / 1440) * (num - 1070);
@@ -211,7 +226,10 @@ define([], function () {
           }
         }
         else {
-          if (shiftnum == 1 || shiftnum == 3) {
+          if (shiftnum == 3 && num < 350) {
+            target = (dayaeq / 1440) * (num + 370);
+          }
+          else if (shiftnum == 1 || shiftnum == 3) {
             target = dayaeq / 2;
           }
           else {
@@ -226,9 +244,12 @@ define([], function () {
           }
         }
 
-        if ((vm.edate == vm.date) || (num < 350 && diff == 86400)) {
+        if (vm.edate == vm.date) {
           if (shiftnum == 1 && num >= 350 && num <= 1070) {
             target = (daymeter / 1440) * (num - 350);
+          }
+          else if (shiftnum == 1 && num > 1070) {
+            target = daymeter / 2;
           }
           else if (shiftnum == 3 && num > 1070) {
             target = (daymeter / 1440) * (num - 1070);
@@ -247,7 +268,10 @@ define([], function () {
           }
         }
         else {
-          if (shiftnum == 1 || shiftnum == 3) {
+          if (shiftnum == 3 && num < 350) {
+            target = (daymeter / 1440) * (num + 370);
+          }
+          else if (shiftnum == 1 || shiftnum == 3) {
             target = daymeter / 2;
           }
           else {
