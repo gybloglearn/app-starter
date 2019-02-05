@@ -2,8 +2,8 @@ define([], function () {
   'use strict';
   function Controller(dayService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
-    vm.date = $filter('date')(new Date(), 'yyyy-MM-dd');
-    vm.edate = $filter('date')(new Date(), 'yyyy-MM-dd');
+    /*vm.date = $filter('date')(new Date(), 'yyyy-MM-dd');
+    vm.edate = $filter('date')(new Date(), 'yyyy-MM-dd');*/
     vm.shifts = [1, 3];
     vm.load = false;
     vm.getrewinder = getrewinder;
@@ -58,6 +58,7 @@ define([], function () {
       var num = new Date().getHours() * 60 + new Date().getMinutes();
 
       if (vm.edate == vm.date) {
+        //szakos cél
         if (vm.actshiftnum == 1) {
           if (num >= 350 && num <= 1070) {
             vm.rwtarget = (vm.rewindernum / 1440) * (num - 350);
@@ -71,6 +72,7 @@ define([], function () {
             vm.rwtarget = (vm.rewindernum / 1440) * (num + 370);
           }
         }
+        //napi cél
         else {
           if (num >= 350 && num <= 1070) {
             vm.rwtarget = (vm.rewindernum / 1440) * (num - 350);
@@ -276,6 +278,17 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
+      var num = new Date().getHours() * 60 + new Date().getMinutes();
+      if (num < 350) {
+        vm.en=-1
+        vm.date = $filter('date')(new Date().getTime() - (24 * 1000 * 60 * 60), 'yyyy-MM-dd');
+        vm.edate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+      }
+      else {
+        vm.en=0
+        vm.date = $filter('date')(new Date(), 'yyyy-MM-dd');
+        vm.edate = $filter('date')(new Date(), 'yyyy-MM-dd');
+      }
       create_rewinders();
       getplans();
       getrewinder();
