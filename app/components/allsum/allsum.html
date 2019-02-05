@@ -54,6 +54,42 @@
         </tbody>
       </table>
     </div>
-    <div class="module-footer"></div>
+    <div class="module-footer">
+      <div class="col-sm-6">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th colspan="2" class="text-center">Veszteség kategóriák</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Tervezett veszteség (kategóriák)</th>
+              <th>Idő (perc)</th>
+            </tr>
+            <tr ng-repeat="tv in vm.tervezett track by $index">
+              <td ng-show="tv.time>0">{{tv.name}}</td>
+              <td ng-show="tv.time>0">{{tv.time/60|number:0}}</td>
+            </tr>
+            <tr>
+              <th>Szervezési veszteség (kategórák)</th>
+              <th>Idő (perc)</th>
+            </tr>
+            <tr ng-repeat="sv in vm.szervezesi track by $index">
+              <td ng-show="sv.time>0">{{sv.name}}</td>
+              <td ng-show="sv.time>0">{{sv.time/60|number:0}}</td>
+            </tr>
+            <tr>
+              <th>Műszaki technikai okok (kategóriák)</th>
+              <th>Idő (perc)</th>
+            </tr>
+            <tr ng-repeat="mto in vm.muszaki track by $index">
+              <td ng-show="mto.time>0">{{mto.name}}</td>
+              <td ng-show="mto.time>0">{{mto.time/60|number:0}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </section>
 </div>
