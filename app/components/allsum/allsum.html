@@ -5,7 +5,7 @@
         <div class="col-sm-6">
           <div class="input-group">
             <span class="input-group-addon">Dátum</span>
-            <input type="text" class="datepicker form-control" ng-model="vm.startdate" setdate="" end="{{vm.edate}}">
+            <input type="text" class="datepicker form-control" ng-model="vm.date" setdate="-1d" end="{{vm.edate}}">
           </div>
         </div>
         <div class="col-sm-6">
@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="col-sm-2 col-sm-offset-5 text-center">
-          <a href="" class="btn btn-primary" ng-click="vm.createdates()">Betöltés</a>
+          <a href="" class="btn btn-primary" ng-click="vm.callsm()" ng-disabled="vm.startdate>vm.enddate">Betöltés</a>
         </div>
         <div class="col-sm-2> col-sm-offset-3 text-right" ng-show="(user.username=='113010451' || user.username=='212434909' || user.username=='212422533' || user.username=='212557160')">
           <a href="app/components/PHP/sumsmjson.php?startdate={{vm.startdate}}" class="btn btn-info" ng-disabled="vm.startdate!=vm.enddate"
@@ -32,7 +32,28 @@
         </div>
       </div>
     </div>
-    <div class="module-body"></div>
+    <div class="module-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Gép</th>
+            <th>Kieső idő</th>
+            <th>Tervezett veszteség</th>
+            <th>Szervezési veszteség</th>
+            <th>Műszaki technikai okok</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="s in vm.sm">
+            <td>{{s.id}}</td>
+            <td>{{(s.timediff/s.alltime)*100|number:2}}%</td>
+            <td>{{(s.terv/s.alltime)*100|number:2}} %</td>
+            <td>{{(s.szerv/s.alltime)*100|number:2}} %</td>
+            <td>{{(s.musz/s.alltime)*100|number:2}} %</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div class="module-footer"></div>
   </section>
 </div>
