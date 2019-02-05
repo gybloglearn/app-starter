@@ -27,6 +27,12 @@ define([], function () {
     });
 
     /* Add states */
+	$stateProvider.state('allsum', {
+		url: '/allsum',
+		templateUrl: './app/components/allsum/allsum.html',
+		controller: 'allsumController',
+		controllerAs: 'vm'
+	});
 	$stateProvider.state('misstime', {
 		url: '/misstime',
 		templateUrl: './app/components/misstime/misstime.html',

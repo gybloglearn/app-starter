@@ -29,6 +29,8 @@ define([
 	, './efficiency/efficiency.ctrl'
 	, './services/efficiency.service'
 	, './misstime/misstime.ctrl'
+	, './allsum/allsum.ctrl'
+	, './services/allsum.service'
 	/* files */
 ], function (
   configFunction,
@@ -61,6 +63,8 @@ define([
 	, efficiencyController
 	, efficiencyService
 	, misstimeController
+	, allsumController
+	, allsumService
 	/* names */) {
 
     // Link all components to the module !!!
@@ -97,5 +101,7 @@ define([
 		app.controller('efficiencyController', efficiencyController);
 		app.service('efficiencyService', efficiencyService);
 		app.controller('misstimeController', misstimeController);
+		app.controller('allsumController', allsumController);
+		app.service('allsumService', allsumService);
 		/* controllers */
   });

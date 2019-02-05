@@ -1,14 +1,25 @@
 <div class="container">
   <section class="module">
     <div class="module-header">
-      <h1 class="text-center">{{vm.sm}} Kieső idő {{vm.datum}}
+      <h1 class="text-center">Kieső idő {{vm.datum}}
         <br> {{vm.misst}} sec.
       </h1>
-      <div class="col-sm-6" style="margin-top:20px">
-        <select ng-model="vm.sm" ng-change="vm.load()">
-          <option value="">Mind</option>
-          <option ng-repeat="s in vm.sheetmakers" value="{{s}}">{{s}}</option>
-        </select>
+      <div class="col-sm-8" style="margin-top:20px">
+        <div class="col-sm-6">
+          <div class="input-group myselector">
+            <select multiple="multiple" class="form-control" ng-model="vm.sheetmakers">
+              <option value="SM1">SM1</option>
+              <option value="SM2">SM2</option>
+              <option value="SM4">SM4</option>
+              <option value="SM5">SM5</option>
+              <option value="SM6">SM6</option>
+              <option value="SM7">SM7</option>
+              <option value="SM8">SM8</option>
+              <option value="SM9">SM9</option>
+            </select>
+            <span class="input-group-addon">gépek</span>
+          </div>
+        </div>
         <div class="input-group">
           <span class="input-group-addon">Dátum:</span>
           <input type="text" class="datepicker form-control" ng-model="vm.datum" end="{{vm.edate}}">
@@ -24,7 +35,7 @@
           <p class="text-center">Frissítés...</p>
         </div>
       </div>
-      <div class="row" ng-hide="vm.sm==''">
+      <div class="row" ng-hide="vm.hossz>1">
         <table class="table table-striped">
           <thead>
             <tr>
