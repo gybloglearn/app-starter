@@ -8,7 +8,7 @@ define([], function () {
     vm.sm = [];
     vm.callsm = callsm;
     vm.create_allday_data = create_allday_data;
-    vm.loading=false;
+    vm.loading = false;
 
     function loadPartnumbers() {
       vm.partnumbers = [];
@@ -19,7 +19,7 @@ define([], function () {
     }
 
     function callsm() {
-     
+
       vm.sm = [];
       for (var i = 0; i < vm.sheetmakers.length; i++) {
         vm.sm[i] = {};
@@ -102,9 +102,16 @@ define([], function () {
 
             if (k <= response.data.length - 1) {
               diff = (response.data[k].timestamp - response.data[i].timestamp) / 1000;
+              vm.sm[vm.sheetmakers.length].misstime += diff;
+                vm.sm[vm.sheetmakers.length].timediff += diff - tmb.Event_time;
             }
 
             for (var j = 0; j < vm.sheetmakers.length; j++) {
+              if (v == vm.sheetmakers[j]) {
+                vm.sm[j].misstime += diff;
+                vm.sm[j].timediff += diff - tmb.Event_time;
+              }
+              
               if (v == vm.sheetmakers[j] && tmb.Ev_Group == "Tervezett veszteseg") {
                 vm.sm[j].terv += tmb.Event_time;
                 vm.sm[vm.sheetmakers.length].terv += tmb.Event_time;
@@ -117,13 +124,8 @@ define([], function () {
                 vm.sm[j].musz += tmb.Event_time;
                 vm.sm[vm.sheetmakers.length].musz += tmb.Event_time;
               }
-              else if (v == vm.sheetmakers[j]) {
-                vm.sm[j].misstime += diff;
-                vm.sm[j].timediff += diff - tmb.Event_time;
-                vm.sm[vm.sheetmakers.length].misstime += diff;
-                vm.sm[vm.sheetmakers.length].timediff += diff - tmb.Event_time;
-              }
             }
+
             for (var a = 0; a < vm.tervezett.length; a++) {
               if (vm.tervezett[a].name == response.data[i].Event_SubGroup) {
                 vm.tervezett[a].time += response.data[i].Event_time;
@@ -140,7 +142,8 @@ define([], function () {
               }
             }
           }
-          vm.loading=false;
+          vm.loading = false;
+          console.log(vm.sm);
         });
       });
     }
@@ -208,16 +211,16 @@ define([], function () {
         for (var j = 0; j < d.length; j++) {
           for (var k = 0; k < vm.daydata.length; k++) {
             if (d[j].type == "3149069") {
-              vm.daydata[k].zbzlbp+=d[j].bpaeq;
-              vm.daydata[k].osszesbp+=d[j].bpaeq;
-              vm.daydata[k].minzbzl+=d[j].minaeq;
-              vm.daydata[k].minosszes+=d[j].minaeq;
+              vm.daydata[k].zbzlbp += d[j].bpaeq;
+              vm.daydata[k].osszesbp += d[j].bpaeq;
+              vm.daydata[k].minzbzl += d[j].minaeq;
+              vm.daydata[k].minosszes += d[j].minaeq;
             }
-            else{
-              vm.daydata[k].otszazbp+=d[j].bpaeq;
-              vm.daydata[k].osszesbp+=d[j].bpaeq;
-              vm.daydata[k].minotszaz+=d[j].minaeq;
-              vm.daydata[k].minosszes+=d[j].minaeq;
+            else {
+              vm.daydata[k].otszazbp += d[j].bpaeq;
+              vm.daydata[k].osszesbp += d[j].bpaeq;
+              vm.daydata[k].minotszaz += d[j].minaeq;
+              vm.daydata[k].minosszes += d[j].minaeq;
             }
           }
         }
