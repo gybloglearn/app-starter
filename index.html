@@ -47,7 +47,7 @@
 					<li><a ui-sref="smweek"><i class="icon-file"></i>SM OEE összesítő</a></li>
 					<li><a ui-sref="smshift"><i class="icon-file"></i>SM OEE Szakos összesítő</a></li>
 					<li><a ui-sref="sumweek"><i class="icon-file"></i> Sumweek</a></li>
-					<li><a ui-sref="allsum"><i class="icon-file"></i> Összegzés</a></li>
+					<li ng-show="user.displayname && (user.username=='212434909'||user.username=='502678184' || user.username=='113010451' || user.username=='212422533' || user.username=='212557160') "><a ui-sref="allsum"><i class="icon-file"></i> Összegzés</a></li>
 					<li ng-show="user.displayname && (user.username=='212434909'||user.username=='502678184' || user.username=='113010451' || user.username=='212422533' || user.username=='212557160') "><a ui-sref="plan"><i class="icon-file"></i>Tervek</a></li>
 					<li ng-show="user.displayname && (user.username=='113005525'||user.username=='212434909'||user.username=='502678184' || user.username=='113010451' || user.username=='212422533' || user.username=='212557160') "><a ui-sref="misstime"><i class="icon-file"></i> Misstime</a></li>
 					<li ng-show="user.displayname && (user.username=='212434909'||user.username=='502678184' || user.username=='113010451' || user.username=='212422533' || user.username=='212557160') "><a ui-sref="efficiency"><i class="icon-file"></i> Efficiency</a></li>
