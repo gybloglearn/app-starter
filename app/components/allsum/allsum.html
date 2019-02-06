@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
   <section class="module">
     <div class="module-header">
       <div class="col-sm-12" style="margin-top:20px">
@@ -24,35 +24,105 @@
           </div>
         </div>
         <div class="col-sm-2 col-sm-offset-5 text-center">
-          <a href="" class="btn btn-primary" ng-click="vm.callsm()" ng-disabled="vm.startdate>vm.enddate">Betöltés</a>
-        </div>
-        <div class="col-sm-2> col-sm-offset-3 text-right" ng-show="(user.username=='113010451' || user.username=='212434909' || user.username=='212422533' || user.username=='212557160')">
-          <a href="app/components/PHP/sumsmjson.php?startdate={{vm.startdate}}" class="btn btn-info" ng-disabled="vm.startdate!=vm.enddate"
-            target="_blank">Frissítés</a>
+          <a href="" class="btn btn-primary" ng-click="vm.create_allday_data();vm.callsm()" ng-disabled="vm.startdate>vm.enddate">Betöltés</a>
         </div>
       </div>
     </div>
     <div class="module-body">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Gép</th>
-            <th>Kieső idő</th>
-            <th>Tervezett veszteség</th>
-            <th>Szervezési veszteség</th>
-            <th>Műszaki technikai okok</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="s in vm.sm">
-            <td>{{s.id}}</td>
-            <td>{{(s.timediff/s.alltime)*100|number:2}}%</td>
-            <td>{{(s.terv/s.alltime)*100|number:2}} %</td>
-            <td>{{(s.szerv/s.alltime)*100|number:2}} %</td>
-            <td>{{(s.musz/s.alltime)*100|number:2}} %</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="progress progress-success progress-striped active" ng-hide="!vm.loading">
+        <div class="progress-bar" style="width: 100%">
+          <p class="text-center">Frissítés...</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-10">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Gép</th>
+                <th>Kieső idő</th>
+                <th>Tervezett veszteség</th>
+                <th>Szervezési veszteség</th>
+                <th>Műszaki technikai okok</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="s in vm.sm">
+                <td ng-show="s.id!='SMS'">{{s.id}}</td>
+                <td ng-show="s.id!='SMS'">{{(s.timediff/s.alltime)*100|number:2}}%</td>
+                <td ng-show="s.id!='SMS'">{{(s.terv/s.alltime)*100|number:2}} %</td>
+                <td ng-show="s.id!='SMS'">{{(s.szerv/s.alltime)*100|number:2}} %</td>
+                <td ng-show="s.id!='SMS'">{{(s.musz/s.alltime)*100|number:2}} %</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>Veszteségek</th>
+                <th>%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="s in vm.sm">
+                <th ng-show="s.id=='SMS'">Kieső idő</th>
+                <td ng-show="s.id=='SMS'">{{(s.timediff/s.alltime)*100|number:2}}%</td>
+              </tr>
+              <tr ng-repeat="s in vm.sm">
+                <th ng-show="s.id=='SMS'">Tervezett veszteség</th>
+                <td ng-show="s.id=='SMS'">{{(s.terv/s.alltime)*100|number:2}} %</td>
+              </tr>
+              <tr ng-repeat="s in vm.sm">
+                <th ng-show="s.id=='SMS'">Szervezési veszteség</th>
+                <td ng-show="s.id=='SMS'">{{(s.szerv/s.alltime)*100|number:2}} %</td>
+              </tr>
+              <tr ng-repeat="s in vm.sm">
+                <th ng-show="s.id=='SMS'">Műszaki technikai okok</th>
+                <td ng-show="s.id=='SMS'">{{(s.musz/s.alltime)*100|number:2}} %</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-4">
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th colspan="4" class="text-center">Napi összes (AEQ)</th>
+              </tr>
+              <tr>
+                <th>Mennyiség</th>
+                <th>500</th>
+                <th>ZB/ZL</th>
+                <th>ZW</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>SM</td>
+                <td>{{vm.daydata[0].otszaz|number:2}}</td>
+                <td>{{vm.daydata[0].zbzl|number:2}}</td>
+                <td>{{vm.daydata[0].osszes|number:2}}</td>
+              </tr>
+              <tr>
+                <td>BP</td>
+                <td>{{vm.daydata[0].otszazbp|number:2}}</td>
+                <td>{{vm.daydata[0].zbzlbp|number:2}}</td>
+                <td>{{vm.daydata[0].osszesbp|number:2}}</td>
+              </tr>
+              <tr>
+                <td>MIN</td>
+                <td>{{vm.daydata[0].minotszaz|number:2}}</td>
+                <td>{{vm.daydata[0].minzbzl|number:2}}</td>
+                <td>{{vm.daydata[0].minosszes|number:2}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <div class="module-footer">
       <div class="col-sm-6">

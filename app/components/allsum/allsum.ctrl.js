@@ -7,6 +7,8 @@ define([], function () {
     vm.sheetmakers = ["SM1", "SM2", "SM4", "SM5", "SM6", "SM7", "SM8", "SM9"];
     vm.sm = [];
     vm.callsm = callsm;
+    vm.create_allday_data = create_allday_data;
+    vm.loading=false;
 
     function loadPartnumbers() {
       vm.partnumbers = [];
@@ -17,7 +19,7 @@ define([], function () {
     }
 
     function callsm() {
-      vm.loaddata = true;
+     
       vm.sm = [];
       for (var i = 0; i < vm.sheetmakers.length; i++) {
         vm.sm[i] = {};
@@ -54,6 +56,7 @@ define([], function () {
     }
 
     function load() {
+      vm.loading = true;
       vm.tervezett = [
         { name: "101 - üresjárat (nem kell gyártani)", time: 0 },
         { name: "102 - kísérlet", time: 0 },
@@ -70,14 +73,14 @@ define([], function () {
       vm.szervezesi = [
         { name: "201 - Segédeszköz (keret, fésű, U alak) hiány", time: 0 },
         { name: "202 - létszámhiány", time: 0 },
-        { name: "203 - Egyéb, nem SM géphiba miatti állás", time: 0 },
+        { name: "203 - Egyéb, nem SM géphiba miatti állás ", time: 0 },
         { name: "204 - alap - vagy segédanyaghiány", time: 0 },
         { name: "205 - szárító tele van", time: 0 },
         { name: "206 - Munkaidő veszteseg", time: 0 },
         { name: "207 - Lapdurrogtatas", time: 0 },
         { name: "20105 - SpoolCsere - norma fölött", time: 0 },
-        { name: "20107 - Normál keretfeladás, új fésű felrakása - normafölött", time: 0 },
-        { name: "20106 - Lamináltcsík töltés - norma fölött", time: 0 },
+        { name: "20107 - Normál keretfeladás, új fésű felrakása-normafölött", time: 0 },
+        { name: "20106 - Lamináltcsík töltés-norma fölött", time: 0 },
       ];
       vm.muszaki = [
         { name: "301 - Maximo van - kötelező számot felvinni", time: 0 },
@@ -137,8 +140,25 @@ define([], function () {
               }
             }
           }
+          vm.loading=false;
         });
       });
+    }
+
+    function create_allday_data() {
+      vm.daydata = [];
+      var ob = {
+        otszaz: 0,
+        zbzl: 0,
+        osszes: 0,
+        otszazbp: 0,
+        zbzlbp: 0,
+        osszesbp: 0,
+        minotszaz: 0,
+        minzbzl: 0,
+        minosszes: 0
+      };
+      vm.daydata.push(ob);
       loadsm();
     }
 
@@ -159,24 +179,48 @@ define([], function () {
         }
 
         for (var j = 0; j < d.length; j++) {
-          for (var k = 0; k < vm.sheetmakers.length; k++) {
-            if (d[j].shortname == vm.sm[k].id) {
-              vm.sm[k].jo += d[j].Goodsheets * 1;
-              vm.sm[k].jaeq += d[j].Goodaeq * 1;
-              vm.sm[k].selejt += d[j].ScrapSheets * 1;
-              vm.sm[k].saeq += d[j].Scrapaeq * 1;
-              vm.sm[k].ossz += d[j].Totalsheets * 1;
-              vm.sm[k].oaeq += d[j].Totalaeq * 1;
-              vm.sm[vm.sheetmakers.length].jo += d[j].Goodsheets * 1;
-              vm.sm[vm.sheetmakers.length].jaeq += d[j].Goodaeq * 1;
-              vm.sm[vm.sheetmakers.length].selejt += d[j].ScrapSheets * 1;
-              vm.sm[vm.sheetmakers.length].saeq += d[j].Scrapaeq * 1;
-              vm.sm[vm.sheetmakers.length].ossz += d[j].Totalsheets * 1;
-              vm.sm[vm.sheetmakers.length].oaeq += d[j].Totalaeq * 1;
+          for (var k = 0; k < vm.daydata.length; k++) {
+            if (d[j].shortname == "SM1" || d[j].shortname == "SM2") {
+              vm.daydata[k].zbzl += d[j].Goodaeq * 1;
+              vm.daydata[k].osszes += d[j].Goodaeq * 1;
+            }
+            else {
+              vm.daydata[k].otszaz += d[j].Goodaeq * 1;
+              vm.daydata[k].osszes += d[j].Goodaeq * 1;
             }
           }
         }
-        console.log(vm.sm);
+        loadmtf();
+      });
+    }
+
+    function loadmtf() {
+      allsumService.getmtftable(vm.date, $filter('date')(new Date(vm.date).getTime() + 24 * 60 * 60 * 1000, "yyyy-MM-dd")).then(function (response) {
+        var d = response.data;
+        for (var i = 0; i < vm.partnumbers.length; i++) {
+          for (var j = 0; j < d.length; j++) {
+            if (vm.partnumbers[i].id == d[j].type) {
+              d[j].bpaeq = d[j].BPOUT * vm.partnumbers[i].aeq;
+              d[j].minaeq = d[j].GRADED * vm.partnumbers[i].aeq;
+            }
+          }
+        }
+        for (var j = 0; j < d.length; j++) {
+          for (var k = 0; k < vm.daydata.length; k++) {
+            if (d[j].type == "3149069") {
+              vm.daydata[k].zbzlbp+=d[j].bpaeq;
+              vm.daydata[k].osszesbp+=d[j].bpaeq;
+              vm.daydata[k].minzbzl+=d[j].minaeq;
+              vm.daydata[k].minosszes+=d[j].minaeq;
+            }
+            else{
+              vm.daydata[k].otszazbp+=d[j].bpaeq;
+              vm.daydata[k].osszesbp+=d[j].bpaeq;
+              vm.daydata[k].minotszaz+=d[j].minaeq;
+              vm.daydata[k].minosszes+=d[j].minaeq;
+            }
+          }
+        }
       });
     }
 

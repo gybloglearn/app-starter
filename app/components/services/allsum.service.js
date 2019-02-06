@@ -4,8 +4,9 @@ define([], function () {
   function Service($http) {
     var service = {
       getpartnumber: getpartnumber,
-      get:get,
-      getsheet: getsheet
+      get: get,
+      getsheet: getsheet,
+      getmtftable: getmtftable,
     };
 
     return service;
@@ -19,10 +20,10 @@ define([], function () {
       };
       return $http(req);
     }
-    function get(date,sm) {
+    function get(date, sm) {
       var req = {
         method: 'GET',
-        url: 'app/components/PHP/smprod.php?startdate='+ date + '&mch='+ sm
+        url: 'app/components/PHP/smprod.php?startdate=' + date + '&mch=' + sm
       };
       return $http(req);
     }
@@ -30,6 +31,13 @@ define([], function () {
       var req = {
         method: 'GET',
         url: 'app/components/PHP/Smtable.php?startdate=' + start + '&enddate=' + end
+      };
+      return $http(req);
+    }
+    function getmtftable(start, end) {
+      var req = {
+        method: 'GET',
+        url: 'app/components/PHP/mtf_table.php?startdate=' + start + '&enddate=' + end
       };
       return $http(req);
     }
