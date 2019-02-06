@@ -202,7 +202,7 @@ define([], function () {
     }
 
     function createinfo(categ, name) {
-      if (name == "Potting") {
+      if (name == "Potting" || name=="Centrifuga") {
         vm.createinfodata = {};
         vm.actplace = "";
         vm.cat = "";

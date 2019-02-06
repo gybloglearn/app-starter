@@ -7,6 +7,13 @@ define([], function () {
     vm.edate = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.beallit = beallit;
     vm.loading = false;
+    vm.clorcat = ["Anyaghiány Pottingról", "Létszámhiány", "PH beállítás", "Áramláshiba", "Szivárgás", "Hőmérséklet", "Beadagolás hiba", "Sósav tartály levegőre fut", "Segédeszköz hiány", "Egyéb"];
+    vm.fluxuscat = ["Anyaghiány", "Létszámhiány", "Szivattyú", "Szűrő", "Áramláshiba", "Hőmérséklet", "Egyéb"];
+    vm.impregnalcat = ["Glicerinsűrűség", "Kádszint", "Segédeszköz hiány", "Szivattyú", "Glicerin hiány", "Anyaghiány", "Létszámhiány", "Áramlási hiba", "Egyéb"];
+    vm.saveclorinfo=saveclorinfo;
+    vm.savefluxusinfo=savefluxusinfo;
+    vm.saveimpregnalinfo=saveimpregnalinfo;
+    vm.goodsave=goodsave;
 
     function loadpartnumbers() {
       vm.partnumbers = [];
@@ -37,7 +44,7 @@ define([], function () {
 
       vm.data = [];
       vm.impdata = [];
-      vm.clordata=[];
+      vm.clordata = [];
 
       var sdate = $filter('date')(new Date(vm.date).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
       var edate = $filter('date')(new Date(vm.date).getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
@@ -93,7 +100,6 @@ define([], function () {
     }
 
     function create_chart() {
-      console.log(vm.impdata);
       vm.chartdata =
         [
           { name: 'Klórozó', color: 'rgb(50,102,155)', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
@@ -127,11 +133,11 @@ define([], function () {
 
         }
         for (var k = 0; k < 24; k++) {
-          if(k > 0){
-            vm.chartdata[1].data[k] = vm.chartdata[1].data[k-1] + vm.chartdata[0].data[k];
-            vm.chartdata[3].data[k] = vm.chartdata[3].data[k-1] + vm.chartdata[2].data[k];
-            vm.chartdata[5].data[k] = vm.chartdata[5].data[k-1] + vm.chartdata[4].data[k];
-            vm.chartdata[6].data[k] = vm.chartdata[6].data[k-1] + 3.7;
+          if (k > 0) {
+            vm.chartdata[1].data[k] = vm.chartdata[1].data[k - 1] + vm.chartdata[0].data[k];
+            vm.chartdata[3].data[k] = vm.chartdata[3].data[k - 1] + vm.chartdata[2].data[k];
+            vm.chartdata[5].data[k] = vm.chartdata[5].data[k - 1] + vm.chartdata[4].data[k];
+            vm.chartdata[6].data[k] = vm.chartdata[6].data[k - 1] + 3.7;
           } else {
             vm.chartdata[1].data[k] = vm.chartdata[0].data[k];
             vm.chartdata[3].data[k] = vm.chartdata[2].data[k];
@@ -145,15 +151,144 @@ define([], function () {
           type: 'column',
           height: 360
         },
+        plotOptions: {
+          column: {
+            borderWidth: 0,
+            events: {
+              click: function (ev) {
+                /*console.log(ev.point.category);
+                console.log(ev.point.options.cat + " - " + ev.point.series.name);*/
+                createinfo(ev.point.category, ev.point.series.name);
+              }
+            }
+          }
+        },
         title: { text: "Fluxus és impregnálás adatok órai lebontása" },
         tooltip: {
           valueDecimals: 0
         },
         xAxis: { type: 'category', categories: vm.cats },
-        yAxis: [{ title:{text:'Darab'}}, {title: {text: 'Kumulált Darab'}, opposite: true}],
+        yAxis: [{ title: { text: 'Darab' } }, { title: { text: 'Kumulált Darab' }, opposite: true }],
         series: vm.chartdata
       };
     }
+
+    function createinfo(categ, name) {
+      if (name == "Klórozó") {
+        vm.createinfodata = {};
+        vm.cat = "";
+        vm.descriptioninfo = "";
+        vm.startinfo = vm.date + " " + categ + ":" + "00";
+        vm.endinfo = vm.date + " " + categ + ":" + "00";
+
+        loadclorinationinfo();
+        vm.mutatklor = true;
+      }
+      else if (name == "Fluxus") {
+        vm.createinfodata = {};
+        vm.cat = "";
+        vm.descriptioninfo = "";
+        vm.startinfo = vm.date + " " + categ + ":" + "00";
+        vm.endinfo = vm.date + " " + categ + ":" + "00";
+
+        loadfluxusinfo();
+        vm.mutatfluxus = true;
+      }
+      else if (name == "Impregnálás") {
+        vm.createinfodata = {};
+        vm.cat = "";
+        vm.descriptioninfo = "";
+        vm.startinfo = vm.date + " " + categ + ":" + "00";
+        vm.endinfo = vm.date + " " + categ + ":" + "00";
+
+        loadimpregnalinfo();
+        vm.mutatimpregnal = true;
+      }
+    }
+
+    function saveclorinfo() {
+
+      vm.createinfodata.id = new Date().getTime();
+      vm.createinfodata.sso = $rootScope.user.username;
+      vm.createinfodata.operator_name = $rootScope.user.displayname
+      vm.createinfodata.start = vm.startinfo;
+      vm.createinfodata.end = vm.endinfo;
+      vm.createinfodata.time = vm.timeinfo = (new Date(vm.endinfo).getTime() - new Date(vm.startinfo).getTime()) / 60000;
+      vm.createinfodata.category = vm.cat;
+      vm.createinfodata.description = vm.descriptioninfo;
+      
+      console.log(vm.createinfodata);
+      fluxusService.postclorination(vm.createinfodata).then(function (resp) {
+        vm.showmessage = true;
+        vm.createinfodata = {};
+      });
+      vm.mutatklor = false;
+    }
+
+    function loadclorinationinfo() {
+      vm.clorinationinfo = [];
+
+      fluxusService.getclorination().then(function (resp) {
+        vm.clorinationinfo = resp.data;
+      });
+    }
+    function savefluxusinfo() {
+
+      vm.createinfodata.id = new Date().getTime();
+      vm.createinfodata.sso = $rootScope.user.username;
+      vm.createinfodata.operator_name = $rootScope.user.displayname
+      vm.createinfodata.start = vm.startinfo;
+      vm.createinfodata.end = vm.endinfo;
+      vm.createinfodata.time = vm.timeinfo = (new Date(vm.endinfo).getTime() - new Date(vm.startinfo).getTime()) / 60000;
+      vm.createinfodata.category = vm.cat;
+      vm.createinfodata.description = vm.descriptioninfo;
+      
+      console.log(vm.createinfodata);
+      fluxusService.postfluxus(vm.createinfodata).then(function (resp) {
+        vm.showmessage = true;
+        vm.createinfodata = {};
+      });
+      vm.mutatfluxus = false;
+    }
+
+    function loadfluxusinfo() {
+      vm.clorinationinfo = [];
+
+      fluxusService.getfluxus().then(function (resp) {
+        vm.fluxusinfo = resp.data;
+      });
+    }
+
+    function saveimpregnalinfo() {
+
+      vm.createinfodata.id = new Date().getTime();
+      vm.createinfodata.sso = $rootScope.user.username;
+      vm.createinfodata.operator_name = $rootScope.user.displayname
+      vm.createinfodata.start = vm.startinfo;
+      vm.createinfodata.end = vm.endinfo;
+      vm.createinfodata.time = vm.timeinfo = (new Date(vm.endinfo).getTime() - new Date(vm.startinfo).getTime()) / 60000;
+      vm.createinfodata.category = vm.cat;
+      vm.createinfodata.description = vm.descriptioninfo;
+      
+      console.log(vm.createinfodata);
+      fluxusService.postimpregnal(vm.createinfodata).then(function (resp) {
+        vm.showmessage = true;
+        vm.createinfodata = {};
+      });
+      vm.mutatimpregnal = false;
+    }
+
+    function loadimpregnalinfo() {
+      vm.impregnalinfoinfo = [];
+
+      fluxusService.getimpregnal().then(function (resp) {
+        vm.impregnalinfo = resp.data;
+      });
+    }
+
+    function goodsave() {
+      alert("Mentés sikeres!");
+  }
 
     activate();
 

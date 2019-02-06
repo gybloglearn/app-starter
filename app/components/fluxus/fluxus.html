@@ -21,6 +21,116 @@
       <div class="row" style="padding: 20px">
         <my-chart id="chart" config="vm.chartconfig"></my-chart>
       </div>
+      <div ng-show="vm.mutatklor && user.displayname && (user.username=='212557160' || user.username=='212434909'||user.username=='502678184')">
+        <h1 class="text-center">Klórozó állásidő rögzítés</h1>
+        <div class="col-sm-12" style="margin-top:20px">
+          <div class="input-group">
+            <span class="input-group-addon">Kezdő dátum</span>
+            <input type="text" class="form-control" ng-model="vm.startinfo">
+            <span class="input-group-addon">Vége dátum</span>
+            <input type="text" class="form-control" ng-model="vm.endinfo">
+            <span class="input-group-addon">Kategória</span>
+            <select class="form-control" ng-model="vm.cat">
+              <option ng-repeat="cc in vm.clorcat" value="{{cc}}">{{cc}}</option>
+            </select>
+          </div>
+          <div class="input-group" style="margin-top:20px">
+            <span class="input-group-addon">Megjegyzés</span>
+            <textarea class="form-control" rows="4" ng-model="vm.descriptioninfo"></textarea>
+          </div>
+          <div>
+            <h3>Feltöltési segédlet</h3>
+            <p>Adatokat akkor lehet rögzíteni ha a következő kritériumoknak felelnek meg az input mezők:
+              <br> -vége dátumnak nagyobbnak kell lenni mint a kezdő dátumnak (mindkettő szerkeszthető kézzel,de a
+              formátumnak
+              meg kell egyeznie az alábbival:yyyy-MM-dd HH:mm:mm)
+              <br> -kategória mezőt kell választani ami a kieső idő okát jelenti,amennyiben nincs a listában úgy az
+              egyéb mező
+              választásával a megjegyzés mezőbe lehet beírni az okot
+              <br> -alkategória mező választható,de ennek a kitöltése nem kötelező,a megjegyzés mező használható
+              kiegészítésre is
+            </p>
+          </div>
+          <div class="col-sm-4" style="margin-top:10px">
+            <button class="btn btn-success" ng-click="vm.saveclorinfo();vm.goodsave()" ng-disabled="vm.cat=='' || vm.startinfo>=vm.endinfo">Feltölt</button>
+            <button class="btn btn-primary" ng-click="vm.createinfodata={};vm.mutatklor=false">Mégse</button>
+          </div>
+        </div>
+      </div>
+      <div ng-show="vm.mutatfluxus && user.displayname && (user.username=='212557160' || user.username=='212434909'||user.username=='502678184')">
+        <div class="col-sm-12" style="margin-top:20px">
+          <h1 class="text-center">Fluxus állásidő rögzítés</h1>
+          <div class="input-group">
+            <span class="input-group-addon">Kezdő dátum</span>
+            <input type="text" class="form-control" ng-model="vm.startinfo">
+            <span class="input-group-addon">Vége dátum</span>
+            <input type="text" class="form-control" ng-model="vm.endinfo">
+            <span class="input-group-addon">Kategória</span>
+            <select class="form-control" ng-model="vm.cat">
+              <option ng-repeat="fc in vm.fluxuscat" value="{{fc}}">{{fc}}</option>
+            </select>
+          </div>
+          <div class="input-group" style="margin-top:20px">
+            <span class="input-group-addon">Megjegyzés</span>
+            <textarea class="form-control" rows="4" ng-model="vm.descriptioninfo"></textarea>
+          </div>
+          <div>
+            <h3>Feltöltési segédlet</h3>
+            <p>Adatokat akkor lehet rögzíteni ha a következő kritériumoknak felelnek meg az input mezők:
+              <br> -vége dátumnak nagyobbnak kell lenni mint a kezdő dátumnak (mindkettő szerkeszthető kézzel,de a
+              formátumnak
+              meg kell egyeznie az alábbival:yyyy-MM-dd HH:mm:mm)
+              <br> -kategória mezőt kell választani ami a kieső idő okát jelenti,amennyiben nincs a listában úgy az
+              egyéb mező
+              választásával a megjegyzés mezőbe lehet beírni az okot
+              <br> -alkategória mező választható,de ennek a kitöltése nem kötelező,a megjegyzés mező használható
+              kiegészítésre is
+            </p>
+          </div>
+          <div class="col-sm-4" style="margin-top:10px">
+            <button class="btn btn-success" ng-click="vm.savefluxusinfo();vm.goodsave()" ng-disabled="vm.cat=='' || vm.startinfo>=vm.endinfo">Feltölt</button>
+            <button class="btn btn-primary" ng-click="vm.createinfodata={};vm.mutatfluxus=false">Mégse</button>
+          </div>
+        </div>
+      </div>
+      <div ng-show="vm.mutatimpregnal && user.displayname && (user.username=='212557160' || user.username=='212434909'||user.username=='502678184' )">
+        <h1 class="text-center">Impregnálás állásidő rögzítés</h1>
+        <div class="col-sm-12" style="margin-top:20px">
+          <div class="input-group">
+            <span class="input-group-addon">Kezdő dátum</span>
+            <input type="text" class="form-control" ng-model="vm.startinfo">
+            <span class="input-group-addon">Vége dátum</span>
+            <input type="text" class="form-control" ng-model="vm.endinfo">
+            <span class="input-group-addon">Kategória</span>
+            <select class="form-control" ng-model="vm.cat">
+              <option ng-repeat="ic in vm.fluxuscat" value="{{ic}}">{{ic}}</option>
+            </select>
+          </div>
+          <div class="input-group" style="margin-top:20px">
+            <span class="input-group-addon">Megjegyzés</span>
+            <textarea class="form-control" rows="4" ng-model="vm.descriptioninfo"></textarea>
+          </div>
+          <div>
+            <h3>Feltöltési segédlet</h3>
+            <p>Adatokat akkor lehet rögzíteni ha a következő kritériumoknak felelnek meg az input mezők:
+              <br> -vége dátumnak nagyobbnak kell lenni mint a kezdő dátumnak (mindkettő szerkeszthető kézzel,de a
+              formátumnak
+              meg kell egyeznie az alábbival:yyyy-MM-dd HH:mm:mm)
+              <br> -kategória mezőt kell választani ami a kieső idő okát jelenti,amennyiben nincs a listában úgy az
+              egyéb mező
+              választásával a megjegyzés mezőbe lehet beírni az okot
+              <br> -alkategória mező választható,de ennek a kitöltése nem kötelező,a megjegyzés mező használható
+              kiegészítésre is
+            </p>
+          </div>
+          <div class="col-sm-4" style="margin-top:10px">
+            <button class="btn btn-success" ng-click="vm.saveimpregnalinfo();vm.goodsave()" ng-disabled="vm.cat=='' || vm.startinfo>=vm.endinfo">Feltölt</button>
+            <button class="btn btn-primary" ng-click="vm.createinfodata={};vm.mutatimpregnal=false">Mégse</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-footer">
       <div class="row" style="margin-top:10px">
         <div class="col-sm-6">
           <h2>Fluxus táblázat</h2>
@@ -30,7 +140,6 @@
                 <th>Modul</th>
                 <th>Megnevezés</th>
                 <th>Dátum</th>
-                <!--th>Gép</th-->
                 <th>Szak</th>
                 <th>Aeq</th>
               </tr>
@@ -40,7 +149,6 @@
                 <td>{{item.jobid}}</td>
                 <td>{{item.modulname}}</td>
                 <td>{{item.Perm_test}}</td>
-                <!--td>{{item.Perm_gep}}</td-->
                 <td>{{item.Perm_test_shift}}</td>
                 <td>{{item.aeq}}</td>
               </tr>
@@ -71,6 +179,6 @@
           </table>
         </div>
       </div>
-      <div class="module-footer"></div>
+    </div>
   </section>
-  </div>
+</div>
