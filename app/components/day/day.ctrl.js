@@ -63,6 +63,9 @@ define([], function () {
           if (num >= 350 && num <= 1070) {
             vm.rwtarget = (vm.rewindernum / 1440) * (num - 350);
           }
+          else{
+            vm.rwtarget = vm.rewindernum / 2;
+          }
         }
         else if (vm.actshiftnum == 3) {
           if (num > 1070) {
@@ -112,6 +115,9 @@ define([], function () {
           if (shiftnum == 1 && num >= 350 && num <= 1070) {
             target = (dayaeq / 1440) * (num - 350);
           }
+          else if (shiftnum == 1 && num < 350) {
+            target = dayaeq / 2;
+          }
           else if (shiftnum == 1 && num > 1070) {
             target = dayaeq / 2;
           }
@@ -151,6 +157,9 @@ define([], function () {
         if (vm.edate == vm.date) {
           if (shiftnum == 1 && num >= 350 && num <= 1070) {
             target = (daymeter / 1440) * (num - 350);
+          }
+          else if (shiftnum == 1 && num < 350) {
+            target = daymeter / 2;
           }
           else if (shiftnum == 1 && num > 1070) {
             target = daymeter / 2;
