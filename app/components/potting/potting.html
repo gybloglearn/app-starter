@@ -57,7 +57,7 @@
             </p>
           </div>
           <div class="col-sm-4" style="margin-top:10px">
-            <button class="btn btn-success" ng-click="vm.saveinfo()" ng-disabled="vm.mch=='' || vm.cat=='' || vm.startinfo>=vm.endinfo">Feltölt</button>
+            <button class="btn btn-success" ng-click="vm.saveinfo();vm.goodsave()" ng-disabled="vm.mch=='' || vm.cat=='' || vm.startinfo>=vm.endinfo">Feltölt</button>
             <button class="btn btn-primary" ng-click="vm.createinfodata={};vm.mutat=false">Mégse</button>
           </div>
         </div>

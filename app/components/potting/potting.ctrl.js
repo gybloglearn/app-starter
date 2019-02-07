@@ -41,6 +41,7 @@ define([], function () {
     ];
     vm.beallit = beallit;
     vm.saveinfo = saveinfo;
+    vm.goodsave=goodsave;
     vm.mutat = false;
     vm.loading = false;
 
@@ -242,6 +243,10 @@ define([], function () {
       //loadinfo();
       vm.mutat = false;
     }
+
+    function goodsave() {
+      alert("Mentés sikeres!");
+  }
 
     activate();
 
