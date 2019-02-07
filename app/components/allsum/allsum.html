@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container">
   <section class="module">
     <div class="module-header">
       <div class="col-sm-12" style="margin-top:20px">
@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-10">
+        <div class="col-sm-8">
           <table class="table table-striped">
             <thead>
               <tr>
@@ -74,15 +74,18 @@
               </tr>
               <tr ng-repeat="s in vm.sm">
                 <th ng-show="s.id=='SMS'">Tervezett veszteség</th>
-                <td ng-show="s.id=='SMS'">{{(s.terv/s.alltime)*100|number:2}} %</td>
+                <td ng-show="s.id=='SMS'"><span class="{{s.terv/s.alltime*100 <= 13?'text-ge-green':'text-ge-red'}}">{{(s.terv/s.alltime)*100|number:2}}
+                    %</span></td>
               </tr>
               <tr ng-repeat="s in vm.sm">
                 <th ng-show="s.id=='SMS'">Szervezési veszteség</th>
-                <td ng-show="s.id=='SMS'">{{(s.szerv/s.alltime)*100|number:2}} %</td>
+                <td ng-show="s.id=='SMS'"><span class="{{s.szerv/s.alltime*100 <= 3?'text-ge-green':'text-ge-red'}}">{{(s.szerv/s.alltime)*100|number:2}}
+                    %</span></td>
               </tr>
               <tr ng-repeat="s in vm.sm">
                 <th ng-show="s.id=='SMS'">Műszaki technikai okok</th>
-                <td ng-show="s.id=='SMS'">{{(s.musz/s.alltime)*100|number:2}} %</td>
+                <td ng-show="s.id=='SMS'"><span class="{{s.musz/s.alltime*100 <= 13?'text-ge-green':'text-ge-red'}}">{{(s.musz/s.alltime)*100|number:2}}
+                    %</span></td>
               </tr>
             </tbody>
           </table>
@@ -122,10 +125,15 @@
             </tbody>
           </table>
         </div>
+        <div class="col-sm-2">
+          <div class="input-group-btn">
+            <a class="btn btn-info" ng-click="vm.exportToCSV()">Adatok mentése</a>
+          </div>
+        </div>
       </div>
     </div>
     <div class="module-footer">
-      <div class="col-sm-6">
+      <div class="col-sm-8">
         <table class="table table-condensed">
           <thead>
             <tr>

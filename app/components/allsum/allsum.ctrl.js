@@ -8,6 +8,7 @@ define([], function () {
     vm.sm = [];
     vm.callsm = callsm;
     vm.create_allday_data = create_allday_data;
+    vm.exportToCSV = exportToCSV;
     vm.loading = false;
 
     function loadPartnumbers() {
@@ -72,22 +73,23 @@ define([], function () {
       ];
       vm.szervezesi = [
         { name: "201 - Segédeszköz (keret, fésű, U alak) hiány", time: 0 },
-        { name: "202 - létszámhiány", time: 0 },
+        { name: "202 - Létszámhiány", time: 0 },
         { name: "203 - Egyéb, nem SM géphiba miatti állás ", time: 0 },
         { name: "204 - alap - vagy segédanyaghiány", time: 0 },
-        { name: "205 - szárító tele van", time: 0 },
+        { name: "205 - Szárító tele van", time: 0 },
         { name: "206 - Munkaidő veszteseg", time: 0 },
         { name: "207 - Lapdurrogtatas", time: 0 },
+        { name: "11103 - Összerendelés / Papírmunka", time: 0 },
         { name: "20105 - SpoolCsere - norma fölött", time: 0 },
-        { name: "20107 - Normál keretfeladás, új fésű felrakása-normafölött", time: 0 },
         { name: "20106 - Lamináltcsík töltés-norma fölött", time: 0 },
+        { name: "20107 - Normál keretfeladás, új fésű felrakása-normafölött", time: 0 },
       ];
       vm.muszaki = [
         { name: "301 - Maximo van - kötelező számot felvinni", time: 0 },
         { name: "302 - gépbeállítás - beállító operátor", time: 0 },
         { name: "303 - (maximo nincs) - vaklárma", time: 0 },
         { name: "304 - laphossz - beállító operátor", time: 0 },
-        { name: "305 - laphossz - karbantartó", time: 0 },
+        { name: "305 - laphossz karbantartó kötelező maximo", time: 0 },
         { name: "306 - ragcsík / laminált - beállító operátor", time: 0 },
         { name: "307 - ragcsík / laminált - karbantartó - maximo", time: 0 },
         { name: "308 - Lapmérés", time: 0 }
@@ -103,7 +105,7 @@ define([], function () {
             if (k <= response.data.length - 1) {
               diff = (response.data[k].timestamp - response.data[i].timestamp) / 1000;
               vm.sm[vm.sheetmakers.length].misstime += diff;
-                vm.sm[vm.sheetmakers.length].timediff += diff - tmb.Event_time;
+              vm.sm[vm.sheetmakers.length].timediff += diff - tmb.Event_time;
             }
 
             for (var j = 0; j < vm.sheetmakers.length; j++) {
@@ -111,7 +113,7 @@ define([], function () {
                 vm.sm[j].misstime += diff;
                 vm.sm[j].timediff += diff - tmb.Event_time;
               }
-              
+
               if (v == vm.sheetmakers[j] && tmb.Ev_Group == "Tervezett veszteseg") {
                 vm.sm[j].terv += tmb.Event_time;
                 vm.sm[vm.sheetmakers.length].terv += tmb.Event_time;
@@ -143,7 +145,6 @@ define([], function () {
             }
           }
           vm.loading = false;
-          console.log(vm.sm);
         });
       });
     }
@@ -216,7 +217,7 @@ define([], function () {
               vm.daydata[k].minzbzl += d[j].minaeq;
               vm.daydata[k].minosszes += d[j].minaeq;
             }
-            else {
+            else if (d[j].type[0] == "3") {
               vm.daydata[k].otszazbp += d[j].bpaeq;
               vm.daydata[k].osszesbp += d[j].bpaeq;
               vm.daydata[k].minotszaz += d[j].minaeq;
@@ -227,48 +228,47 @@ define([], function () {
       });
     }
 
+    function exportToCSV() {
+      var content = "";
+      content += "Veszteségek;%;;Napi összes(AEQ)\r\n";
+      content += "Kieso ido;" + $filter('number')(((vm.sm[vm.sm.length - 1].timediff / vm.sm[vm.sm.length - 1].alltime) * 100), 2) + "%;;Mennyiség;500;ZB/ZL;ZW;\r\n";
+      content += "Tervezett veszteség;" + $filter('number')(((vm.sm[vm.sm.length - 1].terv / vm.sm[vm.sm.length - 1].alltime) * 100), 2) + "%;;SM;" + $filter('number')(vm.daydata[0].otszaz, 2) + ";" + $filter('number')(vm.daydata[0].zbzl, 2) + ";" + $filter('number')(vm.daydata[0].osszes, 2) + ";\r\n";
+      content += "Szervezési veszteség;" + $filter('number')(((vm.sm[vm.sm.length - 1].szerv / vm.sm[vm.sm.length - 1].alltime) * 100), 2) + "%;;BP;" + $filter('number')(vm.daydata[0].otszazbp, 2) + ";" + $filter('number')(vm.daydata[0].zbzlbp, 2) + ";" + $filter('number')(vm.daydata[0].osszesbp, 2) + ";\r\n";
+      content += "Muszaki technikai okok;" + $filter('number')(((vm.sm[vm.sm.length - 1].musz / vm.sm[vm.sm.length - 1].alltime) * 100), 2) + "%;;SM;" + $filter('number')(vm.daydata[0].minotszaz, 2) + ";" + $filter('number')(vm.daydata[0].minzbzl, 2) + ";" + $filter('number')(vm.daydata[0].minosszes, 2) + ";\r\n";
+      content += ";\r\n";
+      content += "Veszteségek kategóriák;;\r\n";
+      content += "Tervezett veszteség (kategóriák);Ido(perc);\r\n";
+      for (var a = 0; a < vm.tervezett.length; a++) {
+        if (vm.tervezett[a].time > 0) {
+          content += vm.tervezett[a].name + ";" + vm.tervezett[a].time + ";\r\n";
+        }
+      }
+      content += "Szervezési veszteség (kategóriák);Ido(perc);\r\n";
+      for (var b = 0; b < vm.szervezesi.length; b++) {
+        if (vm.szervezesi[b].time > 0) {
+          content += vm.szervezesi[b].name + ";" + vm.szervezesi[b].time + ";\r\n";
+        }
+      }
+      content += "Muszaki technikai okok (kategóriák);Ido(perc);\r\n";
+      for(var c=0;c<vm.muszaki.length;c++){
+        if(vm.muszaki[c].time>0){
+          content += vm.muszaki[c].name + ";" + vm.muszaki[c].time + ";\r\n";
+        }
+      }
+
+      var hiddenElement = document.createElement('a');
+      hiddenElement.href = 'data:attachment/text;charset=ISO8859-2,' + escape(content);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = 'Napi_összesítés' + vm.date + '.csv';
+      hiddenElement.click();
+    }
+
     activate();
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
       loadPartnumbers();
     }
-
-    /*vm.tervezett = [
-      { name: "101 - üresjárat (nem kell gyártani)", time: 0 },
-      { name: "102 - kísérlet", time: 0 },
-      { name: "103 - oktatás", time: 0 },
-      { name: "104 - takarítás", time: 0 },
-      { name: "105 - spoolcsere", time: 0 },
-      { name: "106 - laminálcsík töltés", time: 0 },
-      { name: "107 - normál keretfeladás , új fésű felrakása", time: 0 },
-      { name: "108 - TMK", time: 0 },
-      { name: "109 - termékváltás (csak a norma szerinti)", time: 0 },
-      { name: "110 - Keretenkénti lap mérése", time: 0 },
-      { name: "111 - Egyéb - kötelező szöveges beviteli mező", time: 0 }
-    ];
-    vm.szervezesi = [
-      { name: "201 - Segédeszköz (keret, fésű, U alak) hiány", time: 0 },
-      { name: "202 - létszámhiány", time: 0 },
-      { name: "203 - Egyéb, nem SM géphiba miatti állás", time: 0 },
-      { name: "204 - alap - vagy segédanyaghiány", time: 0 },
-      { name: "205 - szárító tele van", time: 0 },
-      { name: "206 - Munkaidő veszteseg", time: 0 },
-      { name: "207 - Lapdurrogtatas", time: 0 },
-      { name: "20105 - SpoolCsere - norma fölött", time: 0 },
-      { name: "20107 - Normál keretfeladás, új fésű felrakása - normafölött", time: 0 },
-      { name: "20106 - Lamináltcsík töltés - norma fölött", time: 0 },
-    ];
-    vm.muszaki = [
-      { name: "301 - Maximo van - kötelező számot felvinni", time: 0 },
-      { name: "302 - gépbeállítás - beállító operátor", time: 0 },
-      { name: "303 - (maximo nincs) - vaklárma", time: 0 },
-      { name: "304 - laphossz - beállító operátor", time: 0 },
-      { name: "305 - laphossz - karbantartó", time: 0 },
-      { name: "306 - ragcsík / laminált - beállító operátor", time: 0 },
-      { name: "307 - ragcsík / laminált - karbantartó - maximo", time: 0 },
-      { name: "308 - Lapmérés", time: 0 }
-    ];*/
   }
   Controller.$inject = ['allsumService', '$cookies', '$state', '$rootScope', '$filter'];
   return Controller;
