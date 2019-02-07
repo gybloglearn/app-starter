@@ -32,14 +32,14 @@ define([], function () {
     function get() {
       var req = {
         method: 'GET',
-        url: 'app/components/PHP/Pottinginfosave/info1000/11254878'
+        url: 'app/components/PHP/Pottinginfosave/info/11254878'
       };
       return $http(req);
     }
     function post(data) {
       var req = {
         method: 'POST',
-        url: 'app/components/PHP/Pottinginfosave/info1000/' + data.id,
+        url: 'app/components/PHP/Pottinginfosave/info/' + data.id,
         data: data
       };
       return $http(req);
@@ -47,7 +47,7 @@ define([], function () {
     function put(data) {
       var req = {
         method: 'PUT',
-        url: 'app/components/PHP/Pottinginfosave/info1000/' + data.id,
+        url: 'app/components/PHP/Pottinginfosave/info/' + data.id,
         data: data
       };
       return $http(req);
