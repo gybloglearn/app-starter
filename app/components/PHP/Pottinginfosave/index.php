@@ -1,6 +1,6 @@
 <?php
 //potting
-class info1000{
+class info{
     function get(){
         //$db=new \DB\SQL('pgsql:host=localhost;dbname=ZW1000Potting','postgres','abcd');
         $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
@@ -276,7 +276,7 @@ class impregnalinfo{
     }
 }
 $app=require('../../../../../f3lib/base.php');
-$app->map('/info1000/@id','info1000');
+$app->map('/info/@id','info');
 $app->map('/clorinationinfo/@id','clorinationinfo');
 $app->map('/fluxusinfo/@id','fluxusinfo');
 $app->map('/impregnalinfo/@id','impregnalinfo');
