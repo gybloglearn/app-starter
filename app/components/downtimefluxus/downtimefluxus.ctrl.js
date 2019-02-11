@@ -8,6 +8,7 @@ define([], function () {
     vm.categories = ["Anyaghiány", "Létszámhiány", "Szivattyú", "Szűrő", "Áramláshiba", "Hőmérséklet", "Egyéb"];
     vm.cat = "";
     vm.filterload = filterload;
+    vm.remove=remove;
 
     function load() {
       vm.dbdata = [];
@@ -92,6 +93,12 @@ define([], function () {
           { name: 'Egyéb', data: vm.egyeb, stack: 'flux' },
         ],
       };
+    }
+
+    function remove(id, index){
+      downtimefluxusService.erase(id).then(function (resp) {
+        vm.guidata.splice(index, 1);
+      });
     }
 
     activate();

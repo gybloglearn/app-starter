@@ -33,6 +33,7 @@
                 <th>Állásidő (perc)</th>
                 <th>Kategória</th>
                 <th>Megjegyzés</th>
+                <th ng-show="user.username=='212557160' || user.username=='212434909'||user.username=='502678184' ||user.username=='212682321'">Törlés</th>
               </tr>
             </thead>
             <tbody>
@@ -43,6 +44,11 @@
                 <td>{{item.time}}</td>
                 <td>{{item.category}}</td>
                 <td>{{item.description}}</td>
+                <td ng-show="user.username=='212557160' || user.username=='212434909'||user.username=='502678184' ||user.username=='212682321'">
+                    <button class="btn btn-danger" ng-click="vm.remove(item.id,$index)">
+                      <i class="icon-trash"></i>
+                    </button>
+                  </td>
               </tr>
             </tbody>
           </table>

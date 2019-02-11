@@ -8,6 +8,7 @@ define([], function () {
     vm.categories = ["Anyaghiány Pottingról", "Létszámhiány", "PH beállítás", "Áramláshiba", "Szivárgás", "Hőmérséklet", "Beadagolás hiba", "Sósav tartály levegőre fut", "Segédeszköz hiány", "Egyéb"];
     vm.cat = "";
     vm.filterload = filterload;
+    vm.remove=remove;
 
     function load() {
       vm.dbdata = [];
@@ -100,6 +101,12 @@ define([], function () {
           { name: 'Egyéb', data: vm.egyeb, stack: 'cl' },
         ],
       };
+    }
+
+    function remove(id, index){
+      downtimechlorService.erase(id).then(function (resp) {
+        vm.guidata.splice(index, 1);
+      });
     }
 
     activate();

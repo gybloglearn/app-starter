@@ -8,6 +8,7 @@ define([], function () {
     vm.categories = ["Glicerinsűrűség", "Kádszint", "Segédeszköz hiány", "Szivattyú", "Glicerin hiány", "Anyaghiány", "Létszámhiány", "Áramlási hiba", "Egyéb"];
     vm.cat = "";
     vm.filterload = filterload;
+    vm.remove=remove;
 
     function load() {
       vm.dbdata = [];
@@ -97,6 +98,12 @@ define([], function () {
           { name: 'Egyéb', data: vm.egyeb, stack: 'imp' },
         ],
       };
+    }
+
+    function remove(id, index){
+      downtimeimpregnalService.erase(id).then(function (resp) {
+        vm.guidata.splice(index, 1);
+      });
     }
 
     activate();

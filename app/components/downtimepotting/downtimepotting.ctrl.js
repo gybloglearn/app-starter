@@ -8,6 +8,7 @@ define([], function () {
     vm.mch = "";
     vm.cat = "";
     vm.filterload = filterload;
+    vm.remove=remove;
 
     function load() {
       vm.dbdata = [];
@@ -98,7 +99,6 @@ define([], function () {
         vm.dinamikplchiba.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Dinamik', category: 'PLC hiba', day: vm.cats[i] }), 'time')) * 1 })
         vm.dinamikegyeb.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Dinamik', category: 'Egyéb', day: vm.cats[i] }), 'time')) * 1 })
       }
-      console.log(vm.statikrobot);
 
       vm.chartconfig_statik = {
         chart: { type: 'column' },
@@ -148,6 +148,12 @@ define([], function () {
           { name: 'Egyéb', data: vm.dinamikegyeb, stack: 'Dinamik' },
         ],
       };
+    }
+
+    function remove(id, index){
+      downtimepottingService.erase(id).then(function (resp) {
+        vm.guidata.splice(index, 1);
+      });
     }
 
     activate();
