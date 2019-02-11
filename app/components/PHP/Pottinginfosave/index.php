@@ -67,6 +67,7 @@ class info{
         //$mapper=new DB\SQL\Mapper($db,'info');
         $mapper=new DB\SQL\Mapper($db,'info1000');
         $info=$mapper->find(Array('id=?',$params['id']));
+        $info[0]->id=(string)($info[0]->id);
         echo $info[0]->id;
         $info[0]->erase();
         echo "OK";
