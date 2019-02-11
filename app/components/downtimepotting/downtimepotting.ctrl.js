@@ -151,6 +151,8 @@ define([], function () {
     }
 
     function remove(id, index){
+      console.log(id);
+      console.log(index);
       downtimepottingService.erase(id).then(function (resp) {
         vm.guidata.splice(index, 1);
       });
