@@ -137,36 +137,47 @@
         <table class="table table-condensed">
           <thead>
             <tr>
-              <th colspan="2" class="text-center">Veszteség kategóriák</th>
+              <th colspan="3" class="text-center">Veszteség kategóriák</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <th>Tervezett veszteség (kategóriák)</th>
               <th>Idő (perc)</th>
+              <th>Megjegyzés</th>
             </tr>
             <tr ng-repeat="tv in vm.tervezett track by $index">
               <td ng-show="tv.time>0">{{tv.name}}</td>
               <td ng-show="tv.time>0">{{tv.time/60|number:0}}</td>
+              <td ng-show="tv.time>0"><textarea class="form-control" rows="2"  ng-model="tv.descr">{{tv.descr}}</textarea></td>
             </tr>
             <tr>
               <th>Szervezési veszteség (kategórák)</th>
               <th>Idő (perc)</th>
+              <th>Megjegyzés</th>
             </tr>
             <tr ng-repeat="sv in vm.szervezesi track by $index">
               <td ng-show="sv.time>0">{{sv.name}}</td>
               <td ng-show="sv.time>0">{{sv.time/60|number:0}}</td>
+              <td ng-show="sv.time>0"><textarea class="form-control" rows="2"  ng-model="sv.descr">{{sv.descr}}</textarea></td>
             </tr>
             <tr>
               <th>Műszaki technikai okok (kategóriák)</th>
               <th>Idő (perc)</th>
+              <th>Megjegyzés</th>
             </tr>
             <tr ng-repeat="mto in vm.muszaki track by $index">
               <td ng-show="mto.time>0">{{mto.name}}</td>
               <td ng-show="mto.time>0">{{mto.time/60|number:0}}</td>
+              <td ng-show="mto.time>0"><textarea class="form-control" rows="2" ng-model="mto.descr">{{mto.descr}}</textarea></td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <div class="col-sm-2">
+        <div class="input-group-btn">
+          <a class="btn btn-primary" ng-click="vm.clr()">Megjegyzés törlése</a>
+        </div>
       </div>
     </div>
   </section>
