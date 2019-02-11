@@ -21,7 +21,7 @@ define([], function () {
     function erase(id) {
       var request = {
         method: "DELETE",
-        url: "app/components/php/Pottinginfosave/impregnalinfo/" + id
+        url: "app/components/PHP/Pottinginfosave/impregnalinfo/" + id
       };
       return $http(request);
     }
