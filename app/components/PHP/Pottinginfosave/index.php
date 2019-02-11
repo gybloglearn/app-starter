@@ -67,7 +67,7 @@ class info{
         //$mapper=new DB\SQL\Mapper($db,'info');
         $mapper=new DB\SQL\Mapper($db,'info1000');
         $info=$mapper->find(Array('id=?',$params['id']));
-        echo $info;
+        echo $info[0];
         $info[0]->erase();
         echo "OK";
         @unlink($mapper);
