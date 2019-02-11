@@ -220,7 +220,7 @@ define([], function () {
 
     function saveinfo() {
 
-      vm.createinfodata.id = new Date().getTime();
+      vm.createinfodata.id = (new Date().getTime()).toString();
       vm.createinfodata.sso = $rootScope.user.username;
       vm.createinfodata.operator_name = $rootScope.user.displayname
       vm.createinfodata.start = vm.startinfo;
@@ -235,10 +235,6 @@ define([], function () {
       pottingService.post(vm.createinfodata).then(function (resp) {
         vm.showmessage = true;
         vm.createinfodata = {};
-        $timeout(function () {
-          vm.showmessage = false;
-          vm.showtitle = '';
-        }, 5000);
       });
       //loadinfo();
       vm.mutat = false;
