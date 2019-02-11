@@ -66,7 +66,7 @@ class info{
         $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
         //$mapper=new DB\SQL\Mapper($db,'info');
         $mapper=new DB\SQL\Mapper($db,'info1000');
-        $info=$mapper->find(Array('id=?',$params['id']));
+        $info=$mapper->find(Array('id=?',(string)$params['id']));
         $info[0]->erase();
         echo "OK";
         @unlink($mapper);
@@ -133,7 +133,7 @@ class clorinationinfo{
         //$db = new \DB\SQL('pgsql:host=localhost;dbname=ZW1000Potting','postgres','abcd');
         $db=new \DB\SQL('pgsql:host=localhost;dbname=zwdowntimes','postgres','abc912');
         $mapper=new DB\SQL\Mapper($db,'chlorination1000');
-        $info=$mapper->find(Array('id=?',(string)$params['id']));
+        $info=$mapper->find(Array('id=?',$params['id']));
         $info[0]->erase();
         echo "OK";
         @unlink($mapper);
