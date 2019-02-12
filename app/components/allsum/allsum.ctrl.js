@@ -234,11 +234,23 @@ define([], function () {
 
     function exportToCSV() {
       var content = "";
-      content += "Veszteségek;%;;Napi összes(AEQ)\r\n";
+      /*content += "Veszteségek;%;;Napi összes(AEQ)\r\n";
       content += "Kieso ido;" + $filter('number')(((vm.sm[vm.sm.length - 1].timediff / vm.sm[vm.sm.length - 1].alltime) * 100), 2) + "%;;Mennyiség;500;ZB/ZL;ZW;\r\n";
       content += "Tervezett veszteség;" + $filter('number')(((vm.sm[vm.sm.length - 1].terv / vm.sm[vm.sm.length - 1].alltime) * 100), 2) + "%;;SM;" + $filter('number')(vm.daydata[0].otszaz, 2) + ";" + $filter('number')(vm.daydata[0].zbzl, 2) + ";" + $filter('number')(vm.daydata[0].osszes, 2) + ";\r\n";
       content += "Szervezési veszteség;" + $filter('number')(((vm.sm[vm.sm.length - 1].szerv / vm.sm[vm.sm.length - 1].alltime) * 100), 2) + "%;;BP;" + $filter('number')(vm.daydata[0].otszazbp, 2) + ";" + $filter('number')(vm.daydata[0].zbzlbp, 2) + ";" + $filter('number')(vm.daydata[0].osszesbp, 2) + ";\r\n";
-      content += "Muszaki technikai okok;" + $filter('number')(((vm.sm[vm.sm.length - 1].musz / vm.sm[vm.sm.length - 1].alltime) * 100), 2) + "%;;SM;" + $filter('number')(vm.daydata[0].minotszaz, 2) + ";" + $filter('number')(vm.daydata[0].minzbzl, 2) + ";" + $filter('number')(vm.daydata[0].minosszes, 2) + ";\r\n";
+      content += "Muszaki technikai okok;" + $filter('number')(((vm.sm[vm.sm.length - 1].musz / vm.sm[vm.sm.length - 1].alltime) * 100), 2) + "%;;SM;" + $filter('number')(vm.daydata[0].minotszaz, 2) + ";" + $filter('number')(vm.daydata[0].minzbzl, 2) + ";" + $filter('number')(vm.daydata[0].minosszes, 2) + ";\r\n";*/
+
+      content += "Veszteségek;%;\r\n";
+      content += "Kieso ido;" + $filter('number')(((vm.sm[vm.sm.length - 1].timediff / vm.sm[vm.sm.length - 1].alltime) * 100), 2) + ";\r\n";
+      content += "Tervezett veszteség;" + $filter('number')(((vm.sm[vm.sm.length - 1].terv / vm.sm[vm.sm.length - 1].alltime) * 100), 2) + "%;\r\n";
+      content += "Szervezési veszteség;" + $filter('number')(((vm.sm[vm.sm.length - 1].szerv / vm.sm[vm.sm.length - 1].alltime) * 100), 2) + "%;\r\n";
+      content += "Muszaki technikai okok;" + $filter('number')(((vm.sm[vm.sm.length - 1].musz / vm.sm[vm.sm.length - 1].alltime) * 100), 2) + "%;\r\n";
+      content += ";\r\n";
+      content += "Napi összes(AEQ);\r\n";
+      content += "Mennyiség;500;ZB/ZL;ZW;\r\n";
+      content +=  "SM;" +$filter('number')(vm.daydata[0].otszaz, 2) + ";" + $filter('number')(vm.daydata[0].zbzl, 2) + ";" + $filter('number')(vm.daydata[0].osszes, 2) + ";\r\n";
+      content +=  "BP;" +$filter('number')(vm.daydata[0].otszazbp, 2) + ";" + $filter('number')(vm.daydata[0].zbzlbp, 2) + ";" + $filter('number')(vm.daydata[0].osszesbp, 2) + ";\r\n";
+      content +=  "MIN;" +$filter('number')(vm.daydata[0].minotszaz, 2) + ";" + $filter('number')(vm.daydata[0].minzbzl, 2) + ";" + $filter('number')(vm.daydata[0].minosszes, 2) + ";\r\n";
       content += ";\r\n";
       content += "Veszteségek kategóriák;;\r\n";
       content += "Tervezett veszteség (kategóriák);Ido(perc);Megjegyzés;\r\n";
