@@ -123,7 +123,7 @@
                 <td>MIN</td>
                 <td>{{vm.daydata[0].minotszaz|number:2}}</td>
                 <td>{{vm.daydata[0].minzbzl|number:2}}</td>
-                <td><span class="{{vm.daydata[0].minosszes >= vm.smtarget?'text-ge-green':'text-ge-red'}}">{{vm.daydata[0].minosszes|number:2}}</span></td>
+                <td><span class="{{vm.daydata[0].minosszes >= vm.mintarget?'text-ge-green':'text-ge-red'}}">{{vm.daydata[0].minosszes|number:2}}</span></td>
                 <td><input type="text" ng-model="vm.mintarget"></td>
               </tr>
             </tbody>
