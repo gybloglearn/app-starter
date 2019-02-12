@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-5">
           <table class="table table-condensed">
             <thead>
               <tr>
@@ -90,17 +90,18 @@
             </tbody>
           </table>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-5">
           <table class="table table-condensed">
             <thead>
               <tr>
-                <th colspan="4" class="text-center">Napi összes (AEQ)</th>
+                <th colspan="5" class="text-center">Napi összes (AEQ)</th>
               </tr>
               <tr>
                 <th>Mennyiség</th>
                 <th>500</th>
                 <th>ZB/ZL</th>
                 <th>ZW</th>
+                <th>Terv</th>
               </tr>
             </thead>
             <tbody>
@@ -108,19 +109,22 @@
                 <td>SM</td>
                 <td>{{vm.daydata[0].otszaz|number:2}}</td>
                 <td>{{vm.daydata[0].zbzl|number:2}}</td>
-                <td>{{vm.daydata[0].osszes|number:2}}</td>
+                <td><span class="{{vm.daydata[0].osszes >= vm.smtarget?'text-ge-green':'text-ge-red'}}">{{vm.daydata[0].osszes|number:2}}</span></td>
+                <td><input type="text" ng-model="vm.smtarget"></td>
               </tr>
               <tr>
                 <td>BP</td>
                 <td>{{vm.daydata[0].otszazbp|number:2}}</td>
                 <td>{{vm.daydata[0].zbzlbp|number:2}}</td>
-                <td>{{vm.daydata[0].osszesbp|number:2}}</td>
+                <td><span class="{{vm.daydata[0].osszesbp >= vm.bptarget?'text-ge-green':'text-ge-red'}}">{{vm.daydata[0].osszesbp|number:2}}</span></td>
+                <td><input type="text" ng-model="vm.bptarget"></td>
               </tr>
               <tr>
                 <td>MIN</td>
                 <td>{{vm.daydata[0].minotszaz|number:2}}</td>
                 <td>{{vm.daydata[0].minzbzl|number:2}}</td>
-                <td>{{vm.daydata[0].minosszes|number:2}}</td>
+                <td><span class="{{vm.daydata[0].minosszes >= vm.smtarget?'text-ge-green':'text-ge-red'}}">{{vm.daydata[0].minosszes|number:2}}</span></td>
+                <td><input type="text" ng-model="vm.mintarget"></td>
               </tr>
             </tbody>
           </table>
@@ -133,7 +137,7 @@
       </div>
     </div>
     <div class="module-footer">
-      <div class="col-sm-8">
+      <div class="col-sm-10">
         <table class="table table-condensed">
           <thead>
             <tr>
@@ -149,7 +153,7 @@
             <tr ng-repeat="tv in vm.tervezett track by $index">
               <td ng-show="tv.time>0">{{tv.name}}</td>
               <td ng-show="tv.time>0">{{tv.time/60|number:0}}</td>
-              <td ng-show="tv.time>0"><textarea class="form-control" rows="2"  ng-model="tv.descr">{{tv.descr}}</textarea></td>
+              <td ng-show="tv.time>0"><textarea class="form-control" rows="1"  ng-model="tv.descr">{{tv.descr}}</textarea></td>
             </tr>
             <tr>
               <th>Szervezési veszteség (kategórák)</th>
@@ -159,7 +163,7 @@
             <tr ng-repeat="sv in vm.szervezesi track by $index">
               <td ng-show="sv.time>0">{{sv.name}}</td>
               <td ng-show="sv.time>0">{{sv.time/60|number:0}}</td>
-              <td ng-show="sv.time>0"><textarea class="form-control" rows="2"  ng-model="sv.descr">{{sv.descr}}</textarea></td>
+              <td ng-show="sv.time>0"><textarea class="form-control" rows="1"  ng-model="sv.descr">{{sv.descr}}</textarea></td>
             </tr>
             <tr>
               <th>Műszaki technikai okok (kategóriák)</th>
@@ -169,7 +173,7 @@
             <tr ng-repeat="mto in vm.muszaki track by $index">
               <td ng-show="mto.time>0">{{mto.name}}</td>
               <td ng-show="mto.time>0">{{mto.time/60|number:0}}</td>
-              <td ng-show="mto.time>0"><textarea class="form-control" rows="2" ng-model="mto.descr">{{mto.descr}}</textarea></td>
+              <td ng-show="mto.time>0"><textarea class="form-control" rows="1" ng-model="mto.descr">{{mto.descr}}</textarea></td>
             </tr>
           </tbody>
         </table>

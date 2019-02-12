@@ -10,6 +10,9 @@ define([], function () {
     vm.create_allday_data = create_allday_data;
     vm.exportToCSV = exportToCSV;
     vm.clr = clr;
+    vm.smtarget = 250;
+    vm.bptarget = 250;
+    vm.mintarget = 250;
     vm.loading = false;
 
     function loadPartnumbers() {
