@@ -210,7 +210,7 @@ define([], function () {
 
       vm.createinfodata.id = new Date().getTime();
       vm.createinfodata.sso = $rootScope.user.username;
-      vm.createinfodata.operator_name = $rootScope.user.displayname
+      vm.createinfodata.operator_name = $rootScope.user.displayname;
       vm.createinfodata.start = vm.startinfo;
       vm.createinfodata.end = vm.endinfo;
       vm.createinfodata.time = vm.timeinfo = (new Date(vm.endinfo).getTime() - new Date(vm.startinfo).getTime()) / 60000;
@@ -236,7 +236,7 @@ define([], function () {
 
       vm.createinfodata.id = new Date().getTime();
       vm.createinfodata.sso = $rootScope.user.username;
-      vm.createinfodata.operator_name = $rootScope.user.displayname
+      vm.createinfodata.operator_name = $rootScope.user.displayname;
       vm.createinfodata.start = vm.startinfo;
       vm.createinfodata.end = vm.endinfo;
       vm.createinfodata.time = vm.timeinfo = (new Date(vm.endinfo).getTime() - new Date(vm.startinfo).getTime()) / 60000;
@@ -263,7 +263,7 @@ define([], function () {
 
       vm.createinfodata.id = new Date().getTime();
       vm.createinfodata.sso = $rootScope.user.username;
-      vm.createinfodata.operator_name = $rootScope.user.displayname
+      vm.createinfodata.operator_name = $rootScope.user.displayname;
       vm.createinfodata.start = vm.startinfo;
       vm.createinfodata.end = vm.endinfo;
       vm.createinfodata.time = vm.timeinfo = (new Date(vm.endinfo).getTime() - new Date(vm.startinfo).getTime()) / 60000;
