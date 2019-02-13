@@ -41,7 +41,7 @@ define([], function () {
     ];
     vm.beallit = beallit;
     vm.saveinfo = saveinfo;
-    vm.goodsave=goodsave;
+    vm.goodsave = goodsave;
     vm.mutat = false;
     vm.loading = false;
 
@@ -75,7 +75,7 @@ define([], function () {
       vm.pottingdata = [];
       vm.centridata = [];
 
-      var sdate = $filter('date')(new Date(vm.date).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
+      var sdate = $filter('date')(new Date(vm.date).getTime() - (7 * 24 * 3600 * 1000), 'yyyy-MM-dd');
       var edate = $filter('date')(new Date(vm.date).getTime() + (24 * 3600 * 1000), 'yyyy-MM-dd');
 
       pottingService.getpotting(sdate, edate).then(function (response) {
@@ -203,7 +203,7 @@ define([], function () {
     }
 
     function createinfo(categ, name) {
-      if (name == "Potting" || name=="Centrifuga") {
+      if (name == "Potting" || name == "Centrifuga") {
         vm.createinfodata = {};
         vm.actplace = "";
         vm.cat = "";
@@ -230,7 +230,7 @@ define([], function () {
       vm.createinfodata.category = vm.cat;
       vm.createinfodata.subcategory = vm.scat;
       vm.createinfodata.description = vm.descriptioninfo;
-      
+
       console.log(vm.createinfodata);
       pottingService.post(vm.createinfodata).then(function (resp) {
         vm.showmessage = true;
@@ -242,7 +242,7 @@ define([], function () {
 
     function goodsave() {
       alert("Mentés sikeres!");
-  }
+    }
 
     activate();
 
