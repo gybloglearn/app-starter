@@ -39,23 +39,35 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th>Gép</th>
-                <th>Kieső idő</th>
-                <th>Tervezett veszteség</th>
-                <th>Szervezési veszteség</th>
-                <th>Műszaki technikai okok</th>
+                <th style="font-size:1.5em">Gép</th>
+                <th style="font-size:1.5em">Kieső idő</th>
+                <th style="font-size:1.5em">Tervezett veszteség</th>
+                <th style="font-size:1.5em">Szervezési veszteség</th>
+                <th style="font-size:1.5em">Műszaki technikai okok</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="s in vm.sm">
-                <td ng-show="s.id!='SMS'">{{s.id}}</td>
-                <td ng-show="s.id!='SMS'">{{(s.timediff/s.alltime)*100|number:2}}%</td>
-                <td ng-show="s.id!='SMS'">{{(s.terv/s.alltime)*100|number:2}} %</td>
-                <td ng-show="s.id!='SMS'">{{(s.szerv/s.alltime)*100|number:2}} %</td>
-                <td ng-show="s.id!='SMS'">{{(s.musz/s.alltime)*100|number:2}} %</td>
+                <td ng-show="s.id!='SMS'" style="font-size:1.5em">{{s.id}}</td>
+                <td ng-show="s.id!='SMS'" style="font-size:1.5em">{{(s.timediff/s.alltime)*100|number:2}}%</td>
+                <td ng-show="s.id!='SMS'" style="font-size:1.5em">{{(s.terv/s.alltime)*100|number:2}} %</td>
+                <td ng-show="s.id!='SMS'" style="font-size:1.5em">{{(s.szerv/s.alltime)*100|number:2}} %</td>
+                <td ng-show="s.id!='SMS'" style="font-size:1.5em">{{(s.musz/s.alltime)*100|number:2}} %</td>
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="input-group-btn">
+            <a class="btn btn-info" ng-click="vm.exportToCSV()">Adatok mentése</a>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="input-group-btn">
+            <a class="btn btn-primary" ng-click="vm.clr()">Megjegyzés törlése</a>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -63,28 +75,28 @@
           <table class="table table-condensed">
             <thead>
               <tr>
-                <th>Veszteségek</th>
-                <th>%</th>
+                <th style="font-size:1.5em">Veszteségek</th>
+                <th style="font-size:1.5em">%</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="s in vm.sm">
-                <th ng-show="s.id=='SMS'">Kieső idő</th>
-                <td ng-show="s.id=='SMS'">{{(s.timediff/s.alltime)*100|number:2}}%</td>
+                <th ng-show="s.id=='SMS'" style="font-size:1.5em">Kieső idő</th>
+                <td ng-show="s.id=='SMS'" style="font-size:1.5em">{{(s.timediff/s.alltime)*100|number:2}}%</td>
               </tr>
               <tr ng-repeat="s in vm.sm">
-                <th ng-show="s.id=='SMS'">Tervezett veszteség</th>
-                <td ng-show="s.id=='SMS'"><span class="{{s.terv/s.alltime*100 <= 13?'text-ge-green':'text-ge-red'}}">{{(s.terv/s.alltime)*100|number:2}}
+                <th ng-show="s.id=='SMS'" style="font-size:1.5em">Tervezett veszteség</th>
+                <td ng-show="s.id=='SMS'" style="font-size:1.5em"><span class="{{s.terv/s.alltime*100 <= 13?'text-ge-green':'text-ge-red'}}">{{(s.terv/s.alltime)*100|number:2}}
                     %</span></td>
               </tr>
               <tr ng-repeat="s in vm.sm">
-                <th ng-show="s.id=='SMS'">Szervezési veszteség</th>
-                <td ng-show="s.id=='SMS'"><span class="{{s.szerv/s.alltime*100 <= 3?'text-ge-green':'text-ge-red'}}">{{(s.szerv/s.alltime)*100|number:2}}
+                <th ng-show="s.id=='SMS'" style="font-size:1.5em">Szervezési veszteség</th>
+                <td ng-show="s.id=='SMS'" style="font-size:1.5em"><span class="{{s.szerv/s.alltime*100 <= 3?'text-ge-green':'text-ge-red'}}">{{(s.szerv/s.alltime)*100|number:2}}
                     %</span></td>
               </tr>
               <tr ng-repeat="s in vm.sm">
-                <th ng-show="s.id=='SMS'">Műszaki technikai okok</th>
-                <td ng-show="s.id=='SMS'"><span class="{{s.musz/s.alltime*100 <= 6?'text-ge-green':'text-ge-red'}}">{{(s.musz/s.alltime)*100|number:2}}
+                <th ng-show="s.id=='SMS'" style="font-size:1.5em">Műszaki technikai okok</th>
+                <td ng-show="s.id=='SMS'" style="font-size:1.5em"><span class="{{s.musz/s.alltime*100 <= 6?'text-ge-green':'text-ge-red'}}">{{(s.musz/s.alltime)*100|number:2}}
                     %</span></td>
               </tr>
             </tbody>
@@ -94,94 +106,84 @@
           <table class="table table-condensed">
             <thead>
               <tr>
-                <th colspan="5" class="text-center">Napi összes (AEQ)</th>
+                <th colspan="5" class="text-center" style="font-size:1.5em">Napi összes (AEQ)</th>
               </tr>
               <tr>
-                <th>Mennyiség</th>
-                <th>500</th>
-                <th>ZB/ZL</th>
-                <th>ZW</th>
-                <th>Terv</th>
+                <th style="font-size:1.5em">Mennyiség</th>
+                <th style="font-size:1.5em">500</th>
+                <th style="font-size:1.5em">ZB/ZL</th>
+                <th style="font-size:1.5em">ZW</th>
+                <th style="font-size:1.5em">Terv</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>SM</td>
-                <td>{{vm.daydata[0].otszaz|number:2}}</td>
-                <td>{{vm.daydata[0].zbzl|number:2}}</td>
-                <td><span class="{{vm.daydata[0].osszes >= vm.smtarget?'text-ge-green':'text-ge-red'}}">{{vm.daydata[0].osszes|number:2}}</span></td>
-                <td><input type="text" ng-model="vm.smtarget"></td>
+                <td style="font-size:1.5em">SM</td>
+                <td style="font-size:1.5em">{{vm.daydata[0].otszaz|number:2}}</td>
+                <td style="font-size:1.5em">{{vm.daydata[0].zbzl|number:2}}</td>
+                <td style="font-size:1.5em"><span class="{{vm.daydata[0].osszes >= vm.smtarget?'text-ge-green':'text-ge-red'}}">{{vm.daydata[0].osszes|number:2}}</span></td>
+                <td><input type="text" ng-model="vm.smtarget"  style="font-size:1.5em"></td>
               </tr>
               <tr>
-                <td>BP</td>
-                <td>{{vm.daydata[0].otszazbp|number:2}}</td>
-                <td>{{vm.daydata[0].zbzlbp|number:2}}</td>
-                <td><span class="{{vm.daydata[0].osszesbp >= vm.bptarget?'text-ge-green':'text-ge-red'}}">{{vm.daydata[0].osszesbp|number:2}}</span></td>
-                <td><input type="text" ng-model="vm.bptarget"></td>
+                <td style="font-size:1.5em">BP</td>
+                <td style="font-size:1.5em">{{vm.daydata[0].otszazbp|number:2}}</td>
+                <td style="font-size:1.5em">{{vm.daydata[0].zbzlbp|number:2}}</td>
+                <td style="font-size:1.5em"><span class="{{vm.daydata[0].osszesbp >= vm.bptarget?'text-ge-green':'text-ge-red'}}">{{vm.daydata[0].osszesbp|number:2}}</span></td>
+                <td><input type="text" ng-model="vm.bptarget" style="font-size:1.5em"></td>
               </tr>
               <tr>
-                <td>MIN</td>
-                <td>{{vm.daydata[0].minotszaz|number:2}}</td>
-                <td>{{vm.daydata[0].minzbzl|number:2}}</td>
-                <td><span class="{{vm.daydata[0].minosszes >= vm.mintarget?'text-ge-green':'text-ge-red'}}">{{vm.daydata[0].minosszes|number:2}}</span></td>
-                <td><input type="text" ng-model="vm.mintarget"></td>
+                <td style="font-size:1.5em">MIN</td>
+                <td style="font-size:1.5em">{{vm.daydata[0].minotszaz|number:2}}</td>
+                <td style="font-size:1.5em">{{vm.daydata[0].minzbzl|number:2}}</td>
+                <td style="font-size:1.5em"><span class="{{vm.daydata[0].minosszes >= vm.mintarget?'text-ge-green':'text-ge-red'}}">{{vm.daydata[0].minosszes|number:2}}</span></td>
+                <td><input type="text" ng-model="vm.mintarget"  style="font-size:1.5em"></td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="col-sm-2">
-          <div class="input-group-btn">
-            <a class="btn btn-info" ng-click="vm.exportToCSV()">Adatok mentése</a>
-          </div>
-        </div>
-      </div>
+      </div>  
     </div>
     <div class="module-footer">
       <div class="col-sm-10">
         <table class="table table-condensed">
           <thead>
             <tr>
-              <th colspan="3" class="text-center">Veszteség kategóriák</th>
+              <th colspan="3" class="text-center" style="font-size:1.5em">Veszteség kategóriák</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th>Tervezett veszteség (kategóriák)</th>
-              <th>Idő (perc)</th>
-              <th>Megjegyzés</th>
+              <th style="font-size:1.5em">Tervezett veszteség (kategóriák)</th>
+              <th style="font-size:1.5em">Idő (perc)</th>
+              <th style="font-size:1.5em">Megjegyzés</th>
             </tr>
             <tr ng-repeat="tv in vm.tervezett track by $index">
-              <td ng-show="tv.time>0">{{tv.name}}</td>
-              <td ng-show="tv.time>0">{{tv.time/60|number:0}}</td>
-              <td ng-show="tv.time>0"><textarea class="form-control" rows="1"  ng-model="tv.descr">{{tv.descr}}</textarea></td>
+              <td ng-show="tv.time>0" style="font-size:1.5em">{{tv.name}}</td>
+              <td ng-show="tv.time>0" style="font-size:1.5em">{{tv.time/60|number:0}}</td>
+              <td ng-show="tv.time>0"><textarea class="form-control" rows="1"  ng-model="tv.descr"  style="font-size:1.5em">{{tv.descr}}</textarea></td>
             </tr>
             <tr>
-              <th>Szervezési veszteség (kategórák)</th>
-              <th>Idő (perc)</th>
-              <th>Megjegyzés</th>
+              <th style="font-size:1.5em">Szervezési veszteség (kategórák)</th>
+              <th style="font-size:1.5em">Idő (perc)</th>
+              <th style="font-size:1.5em">Megjegyzés</th>
             </tr>
             <tr ng-repeat="sv in vm.szervezesi track by $index">
-              <td ng-show="sv.time>0">{{sv.name}}</td>
-              <td ng-show="sv.time>0">{{sv.time/60|number:0}}</td>
-              <td ng-show="sv.time>0"><textarea class="form-control" rows="1"  ng-model="sv.descr">{{sv.descr}}</textarea></td>
+              <td ng-show="sv.time>0" style="font-size:1.5em">{{sv.name}}</td>
+              <td ng-show="sv.time>0" style="font-size:1.5em">{{sv.time/60|number:0}}</td>
+              <td ng-show="sv.time>0"><textarea class="form-control" rows="1"  ng-model="sv.descr"  style="font-size:1.5em">{{sv.descr}}</textarea></td>
             </tr>
             <tr>
-              <th>Műszaki technikai okok (kategóriák)</th>
-              <th>Idő (perc)</th>
-              <th>Megjegyzés</th>
+              <th style="font-size:1.5em">Műszaki technikai okok (kategóriák)</th>
+              <th style="font-size:1.5em">Idő (perc)</th>
+              <th style="font-size:1.5em">Megjegyzés</th>
             </tr>
             <tr ng-repeat="mto in vm.muszaki track by $index">
-              <td ng-show="mto.time>0">{{mto.name}}</td>
-              <td ng-show="mto.time>0">{{mto.time/60|number:0}}</td>
-              <td ng-show="mto.time>0"><textarea class="form-control" rows="1" ng-model="mto.descr">{{mto.descr}}</textarea></td>
+              <td ng-show="mto.time>0" style="font-size:1.5em">{{mto.name}}</td>
+              <td ng-show="mto.time>0" style="font-size:1.5em">{{mto.time/60|number:0}}</td>
+              <td ng-show="mto.time>0"><textarea class="form-control" rows="1" ng-model="mto.descr" style="font-size:1.5em">{{mto.descr}}</textarea></td>
             </tr>
           </tbody>
         </table>
-      </div>
-      <div class="col-sm-2">
-        <div class="input-group-btn">
-          <a class="btn btn-primary" ng-click="vm.clr()">Megjegyzés törlése</a>
-        </div>
       </div>
     </div>
   </section>
