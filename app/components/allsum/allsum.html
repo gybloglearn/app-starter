@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-11">
           <table class="table table-striped">
             <thead>
               <tr>
@@ -122,7 +122,7 @@
                 <td style="font-size:1.5em">{{vm.daydata[0].otszaz|number:2}}</td>
                 <td style="font-size:1.5em">{{vm.daydata[0].zbzl|number:2}}</td>
                 <td style="font-size:1.5em"><span class="{{vm.daydata[0].osszes >= vm.smtarget?'text-ge-green':'text-ge-red'}}">{{vm.daydata[0].osszes|number:2}}</span></td>
-                <td><input type="text" ng-model="vm.smtarget"  style="font-size:1.5em"></td>
+                <td><input type="text" ng-model="vm.smtarget" style="font-size:1.5em"></td>
               </tr>
               <tr>
                 <td style="font-size:1.5em">BP</td>
@@ -136,54 +136,56 @@
                 <td style="font-size:1.5em">{{vm.daydata[0].minotszaz|number:2}}</td>
                 <td style="font-size:1.5em">{{vm.daydata[0].minzbzl|number:2}}</td>
                 <td style="font-size:1.5em"><span class="{{vm.daydata[0].minosszes >= vm.mintarget?'text-ge-green':'text-ge-red'}}">{{vm.daydata[0].minosszes|number:2}}</span></td>
-                <td><input type="text" ng-model="vm.mintarget"  style="font-size:1.5em"></td>
+                <td><input type="text" ng-model="vm.mintarget" style="font-size:1.5em"></td>
               </tr>
             </tbody>
           </table>
         </div>
-      </div>  
+      </div>
     </div>
     <div class="module-footer">
-      <div class="col-sm-10">
-        <table class="table table-condensed">
-          <thead>
-            <tr>
-              <th colspan="3" class="text-center" style="font-size:1.5em">Veszteség kategóriák</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th style="font-size:1.5em">Tervezett veszteség (kategóriák)</th>
-              <th style="font-size:1.5em">Idő (perc)</th>
-              <th style="font-size:1.5em">Megjegyzés</th>
-            </tr>
-            <tr ng-repeat="tv in vm.tervezett track by $index">
-              <td ng-show="tv.time>0" style="font-size:1.5em">{{tv.name}}</td>
-              <td ng-show="tv.time>0" style="font-size:1.5em">{{tv.time/60|number:0}}</td>
-              <td ng-show="tv.time>0"><textarea class="form-control" rows="1"  ng-model="tv.descr"  style="font-size:1.5em">{{tv.descr}}</textarea></td>
-            </tr>
-            <tr>
-              <th style="font-size:1.5em">Szervezési veszteség (kategórák)</th>
-              <th style="font-size:1.5em">Idő (perc)</th>
-              <th style="font-size:1.5em">Megjegyzés</th>
-            </tr>
-            <tr ng-repeat="sv in vm.szervezesi track by $index">
-              <td ng-show="sv.time>0" style="font-size:1.5em">{{sv.name}}</td>
-              <td ng-show="sv.time>0" style="font-size:1.5em">{{sv.time/60|number:0}}</td>
-              <td ng-show="sv.time>0"><textarea class="form-control" rows="1"  ng-model="sv.descr"  style="font-size:1.5em">{{sv.descr}}</textarea></td>
-            </tr>
-            <tr>
-              <th style="font-size:1.5em">Műszaki technikai okok (kategóriák)</th>
-              <th style="font-size:1.5em">Idő (perc)</th>
-              <th style="font-size:1.5em">Megjegyzés</th>
-            </tr>
-            <tr ng-repeat="mto in vm.muszaki track by $index">
-              <td ng-show="mto.time>0" style="font-size:1.5em">{{mto.name}}</td>
-              <td ng-show="mto.time>0" style="font-size:1.5em">{{mto.time/60|number:0}}</td>
-              <td ng-show="mto.time>0"><textarea class="form-control" rows="1" ng-model="mto.descr" style="font-size:1.5em">{{mto.descr}}</textarea></td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="row">
+        <div class="col-sm-11">
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th colspan="3" class="text-center" style="font-size:1.5em">Veszteség kategóriák</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th style="font-size:1.5em">Tervezett veszteség (kategóriák)</th>
+                <th style="font-size:1.5em">Idő (perc)</th>
+                <th style="font-size:1.5em">Megjegyzés</th>
+              </tr>
+              <tr ng-repeat="tv in vm.tervezett track by $index">
+                <td ng-show="tv.time>0" style="font-size:1.5em">{{tv.name}}</td>
+                <td ng-show="tv.time>0" style="font-size:1.5em">{{tv.time/60|number:0}}</td>
+                <td ng-show="tv.time>0"><textarea class="form-control" rows="1" ng-model="tv.descr" style="font-size:1.5em">{{tv.descr}}</textarea></td>
+              </tr>
+              <tr>
+                <th style="font-size:1.5em">Szervezési veszteség (kategórák)</th>
+                <th style="font-size:1.5em">Idő (perc)</th>
+                <th style="font-size:1.5em">Megjegyzés</th>
+              </tr>
+              <tr ng-repeat="sv in vm.szervezesi track by $index">
+                <td ng-show="sv.time>0" style="font-size:1.5em">{{sv.name}}</td>
+                <td ng-show="sv.time>0" style="font-size:1.5em">{{sv.time/60|number:0}}</td>
+                <td ng-show="sv.time>0"><textarea class="form-control" rows="1" ng-model="sv.descr" style="font-size:1.5em">{{sv.descr}}</textarea></td>
+              </tr>
+              <tr>
+                <th style="font-size:1.5em">Műszaki technikai okok (kategóriák)</th>
+                <th style="font-size:1.5em">Idő (perc)</th>
+                <th style="font-size:1.5em">Megjegyzés</th>
+              </tr>
+              <tr ng-repeat="mto in vm.muszaki track by $index">
+                <td ng-show="mto.time>0" style="font-size:1.5em">{{mto.name}}</td>
+                <td ng-show="mto.time>0" style="font-size:1.5em">{{mto.time/60|number:0}}</td>
+                <td ng-show="mto.time>0"><textarea class="form-control" rows="1" ng-model="mto.descr" style="font-size:1.5em">{{mto.descr}}</textarea></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </section>
