@@ -84,7 +84,7 @@
               </tr>
               <tr ng-repeat="s in vm.sm">
                 <th ng-show="s.id=='SMS'">Műszaki technikai okok</th>
-                <td ng-show="s.id=='SMS'"><span class="{{s.musz/s.alltime*100 <= 13?'text-ge-green':'text-ge-red'}}">{{(s.musz/s.alltime)*100|number:2}}
+                <td ng-show="s.id=='SMS'"><span class="{{s.musz/s.alltime*100 <= 6?'text-ge-green':'text-ge-red'}}">{{(s.musz/s.alltime)*100|number:2}}
                     %</span></td>
               </tr>
             </tbody>
