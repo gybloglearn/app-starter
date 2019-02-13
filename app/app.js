@@ -1,5 +1,5 @@
 require([
-  './app-starter/app/components/module'
+  './x2d/app/components/module'
 ], function(){
   'use strict';
   angular.bootstrap(document, ['app']);

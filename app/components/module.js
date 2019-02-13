@@ -4,7 +4,10 @@ define([
   './start/start.ctrl',
   './login/login.ctrl',
   './services/login.service',
-  './services/data.service'
+  './services/data.service',
+  './directives/datepicker',
+  './directives/countdown',
+  './directives/mychart'
   /* files */
 ], function(
   configFunction,
@@ -12,7 +15,9 @@ define([
   startController,
   loginController,
   loginService,
-  dataService
+  dataService,
+  datepicker,
+  mychart,
 /* names */) {
 
   // Link all components to the module !!!
@@ -24,5 +29,7 @@ define([
   app.service('Login', loginService);
   app.controller('StartController', startController);
   app.controller('LoginController', loginController);
+  app.directive('datepicker',datepicker);
+  app.directive('myChart',mychart);
   /* controllers */
 });

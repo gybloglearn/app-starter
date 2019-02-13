@@ -1,0 +1,16 @@
+[
+    {
+        "name": "CP5",
+        "washing": 20,
+        "bar1": 60,
+        "bar2": 20,
+        "sum": 100
+    },
+    {
+        "name": "Flow",
+        "washing": 30,
+        "bar1": 80,
+        "bar2": 30,
+        "sum": 140
+    }
+]
