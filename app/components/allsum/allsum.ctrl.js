@@ -79,7 +79,7 @@ define([], function () {
         { name: "201 - Segédeszköz (keret, fésű, U alak) hiány", time: 0, descr: "" },
         { name: "202 - Létszámhiány", time: 0, descr: "" },
         { name: "203 - Egyéb, nem SM géphiba miatti állás ", time: 0, descr: "" },
-        { name: "204 - alap - vagy segédanyaghiány", time: 0, descr: "" },
+        { name: "204 - alap- vagy segédanyaghiány", time: 0, descr: "" },
         { name: "205 - Szárító tele van", time: 0, descr: "" },
         { name: "206 - Munkaidő veszteseg", time: 0, descr: "" },
         { name: "207 - Lapdurrogtatas", time: 0, descr: "" },
@@ -94,7 +94,7 @@ define([], function () {
         { name: "303 - (maximo nincs) - vaklárma", time: 0, descr: "" },
         { name: "304 - laphossz - beállító operátor", time: 0, descr: "" },
         { name: "305 - laphossz karbantartó kötelező maximo", time: 0, descr: "" },
-        { name: "306 - ragcsík / laminált - beállító operátor", time: 0, descr: "" },
+        { name: "306 - ragcsík/laminált - beállító operátor", time: 0, descr: "" },
         { name: "307 - ragcsík / laminált - karbantartó - maximo", time: 0, descr: "" },
         { name: "308 - Lapmérés", time: 0 }
       ];
