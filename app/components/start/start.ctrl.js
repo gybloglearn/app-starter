@@ -1,14 +1,24 @@
 define([], function () {
   'use strict';
-  function Controller($cookies, $state, $rootScope) {
+  function Controller(dataService, $cookies, $state, $rootScope, $filter) {
     var vm = this;
+
+    function loadpds() {
+      vm.todate="";
+      vm.allnumber=0;
+      dataService.getpds().then(function (response) {
+        var d=response.data;
+        vm.todate=$filter('date')(new Date(d[0].save).getTime()+(6*3600*1000), 'yyyy-MM-dd HH:mm');
+        vm.allnumber=d.length;
+      });
+    }
 
     activate();
 
     function activate() {
-      //(!$cookies.getObject('user')?$state.go('login'):$rootScope.user=$cookies.getObject('user'));
+      loadpds();
     }
   }
-  Controller.$inject = ['$cookies', '$state', '$rootScope'];
+  Controller.$inject = ['Data', '$cookies', '$state', '$rootScope', '$filter'];
   return Controller;
 });

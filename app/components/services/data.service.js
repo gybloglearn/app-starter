@@ -3,17 +3,17 @@ define([], function () {
 
   function Service($http) {
     var service = {
-      get: get
+      getpds: getpds
     };
 
     return service;
 
     ///////////
 
-    function get() {
+    function getpds() {
       var req = {
         method: 'GET',
-        url: '//url//'
+        url: 'app/components/PHP/File/forchlor.json'
       };
       return $http(req);
     }
