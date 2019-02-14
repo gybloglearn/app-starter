@@ -6,7 +6,6 @@ define([
   './services/login.service',
   './services/data.service',
   './directives/datepicker',
-  './directives/countdown',
   './directives/mychart'
   /* files */
 ], function(
