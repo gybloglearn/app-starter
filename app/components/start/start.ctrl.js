@@ -50,7 +50,6 @@ define([], function () {
 
     function activate() {
       (!$cookies.getObject('user') ? $state.go('login') : $rootScope.user = $cookies.getObject('user'));
-      create_dates();
       var num = new Date().getHours() * 60 + new Date().getMinutes();
       if (num < 350) {
         vm.snum=-8;
@@ -66,6 +65,7 @@ define([], function () {
         vm.enddate = $filter('date')(new Date().getTime() - 24 * 1000 * 60 * 60, 'yyyy-MM-dd');
         vm.edate = $filter('date')(new Date().getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
       }
+      create_dates();
     }
   }
   Controller.$inject = ['Data', '$cookies', '$state', '$rootScope', '$filter'];
