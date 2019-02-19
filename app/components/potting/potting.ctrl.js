@@ -14,6 +14,8 @@ define([], function () {
       { id: "Statik", cat: "Létszámhiány" },
       { id: "Statik", cat: "Mold hiány" },
       { id: "Statik", cat: "Kerethiány" },
+      { id: "Statik", cat: "Marriage" },
+      { id: "Statik", cat: "Brick vágó" },
       { id: "Statik", cat: "Egyéb" },
       { id: "Dinamik", cat: "Frekvencia váltó hiba" },
       { id: "Dinamik", cat: "Robot" },

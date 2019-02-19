@@ -2,7 +2,7 @@ define([], function () {
   'use strict';
   function Controller(downtimepottingService,$cookies, $state, $rootScope,$filter) {
     var vm = this;
-    vm.startdate = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
+    vm.startdate = $filter('date')(new Date().getTime() - (3 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
     vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
     vm.mch = "";
@@ -52,6 +52,8 @@ define([], function () {
       vm.statikletszamhiany = [];
       vm.statikmoldhiany = [];
       vm.statikkerethiany=[];
+      vm.statikbrickvago=[];
+      vm.statikmarriage=[];
       vm.statikegyeb = [];
       //dinamik
       vm.dinamikfrekvenciavaltohiba=[];
@@ -84,6 +86,8 @@ define([], function () {
         vm.statikletszamhiany.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Statik', category: 'Létszámhiány', day: vm.cats[i] }), 'time')) * 1 });
         vm.statikmoldhiany.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Statik', category: 'Mold hiány', day: vm.cats[i] }), 'time')) * 1 });
         vm.statikkerethiany.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Statik', category: 'Kerethiány', day: vm.cats[i] }), 'time')) * 1 });
+        vm.statikbrickvago.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Statik', category: 'Brick vágó', day: vm.cats[i] }), 'time')) * 1 });
+        vm.statikmarriage.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Statik', category: 'Marriage', day: vm.cats[i] }), 'time')) * 1 });
         vm.statikegyeb.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Statik', category: 'Egyéb', day: vm.cats[i] }), 'time')) * 1 });
         //dinamik
         vm.dinamikfrekvenciavaltohiba.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Dinamik', category: 'Frekvencia váltó hiba', day: vm.cats[i] }), 'time')) * 1 })
@@ -119,6 +123,8 @@ define([], function () {
           { name: 'Létszámhiány', data: vm.statikletszamhiany, stack: 'Statik' },
           { name: 'Mold hiány', data: vm.statikmoldhiany, stack: 'Statik' },
           { name: 'Kerethiány', data: vm.statikkerethiany, stack: 'Statik' },
+          { name: 'Brick vágó', data: vm.statikbrickvago, stack: 'Statik' },
+          { name: 'Marriage', data: vm.statikmarriage, stack: 'Statik' },
           { name: 'Egyéb', data: vm.statikegyeb, stack: 'Statik' },
         ],
       };
@@ -172,6 +178,8 @@ define([], function () {
       { id: "Statik", cat: "Létszámhiány" },
       { id: "Statik", cat: "Mold hiány" },
       { id: "Statik", cat: "Kerethiány" },
+      { id: "Statik", cat: "Marriage" },
+      { id: "Statik", cat: "Brick vágó" },
       { id: "Statik", cat: "Egyéb" },
       { id: "Dinamik", cat: "Frekvencia váltó hiba" },
       { id: "Dinamik", cat: "Robot" },
