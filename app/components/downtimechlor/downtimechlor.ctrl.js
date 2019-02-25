@@ -5,7 +5,7 @@ define([], function () {
     vm.startdate = $filter('date')(new Date().getTime() - (6 * 24 * 3600 * 1000), 'yyyy-MM-dd');
     vm.enddate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
     vm.edate = $filter('date')(new Date().getTime(), 'yyyy-MM-dd');
-    vm.categories = ["Anyaghiány Pottingról", "Létszámhiány", "PH beállítás", "Áramláshiba", "Szivárgás", "Hőmérséklet", "Beadagolás hiba", "Sósav tartály levegőre fut", "Segédeszköz hiány", "Egyéb"];
+    vm.categories = ["Anyaghiány Pottingról", "Létszámhiány", "PH beállítás", "Áramláshiba", "Szivárgás", "Hőmérséklet", "Beadagolás hiba", "Sósav tartály levegőre fut", "Segédeszköz hiány","Szivattyú", "Egyéb"];
     vm.cat = "";
     vm.filterload = filterload;
     vm.remove=remove;
@@ -54,6 +54,7 @@ define([], function () {
       vm.beadagolashiba = [];
       vm.sosavtartalylevegorefut = [];
       vm.segedeszkozhiany = [];
+      vm.szivattyu = [];
       vm.egyeb = [];
 
       var catnum1 = new Date(vm.startdate).getTime();
@@ -74,6 +75,7 @@ define([], function () {
         vm.beadagolashiba.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { category: 'Beadagolás hiba', day: vm.cats[i] }), 'time')) * 1 });
         vm.sosavtartalylevegorefut.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { category: 'Sósav tartály levegőre fut', day: vm.cats[i] }), 'time')) * 1 });
         vm.segedeszkozhiany.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { category: 'Segédeszköz hiány', day: vm.cats[i] }), 'time')) * 1 });
+        vm.szivattyu.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { category: 'Szivattyú', day: vm.cats[i] }), 'time')) * 1 });
         vm.egyeb.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { category: 'Egyéb', day: vm.cats[i] }), 'time')) * 1 });
       }
 
@@ -98,6 +100,7 @@ define([], function () {
           { name: 'Beadagolás hiba', data: vm.beadagolashiba, stack: 'cl' },
           { name: 'Sósav tartály levegőre fut', data: vm.sosavtartalylevegorefut, stack: 'cl' },
           { name: 'Segédeszköz hiány', data: vm.segedeszkozhiany, stack: 'cl' },
+          { name: 'Szivattyú', data: vm.szivattyu, stack: 'cl' },
           { name: 'Egyéb', data: vm.egyeb, stack: 'cl' },
         ],
       };

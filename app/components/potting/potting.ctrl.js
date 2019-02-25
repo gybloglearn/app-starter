@@ -16,6 +16,8 @@ define([], function () {
       { id: "Statik", cat: "Kerethiány" },
       { id: "Statik", cat: "Marriage" },
       { id: "Statik", cat: "Brick vágó" },
+      { id: "Statik", cat: "Szárító" },
+      { id: "Statik", cat: "Bundlevágó" },
       { id: "Statik", cat: "Egyéb" },
       { id: "Dinamik", cat: "Frekvencia váltó hiba" },
       { id: "Dinamik", cat: "Robot" },
@@ -28,6 +30,8 @@ define([], function () {
       { id: "Dinamik", cat: "Anyaghiány Statikról" },
       { id: "Dinamik", cat: "Létszámhiány" },
       { id: "Dinamik", cat: "PLC hiba" },
+      { id: "Dinamik", cat: "Rezgés hiba" },
+      { id: "Dinamik", cat: "Retesz hiba" },
       { id: "Dinamik", cat: "Egyéb" }
     ];
     vm.subcategories = [

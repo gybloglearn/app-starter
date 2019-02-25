@@ -54,6 +54,8 @@ define([], function () {
       vm.statikkerethiany=[];
       vm.statikbrickvago=[];
       vm.statikmarriage=[];
+      vm.statikszarito=[];
+      vm.statikbundlevago=[];
       vm.statikegyeb = [];
       //dinamik
       vm.dinamikfrekvenciavaltohiba=[];
@@ -67,6 +69,8 @@ define([], function () {
       vm.dinamikanyaghianystatikrol = [];
       vm.dinamikletszamhiany = [];
       vm.dinamikplchiba=[];
+      vm.dinamikrezgeshiba=[];
+      vm.dinamikreteszhiba=[];
       vm.dinamikegyeb = [];
 
       var catnum1 = new Date(vm.startdate).getTime();
@@ -88,6 +92,8 @@ define([], function () {
         vm.statikkerethiany.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Statik', category: 'Kerethiány', day: vm.cats[i] }), 'time')) * 1 });
         vm.statikbrickvago.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Statik', category: 'Brick vágó', day: vm.cats[i] }), 'time')) * 1 });
         vm.statikmarriage.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Statik', category: 'Marriage', day: vm.cats[i] }), 'time')) * 1 });
+        vm.statikszarito.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Statik', category: 'Szárító', day: vm.cats[i] }), 'time')) * 1 });
+        vm.statikbundlevago.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Statik', category: 'Bundlevágó', day: vm.cats[i] }), 'time')) * 1 });
         vm.statikegyeb.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Statik', category: 'Egyéb', day: vm.cats[i] }), 'time')) * 1 });
         //dinamik
         vm.dinamikfrekvenciavaltohiba.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Dinamik', category: 'Frekvencia váltó hiba', day: vm.cats[i] }), 'time')) * 1 })
@@ -101,6 +107,8 @@ define([], function () {
         vm.dinamikanyaghianystatikrol.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Dinamik', category: 'Anyaghiány Statikról', day: vm.cats[i] }), 'time')) * 1 })
         vm.dinamikletszamhiany.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Dinamik', category: 'Létszámhiány', day: vm.cats[i] }), 'time')) * 1 })
         vm.dinamikplchiba.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Dinamik', category: 'PLC hiba', day: vm.cats[i] }), 'time')) * 1 })
+        vm.dinamikrezgeshiba.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Dinamik', category: 'Rezgés hiba', day: vm.cats[i] }), 'time')) * 1 })
+        vm.dinamikreteszhiba.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Dinamik', category: 'Retesz hiba', day: vm.cats[i] }), 'time')) * 1 })
         vm.dinamikegyeb.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Dinamik', category: 'Egyéb', day: vm.cats[i] }), 'time')) * 1 })
       }
 
@@ -125,6 +133,8 @@ define([], function () {
           { name: 'Kerethiány', data: vm.statikkerethiany, stack: 'Statik' },
           { name: 'Brick vágó', data: vm.statikbrickvago, stack: 'Statik' },
           { name: 'Marriage', data: vm.statikmarriage, stack: 'Statik' },
+          { name: 'Szárító', data: vm.statikszarito, stack: 'Statik' },
+          { name: 'Bundlevágó', data: vm.statikbundlevago, stack: 'Statik' },
           { name: 'Egyéb', data: vm.statikegyeb, stack: 'Statik' },
         ],
       };
@@ -151,6 +161,8 @@ define([], function () {
           { name: 'Anyaghiány Statikról', data: vm.dinamikanyaghianystatikrol, stack: 'Dinamik' },
           { name: 'Létszámhiány', data: vm.dinamikletszamhiany, stack: 'Dinamik' },
           { name: 'PLC hiba', data: vm.dinamikplchiba, stack: 'Dinamik' },
+          { name: 'Rezgés hiba', data: vm.dinamikrezgeshiba, stack: 'Dinamik' },
+          { name: 'Retesz hiba', data: vm.dinamikreteszhiba, stack: 'Dinamik' },
           { name: 'Egyéb', data: vm.dinamikegyeb, stack: 'Dinamik' },
         ],
       };
@@ -180,6 +192,8 @@ define([], function () {
       { id: "Statik", cat: "Kerethiány" },
       { id: "Statik", cat: "Marriage" },
       { id: "Statik", cat: "Brick vágó" },
+      { id: "Statik", cat: "Szárító" },
+      { id: "Statik", cat: "Bundlevágó" },
       { id: "Statik", cat: "Egyéb" },
       { id: "Dinamik", cat: "Frekvencia váltó hiba" },
       { id: "Dinamik", cat: "Robot" },
@@ -192,6 +206,8 @@ define([], function () {
       { id: "Dinamik", cat: "Anyaghiány Statikról" },
       { id: "Dinamik", cat: "Létszámhiány" },
       { id: "Dinamik", cat: "PLC hiba" },
+      { id: "Dinamik", cat: "Rezgés hiba" },
+      { id: "Dinamik", cat: "Retesz hiba" },
       { id: "Dinamik", cat: "Egyéb" }
     ];
   }

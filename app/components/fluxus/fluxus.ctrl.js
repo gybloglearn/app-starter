@@ -7,7 +7,7 @@ define([], function () {
     vm.edate = $filter('date')(new Date(), 'yyyy-MM-dd');
     vm.beallit = beallit;
     vm.loading = false;
-    vm.clorcat = ["Anyaghiány Pottingról", "Létszámhiány", "PH beállítás", "Áramláshiba", "Szivárgás", "Hőmérséklet", "Beadagolás hiba", "Sósav tartály levegőre fut", "Segédeszköz hiány", "Egyéb"];
+    vm.clorcat = ["Anyaghiány Pottingról", "Létszámhiány", "PH beállítás", "Áramláshiba", "Szivárgás", "Hőmérséklet", "Beadagolás hiba", "Sósav tartály levegőre fut", "Segédeszköz hiány","Szivattyú", "Egyéb"];
     vm.fluxuscat = ["Anyaghiány", "Létszámhiány", "Szivattyú", "Szűrő", "Áramláshiba", "Hőmérséklet", "Egyéb"];
     vm.impregnalcat = ["Glicerinsűrűség", "Kádszint", "Segédeszköz hiány", "Szivattyú", "Glicerin hiány", "Anyaghiány", "Létszámhiány", "Áramlási hiba", "Egyéb"];
     vm.saveclorinfo=saveclorinfo;
