@@ -1,7 +1,8 @@
 <div class="container">
   <section class="module">
     <div class="module-header">
-      <h1 class="text-center">{{vm.actdry}}</h1>
+      <h1 class="text-center" ng-hide="vm.archive==true">{{vm.actdry}}</h1>
+      <h1 class="text-center" ng-show="vm.archive==true">Archívum</h1>
       <ul class="nav nav-tabs" style="margin-top:10px">
         <li ng-repeat="item in vm.drylist track by $index">
           <a data-toggle="tab" href="" ng-click="vm.actdry=item;vm.archive=false;vm.load()" ng-hide="vm.dis">{{item}}</a>

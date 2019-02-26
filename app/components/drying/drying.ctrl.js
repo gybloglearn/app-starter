@@ -21,7 +21,8 @@ define([], function () {
     }
 
     function loadarchive(){
-      var sttime = new Date('2017-12-12 05:50:00').getTime();
+      //var sttime = new Date('2017-12-12 05:50:00').getTime(); //első nap
+      var sttime = new Date(new Date().getTime()-(45*24*3600*1000)).getTime();
       var enddate = new Date().getTime();
       var loadstodo = Math.floor((enddate - sttime) / (6*60*60*1000));
       vm.loads = [];
