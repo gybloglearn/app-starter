@@ -15,13 +15,13 @@ define([], function () {
       downtimepottingService.get().then(function (response) {
         vm.dbdata = response.data;
         for (var i = 0; i < vm.dbdata.length; i++) {
-          var num = (new Date(vm.dbdata[i].start_date).getHours() * 60) + (new Date(vm.dbdata[i].start_date).getMinutes());
-          if (num > 350) {
+          /*var num = (new Date(vm.dbdata[i].start_date).getHours() * 60) + (new Date(vm.dbdata[i].start_date).getMinutes());
+          if (num > 350) {*/
             vm.dbdata[i].day = $filter('date')(new Date(vm.dbdata[i].start_date).getTime(), 'yyyy-MM-dd');
-          }
+          /*}
           else {
             vm.dbdata[i].day = $filter('date')(new Date(vm.dbdata[i].start_date).getTime() - (24 * 3600 * 1000), 'yyyy-MM-dd');
-          }
+          }*/
         }
         filterload();
       });
