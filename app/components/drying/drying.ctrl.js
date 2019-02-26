@@ -22,12 +22,9 @@ define([], function () {
 
     function loadarchive(){
       //var sttime = new Date('2017-12-12 05:50:00').getTime(); //első nap
-<<<<<<< HEAD
       var sttime = new Date(new Date().getTime()-(45*24*3600*1000)).getTime();
-=======
       var stime = $filter('date')(new Date().getTime()-(45*24*3600*1000),'yyyy-MM-dd');
       var sttime = new Date(stime+' 05:50:00').getTime();
->>>>>>> e454aa456697960b893833672c86372e736f16cd
       var enddate = new Date().getTime();
       var loadstodo = Math.floor((enddate - sttime) / (6*60*60*1000));
       vm.loads = [];
