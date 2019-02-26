@@ -32,7 +32,7 @@
           </tr>
         </thead>
         <tbody id="exportTable">
-          <tr ng-repeat="item in vm.drydata track by $index">
+					<tr ng-repeat="item in vm.drydata track by $index" style="background-color: {{vm.colorize(item.modul_a);}}"> 
             <td>{{item.machinename}}</td>
             <td>{{item.startdate}}</td>
             <td>{{item.startshift}}</td>
@@ -73,7 +73,7 @@
             </tr>
           </thead>
           <tbody id="exportTable">
-            <tr ng-repeat="item in vm.dryarchivedata track by $index">
+						<tr ng-repeat="item in vm.dryarchivedata track by $index" style="background-color: {{vm.colorize(item.modul_a);}}">
               <td>{{item.machinename}}</td>
               <td>{{item.startdate}}</td>
               <td>{{item.startshift}}</td>
