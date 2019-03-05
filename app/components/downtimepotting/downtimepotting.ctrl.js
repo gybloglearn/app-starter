@@ -71,6 +71,7 @@ define([], function () {
       vm.dinamikplchiba=[];
       vm.dinamikrezgeshiba=[];
       vm.dinamikreteszhiba=[];
+      vm.dinamikhomerseklet=[];
       vm.dinamikegyeb = [];
 
       var catnum1 = new Date(vm.startdate).getTime();
@@ -109,6 +110,7 @@ define([], function () {
         vm.dinamikplchiba.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Dinamik', category: 'PLC hiba', day: vm.cats[i] }), 'time')) * 1 })
         vm.dinamikrezgeshiba.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Dinamik', category: 'Rezgés hiba', day: vm.cats[i] }), 'time')) * 1 })
         vm.dinamikreteszhiba.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Dinamik', category: 'Retesz hiba', day: vm.cats[i] }), 'time')) * 1 })
+        vm.dinamikhomerseklet.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Dinamik', category: 'Hőmérséklet', day: vm.cats[i] }), 'time')) * 1 })
         vm.dinamikegyeb.push({ cat: vm.cats[i], y: ($filter('sumField')($filter('filter')(vm.guidata, { pottingid: 'Dinamik', category: 'Egyéb', day: vm.cats[i] }), 'time')) * 1 })
       }
 
@@ -163,6 +165,7 @@ define([], function () {
           { name: 'PLC hiba', data: vm.dinamikplchiba, stack: 'Dinamik' },
           { name: 'Rezgés hiba', data: vm.dinamikrezgeshiba, stack: 'Dinamik' },
           { name: 'Retesz hiba', data: vm.dinamikreteszhiba, stack: 'Dinamik' },
+          { name: 'Hőmérséklet', data: vm.dinamikhomerseklet, stack: 'Dinamik' },
           { name: 'Egyéb', data: vm.dinamikegyeb, stack: 'Dinamik' },
         ],
       };
@@ -208,6 +211,7 @@ define([], function () {
       { id: "Dinamik", cat: "PLC hiba" },
       { id: "Dinamik", cat: "Rezgés hiba" },
       { id: "Dinamik", cat: "Retesz hiba" },
+      { id: "Dinamik", cat: "Hőmérséklet" },
       { id: "Dinamik", cat: "Egyéb" }
     ];
   }
