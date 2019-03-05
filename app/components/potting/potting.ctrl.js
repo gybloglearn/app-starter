@@ -32,6 +32,7 @@ define([], function () {
       { id: "Dinamik", cat: "PLC hiba" },
       { id: "Dinamik", cat: "Rezgés hiba" },
       { id: "Dinamik", cat: "Retesz hiba" },
+      { id: "Dinamik", cat: "Hőmérséklet" },
       { id: "Dinamik", cat: "Egyéb" }
     ];
     vm.subcategories = [
