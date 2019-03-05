@@ -10,7 +10,8 @@ define([], function () {
     vm.getToday = getToday;
     vm.datumszam = vm.fr;
     vm.datszam = datszam;
-    vm.szakok=["A","B","C","D"];
+    vm.szakok = ["A", "B", "C", "D"];
+    vm.exportToCSV = exportToCSV;
 
     function datszam() {
       vm.szam = new Date(vm.fr);
@@ -87,8 +88,8 @@ define([], function () {
             vm.opdata[a].worktime = 0;
             vm.opdata[a].repair = 0;
             vm.opdata[a].remove = 0;
-            vm.opdata[a].shift=vm.tabledata[k].shift;
-            vm.opdata[a].shiftnum=vm.tabledata[k].shiftnum;
+            vm.opdata[a].shift = vm.tabledata[k].shift;
+            vm.opdata[a].shiftnum = vm.tabledata[k].shiftnum;
             vm.opdata[a].moduls = [];
             a++
           }
@@ -117,7 +118,7 @@ define([], function () {
               { color: "#ccc", from: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 17 * 3600 * 1000 + 50 * 60 * 1000, to: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 29 * 3600 * 1000 + 50 * 60 * 1000 }
             ]
           },
-          yAxis: { title: { text: 'UFF' }, min: 0, max: 16, categories: ['BP1', 'BP2', 'BP3', 'BP4', 'BP5', 'BP6', 'BP7', 'BP8', 'BP12', 'BP13', 'BP14', 'BP15', 'BP21', 'BP22', 'BP23', 'BP25', 'BP26'] },
+          yAxis: [{ title: { text: 'UFF' }, min: 0, max: 16, categories: ['BP1', 'BP2', 'BP3', 'BP4', 'BP5', 'BP6', 'BP7', 'BP8', 'BP12', 'BP13', 'BP14', 'BP15', 'BP21', 'BP22', 'BP23', 'BP25', 'BP26'] }, { title: { text: 'Modul' }, min: 0, max: 16, categories: [datas[0].data.length + ' db', datas[1].data.length + ' db', datas[2].data.length + ' db', datas[3].data.length + ' db', datas[4].data.length + ' db', datas[5].data.length + ' db', datas[6].data.length + ' db', datas[7].data.length + ' db', datas[8].data.length + ' db', datas[9].data.length + ' db', datas[10].data.length + ' db', datas[11].data.length + ' db', datas[12].data.length + ' db', datas[13].data.length + ' db', datas[14].data.length + ' db', datas[15].data.length + ' db', datas[16].data.length + ' db'], opposite: true }],
           legend: { floating: false, enabled: false, align: 'top' },
           tooltip: {
             useHTML: true,
@@ -206,6 +207,19 @@ define([], function () {
         y_adatok[i] = tomb[i].operator;
       }
       return y_adatok;
+    }
+
+    function exportToCSV() {
+      var content = "";
+      content += "Operátor;Modulok;Összes eltávolított szál;Összes bökés;Munka(perc);Bökés/perc;Szak;Napszak;\r\n";
+      for(var i=0;i<vm.opdata.length;i++){
+        content += vm.opdata[i].operator + ";" + vm.opdata[i].moduls.length + ";" + vm.opdata[i].remove + ";" + vm.opdata[i].repair + ";" + vm.opdata[i].worktime +";" +  $filter('number')((vm.opdata[i].remove/vm.opdata[i].worktime),2) +";" + vm.opdata[i].shift +";" + $filter('changenum')(vm.opdata[i].shiftnum) +";\r\n";
+      }
+      var hiddenElement = document.createElement('a');
+      hiddenElement.href = 'data:attachment/text;charset=ISO8859-2,' + escape(content);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = 'Operátorok' + vm.datumszam + '.csv';
+      hiddenElement.click();
     }
   }
   Controller.$inject = ['$cookies', '$state', '$rootScope', 'bpsdataService', '$filter'];
