@@ -99,13 +99,13 @@
 				<div class="tray filter-tray top" style="margin-top:20px">
 					<div class="tray-inner">
 						<div class="filter-rule-group">
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 								<div class="form-group">
 									<span class="control-label" style="color:#FFFFFF">Operátor:</span>
 									<input type="text" ng-model="vm.search.operator" class="form-control">
 								</div>
 							</div>
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 								<div class="form-group">
 									<span class="control-label" style="color:#FFFFFF">Szak:</span>
 									<select class="form-control" ng-model="vm.search.shift">
@@ -114,7 +114,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 								<div class="form-group">
 									<span class="control-label" style="color:#FFFFFF">Szak:</span>
 									<select class="form-control" ng-model="vm.search.shiftnum">
@@ -122,6 +122,14 @@
 										<option value=1>Nappal</option>
 										<option value=3>Éjszaka</option>
 									</select>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<span class="control-label" style="color:#FFFFFF">Letöltés:</span>
+									<div class="input-group-btn">
+										<a class="btn btn-info" ng-click="vm.exportToCSV()">Adatok mentése</a>
+									</div>
 								</div>
 							</div>
 						</div>

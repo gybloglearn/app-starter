@@ -11,6 +11,7 @@ define([], function () {
     vm.datumszam = vm.fr;
     vm.datszam = datszam;
     vm.szakok = ["A", "B", "C", "D"];
+    vm.exportToCSV = exportToCSV;
 
     function datszam() {
       vm.szam = new Date(vm.fr);
@@ -206,6 +207,19 @@ define([], function () {
         y_adatok[i] = tomb[i].operator;
       }
       return y_adatok;
+    }
+
+    function exportToCSV() {
+      var content = "";
+      content += "Operátor;Modulok;Összes eltávolított szál;Összes bökés;Munka(perc);Bökés/perc;Szak;Napszak;\r\n";
+      for(var i=0;i<vm.opdata.length;i++){
+        content += vm.opdata[i].operator + ";" + vm.opdata[i].moduls.length + ";" + vm.opdata[i].remove + ";" + vm.opdata[i].repair + ";" + vm.opdata[i].worktime +";" +  $filter('number')((vm.opdata[i].remove/vm.opdata[i].worktime),2) +";" + vm.opdata[i].shift +";" + $filter('changenum')(vm.opdata[i].shiftnum) +";\r\n";
+      }
+      var hiddenElement = document.createElement('a');
+      hiddenElement.href = 'data:attachment/text;charset=ISO8859-2,' + escape(content);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = 'Operátorok' + vm.datumszam + '.csv';
+      hiddenElement.click();
     }
   }
   Controller.$inject = ['$cookies', '$state', '$rootScope', 'bpsdataService', '$filter'];
