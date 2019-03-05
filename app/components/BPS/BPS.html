@@ -11,7 +11,8 @@
 				<div class="col-sm-6">
 					<div class="input-group">
 						<span class="input-group-addon">Dátumtól:</span>
-						<input class="form-control datepicker" min-date="2017-02-08" setdate="0d" end="{{vm.edate}}" ng-model="vm.fr" />
+						<input class="form-control datepicker" min-date="2017-02-08" setdate="0d" end="{{vm.edate}}"
+							ng-model="vm.fr" />
 						<div class="input-group-btn">
 							<button class="btn btn-info" ng-click="vm.getData();vm.datszam()">Betöltés</button>
 						</div>
@@ -22,12 +23,19 @@
 			<hr>
 			<mychart id="opchart" config="vm.opchartconfig"></mychart>
 			<button class="btn default" ng-class="{'btn-info':kadak}" ng-click="kadak=!kadak">Kádak</button>
-			<button class="btn default" ng-class="{'btn-info':operatorok}" ng-click="operatorok=!operatorok">Operátorok</button>
+			<button class="btn default" ng-class="{'btn-info':operatorok}"
+				ng-click="operatorok=!operatorok">Operátorok</button>
 
 			<div ng-show="kadak">
 				<div class="tray filter-tray top" style="margin-top:20px">
 					<div class="tray-inner">
 						<div class="filter-rule-group">
+							<div class="col-sm-3">
+								<div class="form-group">
+									<span class="control-label" style="color:#FFFFFF">Modul:</span>
+									<input type="text" ng-model="vm.searchda.JobID" class="form-control">
+								</div>
+							</div>
 							<div class="col-sm-3">
 								<div class="form-group">
 									<span class="control-label" style="color:#FFFFFF">Kád:</span>
@@ -36,17 +44,11 @@
 							</div>
 							<div class="col-sm-3">
 								<div class="form-group">
-									<span class="control-label" style="color:#FFFFFF">Operátor:</span>
-									<input type="text" ng-model="vm.searchda.Operator" class="form-control">
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="form-group">
 									<span class="control-label" style="color:#FFFFFF">Szak:</span>
 									<select class="form-control" ng-model="vm.searchda.shift">
 										<option value=>Mind</option>
 										<option ng-repeat="item in vm.szakok" value="{{item}}">{{item}}</option>
-						  			</select>
+									</select>
 								</div>
 							</div>
 							<div class="col-sm-3">
@@ -56,7 +58,7 @@
 										<option value=>Mind</option>
 										<option value=1>Nappal</option>
 										<option value=3>Éjszaka</option>
-						  			</select>
+									</select>
 								</div>
 							</div>
 						</div>
@@ -77,7 +79,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="da in vm.tabledata | orderBy:['machinename','startdate']| filter: vm.searchda track by $index" class="ng-scope">
+						<tr ng-repeat="da in vm.tabledata | orderBy:['machinename','startdate']| filter: vm.searchda track by $index"
+							class="ng-scope">
 							<td>{{da.JobID}}</td>
 							<td>{{da.machinename}}</td>
 							<td>{{da.Operator}}</td>
@@ -108,7 +111,7 @@
 									<select class="form-control" ng-model="vm.search.shift">
 										<option value=>Mind</option>
 										<option ng-repeat="item in vm.szakok" value="{{item}}">{{item}}</option>
-						  			</select>
+									</select>
 								</div>
 							</div>
 							<div class="col-sm-4">
@@ -118,7 +121,7 @@
 										<option value=>Mind</option>
 										<option value=1>Nappal</option>
 										<option value=3>Éjszaka</option>
-						  			</select>
+									</select>
 								</div>
 							</div>
 						</div>
@@ -138,11 +141,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="item in vm.opdata | filter: vm.search | orderBy:'worktime':true track by $index" class="ng-scope">
+						<tr ng-repeat="item in vm.opdata | filter: vm.search | orderBy:'worktime':true track by $index"
+							class="ng-scope">
 							<td>{{item.operator}}</td>
-							<td><a class="btn btn-default btn-block" data-toggle="collapse" data-target="#moduls{{item.operator}}">{{item.moduls.length}}</i></a>
+							<td><a class="btn btn-default btn-block" data-toggle="collapse"
+									data-target="#moduls{{item.operator}}">{{item.moduls.length}}</i></a>
 								<div class="collapse" id="moduls{{item.operator}}">
-									<div ng-repeat="mo in item.moduls track by $index">{{mo[0]}} modulon: <b>{{mo[1]}}</b> bökés</div>
+									<div ng-repeat="mo in item.moduls track by $index">{{mo[0]}} modulon:
+										<b>{{mo[1]}}</b> bökés</div>
 								</div>
 							</td>
 							<td>{{item.remove}}</td>
