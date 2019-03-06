@@ -12,6 +12,7 @@ define([], function () {
     vm.datszam = datszam;
     vm.szakok = ["A", "B", "C", "D"];
     vm.exportToCSV = exportToCSV;
+    vm.exportToCSVtank = exportToCSVtank;
 
     function datszam() {
       vm.szam = new Date(vm.fr);
@@ -34,16 +35,16 @@ define([], function () {
         { name: "Bubble point tank5", val: 4, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
         { name: "Bubble point tank6", val: 5, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
         { name: "Bubble point tank7", val: 6, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
-        { name: "Bubble point tank8", val: 7, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
-        { name: "Bubble point tank12", val: 8, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
-        { name: "Bubble point tank13", val: 9, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
-        { name: "Bubble point tank14", val: 10, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
-        { name: "Bubble point tank15", val: 11, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
-        { name: "Bubble point tank21", val: 12, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
-        { name: "Bubble point tank22", val: 13, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
-        { name: "Bubble point tank23", val: 14, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
-        { name: "Bubble point tank25", val: 15, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
-        { name: "Bubble point tank26", val: 16, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
+        //{ name: "Bubble point tank8", val: 7, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
+        { name: "Bubble point tank12", val: 7, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
+        { name: "Bubble point tank13", val: 8, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
+        { name: "Bubble point tank14", val: 9, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
+        { name: "Bubble point tank15", val: 10, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
+        { name: "Bubble point tank21", val: 11, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
+        { name: "Bubble point tank22", val: 12, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
+        { name: "Bubble point tank23", val: 13, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
+        { name: "Bubble point tank25", val: 14, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
+        { name: "Bubble point tank26", val: 15, color: '#005cb9', borderColor: '#005cB9', data: [], pointWidth: 10 },
         { name: "Kieső idő", color: '#ff9821', borderColor: '#ff9821', data: [], pointWidth: 10 }
       ];
       i.then(function (resp) {
@@ -118,7 +119,26 @@ define([], function () {
               { color: "#ccc", from: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 17 * 3600 * 1000 + 50 * 60 * 1000, to: new Date($filter('date')(new Date(vm.fr), 'yyyy-MM-dd')).getTime() + 29 * 3600 * 1000 + 50 * 60 * 1000 }
             ]
           },
-          yAxis: [{ title: { text: 'UFF' }, min: 0, max: 16, categories: ['BP1', 'BP2', 'BP3', 'BP4', 'BP5', 'BP6', 'BP7', 'BP8', 'BP12', 'BP13', 'BP14', 'BP15', 'BP21', 'BP22', 'BP23', 'BP25', 'BP26'] }, { title: { text: 'Modul' }, min: 0, max: 16, categories: [datas[0].data.length + ' db', datas[1].data.length + ' db', datas[2].data.length + ' db', datas[3].data.length + ' db', datas[4].data.length + ' db', datas[5].data.length + ' db', datas[6].data.length + ' db', datas[7].data.length + ' db', datas[8].data.length + ' db', datas[9].data.length + ' db', datas[10].data.length + ' db', datas[11].data.length + ' db', datas[12].data.length + ' db', datas[13].data.length + ' db', datas[14].data.length + ' db', datas[15].data.length + ' db', datas[16].data.length + ' db'], opposite: true }],
+          yAxis: [{
+            title: { text: 'UFF' }, min: 0, max: 15, categories: ['BP1', 'BP2', 'BP3', 'BP4', 'BP5', 'BP6', 'BP7', /*'BP8',*/ 'BP12', 'BP13', 'BP14', 'BP15', 'BP21', 'BP22', 'BP23', 'BP25', 'BP26'], labels: {
+              formatter: function () {
+                if ('BP1' === this.value || 'BP2' === this.value || 'BP3' === this.value || 'BP4' === this.value) {
+                  return '<span style="fill: #660066;">' + this.value + '</span>';
+                } else if ('BP5' === this.value || 'BP6' === this.value || 'BP7' === this.value) {
+                  return '<span style="fill: #ff9900;">' + this.value + '</span>';
+                }
+                else if ('BP12' === this.value || 'BP13' === this.value || 'BP14' === this.value || 'BP15' === this.value) {
+                  return '<span style="fill: #ff0000;">' + this.value + '</span>';
+                }
+                else if ('BP21' === this.value || 'BP22' === this.value || 'BP23' === this.value || 'BP25' === this.value || 'BP26' === this.value) {
+                  return '<span style="fill: #0000ff;">' + this.value + '</span>';
+                }
+                else {
+                  return this.value;
+                }
+              }
+            }
+          }, { title: { text: 'Modul' }, min: 0, max: 15, labels: {x:20,y:10}, categories: [datas[0].data.length + ' db', datas[1].data.length + ' db', datas[2].data.length + ' db', datas[3].data.length + ' db', datas[4].data.length + ' db', datas[5].data.length + ' db', datas[6].data.length + ' db', /*datas[7].data.length + ' db',*/ datas[7].data.length + ' db', datas[8].data.length + ' db', datas[9].data.length + ' db', datas[10].data.length + ' db', datas[11].data.length + ' db', datas[12].data.length + ' db', datas[13].data.length + ' db', datas[14].data.length + ' db', datas[15].data.length + ' db'], opposite: true }],
           legend: { floating: false, enabled: false, align: 'top' },
           tooltip: {
             useHTML: true,
@@ -212,13 +232,25 @@ define([], function () {
     function exportToCSV() {
       var content = "";
       content += "Operátor;Modulok;Összes eltávolított szál;Összes bökés;Munka(perc);Bökés/perc;Szak;Napszak;\r\n";
-      for(var i=0;i<vm.opdata.length;i++){
-        content += vm.opdata[i].operator + ";" + vm.opdata[i].moduls.length + ";" + vm.opdata[i].remove + ";" + vm.opdata[i].repair + ";" + vm.opdata[i].worktime +";" +  $filter('number')((vm.opdata[i].remove/vm.opdata[i].worktime),2) +";" + vm.opdata[i].shift +";" + $filter('changenum')(vm.opdata[i].shiftnum) +";\r\n";
+      for (var i = 0; i < vm.opdata.length; i++) {
+        content += vm.opdata[i].operator + ";" + vm.opdata[i].moduls.length + ";" + vm.opdata[i].remove + ";" + vm.opdata[i].repair + ";" + vm.opdata[i].worktime + ";" + $filter('number')((vm.opdata[i].remove / vm.opdata[i].worktime), 2) + ";" + vm.opdata[i].shift + ";" + $filter('changenum')(vm.opdata[i].shiftnum) + ";\r\n";
       }
       var hiddenElement = document.createElement('a');
       hiddenElement.href = 'data:attachment/text;charset=ISO8859-2,' + escape(content);
       hiddenElement.target = '_blank';
       hiddenElement.download = 'Operátorok' + vm.datumszam + '.csv';
+      hiddenElement.click();
+    }
+    function exportToCSVtank() {
+      var content = "";
+      content += "Modul;Machinename;Operator;startdate;enddate;Time(HH:mm);repaired;Szak;Napszak;\r\n";
+      for (var i = 0; i < vm.tabledata.length; i++) {
+        content += vm.tabledata[i].JobID + ";" + vm.tabledata[i].machinename + ";" + vm.tabledata[i].Operator + ";" + vm.tabledata[i].startdate + ";" + vm.tabledata[i].enddate + ";" + $filter('date')(vm.tabledata[i].Time, 'HH:mm') + ";" + vm.tabledata[i].Repaired + ";" + vm.tabledata[i].shift + ";" + $filter('changenum')(vm.tabledata[i].shiftnum) + ";\r\n";
+      }
+      var hiddenElement = document.createElement('a');
+      hiddenElement.href = 'data:attachment/text;charset=ISO8859-2,' + escape(content);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = 'Kádak' + vm.datumszam + '.csv';
       hiddenElement.click();
     }
   }
