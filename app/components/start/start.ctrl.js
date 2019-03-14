@@ -293,6 +293,7 @@ define([], function () {
       }
 
       //console.log(vm.displaydata);
+      vm.load=false;
     }
 
     function populate() {
